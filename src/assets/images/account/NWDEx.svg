@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+        width   = "100"
+        height  = "100"
+        viewBox = "0 0 100 100"
+        xmlns   = "http://www.w3.org/2000/svg">
+    <style type="text/css">
+        <![CDATA[
+         tspan.nw {
+            font-weight: bold;
+            font-size:   48px;
+            line-height: 125%;
+            font-family: Arial;
+            text-align:  center;
+            text-anchor: middle;
+            fill:        #5C5C5C;
+         }
+
+         rect.nw {
+            fill: #004A8F;
+         }
+
+         rect.nwborder {
+            fill: #5C5C5C;
+         }
+
+         rect.nw2border {
+            fill: #ACACAC;
+         }
+      ]]>
+    </style>
+    <rect class="nwborder" width="100" height="100" x="0" y="0"/>
+    <rect class="nw2border" width="90" height="90" x="5" y="5"/>
+    <rect class="nw" width="80" height="80" x="10" y="10"/>
+    <text>
+        <tspan class="nw" x="50" y="66">NW</tspan>
+    </text>
+</svg>

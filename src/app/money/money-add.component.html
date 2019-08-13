@@ -1,0 +1,162 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-4">
+                <div class="table-responsive">
+                    <table class="table" *ngIf="categories && categories.length">
+                        <tbody>
+                            <ng-container *ngFor="let nextCategory of filteredCatgories; let i = index">
+                                <tr *ngIf="i % 2 == 0">
+                                    <td class="category-button">
+                                        <label class="btn btn-primary category-list"
+                                               [style.background-color]="getCategoryColour(i)"
+                                               [style.color]="getCategoryTextColour(i)"
+                                               [(ngModel)]="categoryRadio"
+                                               btnRadio="{{nextCategory.id}}"
+                                               tabindex="0"
+                                               (click)="onClickCategory(i)">
+                                            {{nextCategory.name}}
+                                        </label>
+                                    </td>
+                                    <td *ngIf="i + 1 < categories.length" class="category-button">
+                                        <label class="btn btn-primary category-list"
+                                               [style.background-color]="getCategoryColour(i + 1)"
+                                               [style.color]="getCategoryTextColour(i + 1)"
+                                               [(ngModel)]="categoryRadio"
+                                               btnRadio="{{i + 1 < categories.length ? categories[i + 1].id : 0}}"
+                                               tabindex="0"
+                                               (click)="onClickCategory(i+1)">
+                                            {{i + 1 < categories.length ? categories[i + 1].name : ""}}
+                                        </label>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                            <ng-container *ngFor="let nextAccount of accounts; let i = index">
+                                <tr *ngIf="i % 2 == 0">
+                                    <td class="category-button">
+                                        <label class="btn btn-primary category-list"
+                                               [style.background-color]="getAccountColour(i)"
+                                               [style.color]="getAccountTextColour(i)"
+                                               [(ngModel)]="categoryRadio"
+                                               btnRadio="{{nextAccount.id}}"
+                                               tabindex="0"
+                                               (click)="onClickTransfer(i)">
+                                            <img class="btn-account-trf-img" src="{{getImage(nextAccount.id)}}" alt="Account"/>
+                                            Transfer
+                                        </label>
+                                    </td>
+                                    <td *ngIf="i + 1 < accounts.length" class="category-button">
+                                        <label class="btn btn-primary category-list"
+                                               [style.background-color]="getAccountColour(i + 1)"
+                                               [style.color]="getAccountTextColour(i + 1)"
+                                               [(ngModel)]="categoryRadio"
+                                               btnRadio="{{i + 1 < accounts.length ? accounts[i + 1].id : 0}}"
+                                               tabindex="0"
+                                               (click)="onClickTransfer(i+1)">
+                                            <img class="btn-account-trf-img" src="{{getImage(accounts[i + 1].id)}}" alt="Transfer Account"/>
+                                            Transfer
+                                        </label>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="row">
+                    <div class="col">
+                        <div class="{{statusClass}}">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <div class="card status-date-card mb-3">
+                                            <div class="card-body status-date-card-body">
+                                                <p class="status-date-month">{{statusMonth}}</p>
+                                                <p class="status-date-day">{{statusDay}}</p>
+                                                <p class="status-date-year">{{statusYear}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="card status-date-card mb-3">
+                                            <div class="card-body status-date-card-body">
+                                                <img *ngIf="selectedAccount != null" class="status-account" src="{{getImage(selectedAccount.id)}}" alt="Selected Account">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2" style="max-width:120px">
+                                        <div class="card status-date-card mb-3">
+                                            <div class="card-body status-date-card-body">
+                                                <div *ngIf="selectedXferAcc != null">
+                                                    <img class="status-account" src="{{getImage(selectedXferAcc.id)}}" alt="Account Status">
+                                                    <svg class="status-xfer-overlay">
+                                                        <circle cx="12" cy="12" r="8" style="stroke:#006600; fill:#FFFFFF"></circle>
+                                                    </svg>
+                                                </div>
+                                                <div *ngIf="selectedXferAcc == null && selectedCategory != null">
+                                                    <div  [innerHTML]="selectedCategoryImage">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="card status-date-card mb-3">
+                                            <div class="card-body status-date-card-body">
+                                                <p *ngIf="transactionAmount != 0" class="status-amount">
+                                                {{transactionAmtDisplay}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-11">
+                                    </div>
+                                    <div class="coll-1" *ngIf="transactionValid == true">
+                                        <label class="btn btn-primary float-right"
+                                               style="background-color: #008800;"
+                                               tabindex="0"
+                                               (click)="onClickCreate()">
+                                            <i class="fa fa-check-circle"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="transaction-date"></label>
+                    <input id="transaction-date"
+                           type="text"
+                           placeholder="Datepicker"
+                           class="form-control calc-datepicker"
+                           [bsValue]="bsValue"
+                           (bsValueChange)="onDateChange($event)"
+                           value="{{ bsValue | date:'dd-MMMM-yyyy'}}"
+                           bsDatepicker [bsConfig]="{
+                                dateInputFormat: 'DD-MMMM-YYYY',
+                                containerClass: 'theme-dark-blue',
+                                selectFromOtherMonth: true }"/>
+                </div>
+                <div class="row">
+                    <div class="col" *ngFor="let nextAccount of accounts; let i = index">
+                        <label class="btn btn-primary btn-account"
+                               [style.background-color]="getAccountColour(i)"
+                               [(ngModel)]="accountRadio"
+                               btnRadio="{{nextAccount.id}}"
+                               tabindex="0"
+                               (click)="onClickAccount(nextAccount.id)">
+                            <img class="btn-account-img" src="{{getImage(nextAccount.id)}}" alt="Account"/>
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <money-add-calc style="width:100%" (valueEntered)="onAmountEntered($event)"></money-add-calc>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

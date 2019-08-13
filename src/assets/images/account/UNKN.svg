@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+        width   = "100"
+        height  = "100"
+        viewBox = "0 0 100 100"
+        xmlns   = "http://www.w3.org/2000/svg">
+    <style type="text/css">
+        <![CDATA[
+         tspan.uk {
+            font-weight: bold;
+            font-size:   32px;
+            line-height: 125%;
+            font-family: Arial;
+            text-align:  center;
+            text-anchor: middle;
+            fill:        #FFFFFF;
+         }
+
+         rect.uk {
+            fill: #656565;
+         }
+
+         rect.ukborder {
+            fill: #FFFFFF;
+         }
+
+      ]]>
+    </style>
+    <rect class="ukborder" width="100" height="100" x="0" y="0"/>
+    <rect class="uk" width="80" height="80" x="10" y="10"/>
+    <text>
+        <tspan class="uk" x="50" y="62">UNK</tspan>
+    </text>
+</svg>

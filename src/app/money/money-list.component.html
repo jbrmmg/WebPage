@@ -1,0 +1,231 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-3" *ngIf="types && types.length">
+                <div class="btn-group" *ngFor="let type of types">
+                    <label class="btn btn-primary btn-type"
+                           btnRadio="{{type.id}}"
+                           [(ngModel)]="radioType"
+                           tabindex="0"
+                           tooltip="{{type.name}}">
+                        <i class="fa {{type.icon}}"></i>
+                    </label>
+                </div>
+            </div>
+            <div class="col-3" *ngIf="accounts && accounts.length">
+                <div class="btn-group" *ngFor="let account of accounts; let i = index">
+                    <label class="btn btn-primary btn-account"
+                           [style.background-color]="getAccountColour(i)"
+                           [(ngModel)]="radioAccount"
+                           btnRadio="{{account.id}}"
+                           tabindex="0"
+                           (click)="onAccountClick(account)">
+                        <img class="btn-account-img" src="{{getImage(account)}}" alt="Account"/>
+                    </label>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-8">
+                        <div class="row">
+                            <label for="from-date"></label>
+                            <input id="from-date"
+                                   type="text"
+                                   placeholder="Datepicker"
+                                   class="form-control filter-datepicker"
+                                   [bsValue]="fromValue"
+                                   (bsValueChange)="onDateChangeFrom($event)"
+                                   [isDisabled]="fromDateDisabled"
+                                   value="{{ fromValue | date:'dd-MMMM-yyyy'}}"
+                                   bsDatepicker [bsConfig]="{
+                                            dateInputFormat: 'DD-MMMM-YYYY',
+                                            containerClass: 'theme-dark-blue',
+                                            selectFromOtherMonth: true }"/>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <button type="button"
+                                class="btn btn-primary btn-date"
+                                [disabled]="toDateButtonDisabled"
+                                (click)="onDateButton('MTD')">
+                            MTD
+                        </button>
+                    </div>
+                    <div class="col-1">
+                        <button type="button"
+                                class="btn btn-primary btn-date"
+                                [disabled]="dateButtonsDisabled"
+                                (click)="onDateButton('M-1')">
+                            M-1
+                        </button>
+                    </div>
+                    <div class="col-1">
+                        <button type="button"
+                                class="btn btn-primary btn-date"
+                                [disabled]="dateButtonsDisabled"
+                                (click)="onDateButton('M+1')">
+                            M+1
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <div class="row">
+                        <label for="to-date"></label>
+                        <input id="to-date"
+                               type="text"
+                               placeholder="Datepicker"
+                               class="form-control filter-datepicker"
+                               [bsValue]="toValue"
+                               (bsValueChange)="onDateChangeTo($event)"
+                               [isDisabled]="toDateDisabled"
+                               value="{{ toValue | date:'dd-MMMM-yyyy'}}"
+                               bsDatepicker [bsConfig]="{
+                                        dateInputFormat: 'DD-MMMM-YYYY',
+                                        containerClass: 'theme-dark-blue',
+                                        selectFromOtherMonth: true }"/>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <button type="button"
+                                class="btn btn-primary btn-date"
+                                [disabled]="toDateButtonDisabled"
+                                (click)="onDateButton('YTD')">
+                            YTD
+                        </button>
+                    </div>
+                    <div class="col-1">
+                        <button type="button"
+                                class="btn btn-primary btn-date"
+                                [disabled]="dateButtonsDisabled"
+                                (click)="onDateButton('Y-1')">
+                            Y-1
+                        </button>
+                    </div>
+                    <div class="col-1">
+                        <button type="button"
+                                class="btn btn-primary btn-date"
+                                [disabled]="dateButtonsDisabled"
+                                (click)="onDateButton('Y+1')">
+                            Y+1
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="categories && categories.length">
+            <div class="col col-category" *ngFor="let nextCategory of filteredCatgories; let i = index">
+                <label [ngClass]="nextCategory.selected ? 'btn btn-primary btn-category' : 'btn btn-primary btn-category-off'"
+                       [style.background-color]="getCategoryColour(i)"
+                       [style.border-color]="nextCategory.selected ? '#005cbf' : '#9f9f9f'"
+                       btnRadio="{{nextCategory.id}}"
+                       tabindex="0"
+                       (click)="onCategoryClick(nextCategory)"
+                       tooltip="{{nextCategory.name}}">
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="table-responsive">
+                <table class="table" *ngIf="transactions && transactions.length">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="transaction-date-header transaction-header">Date</th>
+                            <th class="transaction-account-header transaction-header">Account</th>
+                            <th class="transaction-category-header transaction-header">Category</th>
+                            <th class="transaction-amount-header transaction-header">Amount</th>
+                            <th class="transaction-confirm-btn-header transaction-header"></th>
+                            <th class="transaction-edit-btn-header transaction-header"></th>
+                            <th class="transaction-delete-btn-header transaction-header"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let nextTransaction of transactions">
+                            <td class="transaction-col-day transaction-row">
+                                <p *ngIf="!nextTransaction.totalRow" class="transaction-date-day">{{nextTransaction.dateDay}}</p>
+                            </td>
+                            <td class="transaction-col-monthyear transaction-row">
+                                <p *ngIf="!nextTransaction.totalRow" class="transaction-date-month">{{nextTransaction.dateMonth}}</p>
+                                <p *ngIf="!nextTransaction.totalRow" class="transaction-date-year">{{nextTransaction.dateYear}}</p>
+                            </td>
+                            <td class="transaction-account-col transaction-row">
+                                <img *ngIf="!nextTransaction.totalRow" class="transaction-account-img" src="{{getAccountImage(nextTransaction.account)}}" alt="Account"/>
+                            </td>
+                            <td class="transaction-category-col transaction-row">
+                                <div *ngIf="!nextTransaction.totalRow" class="row transaction-category-col-row">
+                                    <div class="col-10 transaction-category-col-text">
+                                        {{nextTransaction.category}}
+                                    </div>
+                                    <div class="col-2 transaction-category-col-img"
+                                         [innerHTML]="getCategoryImage(nextTransaction)">
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="transaction-row">
+                                <input id="transaction-amount"
+                                       type="text" *ngIf="nextTransaction.editable"
+                                       [(ngModel)]="nextTransaction.amountString"
+                                       [disabled]="!nextTransaction.editable"
+                                       (keyup.enter)="onEnter(nextTransaction)"
+                                       class="transaction-amount-edit-col">
+                                <p *ngIf="!nextTransaction.editable && nextTransaction.amount < 0 && !nextTransaction.totalRow"
+                                   class="transaction-amount-noedit-db-col">{{nextTransaction.amountString}}</p>
+                                <p *ngIf="!nextTransaction.editable && nextTransaction.amount >= 0 && !nextTransaction.totalRow"
+                                   class="transaction-amount-noedit-col">{{nextTransaction.amountString}}</p>
+                                <div *ngIf="nextTransaction.totalRow">
+                                    <div class="row totals-cell">
+                                        <div class="col-2">
+                                            <button type="button"
+                                                    class="btn btn-primary btn-tran-confirm"
+                                                    (click)="onClickLockStatement()"
+                                                    [disabled]="!nextTransaction.summary.canLock || selectedStatement.locked">
+                                                <i [ngClass]="nextTransaction.summary.canLock && selectedStatement.locked ? 'fa fa-lock' : 'fa fa-unlock'"></i>
+                                            </button>
+                                        </div>
+                                        <div class="col-10 totals-col">
+                                            <table class="table totals-table">
+                                                <tbody>
+                                                    <tr *ngFor="let nextTotal of nextTransaction.summary.totalsDisplay" class="totals-row">
+                                                        <td class="totals-title-col">{{nextTotal.title}}</td>
+                                                        <td class="totals-value-coll">{{nextTotal.displayAmt}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="transaction-row">
+                                <button *ngIf="!nextTransaction.totalRow"
+                                        type="button"
+                                        class="btn btn-primary btn-tran-confirm"
+                                        (click)="confirmTransaction(nextTransaction)"
+                                        [disabled]="nextTransaction.locked">
+                                    <i [ngClass]="nextTransaction.locked ? 'fa fa-lock' : nextTransaction.reconciled ? 'fa fa-times' : 'fa fa-check'"></i>
+                                </button>
+                            </td>
+                            <td class="transaction-row">
+                                <button *ngIf="!nextTransaction.totalRow"
+                                        type="button"
+                                        class="btn btn-primary btn-tran-edit"
+                                        (click)="clickEditable(nextTransaction)"
+                                        [disabled]="nextTransaction.locked || nextTransaction.reconciled">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+                            </td>
+                            <td class="transaction-row">
+                                <button *ngIf="!nextTransaction.totalRow"
+                                        type="button"
+                                        class="btn btn-primary btn-tran-delete"
+                                        (click)="deleteTransaction(nextTransaction)"
+                                        [disabled]="nextTransaction.locked || nextTransaction.reconciled">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

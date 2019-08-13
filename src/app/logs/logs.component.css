@@ -1,0 +1,35 @@
+.btn-logtype {
+    width: 100%;
+}
+
+
+.label-date {
+    font-weight: bold;
+    text-align: right;
+    line-height: 100%;
+    margin: 0;
+}
+
+.date-row {
+    align-items: center;
+}
+
+.log-line-row {
+    padding: 0 2px;
+}
+
+.log-row {
+    font-family: monospace;
+}
+
+.log-line-date {
+    width: 9%;
+}
+
+.log-line-badge {
+    width: 6%;
+}
+
+.log-line-text {
+    width: 85%;
+}

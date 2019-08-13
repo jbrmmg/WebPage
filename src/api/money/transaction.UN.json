@@ -1,0 +1,53 @@
+[
+  {
+    "id": 10531,
+    "account": "AMEX",
+    "category": "Take Away Food",
+    "date": 1553126400000,
+    "amount": -12.05,
+    "locked": false,
+    "group": "Food",
+    "oppositeStatementId": "",
+    "oppositeId": -1,
+    "catColour": "FFFF99",
+    "categoryId": "FDT",
+    "dateYear": 2019,
+    "dateMonth": "Mar",
+    "reconciled": false,
+    "dateDay": 21
+  },
+  {
+    "id": 10530,
+    "account": "AMEX",
+    "category": "At Work",
+    "date": 1553212800000,
+    "amount": -0.98,
+    "locked": false,
+    "group": "Food",
+    "oppositeStatementId": "",
+    "oppositeId": -1,
+    "catColour": "FFFFCC",
+    "categoryId": "FDW",
+    "dateYear": 2019,
+    "dateMonth": "Mar",
+    "reconciled": false,
+    "dateDay": 22
+  },
+  {
+    "id": 10529,
+    "account": "AMEX",
+    "category": "Grocery",
+    "date": 1553299200000,
+    "amount": -50.38,
+    "locked": false,
+    "group": "Food",
+    "oppositeStatementId": "",
+    "oppositeId": -1,
+    "catColour": "FFFF00",
+    "categoryId": "FDG",
+    "dateYear": 2019,
+    "dateMonth": "Mar",
+    "reconciled": false,
+    "dateDay": 23
+  }
+]

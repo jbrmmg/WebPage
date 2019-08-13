@@ -1,0 +1,26 @@
+[
+  {
+    "id": "COTW",
+    "name": "Comedy\nof the\nWeek"
+  },
+  {
+    "id": "DOTW",
+    "name": "Drama\nof the\nWeek"
+  },
+  {
+    "id": "FRIC",
+    "name": "Friday Night\nComedy"
+  },
+  {
+    "id": "MORL",
+    "name": "More or\nLess"
+  },
+  {
+    "id": "RUFR",
+    "name": "Rutherford\nand Fry"
+  },
+  {
+    "id": "TRCK",
+    "name": "Tracks\nChimera"
+  }
+]

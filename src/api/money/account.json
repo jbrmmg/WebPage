@@ -1,0 +1,26 @@
+[
+  {
+    "id":"AMEX",
+    "name":"American Express",
+    "imagePrefix":"amex",
+    "colour":"4BBAEA"
+  },
+  {
+    "id":"BANK",
+    "name":"Bank Account",
+    "imagePrefix":"firstDirect",
+    "colour":"000000"
+  },
+  {
+    "id":"JLPC",
+    "name":"John Lewis Card",
+    "imagePrefix":"johnLewis",
+    "colour":"00461C"
+  },
+  {
+    "id":"NWDE",
+    "name":"Nationwide",
+    "imagePrefix":"nationwide",
+    "colour":"00326B"
+  }
+]

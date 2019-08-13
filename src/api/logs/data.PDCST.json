@@ -1,0 +1,9 @@
+[
+  {"timeStampString":"1551521484791",
+    "sequence":391384,
+    "time":"10:11:24",
+    "level":"ERROR",
+    "date":20190302,
+    "typeId":"com.jbr.middletier.money.control.CategoryController",
+    "text":"Podcast control startup failed."}
+]
