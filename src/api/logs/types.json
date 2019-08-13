@@ -1,0 +1,11 @@
+[
+  { "id"   : "MONEY",
+    "icon" : "fa-university",
+    "name" :  "Money Database"},
+  { "id"   : "BCKUP",
+    "icon" : "fa-archive",
+    "name" : "Backup processing"  },
+  { "id"   : "PDCST",
+    "icon" : "fa-podcast",
+    "name" :  "Podcast Control" }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "id":"RC",
+    "name":"Reconciled",
+    "icon": "fa-check"
+  },
+  {
+    "id":"UN",
+    "name":"Unreconciled",
+    "icon": "fa-times"
+  },
+  {
+    "id":"AL",
+    "name":"All",
+    "icon": "fa-globe"
+  },
+  {
+    "id":"UL",
+    "name":"Not Locked",
+    "icon": "fa-unlock"
+  }
+]

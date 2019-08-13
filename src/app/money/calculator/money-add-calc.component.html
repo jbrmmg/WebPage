@@ -1,0 +1,24 @@
+<div class="col" style="width: 100%">
+    <div class="row">
+        <div class="col-12">
+            <label for="calc-display"></label>
+            <input id="calc-display"
+                   type="number"
+                   class="{{displayStyle}}"
+                   name="calcInput"
+                   [readOnly]="true"
+                   [value]="calcDisplay">
+        </div>
+    </div>
+    <ng-container *ngFor="let nextRow of rows">
+        <div class="row">
+            <div class="{{nextColumn.className}}" *ngFor="let nextColumn of nextRow.columns">
+                <label class="{{nextColumn.buttonStyle}}"
+                       tabindex="0"
+                       (click)="onClick(nextColumn)">
+                    {{nextColumn.text}}
+                </label>
+            </div>
+        </div>
+    </ng-container>
+</div>

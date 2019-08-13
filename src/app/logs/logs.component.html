@@ -1,0 +1,51 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row date-row">
+            <label class="col-2 label-date" for="log-date">Log Date:</label>
+            <input id="log-date"
+                   type="text"
+                   placeholder="Datepicker"
+                   class="col-10 form-control"
+                   [minDate]="minDate"
+                   [maxDate]="maxDate"
+                   [bsValue]="bsValue"
+                   (bsValueChange)="onDateChange($event)"
+                   value="{{ bsValue | date:'dd-MMM-yyyy'}}"
+                   bsDatepicker [bsConfig]="{
+                        dateInputFormat: 'DD-MMM-YYYY',
+                        containerClass: 'theme-dark-blue',
+                        selectFromOtherMonth: true }">
+        </div>
+        <div class="row top-buffer">
+            <div class="col-1" *ngIf="types && types.length">
+                <label class="btn btn-primary btn-logtype" *ngFor="let type of types"
+                       [(ngModel)]="radioLogType"
+                       btnRadio="{{type.id}}"
+                       (click)="onClickType(type.id)"
+                       tabindex="0"
+                       tooltip="{{type.name}}">
+                    <i class="fa {{type.icon}}"></i>
+                </label>
+            </div>
+            <div class="col-10">
+                <div class="table-responsive">
+                    <table class="table table-borderless" *ngIf="data && data.length">
+                        <tbody>
+                            <tr class="log-row" *ngFor="let nextData of data">
+                                <td class="log-line-date log-line-row">{{nextData.time}}</td>
+                                <td class="log-line-badge log-line-row"><span [ngClass]="{
+                                    'badge':true,
+                                    'badge-info':nextData.level==='INFO',
+                                    'badge-warning':nextData.level==='WARN',
+                                    'badge-danger':nextData.level==='ERROR' || nextData.level==='FATAL',
+                                    'badge-primary':nextData.level==='DEBUG' || nextData.level==='TRACE'
+                                    }">{{nextData.level}}</span></td>
+                                <td class="log-line-text log-line-row">{{nextData.text}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

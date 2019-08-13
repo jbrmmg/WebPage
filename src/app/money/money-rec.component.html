@@ -1,0 +1,116 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <label class="btn btn-primary btn-submit-data"
+                   tooltip="Submit Data"
+                   (click)="onSubmitData()">
+                <i class="fa fa-save"></i>
+            </label>
+            <label class="btn btn-primary btn-clear-data"
+                   tooltip="Clear Data"
+                   (click)="onClearData()">
+                <i class="fa fa-eraser"></i>
+            </label>
+            <label class="btn btn-primary btn-accept"
+                   tooltip="Accept Transactions"
+                   (click)="onAcceptTransactions()">
+                <i class="fa fa-check-circle"></i>
+            </label>
+            <div class="col-3" *ngIf="accounts && accounts.length">
+                <div class="btn-group" *ngFor="let account of accounts; let i = index">
+                    <label class="btn btn-primary btn-account"
+                           [style.background-color]="getAccountColour(i)"
+                           [(ngModel)]="radioAccount"
+                           btnRadio="{{account.id}}"
+                           tabindex="0"
+                           (click)="onAccountClick(account)">
+                        <img class="btn-account-img" src="{{getImage(account)}}" alt="Account"/>
+                    </label>
+                </div>
+            </div>
+            <div class="btn-group" dropdown>
+                <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle btn-file"
+                        aria-controls="dropdown-basic">
+                    Load from file <span class="caret"></span>
+                </button>
+                <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu"
+                    role="menu" aria-labelledby="button-basic">
+                    <li role="menuitem" dropdown triggers="mouseover" placement="right" container="body" *ngFor="let nextFile of files">
+                        <a dropdownToggle class="dropdown-item dropdown-toggle" (click)="false">{{nextFile.file}}<span class="caret"></span></a>
+                        <ul *dropdownMenu class="dropdown-menu" role="menu">
+                            <li role="menuitem" (click)="onLoadFile(nextFile.file,'AMEX')"><a class="dropdown-item">AMEX</a></li>
+                            <li role="menuitem" (click)="onLoadFile(nextFile.file,'JOHNLEWIS')"><a class="dropdown-item">JOHN LEWIS</a></li>
+                            <li role="menuitem" (click)="onLoadFile(nextFile.file,'FIRSTDIRECT')"><a class="dropdown-item">FIRST DIRECT</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <label for="rec-data"></label>
+            <textarea id="rec-data" class="col-12 txt-data" [(ngModel)]="textData">
+            </textarea>
+        </div>
+        <div class="row">
+            <div class="col-5">
+                <div class="table-responsive">
+                    <table class="table" *ngIf="uncatorisedMatches && uncatorisedMatches.length">
+                        <tr *ngFor="let nextMatch of uncatorisedMatches">
+                            <td class="td-uncat-match"><label for="select-transaction"></label><input id="select-transaction" type="checkbox" (change)="onRowClick(nextMatch)"/></td>
+                            <td class="td-uncat-match">{{nextMatch.description}}</td>
+                            <td class="td-uncat-match">{{nextMatch.date}}</td>
+                            <td class="td-uncat-match"
+                                [style.color]="getAmtTextColour(nextMatch.amount)">
+                                {{nextMatch.amount}}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-1">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr *ngFor="let nextCategory of filteredCatgories">
+                            <td class="td-category">
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        tooltip="{{nextCategory.name}}"
+                                        (click)="onCategoryClick(nextCategory)"
+                                        [style.color]="getCategoryTextColour(nextCategory.id)"
+                                        [style.background-color]="getCategoryColour(nextCategory.id)">
+                                    <i class="fa fa-arrow-circle-right"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-5">
+                <div class="table-responsive">
+                    <table class="table" *ngIf="catorisedMatches && catorisedMatches.length">
+                        <tr *ngFor="let nextMatch of catorisedMatches">
+                            <td class="td-cat-match">
+                                {{nextMatch.date}}
+                            </td>
+                            <td class="td-cat-match"
+                                [style.color]="getAmtTextColour(nextMatch.amount)">
+                                {{nextMatch.amount}}
+                            </td>
+                            <td class="td-cat-match">
+                                <button type="button"
+                                        class="btn btn-primary btn-list-action"
+                                        (click)="actOnMatch(nextMatch)"
+                                        [disabled]="nextMatch.disabled">
+                                    <i [ngClass]="nextMatch.classIcon"></i>
+                                </button>
+                            </td>
+                            <td class="td-cat-match"
+                                [style.color]="getCategoryTextColour(nextMatch.category)"
+                                [style.background-color]="getCategoryColour(nextMatch.category)">
+                                {{nextMatch.category}}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
