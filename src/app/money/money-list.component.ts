@@ -1,10 +1,10 @@
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {Component, OnInit} from "@angular/core";
 import {MoneyService} from "./money.service";
 import {Category, ICategory} from "./money-category";
 import {JbAccount} from "./money-account";
 import {TransactionType} from "./money-type";
-import {ITransaction, Transaction, TransactionSummary} from "./money-transaction";
+import {ITransaction, Transaction, TransactionLineType, TransactionSummary} from "./money-transaction";
 import {Statement} from "./money-statement";
 
 @Component({
@@ -283,14 +283,17 @@ export class MoneyListComponent implements OnInit {
             this.categories).subscribe(
             transactions => {
                 transactions.forEach(value => {
-                    this.transactions.push(new Transaction(value,this.summaryRow));
+                    this.transactions.push(new Transaction(value,this.summaryRow,TransactionLineType.TRANSACTION));
                     this.summaryRow.addAmount(value.amount);
                 })
             },
             error => this.errorMessage = <any>error,
             () => {
                 console.log("Request Transactions Complete." + thisChange);
-                this.transactions.push(new Transaction(null,this.summaryRow));
+                this.transactions.push(new Transaction(null,this.summaryRow,TransactionLineType.TOTAL_BOUGHTFWD));
+                this.transactions.push(new Transaction(null,this.summaryRow,TransactionLineType.TOTAL_DEBITS));
+                this.transactions.push(new Transaction(null,this.summaryRow,TransactionLineType.TOTAL_CREDITS));
+                this.transactions.push(new Transaction(null,this.summaryRow,TransactionLineType.TOTAL_CARRIEDFWD));
             }
         )
     }

@@ -7,6 +7,7 @@ export interface ITransaction {
     locked: boolean;
     group: string;
     oppositeStatementId: string;
+    description: string;
     oppositeId: number;
     catColour: string;
     categoryId: string;
@@ -14,6 +15,14 @@ export interface ITransaction {
     dateMonth: string;
     reconciled: boolean;
     dateDay: number;
+}
+
+export enum TransactionLineType {
+    TRANSACTION,
+    TOTAL_BOUGHTFWD,
+    TOTAL_DEBITS,
+    TOTAL_CREDITS,
+    TOTAL_CARRIEDFWD
 }
 
 export class Transaction implements ITransaction {
@@ -33,11 +42,13 @@ export class Transaction implements ITransaction {
     reconciled: boolean = true;
     dateDay: number = -1;
     editable: boolean = false;
-    totalRow: boolean = true;
+    transactionLineType: TransactionLineType = TransactionLineType.TRANSACTION;
     summary: TransactionSummary = null;
+    description: string = "";
 
     constructor(source: ITransaction,
-                summary: TransactionSummary) {
+                summary: TransactionSummary,
+                type: TransactionLineType) {
         if(source != null) {
             this.id = source.id;
             this.account = source.account;
@@ -54,8 +65,9 @@ export class Transaction implements ITransaction {
             this.dateMonth = source.dateMonth;
             this.reconciled = source.reconciled;
             this.dateDay = source.dateDay;
-            this.totalRow = false;
+            this.description = source.description;
         }
+        this.transactionLineType = type;
         this.summary = summary;
     }
 
@@ -71,6 +83,27 @@ export class Transaction implements ITransaction {
     get amountString(): string {
         return this.amount.toFixed(2);
     }
+
+    get isTransactionLine(): boolean {
+        return this.transactionLineType == TransactionLineType.TRANSACTION;
+    }
+
+    get isBoughtForward(): boolean {
+        return this.transactionLineType == TransactionLineType.TOTAL_BOUGHTFWD;
+    }
+
+    get isTotalDebits(): boolean {
+        return this.transactionLineType == TransactionLineType.TOTAL_DEBITS;
+    }
+
+    get isTotalCredits(): boolean {
+        return this.transactionLineType == TransactionLineType.TOTAL_CREDITS;
+    }
+
+    get isCarriedFoward(): boolean {
+        return this.transactionLineType == TransactionLineType.TOTAL_CARRIEDFWD;
+    }
+
 }
 
 export class TransactionSummary {
@@ -119,5 +152,37 @@ export class TransactionSummary {
             this.totalsDisplay[2].amount += value; // Credits
         }
         this.calculateCarriedFwd();
+    }
+
+    get boughtFwd(): number {
+        return this.totalsDisplay[0].amount;
+    }
+
+    get boughtFwdDisplay(): string {
+        return this.totalsDisplay[0].displayAmt;
+    }
+
+    get totalDebits(): number {
+        return this.totalsDisplay[1].amount;
+    }
+
+    get totalDebitsDisplay(): string {
+        return this.totalsDisplay[1].displayAmt;
+    }
+
+    get totalCredits(): number {
+        return this.totalsDisplay[2].amount;
+    }
+
+    get totalCreditsDisplay(): string {
+        return this.totalsDisplay[2].displayAmt;
+    }
+
+    get carriedForward(): number {
+        return this.totalsDisplay[3].amount;
+    }
+
+    get carriedForwardDisplay(): string {
+        return this.totalsDisplay[3].displayAmt;
     }
 }

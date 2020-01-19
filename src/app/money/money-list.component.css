@@ -1,4 +1,6 @@
 
+/* Button used to select the type of transaction listed. */
+
 .btn-type {
     width: 44px;
     height: 44px;
@@ -6,17 +8,11 @@
     padding: 3px;
 }
 
+/* Button used to select the accounts. */
+
 .btn-account {
     width: 44px;
     height: 44px;
-    margin-right: 2px;
-    padding: 3px;
-}
-
-.btn-date {
-    font-size: 8px;
-    width: 28px;
-    height: 28px;
     margin-right: 2px;
     padding: 3px;
 }
@@ -26,25 +22,25 @@
     height: 100%;
 }
 
+/* Button used select a date and the picker. */
+
+.btn-date {
+    font-size: 8px;
+    width: 28px;
+    height: 28px;
+    margin-right: 2px;
+    padding: 3px;
+}
+
 .filter-datepicker {
     font-size: 12px;
     padding: 0 0 0 2px;
     margin-bottom: 2px;
 }
 
-.btn-categtory-img {
-    width: 100%;
-    height: 100%;
-}
 
-.btn-tran-delete {
-}
 
-.btn-tran-edit {
-}
-
-.btn-tran-confirm {
-}
+/* category selectors */
 
 .btn-category {
     width: 20px;
@@ -59,45 +55,21 @@
     border-width: 10px;
 }
 
-.col-category {
-    padding: 4px 0 0 0;
-}
+/* List */
 
 .transaction-header {
     padding: 2px 2px
 }
 
-.transaction-date-header {
-    width: 7%;
-}
-
-.transaction-account-header {
-    width: 100px;
-}
-
-.transaction-category-header {
-    width: 30%;
-    text-align: center;
-}
-
-.transaction-amount-header {
-    text-align: center;
-}
-
-.transaction-confirm-btn-header {
-    width: 40px;
-}
-
-.transaction-edit-btn-header {
-    width: 40px;
-}
-
-.transaction-delete-btn-header {
-    width: 40px;
-}
-
 .transaction-row {
     padding: 4px 2px 2px 2px;
+    vertical-align: middle;
+}
+
+/* Col 1 & 2 - Date */
+
+.transaction-date-header {
+    width: 7%;
 }
 
 .transaction-date-day {
@@ -127,6 +99,12 @@
     font-size: 10px;
 }
 
+/* Col 3 - Account */
+
+.transaction-account-header {
+    width: 100px;
+}
+
 .transaction-account-col {
 }
 
@@ -135,30 +113,90 @@
     height: 40px;
 }
 
+/* Col 4 - Category */
+
+.transaction-category-header {
+    width: 15%;
+    text-align: center;
+}
+
+.col-category {
+    padding: 4px 0 0 0;
+}
+
 .transaction-category-col {
     height: 40px;
 }
 
 .transaction-category-col-row {
     height: 40px;
+    margin: 0;
 }
 
 .transaction-category-col-text {
     text-align: right;
+    padding-left: 0;
+    padding-right: 4px;
+    padding-bottom: 4px;
+    margin: auto;
 }
 
 .transaction-category-col-img {
     height: 35px;
+    padding: 0;
+}
+
+/* Col 5 - Description */
+
+.transaction-text-header {
+}
+
+.transaction-text-col {
+    height: 40px;
+}
+
+.transaction-text-sub-col {
+    height: 40px;
+    border-top: 0;
+}
+
+.transaction-text-col-row {
+    height: 40px;
+}
+
+.transaction-text-col-text {
+    text-align: left;
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-bottom: 4px;
+}
+
+.transaction-text-total-col-text {
+    margin-top: auto;
+    margin-bottom: auto;
+    padding-bottom: 4px;
+    font-weight: bold;
+    text-align: right;
+}
+
+/* Col 6 - Amount */
+
+.transaction-amount-header {
+    text-align: center;
+    width: 10%;
 }
 
 .transaction-amount-edit-col {
     padding-right: 16px;
-    width: 100%;
     text-align: right;
+    width: 100%;
 }
 
 .transaction-amount-noedit-col {
     padding-right: 16px;
+    padding-bottom: 4px;
+    margin-top: auto;
+    margin-bottom: auto;
     line-height: 20px;
     width: 100%;
     text-align: right;
@@ -168,12 +206,44 @@
 
 .transaction-amount-noedit-db-col {
     padding-right: 16px;
+    padding-bottom: 4px;
+    margin-top: auto;
+    margin-bottom: auto;
     line-height: 20px;
     width: 100%;
     text-align: right;
     color: #cc0000;
     font-weight: bolder;
 }
+
+/* Col 7 - Confirm */
+
+.transaction-confirm-btn-header {
+    width: 40px;
+}
+
+.btn-tran-confirm {
+}
+
+/* Col 8 - Edit */
+
+.transaction-edit-btn-header {
+    width: 40px;
+}
+
+.btn-tran-edit {
+}
+
+/* Col 9 - Delete */
+
+.transaction-delete-btn-header {
+    width: 40px;
+}
+
+.btn-tran-delete {
+}
+
+/* Format for the totals section */
 
 .totals-table {
     width: 100%;
@@ -192,9 +262,9 @@
 }
 
 .totals-cell {
-    margin: 10px 0px 0px 0px;
+    margin: 10px 0 0 0;
 }
 
 .totals-col {
-    padding-right: 0px;
+    padding-right: 0;
 }
