@@ -104,6 +104,12 @@ export class Transaction implements ITransaction {
         return this.transactionLineType == TransactionLineType.TOTAL_CARRIEDFWD;
     }
 
+    get isTotalLine(): boolean {
+        return ( this.transactionLineType == TransactionLineType.TOTAL_CARRIEDFWD ||
+            this.transactionLineType == TransactionLineType.TOTAL_CREDITS ||
+            this.transactionLineType == TransactionLineType.TOTAL_DEBITS ||
+            this.transactionLineType == TransactionLineType.TOTAL_BOUGHTFWD )
+    }
 }
 
 export class TransactionSummary {

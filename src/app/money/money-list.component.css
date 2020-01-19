@@ -64,6 +64,14 @@
 .transaction-row {
     padding: 4px 2px 2px 2px;
     vertical-align: middle;
+    border-top: 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.transaction-row-total {
+    padding: 4px 2px 2px 2px;
+    vertical-align: middle;
+    border-top: 0;
 }
 
 /* Col 1 & 2 - Date */
@@ -84,10 +92,12 @@
 
 .transaction-col-monthyear {
     padding-left: 0;
+    border-top: 0;
 }
 
 .transaction-col-day {
     padding-right: 0;
+    border-top: 0;
 }
 
 .transaction-date-month {
@@ -106,6 +116,7 @@
 }
 
 .transaction-account-col {
+    border-top: 0;
 }
 
 .transaction-account-img {
@@ -126,6 +137,7 @@
 
 .transaction-category-col {
     height: 40px;
+    border-top: 0;
 }
 
 .transaction-category-col-row {
@@ -153,6 +165,13 @@
 
 .transaction-text-col {
     height: 40px;
+    border-top: 0;
+}
+
+.transaction-text-total-col {
+    height: 40px;
+    border-top: 0;
+    padding: 0;
 }
 
 .transaction-text-sub-col {
