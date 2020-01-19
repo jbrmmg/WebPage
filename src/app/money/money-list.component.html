@@ -144,17 +144,25 @@
                         <tr *ngFor="let nextTransaction of transactions"
                             [ngClass]="{'transaction-row-total': nextTransaction.isTotalLine === true,
                                         'transaction-row':  nextTransaction.isTotalLine === false}">
-                            <td class="transaction-col-day">
+
+                            <td [ngClass]="{'transaction-col-total': nextTransaction.isTotalLine === true,
+                                            'transaction-col':  nextTransaction.isTotalLine === false}">
                                 <p *ngIf="nextTransaction.isTransactionLine" class="transaction-date-day">{{nextTransaction.dateDay}}</p>
                             </td>
-                            <td class="transaction-col-monthyear">
+
+                            <td [ngClass]="{'transaction-col-total': nextTransaction.isTotalLine === true,
+                                            'transaction-col':  nextTransaction.isTotalLine === false}">
                                 <p *ngIf="nextTransaction.isTransactionLine" class="transaction-date-month">{{nextTransaction.dateMonth}}</p>
                                 <p *ngIf="nextTransaction.isTransactionLine" class="transaction-date-year">{{nextTransaction.dateYear}}</p>
                             </td>
-                            <td class="transaction-account-col">
+
+                            <td [ngClass]="{'transaction-col-total': nextTransaction.isTotalLine === true,
+                                            'transaction-col':  nextTransaction.isTotalLine === false}">
                                 <img *ngIf="nextTransaction.isTransactionLine" class="transaction-account-img" src="{{getAccountImage(nextTransaction.account)}}" alt="Account"/>
                             </td>
-                            <td class="transaction-category-col">
+
+                            <td [ngClass]="{'transaction-col-total': nextTransaction.isTotalLine === true,
+                                            'transaction-col':  nextTransaction.isTotalLine === false}">
                                 <div *ngIf="nextTransaction.isTransactionLine" class="row transaction-category-col-row">
                                     <div class="col-10 transaction-category-col-text">
                                         {{nextTransaction.category}}
@@ -163,17 +171,10 @@
                                          [innerHTML]="getCategoryImage(nextTransaction)">
                                     </div>
                                 </div>
-                                <div *ngIf="nextTransaction.isCarriedFoward" class="row">
-                                    <button type="button"
-                                            class="btn btn-primary btn-tran-confirm"
-                                            (click)="onClickLockStatement()"
-                                            [disabled]="!nextTransaction.summary.canLock || selectedStatement.locked">
-                                        <i [ngClass]="nextTransaction.summary.canLock && selectedStatement.locked ? 'fa fa-lock' : 'fa fa-unlock'"></i>
-                                    </button>
-                                </div>
                             </td>
-                            <td [ngClass]="{'transaction-text-total-col': nextTransaction.isTotalLine === true,
-                                            'transaction-text-col':  nextTransaction.isTotalLine === false}">
+
+                            <td [ngClass]="{'transaction-col-total': nextTransaction.isTotalLine === true,
+                                            'transaction-col':  nextTransaction.isTotalLine === false}">
                                 <div *ngIf="nextTransaction.isTransactionLine" class="row transaction-text-col-row">
                                     <div class="col-10 transaction-text-col-text">
                                         {{nextTransaction.description}}
@@ -200,40 +201,46 @@
                                     </div>
                                 </div>
                             </td>
-                            <td *ngIf="nextTransaction.isTransactionLine || nextTransaction.isBoughtForward">
-                                <input id="transaction-amount"
-                                       type="text" *ngIf="nextTransaction.editable"
-                                       [(ngModel)]="nextTransaction.amountString"
-                                       [disabled]="!nextTransaction.editable"
-                                       (keyup.enter)="onEnter(nextTransaction)"
-                                       class="transaction-amount-edit-col">
-                                <p *ngIf="!nextTransaction.editable && nextTransaction.amount < 0 && nextTransaction.isTransactionLine"
-                                   class="transaction-amount-noedit-db-col">{{nextTransaction.amountString}}</p>
-                                <p *ngIf="!nextTransaction.editable && nextTransaction.amount >= 0 && nextTransaction.isTransactionLine"
-                                   class="transaction-amount-noedit-col">{{nextTransaction.amountString}}</p>
 
-                                <p *ngIf="!nextTransaction.editable && nextTransaction.summary.boughtFwd < 0 && nextTransaction.isBoughtForward"
-                                   class="transaction-amount-noedit-db-col">{{nextTransaction.summary.boughtFwdDisplay}}</p>
-                                <p *ngIf="!nextTransaction.editable && nextTransaction.summary.boughtFwd >= 0 && nextTransaction.isBoughtForward"
-                                   class="transaction-amount-noedit-col">{{nextTransaction.summary.boughtFwdDisplay}}</p>
+                            <td [ngClass]="{'transaction-col-total': nextTransaction.isTotalLine === true,
+                                            'transaction-col':  nextTransaction.isTotalLine === false}">
+                                <div class="row transaction-amount-col">
+                                    <input id="transaction-amount"
+                                           type="text" *ngIf="nextTransaction.editable"
+                                           [(ngModel)]="nextTransaction.amountString"
+                                           [disabled]="!nextTransaction.editable"
+                                           (keyup.enter)="onEnter(nextTransaction)"
+                                           class="transaction-amount-edit-col">
+                                    <div *ngIf="!nextTransaction.editable && nextTransaction.amount < 0 && nextTransaction.isTransactionLine"
+                                       class="transaction-amount-noedit-db-col">{{nextTransaction.amountString}}</div>
+                                    <div *ngIf="!nextTransaction.editable && nextTransaction.amount >= 0 && nextTransaction.isTransactionLine"
+                                       class="transaction-amount-noedit-col">{{nextTransaction.amountString}}</div>
+
+                                    <div *ngIf="!nextTransaction.editable && nextTransaction.summary.boughtFwd < 0 && nextTransaction.isBoughtForward"
+                                       class="transaction-amount-noedit-db-col">{{nextTransaction.summary.boughtFwdDisplay}}</div>
+                                    <div *ngIf="!nextTransaction.editable && nextTransaction.summary.boughtFwd >= 0 && nextTransaction.isBoughtForward"
+                                       class="transaction-amount-noedit-col">{{nextTransaction.summary.boughtFwdDisplay}}</div>
+
+                                    <div *ngIf="!nextTransaction.editable && nextTransaction.summary.totalDebits < 0 && nextTransaction.isTotalDebits"
+                                       class="transaction-amount-noedit-db-col">{{nextTransaction.summary.totalDebitsDisplay}}</div>
+                                    <div *ngIf="!nextTransaction.editable && nextTransaction.summary.totalDebits >= 0 && nextTransaction.isTotalDebits"
+                                       class="transaction-amount-noedit-col">{{nextTransaction.summary.totalDebitsDisplay}}</div>
+
+                                    <div *ngIf="!nextTransaction.editable && nextTransaction.summary.totalCredits < 0 && nextTransaction.isTotalCredits"
+                                       class="transaction-amount-noedit-db-col">{{nextTransaction.summary.totalCreditsDisplay}}</div>
+                                    <div *ngIf="!nextTransaction.editable && nextTransaction.summary.totalCredits >= 0 && nextTransaction.isTotalCredits"
+                                       class="transaction-amount-noedit-col">{{nextTransaction.summary.totalCreditsDisplay}}</div>
+
+                                    <div *ngIf="!nextTransaction.editable && nextTransaction.summary.carriedForward < 0 && nextTransaction.isCarriedFoward"
+                                       class="transaction-amount-noedit-db-col">{{nextTransaction.summary.carriedForwardDisplay}}</div>
+                                    <div *ngIf="!nextTransaction.editable && nextTransaction.summary.carriedForward >= 0 && nextTransaction.isCarriedFoward"
+                                       class="transaction-amount-noedit-col">{{nextTransaction.summary.carriedForwardDisplay}}</div>
+                                </div>
                             </td>
-                            <td *ngIf="nextTransaction.isTotalDebits || nextTransaction.isTotalCredits || nextTransaction.isCarriedFoward" class="transaction-text-sub-col">
-                                <p *ngIf="!nextTransaction.editable && nextTransaction.summary.totalDebits < 0 && nextTransaction.isTotalDebits"
-                                   class="transaction-amount-noedit-db-col">{{nextTransaction.summary.totalDebitsDisplay}}</p>
-                                <p *ngIf="!nextTransaction.editable && nextTransaction.summary.totalDebits >= 0 && nextTransaction.isTotalDebits"
-                                   class="transaction-amount-noedit-col">{{nextTransaction.summary.totalDebitsDisplay}}</p>
 
-                                <p *ngIf="!nextTransaction.editable && nextTransaction.summary.totalCredits < 0 && nextTransaction.isTotalCredits"
-                                   class="transaction-amount-noedit-db-col">{{nextTransaction.summary.totalCreditsDisplay}}</p>
-                                <p *ngIf="!nextTransaction.editable && nextTransaction.summary.totalCredits >= 0 && nextTransaction.isTotalCredits"
-                                   class="transaction-amount-noedit-col">{{nextTransaction.summary.totalCreditsDisplay}}</p>
-
-                                <p *ngIf="!nextTransaction.editable && nextTransaction.summary.carriedForward < 0 && nextTransaction.isCarriedFoward"
-                                   class="transaction-amount-noedit-db-col">{{nextTransaction.summary.carriedForwardDisplay}}</p>
-                                <p *ngIf="!nextTransaction.editable && nextTransaction.summary.carriedForward >= 0 && nextTransaction.isCarriedFoward"
-                                   class="transaction-amount-noedit-col">{{nextTransaction.summary.carriedForwardDisplay}}</p>
-                            </td>
-                            <td *ngIf="nextTransaction.isTransactionLine || nextTransaction.isBoughtForward">
+                            <td *ngIf="nextTransaction.isTransactionLine || nextTransaction.isCarriedFoward"
+                                [ngClass]="{'transaction-col-total': nextTransaction.isTotalLine === true,
+                                            'transaction-col':  nextTransaction.isTotalLine === false}">
                                 <button *ngIf="nextTransaction.isTransactionLine" type="button"
                                         class="btn btn-primary btn-tran-confirm"
                                         (click)="confirmTransaction(nextTransaction)"
@@ -241,7 +248,10 @@
                                     <i [ngClass]="nextTransaction.locked ? 'fa fa-lock' : nextTransaction.reconciled ? 'fa fa-times' : 'fa fa-check'"></i>
                                 </button>
                             </td>
-                            <td *ngIf="nextTransaction.isTransactionLine || nextTransaction.isBoughtForward">
+
+                            <td *ngIf="nextTransaction.isTransactionLine || nextTransaction.isCarriedFoward"
+                                [ngClass]="{'transaction-col-total': nextTransaction.isTotalLine === true,
+                                            'transaction-col':  nextTransaction.isTotalLine === false}">
                                 <button *ngIf="nextTransaction.isTransactionLine" type="button"
                                         class="btn btn-primary btn-tran-edit"
                                         (click)="clickEditable(nextTransaction)"
@@ -249,12 +259,21 @@
                                     <i class="fa fa-pencil"></i>
                                 </button>
                             </td>
-                            <td *ngIf="nextTransaction.isTransactionLine || nextTransaction.isBoughtForward">
+
+                            <td *ngIf="nextTransaction.isTransactionLine || nextTransaction.isCarriedFoward"
+                                [ngClass]="{'transaction-col-total': nextTransaction.isTotalLine === true,
+                                            'transaction-col':  nextTransaction.isTotalLine === false}">
                                 <button *ngIf="nextTransaction.isTransactionLine" type="button"
                                         class="btn btn-primary btn-tran-delete"
                                         (click)="deleteTransaction(nextTransaction)"
                                         [disabled]="nextTransaction.locked || nextTransaction.reconciled">
                                     <i class="fa fa-trash"></i>
+                                </button>
+                                <button *ngIf="nextTransaction.isCarriedFoward" type="button"
+                                        class="btn btn-primary btn-tran-confirm"
+                                        (click)="onClickLockStatement()"
+                                        [disabled]="!nextTransaction.summary.canLock || selectedStatement.locked">
+                                    <i [ngClass]="nextTransaction.summary.canLock && selectedStatement.locked ? 'fa fa-lock' : 'fa fa-unlock'"></i>
                                 </button>
                             </td>
                         </tr>

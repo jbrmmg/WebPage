@@ -74,6 +74,15 @@
     border-top: 0;
 }
 
+.transaction-col {
+    padding: 2px 2px 2px 2px;
+}
+
+.transaction-col-total {
+    padding: 0;
+    border-top: 0;
+}
+
 /* Col 1 & 2 - Date */
 
 .transaction-date-header {
@@ -88,16 +97,6 @@
     line-height: 32px;
     padding-right: 4px;
     padding-top: 2px;
-}
-
-.transaction-col-monthyear {
-    padding-left: 0;
-    border-top: 0;
-}
-
-.transaction-col-day {
-    padding-right: 0;
-    border-top: 0;
 }
 
 .transaction-date-month {
@@ -115,10 +114,6 @@
     width: 100px;
 }
 
-.transaction-account-col {
-    border-top: 0;
-}
-
 .transaction-account-img {
     width: 100%;
     height: 40px;
@@ -133,11 +128,6 @@
 
 .col-category {
     padding: 4px 0 0 0;
-}
-
-.transaction-category-col {
-    height: 40px;
-    border-top: 0;
 }
 
 .transaction-category-col-row {
@@ -163,11 +153,6 @@
 .transaction-text-header {
 }
 
-.transaction-text-col {
-    height: 40px;
-    border-top: 0;
-}
-
 .transaction-text-total-col {
     height: 40px;
     border-top: 0;
@@ -181,6 +166,7 @@
 
 .transaction-text-col-row {
     height: 40px;
+    padding-left: 12px;
 }
 
 .transaction-text-col-text {
@@ -200,6 +186,10 @@
 
 /* Col 6 - Amount */
 
+.transaction-amount-col {
+    height: 40px;
+}
+
 .transaction-amount-header {
     text-align: center;
     width: 10%;
@@ -216,7 +206,6 @@
     padding-bottom: 4px;
     margin-top: auto;
     margin-bottom: auto;
-    line-height: 20px;
     width: 100%;
     text-align: right;
     color: #000000;
@@ -228,7 +217,6 @@
     padding-bottom: 4px;
     margin-top: auto;
     margin-bottom: auto;
-    line-height: 20px;
     width: 100%;
     text-align: right;
     color: #cc0000;
