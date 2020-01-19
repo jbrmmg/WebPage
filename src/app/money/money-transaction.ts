@@ -110,6 +110,70 @@ export class Transaction implements ITransaction {
             this.transactionLineType == TransactionLineType.TOTAL_DEBITS ||
             this.transactionLineType == TransactionLineType.TOTAL_BOUGHTFWD )
     }
+
+    get hasDate(): boolean {
+        return this.transactionLineType == TransactionLineType.TRANSACTION;
+    }
+
+    get hasAccount(): boolean {
+        return this.transactionLineType == TransactionLineType.TRANSACTION;
+    }
+
+    get hasCategory(): boolean {
+        return this.transactionLineType == TransactionLineType.TRANSACTION;
+    }
+
+    get hasDescription(): boolean {
+        return this.transactionLineType == TransactionLineType.TRANSACTION;
+    }
+
+    get myAmount(): number {
+        if(this.transactionLineType == TransactionLineType.TRANSACTION) {
+            return this.amount;
+        }
+
+        if(this.transactionLineType == TransactionLineType.TOTAL_BOUGHTFWD) {
+            return this.summary.boughtFwd;
+        }
+
+        if(this.transactionLineType == TransactionLineType.TOTAL_DEBITS) {
+            return this.summary.totalDebits;
+        }
+
+        if(this.transactionLineType == TransactionLineType.TOTAL_CREDITS) {
+            return this.summary.totalCredits;
+        }
+
+        if(this.transactionLineType == TransactionLineType.TOTAL_CARRIEDFWD) {
+            return this.summary.carriedForward;
+        }
+
+        return 0;
+    }
+
+    get myDisplayAmount(): string {
+        if(this.transactionLineType == TransactionLineType.TRANSACTION) {
+            return this.amountString;
+        }
+
+        if(this.transactionLineType == TransactionLineType.TOTAL_BOUGHTFWD) {
+            return this.summary.boughtFwdDisplay;
+        }
+
+        if(this.transactionLineType == TransactionLineType.TOTAL_DEBITS) {
+            return this.summary.totalDebitsDisplay;
+        }
+
+        if(this.transactionLineType == TransactionLineType.TOTAL_CREDITS) {
+            return this.summary.totalCreditsDisplay;
+        }
+
+        if(this.transactionLineType == TransactionLineType.TOTAL_CARRIEDFWD) {
+            return this.summary.carriedForwardDisplay;
+        }
+
+        return "0.00";
+    }
 }
 
 export class TransactionSummary {

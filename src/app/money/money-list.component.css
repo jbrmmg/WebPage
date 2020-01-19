@@ -57,6 +57,7 @@
 
 /* List */
 
+
 .transaction-header {
     padding: 2px 2px
 }
@@ -274,4 +275,243 @@
 
 .totals-col {
     padding-right: 0;
+}
+
+/* ---------------------------------------------------------- */
+
+/* Transaction table */
+
+.trn-table {
+}
+
+/* Header */
+
+.trn-thead {
+}
+
+.trn-header-row {
+
+}
+
+.trn-header {
+
+}
+
+.trn-date-header {
+    width: 7%;
+}
+
+.trn-account-header {
+    width: 100px;
+}
+
+.trn-category-header {
+    width: 15%;
+}
+
+.trn-description-header {
+
+}
+
+.trn-amount-header {
+    width: 10%;
+}
+
+.trn-btn-header {
+    width: 40px;
+}
+
+.trn-confirm-btn-header {
+
+}
+
+.trn-edit-btn-header {
+
+}
+
+.trn-delete-btn-header {
+
+}
+
+.trn-tbody {
+
+}
+
+.trn-row {
+    border-top: 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.trn-total-row {
+    border-bottom: 0;
+}
+
+.trn-col {
+    border-top: 0;
+    border-bottom: 1px solid #dee2e6;
+    padding: 2px;
+    vertical-align: middle;
+}
+
+.trn-date-day-col {
+
+}
+
+.trn-date-day-col-total {
+    border-bottom: 0;
+}
+
+.trn-date-day {
+    font-size: 32px;
+    font-weight: bolder;
+    text-align: right;
+    line-height: 32px;
+    padding-right: 4px;
+    padding-top: 2px;
+}
+
+.trn-date-month-col {
+
+}
+
+.trn-date-month-col-total {
+    border-bottom: 0;
+}
+
+.trn-date-month {
+
+}
+
+.trn-date-year {
+    font-size: 10px;
+}
+
+.trn-account-col {
+
+}
+
+.trn-account-col-total {
+    border-bottom: 0;
+}
+
+.trn-account {
+}
+
+.trn-account-img {
+    width: 100%;
+    height: 40px;
+}
+
+.trn-category-col {
+
+}
+
+.trn-category-col-total {
+    border-bottom: 0;
+}
+
+.trn-category {
+
+}
+
+.trn-category-txt {
+    text-align: right;
+    line-height: 25px;
+    padding-left: 0;
+    padding-right: 2px;
+    margin: auto;
+}
+
+.trn-category-img {
+    height: 25px;
+    padding: 0;
+}
+
+.trn-description-col {
+
+}
+
+.trn-description-col-total {
+    border-bottom: 0;
+}
+
+.trn-description {
+
+}
+
+.trn-description-text {
+
+}
+
+.trn-description-total-text {
+    font-weight: bold;
+    text-align: right;
+}
+
+.trn-amount-col {
+
+}
+
+.trn-amount-col-total {
+    border-bottom: 0;
+}
+
+.trn-amount {
+
+}
+
+.trn-amount-edit {
+    padding-right: 16px;
+    text-align: right;
+    width: 100%;
+}
+
+.trn-amount-cr {
+    padding-right: 16px;
+    padding-bottom: 4px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 100%;
+    text-align: right;
+    color: #000000;
+    font-weight: bolder;
+}
+
+.trn-amount-db {
+    padding-right: 16px;
+    padding-bottom: 4px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 100%;
+    text-align: right;
+    color: #cc0000;
+    font-weight: bolder;
+}
+
+.trn-button-col {
+
+}
+
+.trn-button-col-total {
+    border-bottom: 0;
+}
+
+.trn-button {
+
+}
+
+.trn-button-confirm {
+
+}
+
+.trn-button-edit {
+
+}
+
+.trn-button-delete {
+
+}
+
+.trn-button-lock {
+
 }
