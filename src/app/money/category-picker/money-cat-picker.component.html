@@ -1,0 +1,25 @@
+<div class="table-responsive" >
+    <table class="table cat-table" *ngIf="categories && categories.length">
+        <tbody class="cat-table-body">
+            <ng-container *ngFor="let nextRow of coordinates">
+                <tr class="cat-table-row">
+                    <ng-container *ngFor="let nextCategoryId of nextRow">
+                        <td class="cat-table-col">
+                            <div class="cat-table-cell" *ngIf="nextCategoryId != -1">
+                                <label class="btn btn-primary cat-btn"
+                                       [style.background-color]="getCategoryColour(nextCategoryId)"
+                                       [style.color]="getCategoryTextColour(nextCategoryId)"
+                                       [(ngModel)]="categoryRadio"
+                                       btnRadio="{{nextCategoryId}}"
+                                       tabindex="0"
+                                       (click)="onClickCategory(nextCategoryId)">
+                                    {{category(nextCategoryId).name}}
+                                </label>
+                            </div>
+                        </td>
+                    </ng-container>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>

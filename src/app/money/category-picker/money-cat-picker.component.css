@@ -1,0 +1,24 @@
+.cat-table {
+}
+
+.cat-table-body {
+}
+
+.cat-table-row {
+
+}
+
+.cat-table-col {
+    border-top: 0;
+    padding: 1px;
+}
+
+.cat-table-cell {
+
+}
+
+.cat-btn {
+    width: 100%;
+    margin-bottom: .125rem;
+    font-size: small;
+}
