@@ -4,6 +4,7 @@ import {MoneyService, NewTransaction} from "./money.service";
 import {ICategory} from "./money-category";
 import {IAccount, JbAccount} from "./money-account";
 import {DatePipe} from "@angular/common";
+import {MoneyCategoryPickerSelectableOption} from "./category-picker/money-cat-picker.component";
 
 @Component({
     templateUrl: './money-add.component.html',
@@ -14,7 +15,6 @@ export class MoneyAddComponent implements OnInit {
     accounts: JbAccount[];
     errorMessage: string;
     internalDate: Date = new Date();
-    categoryRadio: string;
     accountRadio: string;
 
     // Transaction details.
@@ -36,11 +36,6 @@ export class MoneyAddComponent implements OnInit {
         this.categoryImageTemplate += "<circle cx='50' cy='50' r='48' style='stroke:#006600; fill:###colour##'/>";
         this.categoryImageTemplate += "<text x='50' y='50' text-anchor='middle' font-weight='bolder'>##text##</text>";
         this.categoryImageTemplate += "</svg>"
-    }
-
-    get filteredCatgories() : ICategory[] {
-        return this.categories.filter((category: ICategory) =>
-            category.systemUse == "N")
     }
 
     get bsValue(): Date {
@@ -125,15 +120,6 @@ export class MoneyAddComponent implements OnInit {
         return MoneyService.getAccountImage(id);
     }
 
-    getCategoryColour(index: number) : string {
-        if(index < this.categories.length)
-        {
-            return "#" + this.categories[index].colour;
-        }
-
-        return "#FFFFFF";
-    }
-
     getAccountColour(index: number) : string {
         if(index < this.accounts.length)
         {
@@ -141,30 +127,6 @@ export class MoneyAddComponent implements OnInit {
         }
 
         return "#FFFFFF";
-    }
-
-    getCategoryTextColour(index: number) : string {
-        return this.getCategoryBrightness(index) > 130 ? "#000000" : "#FFFFFF";
-    }
-
-    getAccountTextColour(index: number) : string {
-        return this.getAccountBrightness(index) > 130 ? "#000000" : "#FFFFFF";
-    }
-
-    getCategoryBrightness(index: number) : number {
-        if(index < this.categories.length) {
-            return MoneyService.getBrightness(this.categories[index].colour);
-        }
-
-        return 0;
-    }
-
-    getAccountBrightness(index: number): number {
-        if(index < this.accounts.length) {
-            return MoneyService.getBrightness(this.accounts[index].colour);
-        }
-
-        return 0;
     }
 
     onDateChange(newDate: Date): void {
@@ -175,27 +137,6 @@ export class MoneyAddComponent implements OnInit {
         this.statusDay = this.datepipe.transform(this.bsValue,'d');
         this.statusYear = this.datepipe.transform(this.bsValue,'yyyy');
     }
-
-    onClickCategory(index: number): void {
-        this.selectedCategory = null;
-        this.selectedXferAcc = null;
-
-        if(index < this.categories.length) {
-            this.selectedCategory = this.categories[index];
-        }
-    }
-
-    onClickTransfer(index: number): void {
-        this.selectedCategory = null;
-        this.selectedXferAcc = null;
-
-        if(index < this.accounts.length) {
-            this.selectedXferAcc = this.accounts[index];
-        }
-
-        console.info("Index Selected - " + index.toString() + " " + this.selectedXferAcc.id);
-    }
-
 
     onClickAccount(id: string): void {
         this.selectedAccount = null;
@@ -211,6 +152,17 @@ export class MoneyAddComponent implements OnInit {
         console.info("Entered = " + value);
 
         this.transactionAmount = value;
+    }
+
+    onCategorySelected(value: MoneyCategoryPickerSelectableOption) {
+        this.selectedCategory = null;
+        this.selectedXferAcc = null;
+
+        if(value.accountTransfer != null) {
+            this.selectedXferAcc = value.accountTransfer;
+        } else {
+            this.selectedCategory = value.category;
+        }
     }
 
     onClickCreate() {

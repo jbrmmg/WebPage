@@ -5,7 +5,10 @@
                 <tr class="cat-table-row">
                     <ng-container *ngFor="let nextCategoryId of nextRow">
                         <td class="cat-table-col">
-                            <div class="cat-table-cell" *ngIf="nextCategoryId != -1">
+                            <div class="cat-table-cell"
+                                 [style.margin-right]="getRightMargin(nextCategoryId)"
+                                 [style.margin-bottom]="getBottomMargin(nextCategoryId)"
+                                 *ngIf="nextCategoryId != -1">
                                 <label class="btn btn-primary cat-btn"
                                        [style.background-color]="getCategoryColour(nextCategoryId)"
                                        [style.color]="getCategoryTextColour(nextCategoryId)"
@@ -13,6 +16,10 @@
                                        btnRadio="{{nextCategoryId}}"
                                        tabindex="0"
                                        (click)="onClickCategory(nextCategoryId)">
+                                    <img *ngIf="hasImage(nextCategoryId)"
+                                         class="cat-trf-img"
+                                         src="{{getImage(nextCategoryId)}}"
+                                         alt="Account"/>
                                     {{category(nextCategoryId).name}}
                                 </label>
                             </div>

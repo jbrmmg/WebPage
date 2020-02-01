@@ -2,66 +2,14 @@
     <div class="card-body">
         <div class="row">
             <div class="col-4">
-                <div class="table-responsive">
-                    <table class="table" *ngIf="categories && categories.length">
-                        <tbody>
-                            <ng-container *ngFor="let nextCategory of filteredCatgories; let i = index">
-                                <tr *ngIf="i % 2 == 0">
-                                    <td class="category-button">
-                                        <label class="btn btn-primary category-list"
-                                               [style.background-color]="getCategoryColour(i)"
-                                               [style.color]="getCategoryTextColour(i)"
-                                               [(ngModel)]="categoryRadio"
-                                               btnRadio="{{nextCategory.id}}"
-                                               tabindex="0"
-                                               (click)="onClickCategory(i)">
-                                            {{nextCategory.name}}
-                                        </label>
-                                    </td>
-                                    <td *ngIf="i + 1 < categories.length" class="category-button">
-                                        <label class="btn btn-primary category-list"
-                                               [style.background-color]="getCategoryColour(i + 1)"
-                                               [style.color]="getCategoryTextColour(i + 1)"
-                                               [(ngModel)]="categoryRadio"
-                                               btnRadio="{{i + 1 < categories.length ? categories[i + 1].id : 0}}"
-                                               tabindex="0"
-                                               (click)="onClickCategory(i+1)">
-                                            {{i + 1 < categories.length ? categories[i + 1].name : ""}}
-                                        </label>
-                                    </td>
-                                </tr>
-                            </ng-container>
-                            <ng-container *ngFor="let nextAccount of accounts; let i = index">
-                                <tr *ngIf="i % 2 == 0">
-                                    <td class="category-button">
-                                        <label class="btn btn-primary category-list"
-                                               [style.background-color]="getAccountColour(i)"
-                                               [style.color]="getAccountTextColour(i)"
-                                               [(ngModel)]="categoryRadio"
-                                               btnRadio="{{nextAccount.id}}"
-                                               tabindex="0"
-                                               (click)="onClickTransfer(i)">
-                                            <img class="btn-account-trf-img" src="{{getImage(nextAccount.id)}}" alt="Account"/>
-                                            Transfer
-                                        </label>
-                                    </td>
-                                    <td *ngIf="i + 1 < accounts.length" class="category-button">
-                                        <label class="btn btn-primary category-list"
-                                               [style.background-color]="getAccountColour(i + 1)"
-                                               [style.color]="getAccountTextColour(i + 1)"
-                                               [(ngModel)]="categoryRadio"
-                                               btnRadio="{{i + 1 < accounts.length ? accounts[i + 1].id : 0}}"
-                                               tabindex="0"
-                                               (click)="onClickTransfer(i+1)">
-                                            <img class="btn-account-trf-img" src="{{getImage(accounts[i + 1].id)}}" alt="Transfer Account"/>
-                                            Transfer
-                                        </label>
-                                    </td>
-                                </tr>
-                            </ng-container>
-                        </tbody>
-                    </table>
-                </div>
+                <money-category-picker
+                        [columns]="2"
+                        [showAccountTransfers]="true"
+                        [showSystem]="false"
+                        columnSpacing="5px"
+                        rowSpacing="3px"
+                        (valueSelected)="onCategorySelected($event)">
+                </money-category-picker>
             </div>
             <div class="col-8">
                 <div class="row">
@@ -158,8 +106,5 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <money-category-picker columns="2" showAccountTransfers="true"></money-category-picker>
     </div>
 </div>
