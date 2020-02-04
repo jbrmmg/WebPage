@@ -1,11 +1,12 @@
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, TemplateRef} from "@angular/core";
 import {MoneyService} from "./money.service";
 import {Category, ICategory} from "./money-category";
 import {JbAccount} from "./money-account";
 import {TransactionType} from "./money-type";
 import {ITransaction, Transaction, TransactionLineType, TransactionSummary} from "./money-transaction";
 import {Statement} from "./money-statement";
+import {BsModalService,BsModalRef} from "ngx-bootstrap/modal";
 
 @Component({
     templateUrl: './money-list.component.html',
@@ -35,8 +36,11 @@ export class MoneyListComponent implements OnInit {
 
     private readonly categoryImageTemplate: string;
 
+    modalRef: BsModalRef;
+
     constructor(private _moneyService : MoneyService,
-                private sanitizer: DomSanitizer) {
+                private sanitizer: DomSanitizer,
+                private modalService: BsModalService) {
         this.fromDateDisabled = true;
         this.toDateDisabled = true;
         this.lastChangeType = "";
@@ -48,6 +52,10 @@ export class MoneyListComponent implements OnInit {
         this.categoryImageTemplate = "<svg ##viewbox## width='98%' height='98%'>".replace("##viewbox##","viewBox='0 0 100 100'");
         this.categoryImageTemplate += "<circle cx='50' cy='50' r='48' style='stroke:#006600; fill:###colour##'/>";
         this.categoryImageTemplate += "</svg>"
+    }
+
+    openModal(template: TemplateRef<any>) {
+        this.modalRef = this.modalService.show(template);
     }
 
     get radioType() : string {

@@ -9,6 +9,7 @@ import { StarComponent } from "./shared/example/star.component";
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { ModalModule} from "ngx-bootstrap/modal";
 import { ButtonsModule } from "ngx-bootstrap";
 import { LogsComponent } from "./logs/logs.component";
 import { TooltipModule } from "ngx-bootstrap";
@@ -49,6 +50,7 @@ import { WeightComponent } from "./weight/weight.component";
     BsDatepickerModule.forRoot(),
     ButtonsModule.forRoot(),
     TooltipModule.forRoot(),
+    ModalModule.forRoot(),
     [BsDropdownModule.forRoot()],
     RouterModule.forRoot([
       { path: 'welcome', component: WelcomeComponent },
