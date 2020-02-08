@@ -20,3 +20,7 @@ body .bs-datepicker-container .bs-datepicker-head {
 }
 
 .top-buffer { margin-top:10px; }
+
+.smaller-modal-popup {
+    max-width: 350px;
+}

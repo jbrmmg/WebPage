@@ -267,26 +267,5 @@
                 </table>
             </div>
         </div>
-        <div class="row">
-            <div>
-                <button type="button" class="btn btn-primary" (click)="openModal(template)">Modal</button>
-            </div>
-        </div>
     </div>
 </div>
-
-<ng-template #template>
-    <div class="modal-header">
-        <h4 class="modal-title pull-left">Select a Category</h4>
-    </div>
-    <div class="body">
-        <money-category-picker
-                [columns]="2"
-                [showAccountTransfers]="true"
-                [showSystem]="false"
-                columnSpacing="5px"
-                rowSpacing="3px"
-                (valueSelected)="onCategorySelected($event)">
-        </money-category-picker>
-    </div>
-</ng-template>

@@ -105,3 +105,11 @@
     width: 20px;
     height: 20px;
 }
+
+.calc-inline-datepicker {
+    box-shadow: none;
+}
+
+::ng-deep.bs-datepicker {
+    box-shadow: none;
+}

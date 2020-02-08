@@ -36,11 +36,9 @@ export class MoneyListComponent implements OnInit {
 
     private readonly categoryImageTemplate: string;
 
-    modalRef: BsModalRef;
 
     constructor(private _moneyService : MoneyService,
-                private sanitizer: DomSanitizer,
-                private modalService: BsModalService) {
+                private sanitizer: DomSanitizer) {
         this.fromDateDisabled = true;
         this.toDateDisabled = true;
         this.lastChangeType = "";
@@ -54,8 +52,10 @@ export class MoneyListComponent implements OnInit {
         this.categoryImageTemplate += "</svg>"
     }
 
-    openModal(template: TemplateRef<any>) {
-        this.modalRef = this.modalService.show(template);
+    onAmountEntered(value: number){
+        console.info("Entered = " + value);
+
+//        this.transactionAmount = value;
     }
 
     get radioType() : string {

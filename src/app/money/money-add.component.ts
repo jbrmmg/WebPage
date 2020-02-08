@@ -1,10 +1,11 @@
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, TemplateRef} from "@angular/core";
 import {MoneyService, NewTransaction} from "./money.service";
 import {ICategory} from "./money-category";
 import {IAccount, JbAccount} from "./money-account";
 import {DatePipe} from "@angular/common";
 import {MoneyCategoryPickerSelectableOption} from "./category-picker/money-cat-picker.component";
+import {BsModalRef, BsModalService} from "ngx-bootstrap";
 
 @Component({
     templateUrl: './money-add.component.html',
@@ -27,9 +28,12 @@ export class MoneyAddComponent implements OnInit {
     transactionAmount: number = 0;
     private readonly categoryImageTemplate: string;
 
+    modalRef: BsModalRef;
+
     constructor(private _moneyService : MoneyService,
                 public datepipe: DatePipe,
-                private sanitizer: DomSanitizer) {
+                private sanitizer: DomSanitizer,
+                private modalService: BsModalService) {
 
         // Setup the template for the category image.
         this.categoryImageTemplate = "<svg ##viewbox## width='98%' height='98%'>".replace("##viewbox##","viewBox='0 0 100 100'");
@@ -152,6 +156,10 @@ export class MoneyAddComponent implements OnInit {
         console.info("Entered = " + value);
 
         this.transactionAmount = value;
+    }
+
+    openModal(template: TemplateRef<any>, dialogClass: string) {
+        this.modalRef = this.modalService.show(template, {class: dialogClass});
     }
 
     onCategorySelected(value: MoneyCategoryPickerSelectableOption) {
