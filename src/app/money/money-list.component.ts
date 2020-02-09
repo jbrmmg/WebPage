@@ -52,9 +52,6 @@ export class MoneyListComponent implements OnInit {
     private lastChangeFrom: string;
     private lastChangeTo: string;
 
-    private readonly categoryImageTemplate: string;
-
-
     constructor(private _moneyService : MoneyService,
                 public datepipe: DatePipe,
                 private sanitizer: DomSanitizer,
@@ -66,11 +63,6 @@ export class MoneyListComponent implements OnInit {
         this.lastChangeTo = null;
         this.selectedStatement = null;
         this.isCollapsed = true;
-
-        // Setup the template for the category image.
-        this.categoryImageTemplate = "<svg ##viewbox## width='98%' height='98%'>".replace("##viewbox##","viewBox='0 0 100 100'");
-        this.categoryImageTemplate += "<circle cx='50' cy='50' r='48' style='stroke:#006600; fill:###colour##'/>";
-        this.categoryImageTemplate += "</svg>"
     }
 
     get bsValue(): Date {
@@ -496,10 +488,6 @@ export class MoneyListComponent implements OnInit {
         }
 
         return MoneyService.getDisabledAccountImage(account.id);
-    }
-
-    getCategoryImage(transaction: ITransaction) : SafeHtml {
-        return this.sanitizer.bypassSecurityTrustHtml(this.categoryImageTemplate.replace("##colour##",transaction.catColour));
     }
 
     getCategoryColour(index: number) : string {
