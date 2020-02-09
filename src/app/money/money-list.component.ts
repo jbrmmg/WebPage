@@ -1,12 +1,14 @@
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import {Component, OnInit, TemplateRef} from "@angular/core";
-import {MoneyService} from "./money.service";
+import {MoneyService, NewTransaction} from "./money.service";
 import {Category, ICategory} from "./money-category";
-import {JbAccount} from "./money-account";
+import {IAccount, JbAccount} from "./money-account";
 import {TransactionType} from "./money-type";
 import {ITransaction, Transaction, TransactionLineType, TransactionSummary} from "./money-transaction";
 import {Statement} from "./money-statement";
 import {BsModalService,BsModalRef} from "ngx-bootstrap/modal";
+import {MoneyCategoryPickerSelectableOption} from "./category-picker/money-cat-picker.component";
+import {DatePipe} from "@angular/common";
 
 @Component({
     templateUrl: './money-list.component.html',
@@ -27,8 +29,24 @@ export class MoneyListComponent implements OnInit {
     selectedStatement: Statement;
     transactionsUpdated: any;
 
+    internalDate: Date = new Date();
+    accountRadio: string;
+
     fromDateDisabled: boolean;
     toDateDisabled: boolean;
+
+    isCollapsed: boolean;
+
+    // Transaction details.
+    statusMonth: string = 'September';
+    statusYear: string = '2019';
+    statusDay: string = '24';
+    selectedAccount: IAccount = null;
+    selectedCategory: ICategory = null;
+    selectedXferAcc: IAccount = null;
+    transactionAmount: number = 0;
+
+    modalRef: BsModalRef;
 
     private lastChangeType: string;
     private lastChangeFrom: string;
@@ -38,13 +56,16 @@ export class MoneyListComponent implements OnInit {
 
 
     constructor(private _moneyService : MoneyService,
-                private sanitizer: DomSanitizer) {
+                public datepipe: DatePipe,
+                private sanitizer: DomSanitizer,
+                private modalService: BsModalService) {
         this.fromDateDisabled = true;
         this.toDateDisabled = true;
         this.lastChangeType = "";
         this.lastChangeFrom = null;
         this.lastChangeTo = null;
         this.selectedStatement = null;
+        this.isCollapsed = true;
 
         // Setup the template for the category image.
         this.categoryImageTemplate = "<svg ##viewbox## width='98%' height='98%'>".replace("##viewbox##","viewBox='0 0 100 100'");
@@ -52,10 +73,55 @@ export class MoneyListComponent implements OnInit {
         this.categoryImageTemplate += "</svg>"
     }
 
-    onAmountEntered(value: number){
-        console.info("Entered = " + value);
+    get bsValue(): Date {
+        return this.internalDate;
+    }
 
-//        this.transactionAmount = value;
+    get transactionAmtDisplay() : string {
+        if (this.transactionAmount < 0)
+            return this.transactionAmount.toFixed(2).replace("-","-£");
+
+        return "£" + this.transactionAmount.toFixed(2);
+    }
+
+    get transactionValid() : boolean {
+        if(this.internalDate == null) {
+            return false;
+        }
+
+        if(this.transactionAmount == 0) {
+            return false;
+        }
+
+        if(this.selectedAccount == null) {
+            return false;
+        }
+
+        if(this.selectedCategory == null && this.selectedXferAcc == null ) {
+            return false;
+        }
+
+        if(this.selectedXferAcc != null) {
+            if(this.selectedXferAcc.id == this.selectedAccount.id) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    get statusClass(): string {
+        if(!this.transactionValid) {
+            return "card text-black status-text-error mb-3";
+        }
+
+        return "card text-black status-text-success mb-3";
+    }
+
+    set bsValue(newValue: Date) {
+        if(newValue == null)
+            return;
+        this.internalDate = newValue;
     }
 
     get radioType() : string {
@@ -432,10 +498,6 @@ export class MoneyListComponent implements OnInit {
         return MoneyService.getDisabledAccountImage(account.id);
     }
 
-    getAccountImage(accountId: string) {
-        return MoneyService.getAccountImage(accountId);
-    }
-
     getCategoryImage(transaction: ITransaction) : SafeHtml {
         return this.sanitizer.bypassSecurityTrustHtml(this.categoryImageTemplate.replace("##colour##",transaction.catColour));
     }
@@ -485,5 +547,109 @@ export class MoneyListComponent implements OnInit {
         // Delete the transaction.
         this._moneyService.deleteTransaction(transaction);
         this.transactions = [];
+    }
+
+
+
+    getAccountImage(id: string): string {
+        return MoneyService.getAccountImage(id);
+    }
+
+    getSelectedAcountColour() : string {
+        if(this.selectedAccount != null) {
+            return "#" + this.selectedAccount.colour;
+        }
+
+        return "#3277A8";
+    }
+
+    getSelectedCategoryColour() : string {
+        if(this.selectedCategory != null) {
+            return "#" + this.selectedCategory.colour;
+        }
+
+        return "#3277A8";
+    }
+
+    getSelectedCategoryText() : string {
+        if(this.selectedCategory != null) {
+            return this.selectedCategory.name;
+        }
+
+        return "?";
+    }
+
+    onDateChange(newDate: Date): void {
+        console.info("Date Changed " + (newDate == null ? "is null " : "not"));
+        this.bsValue = newDate;
+
+        this.statusMonth = this.datepipe.transform(this.bsValue,'MMMM');
+        this.statusDay = this.datepipe.transform(this.bsValue,'d');
+        this.statusYear = this.datepipe.transform(this.bsValue,'yyyy');
+
+        this.modalRef.hide();
+    }
+
+    onClickAccount(id: string): void {
+        this.selectedAccount = null;
+
+        this.accounts.forEach(nextAccount => {
+            if(nextAccount.id == id) {
+                this.selectedAccount = nextAccount;
+            }
+        })
+
+        this.modalRef.hide();
+    }
+
+    onAmountEntered(value: number){
+        console.info("Entered = " + value);
+
+        this.transactionAmount = value;
+
+        this.modalRef.hide();
+    }
+
+    openModal(template: TemplateRef<any>, dialogClass: string) {
+        this.modalRef = this.modalService.show(template, {class: dialogClass});
+    }
+
+    onCategorySelected(value: MoneyCategoryPickerSelectableOption) {
+        this.selectedCategory = null;
+        this.selectedXferAcc = null;
+
+        if(value.accountTransfer != null) {
+            this.selectedXferAcc = value.accountTransfer;
+        } else {
+            this.selectedCategory = value.category;
+        }
+
+        this.modalRef.hide();
+    }
+
+    onClickCreate() {
+        console.info("Create transaction:");
+
+        if(this.transactionValid) {
+            let newTransaction: NewTransaction = new NewTransaction();
+            newTransaction.amount = this.transactionAmount;
+            newTransaction.date = this.internalDate;
+            newTransaction.account = this.selectedAccount.id;
+            if(this.selectedXferAcc != null) {
+                newTransaction.accountTransfer = true;
+                newTransaction.transferAccount = this.selectedXferAcc.id;
+                newTransaction.category = "TRF";
+            } else {
+                newTransaction.accountTransfer = false;
+                newTransaction.category = this.selectedCategory.id;
+            }
+
+            this._moneyService.addTransaction(newTransaction);
+        }
+
+        // Clear the details.
+        this.transactionAmount = 0;
+        this.selectedAccount = null;
+        this.selectedCategory = null;
     }
 }

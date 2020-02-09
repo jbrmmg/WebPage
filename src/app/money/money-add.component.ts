@@ -27,7 +27,6 @@ export class MoneyAddComponent implements OnInit {
     selectedCategory: ICategory = null;
     selectedXferAcc: IAccount = null;
     transactionAmount: number = 0;
-    private readonly categoryImageTemplate: string;
 
     modalRef: BsModalRef;
 
@@ -36,11 +35,7 @@ export class MoneyAddComponent implements OnInit {
                 private sanitizer: DomSanitizer,
                 private modalService: BsModalService) {
 
-        // Setup the template for the category image.
-        this.categoryImageTemplate = "<svg ##viewbox## width='98%' height='98%'>".replace("##viewbox##","viewBox='0 0 100 100'");
-        this.categoryImageTemplate += "<circle cx='50' cy='50' r='48' style='stroke:#006600; fill:###colour##'/>";
-        this.categoryImageTemplate += "<text x='50' y='50' text-anchor='middle' font-weight='bolder'>##text##</text>";
-        this.categoryImageTemplate += "</svg>"
+        this.isCollapsed = true;
     }
 
     get bsValue(): Date {
@@ -52,18 +47,6 @@ export class MoneyAddComponent implements OnInit {
             return this.transactionAmount.toFixed(2).replace("-","-£");
 
         return "£" + this.transactionAmount.toFixed(2);
-    }
-
-    get selectedCategoryImage() : SafeHtml {
-        let colour: string = "FFFFFF";
-        let text: string = "?";
-        if(this.selectedCategory != null) {
-            colour = this.selectedCategory.colour;
-            text = this.selectedCategory.id;
-        }
-
-        let html = this.categoryImageTemplate.replace("##colour##",colour).replace("##text##",text);
-        return this.sanitizer.bypassSecurityTrustHtml(html);
     }
 
     get transactionValid() : boolean {
@@ -123,6 +106,30 @@ export class MoneyAddComponent implements OnInit {
 
     getImage(id: string): string {
         return MoneyService.getAccountImage(id);
+    }
+
+    getSelectedAcountColour() : string {
+        if(this.selectedAccount != null) {
+            return "#" + this.selectedAccount.colour;
+        }
+
+        return "#3277A8";
+    }
+
+    getSelectedCategoryColour() : string {
+        if(this.selectedCategory != null) {
+            return "#" + this.selectedCategory.colour;
+        }
+
+        return "#3277A8";
+    }
+
+    getSelectedCategoryText() : string {
+        if(this.selectedCategory != null) {
+            return this.selectedCategory.name;
+        }
+
+        return "?";
     }
 
     getAccountColour(index: number) : string {

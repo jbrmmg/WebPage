@@ -129,6 +129,7 @@ export class MoneyCalcButtonClear extends MoneyCalcButton implements IMoneyCalcB
     constructor(status: MoneyCalcButtonStatus) {
         super(-1,"col-6",CalculatorOperator.NONE,CalculatorButtonType.CLEAR,status);
         this.text = "CLR";
+        this.buttonStyle = "btn btn-primary btn-calculator-clear";
     }
 
     buttonClicked() {
