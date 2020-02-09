@@ -10,7 +10,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule} from "ngx-bootstrap/modal";
-import { ButtonsModule } from "ngx-bootstrap";
+import {ButtonsModule, CollapseModule} from "ngx-bootstrap";
 import { LogsComponent } from "./logs/logs.component";
 import { TooltipModule } from "ngx-bootstrap";
 import { PodcastComponent } from "./podcast/podcast.component";
@@ -53,18 +53,19 @@ import { WeightComponent } from "./weight/weight.component";
     ModalModule.forRoot(),
     [BsDropdownModule.forRoot()],
     RouterModule.forRoot([
-      { path: 'welcome', component: WelcomeComponent },
-      { path: 'logs', component: LogsComponent },
-      { path: 'podcast', component: PodcastComponent },
-      { path: 'add', component: MoneyAddComponent },
-      { path: 'regular', component: MoneyRegularComponent },
-      { path: 'list', component: MoneyListComponent },
-      { path: 'rec', component: MoneyRecComponent },
-      { path: 'house', component: HouseComponent },
-      { path: 'weight', component: WeightComponent },
-      { path: '', redirectTo: 'welcome', pathMatch: 'full' },
-      { path: '**', redirectTo: 'welcome', pathMatch: 'full' }
-    ] )
+      {path: 'welcome', component: WelcomeComponent},
+      {path: 'logs', component: LogsComponent},
+      {path: 'podcast', component: PodcastComponent},
+      {path: 'add', component: MoneyAddComponent},
+      {path: 'regular', component: MoneyRegularComponent},
+      {path: 'list', component: MoneyListComponent},
+      {path: 'rec', component: MoneyRecComponent},
+      {path: 'house', component: HouseComponent},
+      {path: 'weight', component: WeightComponent},
+      {path: '', redirectTo: 'welcome', pathMatch: 'full'},
+      {path: '**', redirectTo: 'welcome', pathMatch: 'full'}
+    ]),
+    CollapseModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

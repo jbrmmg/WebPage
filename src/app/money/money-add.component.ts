@@ -17,6 +17,7 @@ export class MoneyAddComponent implements OnInit {
     errorMessage: string;
     internalDate: Date = new Date();
     accountRadio: string;
+    isCollapsed: boolean;
 
     // Transaction details.
     statusMonth: string = 'September';
