@@ -1,17 +1,7 @@
 <div class="card">
     <div class="card-body">
         <div class="row">
-            <div class="col-4">
-                <money-category-picker
-                        [columns]="2"
-                        [showAccountTransfers]="true"
-                        [showSystem]="false"
-                        columnSpacing="5px"
-                        rowSpacing="3px"
-                        (valueSelected)="onCategorySelected($event)">
-                </money-category-picker>
-            </div>
-            <div class="col-8">
+            <div class="col-12">
                 <div class="row">
                     <div class="col">
                         <div class="{{statusClass}}">
@@ -19,7 +9,7 @@
                                 <div class="row">
                                     <div class="col-2">
                                         <div class="card status-date-card mb-3">
-                                            <div class="card-body status-date-card-body">
+                                            <div class="card-body status-date-card-body" (click)="openModal(template4,'date-entry-modal-popup')">
                                                 <p class="status-date-month">{{statusMonth}}</p>
                                                 <p class="status-date-day">{{statusDay}}</p>
                                                 <p class="status-date-year">{{statusYear}}</p>
@@ -27,7 +17,7 @@
                                         </div>
                                     </div>
                                     <div class="col-2">
-                                        <div class="card status-date-card mb-3">
+                                        <div class="card status-date-card mb-3" (click)="openModal(template3,'')">
                                             <div class="card-body status-date-card-body">
                                                 <img *ngIf="selectedAccount != null" class="status-account" src="{{getImage(selectedAccount.id)}}" alt="Selected Account">
                                             </div>
@@ -35,7 +25,7 @@
                                     </div>
                                     <div class="col-2" style="max-width:120px">
                                         <div class="card status-date-card mb-3">
-                                            <div class="card-body status-date-card-body">
+                                            <div class="card-body status-date-card-body" (click)="openModal(template1,'')">
                                                 <div *ngIf="selectedXferAcc != null">
                                                     <img class="status-account" src="{{getImage(selectedXferAcc.id)}}" alt="Account Status">
                                                     <svg class="status-xfer-overlay">
@@ -50,7 +40,7 @@
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="card status-date-card mb-3">
+                                        <div class="card status-date-card mb-3" (click)="openModal(template2,'')">
                                             <div class="card-body status-date-card-body">
                                                 <p *ngIf="transactionAmount != 0" class="status-amount">
                                                 {{transactionAmtDisplay}}
@@ -75,43 +65,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <label for="transaction-date"></label>
-                    <input id="transaction-date"
-                           type="text"
-                           placeholder="Datepicker"
-                           class="form-control calc-datepicker"
-                           [bsValue]="bsValue"
-                           (bsValueChange)="onDateChange($event)"
-                           value="{{ bsValue | date:'dd-MMMM-yyyy'}}"
-                           bsDatepicker [bsConfig]="{
-                                dateInputFormat: 'DD-MMMM-YYYY',
-                                containerClass: 'theme-dark-blue',
-                                selectFromOtherMonth: true }"/>
-                </div>
-                <div class="row">
-                    <div class="col" *ngFor="let nextAccount of accounts; let i = index">
-                        <label class="btn btn-primary btn-account"
-                               [style.background-color]="getAccountColour(i)"
-                               [(ngModel)]="accountRadio"
-                               btnRadio="{{nextAccount.id}}"
-                               tabindex="0"
-                               (click)="onClickAccount(nextAccount.id)">
-                            <img class="btn-account-img" src="{{getImage(nextAccount.id)}}" alt="Account"/>
-                        </label>
-                    </div>
-                </div>
-                <div class="row">
-                    <money-add-calc style="width:100%" (valueEntered)="onAmountEntered($event)"></money-add-calc>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div>
-                <button type="button" class="btn btn-primary" (click)="openModal(template1,'')">Modal 1</button>
-                <button type="button" class="btn btn-primary" (click)="openModal(template2,'')">Modal 2</button>
-                <button type="button" class="btn btn-primary" (click)="openModal(template3,'')">Modal 3</button>
-                <button type="button" class="btn btn-primary" (click)="openModal(template4,'smaller-modal-popup')">Modal 4</button>
             </div>
         </div>
     </div>
@@ -179,7 +132,6 @@
                                 containerClass: 'theme-dark-blue',
                                 selectFromOtherMonth: true }"/> -->
     <bs-datepicker-inline
-            class="calc-inline-datepicker"
             [bsValue]="bsValue"
             (bsValueChange)="onDateChange($event)"
             bsDatepicker [bsConfig]="{

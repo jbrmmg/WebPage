@@ -140,6 +140,8 @@ export class MoneyAddComponent implements OnInit {
         this.statusMonth = this.datepipe.transform(this.bsValue,'MMMM');
         this.statusDay = this.datepipe.transform(this.bsValue,'d');
         this.statusYear = this.datepipe.transform(this.bsValue,'yyyy');
+
+        this.modalRef.hide();
     }
 
     onClickAccount(id: string): void {
@@ -150,12 +152,16 @@ export class MoneyAddComponent implements OnInit {
                 this.selectedAccount = nextAccount;
             }
         })
+
+        this.modalRef.hide();
     }
 
     onAmountEntered(value: number){
         console.info("Entered = " + value);
 
         this.transactionAmount = value;
+
+        this.modalRef.hide();
     }
 
     openModal(template: TemplateRef<any>, dialogClass: string) {
@@ -171,6 +177,8 @@ export class MoneyAddComponent implements OnInit {
         } else {
             this.selectedCategory = value.category;
         }
+
+        this.modalRef.hide();
     }
 
     onClickCreate() {

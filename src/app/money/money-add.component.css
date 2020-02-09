@@ -106,10 +106,8 @@
     height: 20px;
 }
 
-.calc-inline-datepicker {
-    box-shadow: none;
-}
-
 ::ng-deep.bs-datepicker {
     box-shadow: none;
+    margin-bottom: 10px;
+    width: 100%;
 }
