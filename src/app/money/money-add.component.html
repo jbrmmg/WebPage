@@ -18,7 +18,7 @@
                                 <div class="row">
                                     <div class="col-2">
                                         <div class="card status-date-card mb-3">
-                                            <div class="card-body status-date-card-body" (click)="openModal(template4,'date-entry-modal-popup')">
+                                            <div class="card-body status-date-card-body" (click)="openModal(templateDate,'date-entry-modal-popup')">
                                                 <p class="status-date-month">{{statusMonth}}</p>
                                                 <p class="status-date-day">{{statusDay}}</p>
                                                 <p class="status-date-year">{{statusYear}}</p>
@@ -26,30 +26,34 @@
                                         </div>
                                     </div>
                                     <div class="col-2">
-                                        <div class="card status-date-card mb-3" (click)="openModal(template3,'')">
-                                            <div class="card-body status-date-card-body">
+                                        <div class="card status-date-card mb-3" (click)="openModal(templateAccount,'')">
+                                            <div class="card-body status-date-card-body" [style.background-color]="getSelectedAcountColour()">
                                                 <img *ngIf="selectedAccount != null" class="status-account" src="{{getImage(selectedAccount.id)}}" alt="Selected Account">
+                                                <img *ngIf="selectedAccount == null" class="status-account" src="assets/images/money/noaccount.svg" alt="Selected Account">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-2" style="max-width:120px">
-                                        <div class="card status-date-card mb-3">
-                                            <div class="card-body status-date-card-body" (click)="openModal(template1,'')">
-                                                <div *ngIf="selectedXferAcc != null">
-                                                    <img class="status-account" src="{{getImage(selectedXferAcc.id)}}" alt="Account Status">
-                                                    <svg class="status-xfer-overlay">
-                                                        <circle cx="12" cy="12" r="8" style="stroke:#006600; fill:#FFFFFF"></circle>
-                                                    </svg>
-                                                </div>
-                                                <div *ngIf="selectedXferAcc == null && selectedCategory != null">
-                                                    <div  [innerHTML]="selectedCategoryImage">
-                                                    </div>
-                                                </div>
+                                    <div class="col-2">
+                                        <div class="card status-date-card mb-3" (click)="openModal(templateCategory,'')">
+                                            <div class="card-body status-date-card-body">
+                                                <img *ngIf="selectedXferAcc != null" class="status-account" src="{{getImage(selectedXferAcc.id)}}" alt="Selected Category">
+                                                <svg *ngIf="selectedXferAcc != null" class="status-xfer-overlay">
+                                                    <circle cx="12" cy="12" r="8" style="stroke:#006600; fill:#FFFFFF"></circle>
+                                                </svg>
+                                                <svg *ngIf="selectedXferAcc == null"
+                                                     class   = "status-account"
+                                                     width   = "100%"
+                                                     height  = "100%"
+                                                     viewBox = "0 0 120 120"
+                                                     xmlns   = "http://www.w3.org/2000/svg">
+                                                    <circle cx='60' cy='52' r='44' [style.fill]="getSelectedCategoryColour()" style="stroke:#006600"/>";
+                                                    <text x='60' y='112' text-anchor='middle' font-weight='bolder'>{{getSelectedCategoryText()}}</text>
+                                                </svg>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="card status-date-card mb-3" (click)="openModal(template2,'')">
+                                        <div class="card status-date-card mb-3" (click)="openModal(templateCalculator,'')">
                                             <div class="card-body status-date-card-body">
                                                 <p *ngIf="transactionAmount != 0" class="status-amount">
                                                 {{transactionAmtDisplay}}
@@ -60,6 +64,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-11">
+                                        <input/>
                                     </div>
                                     <div class="coll-1" *ngIf="transactionValid == true">
                                         <label class="btn btn-primary float-right"
@@ -79,13 +84,13 @@
     </div>
 </div>
 
-<ng-template #template1>
+<ng-template #templateCategory>
     <div class="modal-header">
         <h4 class="modal-title pull-left">Enter category</h4>
     </div>
     <div class="body">
         <money-category-picker
-                [columns]="2"
+                [columns]="3"
                 [showAccountTransfers]="true"
                 [showSystem]="false"
                 columnSpacing="5px"
@@ -95,7 +100,7 @@
     </div>
 </ng-template>
 
-<ng-template #template2>
+<ng-template #templateCalculator>
     <div class="modal-header">
         <h4 class="modal-title pull-left">Enter value</h4>
     </div>
@@ -104,27 +109,25 @@
     </div>
 </ng-template>
 
-<ng-template #template3>
+<ng-template #templateAccount>
     <div class="modal-header">
         <h4 class="modal-title pull-left">Select an account</h4>
     </div>
     <div class="body">
-        <div class="row">
-            <div class="col" *ngFor="let nextAccount of accounts; let i = index">
-                <label class="btn btn-primary btn-account"
-                       [style.background-color]="getAccountColour(i)"
-                       [(ngModel)]="accountRadio"
-                       btnRadio="{{nextAccount.id}}"
-                       tabindex="0"
-                       (click)="onClickAccount(nextAccount.id)">
-                    <img class="btn-account-img" src="{{getImage(nextAccount.id)}}" alt="Account"/>
-                </label>
-            </div>
+        <div class="col" *ngFor="let nextAccount of accounts; let i = index">
+            <label class="btn btn-primary btn-account"
+                   [style.background-color]="getAccountColour(i)"
+                   [(ngModel)]="accountRadio"
+                   btnRadio="{{nextAccount.id}}"
+                   tabindex="0"
+                   (click)="onClickAccount(nextAccount.id)">
+                <img class="btn-account-img" src="{{getImage(nextAccount.id)}}" alt="Account"/>
+            </label>
         </div>
     </div>
 </ng-template>
 
-<ng-template #template4>
+<ng-template #templateDate>
     <div class="modal-header">
         <h4 class="modal-title pull-left">Select a date</h4>
     </div>
