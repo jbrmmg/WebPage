@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-11">
-                                        <input/>
+                                        <input style="width:100%;"/>
                                     </div>
                                     <div class="coll-1" *ngIf="transactionValid == true">
                                         <label class="btn btn-primary float-right"
@@ -105,7 +105,12 @@
                     </label>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-1">
+                <div class="cat-filter">
+                    <money-category-filter [categoriesChange]="eventsCategoriesChange.asObservable()"></money-category-filter>
+                </div>
+            </div>
+            <div class="col-5">
                 <div class="row">
                     <div class="col-8">
                         <div class="row">

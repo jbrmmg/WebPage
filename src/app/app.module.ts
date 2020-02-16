@@ -10,13 +10,14 @@ import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule} from "ngx-bootstrap/modal";
-import {ButtonsModule, CollapseModule} from "ngx-bootstrap";
+import { ButtonsModule, CollapseModule } from "ngx-bootstrap";
 import { LogsComponent } from "./logs/logs.component";
 import { TooltipModule } from "ngx-bootstrap";
 import { PodcastComponent } from "./podcast/podcast.component";
 import { MoneyAddComponent } from "./money/money-add.component";
 import { MoneyAddCalcComponent } from "./money/calculator/money-add-calc.component";
 import { MoneyCatagoryPickerComponent } from "./money/category-picker/money-cat-picker.component";
+import { MoneyCategoryFilterComponent } from "./money/category-picker/money-cat-filter.component";
 import { PairsPipe } from "./shared/example/pairs.pipe";
 import { DatePipe } from "@angular/common";
 import { MoneyListComponent } from "./money/money-list.component";
@@ -37,6 +38,7 @@ import { WeightComponent } from "./weight/weight.component";
     MoneyAddComponent,
     MoneyAddCalcComponent,
     MoneyCatagoryPickerComponent,
+    MoneyCategoryFilterComponent,
     MoneyListComponent,
     MoneyRecComponent,
     HouseComponent,
@@ -56,7 +58,6 @@ import { WeightComponent } from "./weight/weight.component";
       {path: 'welcome', component: WelcomeComponent},
       {path: 'logs', component: LogsComponent},
       {path: 'podcast', component: PodcastComponent},
-      {path: 'add', component: MoneyAddComponent},
       {path: 'regular', component: MoneyRegularComponent},
       {path: 'list', component: MoneyListComponent},
       {path: 'rec', component: MoneyRecComponent},

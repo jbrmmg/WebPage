@@ -1,14 +1,15 @@
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import {DomSanitizer} from '@angular/platform-browser';
 import {Component, OnInit, TemplateRef} from "@angular/core";
 import {MoneyService, NewTransaction} from "./money.service";
 import {Category, ICategory} from "./money-category";
 import {IAccount, JbAccount} from "./money-account";
 import {TransactionType} from "./money-type";
-import {ITransaction, Transaction, TransactionLineType, TransactionSummary} from "./money-transaction";
+import {Transaction, TransactionLineType, TransactionSummary} from "./money-transaction";
 import {Statement} from "./money-statement";
 import {BsModalService,BsModalRef} from "ngx-bootstrap/modal";
 import {MoneyCategoryPickerSelectableOption} from "./category-picker/money-cat-picker.component";
 import {DatePipe} from "@angular/common";
+import {Subject} from "rxjs";
 
 @Component({
     templateUrl: './money-list.component.html',
@@ -52,6 +53,8 @@ export class MoneyListComponent implements OnInit {
     private lastChangeFrom: string;
     private lastChangeTo: string;
 
+    eventsCategoriesChange: Subject<Category[]> = new Subject<Category[]>();
+
     constructor(private _moneyService : MoneyService,
                 public datepipe: DatePipe,
                 private sanitizer: DomSanitizer,
@@ -63,6 +66,10 @@ export class MoneyListComponent implements OnInit {
         this.lastChangeTo = null;
         this.selectedStatement = null;
         this.isCollapsed = true;
+    }
+
+    emitCategoriesChanged() {
+        this.eventsCategoriesChange.next(this.categories);
     }
 
     get bsValue(): Date {
@@ -200,6 +207,7 @@ export class MoneyListComponent implements OnInit {
                 this.categories.forEach(value => {
                     value.selected = true;
                 })
+                this.emitCategoriesChanged();
             }
         );
         this._moneyService.getAccounts().subscribe(
@@ -471,6 +479,7 @@ export class MoneyListComponent implements OnInit {
         category.selected = !category.selected;
 
         this.updateTransactions("category");
+        this.emitCategoriesChanged();
     }
 
     getAccountColour(index: number) : string {
@@ -585,7 +594,7 @@ export class MoneyListComponent implements OnInit {
             if(nextAccount.id == id) {
                 this.selectedAccount = nextAccount;
             }
-        })
+        });
 
         this.modalRef.hide();
     }
