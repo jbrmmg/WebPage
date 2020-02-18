@@ -10,7 +10,7 @@ import {Observable, Subscription} from "rxjs";
 })
 export class MoneyCategoryFilterComponent implements OnInit {
 
-    private categoryEntries: MoneyCatFilterEntry[];
+    public categoryEntries: MoneyCatFilterEntry[];
     private categories: Category[];
     private eventsSubscription: Subscription;
 
