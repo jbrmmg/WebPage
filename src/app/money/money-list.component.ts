@@ -46,6 +46,7 @@ export class MoneyListComponent implements OnInit {
     selectedCategory: ICategory = null;
     selectedXferAcc: IAccount = null;
     transactionAmount: number = 0;
+    transactionDescription: string = "";
 
     modalRef: BsModalRef;
 
@@ -475,13 +476,6 @@ export class MoneyListComponent implements OnInit {
         this.updateTransactions("account");
     }
 
-    onCategoryClick(category: Category):void {
-        category.selected = !category.selected;
-
-        this.updateTransactions("category");
-        this.emitCategoriesChanged();
-    }
-
     getAccountColour(index: number) : string {
         if(index < this.accounts.length)
         {
@@ -497,15 +491,6 @@ export class MoneyListComponent implements OnInit {
         }
 
         return MoneyService.getDisabledAccountImage(account.id);
-    }
-
-    getCategoryColour(index: number) : string {
-        if(index < this.categories.length)
-        {
-            return "#" + this.categories[index].colour;
-        }
-
-        return "#FFFFFF";
     }
 
     clickEditable(transaction: Transaction) {
@@ -641,6 +626,7 @@ export class MoneyListComponent implements OnInit {
             newTransaction.amount = this.transactionAmount;
             newTransaction.date = this.internalDate;
             newTransaction.account = this.selectedAccount.id;
+            newTransaction.description = this.transactionDescription;
             if(this.selectedXferAcc != null) {
                 newTransaction.accountTransfer = true;
                 newTransaction.transferAccount = this.selectedXferAcc.id;
@@ -654,6 +640,7 @@ export class MoneyListComponent implements OnInit {
         }
 
         // Clear the details.
+        this.transactionDescription = "";
         this.transactionAmount = 0;
         this.selectedAccount = null;
         this.selectedCategory = null;

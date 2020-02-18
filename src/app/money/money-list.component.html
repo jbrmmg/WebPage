@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-11">
-                                        <input style="width:100%;"/>
+                                        <input style="width:100%;" [(ngModel)]="transactionDescription"/>
                                     </div>
                                     <div class="coll-1" *ngIf="transactionValid == true">
                                         <label class="btn btn-primary float-right"
@@ -413,17 +413,6 @@
         <h4 class="modal-title pull-left">Select a date</h4>
     </div>
     <div class="body">
-        <!--        <input id="transaction-date"
-                       type="text"
-                       placeholder="Datepicker"
-                       class="form-control calc-datepicker"
-                       [bsValue]="bsValue"
-                       (bsValueChange)="onDateChange($event)"
-                       value="{{ bsValue | date:'dd-MMMM-yyyy'}}"
-                       bsDatepicker [bsConfig]="{
-                                        dateInputFormat: 'DD-MMMM-YYYY',
-                                        containerClass: 'theme-dark-blue',
-                                        selectFromOtherMonth: true }"/> -->
         <bs-datepicker-inline
                 [bsValue]="bsValue"
                 (bsValueChange)="onDateChange($event)"
