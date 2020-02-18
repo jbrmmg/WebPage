@@ -3,25 +3,6 @@
     padding-left: 8px;
 }
 
-.category-list {
-    font-size: 12px;
-    width: 100%;
-    height: 98%;
-}
-
-.calc-datepicker {
-    font-size: 20px;
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    width: 100%;
-}
-
-.category-button {
-    border: none;
-    padding: 4px
-}
-
 .status-text-success {
     background:url(
     data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAHklEQVQYV2MUOl72/51lFyOMZmRgYGBAFoTL4FQBANPXHKFm5MXbAAAAAElFTkSuQmCC
@@ -104,4 +85,10 @@
 .btn-account-trf-img {
     width: 20px;
     height: 20px;
+}
+
+::ng-deep.bs-datepicker {
+    box-shadow: none;
+    margin-bottom: 10px;
+    width: 100%;
 }
