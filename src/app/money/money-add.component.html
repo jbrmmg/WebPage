@@ -1,69 +1,16 @@
 <div class="card">
     <div class="card-body">
         <div class="row">
-            <div class="col-4">
-                <div class="table-responsive">
-                    <table class="table" *ngIf="categories && categories.length">
-                        <tbody>
-                            <ng-container *ngFor="let nextCategory of filteredCatgories; let i = index">
-                                <tr *ngIf="i % 2 == 0">
-                                    <td class="category-button">
-                                        <label class="btn btn-primary category-list"
-                                               [style.background-color]="getCategoryColour(i)"
-                                               [style.color]="getCategoryTextColour(i)"
-                                               [(ngModel)]="categoryRadio"
-                                               btnRadio="{{nextCategory.id}}"
-                                               tabindex="0"
-                                               (click)="onClickCategory(i)">
-                                            {{nextCategory.name}}
-                                        </label>
-                                    </td>
-                                    <td *ngIf="i + 1 < categories.length" class="category-button">
-                                        <label class="btn btn-primary category-list"
-                                               [style.background-color]="getCategoryColour(i + 1)"
-                                               [style.color]="getCategoryTextColour(i + 1)"
-                                               [(ngModel)]="categoryRadio"
-                                               btnRadio="{{i + 1 < categories.length ? categories[i + 1].id : 0}}"
-                                               tabindex="0"
-                                               (click)="onClickCategory(i+1)">
-                                            {{i + 1 < categories.length ? categories[i + 1].name : ""}}
-                                        </label>
-                                    </td>
-                                </tr>
-                            </ng-container>
-                            <ng-container *ngFor="let nextAccount of accounts; let i = index">
-                                <tr *ngIf="i % 2 == 0">
-                                    <td class="category-button">
-                                        <label class="btn btn-primary category-list"
-                                               [style.background-color]="getAccountColour(i)"
-                                               [style.color]="getAccountTextColour(i)"
-                                               [(ngModel)]="categoryRadio"
-                                               btnRadio="{{nextAccount.id}}"
-                                               tabindex="0"
-                                               (click)="onClickTransfer(i)">
-                                            <img class="btn-account-trf-img" src="{{getImage(nextAccount.id)}}" alt="Account"/>
-                                            Transfer
-                                        </label>
-                                    </td>
-                                    <td *ngIf="i + 1 < accounts.length" class="category-button">
-                                        <label class="btn btn-primary category-list"
-                                               [style.background-color]="getAccountColour(i + 1)"
-                                               [style.color]="getAccountTextColour(i + 1)"
-                                               [(ngModel)]="categoryRadio"
-                                               btnRadio="{{i + 1 < accounts.length ? accounts[i + 1].id : 0}}"
-                                               tabindex="0"
-                                               (click)="onClickTransfer(i+1)">
-                                            <img class="btn-account-trf-img" src="{{getImage(accounts[i + 1].id)}}" alt="Transfer Account"/>
-                                            Transfer
-                                        </label>
-                                    </td>
-                                </tr>
-                            </ng-container>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="col-8">
+            <label class="btn-sm btn-primary float-right"
+                   tabindex="0"
+                   (click)="isCollapsed = !isCollapsed"
+                   [attr.aria-expanded]="!isCollapsed"
+                   aria-controls="collapseBasic">
+                <i class="fa fa-plus-circle"></i>
+            </label>
+        </div>
+        <div class="row" [collapse]="isCollapsed">
+            <div class="col-12">
                 <div class="row">
                     <div class="col">
                         <div class="{{statusClass}}">
@@ -71,7 +18,7 @@
                                 <div class="row">
                                     <div class="col-2">
                                         <div class="card status-date-card mb-3">
-                                            <div class="card-body status-date-card-body">
+                                            <div class="card-body status-date-card-body" (click)="openModal(templateDate,'date-entry-modal-popup')">
                                                 <p class="status-date-month">{{statusMonth}}</p>
                                                 <p class="status-date-day">{{statusDay}}</p>
                                                 <p class="status-date-year">{{statusYear}}</p>
@@ -79,30 +26,34 @@
                                         </div>
                                     </div>
                                     <div class="col-2">
-                                        <div class="card status-date-card mb-3">
-                                            <div class="card-body status-date-card-body">
+                                        <div class="card status-date-card mb-3" (click)="openModal(templateAccount,'')">
+                                            <div class="card-body status-date-card-body" [style.background-color]="getSelectedAcountColour()">
                                                 <img *ngIf="selectedAccount != null" class="status-account" src="{{getImage(selectedAccount.id)}}" alt="Selected Account">
+                                                <img *ngIf="selectedAccount == null" class="status-account" src="assets/images/money/noaccount.svg" alt="Selected Account">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-2" style="max-width:120px">
-                                        <div class="card status-date-card mb-3">
+                                    <div class="col-2">
+                                        <div class="card status-date-card mb-3" (click)="openModal(templateCategory,'')">
                                             <div class="card-body status-date-card-body">
-                                                <div *ngIf="selectedXferAcc != null">
-                                                    <img class="status-account" src="{{getImage(selectedXferAcc.id)}}" alt="Account Status">
-                                                    <svg class="status-xfer-overlay">
-                                                        <circle cx="12" cy="12" r="8" style="stroke:#006600; fill:#FFFFFF"></circle>
-                                                    </svg>
-                                                </div>
-                                                <div *ngIf="selectedXferAcc == null && selectedCategory != null">
-                                                    <div  [innerHTML]="selectedCategoryImage">
-                                                    </div>
-                                                </div>
+                                                <img *ngIf="selectedXferAcc != null" class="status-account" src="{{getImage(selectedXferAcc.id)}}" alt="Selected Category">
+                                                <svg *ngIf="selectedXferAcc != null" class="status-xfer-overlay">
+                                                    <circle cx="12" cy="12" r="8" style="stroke:#006600; fill:#FFFFFF"></circle>
+                                                </svg>
+                                                <svg *ngIf="selectedXferAcc == null"
+                                                     class   = "status-account"
+                                                     width   = "100%"
+                                                     height  = "100%"
+                                                     viewBox = "0 0 120 120"
+                                                     xmlns   = "http://www.w3.org/2000/svg">
+                                                    <circle cx='60' cy='52' r='44' [style.fill]="getSelectedCategoryColour()" style="stroke:#006600"/>";
+                                                    <text x='60' y='112' text-anchor='middle' font-weight='bolder'>{{getSelectedCategoryText()}}</text>
+                                                </svg>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="card status-date-card mb-3">
+                                        <div class="card status-date-card mb-3" (click)="openModal(templateCalculator,'')">
                                             <div class="card-body status-date-card-body">
                                                 <p *ngIf="transactionAmount != 0" class="status-amount">
                                                 {{transactionAmtDisplay}}
@@ -113,6 +64,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-11">
+                                        <input/>
                                     </div>
                                     <div class="coll-1" *ngIf="transactionValid == true">
                                         <label class="btn btn-primary float-right"
@@ -127,36 +79,76 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <label for="transaction-date"></label>
-                    <input id="transaction-date"
-                           type="text"
-                           placeholder="Datepicker"
-                           class="form-control calc-datepicker"
-                           [bsValue]="bsValue"
-                           (bsValueChange)="onDateChange($event)"
-                           value="{{ bsValue | date:'dd-MMMM-yyyy'}}"
-                           bsDatepicker [bsConfig]="{
-                                dateInputFormat: 'DD-MMMM-YYYY',
-                                containerClass: 'theme-dark-blue',
-                                selectFromOtherMonth: true }"/>
-                </div>
-                <div class="row">
-                    <div class="col" *ngFor="let nextAccount of accounts; let i = index">
-                        <label class="btn btn-primary btn-account"
-                               [style.background-color]="getAccountColour(i)"
-                               [(ngModel)]="accountRadio"
-                               btnRadio="{{nextAccount.id}}"
-                               tabindex="0"
-                               (click)="onClickAccount(nextAccount.id)">
-                            <img class="btn-account-img" src="{{getImage(nextAccount.id)}}" alt="Account"/>
-                        </label>
-                    </div>
-                </div>
-                <div class="row">
-                    <money-add-calc style="width:100%" (valueEntered)="onAmountEntered($event)"></money-add-calc>
-                </div>
             </div>
         </div>
     </div>
 </div>
+
+<ng-template #templateCategory>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Enter category</h4>
+    </div>
+    <div class="body">
+        <money-category-picker
+                [columns]="3"
+                [showAccountTransfers]="true"
+                [showSystem]="false"
+                columnSpacing="5px"
+                rowSpacing="3px"
+                (valueSelected)="onCategorySelected($event)">
+        </money-category-picker>
+    </div>
+</ng-template>
+
+<ng-template #templateCalculator>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Enter value</h4>
+    </div>
+    <div class="body">
+        <money-add-calc style="width:100%" (valueEntered)="onAmountEntered($event)"></money-add-calc>
+    </div>
+</ng-template>
+
+<ng-template #templateAccount>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Select an account</h4>
+    </div>
+    <div class="body">
+        <div class="col" *ngFor="let nextAccount of accounts; let i = index">
+            <label class="btn btn-primary btn-account"
+                   [style.background-color]="getAccountColour(i)"
+                   [(ngModel)]="accountRadio"
+                   btnRadio="{{nextAccount.id}}"
+                   tabindex="0"
+                   (click)="onClickAccount(nextAccount.id)">
+                <img class="btn-account-img" src="{{getImage(nextAccount.id)}}" alt="Account"/>
+            </label>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #templateDate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Select a date</h4>
+    </div>
+    <div class="body">
+<!--        <input id="transaction-date"
+               type="text"
+               placeholder="Datepicker"
+               class="form-control calc-datepicker"
+               [bsValue]="bsValue"
+               (bsValueChange)="onDateChange($event)"
+               value="{{ bsValue | date:'dd-MMMM-yyyy'}}"
+               bsDatepicker [bsConfig]="{
+                                dateInputFormat: 'DD-MMMM-YYYY',
+                                containerClass: 'theme-dark-blue',
+                                selectFromOtherMonth: true }"/> -->
+    <bs-datepicker-inline
+            [bsValue]="bsValue"
+            (bsValueChange)="onDateChange($event)"
+            bsDatepicker [bsConfig]="{
+                  dateInputFormat: 'DD-MMMM-YYYY',
+                  containerClass: 'theme-dark-blue',
+                  selectFromOtherMonth: true }"></bs-datepicker-inline>
+    </div>
+</ng-template>

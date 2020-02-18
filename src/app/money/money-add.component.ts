@@ -1,9 +1,11 @@
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, TemplateRef} from "@angular/core";
 import {MoneyService, NewTransaction} from "./money.service";
 import {ICategory} from "./money-category";
 import {IAccount, JbAccount} from "./money-account";
 import {DatePipe} from "@angular/common";
+import {MoneyCategoryPickerSelectableOption} from "./category-picker/money-cat-picker.component";
+import {BsModalRef, BsModalService} from "ngx-bootstrap";
 
 @Component({
     templateUrl: './money-add.component.html',
@@ -14,8 +16,8 @@ export class MoneyAddComponent implements OnInit {
     accounts: JbAccount[];
     errorMessage: string;
     internalDate: Date = new Date();
-    categoryRadio: string;
     accountRadio: string;
+    isCollapsed: boolean;
 
     // Transaction details.
     statusMonth: string = 'September';
@@ -25,22 +27,15 @@ export class MoneyAddComponent implements OnInit {
     selectedCategory: ICategory = null;
     selectedXferAcc: IAccount = null;
     transactionAmount: number = 0;
-    private readonly categoryImageTemplate: string;
+
+    modalRef: BsModalRef;
 
     constructor(private _moneyService : MoneyService,
                 public datepipe: DatePipe,
-                private sanitizer: DomSanitizer) {
+                private sanitizer: DomSanitizer,
+                private modalService: BsModalService) {
 
-        // Setup the template for the category image.
-        this.categoryImageTemplate = "<svg ##viewbox## width='98%' height='98%'>".replace("##viewbox##","viewBox='0 0 100 100'");
-        this.categoryImageTemplate += "<circle cx='50' cy='50' r='48' style='stroke:#006600; fill:###colour##'/>";
-        this.categoryImageTemplate += "<text x='50' y='50' text-anchor='middle' font-weight='bolder'>##text##</text>";
-        this.categoryImageTemplate += "</svg>"
-    }
-
-    get filteredCatgories() : ICategory[] {
-        return this.categories.filter((category: ICategory) =>
-            category.systemUse == "N")
+        this.isCollapsed = true;
     }
 
     get bsValue(): Date {
@@ -52,18 +47,6 @@ export class MoneyAddComponent implements OnInit {
             return this.transactionAmount.toFixed(2).replace("-","-£");
 
         return "£" + this.transactionAmount.toFixed(2);
-    }
-
-    get selectedCategoryImage() : SafeHtml {
-        let colour: string = "FFFFFF";
-        let text: string = "?";
-        if(this.selectedCategory != null) {
-            colour = this.selectedCategory.colour;
-            text = this.selectedCategory.id;
-        }
-
-        let html = this.categoryImageTemplate.replace("##colour##",colour).replace("##text##",text);
-        return this.sanitizer.bypassSecurityTrustHtml(html);
     }
 
     get transactionValid() : boolean {
@@ -125,13 +108,28 @@ export class MoneyAddComponent implements OnInit {
         return MoneyService.getAccountImage(id);
     }
 
-    getCategoryColour(index: number) : string {
-        if(index < this.categories.length)
-        {
-            return "#" + this.categories[index].colour;
+    getSelectedAcountColour() : string {
+        if(this.selectedAccount != null) {
+            return "#" + this.selectedAccount.colour;
         }
 
-        return "#FFFFFF";
+        return "#3277A8";
+    }
+
+    getSelectedCategoryColour() : string {
+        if(this.selectedCategory != null) {
+            return "#" + this.selectedCategory.colour;
+        }
+
+        return "#3277A8";
+    }
+
+    getSelectedCategoryText() : string {
+        if(this.selectedCategory != null) {
+            return this.selectedCategory.name;
+        }
+
+        return "?";
     }
 
     getAccountColour(index: number) : string {
@@ -143,30 +141,6 @@ export class MoneyAddComponent implements OnInit {
         return "#FFFFFF";
     }
 
-    getCategoryTextColour(index: number) : string {
-        return this.getCategoryBrightness(index) > 130 ? "#000000" : "#FFFFFF";
-    }
-
-    getAccountTextColour(index: number) : string {
-        return this.getAccountBrightness(index) > 130 ? "#000000" : "#FFFFFF";
-    }
-
-    getCategoryBrightness(index: number) : number {
-        if(index < this.categories.length) {
-            return MoneyService.getBrightness(this.categories[index].colour);
-        }
-
-        return 0;
-    }
-
-    getAccountBrightness(index: number): number {
-        if(index < this.accounts.length) {
-            return MoneyService.getBrightness(this.accounts[index].colour);
-        }
-
-        return 0;
-    }
-
     onDateChange(newDate: Date): void {
         console.info("Date Changed " + (newDate == null ? "is null " : "not"));
         this.bsValue = newDate;
@@ -174,28 +148,9 @@ export class MoneyAddComponent implements OnInit {
         this.statusMonth = this.datepipe.transform(this.bsValue,'MMMM');
         this.statusDay = this.datepipe.transform(this.bsValue,'d');
         this.statusYear = this.datepipe.transform(this.bsValue,'yyyy');
+
+        this.modalRef.hide();
     }
-
-    onClickCategory(index: number): void {
-        this.selectedCategory = null;
-        this.selectedXferAcc = null;
-
-        if(index < this.categories.length) {
-            this.selectedCategory = this.categories[index];
-        }
-    }
-
-    onClickTransfer(index: number): void {
-        this.selectedCategory = null;
-        this.selectedXferAcc = null;
-
-        if(index < this.accounts.length) {
-            this.selectedXferAcc = this.accounts[index];
-        }
-
-        console.info("Index Selected - " + index.toString() + " " + this.selectedXferAcc.id);
-    }
-
 
     onClickAccount(id: string): void {
         this.selectedAccount = null;
@@ -205,12 +160,33 @@ export class MoneyAddComponent implements OnInit {
                 this.selectedAccount = nextAccount;
             }
         })
+
+        this.modalRef.hide();
     }
 
     onAmountEntered(value: number){
         console.info("Entered = " + value);
 
         this.transactionAmount = value;
+
+        this.modalRef.hide();
+    }
+
+    openModal(template: TemplateRef<any>, dialogClass: string) {
+        this.modalRef = this.modalService.show(template, {class: dialogClass});
+    }
+
+    onCategorySelected(value: MoneyCategoryPickerSelectableOption) {
+        this.selectedCategory = null;
+        this.selectedXferAcc = null;
+
+        if(value.accountTransfer != null) {
+            this.selectedXferAcc = value.accountTransfer;
+        } else {
+            this.selectedCategory = value.category;
+        }
+
+        this.modalRef.hide();
     }
 
     onClickCreate() {

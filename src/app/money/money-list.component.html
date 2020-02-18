@@ -1,6 +1,87 @@
 <div class="card">
     <div class="card-body">
         <div class="row">
+            <label class="btn-sm btn-primary float-right"
+                   tabindex="0"
+                   (click)="isCollapsed = !isCollapsed"
+                   [attr.aria-expanded]="!isCollapsed"
+                   aria-controls="collapseBasic">
+                <i class="fa fa-plus-circle"></i>
+            </label>
+        </div>
+        <div class="row" [collapse]="isCollapsed">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col">
+                        <div class="{{statusClass}}">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <div class="card status-date-card mb-3">
+                                            <div class="card-body status-date-card-body" (click)="openModal(templateDate,'date-entry-modal-popup')">
+                                                <p class="status-date-month">{{statusMonth}}</p>
+                                                <p class="status-date-day">{{statusDay}}</p>
+                                                <p class="status-date-year">{{statusYear}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="card status-date-card mb-3" (click)="openModal(templateAccount,'')">
+                                            <div class="card-body status-date-card-body" [style.background-color]="getSelectedAcountColour()">
+                                                <img *ngIf="selectedAccount != null" class="status-account" src="{{getAccountImage(selectedAccount.id)}}" alt="Selected Account">
+                                                <img *ngIf="selectedAccount == null" class="status-account" src="assets/images/money/noaccount.svg" alt="Selected Account">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="card status-date-card mb-3" (click)="openModal(templateCategory,'')">
+                                            <div class="card-body status-date-card-body">
+                                                <img *ngIf="selectedXferAcc != null" class="status-account" src="{{getAccountImage(selectedXferAcc.id)}}" alt="Selected Category">
+                                                <svg *ngIf="selectedXferAcc != null" class="status-xfer-overlay">
+                                                    <circle cx="12" cy="12" r="8" style="stroke:#006600; fill:#FFFFFF"></circle>
+                                                </svg>
+                                                <svg *ngIf="selectedXferAcc == null"
+                                                     class   = "status-account"
+                                                     width   = "100%"
+                                                     height  = "100%"
+                                                     viewBox = "0 0 120 120"
+                                                     xmlns   = "http://www.w3.org/2000/svg">
+                                                    <circle cx='60' cy='52' r='44' [style.fill]="getSelectedCategoryColour()" style="stroke:#006600"></circle>";
+                                                    <text x='60' y='112' text-anchor='middle' font-weight='bolder'>{{getSelectedCategoryText()}}</text>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="card status-date-card mb-3" (click)="openModal(templateCalculator,'')">
+                                            <div class="card-body status-date-card-body">
+                                                <p *ngIf="transactionAmount != 0" class="status-amount">
+                                                    {{transactionAmtDisplay}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-11">
+                                        <input style="width:100%;"/>
+                                    </div>
+                                    <div class="coll-1" *ngIf="transactionValid == true">
+                                        <label class="btn btn-primary float-right"
+                                               style="background-color: #008800;"
+                                               tabindex="0"
+                                               (click)="onClickCreate()">
+                                            <i class="fa fa-check-circle"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-3" *ngIf="types && types.length">
                 <div class="btn-group" *ngFor="let type of types">
                     <label class="btn btn-primary btn-type"
@@ -24,7 +105,12 @@
                     </label>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-1">
+                <div class="cat-filter" (click)="openModal(templateCategoryFilter,'')">
+                    <money-category-filter [categoriesChange]="eventsCategoriesChange.asObservable()"></money-category-filter>
+                </div>
+            </div>
+            <div class="col-5">
                 <div class="row">
                     <div class="col-8">
                         <div class="row">
@@ -113,114 +199,144 @@
                 </div>
             </div>
         </div>
-        <div class="row" *ngIf="categories && categories.length">
-            <div class="col col-category" *ngFor="let nextCategory of filteredCatgories; let i = index">
-                <label [ngClass]="nextCategory.selected ? 'btn btn-primary btn-category' : 'btn btn-primary btn-category-off'"
-                       [style.background-color]="getCategoryColour(i)"
-                       [style.border-color]="nextCategory.selected ? '#005cbf' : '#9f9f9f'"
-                       btnRadio="{{nextCategory.id}}"
-                       tabindex="0"
-                       (click)="onCategoryClick(nextCategory)"
-                       tooltip="{{nextCategory.name}}">
-                </label>
-            </div>
-        </div>
         <div class="row">
             <div class="table-responsive">
-                <table class="table" *ngIf="transactions && transactions.length">
-                    <thead>
-                        <tr>
-                            <th colspan="2" class="transaction-date-header transaction-header">Date</th>
-                            <th class="transaction-account-header transaction-header">Account</th>
-                            <th class="transaction-category-header transaction-header">Category</th>
-                            <th class="transaction-amount-header transaction-header">Amount</th>
-                            <th class="transaction-confirm-btn-header transaction-header"></th>
-                            <th class="transaction-edit-btn-header transaction-header"></th>
-                            <th class="transaction-delete-btn-header transaction-header"></th>
+                <table class="table trn-table" *ngIf="transactions && transactions.length">
+                    <thead class="trn-thead">
+                        <tr class="trn-header-row">
+                            <th colspan="2" class="trn-header trn-date-header">Date</th>
+                            <th class="trn-header trn-account-header">Account</th>
+                            <th class="trn-header trn-category-header">Category</th>
+                            <th class="trn-header trn-description-header">Description</th>
+                            <th class="trn-header trn-amount-header">Amount</th>
+                            <th class="trn-header trn-btn-header trn-confirm-btn-header"></th>
+                            <th class="trn-header trn-btn-header trn-edit-btn-header"></th>
+                            <th class="trn-header trn-btn-header trn-delete-btn-header"></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr *ngFor="let nextTransaction of transactions">
-                            <td class="transaction-col-day transaction-row">
-                                <p *ngIf="!nextTransaction.totalRow" class="transaction-date-day">{{nextTransaction.dateDay}}</p>
+                    <tbody class="trn-tbody">
+                        <tr *ngFor="let nextTransaction of transactions"
+                            [ngClass]="{'trn-row':  true,
+                                        'trn-total-row':  nextTransaction.isTotalLine === true}">
+                            <td [ngClass]="{'trn-col':  true,
+                                            'trn-date-day-col': true,
+                                            'trn-date-day-col-total':  nextTransaction.isTransactionLine === false}">
+                                <div *ngIf="nextTransaction.hasDate" class="trn-date-day">
+                                    {{nextTransaction.dateDay}}
+                                </div>
                             </td>
-                            <td class="transaction-col-monthyear transaction-row">
-                                <p *ngIf="!nextTransaction.totalRow" class="transaction-date-month">{{nextTransaction.dateMonth}}</p>
-                                <p *ngIf="!nextTransaction.totalRow" class="transaction-date-year">{{nextTransaction.dateYear}}</p>
+                            <td [ngClass]="{'trn-col':  true,
+                                            'trn-date-month-col': true,
+                                            'trn-date-month-col-total': nextTransaction.isTransactionLine === false}">
+                                <div *ngIf="nextTransaction.hasDate" class="trn-date-month">
+                                    {{nextTransaction.dateMonth}}
+                                </div>
+                                <div *ngIf="nextTransaction.hasDate" class="trn-date-year">
+                                    {{nextTransaction.dateYear}}
+                                </div>
                             </td>
-                            <td class="transaction-account-col transaction-row">
-                                <img *ngIf="!nextTransaction.totalRow" class="transaction-account-img" src="{{getAccountImage(nextTransaction.account)}}" alt="Account"/>
+                            <td [ngClass]="{'trn-col':  true,
+                                            'trn-account-col': true,
+                                            'trn-account-col-total': nextTransaction.isTransactionLine === false}">
+                                <div *ngIf="nextTransaction.hasAccount" class="trn-account">
+                                    <img class="trn-account-img" src="{{getAccountImage(nextTransaction.account)}}" alt="Account"/>
+                                </div>
                             </td>
-                            <td class="transaction-category-col transaction-row">
-                                <div *ngIf="!nextTransaction.totalRow" class="row transaction-category-col-row">
-                                    <div class="col-10 transaction-category-col-text">
+                            <td [ngClass]="{'trn-col':  true,
+                                            'trn-category-col': true,
+                                            'trn-category-col-total': nextTransaction.isTransactionLine === false}">
+                                <div *ngIf="nextTransaction.hasCategory" class="row trn-category">
+                                    <div class="col-7 trn-category-txt">
                                         {{nextTransaction.category}}
                                     </div>
-                                    <div class="col-2 transaction-category-col-img"
-                                         [innerHTML]="getCategoryImage(nextTransaction)">
+                                    <div class="col-2 trn-category-img">
+                                        <svg viewBox='0 0 100 100' width='98%' height='98%'>
+                                            <circle  cx='50' cy='50' r='48' style='stroke:#006600; fill:#FFFFFF' [style.fill]="nextTransaction.catColour"></circle>
+                                        </svg>
+                                    </div>
+                                    <div class="col-2">
+                                        &nbsp;
                                     </div>
                                 </div>
                             </td>
-                            <td class="transaction-row">
-                                <input id="transaction-amount"
-                                       type="text" *ngIf="nextTransaction.editable"
-                                       [(ngModel)]="nextTransaction.amountString"
-                                       [disabled]="!nextTransaction.editable"
-                                       (keyup.enter)="onEnter(nextTransaction)"
-                                       class="transaction-amount-edit-col">
-                                <p *ngIf="!nextTransaction.editable && nextTransaction.amount < 0 && !nextTransaction.totalRow"
-                                   class="transaction-amount-noedit-db-col">{{nextTransaction.amountString}}</p>
-                                <p *ngIf="!nextTransaction.editable && nextTransaction.amount >= 0 && !nextTransaction.totalRow"
-                                   class="transaction-amount-noedit-col">{{nextTransaction.amountString}}</p>
-                                <div *ngIf="nextTransaction.totalRow">
-                                    <div class="row totals-cell">
-                                        <div class="col-2">
-                                            <button type="button"
-                                                    class="btn btn-primary btn-tran-confirm"
-                                                    (click)="onClickLockStatement()"
-                                                    [disabled]="!nextTransaction.summary.canLock || selectedStatement.locked">
-                                                <i [ngClass]="nextTransaction.summary.canLock && selectedStatement.locked ? 'fa fa-lock' : 'fa fa-unlock'"></i>
-                                            </button>
-                                        </div>
-                                        <div class="col-10 totals-col">
-                                            <table class="table totals-table">
-                                                <tbody>
-                                                    <tr *ngFor="let nextTotal of nextTransaction.summary.totalsDisplay" class="totals-row">
-                                                        <td class="totals-title-col">{{nextTotal.title}}</td>
-                                                        <td class="totals-value-coll">{{nextTotal.displayAmt}}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                            <td [ngClass]="{'trn-col':  true,
+                                            'trn-description-col': true,
+                                            'trn-description-col-total': nextTransaction.isTransactionLine === false}">
+                                <div class="trn-description">
+                                    <div *ngIf="nextTransaction.isTransactionLine" class="trn-description-text">
+                                        {{nextTransaction.description}}
+                                    </div>
+                                    <div *ngIf="nextTransaction.isBoughtForward" class="trn-description-total-text">
+                                        Brought Forward
+                                    </div>
+                                    <div *ngIf="nextTransaction.isTotalDebits" class="trn-description-total-text">
+                                        Total Debits
+                                    </div>
+                                    <div *ngIf="nextTransaction.isTotalCredits" class="trn-description-total-text">
+                                        Total Credits
+                                    </div>
+                                    <div *ngIf="nextTransaction.isCarriedFoward" class="trn-description-total-text">
+                                        Carried Forward
                                     </div>
                                 </div>
                             </td>
-                            <td class="transaction-row">
-                                <button *ngIf="!nextTransaction.totalRow"
-                                        type="button"
-                                        class="btn btn-primary btn-tran-confirm"
-                                        (click)="confirmTransaction(nextTransaction)"
-                                        [disabled]="nextTransaction.locked">
-                                    <i [ngClass]="nextTransaction.locked ? 'fa fa-lock' : nextTransaction.reconciled ? 'fa fa-times' : 'fa fa-check'"></i>
-                                </button>
+                            <td [ngClass]="{'trn-col':  true,
+                                            'trn-amount-col': true,
+                                            'trn-amount-col-total': nextTransaction.isTransactionLine === false}">
+                                <div class="trn-amount">
+                                    <input id="transaction-amount"
+                                           type="text" *ngIf="nextTransaction.editable"
+                                           [(ngModel)]="nextTransaction.amountString"
+                                           [disabled]="!nextTransaction.editable"
+                                           (keyup.enter)="onEnter(nextTransaction)"
+                                           class="trn-amount-edit">
+                                    <div *ngIf="!nextTransaction.editable && nextTransaction.myAmount < 0"
+                                         class="trn-amount-db">{{nextTransaction.myDisplayAmount}}</div>
+                                    <div *ngIf="!nextTransaction.editable && nextTransaction.myAmount >= 0"
+                                         class="trn-amount-cr">{{nextTransaction.myDisplayAmount}}</div>
+                                </div>
                             </td>
-                            <td class="transaction-row">
-                                <button *ngIf="!nextTransaction.totalRow"
-                                        type="button"
-                                        class="btn btn-primary btn-tran-edit"
-                                        (click)="clickEditable(nextTransaction)"
-                                        [disabled]="nextTransaction.locked || nextTransaction.reconciled">
-                                    <i class="fa fa-pencil"></i>
-                                </button>
+                            <td [ngClass]="{'trn-col':  true,
+                                            'trn-button-col': true,
+                                            'trn-button-col-total': nextTransaction.isTransactionLine === false}">
+                                <div class="trn-button">
+                                    <button *ngIf="nextTransaction.isTransactionLine" type="button"
+                                            class="btn btn-primary trn-button-confirm"
+                                            (click)="confirmTransaction(nextTransaction)"
+                                            [disabled]="nextTransaction.locked">
+                                        <i [ngClass]="nextTransaction.locked ? 'fa fa-lock' : nextTransaction.reconciled ? 'fa fa-times' : 'fa fa-check'"></i>
+                                    </button>
+                                </div>
                             </td>
-                            <td class="transaction-row">
-                                <button *ngIf="!nextTransaction.totalRow"
-                                        type="button"
-                                        class="btn btn-primary btn-tran-delete"
-                                        (click)="deleteTransaction(nextTransaction)"
-                                        [disabled]="nextTransaction.locked || nextTransaction.reconciled">
-                                    <i class="fa fa-trash"></i>
-                                </button>
+                            <td [ngClass]="{'trn-col':  true,
+                                                'trn-button-col': true,
+                                                'trn-button-col-total': nextTransaction.isTransactionLine === false}">
+                                <div class="trn-button">
+                                    <button *ngIf="nextTransaction.isTransactionLine" type="button"
+                                            class="btn btn-primary trn-button-edit"
+                                            (click)="clickEditable(nextTransaction)"
+                                            [disabled]="nextTransaction.locked || nextTransaction.reconciled">
+                                        <i class="fa fa-pencil"></i>
+                                    </button>
+                                </div>
+                            </td>
+                            <td [ngClass]="{'trn-col':  true,
+                                                'trn-button-col': true,
+                                                'trn-button-col-total': nextTransaction.isTransactionLine === false}">
+                                <div class="trn-button">
+                                    <button *ngIf="nextTransaction.isTransactionLine" type="button"
+                                            class="btn btn-primary trn-button-delete"
+                                            (click)="deleteTransaction(nextTransaction)"
+                                            [disabled]="nextTransaction.locked || nextTransaction.reconciled">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                    <button *ngIf="nextTransaction.isCarriedFoward" type="button"
+                                            class="btn btn-primary trn-button-lock"
+                                            (click)="onClickLockStatement()"
+                                            [disabled]="!nextTransaction.summary.canLock || selectedStatement.locked">
+                                        <i [ngClass]="nextTransaction.summary.canLock && selectedStatement.locked ? 'fa fa-lock' : 'fa fa-unlock'"></i>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
@@ -229,3 +345,92 @@
         </div>
     </div>
 </div>
+
+<ng-template #templateCategory>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Enter category</h4>
+    </div>
+    <div class="body">
+        <money-category-picker
+                [columns]="3"
+                [showAccountTransfers]="true"
+                [showSystem]="false"
+                columnSpacing="5px"
+                rowSpacing="3px"
+                (valueSelected)="onCategorySelected($event)">
+        </money-category-picker>
+    </div>
+</ng-template>
+
+<ng-template #templateCategoryFilter>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Select Categories</h4>
+    </div>
+    <div class="body">
+        <money-category-picker
+                [columns]="3"
+                [showAccountTransfers]="false"
+                [showSystem]="true"
+                [multiSelect]="true"
+                [selections]="categories"
+                columnSpacing="5px"
+                rowSpacing="3px"
+                (valueSelected)="onCategoryFiltered($event)"
+                (complete)="onExitFilter()">
+        </money-category-picker>
+    </div>
+</ng-template>
+
+<ng-template #templateCalculator>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Enter value</h4>
+    </div>
+    <div class="body">
+        <money-add-calc style="width:100%" (valueEntered)="onAmountEntered($event)"></money-add-calc>
+    </div>
+</ng-template>
+
+<ng-template #templateAccount>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Select an account</h4>
+    </div>
+    <div class="body">
+        <div class="col" *ngFor="let nextAccount of accounts; let i = index">
+            <label class="btn btn-primary btn-account"
+                   [style.background-color]="getAccountColour(i)"
+                   [(ngModel)]="accountRadio"
+                   btnRadio="{{nextAccount.id}}"
+                   tabindex="0"
+                   (click)="onClickAccount(nextAccount.id)">
+                <img class="btn-account-img" src="{{getAccountImage(nextAccount.id)}}" alt="Account"/>
+            </label>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #templateDate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Select a date</h4>
+    </div>
+    <div class="body">
+        <!--        <input id="transaction-date"
+                       type="text"
+                       placeholder="Datepicker"
+                       class="form-control calc-datepicker"
+                       [bsValue]="bsValue"
+                       (bsValueChange)="onDateChange($event)"
+                       value="{{ bsValue | date:'dd-MMMM-yyyy'}}"
+                       bsDatepicker [bsConfig]="{
+                                        dateInputFormat: 'DD-MMMM-YYYY',
+                                        containerClass: 'theme-dark-blue',
+                                        selectFromOtherMonth: true }"/> -->
+        <bs-datepicker-inline
+                [bsValue]="bsValue"
+                (bsValueChange)="onDateChange($event)"
+                bsDatepicker [bsConfig]="{
+                  dateInputFormat: 'DD-MMMM-YYYY',
+                  containerClass: 'theme-dark-blue',
+                  selectFromOtherMonth: true }"></bs-datepicker-inline>
+    </div>
+</ng-template>
+

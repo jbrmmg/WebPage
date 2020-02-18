@@ -1,0 +1,39 @@
+<div>
+    <label class="btn btn-primary cat-opt-btn" (click)="selectAll()">All</label>
+    <label class="btn btn-primary cat-opt-btn" (click)="selectNone()">Clear</label>
+    <label class="btn btn-primary cat-opt-btn" (click)="exit()">Exit</label>
+</div>
+<div class="table-responsive" >
+    <table class="table cat-table" *ngIf="categories && categories.length">
+        <tbody class="cat-table-body">
+            <ng-container *ngFor="let nextRow of coordinates">
+                <tr class="cat-table-row">
+                    <ng-container *ngFor="let nextCategoryId of nextRow">
+                        <td class="cat-table-col">
+                            <div class="cat-table-cell"
+                                 [style.margin-right]="getRightMargin(nextCategoryId)"
+                                 [style.margin-bottom]="getBottomMargin(nextCategoryId)"
+                                 *ngIf="nextCategoryId != -1">
+                                <label class="btn btn-primary cat-btn"
+                                       [style.background-color]="getCategoryColour(nextCategoryId)"
+                                       [style.color]="getCategoryTextColour(nextCategoryId)"
+                                       [(ngModel)]="categoryRadio"
+                                       btnRadio="{{nextCategoryId}}"
+                                       tabindex="0"
+                                       (click)="onClickCategory(nextCategoryId)">
+                                    <img *ngIf="hasImage(nextCategoryId)"
+                                         class="cat-trf-img"
+                                         src="{{getImage(nextCategoryId)}}"
+                                         alt="Account"/>
+                                    <i *ngIf="multiSelect && selected(nextCategoryId)" class="fa fa-check-circle"></i>
+                                    <i *ngIf="multiSelect && !selected(nextCategoryId)" class="fa fa-times-circle"></i>
+                                    {{category(nextCategoryId).name}}
+                                </label>
+                            </div>
+                        </td>
+                    </ng-container>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>

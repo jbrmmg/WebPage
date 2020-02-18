@@ -80,9 +80,7 @@ export class MoneyAddCalcComponent implements OnChanges {
         button.buttonClicked();
 
         // Is the equals button clicked?
-        if(button.buttonType == CalculatorButtonType.EQUAL ||
-            button.buttonType == CalculatorButtonType.CLEAR ||
-            button.buttonType == CalculatorButtonType.DEBIT ) {
+        if(button.buttonType == CalculatorButtonType.EQUAL ) {
             this.valueEntered.emit(parseFloat(this.btnStatus.display) * (this.btnStatus.debit ? -1.0 : 1.0));
         }
     }
