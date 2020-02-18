@@ -19,6 +19,7 @@ export class NewTransaction {
     account: string;
     accountTransfer: boolean;
     transferAccount: string;
+    description: string;
 }
 
 export class StatusResponse {
