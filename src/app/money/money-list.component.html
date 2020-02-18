@@ -106,7 +106,7 @@
                 </div>
             </div>
             <div class="col-1">
-                <div class="cat-filter">
+                <div class="cat-filter" (click)="openModal(templateCategoryFilter,'')">
                     <money-category-filter [categoriesChange]="eventsCategoriesChange.asObservable()"></money-category-filter>
                 </div>
             </div>
@@ -197,18 +197,6 @@
                         </button>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row" *ngIf="categories && categories.length">
-            <div class="col col-category" *ngFor="let nextCategory of filteredCatgories; let i = index">
-                <label [ngClass]="nextCategory.selected ? 'btn btn-primary btn-category' : 'btn btn-primary btn-category-off'"
-                       [style.background-color]="getCategoryColour(i)"
-                       [style.border-color]="nextCategory.selected ? '#005cbf' : '#9f9f9f'"
-                       btnRadio="{{nextCategory.id}}"
-                       tabindex="0"
-                       (click)="onCategoryClick(nextCategory)"
-                       tooltip="{{nextCategory.name}}">
-                </label>
             </div>
         </div>
         <div class="row">
@@ -370,6 +358,25 @@
                 columnSpacing="5px"
                 rowSpacing="3px"
                 (valueSelected)="onCategorySelected($event)">
+        </money-category-picker>
+    </div>
+</ng-template>
+
+<ng-template #templateCategoryFilter>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Select Categories</h4>
+    </div>
+    <div class="body">
+        <money-category-picker
+                [columns]="3"
+                [showAccountTransfers]="false"
+                [showSystem]="true"
+                [multiSelect]="true"
+                [selections]="categories"
+                columnSpacing="5px"
+                rowSpacing="3px"
+                (valueSelected)="onCategoryFiltered($event)"
+                (complete)="onExitFilter()">
         </money-category-picker>
     </div>
 </ng-template>

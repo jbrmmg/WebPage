@@ -1,3 +1,8 @@
+<div>
+    <label class="btn btn-primary cat-opt-btn" (click)="selectAll()">All</label>
+    <label class="btn btn-primary cat-opt-btn" (click)="selectNone()">Clear</label>
+    <label class="btn btn-primary cat-opt-btn" (click)="exit()">Exit</label>
+</div>
 <div class="table-responsive" >
     <table class="table cat-table" *ngIf="categories && categories.length">
         <tbody class="cat-table-body">
@@ -20,6 +25,8 @@
                                          class="cat-trf-img"
                                          src="{{getImage(nextCategoryId)}}"
                                          alt="Account"/>
+                                    <i *ngIf="multiSelect && selected(nextCategoryId)" class="fa fa-check-circle"></i>
+                                    <i *ngIf="multiSelect && !selected(nextCategoryId)" class="fa fa-times-circle"></i>
                                     {{category(nextCategoryId).name}}
                                 </label>
                             </div>

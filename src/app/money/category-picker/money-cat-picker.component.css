@@ -27,3 +27,25 @@
     width: 20px;
     height: 20px;
 }
+
+.cat-opt-table {
+}
+
+.cat-opt-table-body {
+}
+
+.cat-opt-table-row {
+
+}
+
+.cat-opt-table-col {
+    width: 150px;
+    border-top: 0;
+    padding: 1px;
+}
+
+.cat-opt-btn {
+    width: 60px;
+    margin: 2px;
+    font-size: small;
+}

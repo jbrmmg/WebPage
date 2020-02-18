@@ -611,6 +611,10 @@ export class MoneyListComponent implements OnInit {
         this.modalRef = this.modalService.show(template, {class: dialogClass});
     }
 
+    onExitFilter() {
+        this.modalRef.hide();
+    }
+
     onCategorySelected(value: MoneyCategoryPickerSelectableOption) {
         this.selectedCategory = null;
         this.selectedXferAcc = null;
@@ -622,6 +626,11 @@ export class MoneyListComponent implements OnInit {
         }
 
         this.modalRef.hide();
+    }
+
+    onCategoryFiltered(value: MoneyCategoryPickerSelectableOption) {
+        this.updateTransactions("category");
+        this.emitCategoriesChanged();
     }
 
     onClickCreate() {
