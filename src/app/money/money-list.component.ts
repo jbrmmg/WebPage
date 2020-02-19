@@ -47,6 +47,7 @@ export class MoneyListComponent implements OnInit {
     selectedXferAcc: IAccount = null;
     transactionAmount: number = 0;
     transactionDescription: string = "";
+    existingTransactionId: number = -1;
 
     modalRef: BsModalRef;
 
@@ -231,6 +232,8 @@ export class MoneyListComponent implements OnInit {
 
         this.transactionsUpdated = this._moneyService.getTransactionChangeEmitter()
             .subscribe(() => this.updateTransactions("Event"));
+
+        this.performDataChange(new Date());
     }
 
     get filteredCatgories() : Category[] {
@@ -496,6 +499,24 @@ export class MoneyListComponent implements OnInit {
     clickEditable(transaction: Transaction) {
         console.log("Edit - " + transaction.editable);
 
+        this.existingTransactionId = transaction.id;
+        this.transactionDescription = transaction.description;
+        this.transactionAmount = transaction.amount;
+
+        this.categories.forEach(nextCategory => {
+            if(nextCategory.id == transaction.categoryId) {
+                this.selectedCategory = nextCategory;
+            }
+        });
+
+        this.accounts.forEach(nextAccount => {
+            if(nextAccount.id == transaction.account) {
+                this.selectedAccount = nextAccount;
+            }
+        });
+
+        this.performDataChange(transaction.date);
+
         if(transaction.editable) {
             transaction.editable = false;
             return;
@@ -504,19 +525,6 @@ export class MoneyListComponent implements OnInit {
         this.transactions.forEach(value => { value.editable = false; });
 
         transaction.editable = true;
-    }
-
-    onEnter(transaction: Transaction) {
-        transaction.editable = false;
-
-        // Update the transaction amount.
-        this._moneyService.updateTransaction(transaction);
-
-        // Recalculate the totals.
-        this.summaryRow.resetCreditsDetbits();
-        this.transactions.forEach(value => {
-            this.summaryRow.addAmount(value.amount);
-        });
     }
 
     confirmTransaction(transaction:Transaction) {
@@ -561,14 +569,17 @@ export class MoneyListComponent implements OnInit {
         return "?";
     }
 
-    onDateChange(newDate: Date): void {
+    performDataChange(newDate: Date): void {
         console.info("Date Changed " + (newDate == null ? "is null " : "not"));
         this.bsValue = newDate;
 
         this.statusMonth = this.datepipe.transform(this.bsValue,'MMMM');
         this.statusDay = this.datepipe.transform(this.bsValue,'d');
         this.statusYear = this.datepipe.transform(this.bsValue,'yyyy');
+    }
 
+    onDateChange(newDate: Date): void {
+        this.performDataChange(newDate);
         this.modalRef.hide();
     }
 
@@ -618,31 +629,59 @@ export class MoneyListComponent implements OnInit {
         this.emitCategoriesChanged();
     }
 
-    onClickCreate() {
-        console.info("Create transaction:");
-
-        if(this.transactionValid) {
-            let newTransaction: NewTransaction = new NewTransaction();
-            newTransaction.amount = this.transactionAmount;
-            newTransaction.date = this.internalDate;
-            newTransaction.account = this.selectedAccount.id;
-            newTransaction.description = this.transactionDescription;
-            if(this.selectedXferAcc != null) {
-                newTransaction.accountTransfer = true;
-                newTransaction.transferAccount = this.selectedXferAcc.id;
-                newTransaction.category = "TRF";
-            } else {
-                newTransaction.accountTransfer = false;
-                newTransaction.category = this.selectedCategory.id;
-            }
-
-            this._moneyService.addTransaction(newTransaction);
-        }
-
-        // Clear the details.
+    onClearEdit() {
         this.transactionDescription = "";
         this.transactionAmount = 0;
         this.selectedAccount = null;
         this.selectedCategory = null;
+        this.existingTransactionId = -1;
+    }
+
+    onClickCreate() {
+        console.info("Create transaction:");
+
+        if(this.transactionValid) {
+            if(this.existingTransactionId != -1) {
+                // Find the transaction in the list, and update it.
+                this.transactions.forEach(nextTransaction => {
+                    if(nextTransaction.id == this.existingTransactionId) {
+                        if (nextTransaction.categoryId != "TRF") {
+                            nextTransaction.categoryId = this.selectedCategory.id;
+                        }
+
+                        nextTransaction.description = this.transactionDescription;
+                        nextTransaction.amount = this.transactionAmount;
+
+                        // Update the transaction amount.
+                        this._moneyService.updateTransaction(nextTransaction);
+
+                        // Recalculate the totals.
+                        this.summaryRow.resetCreditsDetbits();
+                        this.transactions.forEach(value => {
+                            this.summaryRow.addAmount(value.amount);
+                        });
+                    }
+                })
+            } else {
+                let newTransaction: NewTransaction = new NewTransaction();
+                newTransaction.amount = this.transactionAmount;
+                newTransaction.date = this.internalDate;
+                newTransaction.account = this.selectedAccount.id;
+                newTransaction.description = this.transactionDescription;
+                if (this.selectedXferAcc != null) {
+                    newTransaction.accountTransfer = true;
+                    newTransaction.transferAccount = this.selectedXferAcc.id;
+                    newTransaction.category = "TRF";
+                } else {
+                    newTransaction.accountTransfer = false;
+                    newTransaction.category = this.selectedCategory.id;
+                }
+
+                this._moneyService.addTransaction(newTransaction);
+            }
+        }
+
+        // Clear the details.
+        this.onClearEdit();
     }
 }
