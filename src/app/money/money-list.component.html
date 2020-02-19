@@ -63,7 +63,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-11">
+                                    <div class="col-10">
                                         <input style="width:100%;" [(ngModel)]="transactionDescription"/>
                                     </div>
                                     <div class="coll-1" *ngIf="transactionValid == true">
@@ -72,6 +72,14 @@
                                                tabindex="0"
                                                (click)="onClickCreate()">
                                             <i class="fa fa-check-circle"></i>
+                                        </label>
+                                    </div>
+                                    <div class="coll-1" *ngIf="transactionValid == true">
+                                        <label class="btn btn-primary float-right"
+                                               style="background-color: #008800;"
+                                               tabindex="0"
+                                               (click)="onClearEdit()">
+                                            <i class="fa fa-times-circle"></i>
                                         </label>
                                     </div>
                                 </div>
@@ -284,12 +292,6 @@
                                             'trn-amount-col': true,
                                             'trn-amount-col-total': nextTransaction.isTransactionLine === false}">
                                 <div class="trn-amount">
-                                    <input id="transaction-amount"
-                                           type="text" *ngIf="nextTransaction.editable"
-                                           [(ngModel)]="nextTransaction.amountString"
-                                           [disabled]="!nextTransaction.editable"
-                                           (keyup.enter)="onEnter(nextTransaction)"
-                                           class="trn-amount-edit">
                                     <div *ngIf="!nextTransaction.editable && nextTransaction.myAmount < 0"
                                          class="trn-amount-db">{{nextTransaction.myDisplayAmount}}</div>
                                     <div *ngIf="!nextTransaction.editable && nextTransaction.myAmount >= 0"

@@ -47,6 +47,8 @@ export class ReconcileTransaction {
 export class UpdateTransactionRequest {
     id: number;
     amount: number;
+    description: string;
+    category: string;
 }
 
 export class LoadFileRequest {
@@ -384,6 +386,8 @@ export class MoneyService {
         let updateRequest = new UpdateTransactionRequest();
         updateRequest.id = transaction.id;
         updateRequest.amount = transaction.amount;
+        updateRequest.description = transaction.description;
+        updateRequest.category = transaction.categoryId;
 
         this.http.post<StatusResponse>(url, updateRequest).subscribe(() => {
             console.log(url);

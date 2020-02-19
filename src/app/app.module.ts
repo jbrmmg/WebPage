@@ -14,7 +14,6 @@ import { ButtonsModule, CollapseModule } from "ngx-bootstrap";
 import { LogsComponent } from "./logs/logs.component";
 import { TooltipModule } from "ngx-bootstrap";
 import { PodcastComponent } from "./podcast/podcast.component";
-import { MoneyAddComponent } from "./money/money-add.component";
 import { MoneyAddCalcComponent } from "./money/calculator/money-add-calc.component";
 import { MoneyCatagoryPickerComponent } from "./money/category-picker/money-cat-picker.component";
 import { MoneyCategoryFilterComponent } from "./money/category-picker/money-cat-filter.component";
@@ -35,7 +34,6 @@ import { WeightComponent } from "./weight/weight.component";
     PairsPipe,
     LogsComponent,
     PodcastComponent,
-    MoneyAddComponent,
     MoneyAddCalcComponent,
     MoneyCatagoryPickerComponent,
     MoneyCategoryFilterComponent,
