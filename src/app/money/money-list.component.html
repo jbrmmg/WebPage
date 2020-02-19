@@ -292,9 +292,9 @@
                                             'trn-amount-col': true,
                                             'trn-amount-col-total': nextTransaction.isTransactionLine === false}">
                                 <div class="trn-amount">
-                                    <div *ngIf="!nextTransaction.editable && nextTransaction.myAmount < 0"
+                                    <div *ngIf="nextTransaction.myAmount < 0"
                                          class="trn-amount-db">{{nextTransaction.myDisplayAmount}}</div>
-                                    <div *ngIf="!nextTransaction.editable && nextTransaction.myAmount >= 0"
+                                    <div *ngIf="nextTransaction.myAmount >= 0"
                                          class="trn-amount-cr">{{nextTransaction.myDisplayAmount}}</div>
                                 </div>
                             </td>
