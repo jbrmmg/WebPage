@@ -316,6 +316,7 @@ export class MoneyService {
             },
             () => {
                 console.log("The POST observable is now complete (add)");
+                this.updateTransactions.emit(null);
             }
         );
     }
@@ -389,9 +390,16 @@ export class MoneyService {
         updateRequest.description = transaction.description;
         updateRequest.category = transaction.categoryId;
 
-        this.http.post<StatusResponse>(url, updateRequest).subscribe(() => {
-            console.log(url);
-        });
+        this.http.post<StatusResponse>(url, updateRequest).subscribe(
+            () => {
+                console.log(url);
+            },
+            (response) => {
+                console.log("POST call in error", response);
+            },
+            () => {
+                this.updateTransactions.emit(null);
+            });
     }
 
     confirmTransaction(transaction: Transaction ) {
