@@ -91,37 +91,36 @@
         </div>
         <div class="row">
             <div class="col-3" *ngIf="types && types.length">
-                <div class="btn-group" *ngFor="let type of types">
-                    <label class="btn btn-primary btn-type"
-                           btnRadio="{{type.id}}"
-                           [(ngModel)]="radioType"
-                           tabindex="0"
-                           tooltip="{{type.name}}">
-                        <i class="fa {{type.icon}}"></i>
-                    </label>
+                <div class="row btn-type-row">
+                    <div class="col-3 btn-group btn-type-col" *ngFor="let type of types">
+                        <label class="btn btn-primary btn-type"
+                               btnRadio="{{type.id}}"
+                               [(ngModel)]="radioType"
+                               tabindex="0"
+                               tooltip="{{type.name}}">
+                            <i class="fa {{type.icon}}"></i>
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="col-3" *ngIf="accounts && accounts.length">
-                <div class="btn-group" *ngFor="let account of accounts; let i = index">
-                    <label class="btn btn-primary btn-account"
-                           [style.background-color]="getAccountColour(i)"
-                           [(ngModel)]="radioAccount"
-                           btnRadio="{{account.id}}"
-                           tabindex="0"
-                           (click)="onAccountClick(account)">
-                        <img class="btn-account-img" src="{{getImage(account)}}" alt="Account"/>
-                    </label>
-                </div>
-            </div>
-            <div class="col-1">
-                <div class="cat-filter" (click)="openModal(templateCategoryFilter,'')">
-                    <money-category-filter [categoriesChange]="eventsCategoriesChange.asObservable()"></money-category-filter>
+                <div class="row btn-account-row">
+                    <div class="col-3 btn-group btn-account-col" *ngFor="let account of accounts; let i = index">
+                        <label class="btn btn-primary btn-account"
+                               [style.background-color]="getAccountColour(i)"
+                               [(ngModel)]="radioAccount"
+                               btnRadio="{{account.id}}"
+                               tabindex="0"
+                               (click)="onAccountClick(account)">
+                            <img class="btn-account-img" src="{{getImage(account)}}" alt="Account"/>
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="col-5">
-                <div class="row">
-                    <div class="col-8">
-                        <div class="row">
+                <div class="row date-select-row">
+                    <div class="col-6 date-select-col">
+                        <div class="row date-select-row">
                             <label for="from-date"></label>
                             <input id="from-date"
                                    type="text"
@@ -137,7 +136,7 @@
                                             selectFromOtherMonth: true }"/>
                         </div>
                     </div>
-                    <div class="col-1">
+                    <div class="col-2 date-select-col-btn">
                         <button type="button"
                                 class="btn btn-primary btn-date"
                                 [disabled]="toDateButtonDisabled"
@@ -145,7 +144,7 @@
                             MTD
                         </button>
                     </div>
-                    <div class="col-1">
+                    <div class="col-2 date-select-col-btn">
                         <button type="button"
                                 class="btn btn-primary btn-date"
                                 [disabled]="dateButtonsDisabled"
@@ -153,7 +152,7 @@
                             M-1
                         </button>
                     </div>
-                    <div class="col-1">
+                    <div class="col-2 date-select-col-btn">
                         <button type="button"
                                 class="btn btn-primary btn-date"
                                 [disabled]="dateButtonsDisabled"
@@ -162,25 +161,25 @@
                         </button>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-8">
-                        <div class="row">
-                        <label for="to-date"></label>
-                        <input id="to-date"
-                               type="text"
-                               placeholder="Datepicker"
-                               class="form-control filter-datepicker"
-                               [bsValue]="toValue"
-                               (bsValueChange)="onDateChangeTo($event)"
-                               [isDisabled]="toDateDisabled"
-                               value="{{ toValue | date:'dd-MMMM-yyyy'}}"
-                               bsDatepicker [bsConfig]="{
+                <div class="row date-select-row">
+                    <div class="col-6 date-select-col">
+                        <div class="row date-select-row">
+                            <label for="to-date"></label>
+                            <input id="to-date"
+                                   type="text"
+                                   placeholder="Datepicker"
+                                   class="form-control filter-datepicker"
+                                   [bsValue]="toValue"
+                                   (bsValueChange)="onDateChangeTo($event)"
+                                   [isDisabled]="toDateDisabled"
+                                   value="{{ toValue | date:'dd-MMMM-yyyy'}}"
+                                   bsDatepicker [bsConfig]="{
                                         dateInputFormat: 'DD-MMMM-YYYY',
                                         containerClass: 'theme-dark-blue',
                                         selectFromOtherMonth: true }"/>
                         </div>
                     </div>
-                    <div class="col-1">
+                    <div class="col-2 date-select-col-btn">
                         <button type="button"
                                 class="btn btn-primary btn-date"
                                 [disabled]="toDateButtonDisabled"
@@ -188,7 +187,7 @@
                             YTD
                         </button>
                     </div>
-                    <div class="col-1">
+                    <div class="col-2 date-select-col-btn">
                         <button type="button"
                                 class="btn btn-primary btn-date"
                                 [disabled]="dateButtonsDisabled"
@@ -196,7 +195,7 @@
                             Y-1
                         </button>
                     </div>
-                    <div class="col-1">
+                    <div class="col-2 date-select-col-btn">
                         <button type="button"
                                 class="btn btn-primary btn-date"
                                 [disabled]="dateButtonsDisabled"
@@ -204,6 +203,11 @@
                             Y+1
                         </button>
                     </div>
+                </div>
+            </div>
+            <div class="col-1">
+                <div class="cat-filter" (click)="openModal(templateCategoryFilter,'')">
+                    <money-category-filter [categoriesChange]="eventsCategoriesChange.asObservable()"></money-category-filter>
                 </div>
             </div>
         </div>
@@ -398,13 +402,13 @@
     </div>
     <div class="body">
         <div class="col" *ngFor="let nextAccount of accounts; let i = index">
-            <label class="btn btn-primary btn-account"
+            <label class="btn btn-primary btn-account-select"
                    [style.background-color]="getAccountColour(i)"
                    [(ngModel)]="accountRadio"
                    btnRadio="{{nextAccount.id}}"
                    tabindex="0"
                    (click)="onClickAccount(nextAccount.id)">
-                <img class="btn-account-img" src="{{getAccountImage(nextAccount.id)}}" alt="Account"/>
+                <img class="btn-account-img-select" src="{{getAccountImage(nextAccount.id)}}" alt="Account"/>
             </label>
         </div>
     </div>
