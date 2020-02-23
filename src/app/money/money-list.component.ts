@@ -238,7 +238,7 @@ export class MoneyListComponent implements OnInit {
 
     get filteredCatgories() : Category[] {
         return this.categories.filter((category: ICategory) =>
-            category.systemUse == "N")
+            !category.systemUse)
     }
 
     private getTransactionType(id: string) : TransactionType {

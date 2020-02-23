@@ -23,12 +23,12 @@ export class MoneyRecComponent implements OnInit {
 
     get uncatorisedMatches() : Match[] {
         return this.matches.filter((match: IMatch) =>
-            match.category == "")
+            match.category == null)
     }
 
     get catorisedMatches() : Match[] {
         return this.matches.filter((match: IMatch) =>
-            match.category != "")
+            match.category != null)
     }
 
     ngOnInit(): void {
@@ -120,7 +120,7 @@ export class MoneyRecComponent implements OnInit {
 
     get filteredCatgories() : Category[] {
         return this.categories.filter((category: ICategory) =>
-            category.systemUse == "N")
+            !category.systemUse)
     }
 
     onAccountClick(account: JbAccount) {

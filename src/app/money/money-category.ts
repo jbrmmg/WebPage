@@ -2,10 +2,10 @@ export interface ICategory {
     id: string;
     name: string;
     sort: number;
-    restricted: string,
+    restricted: boolean,
     colour: string,
     group: string,
-    systemUse: string,
+    systemUse: boolean,
     source: string
 }
 
@@ -15,10 +15,10 @@ export class Category implements ICategory {
     constructor(public id: string,
                 public name: string,
                 public sort: number,
-                public restricted: string,
+                public restricted: boolean,
                 public colour: string,
                 public group: string,
-                public systemUse: string,
+                public systemUse: boolean,
                 public source: string ) {
     }
 }
