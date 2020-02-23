@@ -92,7 +92,7 @@ export class MoneyCatagoryPickerComponent implements OnInit {
         // Get a list of selectable options.
         let i = 0;
         for(let nextCategory of this.categories) {
-            if(this.showSystem && (nextCategory.systemUse == "Y")) {
+            if(this.showSystem && (nextCategory.systemUse)) {
                 this.selectableOption[i] = new MoneyCategoryPickerSelectableOption();
                 this.selectableOption[i].accountTransfer = null;
                 this.selectableOption[i].category = nextCategory;
@@ -100,7 +100,7 @@ export class MoneyCatagoryPickerComponent implements OnInit {
                 this.selectableOption[i].bottomMargin = this.rowSpacing;
                 i++;
             }
-            if(nextCategory.systemUse == "N") {
+            if(!nextCategory.systemUse) {
                 console.log(nextCategory.id);
                 this.selectableOption[i] = new MoneyCategoryPickerSelectableOption();
                 this.selectableOption[i].accountTransfer = null;
