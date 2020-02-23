@@ -120,7 +120,7 @@ export class MoneyRecComponent implements OnInit {
 
     get filteredCatgories() : Category[] {
         return this.categories.filter((category: ICategory) =>
-            category.systemUse == "N")
+            !category.systemUse)
     }
 
     onAccountClick(account: JbAccount) {

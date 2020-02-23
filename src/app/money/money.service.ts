@@ -390,12 +390,12 @@ export class MoneyService {
         updateRequest.description = transaction.description;
         updateRequest.category = transaction.categoryId;
 
-        this.http.post<StatusResponse>(url, updateRequest).subscribe(
+        this.http.put<StatusResponse>(url, updateRequest).subscribe(
             () => {
                 console.log(url);
             },
             (response) => {
-                console.log("POST call in error", response);
+                console.log("PUT call in error", response);
             },
             () => {
                 this.updateTransactions.emit(null);
@@ -413,15 +413,15 @@ export class MoneyService {
         reconcileRequest.transactionId = transaction.id;
         reconcileRequest.reconcile = transaction.reconciled;
 
-        this.http.post<StatusResponse>(url,reconcileRequest).subscribe(
+        this.http.put<StatusResponse>(url,reconcileRequest).subscribe(
             () => {
                 console.log(url);
             },
             (response) => {
-                console.log("POST call in error", response);
+                console.log("PUT call in error", response);
             },
             () => {
-                console.log("The POST observable is now complete (confirm)");
+                console.log("The PUT observable is now complete (confirm)");
                 this.updateTransactions.emit(null);
             }
         );
@@ -515,14 +515,14 @@ export class MoneyService {
 
     autoAccept() {
         // Auto accept the data.
-        this.http.post<StatusResponse>(this.autoAcceptUrl,"").subscribe((response) => {
+        this.http.put<StatusResponse>(this.autoAcceptUrl,"").subscribe((response) => {
                 console.log(this.autoAcceptUrl + " -> " + response.status);
             },
             (response) => {
-                console.log("Auto Accept POST call in error", response);
+                console.log("Auto Accept PUT call in error", response);
             },
             () => {
-                console.log("Auto Accept The POST observable is now complete (delete)");
+                console.log("Auto Accept The PUT observable is now complete (delete)");
             });
     }
 
@@ -536,14 +536,14 @@ export class MoneyService {
         request.categoryId = category.id;
         request.type = "rec";
 
-        this.http.post<StatusResponse>(url,request).subscribe((response) => {
+        this.http.put<StatusResponse>(url,request).subscribe((response) => {
                 console.log(url + " -> " + response.status + " " + response.message);
             },
             (response) => {
-                console.log("Set Cat GET call in error", response);
+                console.log("Set Cat PUT call in error", response);
             },
             () => {
-                console.log("Set Cat GET observable is now complete (delete)");
+                console.log("Set Cat PUT observable is now complete (delete)");
             });
     }
 
