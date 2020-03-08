@@ -1,5 +1,9 @@
 /* Button used to select the type of transaction listed. */
 
+.btn-mode {
+    margin: 0 3px;
+}
+
 .btn-type-row {
     width: 100%;
     height: 100%;
@@ -142,17 +146,17 @@
 }
 
 .trn-row {
-    border-top: 0;
-    border-bottom: 1px solid #dee2e6;
+    border-bottom: 0;
+    border-top: 1px solid #dee2e6;
 }
 
 .trn-total-row {
-    border-bottom: 0;
+    border-top: 0;
 }
 
 .trn-col {
-    border-top: 0;
-    border-bottom: 1px solid #dee2e6;
+    border-bottom: 0;
+    border-top: 1px solid #dee2e6;
     padding: 2px;
     vertical-align: middle;
 }
@@ -162,7 +166,7 @@
 }
 
 .trn-date-day-col-total {
-    border-bottom: 0;
+    border-top: 0;
 }
 
 .trn-date-day {
@@ -179,7 +183,7 @@
 }
 
 .trn-date-month-col-total {
-    border-bottom: 0;
+    border-top: 0;
 }
 
 .trn-date-month {
@@ -195,7 +199,7 @@
 }
 
 .trn-account-col-total {
-    border-bottom: 0;
+    border-top: 0;
 }
 
 .trn-account {
@@ -211,7 +215,7 @@
 }
 
 .trn-category-col-total {
-    border-bottom: 0;
+    border-top: 0;
 }
 
 .trn-category {
@@ -237,7 +241,7 @@
 }
 
 .trn-description-col-total {
-    border-bottom: 0;
+    border-top: 0;
 }
 
 .trn-description {
@@ -258,7 +262,7 @@
 }
 
 .trn-amount-col-total {
-    border-bottom: 0;
+    border-top: 0;
 }
 
 .trn-amount {
@@ -298,7 +302,7 @@
 }
 
 .trn-button-col-total {
-    border-bottom: 0;
+    border-top: 0;
 }
 
 .trn-button {
