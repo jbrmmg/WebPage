@@ -61,7 +61,7 @@ export class LoadFileRequest {
 })
 export class MoneyService {
     private  testFormat = 'api/money/transaction.##type##.json';
-    private  prodFormat = 'money/transaction/get?type=##type##[from][to][account][category]';
+    private  prodFormat = 'money/transaction/get?sortAscending=false&type=##type##[from][to][account][category]';
 
     private readonly categoryUrl;
     private readonly accountUrl;
