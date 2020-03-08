@@ -11,6 +11,10 @@ import {MoneyCategoryPickerSelectableOption} from "./category-picker/money-cat-p
 import {DatePipe} from "@angular/common";
 import {Subject} from "rxjs";
 
+export enum ListMode { Normal, Add, Regulars, Reconciliation };
+
+export enum UpdateTransactionReason { Type, Event, ToDate, FromDate, Account, Category, SelectAdd, SelectNormal, SelectRegular, SelectReconcilation };
+
 @Component({
     templateUrl: './money-list.component.html',
     styleUrls: ['./money-list.component.css']
@@ -36,7 +40,7 @@ export class MoneyListComponent implements OnInit {
     fromDateDisabled: boolean;
     toDateDisabled: boolean;
 
-    isCollapsed: boolean;
+    listMode: ListMode;
 
     // Transaction details.
     statusMonth: string = 'September';
@@ -67,7 +71,43 @@ export class MoneyListComponent implements OnInit {
         this.lastChangeFrom = null;
         this.lastChangeTo = null;
         this.selectedStatement = null;
-        this.isCollapsed = true;
+        this.listMode = ListMode.Normal;
+    }
+
+    get isAddMode() {
+        return this.listMode == ListMode.Add;
+    }
+
+    selectAddMode() {
+//        this.listMode = ListMode.Add;
+        this.updateTransactions(UpdateTransactionReason.SelectAdd)
+    }
+
+    get isNormalMode() {
+        return this.listMode == ListMode.Normal;
+    }
+
+    selectNormalMode() {
+//        this.listMode = ListMode.Normal;
+        this.updateTransactions(UpdateTransactionReason.SelectNormal)
+    }
+
+    get isRegularMode() {
+        return this.listMode == ListMode.Regulars;
+    }
+
+    selectRegularMode() {
+//        this.listMode = ListMode.Regulars;
+        this.updateTransactions(UpdateTransactionReason.SelectRegular)
+    }
+
+    get isReconcileMode() {
+        return this.listMode == ListMode.Reconciliation;
+    }
+
+    selectReconcileMode() {
+//        this.listMode = ListMode.Reconciliation;
+        this.updateTransactions(UpdateTransactionReason.SelectReconcilation)
     }
 
     emitCategoriesChanged() {
@@ -182,7 +222,7 @@ export class MoneyListComponent implements OnInit {
 
         this.internalRadioType = value;
 
-        this.updateTransactions("type");
+        this.updateTransactions(UpdateTransactionReason.Type);
     }
 
     get toDateButtonDisabled() : boolean {
@@ -231,7 +271,7 @@ export class MoneyListComponent implements OnInit {
         );
 
         this.transactionsUpdated = this._moneyService.getTransactionChangeEmitter()
-            .subscribe(() => this.updateTransactions("Event"));
+            .subscribe(() => this.updateTransactions(UpdateTransactionReason.Event));
 
         this.performDataChange(new Date());
     }
@@ -292,22 +332,65 @@ export class MoneyListComponent implements OnInit {
         this.summaryRow.boughtForward = BF;
     }
 
-    updateTransactions(thisChange: string) {
-        if(thisChange == "todate")
+    convertTransactionUpdateToMode(update: UpdateTransactionReason) {
+        switch (update) {
+            case UpdateTransactionReason.SelectAdd:
+                return ListMode.Add;
+            case UpdateTransactionReason.SelectNormal:
+                return ListMode.Normal;
+            case UpdateTransactionReason.SelectReconcilation:
+                return ListMode.Reconciliation;
+            case UpdateTransactionReason.SelectRegular:
+                return ListMode.Regulars;
+        }
+
+        return null;
+    }
+
+    updateTransactions(thisChange: UpdateTransactionReason) {
+        if(thisChange == UpdateTransactionReason.SelectAdd || thisChange == UpdateTransactionReason.SelectNormal)
+        {
+            if(this.listMode == ListMode.Normal || this.listMode == ListMode.Add) {
+                this.listMode = this.convertTransactionUpdateToMode(thisChange);
+                return;
+            }
+
+            this.listMode = this.convertTransactionUpdateToMode(thisChange);
+        }
+
+        if(thisChange == UpdateTransactionReason.SelectReconcilation)
+        {
+            if(this.listMode == ListMode.Reconciliation) {
+                return;
+            }
+
+            this.listMode = ListMode.Reconciliation;
+        }
+
+        if(thisChange == UpdateTransactionReason.SelectRegular)
+        {
+            if(this.listMode == ListMode.Regulars) {
+                return;
+            }
+
+            this.listMode = ListMode.Regulars;
+        }
+
+        if(thisChange == UpdateTransactionReason.ToDate)
         {
             if(this.lastChangeFrom == this.fromValue.toISOString()) {
                 console.log("Date From Change already reflected.");
                 return;
             }
         }
-        else if(thisChange == "fromdate")
+        else if(thisChange == UpdateTransactionReason.FromDate)
         {
             if(this.lastChangeFrom == this.fromValue.toISOString() ) {
                 console.log("Date To Change already reflected.");
                 return;
             }
         }
-        else if(thisChange == "type")
+        else if(thisChange == UpdateTransactionReason.Type)
         {
             if(this.lastChangeType == this.internalRadioType)
             {
@@ -347,33 +430,43 @@ export class MoneyListComponent implements OnInit {
             });
         }
 
-        this.lastChangeType = this.internalRadioType;
-        this.lastChangeTo = this.toValue.toISOString();
-        this.lastChangeFrom = this.fromValue.toISOString();
+        if(this.listMode == ListMode.Normal || this.listMode == ListMode.Add) {
+            this.lastChangeType = this.internalRadioType;
+            this.lastChangeTo = this.toValue.toISOString();
+            this.lastChangeFrom = this.fromValue.toISOString();
 
-        this.calculateBF();
-        this.summaryRow.resetCreditsDetbits();
-        this.transactions = [];
-        this._moneyService.getTransactions(this.getTransactionType(this.internalRadioType),
-            this.fromValue,
-            this.toValue,
-            this.accounts,
-            this.categories).subscribe(
-            transactions => {
-                transactions.forEach(value => {
-                    this.transactions.push(new Transaction(value,this.summaryRow,TransactionLineType.TRANSACTION));
-                    this.summaryRow.addAmount(value.amount);
-                })
-            },
-            error => this.errorMessage = <any>error,
-            () => {
-                console.log("Request Transactions Complete." + thisChange);
-                this.transactions.push(new Transaction(null,this.summaryRow,TransactionLineType.TOTAL_BOUGHTFWD));
-                this.transactions.push(new Transaction(null,this.summaryRow,TransactionLineType.TOTAL_DEBITS));
-                this.transactions.push(new Transaction(null,this.summaryRow,TransactionLineType.TOTAL_CREDITS));
-                this.transactions.push(new Transaction(null,this.summaryRow,TransactionLineType.TOTAL_CARRIEDFWD));
-            }
-        )
+            this.calculateBF();
+            this.summaryRow.resetCreditsDetbits();
+            this.transactions = [];
+            this.transactions.push(new Transaction(null, this.summaryRow, TransactionLineType.TOTAL_BOUGHTFWD));
+            this.transactions.push(new Transaction(null, this.summaryRow, TransactionLineType.TOTAL_DEBITS));
+            this.transactions.push(new Transaction(null, this.summaryRow, TransactionLineType.TOTAL_CREDITS));
+            this.transactions.push(new Transaction(null, this.summaryRow, TransactionLineType.TOTAL_CARRIEDFWD));
+            this._moneyService.getTransactions(this.getTransactionType(this.internalRadioType),
+                this.fromValue,
+                this.toValue,
+                this.accounts,
+                this.categories).subscribe(
+                transactions => {
+                    transactions.forEach(value => {
+                        this.transactions.push(new Transaction(value, this.summaryRow, TransactionLineType.TRANSACTION));
+                        this.summaryRow.addAmount(value.amount);
+                    })
+                },
+                error => this.errorMessage = <any>error,
+                () => {
+                    console.log("Request Transactions Complete." + thisChange);
+//                    this.transactions.push(new Transaction(null, this.summaryRow, TransactionLineType.TOTAL_BOUGHTFWD));
+//                    this.transactions.push(new Transaction(null, this.summaryRow, TransactionLineType.TOTAL_DEBITS));
+//                    this.transactions.push(new Transaction(null, this.summaryRow, TransactionLineType.TOTAL_CREDITS));
+//                    this.transactions.push(new Transaction(null, this.summaryRow, TransactionLineType.TOTAL_CARRIEDFWD));
+                }
+            )
+        } else if (this.listMode == ListMode.Regulars) {
+            // Get the regulars.
+        } else if (this.listMode == ListMode.Reconciliation) {
+            // Get the reconcilation.
+        }
     }
 
     onClickLockStatement() {
@@ -387,12 +480,12 @@ export class MoneyListComponent implements OnInit {
 
     onDateChangeFrom(newDate: Date): void {
         this.fromValue = newDate;
-        this.updateTransactions("fromdate");
+        this.updateTransactions(UpdateTransactionReason.FromDate);
     }
 
     onDateChangeTo(newDate: Date): void {
         this.toValue = newDate;
-        this.updateTransactions("todate");
+        this.updateTransactions(UpdateTransactionReason.ToDate);
     }
 
     onDateButton(btn: string) {
@@ -476,7 +569,7 @@ export class MoneyListComponent implements OnInit {
             account.selected = !account.selected;
         }
 
-        this.updateTransactions("account");
+        this.updateTransactions(UpdateTransactionReason.Account);
     }
 
     getAccountColour(index: number) : string {
@@ -625,7 +718,7 @@ export class MoneyListComponent implements OnInit {
     }
 
     onCategoryFiltered(value: MoneyCategoryPickerSelectableOption) {
-        this.updateTransactions("category");
+        this.updateTransactions(UpdateTransactionReason.Category);
         this.emitCategoriesChanged();
     }
 

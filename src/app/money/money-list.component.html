@@ -1,15 +1,36 @@
 <div class="card">
     <div class="card-body">
         <div class="row">
-            <label class="btn-sm btn-primary float-right"
+            <label class="btn-sm btn-primary float-right btn-mode"
                    tabindex="0"
-                   (click)="isCollapsed = !isCollapsed"
-                   [attr.aria-expanded]="!isCollapsed"
-                   aria-controls="collapseBasic">
+                   (click)="selectNormalMode()"
+                   [attr.aria-expanded]="isNormalMode"
+                   aria-controls="normal">
+                <i class="fa fa-align-justify"></i>
+            </label>
+            <label class="btn-sm btn-primary float-right btn-mode"
+                   tabindex="0"
+                   (click)="selectAddMode()"
+                   [attr.aria-expanded]="isAddMode"
+                   aria-controls="addTransaction">
                 <i class="fa fa-plus-circle"></i>
             </label>
+            <label class="btn-sm btn-primary float-right btn-mode"
+                   tabindex="0"
+                   (click)="selectRegularMode()"
+                   [attr.aria-expanded]="isRegularMode"
+                   aria-controls="regular">
+                <i class="fa fa-recycle"></i>
+            </label>
+            <label class="btn-sm btn-primary float-right btn-mode"
+                   tabindex="0"
+                   (click)="selectReconcileMode()"
+                   [attr.aria-expanded]="isReconcileMode"
+                   aria-controls="reconcile">
+                <i class="fa fa-balance-scale"></i>
+            </label>
         </div>
-        <div class="row" [collapse]="isCollapsed">
+        <div class="row" id="addTransaction" [collapse]="!isAddMode">
             <div class="col-12">
                 <div class="row">
                     <div class="col">
@@ -89,125 +110,127 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-3" *ngIf="types && types.length">
-                <div class="row btn-type-row">
-                    <div class="col-3 btn-group btn-type-col" *ngFor="let type of types">
-                        <label class="btn btn-primary btn-type"
-                               btnRadio="{{type.id}}"
-                               [(ngModel)]="radioType"
-                               tabindex="0"
-                               tooltip="{{type.name}}">
-                            <i class="fa {{type.icon}}"></i>
-                        </label>
+        <div id="normal" [collapse]="!isNormalMode">
+            <div class="row">
+                <div class="col-3" *ngIf="types && types.length">
+                    <div class="row btn-type-row">
+                        <div class="col-3 btn-group btn-type-col" *ngFor="let type of types">
+                            <label class="btn btn-primary btn-type"
+                                   btnRadio="{{type.id}}"
+                                   [(ngModel)]="radioType"
+                                   tabindex="0"
+                                   tooltip="{{type.name}}">
+                                <i class="fa {{type.icon}}"></i>
+                            </label>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-3" *ngIf="accounts && accounts.length">
-                <div class="row btn-account-row">
-                    <div class="col-3 btn-group btn-account-col" *ngFor="let account of accounts; let i = index">
-                        <label class="btn btn-primary btn-account"
-                               [style.background-color]="getAccountColour(i)"
-                               [(ngModel)]="radioAccount"
-                               btnRadio="{{account.id}}"
-                               tabindex="0"
-                               (click)="onAccountClick(account)">
-                            <img class="btn-account-img" src="{{getImage(account)}}" alt="Account"/>
-                        </label>
+                <div class="col-3" *ngIf="accounts && accounts.length">
+                    <div class="row btn-account-row">
+                        <div class="col-3 btn-group btn-account-col" *ngFor="let account of accounts; let i = index">
+                            <label class="btn btn-primary btn-account"
+                                   [style.background-color]="getAccountColour(i)"
+                                   [(ngModel)]="radioAccount"
+                                   btnRadio="{{account.id}}"
+                                   tabindex="0"
+                                   (click)="onAccountClick(account)">
+                                <img class="btn-account-img" src="{{getImage(account)}}" alt="Account"/>
+                            </label>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-5">
-                <div class="row date-select-row">
-                    <div class="col-6 date-select-col">
-                        <div class="row date-select-row">
-                            <label for="from-date"></label>
-                            <input id="from-date"
-                                   type="text"
-                                   placeholder="Datepicker"
-                                   class="form-control filter-datepicker"
-                                   [bsValue]="fromValue"
-                                   (bsValueChange)="onDateChangeFrom($event)"
-                                   [isDisabled]="fromDateDisabled"
-                                   value="{{ fromValue | date:'dd-MMMM-yyyy'}}"
-                                   bsDatepicker [bsConfig]="{
+                <div class="col-5">
+                    <div class="row date-select-row">
+                        <div class="col-6 date-select-col">
+                            <div class="row date-select-row">
+                                <label for="from-date"></label>
+                                <input id="from-date"
+                                       type="text"
+                                       placeholder="Datepicker"
+                                       class="form-control filter-datepicker"
+                                       [bsValue]="fromValue"
+                                       (bsValueChange)="onDateChangeFrom($event)"
+                                       [isDisabled]="fromDateDisabled"
+                                       value="{{ fromValue | date:'dd-MMMM-yyyy'}}"
+                                       bsDatepicker [bsConfig]="{
+                                                dateInputFormat: 'DD-MMMM-YYYY',
+                                                containerClass: 'theme-dark-blue',
+                                                selectFromOtherMonth: true }"/>
+                            </div>
+                        </div>
+                        <div class="col-2 date-select-col-btn">
+                            <button type="button"
+                                    class="btn btn-primary btn-date"
+                                    [disabled]="toDateButtonDisabled"
+                                    (click)="onDateButton('MTD')">
+                                MTD
+                            </button>
+                        </div>
+                        <div class="col-2 date-select-col-btn">
+                            <button type="button"
+                                    class="btn btn-primary btn-date"
+                                    [disabled]="dateButtonsDisabled"
+                                    (click)="onDateButton('M-1')">
+                                M-1
+                            </button>
+                        </div>
+                        <div class="col-2 date-select-col-btn">
+                            <button type="button"
+                                    class="btn btn-primary btn-date"
+                                    [disabled]="dateButtonsDisabled"
+                                    (click)="onDateButton('M+1')">
+                                M+1
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row date-select-row">
+                        <div class="col-6 date-select-col">
+                            <div class="row date-select-row">
+                                <label for="to-date"></label>
+                                <input id="to-date"
+                                       type="text"
+                                       placeholder="Datepicker"
+                                       class="form-control filter-datepicker"
+                                       [bsValue]="toValue"
+                                       (bsValueChange)="onDateChangeTo($event)"
+                                       [isDisabled]="toDateDisabled"
+                                       value="{{ toValue | date:'dd-MMMM-yyyy'}}"
+                                       bsDatepicker [bsConfig]="{
                                             dateInputFormat: 'DD-MMMM-YYYY',
                                             containerClass: 'theme-dark-blue',
                                             selectFromOtherMonth: true }"/>
+                            </div>
+                        </div>
+                        <div class="col-2 date-select-col-btn">
+                            <button type="button"
+                                    class="btn btn-primary btn-date"
+                                    [disabled]="toDateButtonDisabled"
+                                    (click)="onDateButton('YTD')">
+                                YTD
+                            </button>
+                        </div>
+                        <div class="col-2 date-select-col-btn">
+                            <button type="button"
+                                    class="btn btn-primary btn-date"
+                                    [disabled]="dateButtonsDisabled"
+                                    (click)="onDateButton('Y-1')">
+                                Y-1
+                            </button>
+                        </div>
+                        <div class="col-2 date-select-col-btn">
+                            <button type="button"
+                                    class="btn btn-primary btn-date"
+                                    [disabled]="dateButtonsDisabled"
+                                    (click)="onDateButton('Y+1')">
+                                Y+1
+                            </button>
                         </div>
                     </div>
-                    <div class="col-2 date-select-col-btn">
-                        <button type="button"
-                                class="btn btn-primary btn-date"
-                                [disabled]="toDateButtonDisabled"
-                                (click)="onDateButton('MTD')">
-                            MTD
-                        </button>
-                    </div>
-                    <div class="col-2 date-select-col-btn">
-                        <button type="button"
-                                class="btn btn-primary btn-date"
-                                [disabled]="dateButtonsDisabled"
-                                (click)="onDateButton('M-1')">
-                            M-1
-                        </button>
-                    </div>
-                    <div class="col-2 date-select-col-btn">
-                        <button type="button"
-                                class="btn btn-primary btn-date"
-                                [disabled]="dateButtonsDisabled"
-                                (click)="onDateButton('M+1')">
-                            M+1
-                        </button>
-                    </div>
                 </div>
-                <div class="row date-select-row">
-                    <div class="col-6 date-select-col">
-                        <div class="row date-select-row">
-                            <label for="to-date"></label>
-                            <input id="to-date"
-                                   type="text"
-                                   placeholder="Datepicker"
-                                   class="form-control filter-datepicker"
-                                   [bsValue]="toValue"
-                                   (bsValueChange)="onDateChangeTo($event)"
-                                   [isDisabled]="toDateDisabled"
-                                   value="{{ toValue | date:'dd-MMMM-yyyy'}}"
-                                   bsDatepicker [bsConfig]="{
-                                        dateInputFormat: 'DD-MMMM-YYYY',
-                                        containerClass: 'theme-dark-blue',
-                                        selectFromOtherMonth: true }"/>
-                        </div>
+                <div class="col-1">
+                    <div class="cat-filter" (click)="openModal(templateCategoryFilter,'')">
+                        <money-category-filter [categoriesChange]="eventsCategoriesChange.asObservable()"></money-category-filter>
                     </div>
-                    <div class="col-2 date-select-col-btn">
-                        <button type="button"
-                                class="btn btn-primary btn-date"
-                                [disabled]="toDateButtonDisabled"
-                                (click)="onDateButton('YTD')">
-                            YTD
-                        </button>
-                    </div>
-                    <div class="col-2 date-select-col-btn">
-                        <button type="button"
-                                class="btn btn-primary btn-date"
-                                [disabled]="dateButtonsDisabled"
-                                (click)="onDateButton('Y-1')">
-                            Y-1
-                        </button>
-                    </div>
-                    <div class="col-2 date-select-col-btn">
-                        <button type="button"
-                                class="btn btn-primary btn-date"
-                                [disabled]="dateButtonsDisabled"
-                                (click)="onDateButton('Y+1')">
-                            Y+1
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-1">
-                <div class="cat-filter" (click)="openModal(templateCategoryFilter,'')">
-                    <money-category-filter [categoriesChange]="eventsCategoriesChange.asObservable()"></money-category-filter>
                 </div>
             </div>
         </div>
