@@ -422,7 +422,7 @@ export class MoneyListComponent implements OnInit {
                     this.statements.forEach( statement => {
                         if( (statement.id.account.id == account.id) &&
                             (statement.id.year == this.fromValue.getFullYear()) &&
-                            (statement.id.month == this.fromValue.getMonth() )) {
+                            (statement.id.month == this.fromValue.getMonth() + 1 )) {
                             this.selectedStatement = statement;
                             this.summaryRow.canLock = true;
                         }
