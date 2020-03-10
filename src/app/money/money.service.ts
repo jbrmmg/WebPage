@@ -15,10 +15,10 @@ import {IFile} from "./money-file";
 export class NewTransaction {
     date: Date;
     amount: number;
-    category: string;
-    account: string;
+    categoryId: string;
+    accountId: string;
     accountTransfer: boolean;
-    transferAccount: string;
+    transferAccountId: string;
     description: string;
 }
 

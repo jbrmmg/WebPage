@@ -770,15 +770,15 @@ export class MoneyListComponent implements OnInit {
                 let newTransaction: NewTransaction = new NewTransaction();
                 newTransaction.amount = this.transactionAmount;
                 newTransaction.date = this.internalDate;
-                newTransaction.account = this.selectedAccount.id;
+                newTransaction.accountId = this.selectedAccount.id;
                 newTransaction.description = this.transactionDescription;
                 if (this.selectedXferAcc != null) {
                     newTransaction.accountTransfer = true;
-                    newTransaction.transferAccount = this.selectedXferAcc.id;
-                    newTransaction.category = "TRF";
+                    newTransaction.transferAccountId = this.selectedXferAcc.id;
+                    newTransaction.categoryId = "TRF";
                 } else {
                     newTransaction.accountTransfer = false;
-                    newTransaction.category = this.selectedCategory.id;
+                    newTransaction.categoryId = this.selectedCategory.id;
                 }
 
                 this._moneyService.addTransaction(newTransaction);
