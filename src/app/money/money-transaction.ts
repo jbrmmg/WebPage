@@ -1,20 +1,17 @@
+import {IRegular} from "./money-regular";
+import {IAccount} from "./money-account";
+import {ICategory} from "./money-category";
+import {IStatement} from "./money-statement";
+
 export interface ITransaction {
     id: number;
-    account: string;
-    category: string;
+    account: IAccount;
+    category: ICategory;
     date: Date;
     amount: number;
-    locked: boolean;
-    group: string;
-    oppositeStatementId: string;
+    statement: IStatement;
     description: string;
-    oppositeId: number;
-    catColour: string;
-    categoryId: string;
-    dateYear: number;
-    dateMonth: string;
-    reconciled: boolean;
-    dateDay: number;
+    oppositeTransactionId: number;
 }
 
 export enum TransactionLineType {
@@ -22,53 +19,127 @@ export enum TransactionLineType {
     TOTAL_BOUGHTFWD,
     TOTAL_DEBITS,
     TOTAL_CREDITS,
-    TOTAL_CARRIEDFWD
+    TOTAL_CARRIEDFWD,
+    REGULAR_TRANSACTION
 }
 
 export class Transaction implements ITransaction {
     id: number = -1;
-    account: string = null;
-    category: string = null;
+    account: IAccount = null;
+    category: ICategory = null;
     date: Date = null;
     amount: number = 0.0;
-    locked: boolean = true;
-    group: string = null;
-    oppositeStatementId: string = null;
-    oppositeId: number = -1;
-    catColour: string = null;
-    categoryId: string = null;
-    dateYear: number = -1;
-    dateMonth: string = null;
-    reconciled: boolean = true;
-    dateDay: number = -1;
+    statement: IStatement = null;
+    oppositeTransactionId: number = -1;
     editable: boolean = false;
     transactionLineType: TransactionLineType = TransactionLineType.TRANSACTION;
     summary: TransactionSummary = null;
     description: string = "";
+    reconciled: boolean;
 
     constructor(source: ITransaction,
+                regular: IRegular,
                 summary: TransactionSummary,
                 type: TransactionLineType) {
         if(source != null) {
             this.id = source.id;
             this.account = source.account;
             this.category = source.category;
-            this.date = source.date;
+            this.date = new Date(source.date);
             this.amount = source.amount;
-            this.locked = source.locked;
-            this.group = source.group;
-            this.oppositeStatementId = source.oppositeStatementId;
-            this.oppositeId = source.oppositeId;
-            this.catColour = source.catColour;
-            this.categoryId = source.categoryId;
-            this.dateYear = source.dateYear;
-            this.dateMonth = source.dateMonth;
-            this.reconciled = source.reconciled;
-            this.dateDay = source.dateDay;
+            this.oppositeTransactionId = source.oppositeTransactionId;
             this.description = source.description;
+            this.statement = source.statement;
+            this.reconciled = (this.statement != null) ? true : false;
+        } else if(regular != null)  {
+            this.id = regular.id;
+            this.category = regular.category;
+            this.date = regular.lastDate == null ? null :  new Date(regular.lastDate);
+            this.amount = regular.amount;
+            this.description = regular.description;
+            this.account = regular.account;
+            this.statement = null;
         }
         this.transactionLineType = type;
         this.summary = summary;
+    }
+
+    get dateDay() : string {
+        if(this.date != null) {
+            return this.date.getDate().toString();
+        } else {
+            return "";
+        }
+    }
+
+    get dateMonth() : string {
+        if(this.date != null) {
+            switch(this.date.getMonth()) {
+                case 0: {
+                    return "Jan";
+                }
+                case 1: {
+                    return "Feb";
+                }
+                case 2: {
+                    return "Mar";
+                }
+                case 3: {
+                    return "Apr";
+                }
+                case 4: {
+                    return "May";
+                }
+                case 5: {
+                    return "Jun";
+                }
+                case 6: {
+                    return "Jul";
+                }
+                case 7: {
+                    return "Aug";
+                }
+                case 8: {
+                    return "Sep";
+                }
+                case 9: {
+                    return "Oct";
+                }
+                case 10: {
+                    return "Nov";
+                }
+                case 11: {
+                    return "Dec";
+                }
+                default: {
+                    return "Xxx";
+                }
+            }
+        } else {
+            return "";
+        }
+    }
+
+    get dateYear() : string {
+        if(this.date != null) {
+            return this.date.getFullYear().toString();
+        } else {
+            return "";
+        }
+    }
+
+    get locked() : boolean {
+        if(this.transactionLineType == TransactionLineType.REGULAR_TRANSACTION) {
+            return true;
+        }
+
+        if(this.statement != null) {
+            if(this.statement.locked) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     set amountString(value:string) {
@@ -85,7 +156,7 @@ export class Transaction implements ITransaction {
     }
 
     get isTransactionLine(): boolean {
-        return this.transactionLineType == TransactionLineType.TRANSACTION;
+        return this.transactionLineType == TransactionLineType.TRANSACTION || this.transactionLineType == TransactionLineType.REGULAR_TRANSACTION;
     }
 
     get isBoughtForward(): boolean {
@@ -112,23 +183,23 @@ export class Transaction implements ITransaction {
     }
 
     get hasDate(): boolean {
-        return this.transactionLineType == TransactionLineType.TRANSACTION;
+        return this.transactionLineType == TransactionLineType.TRANSACTION || this.transactionLineType == TransactionLineType.REGULAR_TRANSACTION;
     }
 
     get hasAccount(): boolean {
-        return this.transactionLineType == TransactionLineType.TRANSACTION;
+        return this.transactionLineType == TransactionLineType.TRANSACTION || this.transactionLineType == TransactionLineType.REGULAR_TRANSACTION;
     }
 
     get hasCategory(): boolean {
-        return this.transactionLineType == TransactionLineType.TRANSACTION;
+        return this.transactionLineType == TransactionLineType.TRANSACTION || this.transactionLineType == TransactionLineType.REGULAR_TRANSACTION;
     }
 
     get hasDescription(): boolean {
-        return this.transactionLineType == TransactionLineType.TRANSACTION;
+        return this.transactionLineType == TransactionLineType.TRANSACTION || this.transactionLineType == TransactionLineType.REGULAR_TRANSACTION;
     }
 
     get myAmount(): number {
-        if(this.transactionLineType == TransactionLineType.TRANSACTION) {
+        if(this.transactionLineType == TransactionLineType.TRANSACTION || this.transactionLineType == TransactionLineType.REGULAR_TRANSACTION) {
             return this.amount;
         }
 
@@ -152,7 +223,7 @@ export class Transaction implements ITransaction {
     }
 
     get myDisplayAmount(): string {
-        if(this.transactionLineType == TransactionLineType.TRANSACTION) {
+        if(this.transactionLineType == TransactionLineType.TRANSACTION || this.transactionLineType == TransactionLineType.REGULAR_TRANSACTION) {
             return this.amountString;
         }
 

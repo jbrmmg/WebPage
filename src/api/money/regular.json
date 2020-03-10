@@ -1,17 +1,54 @@
-
 [
-  {"id":3,"account":"BANK","amount":5712.0,"category":"WGS","frequency":"1M","weekendAdj":"BW","start":"2019-05-22T11:00:00.000+0000","lastDate":"2019-05-22T11:00:00.000+0000"},
-  {"id":4,"account":"BANK","amount":-170.0,"category":"UTL","frequency":"1M","weekendAdj":"FW","start":"2019-05-25T11:00:00.000+0000","lastDate":"2019-05-25T11:00:00.000+0000"},
-  {"id":5,"account":"BANK","amount":-248.0,"category":"UTC","frequency":"1M","weekendAdj":"FW","start":"2019-05-01T11:00:00.000+0000","lastDate":"2019-05-01T11:00:00.000+0000"},
-  {"id":6,"account":"BANK","amount":-12.83,"category":"UTT","frequency":"1M","weekendAdj":"FW","start":"2019-05-01T11:00:00.000+0000","lastDate":"2019-05-01T11:00:00.000+0000"},
-  {"id":7,"account":"BANK","amount":-23.9,"category":"INS","frequency":"1M","weekendAdj":"FW","start":"2019-05-08T11:00:00.000+0000","lastDate":"2019-05-08T11:00:00.000+0000"},
-  {"id":8,"account":"JLPC","amount":-15.0,"category":"UTP","frequency":"1M","weekendAdj":"FW","start":"2019-05-02T11:00:00.000+0000","lastDate":"2019-05-02T11:00:00.000+0000"},
-  {"id":9,"account":"JLPC","amount":-5.0,"category":"UTP","frequency":"1M","weekendAdj":"FW","start":"2019-05-11T11:00:00.000+0000","lastDate":"2019-05-11T11:00:00.000+0000"},
-  {"id":10,"account":"JLPC","amount":-15.0,"category":"UTP","frequency":"1M","weekendAdj":"FW","start":"2019-05-20T11:00:00.000+0000","lastDate":"2019-05-20T11:00:00.000+0000"},
-  {"id":11,"account":"AMEX","amount":-7.99,"category":"UTT","frequency":"1M","weekendAdj":"FW","start":"2019-05-05T11:00:00.000+0000","lastDate":"2019-05-05T11:00:00.000+0000"},
-  {"id":12,"account":"AMEX","amount":-9.99,"category":"FDG","frequency":"1M","weekendAdj":"FW","start":"2019-05-07T11:00:00.000+0000","lastDate":"2019-05-07T11:00:00.000+0000"},
-  {"id":13,"account":"AMEX","amount":-6.75,"category":"HSE","frequency":"1M","weekendAdj":"FW","start":"2019-05-20T11:00:00.000+0000","lastDate":"2019-05-20T11:00:00.000+0000"},
-  {"id":14,"account":"BANK","amount":-2000.0,"category":"HSE","frequency":"1M","weekendAdj":"FW","start":"2019-06-01T11:00:00.000+0000","lastDate":null},
-  {"id":15,"account":"BANK","amount":-126.0,"category":"GYM","frequency":"1M","weekendAdj":"FW","start":"2019-06-01T11:00:00.000+0000","lastDate":null},
-  {"id":16,"account":"BANK","amount":-171.94,"category":"HSE","frequency":"1m","weekendAdj":"FW","start":"2019-06-02T11:00:00.000+0000","lastDate":null}
+  {
+    "id": 1,
+    "account": {
+      "id": "BANK",
+      "name": "Bank Account",
+      "imagePrefix": "firstDirect",
+      "colour": "000000"
+    },
+    "amount": -30.02,
+    "category": {
+      "id": "FDG",
+      "name": "Grocery",
+      "sort": 100,
+      "restricted": false,
+      "colour": "FFFF00",
+      "expense": true,
+      "group": "Food",
+      "systemUse": false,
+      "source": "Grocery"
+    },
+    "frequency": "1M",
+    "weekendAdj": "FW",
+    "start": "2010-03-01T12:00:00.000+0000",
+    "description": "TEST Reg",
+    "lastDate": null
+  },
+  {
+    "id": 2,
+    "account": {
+      "id": "AMEX",
+      "name": "American Express",
+      "imagePrefix": "amex",
+      "colour": "4BBAEA"
+    },
+    "amount": -21.2,
+    "category": {
+      "id": "HSE",
+      "name": "House",
+      "sort": 200,
+      "restricted": false,
+      "colour": "9966FF",
+      "expense": true,
+      "group": "House",
+      "systemUse": false,
+      "source": "House"
+    },
+    "frequency": "1M",
+    "weekendAdj": "FW",
+    "start": "2010-03-01T12:00:00.000+0000",
+    "description": "TEST Reg 2",
+    "lastDate": null
+  }
 ]

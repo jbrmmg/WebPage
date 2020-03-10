@@ -17,11 +17,11 @@
                         <tbody>
                         <tr *ngFor="let nextPayment of regularPayments">
                             <td class="col-5">{{nextPayment.lastDate}}</td>
-                            <td class="col-1">{{nextPayment.account}}</td>
+                            <td class="col-1">{{nextPayment.account.id}}</td>
                             <td class="col-1">{{nextPayment.amount}}</td>
                             <td class="col-1">{{nextPayment.frequency}}</td>
                             <td class="col-1">{{nextPayment.weekendAdj}}</td>
-                            <td class="col-1">{{nextPayment.category}}</td>
+                            <td class="col-1">{{nextPayment.category.id}}</td>
                         </tr>
                         </tbody>
                     </table>
