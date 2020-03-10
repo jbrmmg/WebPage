@@ -321,7 +321,7 @@ export class MoneyListComponent implements OnInit {
             this.statements.forEach(value => {
                 if (!value.locked) {
                     this.accounts.forEach(account => {
-                        if (account.selected && account.id == value.account.id) {
+                        if (account.selected && account.id == value.id.account.id) {
                             BF += value.openBalance;
                         }
                     });
@@ -420,9 +420,9 @@ export class MoneyListComponent implements OnInit {
             this.accounts.forEach(account => {
                 if(account.selected) {
                     this.statements.forEach( statement => {
-                        if( (statement.account.id == account.id) &&
-                            (statement.year == this.fromValue.getFullYear()) &&
-                            (statement.month == this.fromValue.getMonth() )) {
+                        if( (statement.id.account.id == account.id) &&
+                            (statement.id.year == this.fromValue.getFullYear()) &&
+                            (statement.id.month == this.fromValue.getMonth() )) {
                             this.selectedStatement = statement;
                             this.summaryRow.canLock = true;
                         }
