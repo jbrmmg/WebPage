@@ -274,7 +274,7 @@
                                             'trn-account-col': true,
                                             'trn-account-col-total': nextTransaction.isTransactionLine === false}">
                                 <div *ngIf="nextTransaction.hasAccount" class="trn-account">
-                                    <img class="trn-account-img" src="{{getAccountImage(nextTransaction.account)}}" alt="Account"/>
+                                    <img class="trn-account-img" src="{{getAccountImage(nextTransaction.account.id)}}" alt="Account"/>
                                 </div>
                             </td>
                             <td [ngClass]="{'trn-col':  true,
@@ -282,11 +282,11 @@
                                             'trn-category-col-total': nextTransaction.isTransactionLine === false}">
                                 <div *ngIf="nextTransaction.hasCategory" class="row trn-category">
                                     <div class="col-7 trn-category-txt">
-                                        {{nextTransaction.category}}
+                                        {{nextTransaction.category.name}}
                                     </div>
                                     <div class="col-2 trn-category-img">
                                         <svg viewBox='0 0 100 100' width='98%' height='98%'>
-                                            <circle  cx='50' cy='50' r='48' style='stroke:#006600; fill:#FFFFFF' [style.fill]="nextTransaction.catColour"></circle>
+                                            <circle  cx='50' cy='50' r='48' style='stroke:#006600; fill:#FFFFFF' [style.fill]="nextTransaction.category.colour"></circle>
                                         </svg>
                                     </div>
                                     <div class="col-2">

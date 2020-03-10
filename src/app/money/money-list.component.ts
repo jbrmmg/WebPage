@@ -321,7 +321,7 @@ export class MoneyListComponent implements OnInit {
             this.statements.forEach(value => {
                 if (!value.locked) {
                     this.accounts.forEach(account => {
-                        if (account.selected && account.id == value.account) {
+                        if (account.selected && account.id == value.id.account.id) {
                             BF += value.openBalance;
                         }
                     });
@@ -416,12 +416,13 @@ export class MoneyListComponent implements OnInit {
         // Set the selected statement.
         this.summaryRow.canLock = false;
         this.selectedStatement = null;
-        let statementId = MoneyService.getStatementId(this.fromValue);
         if(this.radioType == "RC") {
             this.accounts.forEach(account => {
                 if(account.selected) {
                     this.statements.forEach( statement => {
-                        if( (statement.account == account.id) && (statement.yearMonthId == statementId)) {
+                        if( (statement.id.account.id == account.id) &&
+                            (statement.id.year == this.fromValue.getFullYear()) &&
+                            (statement.id.month == this.fromValue.getMonth() )) {
                             this.selectedStatement = statement;
                             this.summaryRow.canLock = true;
                         }
@@ -438,10 +439,10 @@ export class MoneyListComponent implements OnInit {
             this.calculateBF();
             this.summaryRow.resetCreditsDetbits();
             this.transactions = [];
-            this.transactions.push(new Transaction(null, this.summaryRow, TransactionLineType.TOTAL_BOUGHTFWD));
-            this.transactions.push(new Transaction(null, this.summaryRow, TransactionLineType.TOTAL_DEBITS));
-            this.transactions.push(new Transaction(null, this.summaryRow, TransactionLineType.TOTAL_CREDITS));
-            this.transactions.push(new Transaction(null, this.summaryRow, TransactionLineType.TOTAL_CARRIEDFWD));
+            this.transactions.push(new Transaction(null, null, this.summaryRow, TransactionLineType.TOTAL_BOUGHTFWD));
+            this.transactions.push(new Transaction(null, null, this.summaryRow, TransactionLineType.TOTAL_DEBITS));
+            this.transactions.push(new Transaction(null, null, this.summaryRow, TransactionLineType.TOTAL_CREDITS));
+            this.transactions.push(new Transaction(null, null, this.summaryRow, TransactionLineType.TOTAL_CARRIEDFWD));
             this._moneyService.getTransactions(this.getTransactionType(this.internalRadioType),
                 this.fromValue,
                 this.toValue,
@@ -449,23 +450,33 @@ export class MoneyListComponent implements OnInit {
                 this.categories).subscribe(
                 transactions => {
                     transactions.forEach(value => {
-                        this.transactions.push(new Transaction(value, this.summaryRow, TransactionLineType.TRANSACTION));
+                        this.transactions.push(new Transaction(value, null, this.summaryRow, TransactionLineType.TRANSACTION));
                         this.summaryRow.addAmount(value.amount);
                     })
                 },
                 error => this.errorMessage = <any>error,
                 () => {
                     console.log("Request Transactions Complete." + thisChange);
-//                    this.transactions.push(new Transaction(null, this.summaryRow, TransactionLineType.TOTAL_BOUGHTFWD));
-//                    this.transactions.push(new Transaction(null, this.summaryRow, TransactionLineType.TOTAL_DEBITS));
-//                    this.transactions.push(new Transaction(null, this.summaryRow, TransactionLineType.TOTAL_CREDITS));
-//                    this.transactions.push(new Transaction(null, this.summaryRow, TransactionLineType.TOTAL_CARRIEDFWD));
                 }
             )
         } else if (this.listMode == ListMode.Regulars) {
             // Get the regulars.
+            this.transactions = [];
+
+            this._moneyService.getRegularPayments().subscribe(
+                transctions => {
+                    transctions.forEach( value => {
+                        this.transactions.push(new Transaction(null,value,null, TransactionLineType.REGULAR_TRANSACTION));
+                    })
+                },
+                error => this.errorMessage = <any>error,
+                () => {
+                    console.log("Request Regular Transactions Complete.");
+                }
+            )
         } else if (this.listMode == ListMode.Reconciliation) {
             // Get the reconcilation.
+            this.transactions = [];
         }
     }
 
@@ -597,13 +608,13 @@ export class MoneyListComponent implements OnInit {
         this.transactionAmount = transaction.amount;
 
         this.categories.forEach(nextCategory => {
-            if(nextCategory.id == transaction.categoryId) {
+            if(nextCategory.id == transaction.category.id) {
                 this.selectedCategory = nextCategory;
             }
         });
 
         this.accounts.forEach(nextAccount => {
-            if(nextAccount.id == transaction.account) {
+            if(nextAccount.id == transaction.account.id) {
                 this.selectedAccount = nextAccount;
             }
         });
@@ -738,8 +749,8 @@ export class MoneyListComponent implements OnInit {
                 // Find the transaction in the list, and update it.
                 this.transactions.forEach(nextTransaction => {
                     if(nextTransaction.id == this.existingTransactionId) {
-                        if (nextTransaction.categoryId != "TRF") {
-                            nextTransaction.categoryId = this.selectedCategory.id;
+                        if (nextTransaction.category.id != "TRF") {
+                            nextTransaction.category.id = this.selectedCategory.id;
                         }
 
                         nextTransaction.description = this.transactionDescription;

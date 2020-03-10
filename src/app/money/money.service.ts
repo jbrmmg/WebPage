@@ -48,7 +48,7 @@ export class UpdateTransactionRequest {
     id: number;
     amount: number;
     description: string;
-    category: string;
+    categoryId: string;
 }
 
 export class LoadFileRequest {
@@ -388,7 +388,7 @@ export class MoneyService {
         updateRequest.id = transaction.id;
         updateRequest.amount = transaction.amount;
         updateRequest.description = transaction.description;
-        updateRequest.category = transaction.categoryId;
+        updateRequest.categoryId = transaction.category.id;
 
         this.http.put<StatusResponse>(url, updateRequest).subscribe(
             () => {
@@ -459,9 +459,9 @@ export class MoneyService {
 
         let lockRequest = new LockRequest();
 
-        lockRequest.accountId = statement.account;
-        lockRequest.year = statement.year;
-        lockRequest.month = statement.month;
+        lockRequest.accountId = statement.id.account.id;
+        lockRequest.year = statement.id.year;
+        lockRequest.month = statement.id.month;
 
         this.http.post<StatusResponse>(url,lockRequest).subscribe(() => {
             console.log(url);
