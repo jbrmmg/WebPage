@@ -1,70 +1,78 @@
 [
-  { "id":9849,
-    "account":"AMEX",
-    "category":"Utility - TV",
-    "date":1543968000000,
-    "amount":-7.99,
-    "locked":true,
-    "group":"House",
-    "oppositeStatementId":"",
-    "description": "text of id 9849",
-    "reconciled":true,
-    "dateDay":5,
-    "oppositeId":-1,
-    "catColour":"33CCEE",
-    "categoryId":"UTT",
-    "dateYear":2018,
-    "dateMonth":"Dec"
+  {
+    "id": 2,
+    "account": {
+      "id": "AMEX",
+      "name": "American Express",
+      "imagePrefix": "amex",
+      "colour": "4BBAEA"
+    },
+    "category": {
+      "id": "HSE",
+      "name": "House",
+      "sort": 200,
+      "restricted": false,
+      "colour": "9966FF",
+      "expense": true,
+      "group": "House",
+      "systemUse": false,
+      "source": "House"
+    },
+    "date": "2010-01-02T00:00:00.000+0000",
+    "amount": -21.03,
+    "statement": {
+      "id": {
+        "account": {
+          "id": "AMEX",
+          "name": "American Express",
+          "imagePrefix": "amex",
+          "colour": "4BBAEA"
+        },
+        "month": 1,
+        "year": 2010
+      },
+      "openBalance": 0,
+      "locked": true
+    },
+    "description": "Boots",
+    "oppositeTransactionId": null
   },
-  { "id":9850,
-    "account":"AMEX",
-    "category":"At Work",
-    "date":1543968000000,
-    "amount":-1.9,
-    "locked":true,
-    "group":"Food",
-    "oppositeStatementId":"",
-    "description": "text of id 9849",
-    "reconciled":true,
-    "dateDay":5,
-    "oppositeId":-1,
-    "catColour":"FFFFCC",
-    "categoryId":"FDW",
-    "dateYear":2018,
-    "dateMonth":"Dec"
-  },
-  { "id":9851,
-    "account":"AMEX",
-    "category":"At Work",
-    "date":1543968000000,
-    "amount":-0.95,
-    "locked":true,
-    "group":"Food",
-    "oppositeStatementId":"",
-    "description": "text of id 9849",
-    "reconciled":true,
-    "dateDay":5,
-    "oppositeId":-1,
-    "catColour":"FFFFCC",
-    "categoryId":"FDW",
-    "dateYear":2018,
-    "dateMonth":"Dec"
-  },
-  { "id": 9852,
-    "account": "AMEX",
-    "category": "Public Transport",
-    "date": 1544054400000,
-    "amount": -20.0,
-    "locked": true,
-    "group": "House",
-    "oppositeStatementId": "",
-    "description": "text of id 9849",
-    "reconciled": true,
-    "dateDay": 6,
-    "oppositeId": -1,
-    "catColour": "009900",
-    "categoryId": "TRV",
-    "dateYear": 2018,
-    "dateMonth": "Dec"
+  {
+    "id": 1,
+    "account": {
+      "id": "AMEX",
+      "name": "American Express",
+      "imagePrefix": "amex",
+      "colour": "4BBAEA"
+    },
+    "category": {
+      "id": "FDG",
+      "name": "Grocery",
+      "sort": 100,
+      "restricted": false,
+      "colour": "FFFF00",
+      "expense": true,
+      "group": "Food",
+      "systemUse": false,
+      "source": "Grocery"
+    },
+    "date": "2010-01-01T00:00:00.000+0000",
+    "amount": -10,
+    "statement": {
+      "id": {
+        "account": {
+          "id": "AMEX",
+          "name": "American Express",
+          "imagePrefix": "amex",
+          "colour": "4BBAEA"
+        },
+        "month": 1,
+        "year": 2010
+      },
+      "openBalance": 0,
+      "locked": true
+    },
+    "description": "Waitrose",
+    "oppositeTransactionId": null
   }
 ]

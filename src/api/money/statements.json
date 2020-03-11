@@ -1,110 +1,86 @@
 [
     {
-        "account": "AMEX",
-        "month": 12,
-        "year": 2018,
-        "openBalance": -2038.23,
-        "locked": true,
-        "notLocked": false,
-        "yearMonthId": "201812"
+        "id": {
+            "account": {
+                "id": "AMEX",
+                "name": "American Express",
+                "imagePrefix": "amex",
+                "colour": "4BBAEA"
+            },
+            "month": 1,
+            "year": 2010
+        },
+        "openBalance": 0,
+        "locked": true
     },
     {
-        "account": "AMEX",
-        "month": 1,
-        "year": 2019,
-        "openBalance": -2121.23,
-        "locked": true,
-        "notLocked": false,
-        "yearMonthId": "201901"
+        "id": {
+            "account": {
+                "id": "AMEX",
+                "name": "American Express",
+                "imagePrefix": "amex",
+                "colour": "4BBAEA"
+            },
+            "month": 2,
+            "year": 2010
+        },
+        "openBalance": -31.03,
+        "locked": false
     },
     {
-        "account": "AMEX",
-        "month": 2,
-        "year": 2019,
-        "openBalance": -2131.23,
-        "locked": false,
-        "notLocked": true,
-        "yearMonthId": "201902"
+        "id": {
+            "account": {
+                "id": "BANK",
+                "name": "Bank Account",
+                "imagePrefix": "firstDirect",
+                "colour": "000000"
+            },
+            "month": 1,
+            "year": 2010
+        },
+        "openBalance": 0,
+        "locked": true
     },
     {
-        "account": "BANK",
-        "month": 12,
-        "year": 2018,
-        "openBalance": -2138.23,
-        "locked": true,
-        "notLocked": false,
-        "yearMonthId": "201812"
+        "id": {
+            "account": {
+                "id": "BANK",
+                "name": "Bank Account",
+                "imagePrefix": "firstDirect",
+                "colour": "000000"
+            },
+            "month": 2,
+            "year": 2010
+        },
+        "openBalance": -70.83,
+        "locked": false
     },
     {
-        "account": "BANK",
-        "month": 1,
-        "year": 2019,
-        "openBalance": -2221.23,
-        "locked": true,
-        "notLocked": false,
-        "yearMonthId": "201901"
+        "id": {
+            "account": {
+                "id": "JLPC",
+                "name": "John Lewis Card",
+                "imagePrefix": "johnLewis",
+                "colour": "00461C"
+            },
+            "month": 1,
+            "year": 2010
+        },
+        "openBalance": 0,
+        "locked": false
     },
     {
-        "account": "BANK",
-        "month": 2,
-        "year": 2019,
-        "openBalance": -2331.23,
-        "locked": false,
-        "notLocked": true,
-        "yearMonthId": "201902"
-    },
-    {
-        "account": "JLPC",
-        "month": 12,
-        "year": 2018,
-        "openBalance": -2438.23,
-        "locked": true,
-        "notLocked": false,
-        "yearMonthId": "201812"
-    },
-    {
-        "account": "JLPC",
-        "month": 1,
-        "year": 2019,
-        "openBalance": -2521.23,
-        "locked": true,
-        "notLocked": false,
-        "yearMonthId": "201901"
-    },
-    {
-        "account": "JLPC",
-        "month": 2,
-        "year": 2019,
-        "openBalance": -2631.23,
-        "locked": false,
-        "notLocked": true,
-        "yearMonthId": "201902"
-    },
-    {
-        "account": "NWDE",
-        "month": 12,
-        "year": 2018,
-        "openBalance": -2738.23,
-        "locked": true,
-        "notLocked": false,
-        "yearMonthId": "201812"
-    },
-    {
-        "account": "NWDE",
-        "month": 1,
-        "year": 2019,
-        "openBalance": -2821.23,
-        "locked": true,
-        "notLocked": false,
-        "yearMonthId": "201901"
-    },
-    {
-        "account": "NWDE",
-        "month": 2,
-        "year": 2019,
-        "openBalance": -2931.23,
-        "locked": false,
-        "notLocked": true,
-        "yearMonthId": "201902"
+        "id": {
+            "account": {
+                "id": "NWDE",
+                "name": "Nationwide",
+                "imagePrefix": "nationwide",
+                "colour": "00326B"
+            },
+            "month": 1,
+            "year": 2010
+        },
+        "openBalance": 0,
+        "locked": false
     }
 ]

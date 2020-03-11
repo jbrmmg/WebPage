@@ -1,53 +1,267 @@
 [
-  { "id":8035,
-    "account":"JLPC",
-    "category":"Grocery",
-    "date":1514764800000,
-    "amount":-107.89,
-    "locked":true,
-    "group":"Food",
-    "oppositeStatementId":"",
-    "description":"Text for 8035",
-    "reconciled":true,
-    "dateDay":1,
-    "oppositeId":-1,
-    "catColour":"FFFF00",
-    "categoryId":"FDG",
-    "dateYear":2018,
-   "dateMonth":"Jan"
+  {
+    "id": 4,
+    "account": {
+      "id": "AMEX",
+      "name": "American Express",
+      "imagePrefix": "amex",
+      "colour": "4BBAEA"
+    },
+    "category": {
+      "id": "FDT",
+      "name": "Take Away Food",
+      "sort": 102,
+      "restricted": false,
+      "colour": "FFFF99",
+      "expense": true,
+      "group": "Food",
+      "systemUse": false,
+      "source": "Take Away Food"
+    },
+    "date": "2010-02-01T00:00:00.000+0000",
+    "amount": 3.09,
+    "statement": null,
+    "description": "Pret",
+    "oppositeTransactionId": null
   },
-  { "id":8036,
-    "account":"JLPC",
-    "category":"House",
-    "date":1514764800000,
-    "amount":-103.6,
-    "locked":true,
-    "group":"House",
-    "oppositeStatementId":"",
-    "description":"Text for 8036",
-    "reconciled":true,
-    "dateDay":1,
-    "oppositeId":-1,
-    "catColour":"9966FF",
-    "categoryId":"HSE",
-    "dateYear":2018,
-    "dateMonth":"Jan"
+  {
+    "id": 3,
+    "account": {
+      "id": "AMEX",
+      "name": "American Express",
+      "imagePrefix": "amex",
+      "colour": "4BBAEA"
+    },
+    "category": {
+      "id": "JBS",
+      "name": "Jason",
+      "sort": 300,
+      "restricted": false,
+      "colour": "B8B825",
+      "expense": true,
+      "group": "House",
+      "systemUse": false,
+      "source": "Jason"
+    },
+    "date": "2010-02-01T00:00:00.000+0000",
+    "amount": -38.82,
+    "statement": {
+      "id": {
+        "account": {
+          "id": "AMEX",
+          "name": "American Express",
+          "imagePrefix": "amex",
+          "colour": "4BBAEA"
+        },
+        "month": 2,
+        "year": 2010
+      },
+      "openBalance": -31.03,
+      "locked": false
+    },
+    "description": "Watford FC",
+    "oppositeTransactionId": null
   },
-  { "id":8037,
-    "account":"JLPC",
-    "category":"House",
-    "date":1514764800000,
-    "amount":-80.0,
-    "locked":true,
-    "group":"House",
-    "oppositeStatementId":"",
-    "description":"Text for 8037",
-    "reconciled":true,
-    "dateDay":1,
-    "oppositeId":-1,
-    "catColour":"9966FF",
-    "categoryId":"HSE",
-    "dateYear":2018,
-    "dateMonth":"Jan"
+  {
+    "id": 9,
+    "account": {
+      "id": "NWDE",
+      "name": "Nationwide",
+      "imagePrefix": "nationwide",
+      "colour": "00326B"
+    },
+    "category": {
+      "id": "FDT",
+      "name": "Take Away Food",
+      "sort": 102,
+      "restricted": false,
+      "colour": "FFFF99",
+      "expense": true,
+      "group": "Food",
+      "systemUse": false,
+      "source": "Take Away Food"
+    },
+    "date": "2010-01-06T00:00:00.000+0000",
+    "amount": -31.2,
+    "statement": null,
+    "description": "Nero",
+    "oppositeTransactionId": null
+  },
+  {
+    "id": 6,
+    "account": {
+      "id": "BANK",
+      "name": "Bank Account",
+      "imagePrefix": "firstDirect",
+      "colour": "000000"
+    },
+    "category": {
+      "id": "FDG",
+      "name": "Grocery",
+      "sort": 100,
+      "restricted": false,
+      "colour": "FFFF00",
+      "expense": true,
+      "group": "Food",
+      "systemUse": false,
+      "source": "Grocery"
+    },
+    "date": "2010-01-06T00:00:00.000+0000",
+    "amount": -73.83,
+    "statement": {
+      "id": {
+        "account": {
+          "id": "BANK",
+          "name": "Bank Account",
+          "imagePrefix": "firstDirect",
+          "colour": "000000"
+        },
+        "month": 1,
+        "year": 2010
+      },
+      "openBalance": 0,
+      "locked": true
+    },
+    "description": "John Lewis",
+    "oppositeTransactionId": null
+  },
+  {
+    "id": 8,
+    "account": {
+      "id": "JLPC",
+      "name": "John Lewis Card",
+      "imagePrefix": "johnLewis",
+      "colour": "00461C"
+    },
+    "category": {
+      "id": "FDG",
+      "name": "Grocery",
+      "sort": 100,
+      "restricted": false,
+      "colour": "FFFF00",
+      "expense": true,
+      "group": "Food",
+      "systemUse": false,
+      "source": "Grocery"
+    },
+    "date": "2010-01-04T00:00:00.000+0000",
+    "amount": -30.92,
+    "statement": null,
+    "description": "Tesco",
+    "oppositeTransactionId": null
+  },
+  {
+    "id": 5,
+    "account": {
+      "id": "BANK",
+      "name": "Bank Account",
+      "imagePrefix": "firstDirect",
+      "colour": "000000"
+    },
+    "category": {
+      "id": "PTL",
+      "name": "Petrol",
+      "sort": 901,
+      "restricted": false,
+      "colour": "007800",
+      "expense": true,
+      "group": "Travel",
+      "systemUse": false,
+      "source": "Petrol"
+    },
+    "date": "2010-01-03T00:00:00.000+0000",
+    "amount": 3,
+    "statement": {
+      "id": {
+        "account": {
+          "id": "BANK",
+          "name": "Bank Account",
+          "imagePrefix": "firstDirect",
+          "colour": "000000"
+        },
+        "month": 1,
+        "year": 2010
+      },
+      "openBalance": 0,
+      "locked": true
+    },
+    "description": "Shell",
+    "oppositeTransactionId": null
+  },
+  {
+    "id": 2,
+    "account": {
+      "id": "AMEX",
+      "name": "American Express",
+      "imagePrefix": "amex",
+      "colour": "4BBAEA"
+    },
+    "category": {
+      "id": "HSE",
+      "name": "House",
+      "sort": 200,
+      "restricted": false,
+      "colour": "9966FF",
+      "expense": true,
+      "group": "House",
+      "systemUse": false,
+      "source": "House"
+    },
+    "date": "2010-01-02T00:00:00.000+0000",
+    "amount": -21.03,
+    "statement": {
+      "id": {
+        "account": {
+          "id": "AMEX",
+          "name": "American Express",
+          "imagePrefix": "amex",
+          "colour": "4BBAEA"
+        },
+        "month": 1,
+        "year": 2010
+      },
+      "openBalance": 0,
+      "locked": true
+    },
+    "description": "Boots",
+    "oppositeTransactionId": null
+  },
+  {
+    "id": 1,
+    "account": {
+      "id": "AMEX",
+      "name": "American Express",
+      "imagePrefix": "amex",
+      "colour": "4BBAEA"
+    },
+    "category": {
+      "id": "FDG",
+      "name": "Grocery",
+      "sort": 100,
+      "restricted": false,
+      "colour": "FFFF00",
+      "expense": true,
+      "group": "Food",
+      "systemUse": false,
+      "source": "Grocery"
+    },
+    "date": "2010-01-01T00:00:00.000+0000",
+    "amount": -10,
+    "statement": {
+      "id": {
+        "account": {
+          "id": "AMEX",
+          "name": "American Express",
+          "imagePrefix": "amex",
+          "colour": "4BBAEA"
+        },
+        "month": 1,
+        "year": 2010
+      },
+      "openBalance": 0,
+      "locked": true
+    },
+    "description": "Waitrose",
+    "oppositeTransactionId": null
   }
 ]

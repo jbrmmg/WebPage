@@ -1,22 +1,22 @@
-export interface IStatement {
-    account: string;
+import {IAccount} from "./money-account";
+
+export interface IStatementId {
+    account: IAccount;
     month: number;
     year: number;
+}
+
+export interface IStatement {
+    id: IStatementId;
     openBalance: number;
     locked: boolean;
-    notLocked: boolean;
-    yearMonthId: string;
 }
 
 export class Statement implements IStatement {
     selected: boolean;
 
-    constructor(public account: string,
-                public month: number,
-                public year: number,
+    constructor(public id: IStatementId,
                 public openBalance: number,
-                public locked: boolean,
-                public notLocked: boolean,
-                public yearMonthId: string ) {
+                public locked: boolean ) {
     }
 }

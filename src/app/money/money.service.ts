@@ -15,16 +15,11 @@ import {IFile} from "./money-file";
 export class NewTransaction {
     date: Date;
     amount: number;
-    category: string;
-    account: string;
+    categoryId: string;
+    accountId: string;
     accountTransfer: boolean;
-    transferAccount: string;
+    transferAccountId: string;
     description: string;
-}
-
-export class StatusResponse {
-    status: string;
-    message: string;
 }
 
 export class LockRequest {
@@ -48,7 +43,7 @@ export class UpdateTransactionRequest {
     id: number;
     amount: number;
     description: string;
-    category: string;
+    categoryId: string;
 }
 
 export class LoadFileRequest {
@@ -388,9 +383,9 @@ export class MoneyService {
         updateRequest.id = transaction.id;
         updateRequest.amount = transaction.amount;
         updateRequest.description = transaction.description;
-        updateRequest.category = transaction.categoryId;
+        updateRequest.categoryId = transaction.category.id;
 
-        this.http.put<StatusResponse>(url, updateRequest).subscribe(
+        this.http.put<void>(url, updateRequest).subscribe(
             () => {
                 console.log(url);
             },
@@ -413,7 +408,7 @@ export class MoneyService {
         reconcileRequest.transactionId = transaction.id;
         reconcileRequest.reconcile = transaction.reconciled;
 
-        this.http.put<StatusResponse>(url,reconcileRequest).subscribe(
+        this.http.put<void>(url,reconcileRequest).subscribe(
             () => {
                 console.log(url);
             },
@@ -437,7 +432,7 @@ export class MoneyService {
         let url = this.deleteTransactionUrl;
         url = url.replace("##transactionId##",transaction.id.toString());
 
-        this.http.delete<StatusResponse>(url).subscribe(() => {
+        this.http.delete<void>(url).subscribe(() => {
             console.log(url);
         },
         (response) => {
@@ -459,11 +454,11 @@ export class MoneyService {
 
         let lockRequest = new LockRequest();
 
-        lockRequest.accountId = statement.account;
-        lockRequest.year = statement.year;
-        lockRequest.month = statement.month;
+        lockRequest.accountId = statement.id.account.id;
+        lockRequest.year = statement.id.year;
+        lockRequest.month = statement.id.month;
 
-        this.http.post<StatusResponse>(url,lockRequest).subscribe(() => {
+        this.http.post<void>(url,lockRequest).subscribe(() => {
             console.log(url);
         },
         (response) => {
@@ -502,7 +497,7 @@ export class MoneyService {
 
     clearRecData() {
         // Clear the rec data.
-        this.http.delete<StatusResponse>(this.clearDataUrl).subscribe(() => {
+        this.http.delete<void>(this.clearDataUrl).subscribe(() => {
                 console.log(this.clearDataUrl);
             },
             (response) => {
@@ -515,8 +510,8 @@ export class MoneyService {
 
     autoAccept() {
         // Auto accept the data.
-        this.http.put<StatusResponse>(this.autoAcceptUrl,"").subscribe((response) => {
-                console.log(this.autoAcceptUrl + " -> " + response.status);
+        this.http.put<void>(this.autoAcceptUrl,"").subscribe((response) => {
+                console.log(this.autoAcceptUrl);
             },
             (response) => {
                 console.log("Auto Accept PUT call in error", response);
@@ -536,8 +531,8 @@ export class MoneyService {
         request.categoryId = category.id;
         request.type = "rec";
 
-        this.http.put<StatusResponse>(url,request).subscribe((response) => {
-                console.log(url + " -> " + response.status + " " + response.message);
+        this.http.put<void>(url,request).subscribe((response) => {
+                console.log(url);
             },
             (response) => {
                 console.log("Set Cat PUT call in error", response);
