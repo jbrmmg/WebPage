@@ -1,12 +1,15 @@
+import {ICategory} from "./money-category";
+import {IAccount} from "./money-account";
+
 export interface IMatch {
     transactionId: number;
     beforeAmount: number;
     afterAmount: number;
-    category: string;
+    category: ICategory;
     description: string;
     colour: string;
-    account: string;
-    date: string;
+    account: IAccount;
+    date: Date;
     backwardAction: string;
     forwardAction: string;
     amount: number;
@@ -17,11 +20,11 @@ export class Match implements IMatch {
     public transactionId: number;
     public beforeAmount: number;
     public afterAmount: number;
-    public category: string;
+    public category: ICategory;
     public description: string;
     public colour: string;
-    public account: string;
-    public date: string;
+    public account: IAccount;
+    public date: Date;
     public backwardAction: string;
     public forwardAction: string;
     public amount: number;

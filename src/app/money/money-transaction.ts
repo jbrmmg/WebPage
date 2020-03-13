@@ -1,7 +1,8 @@
 import {IRegular} from "./money-regular";
 import {IAccount} from "./money-account";
-import {ICategory} from "./money-category";
+import {Category, ICategory} from "./money-category";
 import {IStatement} from "./money-statement";
+import {IMatch} from "./money-match";
 
 export interface ITransaction {
     id: number;
@@ -14,17 +15,23 @@ export interface ITransaction {
     oppositeTransactionId: number;
 }
 
+export interface IExtendedTransaction {
+}
+
 export enum TransactionLineType {
     TRANSACTION,
     TOTAL_BOUGHTFWD,
     TOTAL_DEBITS,
     TOTAL_CREDITS,
     TOTAL_CARRIEDFWD,
-    REGULAR_TRANSACTION
+    REGULAR_TRANSACTION,
+    RECONCILE_TRANSACTION,
+    RECONCILE_TOP_LINE
 }
 
-export class Transaction implements ITransaction {
+export class Transaction implements ITransaction, IExtendedTransaction {
     id: number = -1;
+    temp: number = -1;
     account: IAccount = null;
     category: ICategory = null;
     date: Date = null;
@@ -37,8 +44,34 @@ export class Transaction implements ITransaction {
     description: string = "";
     reconciled: boolean;
 
+    static unknownCategory: ICategory;
+    static selectedCategory: ICategory;
+
+    private static createUiCategories() {
+        if(Transaction.unknownCategory == null) {
+            Transaction.unknownCategory = new Category("XXXXX", "Not Set", 0, false, "000000", "none", false, "");
+        }
+
+        if(Transaction.selectedCategory == null) {
+            Transaction.selectedCategory = new Category("XXXXX", "Selected", 0, false, "808080", "none", false, "");
+        }
+    }
+
+    private static getUnknownCategory() : ICategory {
+        Transaction.createUiCategories();
+
+        return Transaction.unknownCategory;
+    }
+
+    private static getSelectedCategory() : ICategory {
+        Transaction.createUiCategories();
+
+        return Transaction.selectedCategory;
+    }
+
     constructor(source: ITransaction,
                 regular: IRegular,
+                reconcile: IMatch,
                 summary: TransactionSummary,
                 type: TransactionLineType) {
         if(source != null) {
@@ -50,7 +83,7 @@ export class Transaction implements ITransaction {
             this.oppositeTransactionId = source.oppositeTransactionId;
             this.description = source.description;
             this.statement = source.statement;
-            this.reconciled = (this.statement != null) ? true : false;
+            this.reconciled = (this.statement != null);
         } else if(regular != null)  {
             this.id = regular.id;
             this.category = regular.category;
@@ -59,9 +92,30 @@ export class Transaction implements ITransaction {
             this.description = regular.description;
             this.account = regular.account;
             this.statement = null;
+        } else if(reconcile != null) {
+            this.id = reconcile.id;
+            this.account = reconcile.account;
+            this.category = reconcile.category == null ? Transaction.getUnknownCategory() : reconcile.category;
+            this.date = new Date(reconcile.date);
+            this.amount = reconcile.amount;
+            this.description = reconcile.description;
+            this.statement = null;
+            this.reconciled = (reconcile.forwardAction == "UNRECONCILE") ? true : false;
         }
         this.transactionLineType = type;
         this.summary = summary;
+    }
+
+    selectCategory() {
+        if(this.transactionLineType == TransactionLineType.RECONCILE_TRANSACTION) {
+            if(this.category.id == "XXXXX") {
+                if(this.category.name == "Selected") {
+                    this.category = Transaction.getUnknownCategory();
+                } else {
+                    this.category = Transaction.getSelectedCategory();
+                }
+            }
+        }
     }
 
     get dateDay() : string {
@@ -129,6 +183,10 @@ export class Transaction implements ITransaction {
     }
 
     get locked() : boolean {
+        if(this.transactionLineType == TransactionLineType.RECONCILE_TOP_LINE) {
+            return false;
+        }
+
         if(this.transactionLineType == TransactionLineType.REGULAR_TRANSACTION) {
             return true;
         }
@@ -142,13 +200,31 @@ export class Transaction implements ITransaction {
         return false;
     }
 
-    set amountString(value:string) {
-        // Check that the string can be an amount.
-        if(isNaN(Number(value))) {
-            return;
+    get tickOK() : boolean {
+        if(this.transactionLineType == TransactionLineType.RECONCILE_TOP_LINE)
+            return true;
+
+        if(this.transactionLineType == TransactionLineType.RECONCILE_TRANSACTION) {
+            if(this.reconciled) {
+                return false;
+            }
         }
 
-        this.amount = Number(value);
+        return !this.locked;
+    }
+
+    get pencilOK() : boolean {
+        if(this.transactionLineType == TransactionLineType.RECONCILE_TOP_LINE)
+            return true;
+
+        return !(this.locked || this.reconciled);
+    }
+
+    get dustbinOK() : boolean {
+        if(this.transactionLineType == TransactionLineType.RECONCILE_TOP_LINE)
+            return true;
+
+        return !(this.locked || this.reconciled);
     }
 
     get amountString(): string {
@@ -156,7 +232,10 @@ export class Transaction implements ITransaction {
     }
 
     get isTransactionLine(): boolean {
-        return this.transactionLineType == TransactionLineType.TRANSACTION || this.transactionLineType == TransactionLineType.REGULAR_TRANSACTION;
+        return this.transactionLineType == TransactionLineType.TRANSACTION ||
+            this.transactionLineType == TransactionLineType.REGULAR_TRANSACTION ||
+            this.transactionLineType == TransactionLineType.RECONCILE_TRANSACTION ||
+            this.transactionLineType == TransactionLineType.RECONCILE_TOP_LINE;
     }
 
     get isBoughtForward(): boolean {
@@ -183,23 +262,27 @@ export class Transaction implements ITransaction {
     }
 
     get hasDate(): boolean {
-        return this.transactionLineType == TransactionLineType.TRANSACTION || this.transactionLineType == TransactionLineType.REGULAR_TRANSACTION;
+        return this.transactionLineType == TransactionLineType.TRANSACTION ||
+            this.transactionLineType == TransactionLineType.REGULAR_TRANSACTION ||
+            this.transactionLineType == TransactionLineType.RECONCILE_TRANSACTION;
     }
 
     get hasAccount(): boolean {
-        return this.transactionLineType == TransactionLineType.TRANSACTION || this.transactionLineType == TransactionLineType.REGULAR_TRANSACTION;
+        return this.transactionLineType == TransactionLineType.TRANSACTION ||
+            this.transactionLineType == TransactionLineType.REGULAR_TRANSACTION ||
+            this.transactionLineType == TransactionLineType.RECONCILE_TRANSACTION;
     }
 
     get hasCategory(): boolean {
-        return this.transactionLineType == TransactionLineType.TRANSACTION || this.transactionLineType == TransactionLineType.REGULAR_TRANSACTION;
-    }
-
-    get hasDescription(): boolean {
-        return this.transactionLineType == TransactionLineType.TRANSACTION || this.transactionLineType == TransactionLineType.REGULAR_TRANSACTION;
+        return this.transactionLineType == TransactionLineType.TRANSACTION ||
+            this.transactionLineType == TransactionLineType.REGULAR_TRANSACTION ||
+            this.transactionLineType == TransactionLineType.RECONCILE_TRANSACTION;
     }
 
     get myAmount(): number {
-        if(this.transactionLineType == TransactionLineType.TRANSACTION || this.transactionLineType == TransactionLineType.REGULAR_TRANSACTION) {
+        if(this.transactionLineType == TransactionLineType.TRANSACTION ||
+            this.transactionLineType == TransactionLineType.REGULAR_TRANSACTION  ||
+             this.transactionLineType == TransactionLineType.RECONCILE_TRANSACTION) {
             return this.amount;
         }
 
@@ -220,30 +303,6 @@ export class Transaction implements ITransaction {
         }
 
         return 0;
-    }
-
-    get myDisplayAmount(): string {
-        if(this.transactionLineType == TransactionLineType.TRANSACTION || this.transactionLineType == TransactionLineType.REGULAR_TRANSACTION) {
-            return this.amountString;
-        }
-
-        if(this.transactionLineType == TransactionLineType.TOTAL_BOUGHTFWD) {
-            return this.summary.boughtFwdDisplay;
-        }
-
-        if(this.transactionLineType == TransactionLineType.TOTAL_DEBITS) {
-            return this.summary.totalDebitsDisplay;
-        }
-
-        if(this.transactionLineType == TransactionLineType.TOTAL_CREDITS) {
-            return this.summary.totalCreditsDisplay;
-        }
-
-        if(this.transactionLineType == TransactionLineType.TOTAL_CARRIEDFWD) {
-            return this.summary.carriedForwardDisplay;
-        }
-
-        return "0.00";
     }
 }
 
@@ -299,31 +358,15 @@ export class TransactionSummary {
         return this.totalsDisplay[0].amount;
     }
 
-    get boughtFwdDisplay(): string {
-        return this.totalsDisplay[0].displayAmt;
-    }
-
     get totalDebits(): number {
         return this.totalsDisplay[1].amount;
-    }
-
-    get totalDebitsDisplay(): string {
-        return this.totalsDisplay[1].displayAmt;
     }
 
     get totalCredits(): number {
         return this.totalsDisplay[2].amount;
     }
 
-    get totalCreditsDisplay(): string {
-        return this.totalsDisplay[2].displayAmt;
-    }
-
     get carriedForward(): number {
         return this.totalsDisplay[3].amount;
-    }
-
-    get carriedForwardDisplay(): string {
-        return this.totalsDisplay[3].displayAmt;
     }
 }

@@ -178,21 +178,6 @@ export class MoneyService {
         return result;
     }
 
-    static getStatementId(fromDate: Date) {
-        let statementId = fromDate.getFullYear().toString();
-
-        let month = fromDate.getMonth() + 1;
-
-        if(month < 10)
-        {
-            statementId = statementId + "0";
-        }
-
-        statementId = statementId + month.toString();
-
-        return statementId;
-    }
-
     private getTransactionsUrl(type: ITransactionType,
                                from: Date,
                                to: Date,
@@ -510,7 +495,7 @@ export class MoneyService {
 
     autoAccept() {
         // Auto accept the data.
-        this.http.put<void>(this.autoAcceptUrl,"").subscribe((response) => {
+        this.http.put<void>(this.autoAcceptUrl,"").subscribe(() => {
                 console.log(this.autoAcceptUrl);
             },
             (response) => {
@@ -531,7 +516,7 @@ export class MoneyService {
         request.categoryId = category.id;
         request.type = "rec";
 
-        this.http.put<void>(url,request).subscribe((response) => {
+        this.http.put<void>(url,request).subscribe(() => {
                 console.log(url);
             },
             (response) => {

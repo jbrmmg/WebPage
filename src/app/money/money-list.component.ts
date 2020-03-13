@@ -10,6 +10,9 @@ import {BsModalService,BsModalRef} from "ngx-bootstrap/modal";
 import {MoneyCategoryPickerSelectableOption} from "./category-picker/money-cat-picker.component";
 import {DatePipe} from "@angular/common";
 import {Subject} from "rxjs";
+import {Match} from "./money-match";
+import {IListRowLineInterface} from "./list-row-line/list-row-line-interface";
+import {ListRowLineFactory} from "./list-row-line/list-row-line-factory";
 
 export enum ListMode { Normal, Add, Regulars, Reconciliation };
 
@@ -25,7 +28,7 @@ export class MoneyListComponent implements OnInit {
     types: TransactionType[];
     categories: Category[];
     accounts: JbAccount[];
-    transactions: Transaction[];
+//    transactions: Transaction[];
     statements: Statement[];
     errorMessage: string;
     fromValue: Date = new Date();
@@ -33,6 +36,7 @@ export class MoneyListComponent implements OnInit {
     summaryRow: TransactionSummary = new TransactionSummary();
     selectedStatement: Statement;
     transactionsUpdated: any;
+    lines: IListRowLineInterface[];
 
     internalDate: Date = new Date();
     accountRadio: string;
@@ -248,7 +252,7 @@ export class MoneyListComponent implements OnInit {
             () => {
                 this.categories.forEach(value => {
                     value.selected = true;
-                })
+                });
                 this.emitCategoriesChanged();
             }
         );
@@ -274,11 +278,6 @@ export class MoneyListComponent implements OnInit {
             .subscribe(() => this.updateTransactions(UpdateTransactionReason.Event));
 
         this.performDataChange(new Date());
-    }
-
-    get filteredCatgories() : Category[] {
-        return this.categories.filter((category: ICategory) =>
-            !category.systemUse)
     }
 
     private getTransactionType(id: string) : TransactionType {
@@ -332,7 +331,7 @@ export class MoneyListComponent implements OnInit {
         this.summaryRow.boughtForward = BF;
     }
 
-    convertTransactionUpdateToMode(update: UpdateTransactionReason) {
+    static convertTransactionUpdateToMode(update: UpdateTransactionReason) {
         switch (update) {
             case UpdateTransactionReason.SelectAdd:
                 return ListMode.Add;
@@ -347,15 +346,19 @@ export class MoneyListComponent implements OnInit {
         return null;
     }
 
+    selectRecocileCategory(transaction: Transaction) {
+        transaction.selectCategory();
+    }
+
     updateTransactions(thisChange: UpdateTransactionReason) {
         if(thisChange == UpdateTransactionReason.SelectAdd || thisChange == UpdateTransactionReason.SelectNormal)
         {
             if(this.listMode == ListMode.Normal || this.listMode == ListMode.Add) {
-                this.listMode = this.convertTransactionUpdateToMode(thisChange);
+                this.listMode = MoneyListComponent.convertTransactionUpdateToMode(thisChange);
                 return;
             }
 
-            this.listMode = this.convertTransactionUpdateToMode(thisChange);
+            this.listMode = MoneyListComponent.convertTransactionUpdateToMode(thisChange);
         }
 
         if(thisChange == UpdateTransactionReason.SelectReconcilation)
@@ -438,11 +441,11 @@ export class MoneyListComponent implements OnInit {
 
             this.calculateBF();
             this.summaryRow.resetCreditsDetbits();
-            this.transactions = [];
-            this.transactions.push(new Transaction(null, null, this.summaryRow, TransactionLineType.TOTAL_BOUGHTFWD));
-            this.transactions.push(new Transaction(null, null, this.summaryRow, TransactionLineType.TOTAL_DEBITS));
-            this.transactions.push(new Transaction(null, null, this.summaryRow, TransactionLineType.TOTAL_CREDITS));
-            this.transactions.push(new Transaction(null, null, this.summaryRow, TransactionLineType.TOTAL_CARRIEDFWD));
+            this.lines = [];
+            this.lines.push(ListRowLineFactory.createRowLineTotalBfwd(this.summaryRow));
+            this.lines.push(ListRowLineFactory.createRowLineDebits(this.summaryRow));
+            this.lines.push(ListRowLineFactory.createRowLineCredits(this.summaryRow));
+            this.lines.push(ListRowLineFactory.createRowLineTotalCfwd(this.summaryRow));
             this._moneyService.getTransactions(this.getTransactionType(this.internalRadioType),
                 this.fromValue,
                 this.toValue,
@@ -450,7 +453,7 @@ export class MoneyListComponent implements OnInit {
                 this.categories).subscribe(
                 transactions => {
                     transactions.forEach(value => {
-                        this.transactions.push(new Transaction(value, null, this.summaryRow, TransactionLineType.TRANSACTION));
+                        this.lines.push(ListRowLineFactory.createRowLineTransaction(value,this.summaryRow));
                         this.summaryRow.addAmount(value.amount);
                     })
                 },
@@ -461,12 +464,11 @@ export class MoneyListComponent implements OnInit {
             )
         } else if (this.listMode == ListMode.Regulars) {
             // Get the regulars.
-            this.transactions = [];
-
+            this.lines = [];
             this._moneyService.getRegularPayments().subscribe(
                 transctions => {
                     transctions.forEach( value => {
-                        this.transactions.push(new Transaction(null,value,null, TransactionLineType.REGULAR_TRANSACTION));
+                        this.lines.push(ListRowLineFactory.createRowLineRegular(value));
                     })
                 },
                 error => this.errorMessage = <any>error,
@@ -476,7 +478,20 @@ export class MoneyListComponent implements OnInit {
             )
         } else if (this.listMode == ListMode.Reconciliation) {
             // Get the reconcilation.
-            this.transactions = [];
+            this.lines = [];
+            this.lines.push(ListRowLineFactory.createRowLineReconcileTop());
+
+            this._moneyService.getMatches(new JbAccount("AMEX", "This needs to be changed", "", "")).subscribe(
+                matches => {
+                    matches.forEach(value => {
+                        this.lines.push(ListRowLineFactory.createRowLineReconcile(value));
+                    })
+                },
+                error => this.errorMessage = <any>error,
+                () => {
+                    console.log("Request matches Complete.");
+                }
+            );
         }
     }
 
@@ -728,7 +743,7 @@ export class MoneyListComponent implements OnInit {
         this.modalRef.hide();
     }
 
-    onCategoryFiltered(value: MoneyCategoryPickerSelectableOption) {
+    onCategoryFiltered() {
         this.updateTransactions(UpdateTransactionReason.Category);
         this.emitCategoriesChanged();
     }
