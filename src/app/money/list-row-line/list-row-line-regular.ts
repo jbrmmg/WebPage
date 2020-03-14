@@ -43,7 +43,7 @@ export class ListRowLineRegular implements IListRowLineInterface {
             this.hasDate = true;
             let paymentDate: Date = new Date(regular.lastDate);
 
-            this.dateDay = paymentDate.getDay().toString();
+            this.dateDay = paymentDate.getDate().toString();
             this.dateMonth = ListRowLineTransaction.getMonthName(paymentDate.getMonth());
             this.dateYear = paymentDate.getFullYear().toString();
         }

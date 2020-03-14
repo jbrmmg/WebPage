@@ -12,6 +12,7 @@ import {Subject} from "rxjs";
 import {IListRowLineInterface} from "./list-row-line/list-row-line-interface";
 import {ListRowLineFactory} from "./list-row-line/list-row-line-factory";
 import {ITransaction, ListRowSummary} from "./list-row-line/list-row-summary";
+import {IFile} from "./money-file";
 
 export enum ListMode { Normal, Add, Regulars, Reconciliation }
 
@@ -36,6 +37,8 @@ export class MoneyListComponent implements OnInit {
     statementsUpdated: any;
     lines: IListRowLineInterface[];
     selectedStatement: IStatement;
+    files: IFile[];
+    reconcileAccount: JbAccount;
 
     internalDate: Date = new Date();
     accountRadio: string;
@@ -76,6 +79,7 @@ export class MoneyListComponent implements OnInit {
         this.lastChangeFrom = null;
         this.lastChangeTo = null;
         this.listMode = ListMode.Normal;
+        this.reconcileAccount = null;
     }
 
     get isAddMode() {
@@ -270,6 +274,12 @@ export class MoneyListComponent implements OnInit {
         this._moneyService.getStatements().subscribe(
             statements => {
                 this.statements = statements;
+            },
+            error => this.errorMessage = <any>error
+        );
+        this._moneyService.getFiles().subscribe(
+            files => {
+                this.files = files;
             },
             error => this.errorMessage = <any>error
         );
@@ -521,17 +531,19 @@ export class MoneyListComponent implements OnInit {
                 }
             }));
 
-            this._moneyService.getMatches(new JbAccount("AMEX", "This needs to be changed", "", "")).subscribe(
-                matches => {
-                    matches.forEach(value => {
-                        this.lines.push(ListRowLineFactory.createRowLineReconcile(this._moneyService, value));
-                    })
-                },
-                error => this.errorMessage = <any>error,
-                () => {
-                    console.log("Request matches Complete.");
-                }
-            );
+            if(this.reconcileAccount != null) {
+                this._moneyService.getMatches(this.reconcileAccount).subscribe(
+                    matches => {
+                        matches.forEach(value => {
+                            this.lines.push(ListRowLineFactory.createRowLineReconcile(this._moneyService, value));
+                        })
+                    },
+                    error => this.errorMessage = <any>error,
+                    () => {
+                        console.log("Request matches Complete.");
+                    }
+                );
+            }
         }
     }
 
@@ -627,6 +639,11 @@ export class MoneyListComponent implements OnInit {
         }
 
         this.updateTransactions(UpdateTransactionReason.Account);
+    }
+
+    onLoadRecForAccount(file: IFile, account: JbAccount) {
+        this.reconcileAccount = account;
+        this._moneyService.loadFileRequest(file,account);
     }
 
     getAccountColour(index: number) : string {

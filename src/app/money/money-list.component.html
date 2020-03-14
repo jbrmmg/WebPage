@@ -235,7 +235,39 @@
             </div>
         </div>
         <div id="reconcile" [collapse]="!isReconcileMode">
+            <div class="row trn-table-files-outer">
+                <table class="table trn-table trn-table-files" *ngIf="files && files.length">
+                    <tr *ngFor="let nextFile of files">
+                        <td class="col-8 trn-table-col-file">
+                            {{nextFile.file}}
+                        </td>
+                        <td class="col-1 trn-table-col-opts">
+                            <div class="row">
+                                <table class="table trn-table trn-table-files-acc">
+                                    <tr >
+                                        <td *ngFor="let nextAccount of accounts" class="trn-table-files-acc-col">
+                                            <label class="btn btn-primary btn-account-sml"
+                                                   [(ngModel)]="radioAccount"
+                                                   btnRadio="{{nextAccount.id}}"
+                                                   tabindex="0"
+                                                   (click)="onLoadRecForAccount(nextFile, nextAccount)">
+                                                <img class="btn-account-img" src="{{getImage(nextAccount)}}" alt="Account"/>
+                                            </label>
+                                        </td>
+                                        <td class="trn-table-files-acc-col">
+                                            <label  class="btn btn-primary btn-account-sml">
 
+                                            </label>
+                                        </td>
+                                        <td class="trn-table-files-acc-col">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
         <div class="row">
             <div class="table-responsive">

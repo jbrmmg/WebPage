@@ -13,4 +13,17 @@ export class JbAccount implements IAccount {
                 public imagePrefix: string,
                 public colour: string ) {
     }
+
+    get fileTypeName(): string {
+        switch (this.id) {
+            case "BANK":
+                return "FIRST DIRECT";
+            case "AMEX":
+                return "AMEX";
+            case "JLPC":
+                return "JOHN LEWIS";
+        }
+
+        return "Other";
+    }
 }
