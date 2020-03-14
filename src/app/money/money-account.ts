@@ -18,11 +18,11 @@ export class JbAccount implements IAccount {
         console.log("HERE");
         switch (id) {
             case "BANK":
-                return "FIRST DIRECT";
+                return "FIRSTDIRECT";
             case "AMEX":
                 return "AMEX";
             case "JLPC":
-                return "JOHN LEWIS";
+                return "JOHNLEWIS";
         }
 
         return "Other";
