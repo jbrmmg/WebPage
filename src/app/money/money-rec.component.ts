@@ -142,7 +142,7 @@ export class MoneyRecComponent implements OnInit {
         this.matches.forEach( value => {
             if (value.selected) {
                     console.log("Check Cat " + value.description);
-                    value.category = category.id;
+                    value.category = category;
                     value.selected = false;
                     this._moneyService.setCategory(value,category);
                 }

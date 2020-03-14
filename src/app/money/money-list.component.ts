@@ -1,19 +1,21 @@
 import {DomSanitizer} from '@angular/platform-browser';
-import {Component, OnInit, TemplateRef} from "@angular/core";
+import {Component, OnInit, TemplateRef, ViewChild} from "@angular/core";
 import {MoneyService, NewTransaction} from "./money.service";
 import {Category, ICategory} from "./money-category";
 import {IAccount, JbAccount} from "./money-account";
 import {TransactionType} from "./money-type";
-import {Transaction, TransactionLineType, TransactionSummary} from "./money-transaction";
-import {Statement} from "./money-statement";
+import {IStatement, Statement} from "./money-statement";
 import {BsModalService,BsModalRef} from "ngx-bootstrap/modal";
 import {MoneyCategoryPickerSelectableOption} from "./category-picker/money-cat-picker.component";
 import {DatePipe} from "@angular/common";
 import {Subject} from "rxjs";
+import {IListRowLineInterface} from "./list-row-line/list-row-line-interface";
+import {ListRowLineFactory} from "./list-row-line/list-row-line-factory";
+import {ITransaction, ListRowSummary} from "./list-row-line/list-row-summary";
 
-export enum ListMode { Normal, Add, Regulars, Reconciliation };
+export enum ListMode { Normal, Add, Regulars, Reconciliation }
 
-export enum UpdateTransactionReason { Type, Event, ToDate, FromDate, Account, Category, SelectAdd, SelectNormal, SelectRegular, SelectReconcilation };
+export enum UpdateTransactionReason { Type, Event, ToDate, FromDate, Account, Category, SelectAdd, SelectNormal, SelectRegular, SelectReconcilation }
 
 @Component({
     templateUrl: './money-list.component.html',
@@ -25,14 +27,15 @@ export class MoneyListComponent implements OnInit {
     types: TransactionType[];
     categories: Category[];
     accounts: JbAccount[];
-    transactions: Transaction[];
     statements: Statement[];
     errorMessage: string;
     fromValue: Date = new Date();
     toValue: Date = new Date();
-    summaryRow: TransactionSummary = new TransactionSummary();
-    selectedStatement: Statement;
+    summaryRow: ListRowSummary = new ListRowSummary();
     transactionsUpdated: any;
+    statementsUpdated: any;
+    lines: IListRowLineInterface[];
+    selectedStatement: IStatement;
 
     internalDate: Date = new Date();
     accountRadio: string;
@@ -61,6 +64,8 @@ export class MoneyListComponent implements OnInit {
 
     eventsCategoriesChange: Subject<Category[]> = new Subject<Category[]>();
 
+    @ViewChild('templateCategorySelector') categorySelector: any;
+
     constructor(private _moneyService : MoneyService,
                 public datepipe: DatePipe,
                 private sanitizer: DomSanitizer,
@@ -70,7 +75,6 @@ export class MoneyListComponent implements OnInit {
         this.lastChangeType = "";
         this.lastChangeFrom = null;
         this.lastChangeTo = null;
-        this.selectedStatement = null;
         this.listMode = ListMode.Normal;
     }
 
@@ -248,7 +252,7 @@ export class MoneyListComponent implements OnInit {
             () => {
                 this.categories.forEach(value => {
                     value.selected = true;
-                })
+                });
                 this.emitCategoriesChanged();
             }
         );
@@ -273,12 +277,10 @@ export class MoneyListComponent implements OnInit {
         this.transactionsUpdated = this._moneyService.getTransactionChangeEmitter()
             .subscribe(() => this.updateTransactions(UpdateTransactionReason.Event));
 
-        this.performDataChange(new Date());
-    }
+        this.statementsUpdated = this._moneyService.getStatementChangeEmitter()
+            .subscribe(() => this.statements = []);
 
-    get filteredCatgories() : Category[] {
-        return this.categories.filter((category: ICategory) =>
-            !category.systemUse)
+        this.performDataChange(new Date());
     }
 
     private getTransactionType(id: string) : TransactionType {
@@ -332,7 +334,7 @@ export class MoneyListComponent implements OnInit {
         this.summaryRow.boughtForward = BF;
     }
 
-    convertTransactionUpdateToMode(update: UpdateTransactionReason) {
+    static convertTransactionUpdateToMode(update: UpdateTransactionReason) {
         switch (update) {
             case UpdateTransactionReason.SelectAdd:
                 return ListMode.Add;
@@ -351,11 +353,11 @@ export class MoneyListComponent implements OnInit {
         if(thisChange == UpdateTransactionReason.SelectAdd || thisChange == UpdateTransactionReason.SelectNormal)
         {
             if(this.listMode == ListMode.Normal || this.listMode == ListMode.Add) {
-                this.listMode = this.convertTransactionUpdateToMode(thisChange);
+                this.listMode = MoneyListComponent.convertTransactionUpdateToMode(thisChange);
                 return;
             }
 
-            this.listMode = this.convertTransactionUpdateToMode(thisChange);
+            this.listMode = MoneyListComponent.convertTransactionUpdateToMode(thisChange);
         }
 
         if(thisChange == UpdateTransactionReason.SelectReconcilation)
@@ -414,7 +416,6 @@ export class MoneyListComponent implements OnInit {
         }
 
         // Set the selected statement.
-        this.summaryRow.canLock = false;
         this.selectedStatement = null;
         if(this.radioType == "RC") {
             this.accounts.forEach(account => {
@@ -424,7 +425,6 @@ export class MoneyListComponent implements OnInit {
                             (statement.id.year == this.fromValue.getFullYear()) &&
                             (statement.id.month == this.fromValue.getMonth() + 1 )) {
                             this.selectedStatement = statement;
-                            this.summaryRow.canLock = true;
                         }
                     });
                 }
@@ -438,11 +438,11 @@ export class MoneyListComponent implements OnInit {
 
             this.calculateBF();
             this.summaryRow.resetCreditsDetbits();
-            this.transactions = [];
-            this.transactions.push(new Transaction(null, null, this.summaryRow, TransactionLineType.TOTAL_BOUGHTFWD));
-            this.transactions.push(new Transaction(null, null, this.summaryRow, TransactionLineType.TOTAL_DEBITS));
-            this.transactions.push(new Transaction(null, null, this.summaryRow, TransactionLineType.TOTAL_CREDITS));
-            this.transactions.push(new Transaction(null, null, this.summaryRow, TransactionLineType.TOTAL_CARRIEDFWD));
+            this.lines = [];
+            this.lines.push(ListRowLineFactory.createRowLineTotalBfwd(this.summaryRow));
+            this.lines.push(ListRowLineFactory.createRowLineDebits(this.summaryRow));
+            this.lines.push(ListRowLineFactory.createRowLineCredits(this.summaryRow));
+            this.lines.push(ListRowLineFactory.createRowLineTotalCfwd(this._moneyService,this.summaryRow,this.selectedStatement));
             this._moneyService.getTransactions(this.getTransactionType(this.internalRadioType),
                 this.fromValue,
                 this.toValue,
@@ -450,7 +450,38 @@ export class MoneyListComponent implements OnInit {
                 this.categories).subscribe(
                 transactions => {
                     transactions.forEach(value => {
-                        this.transactions.push(new Transaction(value, null, this.summaryRow, TransactionLineType.TRANSACTION));
+                        this.lines.push(ListRowLineFactory.createRowLineTransaction(
+                            this._moneyService,
+                            value,
+                            this.summaryRow,
+                            (transaction: ITransaction, clear: boolean ) => {
+                                if(clear) {
+                                    this.onClearEdit();
+                                    return;
+                                }
+
+                                console.log("Edit - " + transaction.id);
+
+                                this.existingTransactionId = transaction.id;
+                                this.transactionDescription = transaction.description;
+                                this.transactionAmount = transaction.amount;
+
+                                this.categories.forEach(nextCategory => {
+                                    if(nextCategory.id == transaction.category.id) {
+                                        this.selectedCategory = nextCategory;
+                                    }
+                                });
+
+                                this.accounts.forEach(nextAccount => {
+                                    if(nextAccount.id == transaction.account.id) {
+                                        this.selectedAccount = nextAccount;
+                                    }
+                                });
+
+                                this.performDataChange(transaction.date);
+
+                                this.lines.forEach(value => { value.selected = false; });
+                        }));
                         this.summaryRow.addAmount(value.amount);
                     })
                 },
@@ -461,12 +492,11 @@ export class MoneyListComponent implements OnInit {
             )
         } else if (this.listMode == ListMode.Regulars) {
             // Get the regulars.
-            this.transactions = [];
-
+            this.lines = [];
             this._moneyService.getRegularPayments().subscribe(
                 transctions => {
                     transctions.forEach( value => {
-                        this.transactions.push(new Transaction(null,value,null, TransactionLineType.REGULAR_TRANSACTION));
+                        this.lines.push(ListRowLineFactory.createRowLineRegular(value));
                     })
                 },
                 error => this.errorMessage = <any>error,
@@ -476,16 +506,32 @@ export class MoneyListComponent implements OnInit {
             )
         } else if (this.listMode == ListMode.Reconciliation) {
             // Get the reconcilation.
-            this.transactions = [];
-        }
-    }
+            this.lines = [];
+            this.lines.push(ListRowLineFactory.createRowLineReconcileTop(this._moneyService, () => {
+                // Perform the category update (only if some are selected).
+                let anySelected: boolean = false;
+                this.lines.forEach(value => {
+                    if(value.selected) {
+                        anySelected = true;
+                    }
+                });
 
-    onClickLockStatement() {
-        if(this.selectedStatement != null && !this.selectedStatement.locked) {
-            this._moneyService.lockStatement(this.selectedStatement);
-            this.transactions = [];
-            this.statements = [];
-            this.selectedStatement = null;
+                if(anySelected) {
+                    this.openModal(this.categorySelector, '')
+                }
+            }));
+
+            this._moneyService.getMatches(new JbAccount("AMEX", "This needs to be changed", "", "")).subscribe(
+                matches => {
+                    matches.forEach(value => {
+                        this.lines.push(ListRowLineFactory.createRowLineReconcile(this._moneyService, value));
+                    })
+                },
+                error => this.errorMessage = <any>error,
+                () => {
+                    console.log("Request matches Complete.");
+                }
+            );
         }
     }
 
@@ -600,51 +646,6 @@ export class MoneyListComponent implements OnInit {
         return MoneyService.getDisabledAccountImage(account.id);
     }
 
-    clickEditable(transaction: Transaction) {
-        console.log("Edit - " + transaction.editable);
-
-        this.existingTransactionId = transaction.id;
-        this.transactionDescription = transaction.description;
-        this.transactionAmount = transaction.amount;
-
-        this.categories.forEach(nextCategory => {
-            if(nextCategory.id == transaction.category.id) {
-                this.selectedCategory = nextCategory;
-            }
-        });
-
-        this.accounts.forEach(nextAccount => {
-            if(nextAccount.id == transaction.account.id) {
-                this.selectedAccount = nextAccount;
-            }
-        });
-
-        this.performDataChange(transaction.date);
-
-        if(transaction.editable) {
-            transaction.editable = false;
-            return;
-        }
-
-        this.transactions.forEach(value => { value.editable = false; });
-
-        transaction.editable = true;
-    }
-
-    confirmTransaction(transaction:Transaction) {
-        // Confirm or unconfirm a tranaction.
-        this._moneyService.confirmTransaction(transaction);
-        this.transactions = [];
-    }
-
-    deleteTransaction(transaction:Transaction) {
-        // Delete the transaction.
-        this._moneyService.deleteTransaction(transaction);
-        this.transactions = [];
-    }
-
-
-
     getAccountImage(id: string): string {
         return MoneyService.getAccountImage(id);
     }
@@ -728,7 +729,20 @@ export class MoneyListComponent implements OnInit {
         this.modalRef.hide();
     }
 
-    onCategoryFiltered(value: MoneyCategoryPickerSelectableOption) {
+    onCategorySelector(selection: MoneyCategoryPickerSelectableOption) {
+        // Update the category on all selected items.
+        this.lines.forEach(value => {
+            value.categorySelected(selection.category)
+        });
+
+        this.modalRef.hide();
+    }
+
+    onExitSelector() {
+        this.modalRef.hide();
+    }
+
+    onCategoryFiltered() {
         this.updateTransactions(UpdateTransactionReason.Category);
         this.emitCategoriesChanged();
     }
@@ -739,6 +753,7 @@ export class MoneyListComponent implements OnInit {
         this.selectedAccount = null;
         this.selectedCategory = null;
         this.existingTransactionId = -1;
+        this.lines.forEach(value => { value.selected = false; });
     }
 
     onClickCreate() {
@@ -747,25 +762,18 @@ export class MoneyListComponent implements OnInit {
         if(this.transactionValid) {
             if(this.existingTransactionId != -1) {
                 // Find the transaction in the list, and update it.
-                this.transactions.forEach(nextTransaction => {
-                    if(nextTransaction.id == this.existingTransactionId) {
-                        if (nextTransaction.category.id != "TRF") {
-                            nextTransaction.category.id = this.selectedCategory.id;
-                        }
-
-                        nextTransaction.description = this.transactionDescription;
-                        nextTransaction.amount = this.transactionAmount;
-
-                        // Update the transaction amount.
-                        this._moneyService.updateTransaction(nextTransaction);
+                this.lines.forEach(nextLine => {
+                    if(nextLine.selected) {
+                        nextLine.completeEdit ( this.existingTransactionId, this.selectedCategory, this.transactionDescription, this.transactionAmount );
 
                         // Recalculate the totals.
                         this.summaryRow.resetCreditsDetbits();
-                        this.transactions.forEach(value => {
+                        this.lines.forEach(value => {
                             this.summaryRow.addAmount(value.amount);
                         });
                     }
                 })
+
             } else {
                 let newTransaction: NewTransaction = new NewTransaction();
                 newTransaction.amount = this.transactionAmount;
