@@ -302,10 +302,10 @@ export class MoneyService {
         );
     }
 
-    loadFileRequest(path: string, type: string) {
+    loadFileRequest(file: IFile, account: JbAccount) {
         let request: LoadFileRequest = new LoadFileRequest();
-        request.path = path;
-        request.type = type;
+        request.path = file.file;
+        request.type = account.fileTypeName;
 
         this.http.post<LoadFileRequest>(this.loadFileUrl,request).subscribe(
             (val) => {
@@ -316,6 +316,7 @@ export class MoneyService {
             },
             () => {
                 console.log("The POST observable is now complete (load)");
+                this.updateTransactions.emit(null);
             }
         );
     }

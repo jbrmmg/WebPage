@@ -89,7 +89,7 @@ export class ListRowLineTransaction implements IListRowLineInterface {
         this.rowType = ListRowLineType.TRANSACTION;
         this.isTotalRow = false;
         this.hasDate = true;
-        this.dateDay = transactionDate.getDay().toString();
+        this.dateDay = transactionDate.getDate().toString();
         this.dateMonth = ListRowLineTransaction.getMonthName(transactionDate.getMonth());
         this.dateYear = transactionDate.getFullYear().toString();
         this.hasAccount = true;

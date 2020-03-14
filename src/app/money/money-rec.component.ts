@@ -175,6 +175,5 @@ export class MoneyRecComponent implements OnInit {
 
     onLoadFile(filename: string, source: string) {
         console.log("Click - " + filename + " " + source);
-        this._moneyService.loadFileRequest(filename,source);
     }
 }
