@@ -52,7 +52,7 @@ import { WeightComponent } from "./weight/weight.component";
       {path: 'welcome', component: WelcomeComponent},
       {path: 'logs', component: LogsComponent},
       {path: 'podcast', component: PodcastComponent},
-      {path: 'list', component: MoneyListComponent},
+      {path: 'money', component: MoneyListComponent},
       {path: 'house', component: HouseComponent},
       {path: 'weight', component: WeightComponent},
       {path: '', redirectTo: 'welcome', pathMatch: 'full'},
