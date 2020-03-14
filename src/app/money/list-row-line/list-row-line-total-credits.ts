@@ -1,7 +1,7 @@
 import {IListRowLineInterface, ListRowLineType} from "./list-row-line-interface";
 import {IAccount} from "../money-account";
 import {ICategory} from "../money-category";
-import {TransactionSummary} from "../money-transaction";
+import {ListRowSummary} from "./list-row-summary";
 
 export class ListRowLineTotalCredits implements IListRowLineInterface {
     public rowType: ListRowLineType;
@@ -26,10 +26,11 @@ export class ListRowLineTotalCredits implements IListRowLineInterface {
     public hasButtonThree: boolean;
     public enableButtonThree: boolean;
     public classButtonThree: string;
+    public selected: boolean;
 
-    private summary: TransactionSummary;
+    private summary: ListRowSummary;
 
-    constructor(summary: TransactionSummary) {
+    constructor(summary: ListRowSummary) {
         this.rowType = ListRowLineType.TOTAL_CREDITS;
         this.isTotalRow = true;
         this.hasDate = false;
@@ -52,6 +53,7 @@ export class ListRowLineTotalCredits implements IListRowLineInterface {
         this.hasButtonThree = false;
         this.enableButtonThree = false;
         this.classButtonThree = "";
+        this.selected = false;
         this.summary = summary;
     }
 
@@ -65,6 +67,12 @@ export class ListRowLineTotalCredits implements IListRowLineInterface {
     }
 
     clickButtonThree() {
+    }
+
+    completeEdit(id: number, selectedCategory: ICategory, description: string, amount: number) {
+    }
+
+    categorySelected(selectedCategory: ICategory) {
     }
 
     getAmount(): number {

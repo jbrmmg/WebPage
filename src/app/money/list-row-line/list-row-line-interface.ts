@@ -35,11 +35,14 @@ export interface IListRowLineInterface {
     hasButtonThree: boolean;
     enableButtonThree: boolean;
     classButtonThree: string;
+    selected: boolean;
 
     select();
     clickButtonOne();
     clickButtonTwo();
     clickButtonThree();
+    completeEdit(id:number, selectedCategory: ICategory, description: string, amount: number);
+    categorySelected(selectedCategory: ICategory);
 
     getAmount() : number;
 }

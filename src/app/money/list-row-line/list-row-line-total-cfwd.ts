@@ -1,7 +1,9 @@
 import {IListRowLineInterface, ListRowLineType} from "./list-row-line-interface";
 import {IAccount} from "../money-account";
 import {ICategory} from "../money-category";
-import {TransactionSummary} from "../money-transaction";
+import {IStatement} from "../money-statement";
+import {MoneyService} from "../money.service";
+import {ListRowSummary} from "./list-row-summary";
 
 export class ListRowLineTotalCfwd implements IListRowLineInterface {
     public rowType: ListRowLineType;
@@ -26,10 +28,15 @@ export class ListRowLineTotalCfwd implements IListRowLineInterface {
     public hasButtonThree: boolean;
     public enableButtonThree: boolean;
     public classButtonThree: string;
+    public selected: boolean;
 
-    private summary: TransactionSummary;
+    private summary: ListRowSummary;
+    private readonly selectedStatement: IStatement;
+    private readonly moneyService: MoneyService;
 
-    constructor(summary: TransactionSummary) {
+    constructor(moneyService : MoneyService,
+                summary: ListRowSummary,
+                statement: IStatement ) {
         this.rowType = ListRowLineType.TOTAL_CARRIEDFWD;
         this.isTotalRow = true;
         this.hasDate = false;
@@ -49,10 +56,27 @@ export class ListRowLineTotalCfwd implements IListRowLineInterface {
         this.hasButtonTwo = false;
         this.enableButtonTwo = false;
         this.classButtonTwo = "";
-        this.hasButtonThree = true;
-        this.enableButtonThree = true;
-        this.classButtonThree = "fa fa-trash";
+
+        if (statement != null) {
+            this.hasButtonThree = true;
+
+            if(statement.locked) {
+                this.enableButtonThree = false;
+                this.classButtonThree = "fa fa-lock";
+            } else {
+                this.enableButtonThree = true;
+                this.classButtonThree = "fa fa-unlock";
+            }
+        } else {
+            this.hasButtonThree = false;
+            this.enableButtonThree = false;
+            this.classButtonThree = "";
+        }
+
+        this.selected = false;
         this.summary = summary;
+        this.selectedStatement = statement;
+        this.moneyService = moneyService;
     }
 
     select() {
@@ -64,7 +88,18 @@ export class ListRowLineTotalCfwd implements IListRowLineInterface {
     clickButtonTwo() {
     }
 
+    completeEdit(id: number, selectedCategory: ICategory, description: string, amount: number) {
+    }
+
     clickButtonThree() {
+        // If the statement is present and not locked, request the lock.
+        if(this.selectedStatement == null || this.selectedStatement.locked)
+            return;
+
+        this.moneyService.lockStatement(this.selectedStatement);
+    }
+
+    categorySelected(selectedCategory: ICategory) {
     }
 
     getAmount(): number {

@@ -1,6 +1,6 @@
 <div>
-    <label class="btn btn-primary cat-opt-btn" (click)="selectAll()">All</label>
-    <label class="btn btn-primary cat-opt-btn" (click)="selectNone()">Clear</label>
+    <label class="btn btn-primary cat-opt-btn" *ngIf="selections" (click)="selectAll()">All</label>
+    <label class="btn btn-primary cat-opt-btn" *ngIf="selections"  (click)="selectNone()">Clear</label>
     <label class="btn btn-primary cat-opt-btn" (click)="exit()">Exit</label>
 </div>
 <div class="table-responsive" >

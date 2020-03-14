@@ -1,6 +1,8 @@
 import {IListRowLineInterface, ListRowLineType} from "./list-row-line-interface";
 import {IAccount} from "../money-account";
 import {ICategory} from "../money-category";
+import {MoneyService} from "../money.service";
+import {ITransaction} from "./list-row-summary";
 
 export class ListRowLineReconcileTop implements IListRowLineInterface {
     public rowType: ListRowLineType;
@@ -25,8 +27,13 @@ export class ListRowLineReconcileTop implements IListRowLineInterface {
     public hasButtonThree: boolean;
     public enableButtonThree: boolean;
     public classButtonThree: string;
+    public selected: boolean;
 
-    constructor() {
+    private readonly moneyService: MoneyService;
+    private readonly updateCategory: () => void;
+
+    constructor(moneyService: MoneyService,
+                updateCategory: () => void) {
         this.rowType = ListRowLineType.RECONCILE_TOP_LINE;
         this.isTotalRow = false;
         this.hasDate = true;
@@ -45,22 +52,37 @@ export class ListRowLineReconcileTop implements IListRowLineInterface {
         this.classButtonOne = "fa fa-check";
         this.hasButtonTwo = true;
         this.enableButtonTwo = true;
-        this.classButtonTwo = "fa fa-pencil";
+        this.classButtonTwo = "fa fa-align-justify";
         this.hasButtonThree = true;
         this.enableButtonThree = true;
-        this.classButtonThree = "fa fa-trash";
+        this.classButtonThree = "fa fa-eraser";
+        this.selected = false;
+        this.moneyService = moneyService;
+        this.updateCategory = updateCategory;
     }
 
     select() {
     }
 
     clickButtonOne() {
+        // Auto accept transactions.
+        this.moneyService.autoAccept();
     }
 
     clickButtonTwo() {
+        // Set category.
+        this.updateCategory();
     }
 
     clickButtonThree() {
+        // Auto accept transactions.
+        this.moneyService.clearRecData();
+    }
+
+    completeEdit(id: number, selectedCategory: ICategory, description: string, amount: number) {
+    }
+
+    categorySelected(selectedCategory: ICategory) {
     }
 
     getAmount(): number {

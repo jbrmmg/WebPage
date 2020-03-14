@@ -2,8 +2,7 @@ import {IListRowLineInterface, ListRowLineType} from "./list-row-line-interface"
 import {IRegular} from "../money-regular";
 import {IAccount} from "../money-account";
 import {ICategory} from "../money-category";
-import {getAllRouteGuards} from "@angular/router/src/utils/preactivation";
-import {ListRowLineFactory} from "./list-row-line-factory";
+import {ListRowLineTransaction} from "./list-row-line-transaction";
 
 export class ListRowLineRegular implements IListRowLineInterface {
     public rowType: ListRowLineType;
@@ -28,6 +27,7 @@ export class ListRowLineRegular implements IListRowLineInterface {
     public hasButtonThree: boolean;
     public enableButtonThree: boolean;
     public classButtonThree: string;
+    public selected: boolean;
 
     private regular: IRegular;
 
@@ -44,7 +44,7 @@ export class ListRowLineRegular implements IListRowLineInterface {
             let paymentDate: Date = new Date(regular.lastDate);
 
             this.dateDay = paymentDate.getDay().toString();
-            this.dateMonth = ListRowLineFactory.getMonthName(paymentDate.getMonth());
+            this.dateMonth = ListRowLineTransaction.getMonthName(paymentDate.getMonth());
             this.dateYear = paymentDate.getFullYear().toString();
         }
         this.hasAccount = true;
@@ -63,6 +63,7 @@ export class ListRowLineRegular implements IListRowLineInterface {
         this.hasButtonThree = false;
         this.enableButtonThree = false;
         this.classButtonThree = "";
+        this.selected = false;
 
         this.regular = regular;
     }
@@ -77,6 +78,12 @@ export class ListRowLineRegular implements IListRowLineInterface {
     }
 
     clickButtonThree() {
+    }
+
+    completeEdit(id: number, selectedCategory: ICategory, description: string, amount: number) {
+    }
+
+    categorySelected(selectedCategory: ICategory) {
     }
 
     getAmount(): number {

@@ -6,11 +6,11 @@ import {catchError, tap} from "rxjs/operators";
 import {Category, ICategory} from "./money-category";
 import {JbAccount} from "./money-account";
 import {ITransactionType, TransactionType} from "./money-type";
-import {ITransaction, Transaction} from "./money-transaction";
-import {Statement} from "./money-statement";
+import {IStatement, Statement} from "./money-statement";
 import {IMatch, Match} from "./money-match";
 import {IRegular} from "./money-regular";
 import {IFile} from "./money-file";
+import {ITransaction} from "./list-row-line/list-row-summary";
 
 export class NewTransaction {
     date: Date;
@@ -117,6 +117,7 @@ export class MoneyService {
     }
 
     @Output() updateTransactions: EventEmitter<any> = new EventEmitter();
+    @Output() updateStatements: EventEmitter<any> = new EventEmitter();
 
     getFiles(): Observable<IFile[]> {
         return this.http.get<IFile[]>(this.getFilesUrl).pipe(
@@ -358,7 +359,7 @@ export class MoneyService {
         return throwError(errorMessage);
     }
 
-    updateTransaction(transaction: Transaction) {
+    updateTransaction(transaction: ITransaction) {
         // Update the amount of the transaction.
         // TransactionId & Amount
 
@@ -382,16 +383,15 @@ export class MoneyService {
             });
     }
 
-    confirmTransaction(transaction: Transaction ) {
+    confirmTransaction(transaction: ITransaction,
+                       reconcile: boolean ) {
         // Set transaction to confirmed/unconfirmed
         // TransactionId & Flag
-        transaction.reconciled = !transaction.reconciled;
-
         let url = this.reconcileTransactionUrl;
 
         let reconcileRequest: ReconcileTransaction = new ReconcileTransaction();
         reconcileRequest.transactionId = transaction.id;
-        reconcileRequest.reconcile = transaction.reconciled;
+        reconcileRequest.reconcile = reconcile;
 
         this.http.put<void>(url,reconcileRequest).subscribe(
             () => {
@@ -411,7 +411,11 @@ export class MoneyService {
         return this.updateTransactions;
     }
 
-    deleteTransaction(transaction: Transaction ) {
+    getStatementChangeEmitter() {
+        return this.updateStatements;
+    }
+
+    deleteTransaction(transaction: ITransaction ) {
         // Delete the transaction.
         // TransactionId
         let url = this.deleteTransactionUrl;
@@ -429,7 +433,7 @@ export class MoneyService {
         });
     }
 
-    lockStatement(statement: Statement) {
+    lockStatement(statement: IStatement) {
         // Lock the statement.
         // Account, Month & Year
 
@@ -451,6 +455,7 @@ export class MoneyService {
         },
         () => {
             console.log("The POST observable is now complete (lock)");
+            this.updateStatements.emit(null);
             this.updateTransactions.emit(null);
         });
     }
@@ -506,7 +511,7 @@ export class MoneyService {
             });
     }
 
-    setCategory(matchRow: Match, category: ICategory) {
+    setCategory(matchRow: IMatch, category: ICategory) {
         // Set the category
         let url = this.setCategoryUrl;
 

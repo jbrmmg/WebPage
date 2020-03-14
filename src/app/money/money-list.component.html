@@ -324,7 +324,7 @@
                                             'trn-button-col-total': nextTransaction.isTotalRow === true}">
                                 <div class="trn-button">
                                     <button *ngIf="nextTransaction.hasButtonOne" type="button"
-                                            class="btn btn-primary trn-button-confirm"
+                                            class="btn btn-primary trn-button-1"
                                             (click)="nextTransaction.clickButtonOne()"
                                             [disabled]="!nextTransaction.enableButtonOne">
                                         <i [ngClass]="nextTransaction.classButtonOne"></i>
@@ -336,7 +336,7 @@
                                                 'trn-button-col-total': nextTransaction.isTotalRow === true}">
                                 <div class="trn-button">
                                     <button *ngIf="nextTransaction.hasButtonTwo" type="button"
-                                            class="btn btn-primary trn-button-edit"
+                                            class="btn btn-primary trn-button-2"
                                             (click)="nextTransaction.clickButtonTwo()"
                                             [disabled]="!nextTransaction.enableButtonTwo">
                                         <i [ngClass]="nextTransaction.classButtonTwo"></i>
@@ -348,7 +348,7 @@
                                                 'trn-button-col-total': nextTransaction.isTotalRow === true}">
                                 <div class="trn-button">
                                     <button *ngIf="nextTransaction.hasButtonThree" type="button"
-                                            class="btn btn-primary trn-button-delete"
+                                            class="btn btn-primary trn-button-3"
                                             (click)="nextTransaction.clickButtonThree()"
                                             [disabled]="!nextTransaction.enableButtonThree">
                                         <i [ngClass]="nextTransaction.classButtonThree"></i>
@@ -374,7 +374,25 @@
                 [showSystem]="false"
                 columnSpacing="5px"
                 rowSpacing="3px"
-                (valueSelected)="onCategorySelected($event)">
+                (valueSelected)="onCategorySelected($event)"
+                (complete)="onExitSelector()">
+        </money-category-picker>
+    </div>
+</ng-template>
+
+<ng-template #templateCategorySelector>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Enter category</h4>
+    </div>
+    <div class="body">
+        <money-category-picker
+                [columns]="3"
+                [showAccountTransfers]="false"
+                [showSystem]="false"
+                columnSpacing="5px"
+                rowSpacing="3px"
+                (valueSelected)="onCategorySelector($event)"
+                (complete)="onExitSelector()">
         </money-category-picker>
     </div>
 </ng-template>

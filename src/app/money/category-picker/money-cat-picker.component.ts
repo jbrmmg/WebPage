@@ -287,6 +287,9 @@ export class MoneyCatagoryPickerComponent implements OnInit {
     }
 
     selectAll() {
+        if(this.selections == null)
+            return;
+
         this.selections.forEach(nextCategory => {
             nextCategory.selected = true;
         })
@@ -297,6 +300,9 @@ export class MoneyCatagoryPickerComponent implements OnInit {
     }
 
     selectNone() {
+        if(this.selections == null)
+            return;
+
         this.selections.forEach(nextCategory => {
             nextCategory.selected = false;
         })

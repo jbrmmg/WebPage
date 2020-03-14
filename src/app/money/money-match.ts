@@ -1,8 +1,9 @@
 import {ICategory} from "./money-category";
 import {IAccount} from "./money-account";
+import {ITransaction} from "./list-row-line/list-row-summary";
 
 export interface IMatch {
-    transactionId: number;
+    transaction: ITransaction;
     beforeAmount: number;
     afterAmount: number;
     category: ICategory;
@@ -17,7 +18,7 @@ export interface IMatch {
 }
 
 export class Match implements IMatch {
-    public transactionId: number;
+    public transaction: ITransaction;
     public beforeAmount: number;
     public afterAmount: number;
     public category: ICategory;
@@ -32,7 +33,7 @@ export class Match implements IMatch {
     public selected: boolean;
 
     constructor(source: IMatch) {
-        this.transactionId = source.transactionId;
+        this.transaction = source.transaction;
         this.beforeAmount = source.beforeAmount;
         this.afterAmount = source.afterAmount;
         this.category = source.category;

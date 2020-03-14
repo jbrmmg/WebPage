@@ -1,6 +1,5 @@
 import {IListRowLineInterface, ListRowLineType} from "./list-row-line-interface";
 import {ListRowLineTransaction} from "./list-row-line-transaction";
-import {ITransaction, TransactionSummary} from "../money-transaction";
 import {ListRowLineReconcile} from "./list-row-line-reconcile";
 import {ListRowLineTotalBfwd} from "./list-row-line-total-bfwd";
 import {ListRowLineTotalCfwd} from "./list-row-line-total-cfwd";
@@ -10,85 +9,44 @@ import {ListRowLineRegular} from "./list-row-line-regular";
 import {ListRowLineReconcileTop} from "./list-row-line-reconcile-top";
 import {IMatch} from "../money-match";
 import {IRegular} from "../money-regular";
+import {MoneyService} from "../money.service";
+import {IStatement} from "../money-statement";
+import {ITransaction, ListRowSummary} from "./list-row-summary";
 
 
 export class ListRowLineFactory {
-    static createRowLineTransaction(transaction: ITransaction,
-                                    summary: TransactionSummary) : IListRowLineInterface {
-        return new ListRowLineTransaction(transaction,summary);
+    static createRowLineTransaction(moneyService: MoneyService,
+                                    transaction: ITransaction,
+                                    summary: ListRowSummary,
+                                    editSelect: (transaction: ITransaction, clear: boolean) => void ) : IListRowLineInterface {
+        return new ListRowLineTransaction(moneyService,transaction,summary,editSelect);
     }
 
-    static createRowLineReconcile(reconcile: IMatch) : IListRowLineInterface {
-        return new ListRowLineReconcile(reconcile);
+    static createRowLineReconcile(moneyService: MoneyService, reconcile: IMatch) : IListRowLineInterface {
+        return new ListRowLineReconcile(moneyService,reconcile);
     }
 
-    static createRowLineReconcileTop() : IListRowLineInterface {
-        return new ListRowLineReconcileTop();
+    static createRowLineReconcileTop(moneyService: MoneyService, updateCategory: () => void) : IListRowLineInterface {
+        return new ListRowLineReconcileTop(moneyService, updateCategory);
     }
 
     static createRowLineRegular(regular: IRegular) : IListRowLineInterface {
         return new ListRowLineRegular(regular);
     }
 
-    static createRowLineTotalBfwd(summary: TransactionSummary) : IListRowLineInterface {
+    static createRowLineTotalBfwd(summary: ListRowSummary) : IListRowLineInterface {
         return new ListRowLineTotalBfwd(summary);
     }
 
-    static createRowLineTotalCfwd(summary: TransactionSummary) : IListRowLineInterface {
-        return new ListRowLineTotalCfwd(summary);
+    static createRowLineTotalCfwd(moneyService: MoneyService,summary: ListRowSummary, statement: IStatement) : IListRowLineInterface {
+        return new ListRowLineTotalCfwd(moneyService,summary,statement);
     }
 
-    static createRowLineCredits(summary: TransactionSummary) : IListRowLineInterface {
+    static createRowLineCredits(summary: ListRowSummary) : IListRowLineInterface {
         return new ListRowLineTotalCredits(summary);
     }
 
-    static createRowLineDebits(summary: TransactionSummary) : IListRowLineInterface {
+    static createRowLineDebits(summary: ListRowSummary) : IListRowLineInterface {
         return new ListRowLineTotalDebits(summary);
-    }
-
-    static getMonthName(month: number): string {
-        switch(month) {
-            case 0: {
-                return "Jan";
-            }
-            case 1: {
-                return "Feb";
-            }
-            case 2: {
-                return "Mar";
-            }
-            case 3: {
-                return "Apr";
-            }
-            case 4: {
-                return "May";
-            }
-            case 5: {
-                return "Jun";
-            }
-            case 6: {
-                return "Jul";
-            }
-            case 7: {
-                return "Aug";
-            }
-            case 8: {
-                return "Sep";
-            }
-            case 9: {
-                return "Oct";
-            }
-            case 10: {
-                return "Nov";
-            }
-            case 11: {
-                return "Dec";
-            }
-            default: {
-                return "Xxx";
-            }
-        }
-
-        return "Xxx";
     }
 }
