@@ -14,8 +14,9 @@ export class JbAccount implements IAccount {
                 public colour: string ) {
     }
 
-    get fileTypeName(): string {
-        switch (this.id) {
+    public static getFileType(id: string) : string {
+        console.log("HERE");
+        switch (id) {
             case "BANK":
                 return "FIRST DIRECT";
             case "AMEX":
