@@ -20,7 +20,6 @@ import { MoneyCategoryFilterComponent } from "./money/category-picker/money-cat-
 import { PairsPipe } from "./shared/example/pairs.pipe";
 import { DatePipe } from "@angular/common";
 import { MoneyListComponent } from "./money/money-list.component";
-import { MoneyRecComponent } from "./money/money-rec.component";
 import { HouseComponent } from "./house/house.component";
 import { WeightComponent } from "./weight/weight.component";
 
@@ -37,7 +36,6 @@ import { WeightComponent } from "./weight/weight.component";
     MoneyCatagoryPickerComponent,
     MoneyCategoryFilterComponent,
     MoneyListComponent,
-    MoneyRecComponent,
     HouseComponent,
     WeightComponent
   ],
@@ -55,7 +53,6 @@ import { WeightComponent } from "./weight/weight.component";
       {path: 'logs', component: LogsComponent},
       {path: 'podcast', component: PodcastComponent},
       {path: 'list', component: MoneyListComponent},
-      {path: 'rec', component: MoneyRecComponent},
       {path: 'house', component: HouseComponent},
       {path: 'weight', component: WeightComponent},
       {path: '', redirectTo: 'welcome', pathMatch: 'full'},
