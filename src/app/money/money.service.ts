@@ -305,7 +305,7 @@ export class MoneyService {
     loadFileRequest(file: IFile, account: JbAccount) {
         let request: LoadFileRequest = new LoadFileRequest();
         request.path = file.file;
-        request.type = account.fileTypeName;
+        request.type = JbAccount.getFileType(account.id);
 
         this.http.post<LoadFileRequest>(this.loadFileUrl,request).subscribe(
             (val) => {
