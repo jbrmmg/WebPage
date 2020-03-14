@@ -234,9 +234,44 @@
                 </div>
             </div>
         </div>
+        <div id="reconcile" [collapse]="!isReconcileMode">
+            <div class="row trn-table-files-outer">
+                <table class="table trn-table trn-table-files" *ngIf="files && files.length">
+                    <tr *ngFor="let nextFile of files">
+                        <td class="col-8 trn-table-col-file">
+                            {{nextFile.file}}
+                        </td>
+                        <td class="col-1 trn-table-col-opts">
+                            <div class="row">
+                                <table class="table trn-table trn-table-files-acc">
+                                    <tr >
+                                        <td *ngFor="let nextAccount of accounts" class="trn-table-files-acc-col">
+                                            <label class="btn btn-primary btn-account-sml"
+                                                   [(ngModel)]="radioAccount"
+                                                   btnRadio="{{nextAccount.id}}"
+                                                   tabindex="0"
+                                                   (click)="onLoadRecForAccount(nextFile, nextAccount)">
+                                                <img class="btn-account-img" src="{{getImage(nextAccount)}}" alt="Account"/>
+                                            </label>
+                                        </td>
+                                        <td class="trn-table-files-acc-col">
+                                            <label  class="btn btn-primary btn-account-sml">
+
+                                            </label>
+                                        </td>
+                                        <td class="trn-table-files-acc-col">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
         <div class="row">
             <div class="table-responsive">
-                <table class="table trn-table" *ngIf="transactions && transactions.length">
+                <table class="table trn-table" *ngIf="lines && lines.length">
                     <thead class="trn-thead">
                         <tr class="trn-header-row">
                             <th colspan="2" class="trn-header trn-date-header">Date</th>
@@ -250,19 +285,19 @@
                         </tr>
                     </thead>
                     <tbody class="trn-tbody">
-                        <tr *ngFor="let nextTransaction of transactions"
+                        <tr *ngFor="let nextTransaction of lines"
                             [ngClass]="{'trn-row':  true,
-                                        'trn-total-row':  nextTransaction.isTotalLine === true}">
+                                        'trn-total-row':  nextTransaction.isTotalRow === true}">
                             <td [ngClass]="{'trn-col':  true,
                                             'trn-date-day-col': true,
-                                            'trn-date-day-col-total':  nextTransaction.isTransactionLine === false}">
+                                            'trn-date-day-col-total':  nextTransaction.isTotalRow === true}">
                                 <div *ngIf="nextTransaction.hasDate" class="trn-date-day">
                                     {{nextTransaction.dateDay}}
                                 </div>
                             </td>
                             <td [ngClass]="{'trn-col':  true,
                                             'trn-date-month-col': true,
-                                            'trn-date-month-col-total': nextTransaction.isTransactionLine === false}">
+                                            'trn-date-month-col-total': nextTransaction.isTotalRow === true}">
                                 <div *ngIf="nextTransaction.hasDate" class="trn-date-month">
                                     {{nextTransaction.dateMonth}}
                                 </div>
@@ -272,15 +307,15 @@
                             </td>
                             <td [ngClass]="{'trn-col':  true,
                                             'trn-account-col': true,
-                                            'trn-account-col-total': nextTransaction.isTransactionLine === false}">
+                                            'trn-account-col-total': nextTransaction.isTotalRow === true}">
                                 <div *ngIf="nextTransaction.hasAccount" class="trn-account">
                                     <img class="trn-account-img" src="{{getAccountImage(nextTransaction.account.id)}}" alt="Account"/>
                                 </div>
                             </td>
                             <td [ngClass]="{'trn-col':  true,
                                             'trn-category-col': true,
-                                            'trn-category-col-total': nextTransaction.isTransactionLine === false}">
-                                <div *ngIf="nextTransaction.hasCategory" class="row trn-category">
+                                            'trn-category-col-total': nextTransaction.isTotalRow === true}">
+                                <div *ngIf="nextTransaction.hasCategory" class="row trn-category" (click)="nextTransaction.select()">
                                     <div class="col-7 trn-category-txt">
                                         {{nextTransaction.category.name}}
                                     </div>
@@ -296,74 +331,59 @@
                             </td>
                             <td [ngClass]="{'trn-col':  true,
                                             'trn-description-col': true,
-                                            'trn-description-col-total': nextTransaction.isTransactionLine === false}">
+                                            'trn-description-col-total': nextTransaction.isTotalRow === true}">
                                 <div class="trn-description">
-                                    <div *ngIf="nextTransaction.isTransactionLine" class="trn-description-text">
+                                    <div *ngIf="!nextTransaction.isTotalRow" class="trn-description-text">
                                         {{nextTransaction.description}}
                                     </div>
-                                    <div *ngIf="nextTransaction.isBoughtForward" class="trn-description-total-text">
-                                        Brought Forward
-                                    </div>
-                                    <div *ngIf="nextTransaction.isTotalDebits" class="trn-description-total-text">
-                                        Total Debits
-                                    </div>
-                                    <div *ngIf="nextTransaction.isTotalCredits" class="trn-description-total-text">
-                                        Total Credits
-                                    </div>
-                                    <div *ngIf="nextTransaction.isCarriedFoward" class="trn-description-total-text">
-                                        Carried Forward
+                                    <div *ngIf="nextTransaction.isTotalRow" class="trn-description-total-text">
+                                        {{nextTransaction.description}}
                                     </div>
                                 </div>
                             </td>
                             <td [ngClass]="{'trn-col':  true,
                                             'trn-amount-col': true,
-                                            'trn-amount-col-total': nextTransaction.isTransactionLine === false}">
+                                            'trn-amount-col-total': nextTransaction.isTotalRow === true}">
                                 <div class="trn-amount">
-                                    <div *ngIf="nextTransaction.myAmount < 0"
-                                         class="trn-amount-db">{{nextTransaction.myDisplayAmount}}</div>
-                                    <div *ngIf="nextTransaction.myAmount >= 0"
-                                         class="trn-amount-cr">{{nextTransaction.myDisplayAmount}}</div>
+                                    <div *ngIf="nextTransaction.getAmount() < 0"
+                                         class="trn-amount-db">{{nextTransaction.amountDisplay}}</div>
+                                    <div *ngIf="nextTransaction.getAmount() >= 0"
+                                         class="trn-amount-cr">{{nextTransaction.amountDisplay}}</div>
                                 </div>
                             </td>
                             <td [ngClass]="{'trn-col':  true,
                                             'trn-button-col': true,
-                                            'trn-button-col-total': nextTransaction.isTransactionLine === false}">
+                                            'trn-button-col-total': nextTransaction.isTotalRow === true}">
                                 <div class="trn-button">
-                                    <button *ngIf="nextTransaction.isTransactionLine" type="button"
-                                            class="btn btn-primary trn-button-confirm"
-                                            (click)="confirmTransaction(nextTransaction)"
-                                            [disabled]="nextTransaction.locked">
-                                        <i [ngClass]="nextTransaction.locked ? 'fa fa-lock' : nextTransaction.reconciled ? 'fa fa-times' : 'fa fa-check'"></i>
+                                    <button *ngIf="nextTransaction.hasButtonOne" type="button"
+                                            class="btn btn-primary trn-button-1"
+                                            (click)="nextTransaction.clickButtonOne()"
+                                            [disabled]="!nextTransaction.enableButtonOne">
+                                        <i [ngClass]="nextTransaction.classButtonOne"></i>
                                     </button>
                                 </div>
                             </td>
                             <td [ngClass]="{'trn-col':  true,
                                                 'trn-button-col': true,
-                                                'trn-button-col-total': nextTransaction.isTransactionLine === false}">
+                                                'trn-button-col-total': nextTransaction.isTotalRow === true}">
                                 <div class="trn-button">
-                                    <button *ngIf="nextTransaction.isTransactionLine" type="button"
-                                            class="btn btn-primary trn-button-edit"
-                                            (click)="clickEditable(nextTransaction)"
-                                            [disabled]="nextTransaction.locked || nextTransaction.reconciled">
-                                        <i class="fa fa-pencil"></i>
+                                    <button *ngIf="nextTransaction.hasButtonTwo" type="button"
+                                            class="btn btn-primary trn-button-2"
+                                            (click)="nextTransaction.clickButtonTwo()"
+                                            [disabled]="!nextTransaction.enableButtonTwo">
+                                        <i [ngClass]="nextTransaction.classButtonTwo"></i>
                                     </button>
                                 </div>
                             </td>
                             <td [ngClass]="{'trn-col':  true,
                                                 'trn-button-col': true,
-                                                'trn-button-col-total': nextTransaction.isTransactionLine === false}">
+                                                'trn-button-col-total': nextTransaction.isTotalRow === true}">
                                 <div class="trn-button">
-                                    <button *ngIf="nextTransaction.isTransactionLine" type="button"
-                                            class="btn btn-primary trn-button-delete"
-                                            (click)="deleteTransaction(nextTransaction)"
-                                            [disabled]="nextTransaction.locked || nextTransaction.reconciled">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
-                                    <button *ngIf="nextTransaction.isCarriedFoward" type="button"
-                                            class="btn btn-primary trn-button-lock"
-                                            (click)="onClickLockStatement()"
-                                            [disabled]="!nextTransaction.summary.canLock || selectedStatement.locked">
-                                        <i [ngClass]="nextTransaction.summary.canLock && selectedStatement.locked ? 'fa fa-lock' : 'fa fa-unlock'"></i>
+                                    <button *ngIf="nextTransaction.hasButtonThree" type="button"
+                                            class="btn btn-primary trn-button-3"
+                                            (click)="nextTransaction.clickButtonThree()"
+                                            [disabled]="!nextTransaction.enableButtonThree">
+                                        <i [ngClass]="nextTransaction.classButtonThree"></i>
                                     </button>
                                 </div>
                             </td>
@@ -386,7 +406,25 @@
                 [showSystem]="false"
                 columnSpacing="5px"
                 rowSpacing="3px"
-                (valueSelected)="onCategorySelected($event)">
+                (valueSelected)="onCategorySelected($event)"
+                (complete)="onExitSelector()">
+        </money-category-picker>
+    </div>
+</ng-template>
+
+<ng-template #templateCategorySelector>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Enter category</h4>
+    </div>
+    <div class="body">
+        <money-category-picker
+                [columns]="3"
+                [showAccountTransfers]="false"
+                [showSystem]="false"
+                columnSpacing="5px"
+                rowSpacing="3px"
+                (valueSelected)="onCategorySelector($event)"
+                (complete)="onExitSelector()">
         </money-category-picker>
     </div>
 </ng-template>
@@ -404,7 +442,7 @@
                 [selections]="categories"
                 columnSpacing="5px"
                 rowSpacing="3px"
-                (valueSelected)="onCategoryFiltered($event)"
+                (valueSelected)="onCategoryFiltered()"
                 (complete)="onExitFilter()">
         </money-category-picker>
     </div>

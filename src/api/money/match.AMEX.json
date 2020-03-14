@@ -1,6 +1,6 @@
 [
   {
-    "transactionId": -1,
+    "transaction": null,
     "beforeAmount": -31.03,
     "afterAmount": -69.23,
     "category": null,
@@ -18,7 +18,7 @@
     "backwardAction": "NONE"
   },
   {
-    "transactionId": -1,
+    "transaction": null,
     "beforeAmount": -69.23,
     "afterAmount": -72.32000000000001,
     "category": null,
@@ -36,7 +36,44 @@
     "backwardAction": "NONE"
   },
   {
-    "transactionId": 3,
+    "transaction": {
+      "id": 3,
+      "account": {
+        "id": "AMEX",
+        "name": "American Express",
+        "imagePrefix": "amex",
+        "colour": "4BBAEA"
+      },
+      "category": {
+        "id": "JBS",
+        "name": "Jason",
+        "sort": 300,
+        "restricted": false,
+        "colour": "B8B825",
+        "expense": true,
+        "group": "House",
+        "systemUse": false,
+        "source": "Jason"
+      },
+      "date": "2010-02-01T00:00:00.000+0000",
+      "amount": -38.82,
+      "statement": {
+        "id": {
+          "account": {
+            "id": "AMEX",
+            "name": "American Express",
+            "imagePrefix": "amex",
+            "colour": "4BBAEA"
+          },
+          "month": 2,
+          "year": 2010
+        },
+        "openBalance": -31.03,
+        "locked": false
+      },
+      "description": "Watford FC",
+      "oppositeTransactionId": null
+    },
     "beforeAmount": 0,
     "afterAmount": 0,
     "category": {
@@ -57,7 +94,7 @@
       "imagePrefix": "amex",
       "colour": "4BBAEA"
     },
-    "date": "2010-02-01",
+    "date": "2010-03-15",
     "id": -1,
     "forwardAction": "UNRECONCILE",
     "amount": -38.82,

@@ -13,4 +13,18 @@ export class JbAccount implements IAccount {
                 public imagePrefix: string,
                 public colour: string ) {
     }
+
+    public static getFileType(id: string) : string {
+        console.log("HERE");
+        switch (id) {
+            case "BANK":
+                return "FIRSTDIRECT";
+            case "AMEX":
+                return "AMEX";
+            case "JLPC":
+                return "JOHNLEWIS";
+        }
+
+        return "Other";
+    }
 }

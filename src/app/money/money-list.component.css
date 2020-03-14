@@ -41,6 +41,13 @@
     padding: 3px;
 }
 
+.btn-account-sml {
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    padding: 0;
+}
+
 .btn-account-img {
     width: 100%;
     height: 100%;
@@ -61,7 +68,7 @@
 }
 
 .date-select-row {
-    margin: 0px;
+    margin: 0;
 }
 
 .date-select-col {
@@ -69,7 +76,7 @@
 }
 
 .date-select-col-btn {
-    padding: 0px 2px 1px 3px;
+    padding: 0 2px 1px 3px;
 }
 
 /* category selectors */
@@ -309,21 +316,21 @@
 
 }
 
-.trn-button-confirm {
-
+.trn-button-1 {
+    width: 100%;
+    height: 100%;
 }
 
-.trn-button-edit {
-
+.trn-button-2 {
+    width: 100%;
+    height: 100%;
 }
 
-.trn-button-delete {
-
+.trn-button-3 {
+    width: 100%;
+    height: 100%;
 }
 
-.trn-button-lock {
-
-}
 
 .status-text-success {
     background:url(
@@ -417,4 +424,31 @@
 
 .cat-filter {
     height: 100%;
+}
+
+.trn-table-files-outer {
+    width: 60%;
+}
+
+.trn-table-files {
+    margin: 0;
+}
+
+.trn-table-col-file {
+    border: 0;
+    padding: 0;
+}
+
+.trn-table-col-opts {
+    border: 0;
+    padding: 0;
+}
+
+.trn-table-files-acc {
+    margin: 0;
+}
+
+.trn-table-files-acc-col {
+    border: 0;
+    padding: 2px;
 }

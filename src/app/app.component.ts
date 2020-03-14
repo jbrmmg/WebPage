@@ -11,7 +11,6 @@ import { Component } from '@angular/core';
         <li><a class='nav-link' [routerLink]="['/logs']">Logs</a></li>
         <li><a class='nav-link' [routerLink]="['/podcast']">Podcast</a></li>
         <li><a class='nav-link' [routerLink]="['/list']">List</a></li>
-        <li><a class='nav-link' [routerLink]="['/rec']">Rec</a></li>
         <li><a class='nav-link' [routerLink]="['/house']">House</a></li>
         <li><a class='nav-link' [routerLink]="['/weight']">Weight</a></li>
       </ul>
