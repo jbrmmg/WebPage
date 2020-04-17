@@ -17,18 +17,15 @@ export class StatusResponse {
 export class PodcastService {
     private readonly podcastUrl;
     private readonly episodeUrl;
-    private readonly deleteEpisodeUrl;
 
     constructor(private http: HttpClient) {
         if(environment.production) {
             // Use production URL's
             this.podcastUrl = '/podcast/type';
             this.episodeUrl = '/podcast/episode?podcastId=#ID#';
-            this.deleteEpisodeUrl = '/podcastctrl/delete?podcastId=#ID#';
         } else {
             this.podcastUrl = 'api/podcast/types.json';
             this.episodeUrl = 'api/podcast/episode.json';
-            this.deleteEpisodeUrl = 'api/podcast/delete.txt';
         }
 
     }
@@ -53,10 +50,10 @@ export class PodcastService {
 
     deleteEpisode(id: string)
     {
-        console.info("Delete episode - " + id + " " + this.deleteEpisodeUrl);
+        console.info("Delete episode - " + id + " " + this.episodeUrl);
 
         let url: string;
-        url = this.deleteEpisodeUrl;
+        url = this.episodeUrl;
         url = url.replace("#ID#",id);
 
         this.http.delete<StatusResponse>(url).subscribe(
