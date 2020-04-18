@@ -18,7 +18,7 @@ export class WelcomeService {
         request.what = text1;
         request.detail = text2;
 
-        this.http.post<void>("/podcastctrl/reminder",request).subscribe(
+        this.http.post<void>("/podcast/reminder",request).subscribe(
             (val) => {
                 console.log("POST call successful value returned in body", val)
             },
