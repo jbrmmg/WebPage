@@ -7,5 +7,8 @@
     "name" : "Backup processing"  },
   { "id"   : "PDCST",
     "icon" : "fa-podcast",
-    "name" :  "Podcast Control" }
+    "name" :  "Podcast Control" },
+  { "id"   : "LOGDB",
+    "icon" : "fa-list",
+    "name" :  "Logs" }
 ]

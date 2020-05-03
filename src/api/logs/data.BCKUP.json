@@ -1,9 +1,10 @@
 [
-  {"timeStampString":"1551521484791",
-    "sequence":391384,
+  {
+    "timeStampString":"1551521484791",
+    "eventId":391384,
     "time":"10:11:24",
-    "level":"INFO",
+    "levelString":"INFO",
     "date":20190302,
     "typeId":"com.jbr.middletier.money.control.CategoryController",
-    "text":"Start backup."}
+    "formattedMessage":"Start backup."}
 ]

@@ -1,0 +1,12 @@
+[
+  {
+    "eventId":2,
+    "formattedMessage":"Logger Starting Up",
+    "levelString":"INFO",
+    "callerClass":"com.jbr.middletier.log.data.LogTypeManager",
+    "typeId":"com.jbr.middletier.log.data.LogTypeManager",
+    "date":20200503,
+    "time":"09:17:06",
+    "timeStampString":"1588493826000"
+  }
+]

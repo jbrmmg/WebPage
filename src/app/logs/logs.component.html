@@ -35,12 +35,12 @@
                                 <td class="log-line-date log-line-row">{{nextData.time}}</td>
                                 <td class="log-line-badge log-line-row"><span [ngClass]="{
                                     'badge':true,
-                                    'badge-info':nextData.level==='INFO',
-                                    'badge-warning':nextData.level==='WARN',
-                                    'badge-danger':nextData.level==='ERROR' || nextData.level==='FATAL',
-                                    'badge-primary':nextData.level==='DEBUG' || nextData.level==='TRACE'
-                                    }">{{nextData.level}}</span></td>
-                                <td class="log-line-text log-line-row">{{nextData.text}}</td>
+                                    'badge-info':nextData.levelString==='INFO',
+                                    'badge-warning':nextData.levelString==='WARN',
+                                    'badge-danger':nextData.levelString==='ERROR' || nextData.levelString==='FATAL',
+                                    'badge-primary':nextData.levelString==='DEBUG' || nextData.levelString==='TRACE'
+                                    }">{{nextData.levelString}}</span></td>
+                                <td class="log-line-text log-line-row">{{nextData.formattedMessage}}</td>
                             </tr>
                         </tbody>
                     </table>
