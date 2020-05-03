@@ -313,6 +313,10 @@ export class MoneyService {
             },
             (response) => {
                 console.log("POST call in error", response);
+                if(!environment.production) {
+                    console.log("Testing - process as complete.", response);
+                    this.updateTransactions.emit(null);
+                }
             },
             () => {
                 console.log("The POST observable is now complete (load)");
@@ -378,6 +382,10 @@ export class MoneyService {
             },
             (response) => {
                 console.log("PUT call in error", response);
+                if(!environment.production) {
+                    console.log("Testing - process as complete.", response);
+                    this.updateTransactions.emit(null);
+                }
             },
             () => {
                 this.updateTransactions.emit(null);
@@ -400,6 +408,10 @@ export class MoneyService {
             },
             (response) => {
                 console.log("PUT call in error", response);
+                if(!environment.production) {
+                    console.log("Testing - process as complete.", response);
+                    this.updateTransactions.emit(null);
+                }
             },
             () => {
                 console.log("The PUT observable is now complete (confirm)");
@@ -427,6 +439,10 @@ export class MoneyService {
         },
         (response) => {
             console.log("POST call in error", response);
+            if(!environment.production) {
+                console.log("Testing - process as complete.", response);
+                this.updateTransactions.emit(null);
+            }
         },
         () => {
             console.log("The POST observable is now complete (delete)");
@@ -453,6 +469,11 @@ export class MoneyService {
         },
         (response) => {
             console.log("POST call in error", response);
+            if(!environment.production) {
+                console.log("Testing - process as complete.", response);
+                this.updateStatements.emit(null);
+                this.updateTransactions.emit(null);
+            }
         },
         () => {
             console.log("The POST observable is now complete (lock)");

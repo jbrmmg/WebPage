@@ -87,7 +87,6 @@ export class MoneyListComponent implements OnInit {
     }
 
     selectAddMode() {
-//        this.listMode = ListMode.Add;
         this.updateTransactions(UpdateTransactionReason.SelectAdd)
     }
 
@@ -96,7 +95,6 @@ export class MoneyListComponent implements OnInit {
     }
 
     selectNormalMode() {
-//        this.listMode = ListMode.Normal;
         this.updateTransactions(UpdateTransactionReason.SelectNormal)
     }
 
@@ -105,7 +103,6 @@ export class MoneyListComponent implements OnInit {
     }
 
     selectRegularMode() {
-//        this.listMode = ListMode.Regulars;
         this.updateTransactions(UpdateTransactionReason.SelectRegular)
     }
 
@@ -114,7 +111,6 @@ export class MoneyListComponent implements OnInit {
     }
 
     selectReconcileMode() {
-//        this.listMode = ListMode.Reconciliation;
         this.updateTransactions(UpdateTransactionReason.SelectReconcilation)
     }
 
@@ -207,7 +203,6 @@ export class MoneyListComponent implements OnInit {
 
         // Set dates to MTD
         this.onDateButton('MTD');
-
 
         // Select all accounts or 1
         if(selectAllAccounts) {
@@ -661,6 +656,10 @@ export class MoneyListComponent implements OnInit {
         }
 
         return MoneyService.getDisabledAccountImage(account.id);
+    }
+
+    getSelectedImage(account: JbAccount): string {
+        return MoneyService.getAccountImage(account.id);
     }
 
     getAccountImage(id: string): string {
