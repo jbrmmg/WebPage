@@ -1,8 +1,8 @@
 export interface ILogsData {
     timeStampString: string;
     time: string;
-    level: string;
+    levelString: string;
     date: number,
     typeId: string,
-    text: string
+    formattedMessage: string
 }
