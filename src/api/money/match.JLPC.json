@@ -1,0 +1,741 @@
+[
+  {
+    "transaction": null,
+    "beforeAmount": -2441.27,
+    "afterAmount": -2620.07,
+    "category": null,
+    "description": "APPLE.COM/UK 0845-600-1683 IRL",
+    "account": {
+      "id": "JLPC",
+      "name": "John Lewis Card",
+      "imagePrefix": "johnLewis",
+      "colour": "00461C"
+    },
+    "date": "2020-04-29",
+    "forwardAction": "SETCATEGORY",
+    "amount": -178.8,
+    "backwardAction": "NONE",
+    "id": 389
+  },
+  {
+    "transaction": null,
+    "beforeAmount": -2620.07,
+    "afterAmount": -3212.17,
+    "category": null,
+    "description": "LES MILLS FITNESS 0207 2640264 GBR",
+    "account": {
+      "id": "JLPC",
+      "name": "John Lewis Card",
+      "imagePrefix": "johnLewis",
+      "colour": "00461C"
+    },
+    "date": "2020-04-25",
+    "forwardAction": "SETCATEGORY",
+    "amount": -592.1,
+    "backwardAction": "NONE",
+    "id": 396
+  },
+  {
+    "transaction": null,
+    "beforeAmount": -3212.17,
+    "afterAmount": -3165.67,
+    "category": null,
+    "description": "LES MILLS FITNESS 0207 2640264 GBR",
+    "account": {
+      "id": "JLPC",
+      "name": "John Lewis Card",
+      "imagePrefix": "johnLewis",
+      "colour": "00461C"
+    },
+    "date": "2020-04-28",
+    "forwardAction": "SETCATEGORY",
+    "amount": 46.5,
+    "backwardAction": "NONE",
+    "id": 392
+  },
+  {
+    "transaction": null,
+    "beforeAmount": -3165.67,
+    "afterAmount": -3178.02,
+    "category": null,
+    "description": "MOONPIG LONDON LND",
+    "account": {
+      "id": "JLPC",
+      "name": "John Lewis Card",
+      "imagePrefix": "johnLewis",
+      "colour": "00461C"
+    },
+    "date": "2020-04-29",
+    "forwardAction": "SETCATEGORY",
+    "amount": -12.35,
+    "backwardAction": "NONE",
+    "id": 391
+  },
+  {
+    "transaction": null,
+    "beforeAmount": -3178.02,
+    "afterAmount": -3197.62,
+    "category": null,
+    "description": "Robert Bosch Ltd Denham GBR",
+    "account": {
+      "id": "JLPC",
+      "name": "John Lewis Card",
+      "imagePrefix": "johnLewis",
+      "colour": "00461C"
+    },
+    "date": "2020-04-29",
+    "forwardAction": "SETCATEGORY",
+    "amount": -19.6,
+    "backwardAction": "NONE",
+    "id": 390
+  },
+  {
+    "transaction": null,
+    "beforeAmount": -3197.62,
+    "afterAmount": -3322.3399999999997,
+    "category": null,
+    "description": "SAINSBURYS 0504 PINNER GBR",
+    "account": {
+      "id": "JLPC",
+      "name": "John Lewis Card",
+      "imagePrefix": "johnLewis",
+      "colour": "00461C"
+    },
+    "date": "2020-04-20",
+    "forwardAction": "SETCATEGORY",
+    "amount": -124.72,
+    "backwardAction": "NONE",
+    "id": 399
+  },
+  {
+    "transaction": null,
+    "beforeAmount": -3322.3399999999997,
+    "afterAmount": -3374.3099999999995,
+    "category": null,
+    "description": "WAITROSE 143 HARROW WEALD GBR",
+    "account": {
+      "id": "JLPC",
+      "name": "John Lewis Card",
+      "imagePrefix": "johnLewis",
+      "colour": "00461C"
+    },
+    "date": "2020-05-01",
+    "forwardAction": "SETCATEGORY",
+    "amount": -51.97,
+    "backwardAction": "NONE",
+    "id": 385
+  },
+  {
+    "transaction": null,
+    "beforeAmount": -3374.3099999999995,
+    "afterAmount": -3402.3299999999995,
+    "category": null,
+    "description": "WM MORRISONS STORE PINNER GBR",
+    "account": {
+      "id": "JLPC",
+      "name": "John Lewis Card",
+      "imagePrefix": "johnLewis",
+      "colour": "00461C"
+    },
+    "date": "2020-05-01",
+    "forwardAction": "SETCATEGORY",
+    "amount": -28.02,
+    "backwardAction": "NONE",
+    "id": 384
+  },
+  {
+    "transaction": null,
+    "beforeAmount": -3402.3299999999995,
+    "afterAmount": -3423.7699999999995,
+    "category": null,
+    "description": "WWW.CHOCOLATE-EXPRESS. ST HELIER GBR",
+    "account": {
+      "id": "JLPC",
+      "name": "John Lewis Card",
+      "imagePrefix": "johnLewis",
+      "colour": "00461C"
+    },
+    "date": "2020-04-30",
+    "forwardAction": "SETCATEGORY",
+    "amount": -21.44,
+    "backwardAction": "NONE",
+    "id": 388
+  },
+  {
+    "transaction": null,
+    "beforeAmount": -3423.7699999999995,
+    "afterAmount": -3618.7699999999995,
+    "category": null,
+    "description": "WWW.JOHNLEWIS.COM 03456 049 049 GBR",
+    "account": {
+      "id": "JLPC",
+      "name": "John Lewis Card",
+      "imagePrefix": "johnLewis",
+      "colour": "00461C"
+    },
+    "date": "2020-04-25",
+    "forwardAction": "SETCATEGORY",
+    "amount": -195,
+    "backwardAction": "NONE",
+    "id": 397
+  },
+  {
+    "transaction": {
+      "id": 66,
+      "account": {
+        "id": "JLPC",
+        "name": "John Lewis Card",
+        "imagePrefix": "johnLewis",
+        "colour": "00461C"
+      },
+      "category": {
+        "id": "UTL",
+        "name": "Utility Bill",
+        "sort": 201,
+        "restricted": false,
+        "colour": "33CCFF",
+        "expense": true,
+        "group": "House",
+        "systemUse": false,
+        "source": "Utility Bill"
+      },
+      "date": "2020-04-20T11:00:00.000+0000",
+      "amount": -15,
+      "statement": null,
+      "description": "giffgaff London GBR",
+      "oppositeTransactionId": null
+    },
+    "beforeAmount": -3618.7699999999995,
+    "afterAmount": -3633.7699999999995,
+    "category": {
+      "id": "UTL",
+      "name": "Utility Bill",
+      "sort": 201,
+      "restricted": false,
+      "colour": "33CCFF",
+      "expense": true,
+      "group": "House",
+      "systemUse": false,
+      "source": "Utility Bill"
+    },
+    "description": "giffgaff London GBR",
+    "account": {
+      "id": "JLPC",
+      "name": "John Lewis Card",
+      "imagePrefix": "johnLewis",
+      "colour": "00461C"
+    },
+    "date": "2020-04-20",
+    "forwardAction": "RECONCILE",
+    "amount": -15,
+    "backwardAction": "DELETE",
+    "id": 398
+  },
+  {
+    "transaction": {
+      "id": 67,
+      "account": {
+        "id": "JLPC",
+        "name": "John Lewis Card",
+        "imagePrefix": "johnLewis",
+        "colour": "00461C"
+      },
+      "category": {
+        "id": "UTL",
+        "name": "Utility Bill",
+        "sort": 201,
+        "restricted": false,
+        "colour": "33CCFF",
+        "expense": true,
+        "group": "House",
+        "systemUse": false,
+        "source": "Utility Bill"
+      },
+      "date": "2020-04-27T11:00:00.000+0000",
+      "amount": -15,
+      "statement": null,
+      "description": "giffgaff London GBR",
+      "oppositeTransactionId": null
+    },
+    "beforeAmount": -3633.7699999999995,
+    "afterAmount": -3648.7699999999995,
+    "category": {
+      "id": "UTL",
+      "name": "Utility Bill",
+      "sort": 201,
+      "restricted": false,
+      "colour": "33CCFF",
+      "expense": true,
+      "group": "House",
+      "systemUse": false,
+      "source": "Utility Bill"
+    },
+    "description": "giffgaff London GBR",
+    "account": {
+      "id": "JLPC",
+      "name": "John Lewis Card",
+      "imagePrefix": "johnLewis",
+      "colour": "00461C"
+    },
+    "date": "2020-04-27",
+    "forwardAction": "RECONCILE",
+    "amount": -15,
+    "backwardAction": "DELETE",
+    "id": 395
+  },
+  {
+    "transaction": {
+      "id": 68,
+      "account": {
+        "id": "JLPC",
+        "name": "John Lewis Card",
+        "imagePrefix": "johnLewis",
+        "colour": "00461C"
+      },
+      "category": {
+        "id": "HSE",
+        "name": "House",
+        "sort": 200,
+        "restricted": false,
+        "colour": "9966FF",
+        "expense": true,
+        "group": "House",
+        "systemUse": false,
+        "source": "House"
+      },
+      "date": "2020-04-27T11:00:00.000+0000",
+      "amount": -56,
+      "statement": {
+        "id": {
+          "account": {
+            "id": "JLPC",
+            "name": "John Lewis Card",
+            "imagePrefix": "johnLewis",
+            "colour": "00461C"
+          },
+          "month": 3,
+          "year": 2010
+        },
+        "openBalance": -2441.27,
+        "locked": false
+      },
+      "description": "This is a mistake",
+      "oppositeTransactionId": null
+    },
+    "beforeAmount": 0,
+    "afterAmount": 0,
+    "category": {
+      "id": "HSE",
+      "name": "House",
+      "sort": 200,
+      "restricted": false,
+      "colour": "9966FF",
+      "expense": true,
+      "group": "House",
+      "systemUse": false,
+      "source": "House"
+    },
+    "description": null,
+    "account": {
+      "id": "JLPC",
+      "name": "John Lewis Card",
+      "imagePrefix": "johnLewis",
+      "colour": "00461C"
+    },
+    "date": "2020-04-27",
+    "forwardAction": "UNRECONCILE",
+    "amount": -56,
+    "backwardAction": "NONE",
+    "id": -1
+  },
+  {
+    "transaction": {
+      "id": 60,
+      "account": {
+        "id": "JLPC",
+        "name": "John Lewis Card",
+        "imagePrefix": "johnLewis",
+        "colour": "00461C"
+      },
+      "category": {
+        "id": "FDG",
+        "name": "Grocery",
+        "sort": 100,
+        "restricted": false,
+        "colour": "FFFF00",
+        "expense": true,
+        "group": "Food",
+        "systemUse": false,
+        "source": "Grocery"
+      },
+      "date": "2020-04-27T11:00:00.000+0000",
+      "amount": -83.05,
+      "statement": {
+        "id": {
+          "account": {
+            "id": "JLPC",
+            "name": "John Lewis Card",
+            "imagePrefix": "johnLewis",
+            "colour": "00461C"
+          },
+          "month": 3,
+          "year": 2010
+        },
+        "openBalance": -2441.27,
+        "locked": false
+      },
+      "description": "SAINSBURYS SACAT 0504 PINNER GBR",
+      "oppositeTransactionId": null
+    },
+    "beforeAmount": -3648.7699999999995,
+    "afterAmount": -3731.8199999999997,
+    "category": {
+      "id": "FDG",
+      "name": "Grocery",
+      "sort": 100,
+      "restricted": false,
+      "colour": "FFFF00",
+      "expense": true,
+      "group": "Food",
+      "systemUse": false,
+      "source": "Grocery"
+    },
+    "description": "SAINSBURYS SACAT 0504 PINNER GBR",
+    "account": {
+      "id": "JLPC",
+      "name": "John Lewis Card",
+      "imagePrefix": "johnLewis",
+      "colour": "00461C"
+    },
+    "date": "2020-04-27",
+    "forwardAction": "NONE",
+    "amount": -83.05,
+    "backwardAction": "UNRECONCILE",
+    "id": 394
+  },
+  {
+    "transaction": {
+      "id": 61,
+      "account": {
+        "id": "JLPC",
+        "name": "John Lewis Card",
+        "imagePrefix": "johnLewis",
+        "colour": "00461C"
+      },
+      "category": {
+        "id": "FDG",
+        "name": "Grocery",
+        "sort": 100,
+        "restricted": false,
+        "colour": "FFFF00",
+        "expense": true,
+        "group": "Food",
+        "systemUse": false,
+        "source": "Grocery"
+      },
+      "date": "2020-04-27T11:00:00.000+0000",
+      "amount": -39.2,
+      "statement": {
+        "id": {
+          "account": {
+            "id": "JLPC",
+            "name": "John Lewis Card",
+            "imagePrefix": "johnLewis",
+            "colour": "00461C"
+          },
+          "month": 3,
+          "year": 2010
+        },
+        "openBalance": -2441.27,
+        "locked": false
+      },
+      "description": "MARKS&SPENCER PLC SF PINNER GBR",
+      "oppositeTransactionId": null
+    },
+    "beforeAmount": -3731.8199999999997,
+    "afterAmount": -3771.0199999999995,
+    "category": {
+      "id": "FDG",
+      "name": "Grocery",
+      "sort": 100,
+      "restricted": false,
+      "colour": "FFFF00",
+      "expense": true,
+      "group": "Food",
+      "systemUse": false,
+      "source": "Grocery"
+    },
+    "description": "MARKS&SPENCER PLC SF PINNER GBR",
+    "account": {
+      "id": "JLPC",
+      "name": "John Lewis Card",
+      "imagePrefix": "johnLewis",
+      "colour": "00461C"
+    },
+    "date": "2020-04-27",
+    "forwardAction": "NONE",
+    "amount": -39.2,
+    "backwardAction": "UNRECONCILE",
+    "id": 393
+  },
+  {
+    "transaction": {
+      "id": 62,
+      "account": {
+        "id": "JLPC",
+        "name": "John Lewis Card",
+        "imagePrefix": "johnLewis",
+        "colour": "00461C"
+      },
+      "category": {
+        "id": "FDG",
+        "name": "Grocery",
+        "sort": 100,
+        "restricted": false,
+        "colour": "FFFF00",
+        "expense": true,
+        "group": "Food",
+        "systemUse": false,
+        "source": "Grocery"
+      },
+      "date": "2020-04-30T11:00:00.000+0000",
+      "amount": -45.87,
+      "statement": {
+        "id": {
+          "account": {
+            "id": "JLPC",
+            "name": "John Lewis Card",
+            "imagePrefix": "johnLewis",
+            "colour": "00461C"
+          },
+          "month": 3,
+          "year": 2010
+        },
+        "openBalance": -2441.27,
+        "locked": false
+      },
+      "description": "SAINSBURYS SACAT 0504 PINNER GBR",
+      "oppositeTransactionId": null
+    },
+    "beforeAmount": -3771.0199999999995,
+    "afterAmount": -3816.8899999999994,
+    "category": {
+      "id": "FDG",
+      "name": "Grocery",
+      "sort": 100,
+      "restricted": false,
+      "colour": "FFFF00",
+      "expense": true,
+      "group": "Food",
+      "systemUse": false,
+      "source": "Grocery"
+    },
+    "description": "SAINSBURYS SACAT 0504 PINNER GBR",
+    "account": {
+      "id": "JLPC",
+      "name": "John Lewis Card",
+      "imagePrefix": "johnLewis",
+      "colour": "00461C"
+    },
+    "date": "2020-04-30",
+    "forwardAction": "NONE",
+    "amount": -45.87,
+    "backwardAction": "UNRECONCILE",
+    "id": 387
+  },
+  {
+    "transaction": {
+      "id": 63,
+      "account": {
+        "id": "JLPC",
+        "name": "John Lewis Card",
+        "imagePrefix": "johnLewis",
+        "colour": "00461C"
+      },
+      "category": {
+        "id": "FDG",
+        "name": "Grocery",
+        "sort": 100,
+        "restricted": false,
+        "colour": "FFFF00",
+        "expense": true,
+        "group": "Food",
+        "systemUse": false,
+        "source": "Grocery"
+      },
+      "date": "2020-04-30T11:00:00.000+0000",
+      "amount": -9,
+      "statement": {
+        "id": {
+          "account": {
+            "id": "JLPC",
+            "name": "John Lewis Card",
+            "imagePrefix": "johnLewis",
+            "colour": "00461C"
+          },
+          "month": 3,
+          "year": 2010
+        },
+        "openBalance": -2441.27,
+        "locked": false
+      },
+      "description": "MARKS & SPENCER PLC SA PINNER GBR",
+      "oppositeTransactionId": null
+    },
+    "beforeAmount": -3816.8899999999994,
+    "afterAmount": -3825.8899999999994,
+    "category": {
+      "id": "FDG",
+      "name": "Grocery",
+      "sort": 100,
+      "restricted": false,
+      "colour": "FFFF00",
+      "expense": true,
+      "group": "Food",
+      "systemUse": false,
+      "source": "Grocery"
+    },
+    "description": "MARKS & SPENCER PLC SA PINNER GBR",
+    "account": {
+      "id": "JLPC",
+      "name": "John Lewis Card",
+      "imagePrefix": "johnLewis",
+      "colour": "00461C"
+    },
+    "date": "2020-04-30",
+    "forwardAction": "NONE",
+    "amount": -9,
+    "backwardAction": "UNRECONCILE",
+    "id": 386
+  },
+  {
+    "transaction": {
+      "id": 64,
+      "account": {
+        "id": "JLPC",
+        "name": "John Lewis Card",
+        "imagePrefix": "johnLewis",
+        "colour": "00461C"
+      },
+      "category": {
+        "id": "FDG",
+        "name": "Grocery",
+        "sort": 100,
+        "restricted": false,
+        "colour": "FFFF00",
+        "expense": true,
+        "group": "Food",
+        "systemUse": false,
+        "source": "Grocery"
+      },
+      "date": "2020-05-02T11:00:00.000+0000",
+      "amount": -42.65,
+      "statement": {
+        "id": {
+          "account": {
+            "id": "JLPC",
+            "name": "John Lewis Card",
+            "imagePrefix": "johnLewis",
+            "colour": "00461C"
+          },
+          "month": 3,
+          "year": 2010
+        },
+        "openBalance": -2441.27,
+        "locked": false
+      },
+      "description": "MARKS & SPENCER PLC SA PINNER GBR",
+      "oppositeTransactionId": null
+    },
+    "beforeAmount": -3825.8899999999994,
+    "afterAmount": -3868.5399999999995,
+    "category": {
+      "id": "FDG",
+      "name": "Grocery",
+      "sort": 100,
+      "restricted": false,
+      "colour": "FFFF00",
+      "expense": true,
+      "group": "Food",
+      "systemUse": false,
+      "source": "Grocery"
+    },
+    "description": "MARKS & SPENCER PLC SA PINNER GBR",
+    "account": {
+      "id": "JLPC",
+      "name": "John Lewis Card",
+      "imagePrefix": "johnLewis",
+      "colour": "00461C"
+    },
+    "date": "2020-05-02",
+    "forwardAction": "NONE",
+    "amount": -42.65,
+    "backwardAction": "UNRECONCILE",
+    "id": 382
+  },
+  {
+    "transaction": {
+      "id": 65,
+      "account": {
+        "id": "JLPC",
+        "name": "John Lewis Card",
+        "imagePrefix": "johnLewis",
+        "colour": "00461C"
+      },
+      "category": {
+        "id": "FDG",
+        "name": "Grocery",
+        "sort": 100,
+        "restricted": false,
+        "colour": "FFFF00",
+        "expense": true,
+        "group": "Food",
+        "systemUse": false,
+        "source": "Grocery"
+      },
+      "date": "2020-05-02T11:00:00.000+0000",
+      "amount": -12.9,
+      "statement": {
+        "id": {
+          "account": {
+            "id": "JLPC",
+            "name": "John Lewis Card",
+            "imagePrefix": "johnLewis",
+            "colour": "00461C"
+          },
+          "month": 3,
+          "year": 2010
+        },
+        "openBalance": -2441.27,
+        "locked": false
+      },
+      "description": "SAINSBURYS SACAT 0504 PINNER GBR",
+      "oppositeTransactionId": null
+    },
+    "beforeAmount": -3868.5399999999995,
+    "afterAmount": -3881.4399999999996,
+    "category": {
+      "id": "FDG",
+      "name": "Grocery",
+      "sort": 100,
+      "restricted": false,
+      "colour": "FFFF00",
+      "expense": true,
+      "group": "Food",
+      "systemUse": false,
+      "source": "Grocery"
+    },
+    "description": "SAINSBURYS SACAT 0504 PINNER GBR",
+    "account": {
+      "id": "JLPC",
+      "name": "John Lewis Card",
+      "imagePrefix": "johnLewis",
+      "colour": "00461C"
+    },
+    "date": "2020-05-02",
+    "forwardAction": "NONE",
+    "amount": -12.9,
+    "backwardAction": "UNRECONCILE",
+    "id": 383
+  }
+]
