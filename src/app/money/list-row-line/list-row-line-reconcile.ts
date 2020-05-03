@@ -79,6 +79,12 @@ export class ListRowLineReconcile implements IListRowLineInterface {
         this.reconcile = reconcile;
         this.moneyService = moneyService;
 
+        if(this.description == null) {
+            if(reconcile.transaction != null) {
+                this.description = reconcile.transaction.description;
+            }
+        }
+
         // If the category is null, create a special category for display.
         ListRowLineReconcile.createUiCategories();
         if (this.category == null) {
@@ -103,8 +109,14 @@ export class ListRowLineReconcile implements IListRowLineInterface {
                 break;
 
             case "NONE-UNRECONCILE":
+                // This is a reconciled transaction - don't allow anything.
+                this.enableButtonOne = false;
+                this.enableButtonTwo = false;
+                this.enableButtonThree = false;
+                break;
+
             case "UNRECONCILE-NONE":
-                // Button 1 cross - unreconcile.
+                // This is a transaction that is not in the file.
                 this.enableButtonTwo = false;
                 this.enableButtonThree = false;
                 this.classButtonOne = "fa fa-times";
