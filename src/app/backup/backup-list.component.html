@@ -1,0 +1,45 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <label class="btn-sm btn-primary float-right btn-mode"
+                   tabindex="0"
+                   (click)="selectNormalMode()"
+                   [attr.aria-expanded]="isNormalMode"
+                   aria-controls="normal">
+                <i class="fa fa-align-justify"></i>
+            </label>
+            <label class="btn-sm btn-primary float-right btn-mode"
+                   tabindex="0"
+                   (click)="ignore()"
+                   [attr.aria-expanded]="isAddMode"
+                   aria-controls="addTransaction">
+                <i class="fa fa-plus-circle"></i>
+            </label>
+            <label class="btn-sm btn-primary float-right btn-mode"
+                   tabindex="0"
+                   (click)="movePrev()"
+                   [attr.aria-expanded]="isRegularMode"
+                   aria-controls="regular">
+                <i class="fa fa-recycle"></i>
+            </label>
+            <label class="btn-sm btn-primary float-right btn-mode"
+                   tabindex="0"
+                   (click)="moveNext()"
+                   [attr.aria-expanded]="isReconcileMode"
+                   aria-controls="reconcile">
+                <i class="fa fa-balance-scale"></i>
+            </label>
+        </div>
+        <div *ngIf="selectedIndex != -1">
+            <p>Hello</p>
+            <p>{{actions[selectedIndex].action}}</p>
+            <p>{{actions[selectedIndex].path}}</p>
+            <div *ngIf="actions[selectedIndex].action == 'IMPORT'">
+                <p>Image</p>
+                <ng-template [ngIf]="imageToShow">
+                    <img [src]="imageToShow" class="img-thumbnail" *ngIf="!isImageLoading;">
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>
