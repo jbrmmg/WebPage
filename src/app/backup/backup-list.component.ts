@@ -37,19 +37,7 @@ export class BackupListComponent implements OnInit {
             this.selectedIndex = 0;
         }
 
-        // Load the image.
-        this.isImageLoading = true;
-        this._backupService.getCustomerImages(this.actions[this.selectedIndex].id).subscribe(
-            data => {
-                console.log("Getting image.");
-                this.createImageFromBlob(data);
-                console.log("Getting image done.");
-                this.isImageLoading = false;
-            },
-            error => {
-                this.isImageLoading = false;
-            }
-        );
+        this.refresh();
     }
 
     createImageFromBlob(image: Blob) {
@@ -73,11 +61,35 @@ export class BackupListComponent implements OnInit {
         this.moveNext();
     }
 
+    keep() {
+        this._backupService.keepPhoto(this.actions[this.selectedIndex].id);
+
+        this.moveNext();
+    }
+
+    refresh() {
+        // Load the image.
+        this.isImageLoading = true;
+        this._backupService.getCustomerImages(this.actions[this.selectedIndex].id).subscribe(
+            data => {
+                console.log("Getting image.");
+                this.createImageFromBlob(data);
+                console.log("Getting image done.");
+                this.isImageLoading = false;
+            },
+            error => {
+                this.isImageLoading = false;
+            }
+        );
+    }
+
     movePrev(): void {
         this.selectedIndex--;
 
         if(this.selectedIndex < 0) {
             this.selectedIndex = this.actions.length - 1;
         }
+
+        this.refresh();
     }
 }

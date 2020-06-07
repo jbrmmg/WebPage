@@ -57,4 +57,21 @@ export class BackupService {
                 console.log("The POST observable is now complete (ignore photo)");
             });
     }
+
+    keepPhoto(id: number) {
+        let confirmReq = new ConfirmRequest();
+
+        confirmReq.id = id;
+        confirmReq.parameter = "";
+
+        this.http.post<void>("backup/actions",confirmReq).subscribe(() => {
+                console.log("Confirm Request");
+            },
+            (response) => {
+                console.log("POST call in error", response);
+            },
+            () => {
+                console.log("The POST observable is now complete (ignore photo)");
+            });
+    }
 }
