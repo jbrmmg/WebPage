@@ -2,6 +2,8 @@ import {Component, OnInit} from "@angular/core";
 import {BackupService} from "./backup.service";
 import {Action} from "./backup-action";
 
+export enum ListMode { Files, Actions }
+
 @Component({
     templateUrl: './backup-list.component.html',
     styleUrls: ['./backup-list.component.css']
@@ -11,6 +13,7 @@ export class BackupListComponent implements OnInit {
     selectedIndex: number;
     imageToShow: any;
     isImageLoading: boolean;
+    listMode: ListMode;
 
     constructor(private _backupService : BackupService) {
     }
@@ -19,15 +22,45 @@ export class BackupListComponent implements OnInit {
         console.log("Get Actions.");
         this.actions = [];
         this.selectedIndex = -1;
+        this.listMode = ListMode.Files;
 
         this._backupService.getActions().subscribe(
             actions => {
-                this.actions = actions
-                this.selectedIndex = 0;
+                this.actions = actions;
+                if(actions.length > 0) {
+                    this.selectedIndex = 0;
+                } else {
+                    this.selectedIndex = -1;
+                }
             },
             () => console.log("Failed to get actions."),
             () => console.log("Load Actions Complete")
         );
+    }
+
+    selectFileMode() {
+        this.listMode = ListMode.Files;
+    }
+
+    get isFileMode() : boolean {
+        return this.listMode == ListMode.Files
+    }
+
+    selectActionMode() {
+        console.log("SELECT ACTION MODE;.");
+        this.listMode = ListMode.Actions;
+    }
+
+    get isActionMode() : boolean {
+        return this.listMode == ListMode.Actions;
+    }
+
+    get isItemSelected(): boolean {
+        return this.selectedIndex != -1;
+    }
+
+    get detailLine(): string {
+        return this.actions.length + " items, selected number: " + ( this.selectedIndex + 1);
     }
 
     moveNext(): void {

@@ -3,49 +3,72 @@
         <div class="row">
             <label class="btn-sm btn-primary float-right btn-mode"
                    tabindex="0"
-                   (click)="ignore()"
-                   aria-controls="addTransaction">
-                <i class="fa fa-trash"></i>
+                   aria-controls="files"
+                   (click)="selectFileMode()"
+                   [attr.aria-expanded]="isFileMode">
+                <i class="fa fa-save"></i>
+            </label>
+            <label class="btn-sm btn-primary float-right btn-mode"
+                   tabindex="1"
+                   aria-controls="actions"
+                   (click)="selectActionMode()"
+                   [attr.aria-expanded]="isActionMode">
+                <i class="fa fa-exclamation-circle"></i>
             </label>
         </div>
-        <div class="row">
-            <label class="btn-sm btn-primary float-right btn-mode"
-                   tabindex="0"
-                   (click)="movePrev()"
-                   aria-controls="regular">
-                <i class="fa fa-arrow-circle-left"></i>
-            </label>
-            <label class="btn-sm btn-primary float-right btn-mode"
-                   tabindex="0"
-                   (click)="refresh()"
-                   aria-controls="reconcile">
-                <i class="fa fa-refresh"></i>
-            </label>
-            <label class="btn-sm btn-primary float-right btn-mode"
-                   tabindex="0"
-                   (click)="moveNext()"
-                   aria-controls="reconcile">
-                <i class="fa fa-arrow-circle-right"></i>
-            </label>
+        <div id="files" [collapse]="!isFileMode">
         </div>
-        <div>
-            <div class="row">
-                <label class="btn-sm btn-primary float-right btn-mode"
-                       tabindex="0"
-                       (click)="keep()"
-                       aria-controls="addTransaction">
-                    <i class="fa fa-check-circle"></i>
-                </label>
+        <div id="actions" [collapse]="!isActionMode">
+            <div class="row action-row">
+                <div class="col-2">
+                    <label class="btn-sm btn-primary btn-action btn-ignore"
+                           tabindex="1"
+                           (click)="ignore()">
+                        <i class="fa fa-trash"></i>
+                    </label>
+                </div>
+                <div class="col-2">
+                </div>
+                <div class="col-4">
+                    <label class="btn-sm btn-primary btn-action btn-left"
+                           tabindex="1"
+                           (click)="movePrev()">
+                        <i class="fa fa-arrow-circle-left"></i>
+                    </label>
+                    <label class="btn-sm btn-primary btn-action btn-refresh"
+                           tabindex="2"
+                           (click)="refresh()">
+                        <i class="fa fa-refresh"></i>
+                    </label>
+                    <label class="btn-sm btn-primary btn-action btn-right"
+                           tabindex="3"
+                           (click)="moveNext()">
+                        <i class="fa fa-arrow-circle-right"></i>
+                    </label>
+                </div>
+                <div class="col-2">
+                </div>
+                <div class="col-2">
+                    <label class="btn-sm btn-primary float-right btn-action btn-accept"
+                           tabindex="1"
+                           (click)="keep()">
+                        <i class="fa fa-check-circle"></i>
+                    </label>
+                </div>
             </div>
-        </div>
-        <div *ngIf="selectedIndex != -1">
-            <p>{{actions[selectedIndex].action}}</p>
-            <p>{{actions[selectedIndex].path}}</p>
-            <div *ngIf="actions[selectedIndex].action == 'IMPORT'">
-                <p>Image</p>
-                <ng-template [ngIf]="imageToShow">
-                    <img [src]="imageToShow" class="img-thumbnail" *ngIf="!isImageLoading;">
-                </ng-template>
+            <div class="row info-row" *ngIf="isItemSelected">
+                <p class="action-txt">{{actions[selectedIndex].action}}</p>
+                <p>{{actions[selectedIndex].path}}</p>
+            </div>
+            <div class="row info-row-2">
+                <p>{{detailLine}}</p>
+            </div>
+            <div class="row">
+                <div *ngIf="actions[selectedIndex].action == 'IMPORT'">
+                    <ng-template [ngIf]="imageToShow">
+                        <img [src]="imageToShow" class="img-thumbnail" *ngIf="!isImageLoading;">
+                    </ng-template>
+                </div>
             </div>
         </div>
     </div>

@@ -1,0 +1,48 @@
+
+.btn-mode {
+    margin: 0 3px;
+}
+
+.btn-action {
+    margin: 0 3px;
+    height: 40px;
+}
+
+.btn-ignore {
+    background-color: red;
+    width: 80%
+}
+
+.btn-left {
+    width: 25%
+}
+
+.btn-refresh {
+    width: 25%
+}
+
+.btn-right {
+    width: 25%
+}
+
+.btn-accept {
+    width: 80%
+}
+
+.action-row {
+    margin: 30px 0 0 0;
+}
+
+.info-row {
+    margin: 10px 0 0 0;
+}
+
+.info-row-2 {
+    margin: 2px 0 0 0;
+    font-size: 10px;
+}
+
+.action-txt {
+    margin-right: 2px;
+    font-weight: bolder;
+}
