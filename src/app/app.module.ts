@@ -22,6 +22,7 @@ import { DatePipe } from "@angular/common";
 import { MoneyListComponent } from "./money/money-list.component";
 import { HouseComponent } from "./house/house.component";
 import { WeightComponent } from "./weight/weight.component";
+import { BackupListComponent } from "./backup/backup-list.component";
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { WeightComponent } from "./weight/weight.component";
     MoneyCategoryFilterComponent,
     MoneyListComponent,
     HouseComponent,
-    WeightComponent
+    WeightComponent,
+    BackupListComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +56,7 @@ import { WeightComponent } from "./weight/weight.component";
       {path: 'podcast', component: PodcastComponent},
       {path: 'money', component: MoneyListComponent},
       {path: 'house', component: HouseComponent},
+      {path: 'bup', component: BackupListComponent},
       {path: 'weight', component: WeightComponent},
       {path: '', redirectTo: 'welcome', pathMatch: 'full'},
       {path: '**', redirectTo: 'welcome', pathMatch: 'full'}
