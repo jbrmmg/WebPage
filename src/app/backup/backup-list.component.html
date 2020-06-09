@@ -17,9 +17,48 @@
             </label>
         </div>
         <div id="files" [collapse]="!isFileMode">
+            <div class="row page-row">
+                <div class="col-2">
+                    <div *ngIf="heirarchy && heirarchy.length">
+                        <div class="row" *ngFor="let nextHeirarchy of heirarchy">
+                            <div class="col-12">
+                                <div *ngIf="nextHeirarchy.directory">
+                                    <label class="btn btn-primary btn-directory"
+                                        (click)="changeHierarchy(nextHeirarchy)">
+                                        {{nextHeirarchy.displayName}}
+                                    </label>
+                                </div>
+                                <div *ngIf="!nextHeirarchy.directory">
+                                    <label class="btn btn-outline-primary btn-directory"
+                                           (click)="displayFile(nextHeirarchy)">
+                                        {{nextHeirarchy.displayName}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12" *ngIf="!atTopLevel">
+                            <label class="btn btn-primary btn-directory"
+                                   (click)="selectTopLevel()">
+                                <i class="fa fa-chevron-circle-left"></i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-10">
+                    <div *ngIf="selectedFile != null">
+                        <p>Selected File:</p>
+                        <p>{{selectedFile.name}}</p>
+                        <ng-template [ngIf]="fileImageToShow">
+                            <img [src]="fileImageToShow" class="img-thumbnail" *ngIf="!fileImageLoading;">
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="actions" [collapse]="!isActionMode">
-            <div class="row action-row">
+            <div class="row page-row">
                 <div class="col-2">
                     <label class="btn-sm btn-primary btn-action btn-ignore"
                            tabindex="1"
@@ -64,7 +103,7 @@
                 <p>{{detailLine}}</p>
             </div>
             <div class="row">
-                <div *ngIf="actions[selectedIndex].action == 'IMPORT'">
+                <div *ngIf="isItemSelected && actions[selectedIndex].action == 'IMPORT'">
                     <ng-template [ngIf]="imageToShow">
                         <img [src]="imageToShow" class="img-thumbnail" *ngIf="!isImageLoading;">
                     </ng-template>
