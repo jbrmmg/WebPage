@@ -10,6 +10,20 @@ export class ConfirmRequest {
     parameter: string;
 }
 
+export class HierarchyResponse {
+    id: number;
+    level: number;
+    displayName: string;
+    path: string;
+    directory: boolean;
+    underlyingId: number;
+}
+
+export class FileInfo {
+    id: number;
+    name: string;
+}
+
 @Injectable({
     providedIn: 'root'
 })
@@ -19,6 +33,20 @@ export class BackupService {
 
     getActions(): Observable<Action[]> {
         return this.http.get<Action[]>("backup/actions").pipe(
+            tap(data => console.log('All: ' + JSON.stringify(data))),
+            catchError( err => BackupService.handleError(err))
+        );
+    }
+
+    getHierarchy(parent: HierarchyResponse): Observable<HierarchyResponse[]> {
+        return this.http.post<HierarchyResponse[]>("backup/hierarchy",parent).pipe(
+            tap(data => console.log('All: ' + JSON.stringify(data))),
+            catchError( err => BackupService.handleError(err))
+        );
+    }
+
+    getFile(id: number): Observable<FileInfo> {
+        return this.http.get<FileInfo>("backup/file?id=" + id).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError( err => BackupService.handleError(err))
         );
@@ -38,6 +66,12 @@ export class BackupService {
     getCustomerImages(id: number): Observable<File> {
         let result: Observable<any> = this.http
             .get(`backup/action-image?actionId=` + id, { responseType: "blob" });
+        return result;
+    }
+
+    getFileImage(id: number): Observable<File> {
+        let result: Observable<any> = this.http
+            .get('backup/fileImage?id=' + id, { responseType: "blob" });
         return result;
     }
 
