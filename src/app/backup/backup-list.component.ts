@@ -64,6 +64,34 @@ export class BackupListComponent implements OnInit {
         return this.listMode == ListMode.Files
     }
 
+    get isImage() : boolean {
+        if(this.selectedFile == null) {
+            return false;
+        }
+
+        if(this.selectedFile.name.toLocaleLowerCase().endsWith(".jpg")) {
+            return true;
+        }
+
+        return false;
+    }
+
+    get isVideo() : boolean {
+        if(this.selectedFile == null) {
+            return false;
+        }
+
+        if(this.selectedFile.name.toLocaleLowerCase().endsWith(".mov")) {
+            return true;
+        }
+
+        if(this.selectedFile.name.toLocaleLowerCase().endsWith(".mp4")) {
+            return true;
+        }
+
+        return false;
+    }
+
     selectActionMode() {
         console.log("SELECT ACTION MODE;.");
         this.listMode = ListMode.Actions;
