@@ -50,9 +50,12 @@
                     <div *ngIf="selectedFile != null">
                         <p>Selected File:</p>
                         <p>{{selectedFile.name}}</p>
-                        <ng-template [ngIf]="fileImageToShow">
-                            <img [src]="fileImageToShow" class="img-thumbnail" *ngIf="!fileImageLoading;">
-                        </ng-template>
+                        <div *ngIf="isImage">
+                            <img src="backup/fileImage?id={{selectedFile.id}}" width="420"/>
+                        </div>
+                        <div *ngIf="isVideo">
+                            <video src="backup/fileVideo?id={{selectedFile.id}}" width="420" controls></video>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -75,6 +75,12 @@ export class BackupService {
         return result;
     }
 
+    getFileVideo(): Observable<File> {
+        let result: Observable<any> = this.http
+            .get("backup/fileVideo", { responseType: "blob" });
+        return result;
+    }
+
     ignorePhoto(id: number) {
         let confirmReq = new ConfirmRequest();
 
