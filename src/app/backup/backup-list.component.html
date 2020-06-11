@@ -77,11 +77,6 @@
                            (click)="movePrev()">
                         <i class="fa fa-arrow-circle-left"></i>
                     </label>
-                    <label class="btn-sm btn-primary btn-action btn-refresh"
-                           tabindex="2"
-                           (click)="refresh()">
-                        <i class="fa fa-refresh"></i>
-                    </label>
                     <label class="btn-sm btn-primary btn-action btn-right"
                            tabindex="3"
                            (click)="moveNext()">
@@ -91,25 +86,50 @@
                 <div class="col-2">
                 </div>
                 <div class="col-2">
-                    <label class="btn-sm btn-primary float-right btn-action btn-accept"
-                           tabindex="1"
-                           (click)="keep()">
-                        <i class="fa fa-check-circle"></i>
-                    </label>
+                    <div class="row">
+                        <label class="btn-sm btn-primary float-right btn-action btn-accept"
+                               tabindex="1"
+                               (click)="keep()">
+                            <i class="fa fa-check-circle"></i>
+                        </label>
+                    </div>
+                    <div class="row">
+                        <input class="category-input"
+                               id="category"
+                               type="string"
+                               name="category"
+                               [readOnly]="false"
+                               [(ngModel)]="category">
+                    </div>
                 </div>
             </div>
             <div class="row info-row" *ngIf="isItemSelected">
-                <p class="action-txt">{{actions[selectedIndex].action}}</p>
-                <p>{{actions[selectedIndex].path}}</p>
+                <div class="col-2">
+                    <p class="action-txt">{{actions[selectedIndex].action}}</p>
+                </div>
+                <div class="col-10">
+                    <p>{{actions[selectedIndex].path.fullFilename}}</p>
+                </div>
+            </div>
+            <div class="row info-row-2" *ngIf="isItemSelected">
+                <div class="col-2">
+                </div>
+                <div class="col-10">
+                    <p>{{detailLine}}</p>
+                </div>
             </div>
             <div class="row info-row-2">
-                <p>{{detailLine}}</p>
-            </div>
-            <div class="row">
-                <div *ngIf="isItemSelected && actions[selectedIndex].action == 'IMPORT'">
-                    <ng-template [ngIf]="imageToShow">
-                        <img [src]="imageToShow" class="img-thumbnail" *ngIf="!isImageLoading;">
-                    </ng-template>
+                <div class="col-12">
+                    <div *ngIf="isItemSelected && actions[selectedIndex].action == 'IMPORT'">
+                        <div *ngIf="selectedFile != null">
+                            <div *ngIf="isImage">
+                                <img src="backup/fileImage?id={{selectedFile.id}}" width="420"/>
+                            </div>
+                            <div *ngIf="isVideo">
+                                <video src="backup/fileVideo?id={{selectedFile.id}}" width="420" controls></video>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,6 +1,8 @@
 import {Component, OnInit} from "@angular/core";
-import {BackupService, FileInfo, HierarchyResponse} from "./backup.service";
 import {Action} from "./backup-action";
+import {FileInfo} from "./backup-fileinfo"
+import {HierarchyResponse} from "./backup-hierarchyresponse"
+import {BackupService} from "./backup.service";
 
 export enum ListMode { Files, Actions }
 
@@ -14,12 +16,9 @@ export class BackupListComponent implements OnInit {
     topLevel: HierarchyResponse;
     atTopLevel: boolean;
     selectedIndex: number;
-    imageToShow: any;
-    isImageLoading: boolean;
-    fileImageToShow: any;
-    fileImageLoading: boolean;
     listMode: ListMode;
     selectedFile: FileInfo;
+    category: string;
 
     constructor(private _backupService : BackupService) {
     }
@@ -33,6 +32,7 @@ export class BackupListComponent implements OnInit {
         this.topLevel = new HierarchyResponse();
         this.topLevel.id = -1;
         this.selectedFile = null;
+        this.category = "AtHome";
 
         this._backupService.getActions().subscribe(
             actions => {
@@ -58,6 +58,18 @@ export class BackupListComponent implements OnInit {
 
     selectFileMode() {
         this.listMode = ListMode.Files;
+        this.selectedFile = null;
+    }
+
+    selectActionMode() {
+        console.log("SELECT ACTION MODE;.");
+        this.listMode = ListMode.Actions;
+
+        if(this.actions.length > 0) {
+            this.selectedIndex = 0;
+
+            this.selectedFile = this.actions[0].path;
+        }
     }
 
     get isFileMode() : boolean {
@@ -92,16 +104,12 @@ export class BackupListComponent implements OnInit {
         return false;
     }
 
-    selectActionMode() {
-        console.log("SELECT ACTION MODE;.");
-        this.listMode = ListMode.Actions;
-    }
-
     get isActionMode() : boolean {
         return this.listMode == ListMode.Actions;
     }
 
     get isItemSelected(): boolean {
+
         return this.selectedIndex != -1;
     }
 
@@ -127,6 +135,34 @@ export class BackupListComponent implements OnInit {
         );
     }
 
+    moveNext(): void {
+        if(this.actions.length <= 0) {
+            return;
+        }
+
+        this.selectedIndex++;
+
+        if(this.selectedIndex >= this.actions.length) {
+            this.selectedIndex = 0;
+        }
+
+        this.selectedFile = this.actions[this.selectedIndex].path;
+    }
+
+    movePrev(): void {
+        if(this.actions.length <= 0) {
+            return;
+        }
+
+        this.selectedIndex--;
+
+        if(this.selectedIndex < 0) {
+            this.selectedIndex = this.actions.length - 1;
+        }
+
+        this.selectedFile = this.actions[this.selectedIndex].path;
+    }
+
     displayFile(file: HierarchyResponse): void {
         console.log("Select file " + file.displayName);
 
@@ -135,65 +171,8 @@ export class BackupListComponent implements OnInit {
                 this.selectedFile = file;
             },
             () => console.log("Failed to get the file"),
-            () => {
-                console.log("Get File complete.");
-                this.fileImageLoading = true;
-                this._backupService.getFileImage(file.underlyingId).subscribe(
-                    data => {
-                        this.createImageFromBlob2(data);
-                        this.fileImageLoading = false;
-                    },
-                    () => {
-                        this.fileImageLoading = false;
-                        console.log("Failed to get the file image")
-                    },
-                    () => {
-                        this.fileImageLoading = false;
-                        console.log("Loaded file image")
-                    }
-                )
-            }
-        )
-    }
-
-    moveNext(): void {
-        this.selectedIndex++;
-
-        if(this.selectedIndex > this.actions.length) {
-            this.selectedIndex = 0;
-        }
-
-        this.refresh();
-    }
-
-    createImageFromBlob(image: Blob) {
-        let reader = new FileReader();
-        reader.addEventListener("load",
-            () => {
-                this.imageToShow = reader.result;
-            },
-            false);
-
-        if (image) {
-            console.log("Image type " + image.type)
-            if (image.type !== "application/pdf")
-                reader.readAsDataURL(image);
-        }
-    }
-
-    createImageFromBlob2(image: Blob) {
-        let reader = new FileReader();
-        reader.addEventListener("load",
-            () => {
-                this.fileImageToShow = reader.result;
-            },
-            false);
-
-        if (image) {
-            console.log("Image type " + image.type)
-            if (image.type !== "application/pdf")
-                reader.readAsDataURL(image);
-        }
+            () => console.log("Get File complete.")
+        );
     }
 
     ignore() {
@@ -203,34 +182,12 @@ export class BackupListComponent implements OnInit {
     }
 
     keep() {
-        this._backupService.keepPhoto(this.actions[this.selectedIndex].id);
-
-        this.moveNext();
-    }
-
-    refresh() {
-        // Load the image.
-        this.isImageLoading = true;
-        this._backupService.getCustomerImages(this.actions[this.selectedIndex].id).subscribe(
-            data => {
-                console.log("Getting image.");
-                this.createImageFromBlob(data);
-                console.log("Getting image done.");
-                this.isImageLoading = false;
-            },
-            error => {
-                this.isImageLoading = false;
-            }
-        );
-    }
-
-    movePrev(): void {
-        this.selectedIndex--;
-
-        if(this.selectedIndex < 0) {
-            this.selectedIndex = this.actions.length - 1;
+        if(this.category.length == 0) {
+            return;
         }
 
-        this.refresh();
+        this._backupService.keepPhoto(this.actions[this.selectedIndex].id,this.category);
+
+        this.moveNext();
     }
 }
