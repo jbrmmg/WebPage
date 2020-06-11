@@ -3,26 +3,9 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError, tap} from "rxjs/operators";
 import {Action} from "./backup-action";
-import {environment} from "../../environments/environment";
-
-export class ConfirmRequest {
-    id: number;
-    parameter: string;
-}
-
-export class HierarchyResponse {
-    id: number;
-    level: number;
-    displayName: string;
-    path: string;
-    directory: boolean;
-    underlyingId: number;
-}
-
-export class FileInfo {
-    id: number;
-    name: string;
-}
+import {FileInfo} from "./backup-fileinfo"
+import {ConfirmRequest} from "./backup-confirmrequest"
+import {HierarchyResponse} from "./backup-hierarchyresponse"
 
 @Injectable({
     providedIn: 'root'
@@ -63,24 +46,6 @@ export class BackupService {
         return throwError(errorMessage);
     }
 
-    getCustomerImages(id: number): Observable<File> {
-        let result: Observable<any> = this.http
-            .get(`backup/action-image?actionId=` + id, { responseType: "blob" });
-        return result;
-    }
-
-    getFileImage(id: number): Observable<File> {
-        let result: Observable<any> = this.http
-            .get('backup/fileImage?id=' + id, { responseType: "blob" });
-        return result;
-    }
-
-    getFileVideo(): Observable<File> {
-        let result: Observable<any> = this.http
-            .get("backup/fileVideo", { responseType: "blob" });
-        return result;
-    }
-
     ignorePhoto(id: number) {
         let confirmReq = new ConfirmRequest();
 
@@ -98,11 +63,11 @@ export class BackupService {
             });
     }
 
-    keepPhoto(id: number) {
+    keepPhoto(id: number, parameter: string) {
         let confirmReq = new ConfirmRequest();
 
         confirmReq.id = id;
-        confirmReq.parameter = "";
+        confirmReq.parameter = parameter;
 
         this.http.post<void>("backup/actions",confirmReq).subscribe(() => {
                 console.log("Confirm Request");
