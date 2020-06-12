@@ -81,7 +81,7 @@ export class BackupListComponent implements OnInit {
             return false;
         }
 
-        if(this.selectedFile.name.toLocaleLowerCase().endsWith(".jpg")) {
+        if(this.selectedFile.classification.isImage) {
             return true;
         }
 
@@ -93,11 +93,7 @@ export class BackupListComponent implements OnInit {
             return false;
         }
 
-        if(this.selectedFile.name.toLocaleLowerCase().endsWith(".mov")) {
-            return true;
-        }
-
-        if(this.selectedFile.name.toLocaleLowerCase().endsWith(".mp4")) {
+        if(this.selectedFile.classification.isVideo) {
             return true;
         }
 
