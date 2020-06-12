@@ -48,8 +48,13 @@
                 </div>
                 <div class="col-10">
                     <div *ngIf="selectedFile != null">
-                        <p>Selected File:</p>
-                        <p>{{selectedFile.name}}</p>
+                        <div class="row detail-name-row">
+                            <i class="fa {{selectedFile.classification.icon}} detail-name-icon"></i><p class="detail-name">{{selectedFile.name}}</p>
+                        </div>
+                        <div class="row detail-fullname-row"><p class="detail-fullname">{{selectedFile.fullFilename}}</p></div>
+                        <div class="row detail-size-row"><p class="detail-size">{{selectedFile.size}}</p></div>
+                        <div class="row detail-date-row"><p class="detail-date">{{selectedFile.date}}</p></div>
+                        <div class="row detail-md5-row"><p class="detail-md5">[{{selectedFile.md5}}]</p></div>
                         <div *ngIf="isImage">
                             <img src="backup/fileImage?id={{selectedFile.id}}" width="420"/>
                         </div>
