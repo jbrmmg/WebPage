@@ -1,4 +1,5 @@
 import {Classification} from "./backup-classification";
+import {DirectoryInfo} from "./backup-directoryinfo";
 
 export class FileInfo {
     id: number;
@@ -8,4 +9,5 @@ export class FileInfo {
     date: Date;
     md5: string;
     classification: Classification;
+    directoryInfo: DirectoryInfo;
 }

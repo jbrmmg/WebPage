@@ -55,6 +55,24 @@
                         <div class="row detail-size-row"><p class="detail-size">{{selectedFile.size}}</p></div>
                         <div class="row detail-date-row"><p class="detail-date">{{selectedFile.date}}</p></div>
                         <div class="row detail-md5-row"><p class="detail-md5">[{{selectedFile.md5}}]</p></div>
+                        <div class="row">
+                            <table *ngIf="fileBackups.length > 0">
+                                <tr>
+                                    <th></th>
+                                    <th class="backup">Path</th>
+                                    <th class="backup">Date</th>
+                                    <th class="backup">MD5</th>
+                                </tr>
+                                <tr *ngFor="let nextBackup of fileBackups">
+                                    <td>
+                                        <i class="fa {{backupStatus(nextBackup)}}"></i>
+                                    </td>
+                                    <td class="backup">{{nextBackup.directoryInfo.source.location.name}}</td>
+                                    <td class="backup">{{nextBackup.date}}</td>
+                                    <td class="backup">[{{nextBackup.md5}}]</td>
+                                </tr>
+                            </table>
+                        </div>
                         <div *ngIf="isImage">
                             <img src="backup/fileImage?id={{selectedFile.id}}" width="420"/>
                         </div>

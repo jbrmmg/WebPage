@@ -99,3 +99,15 @@
     margin: 0;
     font-size: 12px;
 }
+
+.backup {
+    font-size: 12px;
+}
+
+.status-green{
+    color: green;
+}
+
+.status-warn{
+    color: orange;
+}
