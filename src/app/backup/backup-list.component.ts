@@ -18,6 +18,7 @@ export class BackupListComponent implements OnInit {
     selectedIndex: number;
     listMode: ListMode;
     selectedFile: FileInfo;
+    fileBackups: FileInfo[];
     category: string;
 
     constructor(private _backupService : BackupService) {
@@ -32,6 +33,7 @@ export class BackupListComponent implements OnInit {
         this.topLevel = new HierarchyResponse();
         this.topLevel.id = -1;
         this.selectedFile = null;
+        this.fileBackups = [];
         this.category = "AtHome";
 
         this._backupService.getActions().subscribe(
@@ -59,6 +61,7 @@ export class BackupListComponent implements OnInit {
     selectFileMode() {
         this.listMode = ListMode.Files;
         this.selectedFile = null;
+        this.fileBackups = [];
     }
 
     selectActionMode() {
@@ -69,6 +72,7 @@ export class BackupListComponent implements OnInit {
             this.selectedIndex = 0;
 
             this.selectedFile = this.actions[0].path;
+            this.fileBackups = [];
         }
     }
 
@@ -164,7 +168,8 @@ export class BackupListComponent implements OnInit {
 
         this._backupService.getFile(file.underlyingId).subscribe(
             file => {
-                this.selectedFile = file;
+                this.selectedFile = file.file;
+                this.fileBackups = file.backups;
             },
             () => console.log("Failed to get the file"),
             () => console.log("Get File complete.")
@@ -185,5 +190,21 @@ export class BackupListComponent implements OnInit {
         this._backupService.keepPhoto(this.actions[this.selectedIndex].id,this.category);
 
         this.moveNext();
+    }
+
+    backupStatus(backup: FileInfo): string {
+        if(this.selectedFile.date != backup.date) {
+            return "fa-exclamation-triangle status-warn";
+        }
+
+        if(this.selectedFile.md5 == "") {
+            return "fa-exclamation-triangle status-warn";
+        }
+
+        if(this.selectedFile.md5 != backup.md5) {
+            return "fa-exclamation-triangle status-warn";
+        }
+
+        return "fa-check-circle-o status-green";
     }
 }
