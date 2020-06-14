@@ -111,3 +111,8 @@
 .status-warn{
     color: orange;
 }
+
+.list-container{
+    overflow:auto;
+    height: 600px;
+}
