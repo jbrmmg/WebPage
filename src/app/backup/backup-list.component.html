@@ -18,7 +18,15 @@
         </div>
         <div id="files" [collapse]="!isFileMode">
             <div class="row page-row">
-                <div class="col-2">
+                <div class="col-2 list-container">
+                    <div class="row">
+                        <div class="col-12" *ngIf="!atTopLevel">
+                            <label class="btn btn-primary btn-directory"
+                                   (click)="selectTopLevel()">
+                                <i class="fa fa-chevron-circle-left"></i>
+                            </label>
+                        </div>
+                    </div>
                     <div *ngIf="heirarchy && heirarchy.length">
                         <div class="row" *ngFor="let nextHeirarchy of heirarchy">
                             <div class="col-12">
@@ -35,14 +43,6 @@
                                     </label>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12" *ngIf="!atTopLevel">
-                            <label class="btn btn-primary btn-directory"
-                                   (click)="selectTopLevel()">
-                                <i class="fa fa-chevron-circle-left"></i>
-                            </label>
                         </div>
                     </div>
                 </div>
