@@ -6,6 +6,7 @@ import {Action} from "./backup-action";
 import {FileInfo} from "./backup-fileinfo"
 import {ConfirmRequest} from "./backup-confirmrequest"
 import {HierarchyResponse} from "./backup-hierarchyresponse"
+import {FileInfoExtra} from "./backup-fileinfoextra";
 
 @Injectable({
     providedIn: 'root'
@@ -28,8 +29,8 @@ export class BackupService {
         );
     }
 
-    getFile(id: number): Observable<FileInfo> {
-        return this.http.get<FileInfo>("backup/file?id=" + id).pipe(
+    getFile(id: number): Observable<FileInfoExtra> {
+        return this.http.get<FileInfoExtra>("backup/file?id=" + id).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError( err => BackupService.handleError(err))
         );
