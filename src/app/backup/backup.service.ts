@@ -52,6 +52,7 @@ export class BackupService {
 
         confirmReq.id = id;
         confirmReq.parameter = "IGNORE";
+        confirmReq.confirm = false;
 
         this.http.post<void>("backup/actions",confirmReq).subscribe(() => {
                 console.log("Confirm Request");
@@ -69,6 +70,7 @@ export class BackupService {
 
         confirmReq.id = id;
         confirmReq.parameter = parameter;
+        confirmReq.confirm = true;
 
         this.http.post<void>("backup/actions",confirmReq).subscribe(() => {
                 console.log("Confirm Request");
