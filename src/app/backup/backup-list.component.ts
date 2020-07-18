@@ -182,6 +182,10 @@ export class BackupListComponent implements OnInit {
         this.moveNext();
     }
 
+    deleteFile() {
+        this._backupService.deleteFile(this.selectedFile.id);
+    }
+
     keep() {
         if(this.category.length == 0) {
             return;

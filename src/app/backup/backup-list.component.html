@@ -46,7 +46,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-10">
+                <div class="col-10 detail-col">
                     <div *ngIf="selectedFile != null">
                         <div class="row detail-name-row">
                             <i class="fa {{selectedFile.classification.icon}} detail-name-icon"></i><p class="detail-name">{{selectedFile.name}}</p>
@@ -78,6 +78,17 @@
                         </div>
                         <div *ngIf="isVideo">
                             <video src="backup/fileVideo?id={{selectedFile.id}}" width="420" controls></video>
+                        </div>
+                        <div>
+                            <div class="row delete-row">
+                                <div class="col-1">
+                                    <label class="btn-sm btn-primary btn-delete"
+                                           tabindex="1"
+                                           (click)="deleteFile()">
+                                        <i class="fa fa-trash"></i>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
