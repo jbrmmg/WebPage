@@ -3,7 +3,6 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {catchError, tap} from "rxjs/operators";
 import {Action} from "./backup-action";
-import {FileInfo} from "./backup-fileinfo"
 import {ConfirmRequest} from "./backup-confirmrequest"
 import {HierarchyResponse} from "./backup-hierarchyresponse"
 import {FileInfoExtra} from "./backup-fileinfoextra";
@@ -45,6 +44,18 @@ export class BackupService {
         }
         console.error(errorMessage);
         return throwError(errorMessage);
+    }
+
+    deleteFile(id: number) {
+        this.http.delete<void>("backup/file?id=" + id).subscribe(() => {
+                console.log("Delete File");
+            },
+            (response) => {
+                console.log("POST call in error", response);
+            },
+            () => {
+                console.log("The POST observable is now complete (delete file)");
+            });
     }
 
     ignorePhoto(id: number) {
