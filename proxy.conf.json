@@ -2,5 +2,9 @@
   "/backup": {
     "target": "http://localhost:13013/jbr/int",
     "secure": false
+  },
+  "/money": {
+    "target": "http://localhost:13017/jbr/int",
+    "secure": false
   }
 }
