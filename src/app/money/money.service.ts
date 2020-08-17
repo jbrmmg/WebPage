@@ -55,9 +55,6 @@ export class LoadFileRequest {
     providedIn: 'root'
 })
 export class MoneyService {
-    private  testFormat = 'api/money/transaction.##type##.json';
-    private  prodFormat = 'money/transaction/get?sortAscending=false&type=##type##[from][to][account][category]';
-
     private readonly categoryUrl;
     private readonly accountUrl;
     private readonly addUrl;
@@ -78,42 +75,23 @@ export class MoneyService {
 
     constructor(private http: HttpClient) {
         this.typeUrl = 'api/money/types.json';
-        if(environment.production) {
-            // Use production URL's
-            this.categoryUrl = 'money/categories';
-            this.accountUrl = 'money/accounts';
-            this.addUrl = 'money/transaction/add';
-            this.statementUrl = 'money/statement';
-            this.updateTransactionUrl = 'money/transaction/update';
-            this.deleteTransactionUrl = 'money/delete?transactionId=##transactionId##';
-            this.lockStatementUrl = 'money/statement/lock';
-            this.reconcileTransactionUrl = 'money/reconcile';
-            this.matchUrl = 'money/match?account=##accountId##';
-            this.submitDataUrl = 'money/reconciliation/add';
-            this.clearDataUrl = 'money/reconciliation/clear';
-            this.autoAcceptUrl = 'money/reconciliation/auto';
-            this.setCategoryUrl = 'money/reconciliation/update';
-            this.getRegularUrl = 'money/transaction/regulars';
-            this.getFilesUrl = 'money/reconciliation/files';
-            this.loadFileUrl = 'money/reconciliation/load';
-        } else {
-            this.categoryUrl = 'api/money/category.json';
-            this.accountUrl = 'api/money/account.json';
-            this.addUrl = 'api/money/account.json';
-            this.statementUrl = 'api/money/statements.json';
-            this.updateTransactionUrl = 'api/money/updatetran.json';
-            this.deleteTransactionUrl = 'api/money/updatetran.json';
-            this.lockStatementUrl = 'api/money/updatetran.json';
-            this.reconcileTransactionUrl = 'api/money/updatetran.json';
-            this.matchUrl = 'api/money/match.##accountId##.json';
-            this.submitDataUrl = 'api/money/updatetran.json';
-            this.clearDataUrl = 'api/money/updatetran.json';
-            this.autoAcceptUrl = 'api/money/updatetran.json';
-            this.setCategoryUrl = 'api/money/updatetran.json';
-            this.getRegularUrl = 'api/money/regular.json';
-            this.getFilesUrl = 'api/money/recfiles.json';
-            this.loadFileUrl = 'api/money/recfiles.json';
-        }
+        // Use production URL's
+        this.categoryUrl = 'money/categories';
+        this.accountUrl = 'money/accounts';
+        this.addUrl = 'money/transaction/add';
+        this.statementUrl = 'money/statement';
+        this.updateTransactionUrl = 'money/transaction/update';
+        this.deleteTransactionUrl = 'money/delete?transactionId=##transactionId##';
+        this.lockStatementUrl = 'money/statement/lock';
+        this.reconcileTransactionUrl = 'money/reconcile';
+        this.matchUrl = 'money/match?account=##accountId##';
+        this.submitDataUrl = 'money/reconciliation/add';
+        this.clearDataUrl = 'money/reconciliation/clear';
+        this.autoAcceptUrl = 'money/reconciliation/auto';
+        this.setCategoryUrl = 'money/reconciliation/update';
+        this.getRegularUrl = 'money/transaction/regulars';
+        this.getFilesUrl = 'money/reconciliation/files';
+        this.loadFileUrl = 'money/reconciliation/load';
     }
 
     @Output() updateTransactions: EventEmitter<any> = new EventEmitter();
@@ -190,7 +168,7 @@ export class MoneyService {
         let categoryClause:string = null;
         let accountClause:string = null;
         let typeId:string = "XX";
-        let result:string = (environment.production ? this.prodFormat : this.testFormat);
+        let result:string = "money/transaction/get?sortAscending=false&type=##type##[from][to][account][category]";
 
         // Calculate the clauses
         if(type != null) {
@@ -326,31 +304,11 @@ export class MoneyService {
     }
 
     static getAccountImage(id: string): string {
-        // Known ids
-        switch(id) {
-            case "AMEX":
-            case "BANK":
-            case "JLPC":
-            case "NWDE": {
-                return "assets/images/account/" + id + ".svg";
-            }
-        }
-
-        return "assets/images/account/UNKN.svg";
+        return "money/account/logo?disabled=false&id=" + id;
     }
 
     static getDisabledAccountImage(id: string): string {
-        // Known ids
-        switch(id) {
-            case "AMEX":
-            case "BANK":
-            case "JLPC":
-            case "NWDE": {
-                return "assets/images/account/" + id + "x.svg";
-            }
-        }
-
-        return "assets/images/account/UNKN.svg";
+        return "money/account/logo?disabled=true&id=" + id;
     }
 
     private static handleError(err: HttpErrorResponse) {
