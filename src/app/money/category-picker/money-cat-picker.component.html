@@ -25,8 +25,8 @@
                                          class="cat-trf-img"
                                          src="{{getImage(nextCategoryId)}}"
                                          alt="Account"/>
-                                    <i *ngIf="multiSelect && selected(nextCategoryId)" class="fa fa-check-circle"></i>
-                                    <i *ngIf="multiSelect && !selected(nextCategoryId)" class="fa fa-times-circle"></i>
+                                    <em *ngIf="multiSelect && selected(nextCategoryId)" class="fa fa-check-circle"></em>
+                                    <em *ngIf="multiSelect && !selected(nextCategoryId)" class="fa fa-times-circle"></em>
                                     {{category(nextCategoryId).name}}
                                 </label>
                             </div>

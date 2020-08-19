@@ -6,14 +6,14 @@
                    aria-controls="files"
                    (click)="selectFileMode()"
                    [attr.aria-expanded]="isFileMode">
-                <i class="fa fa-save"></i>
+                <em class="fa fa-save"></em>
             </label>
             <label class="btn-sm btn-primary float-right btn-mode"
                    tabindex="1"
                    aria-controls="actions"
                    (click)="selectActionMode()"
                    [attr.aria-expanded]="isActionMode">
-                <i class="fa fa-exclamation-circle"></i>
+                <em class="fa fa-exclamation-circle"></em>
             </label>
         </div>
         <div id="files" [collapse]="!isFileMode">
@@ -23,7 +23,7 @@
                         <div class="col-12" *ngIf="!atTopLevel">
                             <label class="btn btn-primary btn-directory"
                                    (click)="selectTopLevel()">
-                                <i class="fa fa-chevron-circle-left"></i>
+                                <em class="fa fa-chevron-circle-left"></em>
                             </label>
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                 <div class="col-10 detail-col">
                     <div *ngIf="selectedFile != null">
                         <div class="row detail-name-row">
-                            <i class="fa {{selectedFile.classification.icon}} detail-name-icon"></i><p class="detail-name">{{selectedFile.name}}</p>
+                            <em class="fa {{selectedFile.classification.icon}} detail-name-icon"></em><p class="detail-name">{{selectedFile.name}}</p>
                         </div>
                         <div class="row detail-fullname-row"><p class="detail-fullname">{{selectedFile.fullFilename}}</p></div>
                         <div class="row detail-size-row"><p class="detail-size">{{selectedFile.size}}</p></div>
@@ -65,7 +65,7 @@
                                 </tr>
                                 <tr *ngFor="let nextBackup of fileBackups">
                                     <td>
-                                        <i class="fa {{backupStatus(nextBackup)}}"></i>
+                                        <em class="fa {{backupStatus(nextBackup)}}"></em>
                                     </td>
                                     <td class="backup">{{nextBackup.directoryInfo.source.location.name}}</td>
                                     <td class="backup">{{nextBackup.date}}</td>
@@ -85,7 +85,7 @@
                                     <label class="btn-sm btn-primary btn-delete"
                                            tabindex="1"
                                            (click)="deleteFile()">
-                                        <i class="fa fa-trash"></i>
+                                        <em class="fa fa-trash"></em>
                                     </label>
                                 </div>
                             </div>
@@ -100,7 +100,7 @@
                     <label class="btn-sm btn-primary btn-action btn-ignore"
                            tabindex="1"
                            (click)="ignore()">
-                        <i class="fa fa-trash"></i>
+                        <em class="fa fa-trash"></em>
                     </label>
                 </div>
                 <div class="col-2">
@@ -109,12 +109,12 @@
                     <label class="btn-sm btn-primary btn-action btn-left"
                            tabindex="1"
                            (click)="movePrev()">
-                        <i class="fa fa-arrow-circle-left"></i>
+                        <em class="fa fa-arrow-circle-left"></em>
                     </label>
                     <label class="btn-sm btn-primary btn-action btn-right"
                            tabindex="3"
                            (click)="moveNext()">
-                        <i class="fa fa-arrow-circle-right"></i>
+                        <em class="fa fa-arrow-circle-right"></em>
                     </label>
                 </div>
                 <div class="col-2">
@@ -124,7 +124,7 @@
                         <label class="btn-sm btn-primary float-right btn-action btn-accept"
                                tabindex="1"
                                (click)="keep()">
-                            <i class="fa fa-check-circle"></i>
+                            <em class="fa fa-check-circle"></em>
                         </label>
                     </div>
                     <div class="row">
