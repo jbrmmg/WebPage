@@ -57,24 +57,45 @@ export class LoadFileRequest {
 export class MoneyService {
 
     constructor(private http: HttpClient) {
+        console.log('here1.2');
         this.typeUrl = 'api/money/types.json';
-        // Use production URL's
-        this.categoryUrl = 'money/categories';
-        this.accountUrl = 'money/accounts';
-        this.addUrl = 'money/transaction/add';
-        this.statementUrl = 'money/statement';
-        this.updateTransactionUrl = 'money/transaction/update';
-        this.deleteTransactionUrl = 'money/delete?transactionId=##transactionId##';
-        this.lockStatementUrl = 'money/statement/lock';
-        this.reconcileTransactionUrl = 'money/reconcile';
-        this.matchUrl = 'money/match?account=##accountId##';
-        this.submitDataUrl = 'money/reconciliation/add';
-        this.clearDataUrl = 'money/reconciliation/clear';
-        this.autoAcceptUrl = 'money/reconciliation/auto';
-        this.setCategoryUrl = 'money/reconciliation/update';
-        this.getRegularUrl = 'money/transaction/regulars';
-        this.getFilesUrl = 'money/reconciliation/files';
-        this.loadFileUrl = 'money/reconciliation/load';
+        if (environment.production) {
+            // Use production URL's
+            this.categoryUrl = 'money/categories';
+            this.accountUrl = 'money/accounts';
+            this.addUrl = 'money/transaction/add';
+            this.statementUrl = 'money/statement';
+            this.updateTransactionUrl = 'money/transaction/update';
+            this.deleteTransactionUrl = 'money/delete?transactionId=##transactionId##';
+            this.lockStatementUrl = 'money/statement/lock';
+            this.reconcileTransactionUrl = 'money/reconcile';
+            this.matchUrl = 'money/match?account=##accountId##';
+            this.submitDataUrl = 'money/reconciliation/add';
+            this.clearDataUrl = 'money/reconciliation/clear';
+            this.autoAcceptUrl = 'money/reconciliation/auto';
+            this.setCategoryUrl = 'money/reconciliation/update';
+            this.getRegularUrl = 'money/transaction/regulars';
+            this.getFilesUrl = 'money/reconciliation/files';
+            this.loadFileUrl = 'money/reconciliation/load';
+        } else {
+            this.categoryUrl = 'api/money/category.json';
+            this.accountUrl = 'api/money/account.json';
+            this.addUrl = 'api/money/account.json';
+            this.statementUrl = 'api/money/statements.json';
+            this.updateTransactionUrl = 'api/money/updatetran.json';
+            this.deleteTransactionUrl = 'api/money/updatetran.json';
+            this.lockStatementUrl = 'api/money/updatetran.json';
+            this.reconcileTransactionUrl = 'api/money/updatetran.json';
+            this.matchUrl = 'api/money/match.##accountId##.json';
+            this.submitDataUrl = 'api/money/updatetran.json';
+            this.clearDataUrl = 'api/money/updatetran.json';
+            this.autoAcceptUrl = 'api/money/updatetran.json';
+            this.setCategoryUrl = 'api/money/updatetran.json';
+            this.getRegularUrl = 'api/money/regular.json';
+            this.getFilesUrl = 'api/money/recfiles.json';
+            this.loadFileUrl = 'api/money/recfiles.json';
+        }
+        console.log('here1.3');
     }
     private readonly categoryUrl;
     private readonly accountUrl;

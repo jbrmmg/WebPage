@@ -24,6 +24,7 @@ import { MoneyListComponent } from './money/money-list.component';
 import { HouseComponent } from './house/house.component';
 import { WeightComponent } from './weight/weight.component';
 import { BackupListComponent } from './backup/backup-list.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { BackupListComponent } from './backup/backup-list.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
     BsDatepickerModule.forRoot(),

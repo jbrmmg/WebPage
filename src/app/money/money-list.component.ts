@@ -97,6 +97,7 @@ export class MoneyListComponent implements OnInit {
                 public datepipe: DatePipe,
                 private sanitizer: DomSanitizer,
                 private modalService: BsModalService) {
+        console.log('here');
         this.fromDateDisabled = true;
         this.toDateDisabled = true;
         this.lastChangeType = '';
@@ -104,6 +105,7 @@ export class MoneyListComponent implements OnInit {
         this.lastChangeTo = null;
         this.listMode = ListMode.Normal;
         this.reconcileAccount = null;
+        console.log('here2');
     }
 
     get isAddMode() {
@@ -263,6 +265,8 @@ export class MoneyListComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        console.log('here3');
+
         this._moneyService.getTransactionTypes().subscribe(
             types => {
                 this.types = types;
