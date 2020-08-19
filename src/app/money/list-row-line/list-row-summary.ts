@@ -17,10 +17,10 @@ export class ListRowSummary {
     totalsDisplay: Array<{ title: string,
         amount: number,
         displayAmt: string }> = [
-        {title: 'Bought Forward', amount: 0, displayAmt: "0.00"},
-        {title: 'Total Debits', amount: 0, displayAmt: "0.00"},
-        {title: 'Total Credits', amount: 0, displayAmt: "0.00"},
-        {title: 'Carried Forward', amount: 0, displayAmt: "0.00"}
+        {title: 'Bought Forward', amount: 0, displayAmt: '0.00'},
+        {title: 'Total Debits', amount: 0, displayAmt: '0.00'},
+        {title: 'Total Credits', amount: 0, displayAmt: '0.00'},
+        {title: 'Carried Forward', amount: 0, displayAmt: '0.00'}
     ];
 
     private setDisplayValues() {
@@ -28,8 +28,8 @@ export class ListRowSummary {
             value.displayAmt = value.amount.toFixed(2);
         });
 
-        if(this.totalsDisplay[0].amount == 0) {
-            this.totalsDisplay[0].displayAmt = "";
+        if (this.totalsDisplay[0].amount === 0) {
+            this.totalsDisplay[0].displayAmt = '';
         }
     }
 
@@ -45,9 +45,9 @@ export class ListRowSummary {
 
     resetCreditsDetbits() {
         this.totalsDisplay[1].amount = 0;
-        this.totalsDisplay[1].displayAmt = "0.00";
+        this.totalsDisplay[1].displayAmt = '0.00';
         this.totalsDisplay[2].amount = 0;
-        this.totalsDisplay[2].displayAmt = "0.00";
+        this.totalsDisplay[2].displayAmt = '0.00';
         this.calculateCarriedFwd();
     }
 

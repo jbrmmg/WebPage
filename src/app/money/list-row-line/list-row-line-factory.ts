@@ -18,35 +18,35 @@ export class ListRowLineFactory {
     static createRowLineTransaction(moneyService: MoneyService,
                                     transaction: ITransaction,
                                     summary: ListRowSummary,
-                                    editSelect: (transaction: ITransaction, clear: boolean) => void ) : IListRowLineInterface {
-        return new ListRowLineTransaction(moneyService,transaction,summary,editSelect);
+                                    editSelect: (transaction: ITransaction, clear: boolean) => void ): IListRowLineInterface {
+        return new ListRowLineTransaction(moneyService, transaction, summary, editSelect);
     }
 
-    static createRowLineReconcile(moneyService: MoneyService, reconcile: IMatch) : IListRowLineInterface {
-        return new ListRowLineReconcile(moneyService,reconcile);
+    static createRowLineReconcile(moneyService: MoneyService, reconcile: IMatch): IListRowLineInterface {
+        return new ListRowLineReconcile(moneyService, reconcile);
     }
 
-    static createRowLineReconcileTop(moneyService: MoneyService, updateCategory: () => void) : IListRowLineInterface {
+    static createRowLineReconcileTop(moneyService: MoneyService, updateCategory: () => void): IListRowLineInterface {
         return new ListRowLineReconcileTop(moneyService, updateCategory);
     }
 
-    static createRowLineRegular(regular: IRegular) : IListRowLineInterface {
+    static createRowLineRegular(regular: IRegular): IListRowLineInterface {
         return new ListRowLineRegular(regular);
     }
 
-    static createRowLineTotalBfwd(summary: ListRowSummary) : IListRowLineInterface {
+    static createRowLineTotalBfwd(summary: ListRowSummary): IListRowLineInterface {
         return new ListRowLineTotalBfwd(summary);
     }
 
-    static createRowLineTotalCfwd(moneyService: MoneyService,summary: ListRowSummary, statement: IStatement) : IListRowLineInterface {
-        return new ListRowLineTotalCfwd(moneyService,summary,statement);
+    static createRowLineTotalCfwd(moneyService: MoneyService, summary: ListRowSummary, statement: IStatement): IListRowLineInterface {
+        return new ListRowLineTotalCfwd(moneyService, summary, statement);
     }
 
-    static createRowLineCredits(summary: ListRowSummary) : IListRowLineInterface {
+    static createRowLineCredits(summary: ListRowSummary): IListRowLineInterface {
         return new ListRowLineTotalCredits(summary);
     }
 
-    static createRowLineDebits(summary: ListRowSummary) : IListRowLineInterface {
+    static createRowLineDebits(summary: ListRowSummary): IListRowLineInterface {
         return new ListRowLineTotalDebits(summary);
     }
 }

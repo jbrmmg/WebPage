@@ -29,8 +29,8 @@ export interface IMoneyCalcButton {
 }
 
 export class MoneyCalcButton implements IMoneyCalcButton {
-    value : number;
-    className : string;
+    value: number;
+    className: string;
     operatorAction: CalculatorOperator;
     buttonType: CalculatorButtonType;
     buttonStyle: string;
@@ -46,7 +46,7 @@ export class MoneyCalcButton implements IMoneyCalcButton {
         this.className = className;
         this.operatorAction = operatorAction;
         this.buttonType = buttonType;
-        this.buttonStyle = "btn btn-primary btn-calculator";
+        this.buttonStyle = 'btn btn-primary btn-calculator';
         this.status = status;
     }
 
@@ -59,7 +59,7 @@ export class MoneyCalcButtonNumber extends MoneyCalcButton {
 
     constructor(value: number,
                 status: MoneyCalcButtonStatus) {
-        super(value,"col-3", CalculatorOperator.NONE, CalculatorButtonType.NUMBER, status );
+        super(value, 'col-3', CalculatorOperator.NONE, CalculatorButtonType.NUMBER, status );
         this.text = value.toString();
     }
 }
@@ -67,31 +67,31 @@ export class MoneyCalcButtonNumber extends MoneyCalcButton {
 export class MoneyCalcButtonOperator extends MoneyCalcButton implements IMoneyCalcButton {
     constructor(operator: CalculatorOperator,
                 status: MoneyCalcButtonStatus) {
-        super(-1,"col-3",operator,CalculatorButtonType.OPERATOR,status);
+        super(-1, 'col-3', operator, CalculatorButtonType.OPERATOR, status);
 
-        switch(operator) {
+        switch (operator) {
             case CalculatorOperator.ADD: {
-                this.text = "+";
+                this.text = '+';
                 break;
             }
 
             case CalculatorOperator.MULTIPLY: {
-                this.text = "*";
+                this.text = '*';
                 break;
             }
 
             case CalculatorOperator.SUBTRACT: {
-                this.text = "-";
+                this.text = '-';
                 break;
             }
 
             case CalculatorOperator.DIVIDE: {
-                this.text = "/";
+                this.text = '/';
                 break;
             }
 
             default: {
-                this.text = "?";
+                this.text = '?';
                 break;
             }
         }
@@ -104,8 +104,8 @@ export class MoneyCalcButtonOperator extends MoneyCalcButton implements IMoneyCa
 
 export class MoneyCalcButtonDelete extends MoneyCalcButton implements IMoneyCalcButton {
     constructor(status: MoneyCalcButtonStatus) {
-        super(-1,"col-3",CalculatorOperator.NONE,CalculatorButtonType.DELETE,status);
-        this.text = "DEL";
+        super(-1, 'col-3', CalculatorOperator.NONE, CalculatorButtonType.DELETE, status);
+        this.text = 'DEL';
     }
 
     buttonClicked() {
@@ -115,8 +115,8 @@ export class MoneyCalcButtonDelete extends MoneyCalcButton implements IMoneyCalc
 
 export class MoneyCalcButtonEquals extends MoneyCalcButton implements IMoneyCalcButton {
     constructor(status: MoneyCalcButtonStatus) {
-        super(-1,"col-3",CalculatorOperator.NONE,CalculatorButtonType.EQUAL,status);
-        this.text = "=";
+        super(-1, 'col-3', CalculatorOperator.NONE, CalculatorButtonType.EQUAL, status);
+        this.text = '=';
     }
 
     buttonClicked() {
@@ -127,9 +127,9 @@ export class MoneyCalcButtonEquals extends MoneyCalcButton implements IMoneyCalc
 
 export class MoneyCalcButtonClear extends MoneyCalcButton implements IMoneyCalcButton {
     constructor(status: MoneyCalcButtonStatus) {
-        super(-1,"col-6",CalculatorOperator.NONE,CalculatorButtonType.CLEAR,status);
-        this.text = "CLR";
-        this.buttonStyle = "btn btn-primary btn-calculator-clear";
+        super(-1, 'col-6', CalculatorOperator.NONE, CalculatorButtonType.CLEAR, status);
+        this.text = 'CLR';
+        this.buttonStyle = 'btn btn-primary btn-calculator-clear';
     }
 
     buttonClicked() {
@@ -139,7 +139,7 @@ export class MoneyCalcButtonClear extends MoneyCalcButton implements IMoneyCalcB
 
 export class MoneyCalcButtonDebit extends MoneyCalcButton implements IMoneyCalcButton {
     constructor(status: MoneyCalcButtonStatus) {
-        super(-1,"col-3",CalculatorOperator.NONE,CalculatorButtonType.DEBIT,status);
+        super(-1, 'col-3', CalculatorOperator.NONE, CalculatorButtonType.DEBIT, status);
         this.statusUpdate();
     }
 
@@ -149,12 +149,12 @@ export class MoneyCalcButtonDebit extends MoneyCalcButton implements IMoneyCalcB
     }
 
     statusUpdate() {
-        if(!this.status.debit) {
-            this.text = "CR";
-            this.buttonStyle = "btn btn-primary btn-calculator";
+        if (!this.status.debit) {
+            this.text = 'CR';
+            this.buttonStyle = 'btn btn-primary btn-calculator';
         } else {
-            this.text = "DB";
-            this.buttonStyle = "btn btn-primary btn-calculator-db";
+            this.text = 'DB';
+            this.buttonStyle = 'btn btn-primary btn-calculator-db';
         }
     }
 }
@@ -162,13 +162,13 @@ export class MoneyCalcButtonDebit extends MoneyCalcButton implements IMoneyCalcB
 export class MoneyCalcButtonDecimal extends MoneyCalcButton implements IMoneyCalcButton {
 
     constructor(status: MoneyCalcButtonStatus) {
-        super(-1,"col-3",CalculatorOperator.NONE,CalculatorButtonType.DECIMAL,status);
-        this.text = ".";
+        super(-1, 'col-3', CalculatorOperator.NONE, CalculatorButtonType.DECIMAL, status);
+        this.text = '.';
     }
 
     buttonClicked() {
         // If there isn't currently a decimal place, add it now.
-        if(!this.status.display.includes(this.text) || this.status.display == "0.00") {
+        if (!this.status.display.includes(this.text) || this.status.display === '0.00') {
             this.status.appendDisplay(this.text);
         }
     }
@@ -190,19 +190,17 @@ export class MoneyCalcButtonStatus {
         this.debitButtonInternal = value;
     }
 
-    get display() : string {
-        if(this.unformattedDisplay == "0") {
-            return "0.00";
+    get display(): string {
+        if (this.unformattedDisplay === '0') {
+            return '0.00';
         }
 
-        if(this.unformattedDisplay.endsWith("."))
-        {
-            return this.unformattedDisplay + "0";
+        if (this.unformattedDisplay.endsWith('.')) {
+            return this.unformattedDisplay + '0';
         }
 
-        if(this.unformattedDisplay.endsWith("\n"))
-        {
-            let value: number = parseFloat(this.unformattedDisplay);
+        if (this.unformattedDisplay.endsWith('\n')) {
+            const value: number = parseFloat(this.unformattedDisplay);
             return value.toFixed(2);
         }
 
@@ -210,30 +208,29 @@ export class MoneyCalcButtonStatus {
     }
 
     clear() {
-        this.unformattedDisplay = "0";
+        this.unformattedDisplay = '0';
         this.memory = 0;
         this.resetOperator(CalculatorOperator.NONE);
     }
 
     resetOperator(buttonOperator: CalculatorOperator) {
-        if(buttonOperator != CalculatorOperator.NONE) {
+        if (buttonOperator !== CalculatorOperator.NONE) {
             // Store the current value in memory.
             this.memory = parseFloat(this.display);
-            this.unformattedDisplay += "\n";
+            this.unformattedDisplay += '\n';
         }
 
         this.currentOperator = buttonOperator;
     }
 
-    appendDisplay(newChar: string){
-        if(this.unformattedDisplay.endsWith("\n")) {
+    appendDisplay(newChar: string) {
+        if (this.unformattedDisplay.endsWith('\n')) {
 
             this.unformattedDisplay = newChar;
         } else {
-            if(this.unformattedDisplay == "0") {
-                if(newChar == ".") {
-                    this.unformattedDisplay = "0.";
-                    console.info("Here")
+            if (this.unformattedDisplay === '0') {
+                if (newChar === '.') {
+                    this.unformattedDisplay = '0.';
                 } else {
                     this.unformattedDisplay = newChar;
                 }
@@ -246,28 +243,29 @@ export class MoneyCalcButtonStatus {
     switchDebit() {
         this.debitStatus = !this.debitStatus;
 
-        let value : number = parseFloat(this.display);
-        this.unformattedDisplay = value.toFixed(2) + "\n";
+        const value: number = parseFloat(this.display);
+        this.unformattedDisplay = value.toFixed(2) + '\n';
     }
 
-    get debit() : boolean {
+    get debit(): boolean {
         return this.debitStatus;
     }
 
     removeLastDisplay() {
-        if(this.unformattedDisplay.length > 1) {
-            this.unformattedDisplay = this.unformattedDisplay.substring(0,this.unformattedDisplay.length-1);
+        if (this.unformattedDisplay.length > 1) {
+            this.unformattedDisplay = this.unformattedDisplay.substring(0, this.unformattedDisplay.length - 1);
         }
     }
 
     calculate() {
-        let value : number = parseFloat(this.display);
+        let value: number = parseFloat(this.display);
 
-        console.info("Operator " + this.currentOperator.toString());
+        // tslint:disable-next-line:no-console
+        console.info('Operator ' + this.currentOperator.toString());
 
         // Calculate the value.
-        if(this.currentOperator != CalculatorOperator.NONE) {
-            switch(this.currentOperator) {
+        if (this.currentOperator !== CalculatorOperator.NONE) {
+            switch (this.currentOperator) {
                 case CalculatorOperator.ADD: {
                     value += this.memory;
                     this.memory = value;
@@ -292,15 +290,15 @@ export class MoneyCalcButtonStatus {
         }
 
         // If negative, switch the debit flag.
-        if(value < 0) {
+        if (value < 0) {
             value *= -1;
             this.debitStatus = !this.debitStatus;
-            if(this.debitButtonInternal != null) {
+            if (this.debitButtonInternal != null) {
                 this.debitButtonInternal.statusUpdate();
             }
         }
 
         // Display the result.
-        this.unformattedDisplay = value.toFixed(2) + "\n";
+        this.unformattedDisplay = value.toFixed(2) + '\n';
     }
 }

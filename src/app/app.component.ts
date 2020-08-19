@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'pm-root',
+  selector: 'jbr-root',
   template: `
     <nav class='navbar navbar-expand navbar-light bg-light'>
       <img src="assets/images/logo.svg" height="30" width="30" />
@@ -21,5 +21,5 @@ import { Component } from '@angular/core';
 })
 
 export class AppComponent {
-  pageTitle: string = 'JbrMmg';
+  pageTitle = 'JbrMmg';
 }

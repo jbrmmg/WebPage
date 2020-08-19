@@ -34,14 +34,14 @@ export class ListRowLineRegular implements IListRowLineInterface {
     constructor(regular: IRegular) {
         this.rowType = ListRowLineType.REGULAR_TRANSACTION;
         this.isTotalRow = false;
-        if(regular.lastDate == null) {
+        if (regular.lastDate == null) {
             this.hasDate = false;
-            this.dateDay = "";
-            this.dateMonth = "";
-            this.dateYear = "";
+            this.dateDay = '';
+            this.dateMonth = '';
+            this.dateYear = '';
         } else {
             this.hasDate = true;
-            let paymentDate: Date = new Date(regular.lastDate);
+            const paymentDate: Date = new Date(regular.lastDate);
 
             this.dateDay = paymentDate.getDate().toString();
             this.dateMonth = ListRowLineTransaction.getMonthName(paymentDate.getMonth());
@@ -53,16 +53,16 @@ export class ListRowLineRegular implements IListRowLineInterface {
         this.category = regular.category;
         this.description = regular.description;
         this.amount = regular.amount;
-        this.amountDisplay = "?";
+        this.amountDisplay = '?';
         this.hasButtonOne = false;
         this.enableButtonOne = false;
-        this.classButtonOne = "";
+        this.classButtonOne = '';
         this.hasButtonTwo = false;
         this.enableButtonTwo = false;
-        this.classButtonTwo = "";
+        this.classButtonTwo = '';
         this.hasButtonThree = false;
         this.enableButtonThree = false;
-        this.classButtonThree = "";
+        this.classButtonThree = '';
         this.selected = false;
 
         this.regular = regular;

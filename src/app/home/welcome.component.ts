@@ -18,7 +18,7 @@ export class WelcomeComponent {
     this._welcomeService.SendData(this.textData1,this.textData2);
 
     // Reset
-    this.textData1 = "";
-    this.textData2 = "";
+    this.textData1 = '';
+    this.textData2 = '';
   }
 }
