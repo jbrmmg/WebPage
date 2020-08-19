@@ -6,28 +6,28 @@
                    (click)="selectNormalMode()"
                    [attr.aria-expanded]="isNormalMode"
                    aria-controls="normal">
-                <i class="fa fa-align-justify"></i>
+                <em class="fa fa-align-justify"></em>
             </label>
             <label class="btn-sm btn-primary float-right btn-mode"
                    tabindex="0"
                    (click)="selectAddMode()"
                    [attr.aria-expanded]="isAddMode"
                    aria-controls="addTransaction">
-                <i class="fa fa-plus-circle"></i>
+                <em class="fa fa-plus-circle"></em>
             </label>
             <label class="btn-sm btn-primary float-right btn-mode"
                    tabindex="0"
                    (click)="selectRegularMode()"
                    [attr.aria-expanded]="isRegularMode"
                    aria-controls="regular">
-                <i class="fa fa-recycle"></i>
+                <em class="fa fa-recycle"></em>
             </label>
             <label class="btn-sm btn-primary float-right btn-mode"
                    tabindex="0"
                    (click)="selectReconcileMode()"
                    [attr.aria-expanded]="isReconcileMode"
                    aria-controls="reconcile">
-                <i class="fa fa-balance-scale"></i>
+                <em class="fa fa-balance-scale"></em>
             </label>
         </div>
         <div class="row" id="addTransaction" [collapse]="!isAddMode">
@@ -92,7 +92,7 @@
                                                style="background-color: #008800;"
                                                tabindex="0"
                                                (click)="onClickCreate()">
-                                            <i class="fa fa-check-circle"></i>
+                                            <em class="fa fa-check-circle"></em>
                                         </label>
                                     </div>
                                     <div class="coll-1" *ngIf="transactionValid == true">
@@ -100,7 +100,7 @@
                                                style="background-color: #008800;"
                                                tabindex="0"
                                                (click)="onClearEdit()">
-                                            <i class="fa fa-times-circle"></i>
+                                            <em class="fa fa-times-circle"></em>
                                         </label>
                                     </div>
                                 </div>
@@ -120,7 +120,7 @@
                                    [(ngModel)]="radioType"
                                    tabindex="0"
                                    tooltip="{{type.name}}">
-                                <i class="fa {{type.icon}}"></i>
+                                <em class="fa {{type.icon}}"></em>
                             </label>
                         </div>
                     </div>
@@ -359,7 +359,7 @@
                                             class="btn btn-primary trn-button-1"
                                             (click)="nextTransaction.clickButtonOne()"
                                             [disabled]="!nextTransaction.enableButtonOne">
-                                        <i [ngClass]="nextTransaction.classButtonOne"></i>
+                                        <em [ngClass]="nextTransaction.classButtonOne"></em>
                                     </button>
                                 </div>
                             </td>
@@ -371,7 +371,7 @@
                                             class="btn btn-primary trn-button-2"
                                             (click)="nextTransaction.clickButtonTwo()"
                                             [disabled]="!nextTransaction.enableButtonTwo">
-                                        <i [ngClass]="nextTransaction.classButtonTwo"></i>
+                                        <em [ngClass]="nextTransaction.classButtonTwo"></em>
                                     </button>
                                 </div>
                             </td>
@@ -383,7 +383,7 @@
                                             class="btn btn-primary trn-button-3"
                                             (click)="nextTransaction.clickButtonThree()"
                                             [disabled]="!nextTransaction.enableButtonThree">
-                                        <i [ngClass]="nextTransaction.classButtonThree"></i>
+                                        <em [ngClass]="nextTransaction.classButtonThree"></em>
                                     </button>
                                 </div>
                             </td>
