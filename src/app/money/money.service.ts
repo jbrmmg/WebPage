@@ -1,16 +1,16 @@
-import {EventEmitter, Injectable, Output} from "@angular/core";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {environment} from "../../environments/environment";
-import {Observable, throwError} from "rxjs";
-import {catchError, tap} from "rxjs/operators";
-import {Category, ICategory} from "./money-category";
-import {JbAccount} from "./money-account";
-import {ITransactionType, TransactionType} from "./money-type";
-import {IStatement, Statement} from "./money-statement";
-import {IMatch, Match} from "./money-match";
-import {IRegular} from "./money-regular";
-import {IFile} from "./money-file";
-import {ITransaction} from "./list-row-line/list-row-summary";
+import {EventEmitter, Injectable, Output} from '@angular/core';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {Observable, throwError} from 'rxjs';
+import {catchError, tap} from 'rxjs/operators';
+import {Category, ICategory} from './money-category';
+import {JbAccount} from './money-account';
+import {ITransactionType, TransactionType} from './money-type';
+import {IStatement, Statement} from './money-statement';
+import {IMatch, Match} from './money-match';
+import {IRegular} from './money-regular';
+import {IFile} from './money-file';
+import {ITransaction} from './list-row-line/list-row-summary';
 
 export class NewTransaction {
     date: Date;

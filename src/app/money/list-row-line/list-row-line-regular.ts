@@ -1,8 +1,8 @@
-import {IListRowLineInterface, ListRowLineType} from "./list-row-line-interface";
-import {IRegular} from "../money-regular";
-import {IAccount} from "../money-account";
-import {ICategory} from "../money-category";
-import {ListRowLineTransaction} from "./list-row-line-transaction";
+import {IListRowLineInterface, ListRowLineType} from './list-row-line-interface';
+import {IRegular} from '../money-regular';
+import {IAccount} from '../money-account';
+import {ICategory} from '../money-category';
+import {ListRowLineTransaction} from './list-row-line-transaction';
 
 export class ListRowLineRegular implements IListRowLineInterface {
     public rowType: ListRowLineType;

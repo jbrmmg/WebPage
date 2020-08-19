@@ -1,5 +1,5 @@
-import {IAccount} from "../money-account";
-import {ICategory} from "../money-category";
+import {IAccount} from '../money-account';
+import {ICategory} from '../money-category';
 
 export enum ListRowLineType {
     TRANSACTION,

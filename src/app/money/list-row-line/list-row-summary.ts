@@ -1,6 +1,6 @@
-import {IAccount} from "../money-account";
-import {ICategory} from "../money-category";
-import {IStatement} from "../money-statement";
+import {IAccount} from '../money-account';
+import {ICategory} from '../money-category';
+import {IStatement} from '../money-statement';
 
 export interface ITransaction {
     id: number;

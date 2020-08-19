@@ -1,6 +1,6 @@
-import {ICategory} from "./money-category";
-import {IAccount} from "./money-account";
-import {ITransaction} from "./list-row-line/list-row-summary";
+import {ICategory} from './money-category';
+import {IAccount} from './money-account';
+import {ITransaction} from './list-row-line/list-row-summary';
 
 export interface IMatch {
     transaction: ITransaction;
@@ -49,22 +49,22 @@ export class Match implements IMatch {
     }
 
     get disabled() {
-        return this.forwardAction == "NONE";
+        return this.forwardAction === 'NONE';
     }
 
     get classIcon() {
-        //SETCATEGORY, CREATE, RECONCILE, UNRECONCILE, NONE
+        // SETCATEGORY, CREATE, RECONCILE, UNRECONCILE, NONE
         switch (this.forwardAction) {
-            case "SETCATEGORY":
-                return "fa fa-save";
-            case "CREATE":
-                return "fa fa-pencil";
-            case "RECONCILE":
-                return "fa fa-check";
-            case "UNRECONCILE":
-                return "fa fa-times";
+            case 'SETCATEGORY':
+                return 'fa fa-save';
+            case 'CREATE':
+                return 'fa fa-pencil';
+            case 'RECONCILE':
+                return 'fa fa-check';
+            case 'UNRECONCILE':
+                return 'fa fa-times';
         }
 
-        return "fa fa-lock";
+        return 'fa fa-lock';
     }
 }

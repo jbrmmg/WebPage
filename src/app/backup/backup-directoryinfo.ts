@@ -1,4 +1,4 @@
-import {Source} from "./backup-source";
+import {Source} from './backup-source';
 
 export class DirectoryInfo {
     path: string;

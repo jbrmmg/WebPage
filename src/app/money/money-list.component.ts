@@ -1,18 +1,18 @@
 import {DomSanitizer} from '@angular/platform-browser';
-import {Component, OnInit, TemplateRef, ViewChild} from "@angular/core";
-import {MoneyService, NewTransaction} from "./money.service";
-import {Category, ICategory} from "./money-category";
-import {IAccount, JbAccount} from "./money-account";
-import {TransactionType} from "./money-type";
-import {IStatement, Statement} from "./money-statement";
-import {BsModalService,BsModalRef} from "ngx-bootstrap/modal";
-import {MoneyCategoryPickerSelectableOption} from "./category-picker/money-cat-picker.component";
-import {DatePipe} from "@angular/common";
-import {Subject} from "rxjs";
-import {IListRowLineInterface} from "./list-row-line/list-row-line-interface";
-import {ListRowLineFactory} from "./list-row-line/list-row-line-factory";
-import {ITransaction, ListRowSummary} from "./list-row-line/list-row-summary";
-import {IFile} from "./money-file";
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {MoneyService, NewTransaction} from './money.service';
+import {Category, ICategory} from './money-category';
+import {IAccount, JbAccount} from './money-account';
+import {TransactionType} from './money-type';
+import {IStatement, Statement} from './money-statement';
+import {BsModalService,BsModalRef} from 'ngx-bootstrap/modal';
+import {MoneyCategoryPickerSelectableOption} from './category-picker/money-cat-picker.component';
+import {DatePipe} from '@angular/common';
+import {Subject} from 'rxjs';
+import {IListRowLineInterface} from './list-row-line/list-row-line-interface';
+import {ListRowLineFactory} from './list-row-line/list-row-line-factory';
+import {ITransaction, ListRowSummary} from './list-row-line/list-row-summary';
+import {IFile} from './money-file';
 
 export enum ListMode { Normal, Add, Regulars, Reconciliation }
 

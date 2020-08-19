@@ -1,10 +1,10 @@
-import {EventEmitter, Injectable, Output} from "@angular/core";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {Observable, throwError} from "rxjs";
-import {catchError, tap} from "rxjs/operators";
-import {IPodcastEpisode} from "./podcast-episode";
-import {IPodcast} from "./podcast-podcast";
-import {environment} from "../../environments/environment";
+import {EventEmitter, Injectable, Output} from '@angular/core';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {Observable, throwError} from 'rxjs';
+import {catchError, tap} from 'rxjs/operators';
+import {IPodcastEpisode} from './podcast-episode';
+import {IPodcast} from './podcast-podcast';
+import {environment} from '../../environments/environment';
 
 export class StatusResponse {
     status: string;

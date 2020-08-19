@@ -2,7 +2,7 @@ export interface IAccount {
     id: string;
     name: string;
     imagePrefix: string;
-    colour: string
+    colour: string;
 }
 
 export class JbAccount implements IAccount {
@@ -14,17 +14,17 @@ export class JbAccount implements IAccount {
                 public colour: string ) {
     }
 
-    public static getFileType(id: string) : string {
-        console.log("HERE");
+    public static getFileType(id: string): string {
+        console.log('HERE');
         switch (id) {
-            case "BANK":
-                return "FIRSTDIRECT";
-            case "AMEX":
-                return "AMEX";
-            case "JLPC":
-                return "JOHNLEWIS";
+            case 'BANK':
+                return 'FIRSTDIRECT';
+            case 'AMEX':
+                return 'AMEX';
+            case 'JLPC':
+                return 'JOHNLEWIS';
         }
 
-        return "Other";
+        return 'Other';
     }
 }
