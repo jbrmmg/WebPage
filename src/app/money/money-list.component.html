@@ -229,7 +229,7 @@
                 </div>
                 <div class="col-1">
                     <div class="cat-filter" (click)="openModal(templateCategoryFilter,'')">
-                        <money-category-filter [categoriesChange]="eventsCategoriesChange.asObservable()"></money-category-filter>
+                        <jbr-money-category-filter [categoriesChange]="eventsCategoriesChange.asObservable()"></jbr-money-category-filter>
                     </div>
                 </div>
             </div>
@@ -400,7 +400,7 @@
         <h4 class="modal-title pull-left">Enter category</h4>
     </div>
     <div class="body">
-        <money-category-picker
+        <jbr-money-category-picker
                 [columns]="3"
                 [showAccountTransfers]="true"
                 [showSystem]="false"
@@ -408,7 +408,7 @@
                 rowSpacing="3px"
                 (valueSelected)="onCategorySelected($event)"
                 (complete)="onExitSelector()">
-        </money-category-picker>
+        </jbr-money-category-picker>
     </div>
 </ng-template>
 
@@ -417,7 +417,7 @@
         <h4 class="modal-title pull-left">Enter category</h4>
     </div>
     <div class="body">
-        <money-category-picker
+        <jbr-money-category-picker
                 [columns]="3"
                 [showAccountTransfers]="false"
                 [showSystem]="false"
@@ -425,7 +425,7 @@
                 rowSpacing="3px"
                 (valueSelected)="onCategorySelector($event)"
                 (complete)="onExitSelector()">
-        </money-category-picker>
+        </jbr-money-category-picker>
     </div>
 </ng-template>
 
@@ -434,7 +434,7 @@
         <h4 class="modal-title pull-left">Select Categories</h4>
     </div>
     <div class="body">
-        <money-category-picker
+        <jbr-money-category-picker
                 [columns]="3"
                 [showAccountTransfers]="false"
                 [showSystem]="true"
@@ -444,7 +444,7 @@
                 rowSpacing="3px"
                 (valueSelected)="onCategoryFiltered()"
                 (complete)="onExitFilter()">
-        </money-category-picker>
+        </jbr-money-category-picker>
     </div>
 </ng-template>
 
@@ -453,7 +453,7 @@
         <h4 class="modal-title pull-left">Enter value</h4>
     </div>
     <div class="body">
-        <money-add-calc style="width:100%" (valueEntered)="onAmountEntered($event)"></money-add-calc>
+        <jbr-money-add-calc style="width:100%" (valueEntered)="onAmountEntered($event)"></jbr-money-add-calc>
     </div>
 </ng-template>
 

@@ -4,7 +4,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { ConvertToSpacesPipe } from './shared/example/convert-to-spaces.pipe';
-import { WelcomeComponent } from './home/welcome.component'
+import { WelcomeComponent } from './home/welcome.component';
 import { StarComponent } from './shared/example/star.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';

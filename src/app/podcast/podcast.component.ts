@@ -20,10 +20,11 @@ export class PodcastComponent implements OnInit {
             () => {
                 this.episodeDeleted();
             }
-        )
+        );
     }
 
     episodeDeleted(): void {
+        // tslint:disable-next-line:no-console
         console.info('Episode was deleted.');
         this.updateEpisodes(this.selectedId);
     }
@@ -43,43 +44,43 @@ export class PodcastComponent implements OnInit {
     }
 
     onClickDelete(id: string): void {
-        this._podcastService.deleteEpisode(id)
+        this._podcastService.deleteEpisode(id);
     }
 
     getImage(id: string): string {
         // Known ids
-        switch(id) {
-            case "COTW":
-            case "FRIC":
-            case "RUFR":
-            case "MORL":
-            case "TRCK":
-            case "DOTW": {
-                return "assets/images/podcast/" + id + ".jpg";
+        switch (id) {
+            case 'COTW':
+            case 'FRIC':
+            case 'RUFR':
+            case 'MORL':
+            case 'TRCK':
+            case 'DOTW': {
+                return 'assets/images/podcast/' + id + '.jpg';
             }
         }
 
-        return "assets/images/podcast/Default.png";
+        return 'assets/images/podcast/Default.png';
     }
 
     getImageButtonColour(id: string): string {
         // Get the background colour for known ids
-        switch(id) {
-            case "COTW":
-                return "#48B7AE";
-            case "FRIC":
-                return "#48B7AE";
-            case "RUFR":
-                return "#243B41";
-            case "MORL":
-                return "#FFFFFF";
-            case "TRCK":
-                return "#427092";
-            case "DOTW":
-                return "#272C30";
+        switch (id) {
+            case 'COTW':
+                return '#48B7AE';
+            case 'FRIC':
+                return '#48B7AE';
+            case 'RUFR':
+                return '#243B41';
+            case 'MORL':
+                return '#FFFFFF';
+            case 'TRCK':
+                return '#427092';
+            case 'DOTW':
+                return '#272C30';
         }
 
-        return "#FFFFFF";
+        return '#FFFFFF';
     }
 
     ngOnInit(): void {

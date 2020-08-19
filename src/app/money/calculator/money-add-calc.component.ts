@@ -12,28 +12,30 @@ import {
     MoneyCalcButtonNumber,
     MoneyCalcButtonOperator,
     MoneyCalcButtonStatus
-} from "./money-calc-btn";
+} from './money-calc-btn';
 
 @Component({
-    selector: 'money-add-calc',
+    selector: 'jbr-money-add-calc',
     templateUrl: './money-add-calc.component.html',
     styleUrls: ['./money-add-calc.component.css']
 })
 export class MoneyAddCalcComponent implements OnChanges {
-    rows : Array<MoneyCalcBtnRow> = [];
+    rows: Array<MoneyCalcBtnRow> = [];
     btnStatus: MoneyCalcButtonStatus = new MoneyCalcButtonStatus();
 
-    get displayStyle() : string {
-        return this.btnStatus.debit ? "entry-calculator-db" : "entry-calculator";
+    @Output() valueEntered: EventEmitter<number> = new EventEmitter<number>();
+
+    get displayStyle(): string {
+        return this.btnStatus.debit ? 'entry-calculator-db' : 'entry-calculator';
     }
 
-    get calcDisplay() : string {
+    get calcDisplay(): string {
         return this.btnStatus.display;
     }
 
     constructor() {
 
-        let debitButton = new MoneyCalcButtonDebit(this.btnStatus);
+        const debitButton = new MoneyCalcButtonDebit(this.btnStatus);
         this.btnStatus.debitButton = debitButton;
 
         let newRow = new MoneyCalcBtnRow();
@@ -61,7 +63,7 @@ export class MoneyAddCalcComponent implements OnChanges {
         newRow.addColumn(new MoneyCalcButtonNumber(0, this.btnStatus));
         newRow.addColumn(new MoneyCalcButtonDecimal(this.btnStatus));
         newRow.addColumn(new MoneyCalcButtonEquals(this.btnStatus));
-        newRow.addColumn(new MoneyCalcButtonOperator(CalculatorOperator.DIVIDE,this.btnStatus));
+        newRow.addColumn(new MoneyCalcButtonOperator(CalculatorOperator.DIVIDE, this.btnStatus));
         this.rows.push(newRow);
 
         newRow = new MoneyCalcBtnRow();
@@ -74,13 +76,11 @@ export class MoneyAddCalcComponent implements OnChanges {
     ngOnChanges(): void {
     }
 
-    @Output() valueEntered: EventEmitter<number> = new EventEmitter<number>();
-
     onClick(button: IMoneyCalcButton) {
         button.buttonClicked();
 
         // Is the equals button clicked?
-        if(button.buttonType == CalculatorButtonType.EQUAL ) {
+        if (button.buttonType === CalculatorButtonType.EQUAL ) {
             this.valueEntered.emit(parseFloat(this.btnStatus.display) * (this.btnStatus.debit ? -1.0 : 1.0));
         }
     }

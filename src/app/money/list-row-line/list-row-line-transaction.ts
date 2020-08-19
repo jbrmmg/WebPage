@@ -31,60 +31,60 @@ export class ListRowLineTransaction implements IListRowLineInterface {
 
     private _moneyService: MoneyService;
     private readonly transaction: ITransaction;
-    private readonly editSelect: (transaction:ITransaction,clear:boolean) => void;
+    private readonly editSelect: (transaction: ITransaction, clear: boolean) => void;
     private summary: ListRowSummary;
     private reconcileStatus: ListRowLineTransaction.ReconciliationStatus;
     public id: number;
     public date: Date;
 
     static getMonthName(month: number): string {
-        switch(month) {
+        switch (month) {
             case 0: {
-                return "Jan";
+                return 'Jan';
             }
             case 1: {
-                return "Feb";
+                return 'Feb';
             }
             case 2: {
-                return "Mar";
+                return 'Mar';
             }
             case 3: {
-                return "Apr";
+                return 'Apr';
             }
             case 4: {
-                return "May";
+                return 'May';
             }
             case 5: {
-                return "Jun";
+                return 'Jun';
             }
             case 6: {
-                return "Jul";
+                return 'Jul';
             }
             case 7: {
-                return "Aug";
+                return 'Aug';
             }
             case 8: {
-                return "Sep";
+                return 'Sep';
             }
             case 9: {
-                return "Oct";
+                return 'Oct';
             }
             case 10: {
-                return "Nov";
+                return 'Nov';
             }
             case 11: {
-                return "Dec";
+                return 'Dec';
             }
         }
 
-        return "Xxx";
+        return 'Xxx';
     }
 
-    constructor(moneyService : MoneyService,
+    constructor(moneyService: MoneyService,
                 transaction: ITransaction,
                 summary: ListRowSummary,
-                editSelect: (transaction: ITransaction,clear:boolean) => void ) {
-        let transactionDate: Date = new Date(transaction.date);
+                editSelect: (transaction: ITransaction, clear: boolean) => void ) {
+        const transactionDate: Date = new Date(transaction.date);
 
         this.rowType = ListRowLineType.TRANSACTION;
         this.isTotalRow = false;
@@ -98,17 +98,17 @@ export class ListRowLineTransaction implements IListRowLineInterface {
         this.category = transaction.category;
         this.description = transaction.description;
         this.amount = transaction.amount;
-        this.amountDisplay = "?";
+        this.amountDisplay = '?';
         this.hasButtonOne = true;
         this.hasButtonTwo = true;
-        this.classButtonTwo = "fa fa-pencil";
+        this.classButtonTwo = 'fa fa-pencil';
         this.hasButtonThree = true;
-        this.classButtonThree = "fa fa-trash";
+        this.classButtonThree = 'fa fa-trash';
         this.selected = false;
 
         // If the transaction is locked, set button one to a padlock.
-        if(transaction.statement != null) {
-            if(transaction.statement.locked) {
+        if (transaction.statement != null) {
+            if (transaction.statement.locked) {
                 this.setButtons(ListRowLineTransaction.ReconciliationStatus.LOCKED);
             } else {
                 this.setButtons(ListRowLineTransaction.ReconciliationStatus.RECONCILED);
@@ -126,22 +126,22 @@ export class ListRowLineTransaction implements IListRowLineInterface {
     }
 
     private setButtons(newReconcileStatus: ListRowLineTransaction.ReconciliationStatus) {
-        switch(newReconcileStatus) {
+        switch (newReconcileStatus) {
             case ListRowLineTransaction.ReconciliationStatus.LOCKED:
                 this.enableButtonOne = false;
-                this.classButtonOne = "fa fa-lock";
+                this.classButtonOne = 'fa fa-lock';
                 this.enableButtonTwo = false;
                 this.enableButtonThree = false;
                 break;
             case ListRowLineTransaction.ReconciliationStatus.RECONCILED:
                 this.enableButtonOne = true;
-                this.classButtonOne = "fa fa-times";
+                this.classButtonOne = 'fa fa-times';
                 this.enableButtonTwo = false;
                 this.enableButtonThree = false;
                 break;
             case ListRowLineTransaction.ReconciliationStatus.UNRECONCILED:
                 this.enableButtonOne = true;
-                this.classButtonOne = "fa fa-check";
+                this.classButtonOne = 'fa fa-check';
                 this.enableButtonTwo = true;
                 this.enableButtonThree = true;
                 break;
@@ -154,19 +154,20 @@ export class ListRowLineTransaction implements IListRowLineInterface {
 
     clickButtonOne() {
         // If locked, do nothing.
-        if(this.reconcileStatus == ListRowLineTransaction.ReconciliationStatus.LOCKED)
+        if (this.reconcileStatus === ListRowLineTransaction.ReconciliationStatus.LOCKED) {
             return;
+        }
 
         // Switch the reconcile status
-        if(this.reconcileStatus == ListRowLineTransaction.ReconciliationStatus.UNRECONCILED) {
+        if (this.reconcileStatus === ListRowLineTransaction.ReconciliationStatus.UNRECONCILED) {
             // Reconcile.
-            this._moneyService.confirmTransaction(this.transaction,true);
+            this._moneyService.confirmTransaction(this.transaction, true);
 
             // Switch buttons.
             this.setButtons(ListRowLineTransaction.ReconciliationStatus.RECONCILED);
         } else {
             // Un-reconcile.
-            this._moneyService.confirmTransaction(this.transaction,false);
+            this._moneyService.confirmTransaction(this.transaction, false);
 
             // Switch buttons.
             this.setButtons(ListRowLineTransaction.ReconciliationStatus.UNRECONCILED);
@@ -175,31 +176,33 @@ export class ListRowLineTransaction implements IListRowLineInterface {
 
     clickButtonTwo() {
         // Only process if not reconciled.
-        if(this.reconcileStatus != ListRowLineTransaction.ReconciliationStatus.UNRECONCILED)
+        if (this.reconcileStatus !== ListRowLineTransaction.ReconciliationStatus.UNRECONCILED) {
             return;
+        }
 
         // If this is already being edited, then clear it
-        let newEdit: boolean = !this.selected;
-        this.editSelect(this.transaction,!newEdit);
+        const newEdit: boolean = !this.selected;
+        this.editSelect(this.transaction, !newEdit);
         this.selected = newEdit;
     }
 
     clickButtonThree() {
         // Only process if not reconciled.
-        if(this.reconcileStatus != ListRowLineTransaction.ReconciliationStatus.UNRECONCILED)
+        if (this.reconcileStatus !== ListRowLineTransaction.ReconciliationStatus.UNRECONCILED) {
             return;
+        }
 
         // Delete this transaction.
-        this._moneyService.deleteTransaction(this.transaction)
+        this._moneyService.deleteTransaction(this.transaction);
     }
 
     completeEdit(id: number, selectedCategory: ICategory, description: string, amount: number) {
         // Make sure the id matches.
-        if(this.transaction.id != id) {
+        if (this.transaction.id !== id) {
             return;
         }
 
-        if (this.transaction.category.id != "TRF") {
+        if (this.transaction.category.id !== 'TRF') {
             this.transaction.category.id = selectedCategory.id;
         }
 
