@@ -1,7 +1,7 @@
-import {IListRowLineInterface, ListRowLineType} from "./list-row-line-interface";
-import {IAccount} from "../money-account";
-import {ICategory} from "../money-category";
-import {ListRowSummary} from "./list-row-summary";
+import {IListRowLineInterface, ListRowLineType} from './list-row-line-interface';
+import {IAccount} from '../money-account';
+import {ICategory} from '../money-category';
+import {ListRowSummary} from './list-row-summary';
 
 export class ListRowLineTotalCredits implements IListRowLineInterface {
     public rowType: ListRowLineType;

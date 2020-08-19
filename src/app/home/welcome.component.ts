@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {WelcomeService} from "./welcome.service";
+import {WelcomeService} from './welcome.service';
 
 @Component({
   templateUrl: './welcome.component.html',

@@ -1,8 +1,8 @@
-import {Component, OnInit} from "@angular/core";
-import {Action} from "./backup-action";
-import {FileInfo} from "./backup-fileinfo"
-import {HierarchyResponse} from "./backup-hierarchyresponse"
-import {BackupService} from "./backup.service";
+import {Component, OnInit} from '@angular/core';
+import {Action} from './backup-action';
+import {FileInfo} from './backup-fileinfo'
+import {HierarchyResponse} from './backup-hierarchyresponse'
+import {BackupService} from './backup.service';
 
 export enum ListMode { Files, Actions }
 

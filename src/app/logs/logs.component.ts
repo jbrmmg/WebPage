@@ -1,8 +1,8 @@
-import {Component, HostListener, ViewChild, OnInit} from "@angular/core";
-import {BsDatepickerDirective} from "ngx-bootstrap";
-import {ILogsType} from "./logs-type";
-import {LogsService} from "./logs.service";
-import {ILogsData} from "./logs-data";
+import {Component, HostListener, ViewChild, OnInit} from '@angular/core';
+import {BsDatepickerDirective} from 'ngx-bootstrap/datepicker';
+import {ILogsType} from './logs-type';
+import {LogsService} from './logs.service';
+import {ILogsData} from './logs-data';
 
 @Component({
     templateUrl: './logs.component.html',

@@ -1,5 +1,5 @@
-import {Classification} from "./backup-classification";
-import {DirectoryInfo} from "./backup-directoryinfo";
+import {Classification} from './backup-classification';
+import {DirectoryInfo} from './backup-directoryinfo';
 
 export class FileInfo {
     id: number;

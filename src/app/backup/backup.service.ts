@@ -1,11 +1,11 @@
-import {Injectable} from "@angular/core";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {Observable, throwError} from "rxjs";
-import {catchError, tap} from "rxjs/operators";
-import {Action} from "./backup-action";
-import {ConfirmRequest} from "./backup-confirmrequest"
-import {HierarchyResponse} from "./backup-hierarchyresponse"
-import {FileInfoExtra} from "./backup-fileinfoextra";
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {Observable, throwError} from 'rxjs';
+import {catchError, tap} from 'rxjs/operators';
+import {Action} from './backup-action';
+import {ConfirmRequest} from './backup-confirmrequest'
+import {HierarchyResponse} from './backup-hierarchyresponse'
+import {FileInfoExtra} from './backup-fileinfoextra';
 
 @Injectable({
     providedIn: 'root'

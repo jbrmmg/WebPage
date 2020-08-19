@@ -1,5 +1,5 @@
-import {Component, EventEmitter, OnChanges, Output} from "@angular/core";
-import {MoneyCalcBtnRow} from "./money-calc-btn-row";
+import {Component, EventEmitter, OnChanges, Output} from '@angular/core';
+import {MoneyCalcBtnRow} from './money-calc-btn-row';
 import {
     CalculatorButtonType,
     CalculatorOperator,

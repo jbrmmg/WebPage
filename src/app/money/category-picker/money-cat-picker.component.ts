@@ -1,8 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {Category, ICategory} from "../money-category";
-import {MoneyService} from "../money.service";
-import {JbAccount} from "../money-account";
-import {forEach} from "@angular/router/src/utils/collection";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Category, ICategory} from '../money-category';
+import {MoneyService} from '../money.service';
+import {JbAccount} from '../money-account';
 
 export class MoneyCategoryPickerSelectableOption {
     category: ICategory;

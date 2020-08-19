@@ -1,4 +1,4 @@
-import {FileInfo} from "./backup-fileinfo";
+import {FileInfo} from './backup-fileinfo';
 
 export class FileInfoExtra {
     file: FileInfo;

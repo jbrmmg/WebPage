@@ -1,7 +1,7 @@
-import {Component, OnInit} from "@angular/core";
-import {IPodcastEpisode} from "./podcast-episode";
-import {PodcastService} from "./podcast.service";
-import {IPodcast} from "./podcast-podcast";
+import {Component, OnInit} from '@angular/core';
+import {IPodcastEpisode} from './podcast-episode';
+import {PodcastService} from './podcast.service';
+import {IPodcast} from './podcast-podcast';
 
 @Component({
     templateUrl: './podcast.component.html',
@@ -23,8 +23,8 @@ export class PodcastComponent implements OnInit {
         )
     }
 
-    episodeDeleted() : void {
-        console.info("Episode was deleted.");
+    episodeDeleted(): void {
+        console.info('Episode was deleted.');
         this.updateEpisodes(this.selectedId);
     }
 

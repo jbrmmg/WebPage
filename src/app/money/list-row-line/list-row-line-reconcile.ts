@@ -1,10 +1,9 @@
 import {IListRowLineInterface, ListRowLineType} from "./list-row-line-interface";
-import {IMatch} from "../money-match";
-import {IAccount} from "../money-account";
-import {Category, ICategory} from "../money-category";
-import {ListRowLineTransaction} from "./list-row-line-transaction";
-import {MoneyService, NewTransaction} from "../money.service";
-import {MoneyCalcButtonDelete} from "../calculator/money-calc-btn";
+import {IMatch} from '../money-match';
+import {IAccount} from '../money-account';
+import {Category, ICategory} from '../money-category';
+import {ListRowLineTransaction} from './list-row-line-transaction';
+import {MoneyService, NewTransaction} from '../money.service';
 
 export class ListRowLineReconcile implements IListRowLineInterface {
     public rowType: ListRowLineType;
