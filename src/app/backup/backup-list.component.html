@@ -74,10 +74,10 @@
                             </table>
                         </div>
                         <div *ngIf="isImage">
-                            <img src="backup/fileImage?id={{selectedFile.id}}" width="420"/>
+                            <img src="backup/fileImage?id={{selectedFile.id}}" alt="Image File" width="420"/>
                         </div>
                         <div *ngIf="isVideo">
-                            <video src="backup/fileVideo?id={{selectedFile.id}}" width="420" controls></video>
+                            <video src="backup/fileVideo?id={{selectedFile.id}}" alt="Video File" width="420" controls></video>
                         </div>
                         <div>
                             <div class="row delete-row">
