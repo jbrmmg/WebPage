@@ -55,16 +55,6 @@
             </configuration>
             <phase>test</phase>
           </execution>
-          <execution>
-            <id>e2e</id>
-            <goals>
-              <goal>npm</goal>
-            </goals>
-            <configuration>
-              <arguments>run-script e2e</arguments>
-            </configuration>
-            <phase>integration-test</phase>
-          </execution>
         </executions>
       </plugin>
       <plugin>
