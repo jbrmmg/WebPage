@@ -80,6 +80,8 @@
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <sonar.sources>src</sonar.sources>
+    <js-tests.skip>false</js-tests.skip>
+    <bower-components>${basedir}/src/main/resources/static/bower_components</bower-components>
   </properties>
 
   <distributionManagement>

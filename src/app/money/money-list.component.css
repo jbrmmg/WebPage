@@ -94,23 +94,7 @@
     border-width: 10px;
 }
 
-/* Transaction table */
-
-.trn-table {
-}
-
 /* Header */
-
-.trn-thead {
-}
-
-.trn-header-row {
-
-}
-
-.trn-header {
-
-}
 
 .trn-date-header {
     width: 7%;
@@ -124,32 +108,12 @@
     width: 15%;
 }
 
-.trn-description-header {
-
-}
-
 .trn-amount-header {
     width: 10%;
 }
 
 .trn-btn-header {
     width: 40px;
-}
-
-.trn-confirm-btn-header {
-
-}
-
-.trn-edit-btn-header {
-
-}
-
-.trn-delete-btn-header {
-
-}
-
-.trn-tbody {
-
 }
 
 .trn-row {
@@ -168,10 +132,6 @@
     vertical-align: middle;
 }
 
-.trn-date-day-col {
-
-}
-
 .trn-date-day-col-total {
     border-top: 0;
 }
@@ -185,31 +145,16 @@
     padding-top: 2px;
 }
 
-.trn-date-month-col {
-
-}
-
 .trn-date-month-col-total {
     border-top: 0;
-}
-
-.trn-date-month {
-
 }
 
 .trn-date-year {
     font-size: 10px;
 }
 
-.trn-account-col {
-
-}
-
 .trn-account-col-total {
     border-top: 0;
-}
-
-.trn-account {
 }
 
 .trn-account-img {
@@ -217,16 +162,8 @@
     height: 40px;
 }
 
-.trn-category-col {
-
-}
-
 .trn-category-col-total {
     border-top: 0;
-}
-
-.trn-category {
-
 }
 
 .trn-category-txt {
@@ -243,20 +180,8 @@
     padding: 0;
 }
 
-.trn-description-col {
-
-}
-
 .trn-description-col-total {
     border-top: 0;
-}
-
-.trn-description {
-
-}
-
-.trn-description-text {
-
 }
 
 .trn-description-total-text {
@@ -264,16 +189,8 @@
     text-align: right;
 }
 
-.trn-amount-col {
-
-}
-
 .trn-amount-col-total {
     border-top: 0;
-}
-
-.trn-amount {
-
 }
 
 .trn-amount-edit {
@@ -304,16 +221,8 @@
     font-weight: bolder;
 }
 
-.trn-button-col {
-
-}
-
 .trn-button-col-total {
     border-top: 0;
-}
-
-.trn-button {
-
 }
 
 .trn-button-1 {
