@@ -45,6 +45,26 @@
             </configuration>
             <phase>generate-resources</phase>
           </execution>
+          <execution>
+            <id>test</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <configuration>
+              <arguments>run-script test-headless</arguments>
+            </configuration>
+            <phase>test</phase>
+          </execution>
+          <execution>
+            <id>e2e</id>
+            <goals>
+              <goal>npm</goal>
+            </goals>
+            <configuration>
+              <arguments>run-script e2e</arguments>
+            </configuration>
+            <phase>integration-test</phase>
+          </execution>
         </executions>
       </plugin>
       <plugin>
@@ -80,8 +100,7 @@
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <sonar.sources>src</sonar.sources>
-    <js-tests.skip>false</js-tests.skip>
-    <bower-components>${basedir}/src/main/resources/static/bower_components</bower-components>
+    <sonar.javascript.lcov.reportPaths>target/coverage/lcov.info</sonar.javascript.lcov.reportPaths>
   </properties>
 
   <distributionManagement>

@@ -1,6 +1,6 @@
 {
   "name": "jbrmmg",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -8,6 +8,7 @@
     "startprod": "ng serve --prod --proxy-config proxy.conf.json",
     "build": "ng build --prod",
     "test": "ng test",
+    "test-headless": "ng test --watch=false --browsers=ChromeHeadless --codeCoverage=true",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
