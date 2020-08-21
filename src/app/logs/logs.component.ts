@@ -1,8 +1,8 @@
-import {Component, HostListener, ViewChild, OnInit} from "@angular/core";
-import {BsDatepickerDirective} from "ngx-bootstrap";
-import {ILogsType} from "./logs-type";
-import {LogsService} from "./logs.service";
-import {ILogsData} from "./logs-data";
+import {Component, HostListener, ViewChild, OnInit} from '@angular/core';
+import {BsDatepickerDirective} from 'ngx-bootstrap/datepicker';
+import {ILogsType} from './logs-type';
+import {LogsService} from './logs.service';
+import {ILogsData} from './logs-data';
 
 @Component({
     templateUrl: './logs.component.html',
@@ -27,11 +27,11 @@ export class LogsComponent implements OnInit {
         this.bsValue = new Date();
         this.minDate.setDate(this.minDate.getDate() - 5);
         this.maxDate.setDate(this.maxDate.getDate());
-        this.selectedType = "";
+        this.selectedType = '';
     }
 
     updateLogData(): void {
-        this._logsService.getLogsData(this.selectedType,this.bsValue).subscribe(
+        this._logsService.getLogsData(this.selectedType, this.bsValue).subscribe(
             data => {
                 this.data = data;
             },
@@ -54,11 +54,13 @@ export class LogsComponent implements OnInit {
     }
 
     onDateChange(newDate: Date): void {
-        console.info("Date Change - " + newDate.toLocaleDateString("en-GB"));
+        // tslint:disable-next-line:no-console
+        console.info('Date Change - ' + newDate.toLocaleDateString('en-GB'));
         this.bsValue = newDate;
 
-        if(this.selectedType != "")
+        if (this.selectedType !== '') {
             this.updateLogData();
+        }
     }
 
     @HostListener('window:scroll')

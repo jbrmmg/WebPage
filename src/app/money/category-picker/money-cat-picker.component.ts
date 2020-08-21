@@ -1,8 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {Category, ICategory} from "../money-category";
-import {MoneyService} from "../money.service";
-import {JbAccount} from "../money-account";
-import {forEach} from "@angular/router/src/utils/collection";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Category, ICategory} from '../money-category';
+import {MoneyService} from '../money.service';
+import {JbAccount} from '../money-account';
 
 export class MoneyCategoryPickerSelectableOption {
     category: ICategory;
@@ -12,12 +11,12 @@ export class MoneyCategoryPickerSelectableOption {
 }
 
 @Component({
-    selector: 'money-category-picker',
+    selector: 'jbr-money-category-picker',
     templateUrl: './money-cat-picker.component.html',
     styleUrls: ['./money-cat-picker.component.css']
 })
 export class MoneyCatagoryPickerComponent implements OnInit {
-    static readonly defaultMargin = "1px";
+    static readonly defaultMargin = '1px';
 
     selectableOption: MoneyCategoryPickerSelectableOption[];
     categories: ICategory[];
@@ -39,7 +38,7 @@ export class MoneyCatagoryPickerComponent implements OnInit {
     @Output() valueSelected: EventEmitter<MoneyCategoryPickerSelectableOption> = new EventEmitter<MoneyCategoryPickerSelectableOption>();
     @Output() complete: EventEmitter<void> = new EventEmitter<void>();
 
-    constructor(private _moneyService : MoneyService){
+    constructor(private _moneyService: MoneyService) {
         this.columns = 3;
         this.showAccountTransfers = false;
         this.showSystem = false;
@@ -57,8 +56,8 @@ export class MoneyCatagoryPickerComponent implements OnInit {
             },
             error => this.errorMessage = <any>error,
             () => {
-                for(let nextCategory of this.categories) {
-                    if(nextCategory.id == "TRF") {
+                for (const nextCategory of this.categories) {
+                    if (nextCategory.id === 'TRF') {
                         this.transferCategory = nextCategory;
                     }
                 }
@@ -74,7 +73,7 @@ export class MoneyCatagoryPickerComponent implements OnInit {
             () => {
                 this.calculateColumnRow();
             }
-        )
+        );
     }
 
     calculateColumnRow(): void {
@@ -82,7 +81,7 @@ export class MoneyCatagoryPickerComponent implements OnInit {
             return;
         }
 
-        if(this.showAccountTransfers && (this.accounts == null)) {
+        if (this.showAccountTransfers && (this.accounts == null)) {
             return;
         }
 
@@ -91,8 +90,8 @@ export class MoneyCatagoryPickerComponent implements OnInit {
 
         // Get a list of selectable options.
         let i = 0;
-        for(let nextCategory of this.categories) {
-            if(this.showSystem && (nextCategory.systemUse)) {
+        for (const nextCategory of this.categories) {
+            if (this.showSystem && (nextCategory.systemUse)) {
                 this.selectableOption[i] = new MoneyCategoryPickerSelectableOption();
                 this.selectableOption[i].accountTransfer = null;
                 this.selectableOption[i].category = nextCategory;
@@ -100,7 +99,7 @@ export class MoneyCatagoryPickerComponent implements OnInit {
                 this.selectableOption[i].bottomMargin = this.rowSpacing;
                 i++;
             }
-            if(!nextCategory.systemUse) {
+            if (!nextCategory.systemUse) {
                 console.log(nextCategory.id);
                 this.selectableOption[i] = new MoneyCategoryPickerSelectableOption();
                 this.selectableOption[i].accountTransfer = null;
@@ -112,8 +111,8 @@ export class MoneyCatagoryPickerComponent implements OnInit {
         }
 
         // If account transfers are to be shown add them to selectable otpions.
-        if(this.showAccountTransfers) {
-            for (let nextAccount of this.accounts) {
+        if (this.showAccountTransfers) {
+            for (const nextAccount of this.accounts) {
                 this.selectableOption[i] = new MoneyCategoryPickerSelectableOption();
                 this.selectableOption[i].category = this.transferCategory;
                 this.selectableOption[i].accountTransfer = nextAccount;
@@ -128,19 +127,19 @@ export class MoneyCatagoryPickerComponent implements OnInit {
         this.coordinates = [];
 
         i = 0;
-        for(let r = 0; r < this.rows; r++) {
+        for (let r = 0; r < this.rows; r++) {
             this.coordinates[r] = [];
 
-            for(let c = 0; c < this.columns; c++ ) {
-                if(i < this.selectableOption.length) {
+            for (let c = 0; c < this.columns; c++ ) {
+                if (i < this.selectableOption.length) {
                     this.coordinates[r][c] = i;
 
                     // If this is the bottom row or the right column, then remove the margin.
-                    if(r == this.rows - 1) {
+                    if (r === this.rows - 1) {
                         this.selectableOption[i].bottomMargin = MoneyCatagoryPickerComponent.defaultMargin;
                     }
 
-                    if(c == this.columns - 1) {
+                    if (c === this.columns - 1) {
                         this.selectableOption[i].rightMargin = MoneyCatagoryPickerComponent.defaultMargin;
                     }
 
@@ -154,7 +153,7 @@ export class MoneyCatagoryPickerComponent implements OnInit {
     }
 
     private getSelectedOption(id: number): MoneyCategoryPickerSelectableOption {
-        if (id == -1) {
+        if (id === -1) {
             return null;
         }
 
@@ -165,26 +164,25 @@ export class MoneyCatagoryPickerComponent implements OnInit {
         return null;
     }
 
-    getCategoryColour(id: number) : string {
-        let selectableOption = this.getSelectedOption(id);
+    getCategoryColour(id: number): string {
+        const selectableOption = this.getSelectedOption(id);
 
-        if(selectableOption != null)
-        {
-            if(selectableOption.accountTransfer != null) {
-                return "#" + selectableOption.accountTransfer.colour;
+        if (selectableOption != null) {
+            if (selectableOption.accountTransfer != null) {
+                return '#' + selectableOption.accountTransfer.colour;
             }
 
-            return "#" + selectableOption.category.colour;
+            return '#' + selectableOption.category.colour;
         }
 
-        return "#FFFFFF";
+        return '#FFFFFF';
     }
 
-    getCategoryBrightness(id: number) : number {
-        let selectableOption = this.getSelectedOption(id);
+    getCategoryBrightness(id: number): number {
+        const selectableOption = this.getSelectedOption(id);
 
-        if(selectableOption != null) {
-            if(selectableOption.accountTransfer != null) {
+        if (selectableOption != null) {
+            if (selectableOption.accountTransfer != null) {
                 return MoneyService.getBrightness(selectableOption.accountTransfer.colour);
             }
 
@@ -194,31 +192,31 @@ export class MoneyCatagoryPickerComponent implements OnInit {
         return 0;
     }
 
-    getCategoryTextColour(id: number) : string {
-        return this.getCategoryBrightness(id) > 130 ? "#000000" : "#FFFFFF";
+    getCategoryTextColour(id: number): string {
+        return this.getCategoryBrightness(id) > 130 ? '#000000' : '#FFFFFF';
     }
 
     onClickCategory(id: number): void {
-        let selectableOption = this.getSelectedOption(id);
+        const selectableOption = this.getSelectedOption(id);
 
-        if(selectableOption != null) {
-            if(this.multiSelect) {
+        if (selectableOption != null) {
+            if (this.multiSelect) {
                 this.selections.forEach(nextCategory => {
-                    if(nextCategory.id == selectableOption.category.id) {
+                    if (nextCategory.id === selectableOption.category.id) {
                         nextCategory.selected = !nextCategory.selected;
                     }
                 });
             }
 
-            console.log(selectableOption.category.id + "-> " + selectableOption.category.name);
+            console.log(selectableOption.category.id + '-> ' + selectableOption.category.name);
             this.valueSelected.emit(selectableOption);
         }
     }
 
     category(id: number): ICategory {
-        let selectableOption = this.getSelectedOption(id);
+        const selectableOption = this.getSelectedOption(id);
 
-        if(selectableOption != null) {
+        if (selectableOption != null) {
             return selectableOption.category;
         }
 
@@ -226,10 +224,10 @@ export class MoneyCatagoryPickerComponent implements OnInit {
     }
 
     hasImage(id: number): boolean {
-        let selectableOption = this.getSelectedOption(id);
+        const selectableOption = this.getSelectedOption(id);
 
-        if(selectableOption != null) {
-            if(selectableOption.accountTransfer != null) {
+        if (selectableOption != null) {
+            if (selectableOption.accountTransfer != null) {
                 return true;
             }
         }
@@ -238,21 +236,21 @@ export class MoneyCatagoryPickerComponent implements OnInit {
     }
 
     getImage(id: number): string {
-        let selectableOption = this.getSelectedOption(id);
+        const selectableOption = this.getSelectedOption(id);
 
-        if(selectableOption != null) {
-            if(selectableOption.accountTransfer != null) {
+        if (selectableOption != null) {
+            if (selectableOption.accountTransfer != null) {
                 return MoneyService.getAccountImage(selectableOption.accountTransfer.id);
             }
         }
 
-        return "";
+        return '';
     }
 
     getRightMargin(id: number): string {
-        let selectableOption = this.getSelectedOption(id);
+        const selectableOption = this.getSelectedOption(id);
 
-        if(selectableOption != null) {
+        if (selectableOption != null) {
             return selectableOption.rightMargin;
         }
 
@@ -260,9 +258,9 @@ export class MoneyCatagoryPickerComponent implements OnInit {
     }
 
     getBottomMargin(id: number): string {
-        let selectableOption = this.getSelectedOption(id);
+        const selectableOption = this.getSelectedOption(id);
 
-        if(selectableOption != null) {
+        if (selectableOption != null) {
             return selectableOption.bottomMargin;
         }
 
@@ -270,16 +268,12 @@ export class MoneyCatagoryPickerComponent implements OnInit {
     }
 
     selected(id: number): boolean {
-        let selectableOption = this.getSelectedOption(id);
+        const selectableOption = this.getSelectedOption(id);
 
         let selected = false;
         this.selections.forEach(nextCategory => {
-            if(nextCategory.id == selectableOption.category.id) {
-                if(nextCategory.selected) {
-                    selected = true;
-                } else {
-                    selected = false;
-                }
+            if (nextCategory.id === selectableOption.category.id) {
+                selected = nextCategory.selected;
             }
         });
 
@@ -287,12 +281,13 @@ export class MoneyCatagoryPickerComponent implements OnInit {
     }
 
     selectAll() {
-        if(this.selections == null)
+        if (this.selections == null) {
             return;
+        }
 
         this.selections.forEach(nextCategory => {
             nextCategory.selected = true;
-        })
+        });
 
         if (this.selectableOption.length > 0) {
             this.valueSelected.emit(this.selectableOption[0]);
@@ -300,12 +295,13 @@ export class MoneyCatagoryPickerComponent implements OnInit {
     }
 
     selectNone() {
-        if(this.selections == null)
+        if (this.selections == null) {
             return;
+        }
 
         this.selections.forEach(nextCategory => {
             nextCategory.selected = false;
-        })
+        });
 
         if (this.selectableOption.length > 0) {
             this.valueSelected.emit(this.selectableOption[0]);

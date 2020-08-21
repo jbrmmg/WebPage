@@ -1,10 +1,10 @@
-import {EventEmitter, Injectable, Output} from "@angular/core";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {Observable, throwError} from "rxjs";
-import {catchError, tap} from "rxjs/operators";
-import {IPodcastEpisode} from "./podcast-episode";
-import {IPodcast} from "./podcast-podcast";
-import {environment} from "../../environments/environment";
+import {EventEmitter, Injectable, Output} from '@angular/core';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {Observable, throwError} from 'rxjs';
+import {catchError, tap} from 'rxjs/operators';
+import {IPodcastEpisode} from './podcast-episode';
+import {IPodcast} from './podcast-podcast';
+import {environment} from '../../environments/environment';
 
 export class StatusResponse {
     status: string;
@@ -18,8 +18,21 @@ export class PodcastService {
     private readonly podcastUrl;
     private readonly episodeUrl;
 
+    @Output() episodeDeleted: EventEmitter<void> = new EventEmitter<void>();
+
+    private static handleError(err: HttpErrorResponse) {
+        let errorMessage;
+        if (err.error instanceof ErrorEvent) {
+            errorMessage = 'An error occured: ';
+        } else {
+            errorMessage = 'Server returned code ' + err.status + ', error message is: ' + err.message;
+        }
+        console.error(errorMessage);
+        return throwError(errorMessage);
+    }
+
     constructor(private http: HttpClient) {
-        if(environment.production) {
+        if (environment.production) {
             // Use production URL's
             this.podcastUrl = '/podcast/type';
             this.episodeUrl = '/podcast/episode?podcastId=#ID#';
@@ -30,8 +43,8 @@ export class PodcastService {
 
     }
 
-    private getEpisodeUrl(id: string) : string {
-        return this.episodeUrl.replace("#ID#",id);
+    private getEpisodeUrl(id: string): string {
+        return this.episodeUrl.replace('#ID#', id);
     }
 
     getPodcasts(): Observable<IPodcast[]> {
@@ -48,41 +61,27 @@ export class PodcastService {
         );
     }
 
-    deleteEpisode(id: string)
-    {
-        console.info("Delete episode - " + id + " " + this.episodeUrl);
+    deleteEpisode(id: string) {
+        // tslint:disable-next-line:no-console
+        console.info('Delete episode - ' + id + ' ' + this.episodeUrl);
 
         let url: string;
         url = this.episodeUrl;
-        url = url.replace("#ID#",id);
+        url = url.replace('#ID#', id);
 
         this.http.delete<StatusResponse>(url).subscribe(
             (val) => {
-                console.log("POST call successful value returned in body - " + val.status + " " + val.message);
+                console.log('POST call successful value returned in body - ' + val.status + ' ' + val.message);
                 this.episodeDeleted.emit();
             },
             (response) => {
-                console.log("POST call in error", response);
+                console.log('POST call in error', response);
                 this.episodeDeleted.emit();
             },
             () => {
-                console.log("The POST observable is now complete");
+                console.log('The POST observable is now complete');
                 this.episodeDeleted.emit();
             }
         );
     }
-
-    @Output() episodeDeleted : EventEmitter<void> = new EventEmitter<void>();
-
-    private static handleError(err: HttpErrorResponse) {
-        let errorMessage = '';
-        if(err.error instanceof ErrorEvent) {
-            errorMessage = 'An error occured: ';
-        } else {
-            errorMessage = 'Server returned code ' + err.status + ', error message is: ' + err.message;
-        }
-        console.error(errorMessage);
-        return throwError(errorMessage);
-    }
-
 }

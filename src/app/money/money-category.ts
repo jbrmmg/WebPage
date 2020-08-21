@@ -2,11 +2,11 @@ export interface ICategory {
     id: string;
     name: string;
     sort: number;
-    restricted: boolean,
-    colour: string,
-    group: string,
-    systemUse: boolean,
-    source: string
+    restricted: boolean;
+    colour: string;
+    group: string;
+    systemUse: boolean;
+    source: string;
 }
 
 export class Category implements ICategory {

@@ -1,8 +1,8 @@
-import {Component, OnInit} from "@angular/core";
-import {Action} from "./backup-action";
-import {FileInfo} from "./backup-fileinfo"
-import {HierarchyResponse} from "./backup-hierarchyresponse"
-import {BackupService} from "./backup.service";
+import {Component, OnInit} from '@angular/core';
+import {Action} from './backup-action';
+import {FileInfo} from './backup-fileinfo';
+import {HierarchyResponse} from './backup-hierarchyresponse';
+import {BackupService} from './backup.service';
 
 export enum ListMode { Files, Actions }
 
@@ -11,8 +11,11 @@ export enum ListMode { Files, Actions }
     styleUrls: ['./backup-list.component.css']
 })
 export class BackupListComponent implements OnInit {
+    readonly BACKUP_WARNING = 'fa-exclamation-triangle status-warn';
+    readonly BACKUP_OK = 'fa-check-circle-o status-green';
+
     actions: Action[];
-    heirarchy: HierarchyResponse[];
+    hierarchy: HierarchyResponse[];
     topLevel: HierarchyResponse;
     atTopLevel: boolean;
     selectedIndex: number;
@@ -21,11 +24,11 @@ export class BackupListComponent implements OnInit {
     fileBackups: FileInfo[];
     category: string;
 
-    constructor(private _backupService : BackupService) {
+    constructor(private readonly _backupService: BackupService) {
     }
 
     ngOnInit(): void {
-        console.log("Get Actions.");
+        console.log('Get Actions.');
         this.actions = [];
         this.selectedIndex = -1;
         this.listMode = ListMode.Files;
@@ -34,27 +37,27 @@ export class BackupListComponent implements OnInit {
         this.topLevel.id = -1;
         this.selectedFile = null;
         this.fileBackups = [];
-        this.category = "AtHome";
+        this.category = 'AtHome';
 
         this._backupService.getActions().subscribe(
             actions => {
                 this.actions = actions;
-                if(actions.length > 0) {
+                if (actions.length > 0) {
                     this.selectedIndex = 0;
                 } else {
                     this.selectedIndex = -1;
                 }
             },
-            () => console.log("Failed to get actions."),
-            () => console.log("Load Actions Complete")
+            () => console.log('Failed to get actions.'),
+            () => console.log('Load Actions Complete')
         );
 
         this._backupService.getHierarchy(this.topLevel).subscribe(
-            heirarchy => {
-                this.heirarchy = heirarchy;
+            hierarchy => {
+                this.hierarchy = hierarchy;
             },
-            () => console.log("Failed to get hierarchy"),
-            () => console.log("Load hierarchy complete")
+            () => console.log('Failed to get hierarchy'),
+            () => console.log('Load hierarchy complete')
         );
     }
 
@@ -65,10 +68,10 @@ export class BackupListComponent implements OnInit {
     }
 
     selectActionMode() {
-        console.log("SELECT ACTION MODE;.");
+        console.log('SELECT ACTION MODE;.');
         this.listMode = ListMode.Actions;
 
-        if(this.actions.length > 0) {
+        if (this.actions.length > 0) {
             this.selectedIndex = 0;
 
             this.selectedFile = this.actions[0].path;
@@ -76,45 +79,37 @@ export class BackupListComponent implements OnInit {
         }
     }
 
-    get isFileMode() : boolean {
-        return this.listMode == ListMode.Files
+    get isFileMode(): boolean {
+        return this.listMode === ListMode.Files;
     }
 
-    get isImage() : boolean {
-        if(this.selectedFile == null) {
+    get isImage(): boolean {
+        if (this.selectedFile == null) {
             return false;
         }
 
-        if(this.selectedFile.classification.isImage) {
-            return true;
-        }
-
-        return false;
+        return this.selectedFile.classification.isImage;
     }
 
-    get isVideo() : boolean {
-        if(this.selectedFile == null) {
+    get isVideo (): boolean {
+        if (this.selectedFile == null) {
             return false;
         }
 
-        if(this.selectedFile.classification.isVideo) {
-            return true;
-        }
-
-        return false;
+        return this.selectedFile.classification.isVideo;
     }
 
-    get isActionMode() : boolean {
-        return this.listMode == ListMode.Actions;
+    get isActionMode(): boolean {
+        return this.listMode === ListMode.Actions;
     }
 
     get isItemSelected(): boolean {
 
-        return this.selectedIndex != -1;
+        return this.selectedIndex !== -1;
     }
 
     get detailLine(): string {
-        return this.actions.length + " items, selected number: " + ( this.selectedIndex + 1);
+        return `${this.actions.length} items, selected number: ${this.selectedIndex + 1}`;
     }
 
     selectTopLevel(): void {
@@ -122,27 +117,27 @@ export class BackupListComponent implements OnInit {
     }
 
     changeHierarchy(parent: HierarchyResponse): void {
-        this.heirarchy = [];
+        this.hierarchy = [];
 
-        this.atTopLevel = parent.id == -1;
+        this.atTopLevel = parent.id === -1;
 
         this._backupService.getHierarchy(parent).subscribe(
-            heirarchy => {
-                this.heirarchy = heirarchy;
+            hierarchy => {
+                this.hierarchy = hierarchy;
             },
-            () => console.log("Failed to get hierarchy"),
-            () => console.log("Load hierarchy complete")
+            () => console.log('Failed to get hierarchy'),
+            () => console.log('Load hierarchy complete')
         );
     }
 
     moveNext(): void {
-        if(this.actions.length <= 0) {
+        if (this.actions.length <= 0) {
             return;
         }
 
         this.selectedIndex++;
 
-        if(this.selectedIndex >= this.actions.length) {
+        if (this.selectedIndex >= this.actions.length) {
             this.selectedIndex = 0;
         }
 
@@ -150,13 +145,13 @@ export class BackupListComponent implements OnInit {
     }
 
     movePrev(): void {
-        if(this.actions.length <= 0) {
+        if (this.actions.length <= 0) {
             return;
         }
 
         this.selectedIndex--;
 
-        if(this.selectedIndex < 0) {
+        if (this.selectedIndex < 0) {
             this.selectedIndex = this.actions.length - 1;
         }
 
@@ -164,15 +159,15 @@ export class BackupListComponent implements OnInit {
     }
 
     displayFile(file: HierarchyResponse): void {
-        console.log("Select file " + file.displayName);
+        console.log(`Select file ${file.displayName}`);
 
         this._backupService.getFile(file.underlyingId).subscribe(
-            file => {
-                this.selectedFile = file.file;
-                this.fileBackups = file.backups;
+            nextFile => {
+                this.selectedFile = nextFile.file;
+                this.fileBackups = nextFile.backups;
             },
-            () => console.log("Failed to get the file"),
-            () => console.log("Get File complete.")
+            () => console.log('Failed to get the file'),
+            () => console.log('Get File complete.')
         );
     }
 
@@ -187,28 +182,33 @@ export class BackupListComponent implements OnInit {
     }
 
     keep() {
-        if(this.category.length == 0) {
+        if (this.category.length === 0) {
             return;
         }
 
-        this._backupService.keepPhoto(this.actions[this.selectedIndex].id,this.category);
+        this._backupService.keepPhoto(this.actions[this.selectedIndex].id, this.category);
 
         this.moveNext();
     }
 
     backupStatus(backup: FileInfo): string {
-        if(this.selectedFile.date != backup.date) {
-            return "fa-exclamation-triangle status-warn";
+        const selectedDate = new Date(this.selectedFile.date);
+        const backupDate = new Date(backup.date);
+        const difference = Math.abs(selectedDate.getTime() - backupDate.getTime()) / 1000.0;
+
+        if (difference > 30) {
+            console.log(`Difference - ${difference} ${backup.date} ${this.selectedFile.date}`)
+            return this.BACKUP_WARNING;
         }
 
-        if(this.selectedFile.md5 == "") {
-            return "fa-exclamation-triangle status-warn";
+        if (this.selectedFile.md5 === '') {
+            return this.BACKUP_WARNING;
         }
 
-        if(this.selectedFile.md5 != backup.md5) {
-            return "fa-exclamation-triangle status-warn";
+        if (this.selectedFile.md5 !== backup.md5) {
+            return this.BACKUP_WARNING;
         }
 
-        return "fa-check-circle-o status-green";
+        return this.BACKUP_OK;
     }
 }

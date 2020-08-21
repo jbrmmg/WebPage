@@ -4,14 +4,13 @@
     <label class="btn btn-primary cat-opt-btn" (click)="exit()">Exit</label>
 </div>
 <div class="table-responsive" >
-    <table class="table cat-table" *ngIf="categories && categories.length">
-        <tbody class="cat-table-body">
+    <table class="table" *ngIf="categories && categories.length">
+        <tbody>
             <ng-container *ngFor="let nextRow of coordinates">
-                <tr class="cat-table-row">
+                <tr>
                     <ng-container *ngFor="let nextCategoryId of nextRow">
                         <td class="cat-table-col">
-                            <div class="cat-table-cell"
-                                 [style.margin-right]="getRightMargin(nextCategoryId)"
+                            <div [style.margin-right]="getRightMargin(nextCategoryId)"
                                  [style.margin-bottom]="getBottomMargin(nextCategoryId)"
                                  *ngIf="nextCategoryId != -1">
                                 <label class="btn btn-primary cat-btn"
@@ -25,8 +24,8 @@
                                          class="cat-trf-img"
                                          src="{{getImage(nextCategoryId)}}"
                                          alt="Account"/>
-                                    <i *ngIf="multiSelect && selected(nextCategoryId)" class="fa fa-check-circle"></i>
-                                    <i *ngIf="multiSelect && !selected(nextCategoryId)" class="fa fa-times-circle"></i>
+                                    <em *ngIf="multiSelect && selected(nextCategoryId)" class="fa fa-check-circle"></em>
+                                    <em *ngIf="multiSelect && !selected(nextCategoryId)" class="fa fa-times-circle"></em>
                                     {{category(nextCategoryId).name}}
                                 </label>
                             </div>

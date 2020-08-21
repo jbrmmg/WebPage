@@ -3,11 +3,11 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "JbrMmg": {
+    "jbrmmg": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
-      "prefix": "pm",
+      "prefix": "jbr",
       "schematics": {},
       "architect": {
         "build": {
@@ -52,24 +52,51 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "debug": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.debug.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
             }
           }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "JbrMmg:build"
+            "browserTarget": "jbrmmg:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "JbrMmg:build:production"
+              "browserTarget": "jbrmmg:build:production"
+            },
+            "debug" : {
+              "browserTarget": "jbrmmg:build:debug"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "JbrMmg:build"
+            "browserTarget": "jbrmmg:build"
           }
         },
         "test": {
@@ -104,7 +131,7 @@
         }
       }
     },
-    "JbrMmg-e2e": {
+    "jbrmmg-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -112,11 +139,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "JbrMmg:serve"
+            "devServerTarget": "jbrmmg:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "JbrMmg:serve:production"
+              "devServerTarget": "jbrmmg:serve:production"
             }
           }
         },
@@ -132,5 +159,5 @@
       }
     }
   },
-  "defaultProject": "JbrMmg"
+  "defaultProject": "jbrmmg"
 }

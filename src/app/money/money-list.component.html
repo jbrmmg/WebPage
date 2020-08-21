@@ -6,28 +6,28 @@
                    (click)="selectNormalMode()"
                    [attr.aria-expanded]="isNormalMode"
                    aria-controls="normal">
-                <i class="fa fa-align-justify"></i>
+                <em class="fa fa-align-justify"></em>
             </label>
             <label class="btn-sm btn-primary float-right btn-mode"
                    tabindex="0"
                    (click)="selectAddMode()"
                    [attr.aria-expanded]="isAddMode"
                    aria-controls="addTransaction">
-                <i class="fa fa-plus-circle"></i>
+                <em class="fa fa-plus-circle"></em>
             </label>
             <label class="btn-sm btn-primary float-right btn-mode"
                    tabindex="0"
                    (click)="selectRegularMode()"
                    [attr.aria-expanded]="isRegularMode"
                    aria-controls="regular">
-                <i class="fa fa-recycle"></i>
+                <em class="fa fa-recycle"></em>
             </label>
             <label class="btn-sm btn-primary float-right btn-mode"
                    tabindex="0"
                    (click)="selectReconcileMode()"
                    [attr.aria-expanded]="isReconcileMode"
                    aria-controls="reconcile">
-                <i class="fa fa-balance-scale"></i>
+                <em class="fa fa-balance-scale"></em>
             </label>
         </div>
         <div class="row" id="addTransaction" [collapse]="!isAddMode">
@@ -92,7 +92,7 @@
                                                style="background-color: #008800;"
                                                tabindex="0"
                                                (click)="onClickCreate()">
-                                            <i class="fa fa-check-circle"></i>
+                                            <em class="fa fa-check-circle"></em>
                                         </label>
                                     </div>
                                     <div class="coll-1" *ngIf="transactionValid == true">
@@ -100,7 +100,7 @@
                                                style="background-color: #008800;"
                                                tabindex="0"
                                                (click)="onClearEdit()">
-                                            <i class="fa fa-times-circle"></i>
+                                            <em class="fa fa-times-circle"></em>
                                         </label>
                                     </div>
                                 </div>
@@ -120,7 +120,7 @@
                                    [(ngModel)]="radioType"
                                    tabindex="0"
                                    tooltip="{{type.name}}">
-                                <i class="fa {{type.icon}}"></i>
+                                <em class="fa {{type.icon}}"></em>
                             </label>
                         </div>
                     </div>
@@ -229,7 +229,7 @@
                 </div>
                 <div class="col-1">
                     <div class="cat-filter" (click)="openModal(templateCategoryFilter,'')">
-                        <money-category-filter [categoriesChange]="eventsCategoriesChange.asObservable()"></money-category-filter>
+                        <jbr-money-category-filter [categoriesChange]="eventsCategoriesChange.asObservable()"></jbr-money-category-filter>
                     </div>
                 </div>
             </div>
@@ -272,33 +272,31 @@
         <div class="row">
             <div class="table-responsive">
                 <table class="table trn-table" *ngIf="lines && lines.length">
-                    <thead class="trn-thead">
-                        <tr class="trn-header-row">
-                            <th colspan="2" class="trn-header trn-date-header">Date</th>
-                            <th class="trn-header trn-account-header">Account</th>
-                            <th class="trn-header trn-category-header">Category</th>
-                            <th class="trn-header trn-description-header">Description</th>
-                            <th class="trn-header trn-amount-header">Amount</th>
-                            <th class="trn-header trn-btn-header trn-confirm-btn-header"></th>
-                            <th class="trn-header trn-btn-header trn-edit-btn-header"></th>
-                            <th class="trn-header trn-btn-header trn-delete-btn-header"></th>
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="trn-date-header">Date</th>
+                            <th class="trn-account-header">Account</th>
+                            <th class="trn-category-header">Category</th>
+                            <th>Description</th>
+                            <th class="trn-amount-header">Amount</th>
+                            <th class="trn-btn-header"></th>
+                            <th class="trn-btn-header"></th>
+                            <th class="trn-btn-header"></th>
                         </tr>
                     </thead>
-                    <tbody class="trn-tbody">
+                    <tbody>
                         <tr *ngFor="let nextTransaction of lines"
                             [ngClass]="{'trn-row':  true,
                                         'trn-total-row':  nextTransaction.isTotalRow === true}">
                             <td [ngClass]="{'trn-col':  true,
-                                            'trn-date-day-col': true,
                                             'trn-date-day-col-total':  nextTransaction.isTotalRow === true}">
                                 <div *ngIf="nextTransaction.hasDate" class="trn-date-day">
                                     {{nextTransaction.dateDay}}
                                 </div>
                             </td>
                             <td [ngClass]="{'trn-col':  true,
-                                            'trn-date-month-col': true,
                                             'trn-date-month-col-total': nextTransaction.isTotalRow === true}">
-                                <div *ngIf="nextTransaction.hasDate" class="trn-date-month">
+                                <div *ngIf="nextTransaction.hasDate">
                                     {{nextTransaction.dateMonth}}
                                 </div>
                                 <div *ngIf="nextTransaction.hasDate" class="trn-date-year">
@@ -306,16 +304,14 @@
                                 </div>
                             </td>
                             <td [ngClass]="{'trn-col':  true,
-                                            'trn-account-col': true,
                                             'trn-account-col-total': nextTransaction.isTotalRow === true}">
-                                <div *ngIf="nextTransaction.hasAccount" class="trn-account">
+                                <div *ngIf="nextTransaction.hasAccount">
                                     <img class="trn-account-img" src="{{getAccountImage(nextTransaction.account.id)}}" alt="Account"/>
                                 </div>
                             </td>
                             <td [ngClass]="{'trn-col':  true,
-                                            'trn-category-col': true,
                                             'trn-category-col-total': nextTransaction.isTotalRow === true}">
-                                <div *ngIf="nextTransaction.hasCategory" class="row trn-category" (click)="nextTransaction.select()">
+                                <div *ngIf="nextTransaction.hasCategory" class="row" (click)="nextTransaction.select()">
                                     <div class="col-7 trn-category-txt">
                                         {{nextTransaction.category.name}}
                                     </div>
@@ -330,10 +326,9 @@
                                 </div>
                             </td>
                             <td [ngClass]="{'trn-col':  true,
-                                            'trn-description-col': true,
                                             'trn-description-col-total': nextTransaction.isTotalRow === true}">
-                                <div class="trn-description">
-                                    <div *ngIf="!nextTransaction.isTotalRow" class="trn-description-text">
+                                <div>
+                                    <div *ngIf="!nextTransaction.isTotalRow">
                                         {{nextTransaction.description}}
                                     </div>
                                     <div *ngIf="nextTransaction.isTotalRow" class="trn-description-total-text">
@@ -342,9 +337,8 @@
                                 </div>
                             </td>
                             <td [ngClass]="{'trn-col':  true,
-                                            'trn-amount-col': true,
                                             'trn-amount-col-total': nextTransaction.isTotalRow === true}">
-                                <div class="trn-amount">
+                                <div>
                                     <div *ngIf="nextTransaction.getAmount() < 0"
                                          class="trn-amount-db">{{nextTransaction.amountDisplay}}</div>
                                     <div *ngIf="nextTransaction.getAmount() >= 0"
@@ -352,38 +346,35 @@
                                 </div>
                             </td>
                             <td [ngClass]="{'trn-col':  true,
-                                            'trn-button-col': true,
                                             'trn-button-col-total': nextTransaction.isTotalRow === true}">
-                                <div class="trn-button">
+                                <div>
                                     <button *ngIf="nextTransaction.hasButtonOne" type="button"
                                             class="btn btn-primary trn-button-1"
                                             (click)="nextTransaction.clickButtonOne()"
                                             [disabled]="!nextTransaction.enableButtonOne">
-                                        <i [ngClass]="nextTransaction.classButtonOne"></i>
+                                        <em [ngClass]="nextTransaction.classButtonOne"></em>
                                     </button>
                                 </div>
                             </td>
                             <td [ngClass]="{'trn-col':  true,
-                                                'trn-button-col': true,
                                                 'trn-button-col-total': nextTransaction.isTotalRow === true}">
-                                <div class="trn-button">
+                                <div>
                                     <button *ngIf="nextTransaction.hasButtonTwo" type="button"
                                             class="btn btn-primary trn-button-2"
                                             (click)="nextTransaction.clickButtonTwo()"
                                             [disabled]="!nextTransaction.enableButtonTwo">
-                                        <i [ngClass]="nextTransaction.classButtonTwo"></i>
+                                        <em [ngClass]="nextTransaction.classButtonTwo"></em>
                                     </button>
                                 </div>
                             </td>
                             <td [ngClass]="{'trn-col':  true,
-                                                'trn-button-col': true,
                                                 'trn-button-col-total': nextTransaction.isTotalRow === true}">
-                                <div class="trn-button">
+                                <div>
                                     <button *ngIf="nextTransaction.hasButtonThree" type="button"
                                             class="btn btn-primary trn-button-3"
                                             (click)="nextTransaction.clickButtonThree()"
                                             [disabled]="!nextTransaction.enableButtonThree">
-                                        <i [ngClass]="nextTransaction.classButtonThree"></i>
+                                        <em [ngClass]="nextTransaction.classButtonThree"></em>
                                     </button>
                                 </div>
                             </td>
@@ -400,7 +391,7 @@
         <h4 class="modal-title pull-left">Enter category</h4>
     </div>
     <div class="body">
-        <money-category-picker
+        <jbr-money-category-picker
                 [columns]="3"
                 [showAccountTransfers]="true"
                 [showSystem]="false"
@@ -408,7 +399,7 @@
                 rowSpacing="3px"
                 (valueSelected)="onCategorySelected($event)"
                 (complete)="onExitSelector()">
-        </money-category-picker>
+        </jbr-money-category-picker>
     </div>
 </ng-template>
 
@@ -417,7 +408,7 @@
         <h4 class="modal-title pull-left">Enter category</h4>
     </div>
     <div class="body">
-        <money-category-picker
+        <jbr-money-category-picker
                 [columns]="3"
                 [showAccountTransfers]="false"
                 [showSystem]="false"
@@ -425,7 +416,7 @@
                 rowSpacing="3px"
                 (valueSelected)="onCategorySelector($event)"
                 (complete)="onExitSelector()">
-        </money-category-picker>
+        </jbr-money-category-picker>
     </div>
 </ng-template>
 
@@ -434,7 +425,7 @@
         <h4 class="modal-title pull-left">Select Categories</h4>
     </div>
     <div class="body">
-        <money-category-picker
+        <jbr-money-category-picker
                 [columns]="3"
                 [showAccountTransfers]="false"
                 [showSystem]="true"
@@ -444,7 +435,7 @@
                 rowSpacing="3px"
                 (valueSelected)="onCategoryFiltered()"
                 (complete)="onExitFilter()">
-        </money-category-picker>
+        </jbr-money-category-picker>
     </div>
 </ng-template>
 
@@ -453,7 +444,7 @@
         <h4 class="modal-title pull-left">Enter value</h4>
     </div>
     <div class="body">
-        <money-add-calc style="width:100%" (valueEntered)="onAmountEntered($event)"></money-add-calc>
+        <jbr-money-add-calc style="width:100%" (valueEntered)="onAmountEntered($event)"></jbr-money-add-calc>
     </div>
 </ng-template>
 

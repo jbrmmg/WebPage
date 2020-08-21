@@ -1,7 +1,7 @@
-import {IListRowLineInterface, ListRowLineType} from "./list-row-line-interface";
-import {IAccount} from "../money-account";
-import {ICategory} from "../money-category";
-import {ListRowSummary} from "./list-row-summary";
+import {IListRowLineInterface, ListRowLineType} from './list-row-line-interface';
+import {IAccount} from '../money-account';
+import {ICategory} from '../money-category';
+import {ListRowSummary} from './list-row-summary';
 
 export class ListRowLineTotalBfwd implements IListRowLineInterface {
     public rowType: ListRowLineType;
@@ -34,25 +34,25 @@ export class ListRowLineTotalBfwd implements IListRowLineInterface {
         this.rowType = ListRowLineType.TOTAL_BOUGHTFWD;
         this.isTotalRow = true;
         this.hasDate = false;
-        this.dateDay = "";
-        this.dateMonth = "";
-        this.dateYear = "";
+        this.dateDay = '';
+        this.dateMonth = '';
+        this.dateYear = '';
         this.hasAccount = false;
         this.account = null;
         this.hasCategory = false;
         this.category = null;
-        this.description = "Bought Forward";
+        this.description = 'Bought Forward';
         this.amount = 0;
-        this.amountDisplay = "?";
+        this.amountDisplay = '?';
         this.hasButtonOne = false;
         this.enableButtonOne = false;
-        this.classButtonOne = "";
+        this.classButtonOne = '';
         this.hasButtonTwo = false;
         this.enableButtonTwo = false;
-        this.classButtonTwo = "";
+        this.classButtonTwo = '';
         this.hasButtonThree = false;
         this.enableButtonThree = false;
-        this.classButtonThree = "";
+        this.classButtonThree = '';
         this.selected = false;
         this.summary = summary;
     }

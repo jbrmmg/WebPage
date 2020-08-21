@@ -1,16 +1,16 @@
-import {EventEmitter, Injectable, Output} from "@angular/core";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {environment} from "../../environments/environment";
-import {Observable, throwError} from "rxjs";
-import {catchError, tap} from "rxjs/operators";
-import {Category, ICategory} from "./money-category";
-import {JbAccount} from "./money-account";
-import {ITransactionType, TransactionType} from "./money-type";
-import {IStatement, Statement} from "./money-statement";
-import {IMatch, Match} from "./money-match";
-import {IRegular} from "./money-regular";
-import {IFile} from "./money-file";
-import {ITransaction} from "./list-row-line/list-row-summary";
+import {EventEmitter, Injectable, Output} from '@angular/core';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {Observable, throwError} from 'rxjs';
+import {catchError, tap} from 'rxjs/operators';
+import {Category, ICategory} from './money-category';
+import {JbAccount} from './money-account';
+import {ITransactionType, TransactionType} from './money-type';
+import {IStatement, Statement} from './money-statement';
+import {IMatch} from './money-match';
+import {IRegular} from './money-regular';
+import {IFile} from './money-file';
+import {ITransaction} from './list-row-line/list-row-summary';
 
 export class NewTransaction {
     date: Date;
@@ -55,6 +55,48 @@ export class LoadFileRequest {
     providedIn: 'root'
 })
 export class MoneyService {
+
+    constructor(private http: HttpClient) {
+        console.log('here1.2');
+        this.typeUrl = 'api/money/types.json';
+        if (environment.production) {
+            // Use production URL's
+            this.categoryUrl = 'money/categories';
+            this.accountUrl = 'money/accounts';
+            this.addUrl = 'money/transaction/add';
+            this.statementUrl = 'money/statement';
+            this.updateTransactionUrl = 'money/transaction/update';
+            this.deleteTransactionUrl = 'money/delete?transactionId=##transactionId##';
+            this.lockStatementUrl = 'money/statement/lock';
+            this.reconcileTransactionUrl = 'money/reconcile';
+            this.matchUrl = 'money/match?account=##accountId##';
+            this.submitDataUrl = 'money/reconciliation/add';
+            this.clearDataUrl = 'money/reconciliation/clear';
+            this.autoAcceptUrl = 'money/reconciliation/auto';
+            this.setCategoryUrl = 'money/reconciliation/update';
+            this.getRegularUrl = 'money/transaction/regulars';
+            this.getFilesUrl = 'money/reconciliation/files';
+            this.loadFileUrl = 'money/reconciliation/load';
+        } else {
+            this.categoryUrl = 'api/money/category.json';
+            this.accountUrl = 'api/money/account.json';
+            this.addUrl = 'api/money/account.json';
+            this.statementUrl = 'api/money/statements.json';
+            this.updateTransactionUrl = 'api/money/updatetran.json';
+            this.deleteTransactionUrl = 'api/money/updatetran.json';
+            this.lockStatementUrl = 'api/money/updatetran.json';
+            this.reconcileTransactionUrl = 'api/money/updatetran.json';
+            this.matchUrl = 'api/money/match.##accountId##.json';
+            this.submitDataUrl = 'api/money/updatetran.json';
+            this.clearDataUrl = 'api/money/updatetran.json';
+            this.autoAcceptUrl = 'api/money/updatetran.json';
+            this.setCategoryUrl = 'api/money/updatetran.json';
+            this.getRegularUrl = 'api/money/regular.json';
+            this.getFilesUrl = 'api/money/recfiles.json';
+            this.loadFileUrl = 'api/money/recfiles.json';
+        }
+        console.log('here1.3');
+    }
     private readonly categoryUrl;
     private readonly accountUrl;
     private readonly addUrl;
@@ -73,29 +115,53 @@ export class MoneyService {
     private readonly getFilesUrl;
     private readonly loadFileUrl;
 
-    constructor(private http: HttpClient) {
-        this.typeUrl = 'api/money/types.json';
-        // Use production URL's
-        this.categoryUrl = 'money/categories';
-        this.accountUrl = 'money/accounts';
-        this.addUrl = 'money/transaction/add';
-        this.statementUrl = 'money/statement';
-        this.updateTransactionUrl = 'money/transaction/update';
-        this.deleteTransactionUrl = 'money/delete?transactionId=##transactionId##';
-        this.lockStatementUrl = 'money/statement/lock';
-        this.reconcileTransactionUrl = 'money/reconcile';
-        this.matchUrl = 'money/match?account=##accountId##';
-        this.submitDataUrl = 'money/reconciliation/add';
-        this.clearDataUrl = 'money/reconciliation/clear';
-        this.autoAcceptUrl = 'money/reconciliation/auto';
-        this.setCategoryUrl = 'money/reconciliation/update';
-        this.getRegularUrl = 'money/transaction/regulars';
-        this.getFilesUrl = 'money/reconciliation/files';
-        this.loadFileUrl = 'money/reconciliation/load';
-    }
-
     @Output() updateTransactions: EventEmitter<any> = new EventEmitter();
     @Output() updateStatements: EventEmitter<any> = new EventEmitter();
+
+    private static dateToString(value: Date): string {
+        let result = '';
+
+        result += value.getFullYear().toString();
+        result += '-';
+        if (value.getMonth() + 1 < 10) {
+            result += '0';
+        }
+        result += (value.getMonth() + 1).toString();
+        result += '-';
+        if (value.getDate() < 10) {
+            result += '0';
+        }
+        result += value.getDate().toString();
+
+        return result;
+    }
+
+    static getAccountImage(id: string): string {
+        return 'money/account/logo?disabled=false&id=' + id;
+    }
+
+    static getDisabledAccountImage(id: string): string {
+        return 'money/account/logo?disabled=true&id=' + id;
+    }
+
+    private static handleError(err: HttpErrorResponse) {
+        let errorMessage;
+        if (err.error instanceof ErrorEvent) {
+            errorMessage = 'An error occured: ';
+        } else {
+            errorMessage = 'Server returned code ' + err.status + ', error message is: ' + err.message;
+        }
+        console.error(errorMessage);
+        return throwError(errorMessage);
+    }
+
+    static getBrightness(colour: string): number {
+        const red: number = parseInt(colour.substring(0, 2), 16);
+        const green: number = parseInt(colour.substring(2, 4), 16);
+        const blue: number = parseInt(colour.substring(4, 6), 16);
+
+        return Math.sqrt(red * red * .241 + green * green * .691 + blue * blue * .068);
+    }
 
     getFiles(): Observable<IFile[]> {
         return this.http.get<IFile[]>(this.getFilesUrl).pipe(
@@ -113,7 +179,7 @@ export class MoneyService {
 
     getAccounts(): Observable<JbAccount[]> {
         return this.http.get<JbAccount[]>(this.accountUrl).pipe(
-            tap(data=>console.log('All: ' + JSON.stringify(data))),
+            tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
     }
@@ -139,114 +205,94 @@ export class MoneyService {
         );
     }
 
-    private static dateToString(value: Date) : string {
-        let result: string = "";
-
-        result += value.getFullYear().toString();
-        result += "-";
-        if(value.getMonth() + 1 < 10) {
-            result += "0";
-        }
-        result += (value.getMonth() + 1).toString();
-        result += "-";
-        if(value.getDate() < 10) {
-            result += "0";
-        }
-        result += value.getDate().toString();
-
-        return result;
-    }
-
     private getTransactionsUrl(type: ITransactionType,
                                from: Date,
                                to: Date,
                                accounts: JbAccount[],
                                categories: Category[]): string {
 
-        let fromClause:string = null;
-        let toClause:string = null;
-        let categoryClause:string = null;
-        let accountClause:string = null;
-        let typeId:string = "XX";
-        let result:string = "money/transaction/get?sortAscending=false&type=##type##[from][to][account][category]";
+        let fromClause: string = null;
+        let toClause: string = null;
+        let categoryClause: string = null;
+        let accountClause: string = null;
+        let typeId = 'XX';
+        let result = 'money/transaction/get?sortAscending=false&type=##type##[from][to][account][category]';
 
         // Calculate the clauses
-        if(type != null) {
+        if (type != null) {
             typeId = type.id;
 
             if (from != null) {
-                if (type.id == "RC" || type.id == "AL") {
-                    fromClause = "&from=" + MoneyService.dateToString(from);
+                if (type.id === 'RC' || type.id === 'AL') {
+                    fromClause = '&from=' + MoneyService.dateToString(from);
                 }
             }
 
             if (to != null) {
-                if (type.id == "AL") {
-                    toClause = "&to=" + MoneyService.dateToString(to);
+                if (type.id === 'AL') {
+                    toClause = '&to=' + MoneyService.dateToString(to);
                 }
             }
         }
 
-        if(accounts != null)
-        {
-            let allAccount: boolean = true;
+        if (accounts != null) {
+            let allAccount = true;
 
             accounts.forEach(value => {
-                if(!value.selected) {
+                if (!value.selected) {
                     allAccount = false;
                 }
             });
 
-            if(!allAccount) {
-                let addComma: boolean = false;
-                accountClause = "&account=";
+            if (!allAccount) {
+                let addComma = false;
+                accountClause = '&account=';
 
                 accounts.forEach(value => {
-                    if(value.selected) {
+                    if (value.selected) {
                         if (addComma) {
-                            accountClause += ",";
+                            accountClause += ',';
                         }
                         accountClause += value.id;
                         addComma = true;
                     }
-                })
+                });
             }
         }
 
-        if(categories != null)
-        {
-            let allCategories: boolean = true;
+        if (categories != null) {
+            let allCategories = true;
 
             categories.forEach(value => {
-                if(!value.selected) {
+                if (!value.selected) {
                     allCategories = false;
                 }
             });
 
-            if(!allCategories) {
-                let addComma: boolean = false;
-                categoryClause = "&category=";
+            if (!allCategories) {
+                let addComma = false;
+                categoryClause = '&category=';
 
                 categories.forEach(value => {
-                    if(value.selected) {
+                    if (value.selected) {
                         if (addComma) {
-                            categoryClause += ",";
+                            categoryClause += ',';
                         }
                         categoryClause += value.id;
                         addComma = true;
                     }
-                })
+                });
             }
         }
 
-        console.log("Criteria -  " + fromClause + " " + toClause + " " + accountClause + " " + categoryClause);
+        console.log('Criteria -  ' + fromClause + ' ' + toClause + ' ' + accountClause + ' ' + categoryClause);
 
         // Apply the clauses.
-        result = result.replace("##type##",typeId);
-        result = result.replace("[from]", (fromClause == null ? "" : fromClause));
-        result = result.replace("[to]", (toClause == null ? "" : toClause));
-        result = result.replace("[account]", (accountClause == null ? "" : accountClause));
-        result = result.replace("[category]", (categoryClause == null ? "" : categoryClause));
+        result = result.replace('##type##', typeId);
+        result = result.replace('[from]', (fromClause == null ? '' : fromClause));
+        result = result.replace('[to]', (toClause == null ? '' : toClause));
+        result = result.replace('[account]', (accountClause == null ? '' : accountClause));
+        result = result.replace('[category]', (categoryClause == null ? '' : categoryClause));
 
         console.log(result);
 
@@ -257,78 +303,59 @@ export class MoneyService {
                     from: Date,
                     to: Date,
                     accounts: JbAccount[],
-                    categories: Category[]) : Observable<ITransaction[]> {
+                    categories: Category[]): Observable<ITransaction[]> {
 
-        return this.http.get<ITransaction[]>(this.getTransactionsUrl(type,from,to,accounts,categories)).pipe(
+        return this.http.get<ITransaction[]>(this.getTransactionsUrl(type, from, to, accounts, categories)).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
     }
 
     addTransaction(transaction: NewTransaction) {
-        this.http.post<NewTransaction>(this.addUrl,transaction).subscribe(
+        this.http.post<NewTransaction>(this.addUrl, transaction).subscribe(
             (val) => {
-                console.log("POST call successful value returned in body", val)
+                console.log('POST call successful value returned in body', val);
             },
             (response) => {
-                console.log("POST call in error", response);
+                console.log('POST call in error', response);
             },
             () => {
-                console.log("The POST observable is now complete (add)");
+                console.log('The POST observable is now complete (add)');
                 this.updateTransactions.emit(null);
             }
         );
     }
 
     loadFileRequest(file: IFile, account: JbAccount) {
-        let request: LoadFileRequest = new LoadFileRequest();
+        const request: LoadFileRequest = new LoadFileRequest();
         request.path = file.file;
         request.type = JbAccount.getFileType(account.id);
 
-        this.http.post<LoadFileRequest>(this.loadFileUrl,request).subscribe(
+        this.http.post<LoadFileRequest>(this.loadFileUrl, request).subscribe(
             (val) => {
-                console.log("POST call successful value returned in body", val);
+                console.log('POST call successful value returned in body', val);
             },
             (response) => {
-                console.log("POST call in error", response);
-                if(!environment.production) {
-                    console.log("Testing - process as complete.", response);
+                console.log('POST call in error', response);
+                if (!environment.production) {
+                    console.log('Testing - process as complete.', response);
                     this.updateTransactions.emit(null);
                 }
             },
             () => {
-                console.log("The POST observable is now complete (load)");
+                console.log('The POST observable is now complete (load)');
                 this.updateTransactions.emit(null);
             }
         );
-    }
-
-    static getAccountImage(id: string): string {
-        return "money/account/logo?disabled=false&id=" + id;
-    }
-
-    static getDisabledAccountImage(id: string): string {
-        return "money/account/logo?disabled=true&id=" + id;
-    }
-
-    private static handleError(err: HttpErrorResponse) {
-        let errorMessage = '';
-        if(err.error instanceof ErrorEvent) {
-            errorMessage = 'An error occured: ';
-        } else {
-            errorMessage = 'Server returned code ' + err.status + ', error message is: ' + err.message;
-        }
-        console.error(errorMessage);
-        return throwError(errorMessage);
     }
 
     updateTransaction(transaction: ITransaction) {
         // Update the amount of the transaction.
         // TransactionId & Amount
 
-        let url = this.updateTransactionUrl;
+        const url = this.updateTransactionUrl;
 
-        let updateRequest = new UpdateTransactionRequest();
+        const updateRequest = new UpdateTransactionRequest();
         updateRequest.id = transaction.id;
         updateRequest.amount = transaction.amount;
         updateRequest.description = transaction.description;
@@ -339,9 +366,9 @@ export class MoneyService {
                 console.log(url);
             },
             (response) => {
-                console.log("PUT call in error", response);
-                if(!environment.production) {
-                    console.log("Testing - process as complete.", response);
+                console.log('PUT call in error', response);
+                if (!environment.production) {
+                    console.log('Testing - process as complete.', response);
                     this.updateTransactions.emit(null);
                 }
             },
@@ -354,25 +381,25 @@ export class MoneyService {
                        reconcile: boolean ) {
         // Set transaction to confirmed/unconfirmed
         // TransactionId & Flag
-        let url = this.reconcileTransactionUrl;
+        const url = this.reconcileTransactionUrl;
 
-        let reconcileRequest: ReconcileTransaction = new ReconcileTransaction();
+        const reconcileRequest: ReconcileTransaction = new ReconcileTransaction();
         reconcileRequest.transactionId = transaction.id;
         reconcileRequest.reconcile = reconcile;
 
-        this.http.put<void>(url,reconcileRequest).subscribe(
+        this.http.put<void>(url, reconcileRequest).subscribe(
             () => {
                 console.log(url);
             },
             (response) => {
-                console.log("PUT call in error", response);
-                if(!environment.production) {
-                    console.log("Testing - process as complete.", response);
+                console.log('PUT call in error', response);
+                if (!environment.production) {
+                    console.log('Testing - process as complete.', response);
                     this.updateTransactions.emit(null);
                 }
             },
             () => {
-                console.log("The PUT observable is now complete (confirm)");
+                console.log('The PUT observable is now complete (confirm)');
                 this.updateTransactions.emit(null);
             }
         );
@@ -390,20 +417,20 @@ export class MoneyService {
         // Delete the transaction.
         // TransactionId
         let url = this.deleteTransactionUrl;
-        url = url.replace("##transactionId##",transaction.id.toString());
+        url = url.replace('##transactionId##', transaction.id.toString());
 
         this.http.delete<void>(url).subscribe(() => {
             console.log(url);
         },
         (response) => {
-            console.log("POST call in error", response);
-            if(!environment.production) {
-                console.log("Testing - process as complete.", response);
+            console.log('POST call in error', response);
+            if (!environment.production) {
+                console.log('Testing - process as complete.', response);
                 this.updateTransactions.emit(null);
             }
         },
         () => {
-            console.log("The POST observable is now complete (delete)");
+            console.log('The POST observable is now complete (delete)');
             this.updateTransactions.emit(null);
         });
     }
@@ -414,35 +441,35 @@ export class MoneyService {
 
         statement.locked = true;
 
-        let url = this.lockStatementUrl;
+        const url = this.lockStatementUrl;
 
-        let lockRequest = new LockRequest();
+        const lockRequest = new LockRequest();
 
         lockRequest.accountId = statement.id.account.id;
         lockRequest.year = statement.id.year;
         lockRequest.month = statement.id.month;
 
-        this.http.post<void>(url,lockRequest).subscribe(() => {
+        this.http.post<void>(url, lockRequest).subscribe(() => {
             console.log(url);
         },
         (response) => {
-            console.log("POST call in error", response);
-            if(!environment.production) {
-                console.log("Testing - process as complete.", response);
+            console.log('POST call in error', response);
+            if (!environment.production) {
+                console.log('Testing - process as complete.', response);
                 this.updateStatements.emit(null);
                 this.updateTransactions.emit(null);
             }
         },
         () => {
-            console.log("The POST observable is now complete (lock)");
+            console.log('The POST observable is now complete (lock)');
             this.updateStatements.emit(null);
             this.updateTransactions.emit(null);
         });
     }
 
-    getMatches(account: JbAccount) : Observable<IMatch[]> {
+    getMatches(account: JbAccount): Observable<IMatch[]> {
         let url = this.matchUrl;
-        url = url.replace("##accountId##", account.id);
+        url = url.replace('##accountId##', account.id);
 
         return this.http.get<IMatch[]>(url).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
@@ -450,17 +477,17 @@ export class MoneyService {
         );
     }
 
-    submitRecData(textData: string){
+    submitRecData(textData: string) {
         // Submit the rec data.
-        this.http.post<string>(this.submitDataUrl,textData).subscribe(
+        this.http.post<string>(this.submitDataUrl, textData).subscribe(
             (val) => {
-                console.log("Submit data - POST call successful value returned in body", val)
+                console.log('Submit data - POST call successful value returned in body', val);
             },
             (response) => {
-                console.log("Submit data - POST call in error", response);
+                console.log('Submit data - POST call in error', response);
             },
             () => {
-                console.log("Submit data - The POST observable is now complete (add)");
+                console.log('Submit data - The POST observable is now complete (add)');
             }
         );
     }
@@ -471,52 +498,44 @@ export class MoneyService {
                 console.log(this.clearDataUrl);
             },
             (response) => {
-                console.log("Clear POST call in error", response);
+                console.log('Clear POST call in error', response);
             },
             () => {
-                console.log("Clear The POST observable is now complete (delete)");
+                console.log('Clear The POST observable is now complete (delete)');
             });
     }
 
     autoAccept() {
         // Auto accept the data.
-        this.http.put<void>(this.autoAcceptUrl,"").subscribe(() => {
+        this.http.put<void>(this.autoAcceptUrl, '').subscribe(() => {
                 console.log(this.autoAcceptUrl);
             },
             (response) => {
-                console.log("Auto Accept PUT call in error", response);
+                console.log('Auto Accept PUT call in error', response);
             },
             () => {
-                console.log("Auto Accept The PUT observable is now complete (delete)");
+                console.log('Auto Accept The PUT observable is now complete (delete)');
             });
     }
 
     setCategory(matchRow: IMatch, category: ICategory) {
         // Set the category
-        let url = this.setCategoryUrl;
+        const url = this.setCategoryUrl;
 
-        let request: ReconcileUpdate = new ReconcileUpdate();
+        const request: ReconcileUpdate = new ReconcileUpdate();
 
         request.id = matchRow.id;
         request.categoryId = category.id;
-        request.type = "rec";
+        request.type = 'rec';
 
-        this.http.put<void>(url,request).subscribe(() => {
+        this.http.put<void>(url, request).subscribe(() => {
                 console.log(url);
             },
             (response) => {
-                console.log("Set Cat PUT call in error", response);
+                console.log('Set Cat PUT call in error', response);
             },
             () => {
-                console.log("Set Cat PUT observable is now complete (delete)");
+                console.log('Set Cat PUT observable is now complete (delete)');
             });
-    }
-
-    static getBrightness(colour: string): number {
-        let red: number = parseInt(colour.substring(0, 2), 16);
-        let green: number = parseInt(colour.substring(2, 4), 16);
-        let blue: number = parseInt(colour.substring(4, 6), 16);
-
-        return Math.sqrt(red * red * .241 + green * green * .691 + blue * blue * .068);
     }
 }

@@ -60,9 +60,6 @@
     padding-left: 30px;
 }
 
-.detail-name-row {
-}
-
 .detail-name-icon {
     font-size: 48px;
 }
@@ -73,11 +70,11 @@
     font-weight: bolder;
 }
 
-.detail-fullname-row {
+.detail-full-name-row {
     margin: 0;
 }
 
-.detail-fullname {
+.detail-full-name {
     margin: 0;
     font-size: 12px;
 }

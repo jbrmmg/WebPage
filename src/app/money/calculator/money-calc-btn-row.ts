@@ -1,4 +1,4 @@
-import {MoneyCalcButton} from "./money-calc-btn";
+import {MoneyCalcButton} from './money-calc-btn';
 
 export class MoneyCalcBtnRow {
     columns: Array<MoneyCalcButton> = [];

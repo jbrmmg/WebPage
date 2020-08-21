@@ -1,8 +1,7 @@
-import {IListRowLineInterface, ListRowLineType} from "./list-row-line-interface";
-import {IAccount} from "../money-account";
-import {ICategory} from "../money-category";
-import {MoneyService} from "../money.service";
-import {ITransaction} from "./list-row-summary";
+import {IListRowLineInterface, ListRowLineType} from './list-row-line-interface';
+import {IAccount} from '../money-account';
+import {ICategory} from '../money-category';
+import {MoneyService} from '../money.service';
 
 export class ListRowLineReconcileTop implements IListRowLineInterface {
     public rowType: ListRowLineType;
@@ -37,25 +36,25 @@ export class ListRowLineReconcileTop implements IListRowLineInterface {
         this.rowType = ListRowLineType.RECONCILE_TOP_LINE;
         this.isTotalRow = false;
         this.hasDate = true;
-        this.dateDay = "";
-        this.dateMonth = "";
-        this.dateYear = "";
+        this.dateDay = '';
+        this.dateMonth = '';
+        this.dateYear = '';
         this.hasAccount = false;
         this.account = null;
         this.hasCategory = false;
         this.category = null;
-        this.description = "";
+        this.description = '';
         this.amount = 0;
-        this.amountDisplay = "";
+        this.amountDisplay = '';
         this.hasButtonOne = true;
         this.enableButtonOne = true;
-        this.classButtonOne = "fa fa-check";
+        this.classButtonOne = 'fa fa-check';
         this.hasButtonTwo = true;
         this.enableButtonTwo = true;
-        this.classButtonTwo = "fa fa-align-justify";
+        this.classButtonTwo = 'fa fa-align-justify';
         this.hasButtonThree = true;
         this.enableButtonThree = true;
-        this.classButtonThree = "fa fa-eraser";
+        this.classButtonThree = 'fa fa-eraser';
         this.selected = false;
         this.moneyService = moneyService;
         this.updateCategory = updateCategory;
@@ -86,7 +85,7 @@ export class ListRowLineReconcileTop implements IListRowLineInterface {
     }
 
     getAmount(): number {
-        this.amountDisplay = "";
+        this.amountDisplay = '';
         return 0;
     }
 }

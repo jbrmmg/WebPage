@@ -24,13 +24,19 @@
                        (click)="onClickType(type.id)"
                        tabindex="0"
                        tooltip="{{type.name}}">
-                    <i class="fa {{type.icon}}"></i>
+                    <em class="fa {{type.icon}}"></em>
                 </label>
             </div>
             <div class="col-10">
                 <div class="table-responsive">
                     <table class="table table-borderless" *ngIf="data && data.length">
+                        <caption>This is a table</caption>
                         <tbody>
+                            <tr>
+                                <th>Time</th>
+                                <th>Type</th>
+                                <th>Text</th>
+                            </tr>
                             <tr class="log-row" *ngFor="let nextData of data">
                                 <td class="log-line-date log-line-row">{{nextData.time}}</td>
                                 <td class="log-line-badge log-line-row"><span [ngClass]="{

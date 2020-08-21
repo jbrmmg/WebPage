@@ -1,5 +1,5 @@
-import {IAccount} from "../money-account";
-import {ICategory} from "../money-category";
+import {IAccount} from '../money-account';
+import {ICategory} from '../money-category';
 
 export enum ListRowLineType {
     TRANSACTION,
@@ -41,8 +41,8 @@ export interface IListRowLineInterface {
     clickButtonOne();
     clickButtonTwo();
     clickButtonThree();
-    completeEdit(id:number, selectedCategory: ICategory, description: string, amount: number);
+    completeEdit(id: number, selectedCategory: ICategory, description: string, amount: number);
     categorySelected(selectedCategory: ICategory);
 
-    getAmount() : number;
+    getAmount(): number;
 }
