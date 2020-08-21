@@ -11,50 +11,53 @@ import {FileInfoExtra} from './backup-fileinfoextra';
     providedIn: 'root'
 })
 export class BackupService {
+    readonly BACKUP_URL_ACTIONS = 'backup/actions';
+    readonly BACKUP_URL_HIERARCHY = 'backup/hierarchy';
+
     private static handleError(err: HttpErrorResponse) {
         let errorMessage;
         if (err.error instanceof ErrorEvent) {
             errorMessage = 'An error occurred: ';
         } else {
-            errorMessage = 'Server returned code ' + err.status + ', error message is: ' + err.message;
+            errorMessage = `Server returned code ${err.status}, error message is ${err.message}`;
         }
         console.error(errorMessage);
         return throwError(errorMessage);
     }
 
-    constructor(private http: HttpClient) {
+    constructor(private readonly http: HttpClient) {
     }
 
     getActions(): Observable<Action[]> {
-        return this.http.get<Action[]>('backup/actions').pipe(
-            tap(data => console.log('All: ' + JSON.stringify(data))),
+        return this.http.get<Action[]>(this.BACKUP_URL_ACTIONS).pipe(
+            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
             catchError( err => BackupService.handleError(err))
         );
     }
 
     getHierarchy(parent: HierarchyResponse): Observable<HierarchyResponse[]> {
-        return this.http.post<HierarchyResponse[]>('backup/hierarchy', parent).pipe(
-            tap(data => console.log('All: ' + JSON.stringify(data))),
+        return this.http.post<HierarchyResponse[]>(this.BACKUP_URL_HIERARCHY, parent).pipe(
+            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
             catchError( err => BackupService.handleError(err))
         );
     }
 
     getFile(id: number): Observable<FileInfoExtra> {
-        return this.http.get<FileInfoExtra>('backup/file?id=' + id).pipe(
-            tap(data => console.log('All: ' + JSON.stringify(data))),
+        return this.http.get<FileInfoExtra>(`backup/file?id=${id}`).pipe(
+            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
             catchError( err => BackupService.handleError(err))
         );
     }
 
     deleteFile(id: number) {
-        this.http.delete<void>('backup/file?id=' + id).subscribe(() => {
+        this.http.delete<void>(`backup/file?id=${id}`).subscribe(() => {
                 console.log('Delete File');
             },
             (response) => {
-                console.log('POST call in error', response);
+                console.log('DELETE call in error', response);
             },
             () => {
-                console.log('The POST observable is now complete (delete file)');
+                console.log('The DELETE observable is now complete (delete file)');
             });
     }
 
@@ -65,11 +68,11 @@ export class BackupService {
         confirmReq.parameter = 'IGNORE';
         confirmReq.confirm = false;
 
-        this.http.post<void>('backup/actions', confirmReq).subscribe(() => {
+        this.http.post<void>(this.BACKUP_URL_ACTIONS, confirmReq).subscribe(() => {
                 console.log('Confirm Request');
             },
             (response) => {
-                console.log('POST call in error', response);
+                console.log('POST call in error (ignore)', response);
             },
             () => {
                 console.log('The POST observable is now complete (ignore photo)');
@@ -83,14 +86,14 @@ export class BackupService {
         confirmReq.parameter = parameter;
         confirmReq.confirm = true;
 
-        this.http.post<void>('backup/actions', confirmReq).subscribe(() => {
+        this.http.post<void>(this.BACKUP_URL_ACTIONS, confirmReq).subscribe(() => {
                 console.log('Confirm Request');
             },
             (response) => {
-                console.log('POST call in error', response);
+                console.log('POST call in error (keep)', response);
             },
             () => {
-                console.log('The POST observable is now complete (ignore photo)');
+                console.log('The POST observable is now complete (keep photo)');
             });
     }
 }

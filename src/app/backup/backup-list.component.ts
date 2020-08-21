@@ -11,6 +11,9 @@ export enum ListMode { Files, Actions }
     styleUrls: ['./backup-list.component.css']
 })
 export class BackupListComponent implements OnInit {
+    readonly BACKUP_WARNING = 'fa-exclamation-triangle status-warn';
+    readonly BACKUP_OK = 'fa-check-circle-o status-green';
+
     actions: Action[];
     hierarchy: HierarchyResponse[];
     topLevel: HierarchyResponse;
@@ -21,7 +24,7 @@ export class BackupListComponent implements OnInit {
     fileBackups: FileInfo[];
     category: string;
 
-    constructor(private _backupService: BackupService) {
+    constructor(private readonly _backupService: BackupService) {
     }
 
     ngOnInit(): void {
@@ -106,7 +109,7 @@ export class BackupListComponent implements OnInit {
     }
 
     get detailLine(): string {
-        return this.actions.length + ' items, selected number: ' + ( this.selectedIndex + 1);
+        return `${this.actions.length} items, selected number: ${this.selectedIndex + 1}`;
     }
 
     selectTopLevel(): void {
@@ -156,7 +159,7 @@ export class BackupListComponent implements OnInit {
     }
 
     displayFile(file: HierarchyResponse): void {
-        console.log('Select file ' + file.displayName);
+        console.log(`Select file ${file.displayName}`);
 
         this._backupService.getFile(file.underlyingId).subscribe(
             nextFile => {
@@ -189,18 +192,23 @@ export class BackupListComponent implements OnInit {
     }
 
     backupStatus(backup: FileInfo): string {
-        if (this.selectedFile.date !== backup.date) {
-            return 'fa-exclamation-triangle status-warn';
+        const selectedDate = new Date(this.selectedFile.date);
+        const backupDate = new Date(backup.date);
+        const difference = Math.abs(selectedDate.getTime() - backupDate.getTime()) / 1000.0;
+
+        if (difference > 30) {
+            console.log(`Difference - ${difference} ${backup.date} ${this.selectedFile.date}`)
+            return this.BACKUP_WARNING;
         }
 
         if (this.selectedFile.md5 === '') {
-            return 'fa-exclamation-triangle status-warn';
+            return this.BACKUP_WARNING;
         }
 
         if (this.selectedFile.md5 !== backup.md5) {
-            return 'fa-exclamation-triangle status-warn';
+            return this.BACKUP_WARNING;
         }
 
-        return 'fa-check-circle-o status-green';
+        return this.BACKUP_OK;
     }
 }

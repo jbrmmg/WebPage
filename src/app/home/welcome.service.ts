@@ -10,7 +10,7 @@ export class ReminderRequest {
     providedIn: 'root'
 })
 export class WelcomeService {
-    constructor(private http: HttpClient) {
+    constructor(private readonly http: HttpClient) {
     }
 
     SendData(text1: string, text2: string) {

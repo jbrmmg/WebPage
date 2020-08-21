@@ -9,8 +9,7 @@ export class WelcomeComponent {
   textData1: string;
   textData2: string;
 
-  constructor(private _welcomeService: WelcomeService) {
-
+  constructor(private readonly _welcomeService: WelcomeService) {
   }
 
   onClick() {
