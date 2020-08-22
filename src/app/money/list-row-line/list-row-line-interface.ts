@@ -1,18 +1,19 @@
 import {IAccount} from '../money-account';
 import {ICategory} from '../money-category';
+import {ListRowLine} from './list-row-line';
 
 export enum ListRowLineType {
     TRANSACTION,
-    TOTAL_BOUGHTFWD,
+    TOTAL_BOUGHT_FORWARD,
     TOTAL_DEBITS,
     TOTAL_CREDITS,
-    TOTAL_CARRIEDFWD,
+    TOTAL_CARRIED_FORWARD,
     REGULAR_TRANSACTION,
     RECONCILE_TRANSACTION,
     RECONCILE_TOP_LINE
 }
 
-export interface IListRowLineInterface {
+export interface IListRowLineInterface extends ListRowLine {
     rowType: ListRowLineType;
     isTotalRow: boolean;
     hasDate: boolean;

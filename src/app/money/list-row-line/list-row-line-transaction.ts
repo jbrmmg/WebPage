@@ -1,34 +1,10 @@
 import {IListRowLineInterface, ListRowLineType} from './list-row-line-interface';
-import {IAccount} from '../money-account';
 import {ICategory} from '../money-category';
 import {MoneyService} from '../money.service';
 import {ITransaction, ListRowSummary} from './list-row-summary';
+import {ListRowLine} from './list-row-line';
 
-export class ListRowLineTransaction implements IListRowLineInterface {
-    public rowType: ListRowLineType;
-    public isTotalRow: boolean;
-    public hasDate: boolean;
-    public dateDay: string;
-    public dateMonth: string;
-    public dateYear: string;
-    public hasAccount: boolean;
-    public account: IAccount;
-    public hasCategory: boolean;
-    public category: ICategory;
-    public description: string;
-    public amount: number;
-    public amountDisplay: string;
-    public hasButtonOne: boolean;
-    public enableButtonOne: boolean;
-    public classButtonOne: string;
-    public hasButtonTwo: boolean;
-    public enableButtonTwo: boolean;
-    public classButtonTwo: string;
-    public hasButtonThree: boolean;
-    public enableButtonThree: boolean;
-    public classButtonThree: string;
-    public selected: boolean;
-
+export class ListRowLineTransaction extends ListRowLine implements IListRowLineInterface {
     private _moneyService: MoneyService;
     private readonly transaction: ITransaction;
     private readonly editSelect: (transaction: ITransaction, clear: boolean) => void;
@@ -84,6 +60,7 @@ export class ListRowLineTransaction implements IListRowLineInterface {
                 transaction: ITransaction,
                 summary: ListRowSummary,
                 editSelect: (transaction: ITransaction, clear: boolean) => void ) {
+        super();
         const transactionDate: Date = new Date(transaction.date);
 
         this.rowType = ListRowLineType.TRANSACTION;
@@ -98,13 +75,11 @@ export class ListRowLineTransaction implements IListRowLineInterface {
         this.category = transaction.category;
         this.description = transaction.description;
         this.amount = transaction.amount;
-        this.amountDisplay = '?';
         this.hasButtonOne = true;
         this.hasButtonTwo = true;
         this.classButtonTwo = 'fa fa-pencil';
         this.hasButtonThree = true;
         this.classButtonThree = 'fa fa-trash';
-        this.selected = false;
 
         // If the transaction is locked, set button one to a padlock.
         if (transaction.statement != null) {

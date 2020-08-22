@@ -1,37 +1,13 @@
 import {IListRowLineInterface, ListRowLineType} from './list-row-line-interface';
 import {IMatch} from '../money-match';
-import {IAccount} from '../money-account';
 import {Category, ICategory} from '../money-category';
 import {ListRowLineTransaction} from './list-row-line-transaction';
 import {MoneyService, NewTransaction} from '../money.service';
+import {ListRowLine} from './list-row-line';
 
-export class ListRowLineReconcile implements IListRowLineInterface {
+export class ListRowLineReconcile extends ListRowLine implements IListRowLineInterface {
     private static unknownCategory: ICategory;
     private static selectedCategory: ICategory;
-
-    public rowType: ListRowLineType;
-    public isTotalRow: boolean;
-    public hasDate: boolean;
-    public dateDay: string;
-    public dateMonth: string;
-    public dateYear: string;
-    public hasAccount: boolean;
-    public account: IAccount;
-    public hasCategory: boolean;
-    public category: ICategory;
-    public description: string;
-    public amount: number;
-    public amountDisplay: string;
-    public hasButtonOne: boolean;
-    public enableButtonOne: boolean;
-    public classButtonOne: string;
-    public hasButtonTwo: boolean;
-    public enableButtonTwo: boolean;
-    public classButtonTwo: string;
-    public hasButtonThree: boolean;
-    public enableButtonThree: boolean;
-    public classButtonThree: string;
-    public selected: boolean;
 
     private readonly reconcile: IMatch;
     private moneyService: MoneyService;
@@ -49,10 +25,11 @@ export class ListRowLineReconcile implements IListRowLineInterface {
 
     constructor(moneyService: MoneyService,
                 reconcile: IMatch) {
+        super();
+
         const transactionDate: Date = new Date(reconcile.date);
 
         this.rowType = ListRowLineType.RECONCILE_TRANSACTION;
-        this.isTotalRow = false;
         this.hasDate = true;
         this.dateDay = transactionDate.getDate().toString();
         this.dateMonth = ListRowLineTransaction.getMonthName(transactionDate.getMonth());
@@ -63,17 +40,12 @@ export class ListRowLineReconcile implements IListRowLineInterface {
         this.category = reconcile.category;
         this.description = reconcile.description;
         this.amount = reconcile.amount;
-        this.amountDisplay = '?';
         this.hasButtonOne = true;
         this.enableButtonOne = true;
-        this.classButtonOne = 'fa fa-check';
         this.hasButtonTwo = true;
         this.enableButtonTwo = true;
-        this.classButtonTwo = 'fa fa-pencil';
         this.hasButtonThree = true;
         this.enableButtonThree = true;
-        this.classButtonThree = 'fa fa-trash';
-        this.selected = false;
 
         this.reconcile = reconcile;
         this.moneyService = moneyService;
