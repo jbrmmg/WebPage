@@ -33,9 +33,9 @@
                         <caption>This is a table</caption>
                         <tbody>
                             <tr>
-                                <th>Time</th>
-                                <th>Type</th>
-                                <th>Text</th>
+                                <th scope="col">Time</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Text</th>
                             </tr>
                             <tr class="log-row" *ngFor="let nextData of data">
                                 <td class="log-line-date log-line-row">{{nextData.time}}</td>
