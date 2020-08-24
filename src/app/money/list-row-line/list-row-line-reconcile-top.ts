@@ -20,6 +20,7 @@ export class ListRowLineReconcileTop extends ListRowLine implements IListRowLine
         this.amountDisplay = '';
         this.hasButtonOne = true;
         this.enableButtonOne = true;
+        this.classButtonOne = 'fa fa-check';
         this.hasButtonTwo = true;
         this.enableButtonTwo = true;
         this.classButtonTwo = 'fa fa-align-justify';
