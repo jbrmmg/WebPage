@@ -55,9 +55,31 @@ export class LoadFileRequest {
     providedIn: 'root'
 })
 export class MoneyService {
+    private readonly testFormat = 'api/money/transaction.##type##.json';
+    private readonly prodFormat = 'money/transaction/get?sortAscending=false&type=##type##[from][to][account][category]';
+
+    private readonly categoryUrl;
+    private readonly accountUrl;
+    private readonly addUrl;
+    private readonly typeUrl;
+    private readonly statementUrl;
+    private readonly updateTransactionUrl;
+    private readonly deleteTransactionUrl;
+    private readonly lockStatementUrl;
+    private readonly reconcileTransactionUrl;
+    private readonly matchUrl;
+    private readonly submitDataUrl;
+    private readonly clearDataUrl;
+    private readonly autoAcceptUrl;
+    private readonly setCategoryUrl;
+    private readonly getRegularUrl;
+    private readonly getFilesUrl;
+    private readonly loadFileUrl;
+
+    @Output() updateTransactions: EventEmitter<any> = new EventEmitter();
+    @Output() updateStatements: EventEmitter<any> = new EventEmitter();
 
     constructor(private http: HttpClient) {
-        console.log('here1.2');
         this.typeUrl = 'api/money/types.json';
         if (environment.production) {
             // Use production URL's
@@ -95,28 +117,7 @@ export class MoneyService {
             this.getFilesUrl = 'api/money/recfiles.json';
             this.loadFileUrl = 'api/money/recfiles.json';
         }
-        console.log('here1.3');
     }
-    private readonly categoryUrl;
-    private readonly accountUrl;
-    private readonly addUrl;
-    private readonly typeUrl;
-    private readonly statementUrl;
-    private readonly updateTransactionUrl;
-    private readonly deleteTransactionUrl;
-    private readonly lockStatementUrl;
-    private readonly reconcileTransactionUrl;
-    private readonly matchUrl;
-    private readonly submitDataUrl;
-    private readonly clearDataUrl;
-    private readonly autoAcceptUrl;
-    private readonly setCategoryUrl;
-    private readonly getRegularUrl;
-    private readonly getFilesUrl;
-    private readonly loadFileUrl;
-
-    @Output() updateTransactions: EventEmitter<any> = new EventEmitter();
-    @Output() updateStatements: EventEmitter<any> = new EventEmitter();
 
     private static dateToString(value: Date): string {
         let result = '';
@@ -137,11 +138,19 @@ export class MoneyService {
     }
 
     static getAccountImage(id: string): string {
-        return 'money/account/logo?disabled=false&id=' + id;
+        if (environment.production) {
+            return 'money/account/logo?disabled=false&id=' + id;
+        } else {
+            return `assets/images/account/${id}.svg`;
+        }
     }
 
     static getDisabledAccountImage(id: string): string {
-        return 'money/account/logo?disabled=true&id=' + id;
+        if (environment.production) {
+            return 'money/account/logo?disabled=true&id=' + id;
+        } else {
+            return `assets/images/account/${id}x.svg`;
+        }
     }
 
     private static handleError(err: HttpErrorResponse) {
@@ -216,7 +225,7 @@ export class MoneyService {
         let categoryClause: string = null;
         let accountClause: string = null;
         let typeId = 'XX';
-        let result = 'money/transaction/get?sortAscending=false&type=##type##[from][to][account][category]';
+        let result = (environment.production ? this.prodFormat : this.testFormat);
 
         // Calculate the clauses
         if (type != null) {

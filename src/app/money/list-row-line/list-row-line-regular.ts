@@ -1,45 +1,17 @@
 import {IListRowLineInterface, ListRowLineType} from './list-row-line-interface';
 import {IRegular} from '../money-regular';
-import {IAccount} from '../money-account';
 import {ICategory} from '../money-category';
 import {ListRowLineTransaction} from './list-row-line-transaction';
+import {ListRowLine} from './list-row-line';
 
-export class ListRowLineRegular implements IListRowLineInterface {
-    public rowType: ListRowLineType;
-    public isTotalRow: boolean;
-    public hasDate: boolean;
-    public dateDay: string;
-    public dateMonth: string;
-    public dateYear: string;
-    public hasAccount: boolean;
-    public account: IAccount;
-    public hasCategory: boolean;
-    public category: ICategory;
-    public description: string;
-    public amount: number;
-    public amountDisplay: string;
-    public hasButtonOne: boolean;
-    public enableButtonOne: boolean;
-    public classButtonOne: string;
-    public hasButtonTwo: boolean;
-    public enableButtonTwo: boolean;
-    public classButtonTwo: string;
-    public hasButtonThree: boolean;
-    public enableButtonThree: boolean;
-    public classButtonThree: string;
-    public selected: boolean;
-
+export class ListRowLineRegular extends ListRowLine implements IListRowLineInterface {
     private regular: IRegular;
 
     constructor(regular: IRegular) {
+        super();
+
         this.rowType = ListRowLineType.REGULAR_TRANSACTION;
-        this.isTotalRow = false;
-        if (regular.lastDate == null) {
-            this.hasDate = false;
-            this.dateDay = '';
-            this.dateMonth = '';
-            this.dateYear = '';
-        } else {
+        if (regular.lastDate != null) {
             this.hasDate = true;
             const paymentDate: Date = new Date(regular.lastDate);
 
@@ -53,17 +25,9 @@ export class ListRowLineRegular implements IListRowLineInterface {
         this.category = regular.category;
         this.description = regular.description;
         this.amount = regular.amount;
-        this.amountDisplay = '?';
-        this.hasButtonOne = false;
-        this.enableButtonOne = false;
         this.classButtonOne = '';
-        this.hasButtonTwo = false;
-        this.enableButtonTwo = false;
         this.classButtonTwo = '';
-        this.hasButtonThree = false;
-        this.enableButtonThree = false;
         this.classButtonThree = '';
-        this.selected = false;
 
         this.regular = regular;
     }

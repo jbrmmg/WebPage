@@ -703,7 +703,22 @@ export class MoneyListComponent implements OnInit {
     }
 
     onDateChange(newDate: Date): void {
+        // Did the date actually change?
+        let changed = false;
+        if(this.bsValue !== newDate) {
+            changed = true;
+            console.log('Date changed.');
+        }
+
         this.performDataChange(newDate);
+        console.info('click event has be fired');
+
+        if(changed) {
+            this.modalRef.hide();
+        }
+    }
+
+    onCloseDatePopup(): void {
         this.modalRef.hide();
     }
 
