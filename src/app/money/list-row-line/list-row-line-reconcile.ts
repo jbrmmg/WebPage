@@ -42,10 +42,13 @@ export class ListRowLineReconcile extends ListRowLine implements IListRowLineInt
         this.amount = reconcile.amount;
         this.hasButtonOne = true;
         this.enableButtonOne = true;
+        this.classButtonOne = 'fa fa-check';
         this.hasButtonTwo = true;
         this.enableButtonTwo = true;
+        this.classButtonTwo = 'fa fa-pencil';
         this.hasButtonThree = true;
         this.enableButtonThree = true;
+        this.classButtonThree = 'fa fa-trash';
 
         this.reconcile = reconcile;
         this.moneyService = moneyService;
