@@ -112,17 +112,17 @@ export class BackupService {
 
     imageUrl(id: number): string {
         if (environment.production) {
-            return 'backup/fileImage?id=' + id;
+            return `backup/fileImage?id=${id}`;
         } else {
-            return 'api/backup/testimage.jpg';
+            return 'api/backup/test.image.jpg';
         }
     }
 
     videoUrl(id: number): string {
         if (environment.production) {
-            return 'backup/fileVideo?id=' + id;
+            return `backup/fileVideo?id=${id}`;
         } else {
-            return 'api/backup/testvideo.mp4';
+            return 'api/backup/test.video.mp4';
         }
     }
 }
