@@ -1,5 +1,4 @@
 import {IListRowLineInterface, ListRowLineType} from './list-row-line-interface';
-import {IAccount} from '../money-account';
 import {ICategory} from '../money-category';
 import {ListRowSummary} from './list-row-summary';
 import {ListRowLine} from './list-row-line';

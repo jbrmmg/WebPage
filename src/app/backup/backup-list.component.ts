@@ -91,12 +91,20 @@ export class BackupListComponent implements OnInit {
         return this.selectedFile.classification.isImage;
     }
 
+    imageUrl(id: number): string {
+        return this._backupService.imageUrl(id);
+    }
+
     get isVideo (): boolean {
         if (this.selectedFile == null) {
             return false;
         }
 
         return this.selectedFile.classification.isVideo;
+    }
+
+    videoUrl(id: number): string {
+        return this._backupService.videoUrl(id);
     }
 
     get isActionMode(): boolean {
@@ -197,7 +205,7 @@ export class BackupListComponent implements OnInit {
         const difference = Math.abs(selectedDate.getTime() - backupDate.getTime()) / 1000.0;
 
         if (difference > 30) {
-            console.log(`Difference - ${difference} ${backup.date} ${this.selectedFile.date}`)
+            console.log(`Difference - ${difference} ${backup.date} ${this.selectedFile.date}`);
             return this.BACKUP_WARNING;
         }
 

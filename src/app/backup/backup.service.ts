@@ -6,6 +6,7 @@ import {Action} from './backup-action';
 import {ConfirmRequest} from './backup-confirmrequest';
 import {HierarchyResponse} from './backup-hierarchyresponse';
 import {FileInfoExtra} from './backup-fileinfoextra';
+import {environment} from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -14,8 +15,13 @@ export class BackupService {
     readonly BACKUP_URL_ACTIONS = 'backup/actions';
     readonly BACKUP_URL_HIERARCHY = 'backup/hierarchy';
 
+    readonly TEST_BACKUP_URL_ACTIONS = 'api/backup/actions.json';
+    readonly TEST_BACKUP_URL_HIERARCHY = 'api/backup/hierarchy.json';
+    readonly TEST_FILE_URL = 'api/backup/file.json';
+
     private static handleError(err: HttpErrorResponse) {
         let errorMessage;
+
         if (err.error instanceof ErrorEvent) {
             errorMessage = 'An error occurred: ';
         } else {
@@ -29,21 +35,28 @@ export class BackupService {
     }
 
     getActions(): Observable<Action[]> {
-        return this.http.get<Action[]>(this.BACKUP_URL_ACTIONS).pipe(
+        return this.http.get<Action[]>(environment.production === true ? this.BACKUP_URL_ACTIONS : this.TEST_BACKUP_URL_ACTIONS ).pipe(
             tap(data => console.log(`All: ${JSON.stringify(data)}`)),
             catchError( err => BackupService.handleError(err))
         );
     }
 
     getHierarchy(parent: HierarchyResponse): Observable<HierarchyResponse[]> {
-        return this.http.post<HierarchyResponse[]>(this.BACKUP_URL_HIERARCHY, parent).pipe(
-            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
-            catchError( err => BackupService.handleError(err))
-        );
+        if (environment.production) {
+            return this.http.post<HierarchyResponse[]>(this.BACKUP_URL_HIERARCHY, parent).pipe(
+                tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+                catchError(err => BackupService.handleError(err))
+            );
+        } else {
+            return this.http.get<HierarchyResponse[]>(this.TEST_BACKUP_URL_HIERARCHY).pipe(
+                tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+                catchError(err => BackupService.handleError(err))
+            );
+        }
     }
 
     getFile(id: number): Observable<FileInfoExtra> {
-        return this.http.get<FileInfoExtra>(`backup/file?id=${id}`).pipe(
+        return this.http.get<FileInfoExtra>(environment.production === true ? `backup/file?id=${id}` : `api/backup/file${id}.json` ).pipe(
             tap(data => console.log(`All: ${JSON.stringify(data)}`)),
             catchError( err => BackupService.handleError(err))
         );
@@ -95,5 +108,21 @@ export class BackupService {
             () => {
                 console.log('The POST observable is now complete (keep photo)');
             });
+    }
+
+    imageUrl(id: number): string {
+        if (environment.production) {
+            return 'backup/fileImage?id=' + id;
+        } else {
+            return 'api/backup/testimage.jpg';
+        }
+    }
+
+    videoUrl(id: number): string {
+        if (environment.production) {
+            return 'backup/fileVideo?id=' + id;
+        } else {
+            return 'api/backup/testvideo.mp4';
+        }
     }
 }

@@ -16,7 +16,7 @@ import { LogsComponent } from './logs/logs.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { PodcastComponent } from './podcast/podcast.component';
 import { MoneyAddCalcComponent } from './money/calculator/money-add-calc.component';
-import { MoneyCatagoryPickerComponent } from './money/category-picker/money-cat-picker.component';
+import { MoneyCategoryPickerComponent } from './money/category-picker/money-cat-picker.component';
 import { MoneyCategoryFilterComponent } from './money/category-picker/money-cat-filter.component';
 import { PairsPipe } from './shared/example/pairs.pipe';
 import { DatePipe } from '@angular/common';
@@ -36,7 +36,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LogsComponent,
     PodcastComponent,
     MoneyAddCalcComponent,
-    MoneyCatagoryPickerComponent,
+    MoneyCategoryPickerComponent,
     MoneyCategoryFilterComponent,
     MoneyListComponent,
     HouseComponent,

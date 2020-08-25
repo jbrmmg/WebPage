@@ -43,7 +43,7 @@ export class ListRowSummary {
         this.calculateCarriedFwd();
     }
 
-    resetCreditsDetbits() {
+    resetCreditsDebits() {
         this.totalsDisplay[1].amount = 0;
         this.totalsDisplay[1].displayAmt = '0.00';
         this.totalsDisplay[2].amount = 0;
