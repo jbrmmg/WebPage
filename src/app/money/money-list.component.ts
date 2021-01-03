@@ -273,7 +273,7 @@ export class MoneyListComponent implements OnInit {
             },
             error => this.errorMessage = <any>error
         );
-        this._moneyService.getCatories().subscribe(
+        this._moneyService.getCategories().subscribe(
             categories => {
                 this.categories = categories;
             },
@@ -447,7 +447,7 @@ export class MoneyListComponent implements OnInit {
             this.lastChangeFrom = this.fromValue.toISOString();
 
             this.calculateBF();
-            this.summaryRow.resetCreditsDetbits();
+            this.summaryRow.resetCreditsDebits();
             this.lines = [];
             this.lines.push(ListRowLineFactory.createRowLineTotalBfwd(this.summaryRow));
             this.lines.push(ListRowLineFactory.createRowLineDebits(this.summaryRow));
@@ -668,7 +668,7 @@ export class MoneyListComponent implements OnInit {
         return MoneyService.getAccountImage(id);
     }
 
-    getSelectedAcountColour(): string {
+    getSelectedAccountColour(): string {
         if (this.selectedAccount != null) {
             return '#' + this.selectedAccount.colour;
         }
@@ -705,15 +705,16 @@ export class MoneyListComponent implements OnInit {
     onDateChange(newDate: Date): void {
         // Did the date actually change?
         let changed = false;
-        if(this.bsValue !== newDate) {
+        if (this.bsValue !== newDate) {
             changed = true;
             console.log('Date changed.');
         }
 
         this.performDataChange(newDate);
+        // tslint:disable-next-line:no-console
         console.info('click event has be fired');
 
-        if(changed) {
+        if (changed) {
             this.modalRef.hide();
         }
     }
@@ -807,7 +808,7 @@ export class MoneyListComponent implements OnInit {
                             this.transactionAmount );
 
                         // Recalculate the totals.
-                        this.summaryRow.resetCreditsDetbits();
+                        this.summaryRow.resetCreditsDebits();
                         this.lines.forEach(value => {
                             this.summaryRow.addAmount(value.amount);
                         });

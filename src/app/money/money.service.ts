@@ -104,18 +104,18 @@ export class MoneyService {
             this.accountUrl = 'api/money/account.json';
             this.addUrl = 'api/money/account.json';
             this.statementUrl = 'api/money/statements.json';
-            this.updateTransactionUrl = 'api/money/updatetran.json';
-            this.deleteTransactionUrl = 'api/money/updatetran.json';
-            this.lockStatementUrl = 'api/money/updatetran.json';
-            this.reconcileTransactionUrl = 'api/money/updatetran.json';
+            this.updateTransactionUrl = 'api/money/update.json';
+            this.deleteTransactionUrl = 'api/money/update.json';
+            this.lockStatementUrl = 'api/money/update.json';
+            this.reconcileTransactionUrl = 'api/money/update.json';
             this.matchUrl = 'api/money/match.##accountId##.json';
-            this.submitDataUrl = 'api/money/updatetran.json';
-            this.clearDataUrl = 'api/money/updatetran.json';
-            this.autoAcceptUrl = 'api/money/updatetran.json';
-            this.setCategoryUrl = 'api/money/updatetran.json';
+            this.submitDataUrl = 'api/money/update.json';
+            this.clearDataUrl = 'api/money/update.json';
+            this.autoAcceptUrl = 'api/money/update.json';
+            this.setCategoryUrl = 'api/money/update.json';
             this.getRegularUrl = 'api/money/regular.json';
-            this.getFilesUrl = 'api/money/recfiles.json';
-            this.loadFileUrl = 'api/money/recfiles.json';
+            this.getFilesUrl = 'api/money/reconcile.files.json';
+            this.loadFileUrl = 'api/money/reconcile.files.json';
         }
     }
 
@@ -156,7 +156,7 @@ export class MoneyService {
     private static handleError(err: HttpErrorResponse) {
         let errorMessage;
         if (err.error instanceof ErrorEvent) {
-            errorMessage = 'An error occured: ';
+            errorMessage = 'An error occurred: ';
         } else {
             errorMessage = 'Server returned code ' + err.status + ', error message is: ' + err.message;
         }
@@ -179,7 +179,7 @@ export class MoneyService {
         );
     }
 
-    getCatories(): Observable<Category[]> {
+    getCategories(): Observable<Category[]> {
         return this.http.get<Category[]>(this.categoryUrl).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))

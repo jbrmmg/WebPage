@@ -48,9 +48,9 @@
                                     </div>
                                     <div class="col-2">
                                         <div class="card status-date-card mb-3" (click)="openModal(templateAccount,'')">
-                                            <div class="card-body status-date-card-body" [style.background-color]="getSelectedAcountColour()">
+                                            <div class="card-body status-date-card-body" [style.background-color]="getSelectedAccountColour()">
                                                 <img *ngIf="selectedAccount != null" class="status-account" src="{{getAccountImage(selectedAccount.id)}}" alt="Selected Account">
-                                                <img *ngIf="selectedAccount == null" class="status-account" src="assets/images/money/noaccount.svg" alt="Selected Account">
+                                                <img *ngIf="selectedAccount == null" class="status-account" src="assets/images/money/no.account.svg" alt="Selected Account">
                                             </div>
                                         </div>
                                     </div>
@@ -85,7 +85,9 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-10">
-                                        <input style="width:100%;" [(ngModel)]="transactionDescription"/>
+                                        <label style="width:100%;">
+                                            <input style="width:100%;" [(ngModel)]="transactionDescription"/>
+                                        </label>
                                     </div>
                                     <div class="coll-1" *ngIf="transactionValid == true">
                                         <label class="btn btn-primary float-right"
@@ -317,7 +319,7 @@
                                     </div>
                                     <div class="col-2 trn-category-img">
                                         <svg viewBox='0 0 100 100' width='98%' height='98%'>
-                                            <circle  cx='50' cy='50' r='48' style='stroke:#006600; fill:#FFFFFF' [style.fill]="nextTransaction.category.colour"></circle>
+                                            <circle  cx='50' cy='50' r='48' [style.fill]="'#' + nextTransaction.category.colour" style="stroke:#006600"></circle>
                                         </svg>
                                     </div>
                                     <div class="col-2">

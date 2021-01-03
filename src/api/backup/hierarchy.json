@@ -1,0 +1,34 @@
+[
+  {
+    "id": -1,
+    "level": 0,
+    "displayName": "Directory",
+    "path": "/Drawing",
+    "directory": true,
+    "underlyingId": 0
+  },
+  {
+    "id": -1,
+    "level": 0,
+    "displayName": "File 2.dxf",
+    "path": "/Drawing",
+    "directory": false,
+    "underlyingId": 1
+  },
+  {
+    "id": -1,
+    "level": 0,
+    "displayName": "File 3.dxf",
+    "path": "/Drawing",
+    "directory": false,
+    "underlyingId": 2
+  },
+  {
+    "id": -1,
+    "level": 0,
+    "displayName": "File 4.dxf",
+    "path": "/Drawing",
+    "directory": false,
+    "underlyingId": 3
+  }
+]

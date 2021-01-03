@@ -15,7 +15,7 @@ export class MoneyCategoryPickerSelectableOption {
     templateUrl: './money-cat-picker.component.html',
     styleUrls: ['./money-cat-picker.component.css']
 })
-export class MoneyCatagoryPickerComponent implements OnInit {
+export class MoneyCategoryPickerComponent implements OnInit {
     static readonly defaultMargin = '1px';
 
     selectableOption: MoneyCategoryPickerSelectableOption[];
@@ -44,13 +44,13 @@ export class MoneyCatagoryPickerComponent implements OnInit {
         this.showSystem = false;
         this.rows = 0;
         this.multiSelect = false;
-        this.columnSpacing = MoneyCatagoryPickerComponent.defaultMargin;
-        this.rowSpacing = MoneyCatagoryPickerComponent.defaultMargin;
+        this.columnSpacing = MoneyCategoryPickerComponent.defaultMargin;
+        this.rowSpacing = MoneyCategoryPickerComponent.defaultMargin;
         this.selections = null;
     }
 
     ngOnInit(): void {
-        this._moneyService.getCatories().subscribe(
+        this._moneyService.getCategories().subscribe(
             categories => {
                 this.categories = categories;
             },
@@ -91,16 +91,7 @@ export class MoneyCatagoryPickerComponent implements OnInit {
         // Get a list of selectable options.
         let i = 0;
         for (const nextCategory of this.categories) {
-            if (this.showSystem && (nextCategory.systemUse)) {
-                this.selectableOption[i] = new MoneyCategoryPickerSelectableOption();
-                this.selectableOption[i].accountTransfer = null;
-                this.selectableOption[i].category = nextCategory;
-                this.selectableOption[i].rightMargin = this.columnSpacing;
-                this.selectableOption[i].bottomMargin = this.rowSpacing;
-                i++;
-            }
-            if (!nextCategory.systemUse) {
-                console.log(nextCategory.id);
+            if (this.showSystem || (!nextCategory.systemUse)) {
                 this.selectableOption[i] = new MoneyCategoryPickerSelectableOption();
                 this.selectableOption[i].accountTransfer = null;
                 this.selectableOption[i].category = nextCategory;
@@ -110,7 +101,7 @@ export class MoneyCatagoryPickerComponent implements OnInit {
             }
         }
 
-        // If account transfers are to be shown add them to selectable otpions.
+        // If account transfers are to be shown add them to selectable options.
         if (this.showAccountTransfers) {
             for (const nextAccount of this.accounts) {
                 this.selectableOption[i] = new MoneyCategoryPickerSelectableOption();
@@ -136,11 +127,11 @@ export class MoneyCatagoryPickerComponent implements OnInit {
 
                     // If this is the bottom row or the right column, then remove the margin.
                     if (r === this.rows - 1) {
-                        this.selectableOption[i].bottomMargin = MoneyCatagoryPickerComponent.defaultMargin;
+                        this.selectableOption[i].bottomMargin = MoneyCategoryPickerComponent.defaultMargin;
                     }
 
                     if (c === this.columns - 1) {
-                        this.selectableOption[i].rightMargin = MoneyCatagoryPickerComponent.defaultMargin;
+                        this.selectableOption[i].rightMargin = MoneyCategoryPickerComponent.defaultMargin;
                     }
 
                     // Move to next.
@@ -254,7 +245,7 @@ export class MoneyCatagoryPickerComponent implements OnInit {
             return selectableOption.rightMargin;
         }
 
-        return MoneyCatagoryPickerComponent.defaultMargin;
+        return MoneyCategoryPickerComponent.defaultMargin;
     }
 
     getBottomMargin(id: number): string {
@@ -264,7 +255,7 @@ export class MoneyCatagoryPickerComponent implements OnInit {
             return selectableOption.bottomMargin;
         }
 
-        return MoneyCatagoryPickerComponent.defaultMargin;
+        return MoneyCategoryPickerComponent.defaultMargin;
     }
 
     selected(id: number): boolean {

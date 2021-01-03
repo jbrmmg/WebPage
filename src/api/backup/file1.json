@@ -1,0 +1,118 @@
+{
+  "file": {
+    "id": 1,
+    "name": "File 2.dxf",
+    "directoryInfo": {
+      "id": 1,
+      "path": "/Drawing",
+      "source": {
+        "id": 1,
+        "path": "/media/Shared/Documents",
+        "location": {
+          "id": 1,
+          "name": "Main Shared Drive",
+          "size": "1.8TB",
+          "checkDuplicates": true
+        },
+        "status": "OK",
+        "filter": null,
+        "type": "STD",
+        "destinationId": null,
+        "typeEnum": "STANDARD"
+      },
+      "removed": false
+    },
+    "classification": {
+      "id": 6,
+      "regex": ".*\\.dxf$",
+      "action": "BACKUP",
+      "icon": "fa-file-text-o",
+      "useMD5": true,
+      "isImage": true,
+      "isVideo": false
+    },
+    "date": "2020-04-17T13:26:16.000+0000",
+    "size": 19443,
+    "removed": false,
+    "md5": "14730C8868502F86DEC27683E45CDB85",
+    "fullFilename": "/media/Shared/Documents/Drawing/File 2.dxf"
+  },
+  "backups": [
+    {
+      "id": 38046,
+      "name": "File 2.dxf",
+      "directoryInfo": {
+        "id": 70,
+        "path": "/Drawing",
+        "source": {
+          "id": 2,
+          "path": "/media/Backup/Documents",
+          "location": {
+            "id": 2,
+            "name": "Backup Drive",
+            "size": "1.8TB",
+            "checkDuplicates": false
+          },
+          "status": "OK",
+          "filter": null,
+          "type": "STD",
+          "destinationId": null,
+          "typeEnum": "STANDARD"
+        },
+        "removed": false
+      },
+      "classification": {
+        "id": 6,
+        "regex": ".*\\.dxf$",
+        "action": "BACKUP",
+        "icon": "fa-file-text-o",
+        "useMD5": true,
+        "isImage": false,
+        "isVideo": false
+      },
+      "date": "2020-04-17T13:26:15.000+0000",
+      "size": 19443,
+      "removed": false,
+      "md5": "14730C8868502F86DEC27683E45CDB85",
+      "fullFilename": "/media/Backup/Documents/Drawing/CameraBracket2.dxf"
+    },
+    {
+      "id": 38615,
+      "name": "File 2.dxf",
+      "directoryInfo": {
+        "id": 185,
+        "path": "/Drawing",
+        "source": {
+          "id": 3,
+          "path": "/media/GoogleDrive/Documents",
+          "location": {
+            "id": 3,
+            "name": "Google Drive",
+            "size": "100GB",
+            "checkDuplicates": false
+          },
+          "status": "OK",
+          "filter": null,
+          "type": "STD",
+          "destinationId": null,
+          "typeEnum": "STANDARD"
+        },
+        "removed": false
+      },
+      "classification": {
+        "id": 6,
+        "regex": ".*\\.dxf$",
+        "action": "BACKUP",
+        "icon": "fa-file-text-o",
+        "useMD5": true,
+        "isImage": false,
+        "isVideo": false
+      },
+      "date": "2020-04-17T13:26:15.000+0000",
+      "size": 19443,
+      "removed": false,
+      "md5": "14730C8868502F86DEC27683E45CDB85",
+      "fullFilename": "/media/GoogleDrive/Documents/Drawing/File 2.dxf"
+    }
+  ]
+}

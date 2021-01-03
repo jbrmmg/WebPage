@@ -1,4 +1,4 @@
-import {IListRowLineInterface, ListRowLineType} from './list-row-line-interface';
+import {IListRowLineInterface} from './list-row-line-interface';
 import {ListRowLineTransaction} from './list-row-line-transaction';
 import {ListRowLineReconcile} from './list-row-line-reconcile';
 import {ListRowLineTotalBfwd} from './list-row-line-total-bfwd';

@@ -69,12 +69,12 @@ export class ListRowLineTransaction extends ListRowLine implements IListRowLineI
         this.dateDay = transactionDate.getDate().toString();
         this.dateMonth = ListRowLineTransaction.getMonthName(transactionDate.getMonth());
         this.dateYear = transactionDate.getFullYear().toString();
-        this.hasAccount = true;
-        this.account = transaction.account;
-        this.hasCategory = true;
         this.category = transaction.category;
         this.description = transaction.description;
         this.amount = transaction.amount;
+        this.hasAccount = true;
+        this.account = transaction.account;
+        this.hasCategory = true;
         this.hasButtonOne = true;
         this.hasButtonTwo = true;
         this.classButtonTwo = 'fa fa-pencil';

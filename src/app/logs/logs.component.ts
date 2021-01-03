@@ -21,7 +21,7 @@ export class LogsComponent implements OnInit {
 
     @ViewChild(BsDatepickerDirective) datepicker: BsDatepickerDirective;
 
-    constructor(private _logsService: LogsService) {
+    constructor(private readonly _logsService: LogsService) {
         this.minDate = new Date();
         this.maxDate = new Date();
         this.bsValue = new Date();
@@ -35,7 +35,7 @@ export class LogsComponent implements OnInit {
             data => {
                 this.data = data;
             },
-            error => this.errorMessage = <any>error
+            error => this.errorMessage = error
         );
     }
 
@@ -44,7 +44,7 @@ export class LogsComponent implements OnInit {
             types => {
                 this.types = types;
             },
-            error => this.errorMessage = <any>error
+            error => this.errorMessage = error
         );
     }
 
@@ -55,7 +55,7 @@ export class LogsComponent implements OnInit {
 
     onDateChange(newDate: Date): void {
         // tslint:disable-next-line:no-console
-        console.info('Date Change - ' + newDate.toLocaleDateString('en-GB'));
+        console.info(`Date Change - ${newDate.toLocaleDateString('en-GB')}`);
         this.bsValue = newDate;
 
         if (this.selectedType !== '') {

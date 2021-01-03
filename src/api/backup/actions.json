@@ -1,0 +1,47 @@
+[
+  {
+    "id": 59,
+    "action": "IMPORT",
+    "parameterRequired": true,
+    "parameter": "IGNORE",
+    "flags": null,
+    "path": {
+      "id": 810,
+      "name": "Aren't they cute.jpg",
+      "directoryInfo": {
+        "id": 159,
+        "path": "/2003/May/NCT",
+        "source": {
+          "id": 2,
+          "path": "/home/jason/Working/TestSyn/Photo",
+          "location": {
+            "id": 4,
+            "name": "Import",
+            "size": "N/A",
+            "checkDuplicates": null
+          },
+          "status": null,
+          "filter": null,
+          "type": "IMP",
+          "destinationId": 1,
+          "typeEnum": "IMPORT"
+        },
+        "removed": true
+      },
+      "classification": {
+        "id": 5,
+        "regex": ".*\\.jpg$",
+        "action": "BACKUP",
+        "icon": null,
+        "useMD5": true,
+        "isImage": false,
+        "isVideo": false
+      },
+      "date": "2007-06-10T22:17:11.000+0000",
+      "size": 64066,
+      "removed": false,
+      "md5": "2D9E11DE8E1E68C9B5A480932B76F3CC",
+      "fullFilename": "/home/jason/Working/TestSyn/Photo/2003/May/NCT/Aren't they cute.jpg"
+    }
+  }
+]
