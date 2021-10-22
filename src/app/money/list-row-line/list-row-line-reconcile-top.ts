@@ -36,6 +36,8 @@ export class ListRowLineReconcileTop extends ListRowLine implements IListRowLine
     clickButtonOne() {
         // Auto accept transactions.
         this.moneyService.autoAccept();
+
+        // Update the list
     }
 
     clickButtonTwo() {
@@ -44,7 +46,7 @@ export class ListRowLineReconcileTop extends ListRowLine implements IListRowLine
     }
 
     clickButtonThree() {
-        // Auto accept transactions.
+        // Clear the rec data..
         this.moneyService.clearRecData();
     }
 

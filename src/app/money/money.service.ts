@@ -524,6 +524,9 @@ export class MoneyService {
             },
             () => {
                 console.log('Auto Accept The PUT observable is now complete (delete)');
+
+                // Update transactions
+                this.updateTransactions.emit(null);
             });
     }
 
