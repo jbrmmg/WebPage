@@ -97,7 +97,6 @@ export class MoneyListComponent implements OnInit {
                 public datepipe: DatePipe,
                 private sanitizer: DomSanitizer,
                 private modalService: BsModalService) {
-        console.log('here');
         this.fromDateDisabled = true;
         this.toDateDisabled = true;
         this.lastChangeType = '';
@@ -105,7 +104,6 @@ export class MoneyListComponent implements OnInit {
         this.lastChangeTo = null;
         this.listMode = ListMode.Normal;
         this.reconcileAccount = null;
-        console.log('here2');
     }
 
     get isAddMode() {
@@ -515,35 +513,39 @@ export class MoneyListComponent implements OnInit {
                 }
             );
         } else if (this.listMode === ListMode.Reconciliation) {
-            // Get the reconcilation.
-            this.lines = [];
-            this.lines.push(ListRowLineFactory.createRowLineReconcileTop(this._moneyService, () => {
-                // Perform the category update (only if some are selected).
-                let anySelected = false;
-                this.lines.forEach(value => {
-                    if (value.selected) {
-                        anySelected = true;
-                    }
-                });
+            this.refreshReconcilation();
+        }
+    }
 
-                if (anySelected) {
-                    this.openModal(this.categorySelector, '');
+    refreshReconcilation() : void {
+        // Get the reconcilation.
+        this.lines = [];
+        this.lines.push(ListRowLineFactory.createRowLineReconcileTop(this._moneyService, () => {
+            // Perform the category update (only if some are selected).
+            let anySelected = false;
+            this.lines.forEach(value => {
+                if (value.selected) {
+                    anySelected = true;
                 }
-            }));
+            });
 
-            if (this.reconcileAccount != null) {
-                this._moneyService.getMatches(this.reconcileAccount).subscribe(
-                    matches => {
-                        matches.forEach(value => {
-                            this.lines.push(ListRowLineFactory.createRowLineReconcile(this._moneyService, value));
-                        });
-                    },
-                    error => this.errorMessage = <any>error,
-                    () => {
-                        console.log('Request matches Complete.');
-                    }
-                );
+            if (anySelected) {
+                this.openModal(this.categorySelector, '');
             }
+        }));
+
+        if (this.reconcileAccount != null) {
+            this._moneyService.getMatches(this.reconcileAccount).subscribe(
+                matches => {
+                    matches.forEach(value => {
+                        this.lines.push(ListRowLineFactory.createRowLineReconcile(this._moneyService, value));
+                    });
+                },
+                error => this.errorMessage = <any>error,
+                () => {
+                    console.log('Request matches Complete.');
+                }
+            );
         }
     }
 
@@ -719,12 +721,9 @@ export class MoneyListComponent implements OnInit {
         }
     }
 
-    onCloseDatePopup(): void {
-        this.modalRef.hide();
-    }
-
     onClickAccount(id: string): void {
         this.selectedAccount = null;
+
 
         this.accounts.forEach(nextAccount => {
             if (nextAccount.id === id) {
