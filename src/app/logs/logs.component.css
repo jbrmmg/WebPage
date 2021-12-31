@@ -20,22 +20,6 @@
     font-size: 10px;
 }
 
-.log-line-row {
-    padding: 0 2px;
-}
-
-.log-row {
-    font-family: monospace;
-}
-
 .log-line-date {
     padding: 0 0 0 6px;
-}
-
-.log-line-badge {
-
-}
-
-.log-line-text {
-    width: 85%;
 }
