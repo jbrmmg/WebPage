@@ -11,6 +11,15 @@
     color: black;
 }
 
+.log-no-padding {
+    padding: 0;
+}
+
+.log-line-col {
+    font-family: monospace;
+    font-size: 10px;
+}
+
 .log-line-row {
     padding: 0 2px;
 }
@@ -20,11 +29,11 @@
 }
 
 .log-line-date {
-    width: 9%;
+    padding: 0 0 0 6px;
 }
 
 .log-line-badge {
-    width: 6%;
+
 }
 
 .log-line-text {

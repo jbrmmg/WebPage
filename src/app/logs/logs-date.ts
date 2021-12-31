@@ -1,6 +1,6 @@
 export class LogsDate {
     logDate: Date;
-    logDateString: String;
+    logDateString: string;
     selected: boolean;
 
     constructor(logDate: Date) {
