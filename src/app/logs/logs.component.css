@@ -2,16 +2,13 @@
     width: 100%;
 }
 
-
-.label-date {
-    font-weight: bold;
-    text-align: right;
-    line-height: 100%;
-    margin: 0;
+.btn-date {
+    margin: 0 2px 0.5rem 2px;
 }
 
-.date-row {
-    align-items: center;
+.btn-selected {
+    font-weight: bold;
+    color: black;
 }
 
 .log-line-row {

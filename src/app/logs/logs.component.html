@@ -1,36 +1,27 @@
 <div class="card">
     <div class="card-body">
-        <div class="row date-row">
-            <label class="col-2 label-date" for="log-date">Log Date:</label>
-            <input id="log-date"
-                   type="text"
-                   placeholder="Datepicker"
-                   class="col-10 form-control"
-                   [minDate]="minDate"
-                   [maxDate]="maxDate"
-                   [bsValue]="bsValue"
-                   (bsValueChange)="onDateChange($event)"
-                   value="{{ bsValue | date:'dd-MMM-yyyy'}}"
-                   bsDatepicker [bsConfig]="{
-                        dateInputFormat: 'DD-MMM-YYYY',
-                        containerClass: 'theme-dark-blue',
-                        selectFromOtherMonth: true }">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <div class="col">
+                    <label *ngFor="let date of availableDates"
+                           [ngClass]="{'btn': true, 'btn-primary': true, 'btn-date': true, 'btn-selected': date.selected }"
+                           (click)="onClickDate(date.logDate)">{{date.logDateString}}</label>
+                </div>
+            </div>
         </div>
-        <div class="row top-buffer">
+        <div class="row">
             <div class="col-1" *ngIf="types && types.length">
-                <label class="btn btn-primary btn-logtype" *ngFor="let type of types"
-                       [(ngModel)]="radioLogType"
-                       btnRadio="{{type.id}}"
-                       (click)="onClickType(type.id)"
-                       tabindex="0"
-                       tooltip="{{type.name}}">
-                    <em class="fa {{type.icon}}"></em>
+                <label *ngFor="let type of types"
+                       [ngClass]="{'btn': true, 'btn-primary': true, 'btn-logtype': true, 'btn-selected': type.selected }"
+                       (click)="onClickType(type.type.id)"
+                       tooltip="{{type.type.name}}">
+                    <em class="fa {{type.type.icon}}"></em>
                 </label>
             </div>
             <div class="col-10">
                 <div class="table-responsive">
-                    <table class="table table-borderless" *ngIf="data && data.length">
-                        <caption>This is a table</caption>
+                    <table class="table table-borderless" aria-label="Table of log entries" *ngIf="data && data.length">
                         <tbody>
                             <tr>
                                 <th scope="col">Time</th>

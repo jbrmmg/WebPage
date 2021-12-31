@@ -1,70 +1,80 @@
-import {Component, HostListener, ViewChild, OnInit} from '@angular/core';
-import {BsDatepickerDirective} from 'ngx-bootstrap/datepicker';
-import {ILogsType} from './logs-type';
+import {Component, OnInit} from '@angular/core';
 import {LogsService} from './logs.service';
 import {ILogsData} from './logs-data';
+import {LogsDate} from './logs-date';
+import {LogsSelectedType} from './logs-selected-type';
 
 @Component({
     templateUrl: './logs.component.html',
     styleUrls: ['./logs.component.css']
 })
 export class LogsComponent implements OnInit {
-    radioLogType: string;
-    minDate: Date;
-    maxDate: Date;
-    bsValue: Date;
-    selectedType: string;
     errorMessage: string;
-
-    types: ILogsType[];
+    availableDates: LogsDate[];
+    types: LogsSelectedType[];
     data: ILogsData[];
 
-    @ViewChild(BsDatepickerDirective) datepicker: BsDatepickerDirective;
-
     constructor(private readonly _logsService: LogsService) {
-        this.minDate = new Date();
-        this.maxDate = new Date();
-        this.bsValue = new Date();
-        this.minDate.setDate(this.minDate.getDate() - 5);
-        this.maxDate.setDate(this.maxDate.getDate());
-        this.selectedType = '';
-    }
-
-    updateLogData(): void {
-        this._logsService.getLogsData(this.selectedType, this.bsValue).subscribe(
-            data => {
-                this.data = data;
-            },
-            error => this.errorMessage = error
-        );
+        this.types = [];
+        this.availableDates = [];
+        let today: Date;
+        today = new Date();
+        for (let i = 0; i < 5; i++) {
+            this.availableDates.push(new LogsDate(today));
+            today.setDate(today.getDate() - 1);
+        }
+        this.availableDates[0].selected = true;
     }
 
     ngOnInit(): void {
         this._logsService.getLogsTypes().subscribe(
             types => {
-                this.types = types;
+                types.forEach(element => this.types.push(new LogsSelectedType(element)));
+                this.onClickType(this.types[0].type.id);
             },
             error => this.errorMessage = error
         );
     }
 
+    onClickDate(selectedDate: Date): void {
+        this.availableDates.forEach(element => {
+            if (element.logDate === selectedDate) {
+                console.log('here ' + element.logDate.toDateString() + ' ' + element.logDateString);
+                element.selected = true;
+
+                this.types.forEach(element2 => {
+                   if (element2.selected) {
+                       this.updateLogData(element2.type.id, element.logDate);
+                   }
+                });
+            } else {
+                element.selected = false;
+            }
+        });
+    }
+
     onClickType(type: string): void {
-        this.selectedType = type;
-        this.updateLogData();
+        this.types.forEach(element => {
+           if (element.type.id === type) {
+               element.selected = true;
+
+               this.availableDates.forEach(element2 => {
+                  if (element2.selected) {
+                      this.updateLogData(element.type.id, element2.logDate);
+                  }
+               });
+           } else {
+               element.selected = false;
+           }
+        });
     }
 
-    onDateChange(newDate: Date): void {
-        // tslint:disable-next-line:no-console
-        console.info(`Date Change - ${newDate.toLocaleDateString('en-GB')}`);
-        this.bsValue = newDate;
-
-        if (this.selectedType !== '') {
-            this.updateLogData();
-        }
-    }
-
-    @HostListener('window:scroll')
-    onScrollEvent() {
-        this.datepicker.hide();
+    updateLogData(type: string, selectedDate: Date): void {
+        this._logsService.getLogsData(type, selectedDate).subscribe(
+            data => {
+                this.data = data;
+            },
+            error => this.errorMessage = error
+        );
     }
 }
