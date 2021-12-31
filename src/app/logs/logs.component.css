@@ -2,34 +2,24 @@
     width: 100%;
 }
 
+.btn-date {
+    margin: 0 2px 0.5rem 2px;
+}
 
-.label-date {
+.btn-selected {
     font-weight: bold;
-    text-align: right;
-    line-height: 100%;
-    margin: 0;
+    color: black;
 }
 
-.date-row {
-    align-items: center;
+.log-no-padding {
+    padding: 0;
 }
 
-.log-line-row {
-    padding: 0 2px;
-}
-
-.log-row {
+.log-line-col {
     font-family: monospace;
+    font-size: 10px;
 }
 
 .log-line-date {
-    width: 9%;
-}
-
-.log-line-badge {
-    width: 6%;
-}
-
-.log-line-text {
-    width: 85%;
+    padding: 0 0 0 6px;
 }

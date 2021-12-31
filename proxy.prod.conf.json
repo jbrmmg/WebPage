@@ -12,7 +12,7 @@
     "secure": false
   },
   "/log": {
-    "target": "http://localhost:12001/jbr/int",
+    "target": "http://localhost:12001/jbr/ext",
     "secure": false
   }
 }

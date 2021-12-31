@@ -1,55 +1,35 @@
 <div class="card">
     <div class="card-body">
-        <div class="row date-row">
-            <label class="col-2 label-date" for="log-date">Log Date:</label>
-            <input id="log-date"
-                   type="text"
-                   placeholder="Datepicker"
-                   class="col-10 form-control"
-                   [minDate]="minDate"
-                   [maxDate]="maxDate"
-                   [bsValue]="bsValue"
-                   (bsValueChange)="onDateChange($event)"
-                   value="{{ bsValue | date:'dd-MMM-yyyy'}}"
-                   bsDatepicker [bsConfig]="{
-                        dateInputFormat: 'DD-MMM-YYYY',
-                        containerClass: 'theme-dark-blue',
-                        selectFromOtherMonth: true }">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <div class="col">
+                    <label *ngFor="let date of availableDates"
+                           [ngClass]="{'btn': true, 'btn-primary': true, 'btn-date': true, 'btn-selected': date.selected }"
+                           (click)="onClickDate(date.logDate)">{{date.logDateString}}</label>
+                </div>
+            </div>
         </div>
-        <div class="row top-buffer">
+        <div class="row">
             <div class="col-1" *ngIf="types && types.length">
-                <label class="btn btn-primary btn-logtype" *ngFor="let type of types"
-                       [(ngModel)]="radioLogType"
-                       btnRadio="{{type.id}}"
-                       (click)="onClickType(type.id)"
-                       tabindex="0"
-                       tooltip="{{type.name}}">
-                    <em class="fa {{type.icon}}"></em>
+                <label *ngFor="let type of types"
+                       [ngClass]="{'btn': true, 'btn-primary': true, 'btn-logtype': true, 'btn-selected': type.selected }"
+                       (click)="onClickType(type.type.id)"
+                       tooltip="{{type.type.name}}">
+                    <em class="fa {{type.type.icon}}"></em>
                 </label>
             </div>
-            <div class="col-10">
-                <div class="table-responsive">
-                    <table class="table table-borderless" *ngIf="data && data.length">
-                        <caption>This is a table</caption>
-                        <tbody>
-                            <tr>
-                                <th scope="col">Time</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Text</th>
-                            </tr>
-                            <tr class="log-row" *ngFor="let nextData of data">
-                                <td class="log-line-date log-line-row">{{nextData.time}}</td>
-                                <td class="log-line-badge log-line-row"><span [ngClass]="{
+            <div class="col-10 log-no-padding">
+                <div class="row" *ngFor="let nextData of data">
+                    <div class="col-1 log-line-col log-line-date">{{nextData.time}}</div>
+                    <div class="col-1 log-line-col"><span [ngClass]="{
                                     'badge':true,
                                     'badge-info':nextData.levelString==='INFO',
                                     'badge-warning':nextData.levelString==='WARN',
                                     'badge-danger':nextData.levelString==='ERROR' || nextData.levelString==='FATAL',
                                     'badge-primary':nextData.levelString==='DEBUG' || nextData.levelString==='TRACE'
-                                    }">{{nextData.levelString}}</span></td>
-                                <td class="log-line-text log-line-row">{{nextData.formattedMessage}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                    }">{{nextData.levelString}}</span></div>
+                    <div class="col-10 log-line-col log-no-padding">{{nextData.formattedMessage}}</div>
                 </div>
             </div>
         </div>
