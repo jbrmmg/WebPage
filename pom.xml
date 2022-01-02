@@ -19,7 +19,7 @@
         <version>1.11.3</version>
         <configuration>
           <nodeVersion>v14.15.3</nodeVersion>
-          <npmVersion>8.1.0</npmVersion>
+          <npmVersion>8.3.0</npmVersion>
           <workingDirectory>.</workingDirectory>
         </configuration>
         <executions>
