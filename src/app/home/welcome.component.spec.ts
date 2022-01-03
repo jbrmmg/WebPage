@@ -44,6 +44,19 @@ describe('WelcomeService', () => {
             app.onClick();
 
             const req = httpMock.expectOne('/podcast/reminder');
+            req.flush('');
+            expect(req.request.method).toBe('POST');
+        });
+
+        it('should call reminder and fail', () => {
+            app.textData1 = 'x';
+            app.textData2 = 'y';
+            app.onClick();
+
+            const mockErrorResponse = { status: 400, statusText: 'Bad Request'};
+
+            const req = httpMock.expectOne('/podcast/reminder');
+            req.flush(mockErrorResponse);
             expect(req.request.method).toBe('POST');
         });
     });
