@@ -10,7 +10,7 @@ describe('WelcomeService', () => {
     let app: WelcomeComponent;
     let httpMock: HttpTestingController;
 
-    describe('WelcomeService', () => {
+    describe('WelcomeComponent', () => {
         beforeEach(async () => {
             TestBed.configureTestingModule({
                 imports: [
@@ -38,7 +38,7 @@ describe('WelcomeService', () => {
             httpMock.verify();
         });
 
-        it('test your http call', () => {
+        it('should call reminder', () => {
             app.textData1 = 'x';
             app.textData2 = 'y';
             app.onClick();
