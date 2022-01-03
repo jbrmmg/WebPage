@@ -56,7 +56,7 @@ describe('WelcomeService', () => {
             const mockErrorResponse = { status: 400, statusText: 'Bad Request'};
 
             const req = httpMock.expectOne('/podcast/reminder');
-            req.flush(mockErrorResponse);
+            req.flush('', { status: 404, statusText: 'Invalid'});
             expect(req.request.method).toBe('POST');
         });
     });
