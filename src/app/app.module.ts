@@ -1,13 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
-import { ConvertToSpacesPipe } from './shared/example/convert-to-spaces.pipe';
 import { WelcomeComponent } from './home/welcome.component';
-import { StarComponent } from './shared/example/star.component';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule} from 'ngx-bootstrap/modal';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
@@ -18,8 +16,6 @@ import { PodcastComponent } from './podcast/podcast.component';
 import { MoneyAddCalcComponent } from './money/calculator/money-add-calc.component';
 import { MoneyCategoryPickerComponent } from './money/category-picker/money-cat-picker.component';
 import { MoneyCategoryFilterComponent } from './money/category-picker/money-cat-filter.component';
-import { PairsPipe } from './shared/example/pairs.pipe';
-import { DatePipe } from '@angular/common';
 import { MoneyListComponent } from './money/money-list.component';
 import { HouseComponent } from './house/house.component';
 import { WeightComponent } from './weight/weight.component';
@@ -29,10 +25,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
-    ConvertToSpacesPipe,
     WelcomeComponent,
-    StarComponent,
-    PairsPipe,
     LogsComponent,
     PodcastComponent,
     MoneyAddCalcComponent,
@@ -48,11 +41,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
+    CollapseModule,
     BsDatepickerModule.forRoot(),
     ButtonsModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
-    [BsDropdownModule.forRoot()],
+    BsDropdownModule.forRoot(),
     RouterModule.forRoot([
       {path: 'welcome', component: WelcomeComponent},
       {path: 'logs', component: LogsComponent},
@@ -63,10 +57,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       {path: 'weight', component: WeightComponent},
       {path: '', redirectTo: 'welcome', pathMatch: 'full'},
       {path: '**', redirectTo: 'welcome', pathMatch: 'full'}
-    ]),
-    CollapseModule
+    ])
   ],
-  providers: [DatePipe],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

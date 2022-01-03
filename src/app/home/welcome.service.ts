@@ -24,9 +24,6 @@ export class WelcomeService {
             },
             (response) => {
                 console.log('POST call in error', response);
-            },
-            () => {
-                console.log('The POST observable is now complete (add)');
             }
         );
     }
