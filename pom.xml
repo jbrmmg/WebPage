@@ -91,6 +91,9 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <sonar.sources>src</sonar.sources>
     <sonar.javascript.lcov.reportPaths>target/coverage/lcov.info</sonar.javascript.lcov.reportPaths>
+    <sonar.exclusions>src/polyfills.ts</sonar.exclusions>
+    <sonar.coverage.exclusions>**/*spec.ts,src/environments/*.ts,src/karma.conf.js,src/main.ts,src/test.ts</sonar.coverage.exclusions>
+    <sonar.cpd.exclusions>**/*spec.ts</sonar.cpd.exclusions>
   </properties>
 
   <distributionManagement>

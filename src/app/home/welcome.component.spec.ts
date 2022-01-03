@@ -10,54 +10,50 @@ describe('WelcomeService', () => {
     let app: WelcomeComponent;
     let httpMock: HttpTestingController;
 
-    describe('WelcomeComponent', () => {
-        beforeEach(async () => {
-            TestBed.configureTestingModule({
-                imports: [
-                    HttpClientTestingModule,
-                    FormsModule,
-                ],
-                declarations: [
-                    WelcomeComponent,
-                ],
-                providers: [
-                    WelcomeService,
-                ]
-            });
-
-            await TestBed.compileComponents();
-
-            fixture = TestBed.createComponent(WelcomeComponent);
-            app = fixture.componentInstance;
-            httpMock = fixture.debugElement.injector.get<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);
-
-            fixture.detectChanges();
+    beforeEach(async () => {
+        TestBed.configureTestingModule({
+            imports: [
+                HttpClientTestingModule,
+                FormsModule,
+            ],
+            declarations: [
+                WelcomeComponent,
+            ],
+            providers: [
+                WelcomeService,
+            ]
         });
 
-        afterEach(() => {
-            httpMock.verify();
-        });
+        await TestBed.compileComponents();
 
-        it('should call reminder', () => {
-            app.textData1 = 'x';
-            app.textData2 = 'y';
-            app.onClick();
+        fixture = TestBed.createComponent(WelcomeComponent);
+        app = fixture.componentInstance;
+        httpMock = fixture.debugElement.injector.get<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);
 
-            const req = httpMock.expectOne('/podcast/reminder');
-            req.flush('');
-            expect(req.request.method).toBe('POST');
-        });
+        fixture.detectChanges();
+    });
 
-        it('should call reminder and fail', () => {
-            app.textData1 = 'x';
-            app.textData2 = 'y';
-            app.onClick();
+    afterEach(() => {
+        httpMock.verify();
+    });
 
-            const mockErrorResponse = { status: 400, statusText: 'Bad Request'};
+    it('should call reminder', () => {
+        app.textData1 = 'x';
+        app.textData2 = 'y';
+        app.onClick();
 
-            const req = httpMock.expectOne('/podcast/reminder');
-            req.flush('', { status: 404, statusText: 'Invalid'});
-            expect(req.request.method).toBe('POST');
-        });
+        const req = httpMock.expectOne('/podcast/reminder');
+        req.flush('');
+        expect(req.request.method).toBe('POST');
+    });
+
+    it('should call reminder and fail', () => {
+        app.textData1 = 'x';
+        app.textData2 = 'y';
+        app.onClick();
+
+        const req = httpMock.expectOne('/podcast/reminder');
+        req.flush('', { status: 404, statusText: 'Invalid'});
+        expect(req.request.method).toBe('POST');
     });
 });
