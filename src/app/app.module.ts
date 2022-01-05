@@ -21,6 +21,7 @@ import { HouseComponent } from './house/house.component';
 import { WeightComponent } from './weight/weight.component';
 import { BackupListComponent } from './backup/backup-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BackupSummaryComponent } from "./backup/summary/backup-summary.component";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MoneyListComponent,
     HouseComponent,
     WeightComponent,
-    BackupListComponent
+    BackupListComponent,
+    BackupSummaryComponent
   ],
   imports: [
     BrowserModule,

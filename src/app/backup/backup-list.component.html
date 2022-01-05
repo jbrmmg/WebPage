@@ -3,6 +3,13 @@
         <div class="row">
             <label class="btn-sm btn-primary float-right btn-mode"
                    tabindex="0"
+                   aria-controls="summary"
+                   (click)="selectSummaryMode()"
+                   [attr.aria-expanded]="isSummaryMode">
+                <em class="fa fa-hdd-o"></em>
+            </label>
+            <label class="btn-sm btn-primary float-right btn-mode"
+                   tabindex="0"
                    aria-controls="files"
                    (click)="selectFileMode()"
                    [attr.aria-expanded]="isFileMode">
@@ -15,6 +22,9 @@
                    [attr.aria-expanded]="isActionMode">
                 <em class="fa fa-exclamation-circle"></em>
             </label>
+        </div>
+        <div id ="summary" [collapse]="!isSummaryMode">
+            <!--<jbr-backup-summary></jbr-backup-summary>-->
         </div>
         <div id="files" [collapse]="!isFileMode">
             <div class="row page-row">
