@@ -6,7 +6,7 @@
     "start": "ng serve",
     "startext": "ng serve --configuration=debug --proxy-config proxy.conf.json",
     "startprod": "ng serve --prod --proxy-config proxy.prod.conf.json",
-    "startdbg": "ng serve --prod --proxy-config proxy.prod.conf.json --optimization=false",
+    "startdbg": "ng serve --prod --proxy-config proxy.conf.json --optimization=false",
     "build": "ng build --prod",
     "test": "ng test",
     "test-headless": "ng test --watch=false --browsers=ChromeHeadless --codeCoverage=true",
