@@ -21,6 +21,8 @@ import { HouseComponent } from './house/house.component';
 import { WeightComponent } from './weight/weight.component';
 import { BackupListComponent } from './backup/backup-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BackupSummaryComponent } from "./backup/summary/backup-summary.component";
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MoneyListComponent,
     HouseComponent,
     WeightComponent,
-    BackupListComponent
+    BackupListComponent,
+    BackupSummaryComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       {path: '**', redirectTo: 'welcome', pathMatch: 'full'}
     ])
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

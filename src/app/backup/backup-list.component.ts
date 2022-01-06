@@ -4,7 +4,7 @@ import {FileInfo} from './backup-fileinfo';
 import {HierarchyResponse} from './backup-hierarchyresponse';
 import {BackupService} from './backup.service';
 
-export enum ListMode { Files, Actions }
+export enum ListMode { Files, Actions, Summary }
 
 @Component({
     templateUrl: './backup-list.component.html',
@@ -79,8 +79,22 @@ export class BackupListComponent implements OnInit {
         }
     }
 
+    selectSummaryMode() {
+        this.listMode = ListMode.Summary;
+
+
+    }
+
     get isFileMode(): boolean {
         return this.listMode === ListMode.Files;
+    }
+
+    get isActionMode(): boolean {
+        return this.listMode === ListMode.Actions;
+    }
+
+    get isSummaryMode(): boolean {
+        return this.listMode === ListMode.Summary;
     }
 
     get isImage(): boolean {
@@ -105,10 +119,6 @@ export class BackupListComponent implements OnInit {
 
     videoUrl(id: number): string {
         return this._backupService.videoUrl(id);
-    }
-
-    get isActionMode(): boolean {
-        return this.listMode === ListMode.Actions;
     }
 
     get isItemSelected(): boolean {
