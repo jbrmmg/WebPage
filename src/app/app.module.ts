@@ -55,7 +55,6 @@ import {BackupSummarySourceComponent} from "./backup/summary/source/backup-summa
     RouterModule.forRoot([
       {path: 'welcome', component: WelcomeComponent},
       {path: 'logs', component: LogsComponent},
-      {path: 'podcast', component: PodcastComponent},
       {path: 'money', component: MoneyListComponent},
       {path: 'house', component: HouseComponent},
       {path: 'bup', component: BackupListComponent},
