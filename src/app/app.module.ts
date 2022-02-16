@@ -23,6 +23,7 @@ import { BackupListComponent } from './backup/backup-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BackupSummaryComponent } from "./backup/summary/backup-summary.component";
 import { DatePipe } from '@angular/common';
+import {BackupSummarySourceComponent} from "./backup/summary/source/backup-summary-source.component";
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { DatePipe } from '@angular/common';
     HouseComponent,
     WeightComponent,
     BackupListComponent,
-    BackupSummaryComponent
+    BackupSummaryComponent,
+    BackupSummarySourceComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +55,6 @@ import { DatePipe } from '@angular/common';
     RouterModule.forRoot([
       {path: 'welcome', component: WelcomeComponent},
       {path: 'logs', component: LogsComponent},
-      {path: 'podcast', component: PodcastComponent},
       {path: 'money', component: MoneyListComponent},
       {path: 'house', component: HouseComponent},
       {path: 'bup', component: BackupListComponent},

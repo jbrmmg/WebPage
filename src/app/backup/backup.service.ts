@@ -7,14 +7,18 @@ import {ConfirmRequest} from './backup-confirmrequest';
 import {HierarchyResponse} from './backup-hierarchyresponse';
 import {FileInfoExtra} from './backup-fileinfoextra';
 import {environment} from '../../environments/environment';
+import {BackupSummary} from "./summary/backup-summary";
+import {BackupSummaryComponent} from "./summary/backup-summary.component";
 
 @Injectable({
     providedIn: 'root'
 })
 export class BackupService {
+    readonly BACKUP_URL_SUMMARY = 'backup/summary';
     readonly BACKUP_URL_ACTIONS = 'backup/actions';
     readonly BACKUP_URL_HIERARCHY = 'backup/hierarchy';
 
+    readonly TEST_BACKUP_URL_SUMMARY = 'api/backup/summary.json';
     readonly TEST_BACKUP_URL_ACTIONS = 'api/backup/actions.json';
     readonly TEST_BACKUP_URL_HIERARCHY = 'api/backup/hierarchy.json';
     readonly TEST_FILE_URL = 'api/backup/file.json';
@@ -38,6 +42,13 @@ export class BackupService {
         return this.http.get<Action[]>(environment.production === true ? this.BACKUP_URL_ACTIONS : this.TEST_BACKUP_URL_ACTIONS ).pipe(
             tap(data => console.log(`All: ${JSON.stringify(data)}`)),
             catchError( err => BackupService.handleError(err))
+        );
+    }
+
+    getSummary() : Observable<BackupSummary> {
+        return this.http.get<BackupSummary>(environment.production === true ? this.BACKUP_URL_SUMMARY : this.TEST_BACKUP_URL_SUMMARY).pipe(
+            tap(data =>  console.log(`All: ${JSON.stringify(data)}`)),
+            catchError(err => BackupService.handleError(err))
         );
     }
 

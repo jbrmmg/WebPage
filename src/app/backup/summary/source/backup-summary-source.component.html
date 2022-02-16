@@ -1,0 +1,17 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div *ngIf="source.status != null && source.status === 'OK'" class="col-2 bup-sum-src-path-title-ok">Path</div>
+            <div *ngIf="source.status != null && source.status != 'OK'" class="col-2 bup-sum-src-path-title-notok">Path</div>
+            <div *ngIf="source.status === null" class="col-2 bup-sum-src-path-title-ok">Path (import)</div>
+            <div class="col-10">
+                <p class="bup-sum-src-path-text">{{source.path}} ({{source.id}})</p>
+                <p *ngIf="source.location.name != 'Import'" class="bup-sum-src-path-text2">Location: {{source.location.name}}</p>
+                <p *ngIf="source.location.name === 'Import'" class="bup-sum-src-path-text2">Import to ({{source.destinationId}})</p>
+                <p *ngIf="source.filter === null" class="bup-sum-src-path-text2">Files: {{source.fileCount}} in {{source.directoryCount}} directories.</p>
+                <p *ngIf="source.filter != null" class="bup-sum-src-path-text2">Files: {{source.fileCount}} in {{source.directoryCount}} directories ({{source.filter}})</p>
+                <p class="bup-sum-src-path-text2">Largest File: {{source.largestFile}}</p>
+            </div>
+        </div>
+    </div>
+</div>
