@@ -1,15 +1,19 @@
-import {FileInfo} from './backup-fileinfo';
-
 export interface IAction {
     id: number;
-    path: FileInfo;
+    fileId: number;
+    fileName: string;
+    image: boolean;
+    video: boolean;
     action: string;
     parameter: string;
 }
 
 export class Action implements IAction {
     constructor(public id: number,
-                public path: FileInfo,
+                public fileId: number,
+                public fileName: string,
+                public image: boolean,
+                public video: boolean,
                 public action: string,
                 public parameter: string ) {
     }
