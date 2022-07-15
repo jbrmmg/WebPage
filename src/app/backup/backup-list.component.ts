@@ -16,7 +16,7 @@ export class BackupListComponent implements OnInit {
 
     actions: Action[];
     hierarchy: HierarchyResponse[];
-    topLevel: HierarchyResponse;
+    initialHierarchy: HierarchyResponse;
     atTopLevel: boolean;
     selectedIndex: number;
     listMode: ListMode;
@@ -33,8 +33,8 @@ export class BackupListComponent implements OnInit {
         this.selectedIndex = -1;
         this.listMode = ListMode.Files;
         this.atTopLevel = true;
-        this.topLevel = new HierarchyResponse();
-        this.topLevel.id = -1;
+        this.initialHierarchy = new HierarchyResponse();
+        this.initialHierarchy.id = -1;
         this.selectedFile = null;
         this.fileBackups = [];
         this.category = 'AtHome';
@@ -52,7 +52,7 @@ export class BackupListComponent implements OnInit {
             () => console.log('Load Actions Complete')
         );
 
-        this._backupService.getHierarchy(this.topLevel).subscribe(
+        this._backupService.getHierarchy(this.initialHierarchy).subscribe(
             hierarchy => {
                 this.hierarchy = hierarchy;
             },
@@ -74,15 +74,13 @@ export class BackupListComponent implements OnInit {
         if (this.actions.length > 0) {
             this.selectedIndex = 0;
 
-            this.selectedFile = this.actions[0].path;
+            this.selectedFile = null;
             this.fileBackups = [];
         }
     }
 
     selectSummaryMode() {
         this.listMode = ListMode.Summary;
-
-
     }
 
     get isFileMode(): boolean {
@@ -97,24 +95,8 @@ export class BackupListComponent implements OnInit {
         return this.listMode === ListMode.Summary;
     }
 
-    get isImage(): boolean {
-        if (this.selectedFile == null) {
-            return false;
-        }
-
-        return this.selectedFile.classification.isImage;
-    }
-
     imageUrl(id: number): string {
         return this._backupService.imageUrl(id);
-    }
-
-    get isVideo (): boolean {
-        if (this.selectedFile == null) {
-            return false;
-        }
-
-        return this.selectedFile.classification.isVideo;
     }
 
     videoUrl(id: number): string {
@@ -128,10 +110,6 @@ export class BackupListComponent implements OnInit {
 
     get detailLine(): string {
         return `${this.actions.length} items, selected number: ${this.selectedIndex + 1}`;
-    }
-
-    selectTopLevel(): void {
-        this.changeHierarchy(this.topLevel);
     }
 
     changeHierarchy(parent: HierarchyResponse): void {
@@ -158,8 +136,6 @@ export class BackupListComponent implements OnInit {
         if (this.selectedIndex >= this.actions.length) {
             this.selectedIndex = 0;
         }
-
-        this.selectedFile = this.actions[this.selectedIndex].path;
     }
 
     movePrev(): void {
@@ -172,8 +148,6 @@ export class BackupListComponent implements OnInit {
         if (this.selectedIndex < 0) {
             this.selectedIndex = this.actions.length - 1;
         }
-
-        this.selectedFile = this.actions[this.selectedIndex].path;
     }
 
     displayFile(file: HierarchyResponse): void {

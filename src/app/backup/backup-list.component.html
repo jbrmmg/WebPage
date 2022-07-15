@@ -33,24 +33,22 @@
         <div id="files" [collapse]="!isFileMode">
             <div class="row page-row">
                 <div class="col-2 list-container">
-                    <div class="row">
-                        <div class="col-12" *ngIf="!atTopLevel">
-                            <label class="btn btn-primary btn-directory"
-                                   (click)="selectTopLevel()">
-                                <em class="fa fa-chevron-circle-left"></em>
-                            </label>
-                        </div>
-                    </div>
                     <div *ngIf="hierarchy && hierarchy.length">
                         <div class="row" *ngFor="let nextHierarchy of hierarchy">
                             <div class="col-12">
-                                <div *ngIf="nextHierarchy.directory">
+                                <div *ngIf="nextHierarchy.backup">
+                                    <label class="btn btn-primary btn-directory"
+                                           (click)="changeHierarchy(nextHierarchy)">
+                                        <em class="fa fa-chevron-circle-left"></em>
+                                    </label>
+                                </div>
+                                <div *ngIf="nextHierarchy.directory && !nextHierarchy.backup">
                                     <label class="btn btn-primary btn-directory"
                                         (click)="changeHierarchy(nextHierarchy)">
                                         {{nextHierarchy.displayName}}
                                     </label>
                                 </div>
-                                <div *ngIf="!nextHierarchy.directory">
+                                <div *ngIf="!nextHierarchy.directory && !nextHierarchy.backup">
                                     <label class="btn btn-outline-primary btn-directory"
                                            (click)="displayFile(nextHierarchy)">
                                         {{nextHierarchy.displayName}}
@@ -63,7 +61,7 @@
                 <div class="col-10 detail-col">
                     <div *ngIf="selectedFile != null">
                         <div class="row">
-                            <em class="fa {{selectedFile.classification.icon}} detail-name-icon"></em>
+                            <em class="fa {{selectedFile.icon}} detail-name-icon"></em>
                             <p id="selected-file-id" class="detail-name">{{selectedFile.name}}</p>
                         </div>
                         <div class="row detail-full-name-row">
@@ -84,16 +82,16 @@
                                     <td>
                                         <em class="fa {{backupStatus(nextBackup)}}"></em>
                                     </td>
-                                    <td class="backup">{{nextBackup.directoryInfo.source.location.name}}</td>
+                                    <td class="backup">{{nextBackup.locationName}}</td>
                                     <td class="backup">{{nextBackup.date}}</td>
                                     <td class="backup">[{{nextBackup.md5}}]</td>
                                 </tr>
                             </table>
                         </div>
-                        <div *ngIf="isImage">
+                        <div *ngIf="selectedFile.image">
                             <img src="{{imageUrl(selectedFile.id)}}" alt="Image File" width="420"/>
                         </div>
-                        <div *ngIf="isVideo">
+                        <div *ngIf="selectedFile.video">
                             <video src="{{videoUrl(selectedFile.id)}}" width="420" controls></video>
                         </div>
                         <div>
@@ -160,7 +158,7 @@
                     <p class="action-txt">{{actions[selectedIndex].action}}</p>
                 </div>
                 <div class="col-10">
-                    <p>{{actions[selectedIndex].path.fullFilename}}</p>
+                    <p>{{actions[selectedIndex].fileName}}</p>
                 </div>
             </div>
             <div class="row info-row-2" *ngIf="isItemSelected">
@@ -173,12 +171,12 @@
             <div class="row info-row-2">
                 <div class="col-12">
                     <div *ngIf="isItemSelected && actions[selectedIndex].action == 'IMPORT'">
-                        <div *ngIf="selectedFile != null">
-                            <div *ngIf="isImage">
-                                <img src="backup/fileImage?id={{selectedFile.id}}" width="420" alt="backup file"/>
+                        <div *ngIf="actions[selectedIndex].fileName != null">
+                            <div *ngIf="actions[selectedIndex].image">
+                                <img src="backup/fileImage?id={{actions[selectedIndex].fileId}}" width="420" alt="backup file"/>
                             </div>
-                            <div *ngIf="isVideo">
-                                <video src="backup/fileVideo?id={{selectedFile.id}}" width="420" controls></video>
+                            <div *ngIf="actions[selectedIndex].video">
+                                <video src="backup/fileVideo?id={{actions[selectedIndex].fileId}}" width="420" controls></video>
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,3 @@
-import {Classification} from './backup-classification';
-import {DirectoryInfo} from './backup-directoryinfo';
-
 export class FileInfo {
     id: number;
     name: string;
@@ -8,6 +5,9 @@ export class FileInfo {
     size: number;
     date: Date;
     md5: string;
-    classification: Classification;
-    directoryInfo: DirectoryInfo;
+    image: boolean;
+    video: boolean;
+    icon: string;
+    path: string;
+    locationName: string;
 }
