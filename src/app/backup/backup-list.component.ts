@@ -4,7 +4,7 @@ import {FileInfo} from './backup-fileinfo';
 import {HierarchyResponse} from './backup-hierarchyresponse';
 import {BackupService} from './backup.service';
 
-export enum ListMode { Files, Actions, Summary }
+export enum ListMode { Files, Actions, Summary, import }
 
 @Component({
     templateUrl: './backup-list.component.html',
@@ -83,6 +83,10 @@ export class BackupListComponent implements OnInit {
         this.listMode = ListMode.Summary;
     }
 
+    selectImportMode() {
+        this.listMode = ListMode.import;
+    }
+
     get isFileMode(): boolean {
         return this.listMode === ListMode.Files;
     }
@@ -93,6 +97,10 @@ export class BackupListComponent implements OnInit {
 
     get isSummaryMode(): boolean {
         return this.listMode === ListMode.Summary;
+    }
+
+    get isImportMode(): boolean {
+        return this.listMode === ListMode.import;
     }
 
     imageUrl(id: number): string {
