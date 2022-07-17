@@ -8,7 +8,6 @@ import {HierarchyResponse} from './backup-hierarchyresponse';
 import {FileInfoExtra} from './backup-fileinfoextra';
 import {environment} from '../../environments/environment';
 import {BackupSummary} from "./summary/backup-summary";
-import {BackupSummaryComponent} from "./summary/backup-summary.component";
 
 @Injectable({
     providedIn: 'root'
@@ -16,12 +15,16 @@ import {BackupSummaryComponent} from "./summary/backup-summary.component";
 export class BackupService {
     readonly BACKUP_URL_SUMMARY = 'backup/summary';
     readonly BACKUP_URL_ACTIONS = 'backup/actions';
+    readonly BACKUP_URL_CONF_ACTIONS = 'backup/confirmed-actions';
     readonly BACKUP_URL_HIERARCHY = 'backup/hierarchy';
+    readonly BACKUP_URL_RESET_IMPORT = 'backup/importfiles';
+    readonly BACKUP_URL_PROCESS_IMPORT = 'backup/importprocess';
+    readonly BACKUP_URL_IMPORT_FILES = 'backup/import';
 
     readonly TEST_BACKUP_URL_SUMMARY = 'api/backup/summary.json';
     readonly TEST_BACKUP_URL_ACTIONS = 'api/backup/actions.json';
+    readonly TEST_BACKUP_URL_CONF_ACTIONS = 'api/backup/conf-actions.json';
     readonly TEST_BACKUP_URL_HIERARCHY = 'api/backup/hierarchy.json';
-    readonly TEST_FILE_URL = 'api/backup/file.json';
 
     private static handleError(err: HttpErrorResponse) {
         let errorMessage;
@@ -40,6 +43,13 @@ export class BackupService {
 
     getActions(): Observable<Action[]> {
         return this.http.get<Action[]>(environment.production === true ? this.BACKUP_URL_ACTIONS : this.TEST_BACKUP_URL_ACTIONS ).pipe(
+            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+            catchError( err => BackupService.handleError(err))
+        );
+    }
+
+    getConfirmedActions(): Observable<Action[]> {
+        return this.http.get<Action[]>(environment.production === true ? this.BACKUP_URL_CONF_ACTIONS : this.TEST_BACKUP_URL_CONF_ACTIONS ).pipe(
             tap(data => console.log(`All: ${JSON.stringify(data)}`)),
             catchError( err => BackupService.handleError(err))
         );
@@ -85,6 +95,23 @@ export class BackupService {
             });
     }
 
+    confirmRequest(id: number) {
+        const confirmReq = new ConfirmRequest();
+
+        confirmReq.id = id;
+        confirmReq.confirm = true;
+
+        this.http.post<void>(this.BACKUP_URL_ACTIONS, confirmReq).subscribe(() => {
+                console.log('Confirm Request');
+            },
+            (response) => {
+                console.log('POST call in error (confirm)', response);
+            },
+            () => {
+                console.log('The POST observable is now complete (confirm)');
+            });
+    }
+
     ignorePhoto(id: number) {
         const confirmReq = new ConfirmRequest();
 
@@ -103,6 +130,24 @@ export class BackupService {
             });
     }
 
+    recipePhoto(id: number) {
+        const confirmReq = new ConfirmRequest();
+
+        confirmReq.id = id;
+        confirmReq.parameter = '<recipe>';
+        confirmReq.confirm = false;
+
+        this.http.post<void>(this.BACKUP_URL_ACTIONS, confirmReq).subscribe(() => {
+                console.log('Confirm Request');
+            },
+            (response) => {
+                console.log('POST call in error (recipe)', response);
+            },
+            () => {
+                console.log('The POST observable is now complete (recipe photo)');
+            });
+    }
+
     keepPhoto(id: number, parameter: string) {
         const confirmReq = new ConfirmRequest();
 
@@ -118,6 +163,42 @@ export class BackupService {
             },
             () => {
                 console.log('The POST observable is now complete (keep photo)');
+            });
+    }
+
+    resetImportFiles() {
+        this.http.put<void>(this.BACKUP_URL_RESET_IMPORT,"").subscribe(() => {
+                console.log('Reset Import Files');
+            },
+            (response) => {
+                console.log('PUT call in error (reset files)', response);
+            },
+            () => {
+                console.log('The PUT observable is now complete (reset files)');
+            });
+    }
+
+    processImport() {
+        this.http.post<void>(this.BACKUP_URL_PROCESS_IMPORT,"").subscribe(() => {
+                console.log('Reset Import Files');
+            },
+            (response) => {
+                console.log('PUT call in error (reset files)', response);
+            },
+            () => {
+                console.log('The PUT observable is now complete (reset files)');
+            });
+    }
+
+    importFiles(directory: string) {
+        this.http.post<void>(this.BACKUP_URL_IMPORT_FILES,"").subscribe(() => {
+                console.log('Reset Import Files');
+            },
+            (response) => {
+                console.log('PUT call in error (reset files)', response);
+            },
+            () => {
+                console.log('The PUT observable is now complete (reset files)');
             });
     }
 

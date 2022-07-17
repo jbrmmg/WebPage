@@ -22,6 +22,13 @@
                    [attr.aria-expanded]="isActionMode">
                 <em class="fa fa-exclamation-circle"></em>
             </label>
+            <label class="btn-sm btn-primary float-right btn-mode"
+                   tabindex="1"
+                   aria-controls="actions"
+                   (click)="selectImportMode()"
+                   [attr.aria-expanded]="isImportMode">
+                <em class="fa fa-level-down"></em>
+            </label>
         </div>
     </div>
 </div>
@@ -31,157 +38,13 @@
             <jbr-backup-summary></jbr-backup-summary>
         </div>
         <div id="files" [collapse]="!isFileMode">
-            <div class="row page-row">
-                <div class="col-2 list-container">
-                    <div *ngIf="hierarchy && hierarchy.length">
-                        <div class="row" *ngFor="let nextHierarchy of hierarchy">
-                            <div class="col-12">
-                                <div *ngIf="nextHierarchy.backup">
-                                    <label class="btn btn-primary btn-directory"
-                                           (click)="changeHierarchy(nextHierarchy)">
-                                        <em class="fa fa-chevron-circle-left"></em>
-                                    </label>
-                                </div>
-                                <div *ngIf="nextHierarchy.directory && !nextHierarchy.backup">
-                                    <label class="btn btn-primary btn-directory"
-                                        (click)="changeHierarchy(nextHierarchy)">
-                                        {{nextHierarchy.displayName}}
-                                    </label>
-                                </div>
-                                <div *ngIf="!nextHierarchy.directory && !nextHierarchy.backup">
-                                    <label class="btn btn-outline-primary btn-directory"
-                                           (click)="displayFile(nextHierarchy)">
-                                        {{nextHierarchy.displayName}}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-10 detail-col">
-                    <div *ngIf="selectedFile != null">
-                        <div class="row">
-                            <em class="fa {{selectedFile.icon}} detail-name-icon"></em>
-                            <p id="selected-file-id" class="detail-name">{{selectedFile.name}}</p>
-                        </div>
-                        <div class="row detail-full-name-row">
-                            <p class="detail-full-name">{{selectedFile.fullFilename}}</p>
-                        </div>
-                        <div class="row detail-size-row"><p class="detail-size">{{selectedFile.size}}</p></div>
-                        <div class="row detail-date-row"><p class="detail-date">{{selectedFile.date}}</p></div>
-                        <div class="row detail-md5-row"><p class="detail-md5">[{{selectedFile.md5}}]</p></div>
-                        <div class="row">
-                            <table aria-describedby="selected-file-id" *ngIf="fileBackups.length > 0">
-                                <tr>
-                                    <th scope="col"></th>
-                                    <th scope="col" class="backup">Path</th>
-                                    <th scope="col" class="backup">Date</th>
-                                    <th scope="col" class="backup">MD5</th>
-                                </tr>
-                                <tr *ngFor="let nextBackup of fileBackups">
-                                    <td>
-                                        <em class="fa {{backupStatus(nextBackup)}}"></em>
-                                    </td>
-                                    <td class="backup">{{nextBackup.locationName}}</td>
-                                    <td class="backup">{{nextBackup.date}}</td>
-                                    <td class="backup">[{{nextBackup.md5}}]</td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div *ngIf="selectedFile.image">
-                            <img src="{{imageUrl(selectedFile.id)}}" alt="Image File" width="420"/>
-                        </div>
-                        <div *ngIf="selectedFile.video">
-                            <video src="{{videoUrl(selectedFile.id)}}" width="420" controls></video>
-                        </div>
-                        <div>
-                            <div class="row delete-row">
-                                <div class="col-1">
-                                    <label class="btn-sm btn-primary btn-delete"
-                                           tabindex="1"
-                                           (click)="deleteFile()">
-                                        <em class="fa fa-trash"></em>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <jbr-backup-display></jbr-backup-display>
         </div>
         <div id="actions" [collapse]="!isActionMode">
-            <div class="row page-row">
-                <div class="col-2">
-                    <label class="btn-sm btn-primary btn-action btn-ignore"
-                           tabindex="1"
-                           (click)="ignore()">
-                        <em class="fa fa-trash"></em>
-                    </label>
-                </div>
-                <div class="col-2">
-                </div>
-                <div class="col-4">
-                    <label class="btn-sm btn-primary btn-action btn-left"
-                           tabindex="1"
-                           (click)="movePrev()">
-                        <em class="fa fa-arrow-circle-left"></em>
-                    </label>
-                    <label class="btn-sm btn-primary btn-action btn-right"
-                           tabindex="3"
-                           (click)="moveNext()">
-                        <em class="fa fa-arrow-circle-right"></em>
-                    </label>
-                </div>
-                <div class="col-2">
-                </div>
-                <div class="col-2">
-                    <div class="row">
-                        <label class="btn-sm btn-primary float-right btn-action btn-accept"
-                               for="category"
-                               tabindex="1"
-                               (click)="keep()">
-                            <em class="fa fa-check-circle"></em>
-                        </label>
-                    </div>
-                    <div class="row">
-                        <input class="category-input"
-                               id="category"
-                               type="text"
-                               name="category"
-                               [readOnly]="false"
-                               [(ngModel)]="category">
-                    </div>
-                </div>
-            </div>
-            <div class="row info-row" *ngIf="isItemSelected">
-                <div class="col-2">
-                    <p class="action-txt">{{actions[selectedIndex].action}}</p>
-                </div>
-                <div class="col-10">
-                    <p>{{actions[selectedIndex].fileName}}</p>
-                </div>
-            </div>
-            <div class="row info-row-2" *ngIf="isItemSelected">
-                <div class="col-2">
-                </div>
-                <div class="col-10">
-                    <p>{{detailLine}}</p>
-                </div>
-            </div>
-            <div class="row info-row-2">
-                <div class="col-12">
-                    <div *ngIf="isItemSelected && actions[selectedIndex].action == 'IMPORT'">
-                        <div *ngIf="actions[selectedIndex].fileName != null">
-                            <div *ngIf="actions[selectedIndex].image">
-                                <img src="backup/fileImage?id={{actions[selectedIndex].fileId}}" width="420" alt="backup file"/>
-                            </div>
-                            <div *ngIf="actions[selectedIndex].video">
-                                <video src="backup/fileVideo?id={{actions[selectedIndex].fileId}}" width="420" controls></video>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <jbr-backup-action></jbr-backup-action>
+        </div>
+        <div id="import" [collapse]="!isImportMode">
+            <jbr-backup-import></jbr-backup-import>
         </div>
     </div>
 </div>
