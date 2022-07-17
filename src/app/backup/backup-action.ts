@@ -6,6 +6,7 @@ export interface IAction {
     video: boolean;
     action: string;
     parameter: string;
+    confirmed: boolean
 }
 
 export class Action implements IAction {
@@ -15,6 +16,7 @@ export class Action implements IAction {
                 public image: boolean,
                 public video: boolean,
                 public action: string,
-                public parameter: string ) {
+                public parameter: string,
+                public confirmed: boolean ) {
     }
 }

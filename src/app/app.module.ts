@@ -21,9 +21,12 @@ import { HouseComponent } from './house/house.component';
 import { WeightComponent } from './weight/weight.component';
 import { BackupListComponent } from './backup/backup-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BackupSummaryComponent } from "./backup/summary/backup-summary.component";
 import { DatePipe } from '@angular/common';
-import {BackupSummarySourceComponent} from "./backup/summary/source/backup-summary-source.component";
+import { BackupSummaryComponent } from "./backup/summary/backup-summary.component";
+import { BackupSummarySourceComponent } from "./backup/summary/source/backup-summary-source.component";
+import { BackupDisplayComponent } from "./backup/display/backup-display.component";
+import { BackupActionComponent } from "./backup/action/backup-action.component";
+import { BackupImportComponent } from "./backup/import/backup-import.component";
 
 @NgModule({
   declarations: [
@@ -39,7 +42,10 @@ import {BackupSummarySourceComponent} from "./backup/summary/source/backup-summa
     WeightComponent,
     BackupListComponent,
     BackupSummaryComponent,
-    BackupSummarySourceComponent
+    BackupSummarySourceComponent,
+    BackupDisplayComponent,
+    BackupActionComponent,
+    BackupImportComponent
   ],
   imports: [
     BrowserModule,

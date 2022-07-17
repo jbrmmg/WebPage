@@ -27,7 +27,7 @@ export class BackupSummaryComponent implements OnInit  {
 
     get formattedDate() : string {
         if(this.summary.valid) {
-            return this.datePipe.transform(this.summary.validAt,'dd MMMM yyyy hh:mm:ss');
+            return this.datePipe.transform(this.summary.validAt,'dd MMMM yyyy HH:mm:ss');
         }
 
         return '';
