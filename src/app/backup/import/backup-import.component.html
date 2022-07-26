@@ -1,4 +1,13 @@
 <div class="row page-row">
+    <div class="col">
+        <div>{{preImportDirectory}}</div>
+    </div>
+    <div class="col">
+        <div>{{importDirectory}}</div>
+    </div>
+    <div class="col">
+        <div>{{destinationDirectory}}</div>
+    </div>
     <div class="col" *ngIf="isItemSelected">
         <div *ngIf="actions[selectedIndex].fileName != null">
             <div *ngIf="actions[selectedIndex].image">

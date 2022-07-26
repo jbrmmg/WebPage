@@ -1,0 +1,151 @@
+{
+  "valid": true,
+  "validAt": "2022-07-01T20:00:00.000+00:00",
+  "sources": [
+    {
+      "id": 1,
+      "path": "/media/Shared/Documents",
+      "location": {
+        "id": 1,
+        "name": "Main Shared Drive",
+        "size": "1.8TB",
+        "checkDuplicates": true
+      },
+      "status": "OK",
+      "type": "SRCE",
+      "filter": null,
+      "mountCheck": "/media/Shared/MountCheck.txt",
+      "directoryCount": 78,
+      "fileCount": 377,
+      "totalFileSize": 491846774,
+      "largestFile": 31062456
+    },
+    {
+      "id": 2,
+      "path": "/media/Backup/Documents",
+      "location": {
+        "id": 2,
+        "name": "Backup Drive",
+        "size": "1.8TB",
+        "checkDuplicates": false
+      },
+      "status": "OK",
+      "type": "SRCE",
+      "filter": null,
+      "mountCheck": "/media/Backup/MountCheck.txt",
+      "directoryCount": 78,
+      "fileCount": 373,
+      "totalFileSize": 491810862,
+      "largestFile": 31062456
+    },
+    {
+      "id": 3,
+      "path": "/media/GoogleDrive/Documents",
+      "location": {
+        "id": 3,
+        "name": "Google Drive",
+        "size": "100GB",
+        "checkDuplicates": false
+      },
+      "status": "ERROR",
+      "type": "SRCE",
+      "filter": null,
+      "mountCheck": "/media/GoogleDrive/MountCheck.txt",
+      "directoryCount": 78,
+      "fileCount": 373,
+      "totalFileSize": 491810862,
+      "largestFile": 31062456
+    },
+    {
+      "id": 4,
+      "path": "/media/Shared/Photo",
+      "location": {
+        "id": 1,
+        "name": "Main Shared Drive",
+        "size": "1.8TB",
+        "checkDuplicates": true
+      },
+      "status": "OK",
+      "type": "SRCE",
+      "filter": "\\d{4}$",
+      "mountCheck": "/media/Shared/MountCheck.txt",
+      "directoryCount": 801,
+      "fileCount": 10328,
+      "totalFileSize": 54955817148,
+      "largestFile": 1142416671
+    },
+    {
+      "id": 5,
+      "path": "/media/Backup/Photo",
+      "location": {
+        "id": 2,
+        "name": "Backup Drive",
+        "size": "1.8TB",
+        "checkDuplicates": false
+      },
+      "status": "OK",
+      "type": "SRCE",
+      "filter": null,
+      "mountCheck": "/media/Backup/MountCheck.txt",
+      "directoryCount": 801,
+      "fileCount": 10328,
+      "totalFileSize": 54955817148,
+      "largestFile": 1142416671
+    },
+    {
+      "id": 6,
+      "path": "/media/GoogleDrive/Photo",
+      "location": {
+        "id": 3,
+        "name": "Google Drive",
+        "size": "100GB",
+        "checkDuplicates": false
+      },
+      "status": "OK",
+      "type": "SRCE",
+      "filter": null,
+      "mountCheck": "/media/GoogleDrive/MountCheck.txt",
+      "directoryCount": 801,
+      "fileCount": 10328,
+      "totalFileSize": 54955817148,
+      "largestFile": 1142416671
+    },
+    {
+      "id": 1003460,
+      "path": "/home/jason/Pictures/PhotoImport",
+      "location": {
+        "id": 4,
+        "name": "Import",
+        "size": "N/A",
+        "checkDuplicates": false
+      },
+      "status": "OK",
+      "type": "IMPS",
+      "filter": null,
+      "mountCheck": null,
+      "directoryCount": 0,
+      "fileCount": 269,
+      "totalFileSize": 5198515198,
+      "largestFile": 1096826486,
+      "destinationId": 4
+    },
+    {
+      "id": 1005545,
+      "path": "/home/jason/Pictures/PrePhotoImport",
+      "location": {
+        "id": 4,
+        "name": "Import",
+        "size": "N/A",
+        "checkDuplicates": false
+      },
+      "status": "OK",
+      "type": "PIMP",
+      "filter": null,
+      "mountCheck": null,
+      "directoryCount": 0,
+      "fileCount": 0,
+      "totalFileSize": 0,
+      "largestFile": 0
+    }
+  ]
+}
