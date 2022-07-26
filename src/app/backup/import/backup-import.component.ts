@@ -12,6 +12,8 @@ export class BackupImportComponent implements OnInit  {
     selectedIndex: number;
     category: string;
     importDirectory: string;
+    preImportDirectory: string;
+    destinationDirectory: string;
 
     constructor(private readonly _backupService: BackupService) {
     }
@@ -19,7 +21,34 @@ export class BackupImportComponent implements OnInit  {
     ngOnInit(): void {
         this.actions = [];
         this.category = "AtHome";
-        this.importDirectory = "/home/jason/Pictures/Martina Single";
+        this.importDirectory = "";
+        this.preImportDirectory = "";
+        this.destinationDirectory = "";
+
+        this._backupService.getSummary().subscribe(
+            summary => {
+                console.log("Got summary")
+                let destination = -1;
+                summary.sources.forEach( (nextSource) => {
+                    if (nextSource.type === "PIMP") {
+                        this.preImportDirectory = nextSource.path;
+                    }
+                    if (nextSource.type === "IMPS") {
+                        this.importDirectory = nextSource.path;
+                        destination = nextSource.destinationId;
+                    }
+                });
+                if (destination !== -1) {
+                    summary.sources.forEach((nextSource) => {
+                        if (nextSource.type === "SRCE" && nextSource.id === destination) {
+                            this.destinationDirectory = nextSource.path;
+                        }
+                    });
+                }
+            },
+            () => console.log('Failed to get summary.'),
+            () => console.log('Load Actions summary')
+        );
 
         this._backupService.getActions().subscribe(
             actions => {
