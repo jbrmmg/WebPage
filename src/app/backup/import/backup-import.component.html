@@ -1,22 +1,68 @@
 <div class="row page-row">
-    <div class="col">
-        <div>{{preImportDirectory}}</div>
-    </div>
-    <div class="col">
-        <div>{{importDirectory}}</div>
-    </div>
-    <div class="col">
-        <div>{{destinationDirectory}}</div>
-    </div>
-    <div class="col" *ngIf="isItemSelected">
-        <div *ngIf="actions[selectedIndex].fileName != null">
-            <div *ngIf="actions[selectedIndex].image">
-                <img src="backup/fileImage?id={{actions[selectedIndex].fileId}}" width="420" height="280" alt="backup file"/>
-            </div>
-            <div *ngIf="actions[selectedIndex].video">
-                <video src="backup/fileVideo?id={{actions[selectedIndex].fileId}}" width="420" height="280" controls></video>
+    <div class="col-6 left-column">
+        <div class="col left-column">
+            <div class="row">
+                <div class="col-3 directory-title">Pre Import</div>
+                <input class="col-9 directory-edit"
+                       id="pre-import-edit"
+                       type="text"
+                       name="pre-import"
+                       [readOnly]="true"
+                       [(ngModel)]="preImportDirectory"/>
             </div>
         </div>
+        <div class="col left-column">
+            <div class="row">
+                <div class="col-3 directory-title">Import</div>
+                <input class="col-9 directory-edit"
+                       id="import-edit"
+                       type="text"
+                       name="import"
+                       [readOnly]="true"
+                       [(ngModel)]="importDirectory"/>
+            </div>
+        </div>
+        <div class="col left-column">
+            <div class="row">
+                <div class="col-3 directory-title">Destination</div>
+                <input class="col-9 directory-edit"
+                       id="destination-edit"
+                       type="text"
+                       name="destination"
+                       [readOnly]="true"
+                       [(ngModel)]="destinationDirectory"/>
+            </div>
+        </div>
+        <div class="col left-column">
+            <div class="row">
+                <div class="col-3 directory-title"></div>
+                <div class="col-9 directory-edit">
+                    <div class="row">
+                        <div class="col-4">
+                            <label class="btn-primary btn-row">Convert</label>
+                        </div>
+                        <div class="col-4">
+                            <label class="btn-primary btn-row">Import</label>
+                        </div>
+                        <div class="col-4">
+                            <label class="btn-primary btn-row">Process</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col left-column" *ngIf="isItemSelected">
+            <div *ngIf="actions[selectedIndex].fileName != null">
+                <div *ngIf="actions[selectedIndex].image">
+                    <img src="backup/fileImage?id={{actions[selectedIndex].fileId}}" width="420" height="280" alt="backup file"/>
+                </div>
+                <div *ngIf="actions[selectedIndex].video">
+                    <video src="backup/fileVideo?id={{actions[selectedIndex].fileId}}" width="420" height="280" controls></video>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6" *ngIf="isItemSelected">
         <div class="row">
             <input class="category-input"
                    id="category"
@@ -25,32 +71,15 @@
                    [readOnly]="false"
                    [(ngModel)]="category">
         </div>
-        <div class="row">
-            <label class="col btn-primary btn-reset" (click)="resetFiles()">Reset</label>
-        </div>
-        <div class="row">
-            <label class="col btn-primary btn-process" (click)="processImport()">Process</label>
-        </div>
-        <div class="row">
-            <input class="category-input"
-                   id="importDirectory"
-                   type="text"
-                   name="importDirectory"
-                   [readOnly]="false"
-                   [(ngModel)]="importDirectory">
-        </div>
-        <div class="row">
-            <label class="col btn-primary btn-process" (click)="importFiles()">New Import</label>
-        </div>
-    </div>
-    <div class="col list-container">
-        <div class="row" *ngFor="let nextAction of actions">
-            <label class="col btn-primary btn-select" (click)="selectAction(nextAction.id)">Select</label>
-            <div class="col">{{nextAction.fileName}}</div>
-            <div class="col">{{nextAction.parameter}}</div>
-            <label class="col btn-primary btn-ignore" (click)="ignore(nextAction.id)">Ignore</label>
-            <label class="col btn-primary btn-recipe" (click)="moveToRecipe(nextAction.id)">Recipe</label>
-            <label class="col btn-primary btn-import" (click)="import(nextAction.id,category)">Import</label>
+        <div class="col list-container">
+            <div class="row" *ngFor="let nextAction of actions">
+                <label class="col btn-primary btn-select" (click)="selectAction(nextAction.id)">Select</label>
+                <div class="col">{{nextAction.fileName}}</div>
+                <div class="col">{{nextAction.parameter}}</div>
+                <label class="col btn-primary btn-ignore" (click)="ignore(nextAction.id)">Ignore</label>
+                <label class="col btn-primary btn-recipe" (click)="moveToRecipe(nextAction.id)">Recipe</label>
+                <label class="col btn-primary btn-import" (click)="import(nextAction.id,category)">Import</label>
+            </div>
         </div>
     </div>
 </div>

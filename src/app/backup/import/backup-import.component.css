@@ -6,3 +6,22 @@
     overflow: auto;
     height: 600px;
 }
+
+.left-column {
+    padding-left: 0;
+}
+
+.directory-title {
+    font-weight: bold;
+    padding-left: 0;
+}
+
+.directory-edit {
+    margin-bottom: 4px;
+}
+
+.btn-row {
+    margin-top: 4px;
+    width: 100%;
+    text-align: center;
+}
