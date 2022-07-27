@@ -127,12 +127,20 @@
         </div>
         <div class="col action-list">
             <div class="row no-margin" *ngFor="let nextAction of actions">
-                <label class="btn-primary btn-select" (click)="selectAction(nextAction.id)">*</label>
+                <label class="btn-primary btn-select" (click)="selectAction(nextAction.id)">
+                    <em class="fa fa-check"></em>
+                </label>
                 <div class="col">{{nextAction.fileName}}</div>
                 <div class="col">{{nextAction.parameter}}</div>
-                <label class="btn-primary btn-ignore" (click)="ignore(nextAction.id)">I</label>
-                <label class="btn-primary btn-recipe" (click)="moveToRecipe(nextAction.id)">R</label>
-                <label class="btn-primary btn-import" (click)="import(nextAction.id,category)">H</label>
+                <label class="btn-primary btn-ignore" (click)="ignore(nextAction.id)">
+                    <em class="fa fa-exclamation"></em>
+                </label>
+                <label class="btn-primary btn-recipe" (click)="moveToRecipe(nextAction.id)">
+                    <em class="fa"></em>
+                </label>
+                <label class="btn-primary btn-import" (click)="import(nextAction.id,category)">
+                    <em class="fa fa-arrow-right"></em>
+                </label>
             </div>
         </div>
     </div>
