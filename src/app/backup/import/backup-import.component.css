@@ -70,3 +70,10 @@
     width: 15px;
     text-align: center;
 }
+
+.btn-category {
+    margin-top: 3px;
+    padding: 0;
+    width: 95%;
+    text-align: center;
+}

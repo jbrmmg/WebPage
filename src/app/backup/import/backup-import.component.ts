@@ -105,9 +105,7 @@ export class BackupImportComponent implements OnInit  {
     }
 
     selectAction(id: number) {
-        console.log("Select>" + id)
         this.selectedIndex = this.findActionIndexForId(id);
-        console.log(">" + this.selectedIndex)
     }
 
     ignore(id: number) {
@@ -126,8 +124,6 @@ export class BackupImportComponent implements OnInit  {
     }
 
     get isItemSelected(): boolean {
-        console.log("Len:" + this.actions.length);
-        console.log("Idx:" + this.selectedIndex);
         return this.actions.length > 0 && this.selectedIndex !== -1;
     }
 
@@ -144,7 +140,6 @@ export class BackupImportComponent implements OnInit  {
     }
 
     imageUrl(id: number): string {
-        console.log("Image>" + id)
         return this._backupService.imageUrl(id);
     }
 

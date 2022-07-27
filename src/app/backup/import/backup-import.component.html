@@ -103,14 +103,36 @@
                    [readOnly]="false"
                    [(ngModel)]="category">
         </div>
+        <div class="row no-margin">
+            <div class="col-4">
+                <label class="btn-primary btn-category">AtHome</label>
+            </div>
+            <div class="col-4">
+                <label class="btn-primary btn-category">Watford</label>
+            </div>
+            <div class="col-4">
+                <label class="btn-primary btn-category">Ireland</label>
+            </div>
+        </div>
+        <div class="row no-margin">
+            <div class="col-4">
+                <label class="btn-primary btn-category">Martina</label>
+            </div>
+            <div class="col-4">
+                <label class="btn-primary btn-category">Party</label>
+            </div>
+            <div class="col-4">
+                <label class="btn-primary btn-category">TBD</label>
+            </div>
+        </div>
         <div class="col action-list">
             <div class="row no-margin" *ngFor="let nextAction of actions">
                 <label class="btn-primary btn-select" (click)="selectAction(nextAction.id)">*</label>
                 <div class="col">{{nextAction.fileName}}</div>
                 <div class="col">{{nextAction.parameter}}</div>
-                <label class=" btn-primary btn-ignore" (click)="ignore(nextAction.id)">I</label>
-                <label class=" btn-primary btn-recipe" (click)="moveToRecipe(nextAction.id)">R</label>
-                <label class=" btn-primary btn-import" (click)="import(nextAction.id,category)">H</label>
+                <label class="btn-primary btn-ignore" (click)="ignore(nextAction.id)">I</label>
+                <label class="btn-primary btn-recipe" (click)="moveToRecipe(nextAction.id)">R</label>
+                <label class="btn-primary btn-import" (click)="import(nextAction.id,category)">H</label>
             </div>
         </div>
     </div>
