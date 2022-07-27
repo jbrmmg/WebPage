@@ -6,3 +6,74 @@
     overflow: auto;
     height: 600px;
 }
+
+.left-column {
+    padding-left: 0;
+}
+
+.directory-title {
+    font-weight: bold;
+    padding-left: 0;
+}
+
+.directory-edit {
+    margin-bottom: 4px;
+}
+
+.btn-row {
+    margin-top: 4px;
+    width: 100%;
+    text-align: center;
+}
+
+.category-input {
+    width: 100%;
+}
+
+.right-column {
+    padding: 0;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.action-list {
+    padding: 0;
+    height: 700px;
+    width: 100%;
+    margin-top: 10px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.btn-select {
+    margin: 0 0 3px 0;
+    width: 15px;
+    text-align: center;
+}
+
+.btn-ignore {
+    margin: 0 3px 3px 0;
+    width: 15px;
+    text-align: center;
+}
+
+.btn-recipe {
+    margin: 0 3px 3px 0;
+    width: 15px;
+    text-align: center;
+}
+
+.btn-import {
+    margin: 0 3px 3px 0;
+    width: 15px;
+    text-align: center;
+}
+
+.btn-category {
+    margin-top: 3px;
+    padding: 0;
+    width: 95%;
+    text-align: center;
+}

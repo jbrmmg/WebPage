@@ -138,4 +138,12 @@ export class BackupImportComponent implements OnInit  {
     importFiles() {
         this._backupService.importFiles(this.importDirectory);
     }
+
+    imageUrl(id: number): string {
+        return this._backupService.imageUrl(id);
+    }
+
+    videoUrl(id: number): string {
+        return this._backupService.videoUrl(id);
+    }
 }
