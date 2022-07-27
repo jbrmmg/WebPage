@@ -25,3 +25,48 @@
     width: 100%;
     text-align: center;
 }
+
+.category-input {
+    width: 100%;
+}
+
+.right-column {
+    padding: 0;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.action-list {
+    padding: 0;
+    height: 700px;
+    width: 100%;
+    margin-top: 10px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.btn-select {
+    margin: 0 0 3px 0;
+    width: 15px;
+    text-align: center;
+}
+
+.btn-ignore {
+    margin: 0 3px 3px 0;
+    width: 15px;
+    text-align: center;
+}
+
+.btn-recipe {
+    margin: 0 3px 3px 0;
+    width: 15px;
+    text-align: center;
+}
+
+.btn-import {
+    margin: 0 3px 3px 0;
+    width: 15px;
+    text-align: center;
+}
