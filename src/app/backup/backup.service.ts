@@ -191,7 +191,19 @@ export class BackupService {
             });
     }
 
-    importFiles(directory: string) {
+    convert() {
+        this.http.post<void>(this.BACKUP_URL_CONVERT_FILES,"").subscribe(() => {
+                console.log('Reset Import Files');
+            },
+            (response) => {
+                console.log('PUT call in error (convert files)', response);
+            },
+            () => {
+                console.log('The PUT observable is now complete (convert files)');
+            });
+    }
+
+    importFiles() {
         this.http.post<void>(this.BACKUP_URL_IMPORT_FILES,"").subscribe(() => {
                 console.log('Reset Import Files');
             },
@@ -216,33 +228,6 @@ export class BackupService {
             return `backup/fileVideo?id=${id}`;
         } else {
             return 'api/backup/test.video.mp4';
-        }
-    }
-
-    convert() {
-        if (environment.production) {
-            return this.http.post<HierarchyResponse[]>(this.BACKUP_URL_CONVERT_FILES, parent).pipe(
-                tap(data => console.log(`All: ${JSON.stringify(data)}`)),
-                catchError(err => BackupService.handleError(err))
-            );
-        }
-    }
-
-    doImport() {
-        if (environment.production) {
-            return this.http.post<HierarchyResponse[]>(this.BACKUP_URL_IMPORT_FILES, parent).pipe(
-                tap(data => console.log(`All: ${JSON.stringify(data)}`)),
-                catchError(err => BackupService.handleError(err))
-            );
-        }
-    }
-
-    process() {
-        if (environment.production) {
-            return this.http.post<HierarchyResponse[]>(this.BACKUP_URL_PROCESS_IMPORT, parent).pipe(
-                tap(data => console.log(`All: ${JSON.stringify(data)}`)),
-                catchError(err => BackupService.handleError(err))
-            );
         }
     }
 }
