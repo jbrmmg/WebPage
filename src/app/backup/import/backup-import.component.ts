@@ -127,18 +127,6 @@ export class BackupImportComponent implements OnInit  {
         return this.actions.length > 0 && this.selectedIndex !== -1;
     }
 
-    resetFiles() {
-        this._backupService.resetImportFiles();
-    }
-
-    processImport() {
-        this._backupService.processImport();
-    }
-
-    importFiles() {
-        this._backupService.importFiles(this.importDirectory);
-    }
-
     imageUrl(id: number): string {
         return this._backupService.imageUrl(id);
     }
@@ -156,10 +144,10 @@ export class BackupImportComponent implements OnInit  {
     }
 
     doImport() {
-        this._backupService.doImport();
+        this._backupService.importFiles();
     }
 
     process() {
-        this._backupService.process();
+        this._backupService.processImport();
     }
 }
