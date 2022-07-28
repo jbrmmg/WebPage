@@ -39,13 +39,13 @@
                 <div class="col-9 directory-edit">
                     <div class="row">
                         <div class="col-4">
-                            <label class="btn-primary btn-row">Convert</label>
+                            <label class="btn-primary btn-row" (click)="convert()">Convert</label>
                         </div>
                         <div class="col-4">
-                            <label class="btn-primary btn-row">Import</label>
+                            <label class="btn-primary btn-row" (click)="doImport()">Import</label>
                         </div>
                         <div class="col-4">
-                            <label class="btn-primary btn-row">Process</label>
+                            <label class="btn-primary btn-row" (click)="process()">Process</label>
                         </div>
                     </div>
                 </div>
@@ -105,24 +105,24 @@
         </div>
         <div class="row no-margin">
             <div class="col-4">
-                <label class="btn-primary btn-category">AtHome</label>
+                <label class="btn-primary btn-category" (click)="setCategory('AtHome')">AtHome</label>
             </div>
             <div class="col-4">
-                <label class="btn-primary btn-category">Watford</label>
+                <label class="btn-primary btn-category" (click)="setCategory('Watford')">Watford</label>
             </div>
             <div class="col-4">
-                <label class="btn-primary btn-category">Ireland</label>
+                <label class="btn-primary btn-category" (click)="setCategory('Ireland')">Ireland</label>
             </div>
         </div>
         <div class="row no-margin">
             <div class="col-4">
-                <label class="btn-primary btn-category">Martina</label>
+                <label class="btn-primary btn-category" (click)="setCategory('Martina')">Martina</label>
             </div>
             <div class="col-4">
-                <label class="btn-primary btn-category">Party</label>
+                <label class="btn-primary btn-category" (click)="setCategory('Party')">Party</label>
             </div>
             <div class="col-4">
-                <label class="btn-primary btn-category">TBD</label>
+                <label class="btn-primary btn-category" (click)="setCategory('TBD')">TBD</label>
             </div>
         </div>
         <div class="col action-list">

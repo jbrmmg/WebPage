@@ -146,4 +146,20 @@ export class BackupImportComponent implements OnInit  {
     videoUrl(id: number): string {
         return this._backupService.videoUrl(id);
     }
+
+    setCategory(category: string) {
+        this.category = category;
+    }
+
+    convert() {
+        this._backupService.convert();
+    }
+
+    doImport() {
+        this._backupService.doImport();
+    }
+
+    process() {
+        this._backupService.process();
+    }
 }
