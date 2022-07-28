@@ -20,6 +20,7 @@ export class BackupService {
     readonly BACKUP_URL_RESET_IMPORT = 'backup/importfiles';
     readonly BACKUP_URL_PROCESS_IMPORT = 'backup/importprocess';
     readonly BACKUP_URL_IMPORT_FILES = 'backup/import';
+    readonly BACKUP_URL_CONVERT_FILES = 'backup/convert';
 
     readonly TEST_BACKUP_URL_SUMMARY = 'api/backup/summary.json';
     readonly TEST_BACKUP_URL_ACTIONS = 'api/backup/actions.json';
@@ -215,6 +216,33 @@ export class BackupService {
             return `backup/fileVideo?id=${id}`;
         } else {
             return 'api/backup/test.video.mp4';
+        }
+    }
+
+    convert() {
+        if (environment.production) {
+            return this.http.post<HierarchyResponse[]>(this.BACKUP_URL_CONVERT_FILES, parent).pipe(
+                tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+                catchError(err => BackupService.handleError(err))
+            );
+        }
+    }
+
+    doImport() {
+        if (environment.production) {
+            return this.http.post<HierarchyResponse[]>(this.BACKUP_URL_IMPORT_FILES, parent).pipe(
+                tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+                catchError(err => BackupService.handleError(err))
+            );
+        }
+    }
+
+    process() {
+        if (environment.production) {
+            return this.http.post<HierarchyResponse[]>(this.BACKUP_URL_PROCESS_IMPORT, parent).pipe(
+                tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+                catchError(err => BackupService.handleError(err))
+            );
         }
     }
 }
