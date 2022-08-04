@@ -111,20 +111,36 @@ export class BackupImportComponent implements OnInit  {
     ignore(id: number) {
         this._backupService.ignorePhoto(id);
         this.actions[this.findActionIndexForId(id)].parameter = 'ignore';
+
+        if(this.selectedIndex + 1 < this.actions.length) {
+            this.selectedIndex++;
+        }
     }
 
     import(id: number, directory: string) {
         this._backupService.keepPhoto(id,directory);
         this.actions[this.findActionIndexForId(id)].parameter = directory;
+
+        if(this.selectedIndex + 1 < this.actions.length) {
+            this.selectedIndex++;
+        }
     }
 
     moveToRecipe(id: number) {
         this._backupService.recipePhoto(id);
         this.actions[this.findActionIndexForId(id)].parameter = 'recipe';
+
+        if(this.selectedIndex + 1 < this.actions.length) {
+            this.selectedIndex++;
+        }
     }
 
     get isItemSelected(): boolean {
         return this.actions.length > 0 && this.selectedIndex !== -1;
+    }
+
+    isSelectedAction(id: number): boolean {
+        return this.selectedIndex === this.findActionIndexForId(id);
     }
 
     imageUrl(id: number): string {
