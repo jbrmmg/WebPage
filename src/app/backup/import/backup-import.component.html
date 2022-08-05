@@ -29,6 +29,23 @@
                         <video src="{{videoUrl(actions[selectedIndex].fileId)}}" width="100%" controls></video>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-4">
+                        <label class="btn btn-primary btn-ignore" (click)="ignore(-1)">
+                            <em class="fa fa-exclamation"></em>
+                        </label>
+                    </div>
+                    <div class="col-4">
+                        <label class="btn btn-primary btn-recipe" (click)="moveToRecipe(-1)">
+                            <em class="fa fa-beer"></em>
+                        </label>
+                    </div>
+                    <div class="col-4">
+                        <label class="btn btn-primary btn-import" (click)="import(-1, category)">
+                            <em class="fa fa-arrow-right"></em>
+                        </label>
+                    </div>
+                </div>
             </div>
             <div class="col-6">
                 <div class="col left-column">
@@ -139,26 +156,11 @@
             <div class="row no-margin" *ngFor="let nextAction of actions">
                 <div class="col-1">
                     <label class="btn btn-primary btn-select" (click)="selectAction(nextAction.id)">
-                        <em [ngClass]="{'fa' : true, 'fa-check' : isSelectedAction(nextAction.id), 'fa-cross' : !isSelectedAction(nextAction.id)}"></em>
+                        <em [ngClass]="{'fa' : true, 'fa-check' : isSelectedAction(nextAction.id)}"></em>
                     </label>
                 </div>
-                <div [ngClass]="{'selected-file' : isSelectedAction(nextAction.id), 'col-3' : true}">{{nextAction.fileName}}</div>
+                <div [ngClass]="{'selected-file' : isSelectedAction(nextAction.id), 'col-8' : true}">{{nextAction.fileName}}</div>
                 <div [ngClass]="{'selected-file' : isSelectedAction(nextAction.id), 'col-3' : true}">{{nextAction.parameter}}</div>
-                <div class="col-1">
-                    <label class="btn btn-primary btn-ignore" *ngIf="isSelectedAction(nextAction.id)" (click)="ignore(nextAction.id)">
-                        <em class="fa fa-exclamation"></em>
-                    </label>
-                </div>
-                <div class="col-1">
-                    <label class="btn btn-primary btn-recipe" *ngIf="isSelectedAction(nextAction.id)" (click)="moveToRecipe(nextAction.id)">
-                        <em class="fa fa-beer"></em>
-                    </label>
-                </div>
-                <div class="col-1">
-                    <label class="btn btn-primary btn-import" *ngIf="isSelectedAction(nextAction.id)" (click)="import(nextAction.id,category)">
-                        <em class="fa fa-arrow-right"></em>
-                    </label>
-                </div>
             </div>
         </div>
     </div>

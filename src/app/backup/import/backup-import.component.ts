@@ -109,6 +109,10 @@ export class BackupImportComponent implements OnInit  {
     }
 
     ignore(id: number) {
+        if(id === -1 && this.selectedIndex != -1) {
+            id = this.actions[this.selectedIndex].id;
+        }
+
         this._backupService.ignorePhoto(id);
         this.actions[this.findActionIndexForId(id)].parameter = 'ignore';
 
@@ -118,6 +122,10 @@ export class BackupImportComponent implements OnInit  {
     }
 
     import(id: number, directory: string) {
+        if(id === -1 && this.selectedIndex != -1) {
+            id = this.actions[this.selectedIndex].id;
+        }
+
         this._backupService.keepPhoto(id,directory);
         this.actions[this.findActionIndexForId(id)].parameter = directory;
 
@@ -127,6 +135,10 @@ export class BackupImportComponent implements OnInit  {
     }
 
     moveToRecipe(id: number) {
+        if(id === -1 && this.selectedIndex != -1) {
+            id = this.actions[this.selectedIndex].id;
+        }
+
         this._backupService.recipePhoto(id);
         this.actions[this.findActionIndexForId(id)].parameter = 'recipe';
 
