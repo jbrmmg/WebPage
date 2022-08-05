@@ -77,6 +77,9 @@
     padding: 0;
     width: 95%;
     text-align: center;
+    border-color: #81997f;
+    background-color: #81997f;
+    color: white;
 }
 
 .selected-file {

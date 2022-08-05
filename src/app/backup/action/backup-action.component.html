@@ -2,12 +2,12 @@
     <div class="col-2">
     </div>
     <div class="col-4">
-        <label class="btn-sm btn-primary btn-action btn-left"
+        <label class="btn btn-primary btn-action btn-left"
                tabindex="1"
                (click)="movePrev()">
             <em class="fa fa-arrow-circle-left"></em>
         </label>
-        <label class="btn-sm btn-primary btn-action btn-right"
+        <label class="btn btn-primary btn-action btn-right"
                tabindex="3"
                (click)="moveNext()">
             <em class="fa fa-arrow-circle-right"></em>
@@ -17,7 +17,7 @@
     </div>
     <div class="col-2">
         <div class="row">
-            <label class="btn-sm btn-primary float-right btn-action btn-accept"
+            <label class="btn btn-primary float-right btn-action btn-accept"
                    tabindex="1"
                    (click)="confirm()">
                 <em class="fa fa-check-circle"></em>
@@ -44,10 +44,10 @@
     <div class="col-12">
         <div *ngIf="isItemSelected">
             <div *ngIf="actions[selectedIndex].fileName != null">
-                <div *ngIf="actions[selectedIndex].image">
+                <div *ngIf="actions[selectedIndex].isImage">
                     <img src="backup/fileImage?id={{actions[selectedIndex].fileId}}" width="420" alt="backup file"/>
                 </div>
-                <div *ngIf="actions[selectedIndex].video">
+                <div *ngIf="actions[selectedIndex].isVideo">
                     <video src="backup/fileVideo?id={{actions[selectedIndex].fileId}}" width="420" controls></video>
                 </div>
             </div>
