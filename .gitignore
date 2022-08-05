@@ -10,6 +10,7 @@ package-lock.json
 # dependencies
 /node_modules
 /node
+/.angular
 
 # IDEs and editors
 /.idea

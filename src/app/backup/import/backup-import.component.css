@@ -21,7 +21,7 @@
 }
 
 .btn-row {
-    margin-top: 4px;
+    margin-bottom: 4px;
     width: 100%;
     text-align: center;
 }
@@ -49,31 +49,36 @@
 
 .btn-select {
     margin: 0 0 3px 0;
-    width: 15px;
+    width: 80%;
     text-align: center;
 }
 
 .btn-ignore {
     margin: 0 3px 3px 0;
-    width: 15px;
+    width: 80%;
     text-align: center;
 }
 
 .btn-recipe {
     margin: 0 3px 3px 0;
-    width: 15px;
+    width: 80%;
     text-align: center;
 }
 
 .btn-import {
     margin: 0 3px 3px 0;
-    width: 15px;
+    width: 80%;
     text-align: center;
 }
 
 .btn-category {
     margin-top: 3px;
+    margin-left: 3px;
     padding: 0;
     width: 95%;
     text-align: center;
+}
+
+.selected-file {
+    background-color: #ffe87c;
 }
