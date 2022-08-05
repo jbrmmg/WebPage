@@ -111,6 +111,9 @@
             },
             "debug" : {
               "browserTarget": "jbrmmg:build:debug"
+            },
+            "debug-web" : {
+              "browserTarget": "jbrmmg:build:debug-web"
             }
           }
         },

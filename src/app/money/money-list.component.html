@@ -1,28 +1,28 @@
 <div class="card">
     <div class="card-body">
         <div class="row">
-            <label class="btn-sm btn-primary float-right btn-mode"
+            <label class="btn btn-primary float-right btn-mode col-1"
                    tabindex="0"
                    (click)="selectNormalMode()"
                    [attr.aria-expanded]="isNormalMode"
                    aria-controls="normal">
                 <em class="fa fa-align-justify"></em>
             </label>
-            <label class="btn-sm btn-primary float-right btn-mode"
+            <label class="btn btn-primary float-right btn-mode col-1"
                    tabindex="0"
                    (click)="selectAddMode()"
                    [attr.aria-expanded]="isAddMode"
                    aria-controls="addTransaction">
                 <em class="fa fa-plus-circle"></em>
             </label>
-            <label class="btn-sm btn-primary float-right btn-mode"
+            <label class="btn btn-primary float-right btn-mode col-1"
                    tabindex="0"
                    (click)="selectRegularMode()"
                    [attr.aria-expanded]="isRegularMode"
                    aria-controls="regular">
                 <em class="fa fa-recycle"></em>
             </label>
-            <label class="btn-sm btn-primary float-right btn-mode"
+            <label class="btn btn-primary float-right btn-mode col-1"
                    tabindex="0"
                    (click)="selectReconcileMode()"
                    [attr.aria-expanded]="isReconcileMode"
@@ -120,8 +120,7 @@
                             <label class="btn btn-primary btn-type"
                                    btnRadio="{{type.id}}"
                                    [(ngModel)]="radioType"
-                                   tabindex="0"
-                                   tooltip="{{type.name}}">
+                                   tabindex="0">
                                 <em class="fa {{type.icon}}"></em>
                             </label>
                         </div>

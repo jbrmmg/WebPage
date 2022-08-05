@@ -2,6 +2,9 @@
 .btn-mode {
     margin: 0 3px;
     width: 60px;
+    background-color: #97bf78;
+    border-color: #97bf78;
+    color: black;
 }
 
 .btn-action {
