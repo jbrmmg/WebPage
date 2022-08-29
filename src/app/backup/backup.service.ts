@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {Action} from './backup-action';
+import {Log} from './backup-log'
 import {ConfirmRequest} from './backup-confirmrequest';
 import {HierarchyResponse} from './backup-hierarchyresponse';
 import {FileInfoExtra} from './backup-fileinfoextra';
@@ -21,11 +22,13 @@ export class BackupService {
     readonly BACKUP_URL_PROCESS_IMPORT = 'backup/importprocess';
     readonly BACKUP_URL_IMPORT_FILES = 'backup/import';
     readonly BACKUP_URL_CONVERT_FILES = 'backup/convert';
+    readonly BACKUP_URL_LOGS = 'backup/log';
 
     readonly TEST_BACKUP_URL_SUMMARY = 'api/backup/summary.json';
     readonly TEST_BACKUP_URL_ACTIONS = 'api/backup/actions.json';
     readonly TEST_BACKUP_URL_CONF_ACTIONS = 'api/backup/conf-actions.json';
     readonly TEST_BACKUP_URL_HIERARCHY = 'api/backup/hierarchy.json';
+    readonly TEST_BACKUP_URL_LOGS = 'api/backup/logs.json';
 
     private static handleError(err: HttpErrorResponse) {
         let errorMessage;
@@ -46,6 +49,13 @@ export class BackupService {
         return this.http.get<Action[]>(environment.production === true ? this.BACKUP_URL_ACTIONS : this.TEST_BACKUP_URL_ACTIONS ).pipe(
             tap(data => console.log(`All: ${JSON.stringify(data)}`)),
             catchError( err => BackupService.handleError(err))
+        );
+    }
+
+    getLogs(): Observable<Log[]> {
+        return this.http.get<Log[]>(environment.production === true ? this.BACKUP_URL_LOGS : this.TEST_BACKUP_URL_LOGS).pipe(
+            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+            catchError(err => BackupService.handleError(err))
         );
     }
 

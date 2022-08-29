@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {BackupService} from './backup.service';
 
-export enum ListMode { Files, Actions, Summary, import }
+export enum ListMode { Files, Actions, Summary, import, logs }
 
 @Component({
     templateUrl: './backup-list.component.html',
@@ -33,6 +33,10 @@ export class BackupListComponent implements OnInit {
         this.listMode = ListMode.import;
     }
 
+    selectLogMode() {
+        this.listMode = ListMode.logs;
+    }
+
     get isFileMode(): boolean {
         return this.listMode === ListMode.Files;
     }
@@ -47,5 +51,9 @@ export class BackupListComponent implements OnInit {
 
     get isImportMode(): boolean {
         return this.listMode === ListMode.import;
+    }
+
+    get isLogMode(): boolean {
+        return this.listMode === ListMode.logs;
     }
 }

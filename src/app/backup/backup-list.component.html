@@ -29,6 +29,13 @@
                    [attr.aria-expanded]="isImportMode">
                 <em class="fa fa-level-down"></em>
             </label>
+            <label class="btn btn-primary btn-mode col-1"
+                   tabindex="1"
+                   aria-controls="logs"
+                   (click)="selectLogMode()"
+                   [attr.aria-expanded]="isLogMode">
+                <em class="fa fa-bars"></em>
+            </label>
         </div>
     </div>
 </div>
@@ -45,6 +52,9 @@
         </div>
         <div id="import" [collapse]="!isImportMode">
             <jbr-backup-import></jbr-backup-import>
+        </div>
+        <div id="logs" [collapse]="!isLogMode">
+            <jbr-backup-log></jbr-backup-log>
         </div>
     </div>
 </div>

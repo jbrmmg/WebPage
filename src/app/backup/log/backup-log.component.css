@@ -1,0 +1,47 @@
+.icon-col {
+    width: 18px;
+    padding: 0;
+}
+
+.date-col {
+    font-family: "Courier New", serif;
+    font-size: 12px;
+    width: 130px;
+    padding-left: 0;
+    padding-right: 6px;
+}
+
+.message-col {
+    font-family: "Courier New", serif;
+    font-size: 12px;
+    padding-left: 0;
+    padding-right: 6px;
+}
+
+.page-row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.item-row {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.icon-debug {
+    color: lightblue;
+}
+
+.icon-info {
+    color: darkblue;
+}
+
+.icon-warning {
+    color: darkkhaki;
+}
+
+.icon-error {
+    color: red;
+}

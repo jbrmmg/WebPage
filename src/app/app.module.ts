@@ -10,9 +10,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ModalModule} from 'ngx-bootstrap/modal';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
-import { LogsComponent } from './logs/logs.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { PodcastComponent } from './podcast/podcast.component';
 import { MoneyAddCalcComponent } from './money/calculator/money-add-calc.component';
 import { MoneyCategoryPickerComponent } from './money/category-picker/money-cat-picker.component';
 import { MoneyCategoryFilterComponent } from './money/category-picker/money-cat-filter.component';
@@ -27,13 +25,12 @@ import { BackupSummarySourceComponent } from "./backup/summary/source/backup-sum
 import { BackupDisplayComponent } from "./backup/display/backup-display.component";
 import { BackupActionComponent } from "./backup/action/backup-action.component";
 import { BackupImportComponent } from "./backup/import/backup-import.component";
+import { BackupLogComponent } from "./backup/log/backup-log.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     WelcomeComponent,
-    LogsComponent,
-    PodcastComponent,
     MoneyAddCalcComponent,
     MoneyCategoryPickerComponent,
     MoneyCategoryFilterComponent,
@@ -45,7 +42,8 @@ import { BackupImportComponent } from "./backup/import/backup-import.component";
     BackupSummarySourceComponent,
     BackupDisplayComponent,
     BackupActionComponent,
-    BackupImportComponent
+    BackupImportComponent,
+    BackupLogComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +58,6 @@ import { BackupImportComponent } from "./backup/import/backup-import.component";
     BsDropdownModule.forRoot(),
     RouterModule.forRoot([
       {path: 'welcome', component: WelcomeComponent},
-      {path: 'logs', component: LogsComponent},
       {path: 'money', component: MoneyListComponent},
       {path: 'house', component: HouseComponent},
       {path: 'bup', component: BackupListComponent},

@@ -1,0 +1,11 @@
+<div class="row page-row">
+    <div class="row item-row align-items-center" *ngFor="let nextLog of logs">
+        <div [ngClass]="getLogIconClass(nextLog)">
+ <!--           <label>
+                <em [ngClass]="getLogIconClass(nextLog)"></em>
+            </label> -->
+        </div>
+        <div class="col-2 date-col">{{getLogDate(nextLog)}}</div>
+        <div class="col-9 message-col">{{nextLog.message}}</div>
+    </div>
+</div>
