@@ -1,16 +1,26 @@
 <div class="card">
-    <div class="card-body">
-        <div class="row">
-            <div *ngIf="source.status != null && source.status === 'OK'" class="col-2 bup-sum-src-path-title-ok">Path</div>
-            <div *ngIf="source.status != null && source.status != 'OK'" class="col-2 bup-sum-src-path-title-notok">Path</div>
-            <div *ngIf="source.status === null" class="col-2 bup-sum-src-path-title-ok">Path (import)</div>
-            <div class="col-10">
-                <p class="bup-sum-src-path-text">{{source.path}} ({{source.id}})</p>
-                <p *ngIf="source.location.name != 'Import'" class="bup-sum-src-path-text2">Location: {{source.location.name}}</p>
-                <p *ngIf="source.location.name === 'Import'" class="bup-sum-src-path-text2">Import to ({{source.destinationId}})</p>
-                <p *ngIf="source.filter === null" class="bup-sum-src-path-text2">Files: {{source.fileCount}} in {{source.directoryCount}} directories.</p>
-                <p *ngIf="source.filter != null" class="bup-sum-src-path-text2">Files: {{source.fileCount}} in {{source.directoryCount}} directories ({{source.filter}})</p>
-                <p class="bup-sum-src-path-text2">Largest File: {{source.largestFile}}</p>
+    <div class="card-body row">
+        <div class="col-1">
+            <div *ngIf="isOK()" class="col-2 bup-sum-src-path-title-ok fa fa-check-circle"></div>
+            <div *ngIf="!isOK()" class="col-2 bup-sum-src-path-title-notok fa fa-exclamation-circle"></div>
+        </div>
+        <div class="col-11">
+            <div class="bup-sum-src-path-text card-text">{{title()}}: {{source.path}} ({{source.location.name}})</div>
+            <div *ngIf="hasDestination()" class="row card-text">
+                <div class="col-2 bup-sum-src-path-label">Destination:</div>
+                <div class="col-9 bup-sum-src-path-text2">{{destination()}}</div>
+            </div>
+            <div *ngIf="hasFiles()" class="row card-text">
+                <div class="col-2 bup-sum-src-path-label">Files:</div>
+                <div class="col-9 bup-sum-src-path-text2">{{formattedFileCount()}}</div>
+            </div>
+            <div *ngIf="hasFiles()" class="row card-text">
+                <div class="col-2 bup-sum-src-path-label">Largest File:</div>
+                <div class="col-9 bup-sum-src-path-text2">{{largest()}}</div>
+            </div>
+            <div *ngIf="hasFilter()" class="row card-text">
+                <div class="col-2 bup-sum-src-path-label">Filter:</div>
+                <div class="col-9 bup-sum-src-path-text2">{{source.filter}}</div>
             </div>
         </div>
     </div>
