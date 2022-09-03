@@ -1,6 +1,6 @@
 {
   "valid": true,
-  "validAt": "2022-07-01T20:00:00.000+00:00",
+  "validAt": "2022-08-29T13:45:01.928+00:00",
   "sources": [
     {
       "id": 1,
@@ -12,12 +12,12 @@
         "checkDuplicates": true
       },
       "status": "OK",
-      "type": "SRCE",
       "filter": null,
       "mountCheck": "/media/Shared/MountCheck.txt",
+      "type": "SRCE",
       "directoryCount": 78,
-      "fileCount": 377,
-      "totalFileSize": 491846774,
+      "fileCount": 381,
+      "totalFileSize": 493941922,
       "largestFile": 31062456
     },
     {
@@ -29,13 +29,13 @@
         "size": "1.8TB",
         "checkDuplicates": false
       },
-      "status": "OK",
-      "type": "SRCE",
+      "status": "ERROR",
       "filter": null,
       "mountCheck": "/media/Backup/MountCheck.txt",
+      "type": "SRCE",
       "directoryCount": 78,
-      "fileCount": 373,
-      "totalFileSize": 491810862,
+      "fileCount": 378,
+      "totalFileSize": 493906069,
       "largestFile": 31062456
     },
     {
@@ -47,13 +47,13 @@
         "size": "100GB",
         "checkDuplicates": false
       },
-      "status": "ERROR",
-      "type": "SRCE",
+      "status": "OK",
       "filter": null,
       "mountCheck": "/media/GoogleDrive/MountCheck.txt",
+      "type": "SRCE",
       "directoryCount": 78,
-      "fileCount": 373,
-      "totalFileSize": 491810862,
+      "fileCount": 378,
+      "totalFileSize": 493906069,
       "largestFile": 31062456
     },
     {
@@ -66,12 +66,12 @@
         "checkDuplicates": true
       },
       "status": "OK",
-      "type": "SRCE",
       "filter": "\\d{4}$",
       "mountCheck": "/media/Shared/MountCheck.txt",
-      "directoryCount": 801,
-      "fileCount": 10328,
-      "totalFileSize": 54955817148,
+      "type": "SRCE",
+      "directoryCount": 867,
+      "fileCount": 11051,
+      "totalFileSize": 57678806024,
       "largestFile": 1142416671
     },
     {
@@ -84,12 +84,12 @@
         "checkDuplicates": false
       },
       "status": "OK",
-      "type": "SRCE",
       "filter": null,
       "mountCheck": "/media/Backup/MountCheck.txt",
-      "directoryCount": 801,
-      "fileCount": 10328,
-      "totalFileSize": 54955817148,
+      "type": "SRCE",
+      "directoryCount": 867,
+      "fileCount": 11051,
+      "totalFileSize": 57678806024,
       "largestFile": 1142416671
     },
     {
@@ -102,12 +102,12 @@
         "checkDuplicates": false
       },
       "status": "OK",
-      "type": "SRCE",
       "filter": null,
       "mountCheck": "/media/GoogleDrive/MountCheck.txt",
-      "directoryCount": 801,
-      "fileCount": 10328,
-      "totalFileSize": 54955817148,
+      "type": "SRCE",
+      "directoryCount": 867,
+      "fileCount": 11051,
+      "totalFileSize": 57678806024,
       "largestFile": 1142416671
     },
     {
@@ -120,13 +120,13 @@
         "checkDuplicates": false
       },
       "status": "OK",
-      "type": "IMPS",
       "filter": null,
       "mountCheck": null,
+      "type": "IMPS",
       "directoryCount": 0,
-      "fileCount": 269,
-      "totalFileSize": 5198515198,
-      "largestFile": 1096826486,
+      "fileCount": 1,
+      "totalFileSize": 1485387,
+      "largestFile": 1485387,
       "destinationId": 4
     },
     {
@@ -139,13 +139,49 @@
         "checkDuplicates": false
       },
       "status": "OK",
-      "type": "PIMP",
       "filter": null,
       "mountCheck": null,
+      "type": "PIMP",
       "directoryCount": 0,
       "fileCount": 0,
       "totalFileSize": 0,
       "largestFile": 0
+    },
+    {
+      "id": 1007545,
+      "path": "/media/OneDrive/Docs",
+      "location": {
+        "id": 5,
+        "name": "One Drive",
+        "size": "1.0TB",
+        "checkDuplicates": false
+      },
+      "status": "OK",
+      "filter": null,
+      "mountCheck": "/media/OneDrive/MountCheck.txt",
+      "type": "SRCE",
+      "directoryCount": 78,
+      "fileCount": 378,
+      "totalFileSize": 493906069,
+      "largestFile": 31062456
+    },
+    {
+      "id": 1009817,
+      "path": "/media/OneDrive/Photo",
+      "location": {
+        "id": 5,
+        "name": "One Drive",
+        "size": "1.0TB",
+        "checkDuplicates": false
+      },
+      "status": "OK",
+      "filter": null,
+      "mountCheck": "/media/OneDrive/MountCheck.txt",
+      "type": "SRCE",
+      "directoryCount": 867,
+      "fileCount": 11051,
+      "totalFileSize": 57677225253,
+      "largestFile": 1142416671
     }
   ]
 }
