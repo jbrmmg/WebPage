@@ -13,7 +13,7 @@ export class BackupSummaryComponent implements OnInit  {
 
     constructor(private readonly _backupService: BackupService,
                 private datePipe: DatePipe) {
-        // Setup a blank summary before its initialised from the server.
+        // Set up a blank summary before its initialised from the server.
         this.summary = new BackupSummary();
         this.summary.valid = false;
         this.summary.sources = [];
