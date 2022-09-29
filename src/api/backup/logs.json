@@ -1,0 +1,467 @@
+[
+  {
+    "date": "2022-08-26T21:02:52",
+    "type": "Debug",
+    "message": "Starting up (debug)"
+  },
+  {
+    "date": "2022-08-26T21:47:51",
+    "type": "Infod",
+    "message": "Unknown type"
+  },
+  {
+    "date": "2022-08-26T23:42:12",
+    "type": "Info",
+    "message": "Starting up"
+  },
+  {
+    "date": "2022-08-27T00:20:00",
+    "type": "Info",
+    "message": "Created directory + /media/Shared/Backups/2022-08-27"
+  },
+  {
+    "date": "2022-08-27T02:00:02",
+    "type": "Info",
+    "message": "Gather - /media/Shared/Documents"
+  },
+  {
+    "date": "2022-08-27T02:00:05",
+    "type": "Info",
+    "message": "Gather - /media/Backup/Documents"
+  },
+  {
+    "date": "2022-08-27T02:00:23",
+    "type": "Info",
+    "message": "Gather - /media/GoogleDrive/Documents"
+  },
+  {
+    "date": "2022-08-27T02:00:24",
+    "type": "Info",
+    "message": "Gather - /media/Shared/Photo"
+  },
+  {
+    "date": "2022-08-27T02:00:41",
+    "type": "Info",
+    "message": "Gather - /media/Backup/Photo"
+  },
+  {
+    "date": "2022-08-27T02:01:13",
+    "type": "Info",
+    "message": "Gather - /media/GoogleDrive/Photo"
+  },
+  {
+    "date": "2022-08-27T02:01:29",
+    "type": "Info",
+    "message": "Gather - /media/OneDrive/Docs"
+  },
+  {
+    "date": "2022-08-27T02:01:47",
+    "type": "Info",
+    "message": "Gather - /media/OneDrive/Photo"
+  },
+  {
+    "date": "2022-08-27T02:05:44",
+    "type": "Info",
+    "message": "Synchronize - /media/Shared/Documents -> /media/Backup/Documents"
+  },
+  {
+    "date": "2022-08-27T02:05:45",
+    "type": "Warning",
+    "message": "File warning - CamBase.dxf~/FSO_FILE>100080"
+  },
+  {
+    "date": "2022-08-27T02:05:45",
+    "type": "Info",
+    "message": "Synchronize - /media/Shared/Photo -> /media/Backup/Photo"
+  },
+  {
+    "date": "2022-08-27T02:05:45",
+    "type": "Warning",
+    "message": "File warning - .PassData.kdbx.lock/FSO_FILE>1022892"
+  },
+  {
+    "date": "2022-08-27T02:05:45",
+    "type": "Warning",
+    "message": "File warning - CamControlBase.dxf~/FSO_FILE>100091"
+  },
+  {
+    "date": "2022-08-27T02:05:45",
+    "type": "Warning",
+    "message": "File warning - CamBase.dxf~/FSO_FILE>100080"
+  },
+  {
+    "date": "2022-08-27T02:05:45",
+    "type": "Info",
+    "message": "Synchronize - /media/Shared/Documents -> /media/GoogleDrive/Documents"
+  },
+  {
+    "date": "2022-08-27T02:05:45",
+    "type": "Warning",
+    "message": "File warning - .PassData.kdbx.lock/FSO_FILE>1022892"
+  },
+  {
+    "date": "2022-08-27T02:05:45",
+    "type": "Warning",
+    "message": "File warning - CamControlBase.dxf~/FSO_FILE>100091"
+  },
+  {
+    "date": "2022-08-27T02:05:47",
+    "type": "Info",
+    "message": "Synchronize - /media/Shared/Photo -> /media/GoogleDrive/Photo"
+  },
+  {
+    "date": "2022-08-27T02:05:49",
+    "type": "Info",
+    "message": "Synchronize - /media/Shared/Photo -> /media/OneDrive/Photo"
+  },
+  {
+    "date": "2022-08-27T02:05:49",
+    "type": "Warning",
+    "message": "File warning - CamBase.dxf~/FSO_FILE>100080"
+  },
+  {
+    "date": "2022-08-27T02:05:49",
+    "type": "Warning",
+    "message": "File warning - .PassData.kdbx.lock/FSO_FILE>1022892"
+  },
+  {
+    "date": "2022-08-27T02:05:49",
+    "type": "Info",
+    "message": "Synchronize - /media/Shared/Documents -> /media/OneDrive/Docs"
+  },
+  {
+    "date": "2022-08-27T02:05:49",
+    "type": "Warning",
+    "message": "File warning - CamControlBase.dxf~/FSO_FILE>100091"
+  },
+  {
+    "date": "2022-08-27T02:20:00",
+    "type": "Info",
+    "message": "Clean Backup."
+  },
+  {
+    "date": "2022-08-27T02:33:37",
+    "type": "Info",
+    "message": "Deleted /media/Shared/Backups/2022-07-27"
+  },
+  {
+    "date": "2022-08-27T02:33:37",
+    "type": "Error",
+    "message": "Failed to convert directory java.time.format.DateTimeParseException: Text 'Keypass' could not be parsed at index 0"
+  },
+  {
+    "date": "2022-08-27T02:33:37",
+    "type": "Error",
+    "message": "Failed to convert directory java.time.format.DateTimeParseException: Text 'Photos' could not be parsed at index 0"
+  },
+  {
+    "date": "2022-08-27T03:20:00",
+    "type": "Info",
+    "message": "Clean Backup."
+  },
+  {
+    "date": "2022-08-27T03:20:00",
+    "type": "Error",
+    "message": "Failed to convert directory java.time.format.DateTimeParseException: Text 'Keypass' could not be parsed at index 0"
+  },
+  {
+    "date": "2022-08-27T03:20:00",
+    "type": "Error",
+    "message": "Failed to convert directory java.time.format.DateTimeParseException: Text 'Photos' could not be parsed at index 0"
+  },
+  {
+    "date": "2022-08-27T03:20:00",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/Backup/MiddleTier-Backup.iml to /media/Shared/Backups/2022-08-27/DevBackup/MiddleTier-Backup.iml"
+  },
+  {
+    "date": "2022-08-27T03:20:04",
+    "type": "Info",
+    "message": "DirectoryInfo src copy to /media/Shared/Backups/2022-08-27/DevBackup/src"
+  },
+  {
+    "date": "2022-08-27T03:20:05",
+    "type": "Info",
+    "message": "DirectoryInfo .idea copy to /media/Shared/Backups/2022-08-27/DevBackup/.idea"
+  },
+  {
+    "date": "2022-08-27T03:21:09",
+    "type": "Info",
+    "message": "DirectoryInfo .git copy to /media/Shared/Backups/2022-08-27/DevBackup/.git"
+  },
+  {
+    "date": "2022-08-27T03:21:09",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/Backup/README.md to /media/Shared/Backups/2022-08-27/DevBackup/README.md"
+  },
+  {
+    "date": "2022-08-27T03:21:09",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/Backup/pom.xml to /media/Shared/Backups/2022-08-27/DevBackup/pom.xml"
+  },
+  {
+    "date": "2022-08-27T03:21:09",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/Money/MiddleTier-Money.iml to /media/Shared/Backups/2022-08-27/DevMoney/MiddleTier-Money.iml"
+  },
+  {
+    "date": "2022-08-27T03:21:10",
+    "type": "Info",
+    "message": "DirectoryInfo src copy to /media/Shared/Backups/2022-08-27/DevMoney/src"
+  },
+  {
+    "date": "2022-08-27T03:21:11",
+    "type": "Info",
+    "message": "DirectoryInfo .idea copy to /media/Shared/Backups/2022-08-27/DevMoney/.idea"
+  },
+  {
+    "date": "2022-08-27T03:21:23",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/Sites/assembly.xml to /media/Shared/Backups/2022-08-27/DevMySite/assembly.xml"
+  },
+  {
+    "date": "2022-08-27T03:21:23",
+    "type": "Info",
+    "message": "DirectoryInfo .idea copy to /media/Shared/Backups/2022-08-27/DevMySite/.idea"
+  },
+  {
+    "date": "2022-08-27T03:21:23",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/Money/README.md to /media/Shared/Backups/2022-08-27/DevMoney/README.md"
+  },
+  {
+    "date": "2022-08-27T03:21:23",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/Money/pom.xml to /media/Shared/Backups/2022-08-27/DevMoney/pom.xml"
+  },
+  {
+    "date": "2022-08-27T03:21:23",
+    "type": "Info",
+    "message": "DirectoryInfo .git copy to /media/Shared/Backups/2022-08-27/DevMoney/.git"
+  },
+  {
+    "date": "2022-08-27T03:21:25",
+    "type": "Info",
+    "message": "DirectoryInfo .git copy to /media/Shared/Backups/2022-08-27/DevMySite/.git"
+  },
+  {
+    "date": "2022-08-27T03:21:25",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/Sites/README.md to /media/Shared/Backups/2022-08-27/DevMySite/README.md"
+  },
+  {
+    "date": "2022-08-27T03:21:25",
+    "type": "Info",
+    "message": "DirectoryInfo conf copy to /media/Shared/Backups/2022-08-27/DevMySite/conf"
+  },
+  {
+    "date": "2022-08-27T03:21:25",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/Sites/pom.xml to /media/Shared/Backups/2022-08-27/DevMySite/pom.xml"
+  },
+  {
+    "date": "2022-08-27T03:21:25",
+    "type": "Info",
+    "message": "DirectoryInfo DNS copy to /media/Shared/Backups/2022-08-27/DevMySite/DNS"
+  },
+  {
+    "date": "2022-08-27T03:21:25",
+    "type": "Info",
+    "message": "DirectoryInfo src copy to /media/Shared/Backups/2022-08-27/DevAdmin/src"
+  },
+  {
+    "date": "2022-08-27T03:21:26",
+    "type": "Info",
+    "message": "DirectoryInfo .idea copy to /media/Shared/Backups/2022-08-27/DevAdmin/.idea"
+  },
+  {
+    "date": "2022-08-27T03:21:28",
+    "type": "Info",
+    "message": "DirectoryInfo bash copy to /media/Shared/Backups/2022-08-27/DevScripts/bash"
+  },
+  {
+    "date": "2022-08-27T03:21:28",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/Scripts/assembly.xml to /media/Shared/Backups/2022-08-27/DevScripts/assembly.xml"
+  },
+  {
+    "date": "2022-08-27T03:21:28",
+    "type": "Info",
+    "message": "DirectoryInfo .idea copy to /media/Shared/Backups/2022-08-27/DevScripts/.idea"
+  },
+  {
+    "date": "2022-08-27T03:21:28",
+    "type": "Info",
+    "message": "DirectoryInfo other copy to /media/Shared/Backups/2022-08-27/DevScripts/other"
+  },
+  {
+    "date": "2022-08-27T03:21:28",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/Scripts/Script.iml to /media/Shared/Backups/2022-08-27/DevScripts/Script.iml"
+  },
+  {
+    "date": "2022-08-27T03:21:28",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/Admin/pom.xml to /media/Shared/Backups/2022-08-27/DevAdmin/pom.xml"
+  },
+  {
+    "date": "2022-08-27T03:21:28",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/Admin/README.md to /media/Shared/Backups/2022-08-27/DevAdmin/README.md"
+  },
+  {
+    "date": "2022-08-27T03:21:28",
+    "type": "Info",
+    "message": "DirectoryInfo .git copy to /media/Shared/Backups/2022-08-27/DevAdmin/.git"
+  },
+  {
+    "date": "2022-08-27T03:21:29",
+    "type": "Info",
+    "message": "DirectoryInfo .git copy to /media/Shared/Backups/2022-08-27/DevScripts/.git"
+  },
+  {
+    "date": "2022-08-27T03:21:29",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/Scripts/README.md to /media/Shared/Backups/2022-08-27/DevScripts/README.md"
+  },
+  {
+    "date": "2022-08-27T03:21:29",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/Scripts/pom.xml to /media/Shared/Backups/2022-08-27/DevScripts/pom.xml"
+  },
+  {
+    "date": "2022-08-27T03:21:29",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/WebPage/tsconfig.json to /media/Shared/Backups/2022-08-27/DevAngular/tsconfig.json"
+  },
+  {
+    "date": "2022-08-27T03:29:58",
+    "type": "Info",
+    "message": "DirectoryInfo node_modules copy to /media/Shared/Backups/2022-08-27/DevAngular/node_modules"
+  },
+  {
+    "date": "2022-08-27T03:30:25",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/WebPage/package.json to /media/Shared/Backups/2022-08-27/DevAngular/package.json"
+  },
+  {
+    "date": "2022-08-27T03:30:25",
+    "type": "Info",
+    "message": "DirectoryInfo node copy to /media/Shared/Backups/2022-08-27/DevAngular/node"
+  },
+  {
+    "date": "2022-08-27T03:30:27",
+    "type": "Info",
+    "message": "DirectoryInfo src copy to /media/Shared/Backups/2022-08-27/DevAngular/src"
+  },
+  {
+    "date": "2022-08-27T03:30:27",
+    "type": "Info",
+    "message": "DirectoryInfo .idea copy to /media/Shared/Backups/2022-08-27/DevAngular/.idea"
+  },
+  {
+    "date": "2022-08-27T03:30:27",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/WebPage/MySite.Angular.js.iml to /media/Shared/Backups/2022-08-27/DevAngular/MySite.Angular.js.iml"
+  },
+  {
+    "date": "2022-08-27T03:30:27",
+    "type": "Info",
+    "message": "DirectoryInfo e2e copy to /media/Shared/Backups/2022-08-27/DevAngular/e2e"
+  },
+  {
+    "date": "2022-08-27T03:31:23",
+    "type": "Info",
+    "message": "DirectoryInfo .angular copy to /media/Shared/Backups/2022-08-27/DevAngular/.angular"
+  },
+  {
+    "date": "2022-08-27T03:31:36",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/WebPage/proxy.conf.json to /media/Shared/Backups/2022-08-27/DevAngular/proxy.conf.json"
+  },
+  {
+    "date": "2022-08-27T03:31:36",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/WebPage/pom.xml to /media/Shared/Backups/2022-08-27/DevAngular/pom.xml"
+  },
+  {
+    "date": "2022-08-27T03:31:36",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/WebPage/package-lock.json to /media/Shared/Backups/2022-08-27/DevAngular/package-lock.json"
+  },
+  {
+    "date": "2022-08-27T03:31:36",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/WebPage/proxy.prod.conf.json to /media/Shared/Backups/2022-08-27/DevAngular/proxy.prod.conf.json"
+  },
+  {
+    "date": "2022-08-27T03:31:36",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/WebPage/angular.json to /media/Shared/Backups/2022-08-27/DevAngular/angular.json"
+  },
+  {
+    "date": "2022-08-27T03:31:36",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/WebPage/README.md to /media/Shared/Backups/2022-08-27/DevAngular/README.md"
+  },
+  {
+    "date": "2022-08-27T03:31:36",
+    "type": "Info",
+    "message": "DirectoryInfo .git copy to /media/Shared/Backups/2022-08-27/DevAngular/.git"
+  },
+  {
+    "date": "2022-08-27T03:31:37",
+    "type": "Info",
+    "message": "Copy /home/jason/Source/GitHub/Working/WebPage/tslint.json to /media/Shared/Backups/2022-08-27/DevAngular/tslint.json"
+  },
+  {
+    "date": "2022-08-27T03:31:37",
+    "type": "Info",
+    "message": "DirectoryInfo dist copy to /media/Shared/Backups/2022-08-27/DevAngular/dist"
+  },
+  {
+    "date": "2022-08-27T03:31:37",
+    "type": "Info",
+    "message": "Copy /home/jason/.m2/settings.xml to /media/Shared/Backups/2022-08-27//MvnSettings/settings.xml"
+  },
+  {
+    "date": "2022-08-27T04:20:00",
+    "type": "Info",
+    "message": "Copy /media/Shared/Documents/Key Pass/PassData.kdbx to /media/Shared/Backups/2022-08-27//KeePass/PassData.kdbx"
+  },
+  {
+    "date": "2022-08-27T04:20:00",
+    "type": "Info",
+    "message": "Copy /etc/go/cruise-config.xml to /media/Shared/Backups/2022-08-27//EtcFiles/cruise-config.xml"
+  },
+  {
+    "date": "2022-08-27T04:20:00",
+    "type": "Info",
+    "message": "Database Backup BKDB Database backupdb "
+  },
+  {
+    "date": "2022-08-27T04:20:01",
+    "type": "Info",
+    "message": "Database Backup MYDB Database moneydb "
+  },
+  {
+    "date": "2022-08-27T04:20:01",
+    "type": "Info",
+    "message": "Database Backup APDB Database apacheauth "
+  },
+  {
+    "date": "2022-08-27T04:20:01",
+    "type": "Info",
+    "message": "Copy /etc/hosts to /media/Shared/Backups/2022-08-27//EtcFiles/hosts"
+  },
+  {
+    "date": "2022-08-27T04:20:01",
+    "type": "Info",
+    "message": "Copy /etc/sudoers to /media/Shared/Backups/2022-08-27//EtcFiles/sudoers"
+  },
+  {
+    "date": "2022-08-27T04:20:01",
+    "type": "Info",
+    "message": "Copy /etc/fstab to /media/Shared/Backups/2022-08-27//EtcFiles/fstab"
+  }
+]

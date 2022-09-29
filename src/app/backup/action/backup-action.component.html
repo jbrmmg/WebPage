@@ -1,0 +1,56 @@
+<div class="row page-row">
+    <div class="col-2">
+    </div>
+    <div class="col-4">
+        <label class="btn btn-primary btn-action btn-left"
+               tabindex="1"
+               (click)="movePrev()">
+            <em class="fa fa-arrow-circle-left"></em>
+        </label>
+        <label class="btn btn-primary btn-action btn-right"
+               tabindex="3"
+               (click)="moveNext()">
+            <em class="fa fa-arrow-circle-right"></em>
+        </label>
+    </div>
+    <div class="col-2">
+    </div>
+    <div class="col-2">
+        <div class="row">
+            <label class="btn btn-primary float-right btn-action btn-accept"
+                   tabindex="1"
+                   (click)="confirm()">
+                <em class="fa fa-check-circle"></em>
+            </label>
+        </div>
+    </div>
+</div>
+<div class="row info-row" *ngIf="isItemSelected">
+    <div class="col-2">
+        <p class="action-txt">{{actions[selectedIndex].action}}</p>
+    </div>
+    <div class="col-10">
+        <p>{{actions[selectedIndex].fileName}}</p>
+    </div>
+</div>
+<div class="row info-row-2" *ngIf="isItemSelected">
+    <div class="col-2">
+    </div>
+    <div class="col-10">
+        <p>{{detailLine}}</p>
+    </div>
+</div>
+<div class="row info-row-2">
+    <div class="col-12">
+        <div *ngIf="isItemSelected">
+            <div *ngIf="actions[selectedIndex].fileName != null">
+                <div *ngIf="actions[selectedIndex].isImage">
+                    <img src="backup/fileImage?id={{actions[selectedIndex].fileId}}" width="420" alt="backup file"/>
+                </div>
+                <div *ngIf="actions[selectedIndex].isVideo">
+                    <video src="backup/fileVideo?id={{actions[selectedIndex].fileId}}" width="420" controls></video>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -13,6 +13,10 @@ export class BackupSummaryComponent implements OnInit  {
 
     constructor(private readonly _backupService: BackupService,
                 private datePipe: DatePipe) {
+        // Setup a blank summary before its initialised from the server.
+        this.summary = new BackupSummary();
+        this.summary.valid = false;
+        this.summary.sources = [];
     }
 
     ngOnInit(): void {
@@ -20,14 +24,14 @@ export class BackupSummaryComponent implements OnInit  {
             summary => {
                 this.summary = summary;
             },
-            () => console.log('Failed to get summary.'),
-            () => console.log('Load Actions summary')
+            () => console.log('Failed to get the Summary.'),
+            () => console.log('Get Summary is complete.')
         );
     }
 
     get formattedDate() : string {
         if(this.summary.valid) {
-            return this.datePipe.transform(this.summary.validAt,'dd MMMM yyyy hh:mm:ss');
+            return this.datePipe.transform(this.summary.validAt,'dd MMMM yyyy HH:mm:ss');
         }
 
         return '';

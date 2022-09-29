@@ -1,8 +1,4 @@
-<div class="card">
-    <div class="card-body">
-        <p class="summary-header">Backup Summary Information</p>
-        <p class="summary-date" *ngIf="summary.valid">{{formattedDate}}</p>
-        <p class="summary-date" *ngIf="!summary.valid">Summary not available</p>
-        <jbr-backup-summary-source *ngFor="let nextSource of summary.sources" [source]="nextSource"></jbr-backup-summary-source>
-    </div>
-</div>
+<p class="summary-header">Backup Summary Information</p>
+<p class="summary-date" *ngIf="summary.valid">{{formattedDate}}</p>
+<p class="summary-date" *ngIf="!summary.valid">Summary not available</p>
+<jbr-backup-summary-source *ngFor="let nextSource of summary.sources" [source]="nextSource" [summary]="summary"></jbr-backup-summary-source>
