@@ -92,7 +92,6 @@ export class MoneyService {
             this.lockStatementUrl = 'money/statement/lock';
             this.reconcileTransactionUrl = 'money/reconcile';
             this.matchUrl = 'money/match?account=##accountId##';
-            this.submitDataUrl = 'money/reconciliation/add';
             this.clearDataUrl = 'money/reconciliation/clear';
             this.autoAcceptUrl = 'money/reconciliation/auto';
             this.setCategoryUrl = 'money/reconciliation/update';
@@ -109,7 +108,6 @@ export class MoneyService {
             this.lockStatementUrl = 'api/money/update.json';
             this.reconcileTransactionUrl = 'api/money/update.json';
             this.matchUrl = 'api/money/match.##accountId##.json';
-            this.submitDataUrl = 'api/money/update.json';
             this.clearDataUrl = 'api/money/update.json';
             this.autoAcceptUrl = 'api/money/update.json';
             this.setCategoryUrl = 'api/money/update.json';
@@ -483,21 +481,6 @@ export class MoneyService {
         return this.http.get<IMatch[]>(url).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
-        );
-    }
-
-    submitRecData(textData: string) {
-        // Submit the rec data.
-        this.http.post<string>(this.submitDataUrl, textData).subscribe(
-            (val) => {
-                console.log('Submit data - POST call successful value returned in body', val);
-            },
-            (response) => {
-                console.log('Submit data - POST call in error', response);
-            },
-            () => {
-                console.log('Submit data - The POST observable is now complete (add)');
-            }
         );
     }
 
