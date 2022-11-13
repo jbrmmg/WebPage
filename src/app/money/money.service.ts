@@ -85,10 +85,10 @@ export class MoneyService {
             // Use production URL's
             this.categoryUrl = 'money/categories';
             this.accountUrl = 'money/accounts';
-            this.addUrl = 'money/transaction/add';
+            this.addUrl = 'money/transaction';
             this.statementUrl = 'money/statement';
-            this.updateTransactionUrl = 'money/transaction/update';
-            this.deleteTransactionUrl = 'money/delete?transactionId=##transactionId##';
+            this.updateTransactionUrl = 'money/transaction';
+            this.deleteTransactionUrl = 'money/transaction';
             this.lockStatementUrl = 'money/statement/lock';
             this.reconcileTransactionUrl = 'money/reconcile';
             this.matchUrl = 'money/match?account=##accountId##';
