@@ -2,8 +2,9 @@ import {IListRowLineInterface, ListRowLineType} from './list-row-line-interface'
 import {IMatch} from '../money-match';
 import {Category, ICategory} from '../money-category';
 import {ListRowLineTransaction} from './list-row-line-transaction';
-import {MoneyService, NewTransaction} from '../money.service';
+import {MoneyService, Transaction} from '../money.service';
 import {ListRowLine} from './list-row-line';
+import {JbAccount} from "../money-account";
 
 export class ListRowLineReconcile extends ListRowLine implements IListRowLineInterface {
     private static unknownCategory: ICategory;
@@ -123,15 +124,18 @@ export class ListRowLineReconcile extends ListRowLine implements IListRowLineInt
 
     clickButtonTwo() {
         // Always create.
-        const newTransaction: NewTransaction = new NewTransaction();
+        let transactions = [];
+        let newTransaction = new Transaction();
+
         newTransaction.amount = this.reconcile.amount;
         newTransaction.date = this.reconcile.date;
-        newTransaction.accountId = this.reconcile.account.id;
+        newTransaction.account = this.reconcile.account;
         newTransaction.description = this.reconcile.description;
-        newTransaction.accountTransfer = false;
-        newTransaction.categoryId = this.reconcile.category.id;
+        newTransaction.category = this.reconcile.category;
 
-        this.moneyService.addTransaction(newTransaction);
+        transactions.push(newTransaction);
+
+        this.moneyService.addTransaction(transactions);
     }
 
     clickButtonThree() {

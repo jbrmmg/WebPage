@@ -4,7 +4,7 @@ import {environment} from '../../environments/environment';
 import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {Category, ICategory} from './money-category';
-import {JbAccount} from './money-account';
+import {IAccount, JbAccount} from './money-account';
 import {ITransactionType, TransactionType} from './money-type';
 import {IStatement, Statement} from './money-statement';
 import {IMatch} from './money-match';
@@ -12,13 +12,11 @@ import {IRegular} from './money-regular';
 import {IFile} from './money-file';
 import {ITransaction} from './list-row-line/list-row-summary';
 
-export class NewTransaction {
+export class Transaction {
     date: Date;
     amount: number;
-    categoryId: string;
-    accountId: string;
-    accountTransfer: boolean;
-    transferAccountId: string;
+    category: ICategory;
+    account: IAccount;
     description: string;
 }
 
@@ -56,7 +54,7 @@ export class LoadFileRequest {
 })
 export class MoneyService {
     private readonly testFormat = 'api/money/transaction.##type##.json';
-    private readonly prodFormat = 'money/transaction/get?sortAscending=false&type=##type##[from][to][account][category]';
+    private readonly prodFormat = 'money/transaction?sortAscending=false&type=##type##[from][to][account][category]';
 
     private readonly categoryUrl;
     private readonly accountUrl;
@@ -318,8 +316,8 @@ export class MoneyService {
         );
     }
 
-    addTransaction(transaction: NewTransaction) {
-        this.http.post<NewTransaction>(this.addUrl, transaction).subscribe(
+    addTransaction(transactions: Transaction[]) {
+        this.http.post<Transaction>(this.addUrl, transactions).subscribe(
             (val) => {
                 console.log('POST call successful value returned in body', val);
             },
@@ -422,15 +420,17 @@ export class MoneyService {
 
     deleteTransaction(transaction: ITransaction ) {
         // Delete the transaction.
-        // TransactionId
-        let url = this.deleteTransactionUrl;
-        url = url.replace('##transactionId##', transaction.id.toString());
 
-        this.http.delete<void>(url).subscribe(() => {
-            console.log(url);
+        /*
+         this.http.post<Transaction>(this.addUrl, transactions).subscribe(
+         */
+        this.http.delete<Transaction>(this.deleteTransactionUrl, {
+            body: transaction
+        }).subscribe(() => {
+            console.log(this.deleteTransactionUrl);
         },
         (response) => {
-            console.log('POST call in error', response);
+            console.log('DELETE call in error', response);
             if (!environment.production) {
                 console.log('Testing - process as complete.', response);
                 this.updateTransactions.emit(null);
