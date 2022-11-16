@@ -4,7 +4,6 @@ import {Category, ICategory} from '../money-category';
 import {ListRowLineTransaction} from './list-row-line-transaction';
 import {MoneyService, Transaction} from '../money.service';
 import {ListRowLine} from './list-row-line';
-import {JbAccount} from "../money-account";
 
 export class ListRowLineReconcile extends ListRowLine implements IListRowLineInterface {
     private static unknownCategory: ICategory;

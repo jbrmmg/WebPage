@@ -1,4 +1,4 @@
-import {IAccount} from './money-account';
+import {IAccount} from './money-jbaccount';
 
 export interface IStatementId {
     account: IAccount;

@@ -4,7 +4,7 @@ import {environment} from '../../environments/environment';
 import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {Category, ICategory} from './money-category';
-import {IAccount, JbAccount} from './money-account';
+import {IAccount, JbAccount} from './money-jbaccount';
 import {ITransactionType, TransactionType} from './money-type';
 import {IStatement, Statement} from './money-statement';
 import {IMatch} from './money-match';
@@ -21,7 +21,7 @@ export class Transaction {
 }
 
 export class LockRequest {
-    accountId: string;
+    account: IAccount;
     year: number;
     month: number;
 }
@@ -45,8 +45,7 @@ export class UpdateTransactionRequest {
 }
 
 export class LoadFileRequest {
-    path: string;
-    type: string;
+    filename: string;
 }
 
 @Injectable({
@@ -66,7 +65,6 @@ export class MoneyService {
     private readonly lockStatementUrl;
     private readonly reconcileTransactionUrl;
     private readonly matchUrl;
-    private readonly submitDataUrl;
     private readonly clearDataUrl;
     private readonly autoAcceptUrl;
     private readonly setCategoryUrl;
@@ -331,10 +329,9 @@ export class MoneyService {
         );
     }
 
-    loadFileRequest(file: IFile, account: JbAccount) {
+    loadFileRequest(file: IFile) {
         const request: LoadFileRequest = new LoadFileRequest();
-        request.path = file.file;
-        request.type = JbAccount.getFileType(account.id);
+        request.filename = file.filename;
 
         this.http.post<LoadFileRequest>(this.loadFileUrl, request).subscribe(
             (val) => {
@@ -452,7 +449,7 @@ export class MoneyService {
 
         const lockRequest = new LockRequest();
 
-        lockRequest.accountId = statement.id.account.id;
+        lockRequest.account = statement.id.account;
         lockRequest.year = statement.id.year;
         lockRequest.month = statement.id.month;
 

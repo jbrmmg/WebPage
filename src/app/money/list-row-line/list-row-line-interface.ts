@@ -1,4 +1,4 @@
-import {IAccount} from '../money-account';
+import {IAccount} from '../money-jbaccount';
 import {ICategory} from '../money-category';
 import {ListRowLine} from './list-row-line';
 

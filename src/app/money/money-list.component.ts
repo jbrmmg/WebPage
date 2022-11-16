@@ -2,7 +2,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {MoneyService, Transaction} from './money.service';
 import {Category, ICategory} from './money-category';
-import {IAccount, JbAccount} from './money-account';
+import {IAccount, JbAccount} from './money-jbaccount';
 import {TransactionType} from './money-type';
 import {IStatement, Statement} from './money-statement';
 import {BsModalService, BsModalRef} from 'ngx-bootstrap/modal';
@@ -643,7 +643,7 @@ export class MoneyListComponent implements OnInit {
 
     onLoadRecForAccount(file: IFile, account: JbAccount) {
         this.reconcileAccount = account;
-        this._moneyService.loadFileRequest(file, account);
+        this._moneyService.loadFileRequest(file);
     }
 
     getAccountColour(index: number): string {
