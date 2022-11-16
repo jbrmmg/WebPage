@@ -1,5 +1,5 @@
 import {ListRowLineType} from './list-row-line-interface';
-import {IAccount} from '../money-account';
+import {IAccount} from '../money-jbaccount';
 import {ICategory} from '../money-category';
 
 export class ListRowLine {
