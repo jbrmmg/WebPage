@@ -23,6 +23,8 @@ export class JbAccount implements IAccount {
                 return 'AMEX';
             case 'JLPC':
                 return 'JOHNLEWIS';
+            case 'JLP2':
+                return 'JOHNLEWIS2';
         }
 
         return 'Other';

@@ -1,6 +1,6 @@
 import {DomSanitizer} from '@angular/platform-browser';
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {MoneyService, NewTransaction} from './money.service';
+import {MoneyService, Transaction} from './money.service';
 import {Category, ICategory} from './money-category';
 import {IAccount, JbAccount} from './money-account';
 import {TransactionType} from './money-type';
@@ -814,21 +814,34 @@ export class MoneyListComponent implements OnInit {
                     }
                 });
             } else {
-                const newTransaction: NewTransaction = new NewTransaction();
+                let transactions = [];
+
+                let newTransaction: Transaction = new Transaction();
                 newTransaction.amount = this.transactionAmount;
                 newTransaction.date = this.internalDate;
-                newTransaction.accountId = this.selectedAccount.id;
+                newTransaction.account = this.selectedAccount;
                 newTransaction.description = this.transactionDescription;
+
                 if (this.selectedXferAcc != null) {
-                    newTransaction.accountTransfer = true;
-                    newTransaction.transferAccountId = this.selectedXferAcc.id;
-                    newTransaction.categoryId = 'TRF';
+                    let category : ICategory = new Category("TRF", "Transfer", 0, false, "", "", false, "");
+
+                    transactions.push(newTransaction);
+
+                    newTransaction = new Transaction();
+                    newTransaction.amount = -1 * this.transactionAmount;
+                    newTransaction.date = this.internalDate;
+                    newTransaction.account = this.selectedXferAcc;
+                    newTransaction.description = this.transactionDescription;
+                    newTransaction.category = category;
+
+                    transactions.push(newTransaction);
                 } else {
-                    newTransaction.accountTransfer = false;
-                    newTransaction.categoryId = this.selectedCategory.id;
+                    newTransaction.category = this.selectedCategory;
+
+                    transactions.push(newTransaction);
                 }
 
-                this._moneyService.addTransaction(newTransaction);
+                this._moneyService.addTransaction(transactions);
             }
         }
 
