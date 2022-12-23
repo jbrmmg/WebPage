@@ -56,7 +56,7 @@
                 </table>
             </div>
             <div *ngIf="selectedFile.image">
-                <img src="{{imageUrl(selectedFile.id)}}" alt="Image File" width="420"/>
+                <img src="{{imageUrl(selectedFile.id)}}" alt="Image File" width="420" (click)="selectPhotoMode()"/>
             </div>
             <div *ngIf="selectedFile.video">
                 <video src="{{videoUrl(selectedFile.id)}}" width="420" controls></video>

@@ -36,6 +36,13 @@
                    [attr.aria-expanded]="isLogMode">
                 <em class="fa fa-bars"></em>
             </label>
+            <label class="btn btn-primary btn-mode col-1"
+                   tabindex="1"
+                   aria-controls="prints"
+                   (click)="selectPrintsMode()"
+                   [attr.aria-expanded]="isPrintsMode">
+                <em class="fa fa-print"></em>
+            </label>
         </div>
     </div>
 </div>
@@ -45,7 +52,7 @@
             <jbr-backup-summary></jbr-backup-summary>
         </div>
         <div id="files" [collapse]="!isFileMode">
-            <jbr-backup-display></jbr-backup-display>
+            <jbr-backup-display (selectPhoto)="selectPhotoMode()"></jbr-backup-display>
         </div>
         <div id="actions" [collapse]="!isActionMode">
             <jbr-backup-action></jbr-backup-action>
@@ -55,6 +62,12 @@
         </div>
         <div id="logs" [collapse]="!isLogMode">
             <jbr-backup-log></jbr-backup-log>
+        </div>
+        <div id="photo" [collapse]="!isPhotoMode">
+            <jbr-backup-photo (exit)="selectFileMode()"></jbr-backup-photo>
+        </div>
+        <div id="prints" [collapse]="!isPrintsMode">
+            <jbr-backup-prints></jbr-backup-prints>
         </div>
     </div>
 </div>

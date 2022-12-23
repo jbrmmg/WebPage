@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable, Output} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
@@ -23,12 +23,21 @@ export class BackupService {
     readonly BACKUP_URL_IMPORT_FILES = 'backup/import';
     readonly BACKUP_URL_CONVERT_FILES = 'backup/convert';
     readonly BACKUP_URL_LOGS = 'backup/log';
+    readonly BACKUP_URL_PRINTS = 'backup/prints';
+    readonly BACKUP_URL_PRINT = 'backup/print';
+    readonly BACKUP_URL_UNPRINT = 'backup/unprint';
 
     readonly TEST_BACKUP_URL_SUMMARY = 'api/backup/summary.json';
     readonly TEST_BACKUP_URL_ACTIONS = 'api/backup/actions.json';
     readonly TEST_BACKUP_URL_CONF_ACTIONS = 'api/backup/conf-actions.json';
     readonly TEST_BACKUP_URL_HIERARCHY = 'api/backup/hierarchy.json';
     readonly TEST_BACKUP_URL_LOGS = 'api/backup/logs.json';
+    readonly TEST_BACKUP_URL_PRINTS = 'api/backup/prints.json';
+
+    private selectedPhoto : number;
+
+    private selectedPhotos: number[];
+    @Output() printsUpdated = new EventEmitter();
 
     private static handleError(err: HttpErrorResponse) {
         let errorMessage;
@@ -239,5 +248,72 @@ export class BackupService {
         } else {
             return 'api/backup/test.video.mp4';
         }
+    }
+
+    setSelectedPhoto(selected: number) {
+        this.selectedPhoto = selected;
+    }
+
+    getSelectedPhoto():number {
+        return this.selectedPhoto;
+    }
+
+    getSelectedPhotos():number[] {
+        return this.selectedPhotos;
+    }
+
+    updatePrints() {
+        this.http.get<number[]>(environment.production === true ? this.BACKUP_URL_PRINTS : this.TEST_BACKUP_URL_PRINTS).subscribe(
+            (selected) => {
+                this.selectedPhotos = selected;
+                console.log('Selecting from print');
+            },
+            (response) => {
+                console.log('Selecting for print err', response);
+            },
+            () => {
+                this.printsUpdated.emit();
+                console.log('loaded');
+            }
+        );
+    }
+
+    selectForPrint() {
+        this.http.post<void>(this.BACKUP_URL_PRINT,this.selectedPhoto).subscribe(() => {
+                console.log('Select for print');
+            },
+            (response) => {
+                console.log('POST select for print', response);
+            },
+            () => {
+                this.updatePrints();
+                console.log('POST select for print completed');
+            });
+    }
+
+    unselectForPrint(id: number) {
+        this.http.post<void>(this.BACKUP_URL_UNPRINT,id).subscribe(() => {
+                console.log('Select for print');
+            },
+            (response) => {
+                console.log('POST select for print', response);
+            },
+            () => {
+                this.updatePrints();
+                console.log('POST select for print completed');
+            });
+    }
+
+    clearPrints() {
+        this.http.delete<void>(environment.production === true ? this.BACKUP_URL_PRINTS : this.TEST_BACKUP_URL_PRINTS).subscribe(() => {
+                console.log('Delete prints');
+            },
+            (response) => {
+                console.log('DELETE prints', response);
+            },
+            () => {
+                this.updatePrints();
+                console.log('The DELETE observable is now complete (delete prints)');
+            });
     }
 }

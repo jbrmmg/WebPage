@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, EventEmitter, OnInit, Output} from "@angular/core";
 import {BackupService} from "../backup.service";
 import {HierarchyResponse} from "../backup-hierarchyresponse";
 import {FileInfo} from "../backup-fileinfo";
@@ -17,6 +17,8 @@ export class BackupDisplayComponent implements OnInit  {
     atTopLevel: boolean;
     selectedFile: FileInfo;
     fileBackups: FileInfo[];
+
+    @Output() selectPhoto = new EventEmitter();
 
     constructor(private readonly _backupService: BackupService) {
     }
@@ -95,5 +97,10 @@ export class BackupDisplayComponent implements OnInit  {
 
     deleteFile() {
         this._backupService.deleteFile(this.selectedFile.id);
+    }
+
+    selectPhotoMode() {
+        this._backupService.setSelectedPhoto(this.selectedFile.id);
+        this.selectPhoto.emit();
     }
 }

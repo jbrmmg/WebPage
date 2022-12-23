@@ -1,0 +1,21 @@
+.photo-thumbnail {
+    width: 100%;
+    height: auto;
+}
+
+.row-gap {
+    margin-bottom: 5px;
+}
+
+.btn-unselect {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    padding: 0;
+    border: 0;
+}
+
+.outer-image {
+    position: relative;
+    display: inline-block;
+}
