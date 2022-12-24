@@ -26,6 +26,8 @@ import { BackupDisplayComponent } from "./backup/display/backup-display.componen
 import { BackupActionComponent } from "./backup/action/backup-action.component";
 import { BackupImportComponent } from "./backup/import/backup-import.component";
 import { BackupLogComponent } from "./backup/log/backup-log.component";
+import { BackupPhotoComponent } from "./backup/photo/backup-photo.component";
+import { BackupPrintsComponent } from "./backup/prints/backup-prints.component";
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { BackupLogComponent } from "./backup/log/backup-log.component";
     BackupDisplayComponent,
     BackupActionComponent,
     BackupImportComponent,
-    BackupLogComponent
+    BackupLogComponent,
+    BackupPhotoComponent,
+    BackupPrintsComponent
   ],
   imports: [
     BrowserModule,

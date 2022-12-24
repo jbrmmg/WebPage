@@ -18,6 +18,12 @@
     "colour":"00461C"
   },
   {
+    "id":"JLP2",
+    "name":"John Lewis Card 2",
+    "imagePrefix":"johnLewis",
+    "colour":"00461C"
+  },
+  {
     "id":"NWDE",
     "name":"Nationwide",
     "imagePrefix":"nationwide",
