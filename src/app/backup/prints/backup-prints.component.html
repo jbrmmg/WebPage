@@ -5,8 +5,8 @@
 </div>
 <div *ngFor="let row of rows" class="row row-gap">
     <div *ngFor="let col of cols" class="col-2">
-        <div class="outer-image">
-            <img class="photo-thumbnail" *ngIf="imageAvailable(row,col)" src="{{imageUrl(row,col)}}" alt="Image File"/>
+        <div class="outer-image" *ngIf="imageAvailable(row,col)">
+            <img class="photo-thumbnail" src="{{imageUrl(row,col)}}" alt="Image File"/>
             <label class="btn btn-primary btn-unselect">
                 <em class="fa fa-close" (click)="unselect(row,col)"></em>
             </label>
