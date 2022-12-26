@@ -24,10 +24,13 @@ export class BackupPrintsComponent implements OnInit {
     updatePrints() {
         console.log('UPDATE THE PRINGS')
         this.selectedPhotos = this._backupService.getSelectedPhotos();
-        if(this.selectedPhotos == null) {
-            console.log('empty');
+
+        let rowCount: number = this.selectedPhotos.length/5 + 1;
+        this.rows = [rowCount];
+
+        for(let i:number = 0; i < rowCount; i++) {
+            this.rows[i] = i;
         }
-        this.rows = [0,1];
     }
 
     private getIndex(row: number, col: number): number {
