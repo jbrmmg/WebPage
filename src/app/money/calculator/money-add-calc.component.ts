@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnChanges, Output} from '@angular/core';
+import {Component, EventEmitter, HostListener, OnChanges, Output} from '@angular/core';
 import {MoneyCalcBtnRow} from './money-calc-btn-row';
 import {
     CalculatorButtonType,
@@ -31,6 +31,41 @@ export class MoneyAddCalcComponent implements OnChanges {
 
     get calcDisplay(): string {
         return this.btnStatus.display;
+    }
+
+    @HostListener('document:keypress',['$event'])
+    handleKeyboardEvent(event: KeyboardEvent) {
+        console.info('key:' + event.key);
+
+        // Get the text for the key press.
+        let keyPressText: string;
+        keyPressText = event.key;
+
+        // Some keys need to be modified.
+        if(keyPressText === "Enter") {
+            keyPressText = "=";
+        }
+        if(keyPressText === "Delete") {
+            keyPressText = "DEL";
+        }
+        if(keyPressText === "c" || keyPressText === "C") {
+            keyPressText = "DB"
+        }
+        if(keyPressText === "d" || keyPressText === "D") {
+            keyPressText = "CR"
+        }
+        if(keyPressText === "#") {
+            keyPressText = "CLR"
+        }
+
+        // Find the button that represents this key.
+        this.rows.forEach((row) => {
+            row.columns.forEach((button) => {
+                if(button.matchKey(keyPressText)) {
+                    this.onClick(button);
+                }
+            })
+        })
     }
 
     constructor() {

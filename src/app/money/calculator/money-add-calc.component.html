@@ -1,5 +1,5 @@
 <div class="col" style="width: 100%">
-    <div class="row">
+    <div class="row calc-row">
         <div class="col-12">
             <label for="calc-display"></label>
             <input id="calc-display"
@@ -11,7 +11,7 @@
         </div>
     </div>
     <ng-container *ngFor="let nextRow of rows">
-        <div class="row">
+        <div class="row calc-row">
             <div class="{{nextColumn.className}}" *ngFor="let nextColumn of nextRow.columns">
                 <label class="{{nextColumn.buttonStyle}}"
                        tabindex="0"
