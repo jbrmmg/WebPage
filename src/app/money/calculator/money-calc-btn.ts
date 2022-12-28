@@ -53,6 +53,14 @@ export class MoneyCalcButton implements IMoneyCalcButton {
     buttonClicked() {
         this.status.appendDisplay(this.text);
     }
+
+    matchKey(keyText: string) : boolean {
+        if(this.text === keyText) {
+            return true;
+        }
+
+        return false;
+    }
 }
 
 export class MoneyCalcButtonNumber extends MoneyCalcButton {
