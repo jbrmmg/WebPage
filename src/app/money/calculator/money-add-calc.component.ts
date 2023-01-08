@@ -1,122 +1,92 @@
-import {Component, EventEmitter, HostListener, OnChanges, Output} from '@angular/core';
-import {MoneyCalcBtnRow} from './money-calc-btn-row';
-import {
-    CalculatorButtonType,
-    CalculatorOperator,
-    IMoneyCalcButton,
-    MoneyCalcButtonClear,
-    MoneyCalcButtonDebit,
-    MoneyCalcButtonDecimal,
-    MoneyCalcButtonDelete,
-    MoneyCalcButtonEquals,
-    MoneyCalcButtonNumber,
-    MoneyCalcButtonOperator,
-    MoneyCalcButtonStatus
-} from './money-calc-btn';
+import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
+import {CalculatorService} from "./calculator-service";
+import {ButtonRow} from './button/ButtonRow';
+import {Display} from './display/Display';
+import {IBase} from "./button/base/IBase";
+import {DebitCredit} from "./button/DebitCredit";
+import {Digit} from "./button/Digit";
+import {Operator} from "./button/Operator";
+import {OperatorType} from "./enum/OperatorType";
+import {Decimal} from "./button/Decimal";
+import {Equals} from "./button/Equals";
+import {Delete} from "./button/Delete";
+import {Clear} from "./button/Clear";
 
 @Component({
     selector: 'jbr-money-add-calc',
     templateUrl: './money-add-calc.component.html',
     styleUrls: ['./money-add-calc.component.css']
 })
-export class MoneyAddCalcComponent implements OnChanges {
-    rows: Array<MoneyCalcBtnRow> = [];
-    btnStatus: MoneyCalcButtonStatus = new MoneyCalcButtonStatus();
+export class MoneyAddCalcComponent implements OnInit {
+    service: CalculatorService = new CalculatorService();
+    display: Display;
+    rows: Array<ButtonRow> = [];
+
+    @Input()  initialValue: string;
 
     @Output() valueEntered: EventEmitter<number> = new EventEmitter<number>();
 
-    get displayStyle(): string {
-        return this.btnStatus.debit ? 'entry-calculator-db' : 'entry-calculator';
+    constructor() {
+        this.display = new Display(this.service);
+
+        let newRow = new ButtonRow();
+        newRow.addColumn(new Digit(7, this.service));
+        newRow.addColumn(new Digit(8, this.service));
+        newRow.addColumn(new Digit(9, this.service));
+        newRow.addColumn(new Operator(OperatorType.ADD, this.service));
+        this.rows.push(newRow);
+
+        newRow = new ButtonRow();
+        newRow.addColumn(new Digit(4, this.service));
+        newRow.addColumn(new Digit(5, this.service));
+        newRow.addColumn(new Digit(6, this.service));
+        newRow.addColumn(new Operator(OperatorType.SUBTRACT, this.service));
+        this.rows.push(newRow);
+
+        newRow = new ButtonRow();
+        newRow.addColumn(new Digit(1, this.service));
+        newRow.addColumn(new Digit(2, this.service));
+        newRow.addColumn(new Digit(3, this.service));
+        newRow.addColumn(new Operator(OperatorType.MULTIPLY, this.service));
+        this.rows.push(newRow);
+
+        newRow = new ButtonRow();
+        newRow.addColumn(new Digit(0, this.service));
+        newRow.addColumn(new Decimal(this.service));
+        newRow.addColumn(new Equals(this.service));
+        newRow.addColumn(new Operator(OperatorType.DIVIDE, this.service));
+        this.rows.push(newRow);
+
+        newRow = new ButtonRow();
+        newRow.addColumn(new DebitCredit(this.service));
+        newRow.addColumn(new Delete(this.service));
+        newRow.addColumn(new Clear(this.service));
+        this.rows.push(newRow);
     }
 
-    get calcDisplay(): string {
-        return this.btnStatus.display;
+    ngOnInit(): void {
+        this.service.initialise(this.initialValue);
     }
 
     @HostListener('document:keypress',['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
         console.info('key:' + event.key);
 
-        // Get the text for the key press.
-        let keyPressText: string;
-        keyPressText = event.key;
-
-        // Some keys need to be modified.
-        if(keyPressText === "Enter") {
-            keyPressText = "=";
-        }
-        if(keyPressText === "Delete") {
-            keyPressText = "DEL";
-        }
-        if(keyPressText === "c" || keyPressText === "C") {
-            keyPressText = "DB"
-        }
-        if(keyPressText === "d" || keyPressText === "D") {
-            keyPressText = "CR"
-        }
-        if(keyPressText === "#") {
-            keyPressText = "CLR"
-        }
-
-        // Find the button that represents this key.
+        // Click the key that is linked to the key press.
         this.rows.forEach((row) => {
             row.columns.forEach((button) => {
-                if(button.matchKey(keyPressText)) {
+                if(button.isLinkedKeyPress(event.key)) {
                     this.onClick(button);
                 }
             })
         })
     }
 
-    constructor() {
-
-        const debitButton = new MoneyCalcButtonDebit(this.btnStatus);
-        this.btnStatus.debitButton = debitButton;
-
-        let newRow = new MoneyCalcBtnRow();
-        newRow.addColumn(new MoneyCalcButtonNumber(7, this.btnStatus));
-        newRow.addColumn(new MoneyCalcButtonNumber(8, this.btnStatus));
-        newRow.addColumn(new MoneyCalcButtonNumber(9, this.btnStatus));
-        newRow.addColumn(new MoneyCalcButtonOperator(CalculatorOperator.ADD, this.btnStatus));
-        this.rows.push(newRow);
-
-        newRow = new MoneyCalcBtnRow();
-        newRow.addColumn(new MoneyCalcButtonNumber(4, this.btnStatus));
-        newRow.addColumn(new MoneyCalcButtonNumber(5, this.btnStatus));
-        newRow.addColumn(new MoneyCalcButtonNumber(6, this.btnStatus));
-        newRow.addColumn(new MoneyCalcButtonOperator(CalculatorOperator.SUBTRACT, this.btnStatus));
-        this.rows.push(newRow);
-
-        newRow = new MoneyCalcBtnRow();
-        newRow.addColumn(new MoneyCalcButtonNumber(1, this.btnStatus));
-        newRow.addColumn(new MoneyCalcButtonNumber(2, this.btnStatus));
-        newRow.addColumn(new MoneyCalcButtonNumber(3, this.btnStatus));
-        newRow.addColumn(new MoneyCalcButtonOperator(CalculatorOperator.MULTIPLY, this.btnStatus));
-        this.rows.push(newRow);
-
-        newRow = new MoneyCalcBtnRow();
-        newRow.addColumn(new MoneyCalcButtonNumber(0, this.btnStatus));
-        newRow.addColumn(new MoneyCalcButtonDecimal(this.btnStatus));
-        newRow.addColumn(new MoneyCalcButtonEquals(this.btnStatus));
-        newRow.addColumn(new MoneyCalcButtonOperator(CalculatorOperator.DIVIDE, this.btnStatus));
-        this.rows.push(newRow);
-
-        newRow = new MoneyCalcBtnRow();
-        newRow.addColumn(debitButton);
-        newRow.addColumn(new MoneyCalcButtonDelete(this.btnStatus));
-        newRow.addColumn(new MoneyCalcButtonClear(this.btnStatus));
-        this.rows.push(newRow);
-    }
-
-    ngOnChanges(): void {
-    }
-
-    onClick(button: IMoneyCalcButton) {
+    onClick(button: IBase) {
         button.buttonClicked();
 
-        // Is the equals button clicked?
-        if (button.buttonType === CalculatorButtonType.EQUAL ) {
-            this.valueEntered.emit(parseFloat(this.btnStatus.display) * (this.btnStatus.debit ? -1.0 : 1.0));
+        if(button.isExitButton()) {
+            this.valueEntered.emit(this.service.getValue * (this.service.isDebitValue ? -1.0 : 1.0));
         }
     }
 }

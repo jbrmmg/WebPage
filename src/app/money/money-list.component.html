@@ -46,7 +46,7 @@
                                 <div class="row">
                                     <div class="col-2">
                                         <div class="card status-date-card mb-3">
-                                            <div class="card-body status-date-card-body" (click)="openModal(templateDate,'date-entry-modal-popup')">
+                                            <div class="card-body status-date-card-body" (click)="openModalDate(templateDate,'date-entry-modal-popup')">
                                                 <p class="status-date-month">{{statusMonth}}</p>
                                                 <p class="status-date-day">{{statusDay}}</p>
                                                 <p class="status-date-year">{{statusYear}}</p>
@@ -54,7 +54,7 @@
                                         </div>
                                     </div>
                                     <div class="col-2">
-                                        <div class="card status-date-card mb-3" (click)="openModal(templateAccount,'')">
+                                        <div class="card status-date-card mb-3" (click)="openModal(templateAccount)">
                                             <div class="card-body status-date-card-body" [style.background-color]="getSelectedAccountColour()">
                                                 <img *ngIf="selectedAccount != null" class="status-account" src="{{getAccountImage(selectedAccount.id)}}" alt="Selected Account">
                                                 <img *ngIf="selectedAccount == null" class="status-account" src="assets/images/money/no.account.svg" alt="Selected Account">
@@ -62,7 +62,7 @@
                                         </div>
                                     </div>
                                     <div class="col-2">
-                                        <div class="card status-date-card mb-3" (click)="openModal(templateCategory,'')">
+                                        <div class="card status-date-card mb-3" (click)="openModal(templateCategory)">
                                             <div class="card-body status-date-card-body">
                                                 <img *ngIf="selectedXferAcc != null" class="status-account" src="{{getAccountImage(selectedXferAcc.id)}}" alt="Selected Category">
                                                 <svg *ngIf="selectedXferAcc != null" class="status-xfer-overlay">
@@ -81,7 +81,7 @@
                                         </div>
                                     </div>
                                     <div class="col-6">
-                                        <div class="card status-date-card mb-3" (click)="openModal(templateCalculator,'')">
+                                        <div class="card status-date-card mb-3" (click)="openModal(templateCalculator)">
                                             <div class="card-body status-date-card-body">
                                                 <p *ngIf="transactionAmount != 0" class="status-amount">
                                                     {{transactionAmtDisplay}}
@@ -236,7 +236,7 @@
                     </div>
                 </div>
                 <div class="col-1">
-                    <div class="cat-filter" (click)="openModal(templateCategoryFilter,'')">
+                    <div class="cat-filter" (click)="openModal(templateCategoryFilter)">
                         <jbr-money-category-filter [categoriesChange]="eventsCategoriesChange.asObservable()"></jbr-money-category-filter>
                     </div>
                 </div>
@@ -567,7 +567,7 @@
         <h4 class="modal-title pull-left">Enter value</h4>
     </div>
     <div class="body">
-        <jbr-money-add-calc style="width:100%" (valueEntered)="onAmountEntered($event)"></jbr-money-add-calc>
+        <jbr-money-add-calc [initialValue]="transactionAmtDisplay" style="width:100%" (valueEntered)="onAmountEntered($event)"></jbr-money-add-calc>
     </div>
 </ng-template>
 

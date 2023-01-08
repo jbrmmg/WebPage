@@ -4,10 +4,10 @@
             <label for="calc-display"></label>
             <input id="calc-display"
                    type="number"
-                   class="{{displayStyle}}"
+                   class="{{display.Class}}"
                    name="calcInput"
                    [readOnly]="true"
-                   [value]="calcDisplay">
+                   [value]="display.Text">
         </div>
     </div>
     <ng-container *ngFor="let nextRow of rows">
