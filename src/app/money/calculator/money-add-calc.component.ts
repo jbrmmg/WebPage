@@ -1,4 +1,4 @@
-import {Component, EventEmitter, HostListener, OnChanges, Output} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 import {CalculatorService} from "./calculator-service";
 import {ButtonRow} from './button/ButtonRow';
 import {Display} from './display/Display';
@@ -17,10 +17,12 @@ import {Clear} from "./button/Clear";
     templateUrl: './money-add-calc.component.html',
     styleUrls: ['./money-add-calc.component.css']
 })
-export class MoneyAddCalcComponent implements OnChanges {
+export class MoneyAddCalcComponent implements OnInit {
     service: CalculatorService = new CalculatorService();
     display: Display;
     rows: Array<ButtonRow> = [];
+
+    @Input()  initialValue: string;
 
     @Output() valueEntered: EventEmitter<number> = new EventEmitter<number>();
 
@@ -62,6 +64,10 @@ export class MoneyAddCalcComponent implements OnChanges {
         this.rows.push(newRow);
     }
 
+    ngOnInit(): void {
+        this.service.initialise(this.initialValue);
+    }
+
     @HostListener('document:keypress',['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
         console.info('key:' + event.key);
@@ -74,9 +80,6 @@ export class MoneyAddCalcComponent implements OnChanges {
                 }
             })
         })
-    }
-
-    ngOnChanges(): void {
     }
 
     onClick(button: IBase) {

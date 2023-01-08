@@ -25,7 +25,7 @@ export class CalculatorService {
             sequence = sequence + k;
         })
 
-        if(sequence === ".") {
+        if(sequence === "." || sequence === "") {
             return 0;
         }
 
@@ -59,6 +59,32 @@ export class CalculatorService {
         return false;
     }
 
+    private processOperator() {
+        if(this.currentOperator != OperatorType.NONE) {
+            switch (this.currentOperator) {
+                case OperatorType.ADD:
+                    this.value += this.memory;
+                    break;
+                case OperatorType.SUBTRACT:
+                    this.value = this.memory - this.value;
+                    break;
+                case OperatorType.MULTIPLY:
+                    this.value *= this.memory;
+                    break;
+                case OperatorType.DIVIDE:
+                    this.value = this.memory / this.value;
+                    break;
+            }
+
+            if(this.value < 0) {
+                this.value *= -1;
+                this.debitValue = !this.debitValue;
+            }
+
+            this.currentOperator = OperatorType.NONE;
+        }
+    }
+
     clear() {
         this.value = 0;
         this.memory = 0;
@@ -69,6 +95,12 @@ export class CalculatorService {
 
     operator(buttonOperator: OperatorType) {
         if (buttonOperator !== OperatorType.NONE) {
+            if (this.keySequence.length > 0) {
+                this.value = this.valueInProgress;
+                this.keySequence = [];
+            }
+
+            this.processOperator();
             this.memory = this.value;
             this.value = 0;
         }
@@ -111,7 +143,28 @@ export class CalculatorService {
     calculate() {
         if (this.keySequence.length > 0) {
             this.value = this.valueInProgress;
+            this.keySequence = [];
         }
+
+        this.processOperator();
+        this.memory = 0;
+
+        this.statusChange.emit(null);
+    }
+
+    initialise(initialValue: string) {
+        if(initialValue === "£0.00") {
+            return;
+        }
+
+        console.log("Initialise  " + initialValue)
+        this.debitValue = initialValue.startsWith("-");
+
+        initialValue = initialValue.substring(this.debitValue ? 2 : 1);
+        console.log("Initialise(2)  " + initialValue)
+        this.value = parseFloat(initialValue);
+        console.log("value  " + this.value)
+
         this.statusChange.emit(null);
     }
 

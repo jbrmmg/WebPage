@@ -539,7 +539,7 @@ export class MoneyListComponent implements OnInit {
             });
 
             if (anySelected) {
-                this.openModal(this.categorySelector, '');
+                this.openModal(this.categorySelector);
             }
         }));
 
@@ -752,8 +752,25 @@ export class MoneyListComponent implements OnInit {
         this.modalRef.hide();
     }
 
-    openModal(template: TemplateRef<any>, dialogClass: string) {
-        this.modalRef = this.modalService.show(template, {class: dialogClass});
+    openModalDate(template: TemplateRef<any>, dialogClass: string) {
+        const initialState = {
+            class: dialogClass
+        }
+
+        this.modalRef = this.modalService.show(template, {initialState});
+    }
+
+    openModal(template: TemplateRef<any>) {
+        this.modalRef = this.modalService.show(template, {});
+    }
+
+    openModalCalc(template: TemplateRef<any>, initialValue: string) {
+        console.log("IN2:" + initialValue);
+        console.log(template)
+        const initialState = {
+            initialValue: "fred"
+        };
+        this.modalRef = this.modalService.show(template, {initialState});
     }
 
     onExitFilter() {
