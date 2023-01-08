@@ -152,18 +152,13 @@ export class CalculatorService {
         this.statusChange.emit(null);
     }
 
-    initialise(initialValue: string) {
-        if(initialValue === "£0.00") {
+    initialise(initialValue: number) {
+        if(initialValue === 0.0) {
             return;
         }
 
-        console.log("Initialise  " + initialValue)
-        this.debitValue = initialValue.startsWith("-");
-
-        initialValue = initialValue.substring(this.debitValue ? 2 : 1);
-        console.log("Initialise(2)  " + initialValue)
-        this.value = parseFloat(initialValue);
-        console.log("value  " + this.value)
+        this.debitValue = initialValue < 0.0;
+        this.value = initialValue * (this.debitValue ? -1.0 : 1.0);
 
         this.statusChange.emit(null);
     }

@@ -22,7 +22,7 @@ export class MoneyAddCalcComponent implements OnInit {
     display: Display;
     rows: Array<ButtonRow> = [];
 
-    @Input()  initialValue: string;
+    @Input()  initialValue: number;
 
     @Output() valueEntered: EventEmitter<number> = new EventEmitter<number>();
 

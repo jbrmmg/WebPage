@@ -163,6 +163,10 @@ export class MoneyListComponent implements OnInit {
         return '£' + this.transactionAmount.toFixed(2);
     }
 
+    get transactionAmt(): number {
+        return this.transactionAmount;
+    }
+
     get transactionValid(): boolean {
         if (this.internalDate == null) {
             return false;
