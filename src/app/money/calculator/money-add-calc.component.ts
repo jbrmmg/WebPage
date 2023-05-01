@@ -65,7 +65,7 @@ export class MoneyAddCalcComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.service.initialise(this.initialValue);
+                                                                                                                                                                                                                                                                this.service.initialise(this.initialValue);
     }
 
     @HostListener('document:keypress',['$event'])
