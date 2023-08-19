@@ -8,7 +8,7 @@
     <fileSets>
         <fileSet>
             <directory>dist/JbrMmg</directory>
-            <outputDirectory>.</outputDirectory>
+            <outputDirectory>deploy</outputDirectory>
             <includes>
                 <include>**/*</include>
             </includes>
@@ -16,4 +16,32 @@
             <filtered>false</filtered>
         </fileSet>
     </fileSets>
+    <files>
+        <file>
+            <source>${project.build.directory}/scripts/deploy/BlankDeploy.sh</source>
+            <outputDirectory>/</outputDirectory>
+            <destName>pre_deploy.sh</destName>
+            <fileMode>0775</fileMode>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>${project.build.directory}/scripts/deploy/BlankDeploy.sh</source>
+            <outputDirectory>/</outputDirectory>
+            <destName>post_deploy.sh</destName>
+            <fileMode>0775</fileMode>
+            <filtered>true</filtered>
+        </file>
+        <file>
+            <source>${basedir}/src/deployment/release.txt</source>
+            <outputDirectory>/</outputDirectory>
+            <destName>maven-releases-DeploymentDir.txt</destName>
+            <fileMode>0664</fileMode>
+        </file>
+        <file>
+            <source>${basedir}/src/deployment/development.txt</source>
+            <outputDirectory>/</outputDirectory>
+            <destName>maven-snapshots-DeploymentDir.txt</destName>
+            <fileMode>0664</fileMode>
+        </file>
+    </files>
 </assembly>
