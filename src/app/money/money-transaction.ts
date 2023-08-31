@@ -1,3 +1,7 @@
+/*
+ * Equivalent TransactionDTO
+ */
+
 export interface ITransaction {
     id: number;
     accountId: string;

@@ -2,6 +2,10 @@ import {ICategory} from './money-category';
 import {IAccount} from './money-jbaccount';
 import {ITransaction} from './money-transaction';
 
+/*
+ * Equivalent of MatchDataDTO
+ */
+
 export interface IMatch {
     transaction: ITransaction;
     beforeAmount: number;
