@@ -1,6 +1,4 @@
 import {ListRowLineType} from './list-row-line-interface';
-import {IAccount} from '../money-jbaccount';
-import {ICategory} from '../money-category';
 
 export class ListRowLine {
     private _rowType: ListRowLineType;
@@ -10,9 +8,9 @@ export class ListRowLine {
     private _dateMonth: string;
     private _dateYear: string;
     private _hasAccount: boolean;
-    private _account: IAccount;
+    private _accountId: string;
     private _hasCategory: boolean;
-    private _category: ICategory;
+    private _categoryId: string;
     private _description: string;
     private _amount: number;
     private _amountDisplay: string;
@@ -34,9 +32,9 @@ export class ListRowLine {
         this.dateMonth = '';
         this.dateYear = '';
         this.hasAccount = false;
-        this.account = null;
+        this.accountId = null;
         this.hasCategory = false;
-        this.category = null;
+        this.categoryId = null;
         this.description = '';
         this.amount = 0.0;
         this.amountDisplay = '?';
@@ -108,12 +106,12 @@ export class ListRowLine {
         this._hasAccount = value;
     }
 
-    get account(): IAccount {
-        return this._account;
+    get accountId(): string {
+        return this._accountId;
     }
 
-    set account(value: IAccount) {
-        this._account = value;
+    set accountId(value: string) {
+        this._accountId = value;
     }
 
     get hasCategory(): boolean {
@@ -124,12 +122,12 @@ export class ListRowLine {
         this._hasCategory = value;
     }
 
-    get category(): ICategory {
-        return this._category;
+    get categoryId(): string {
+        return this._categoryId;
     }
 
-    set category(value: ICategory) {
-        this._category = value;
+    set categoryId(value: string) {
+        this._categoryId = value;
     }
 
     get description(): string {

@@ -4,7 +4,7 @@
     "secure": false
   },
   "/money": {
-    "target": "http://localhost:12017/jbr/int",
+    "target": "http://localhost:13017/jbr/int",
     "secure": false
   },
   "/podcast": {

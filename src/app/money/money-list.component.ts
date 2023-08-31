@@ -1,6 +1,6 @@
 import {DomSanitizer} from '@angular/platform-browser';
 import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {MoneyService, Transaction} from './money.service';
+import {MoneyService} from './money.service';
 import {Category, ICategory} from './money-category';
 import {IAccount, JbAccount} from './money-jbaccount';
 import {TransactionType} from './money-type';
@@ -11,8 +11,9 @@ import {DatePipe} from '@angular/common';
 import {Subject} from 'rxjs';
 import {IListRowLineInterface} from './list-row-line/list-row-line-interface';
 import {ListRowLineFactory} from './list-row-line/list-row-line-factory';
-import {ITransaction, ListRowSummary} from './list-row-line/list-row-summary';
+import {ListRowSummary} from './list-row-line/list-row-summary';
 import {IFile} from './money-file';
+import {ITransaction, Transaction} from './money-transaction'
 
 export enum ListMode { Normal, Add, Regulars, Reconciliation, Experiment }
 
@@ -488,18 +489,18 @@ export class MoneyListComponent implements OnInit {
                                 this.transactionAmount = transaction.amount;
 
                                 this.categories.forEach(nextCategory => {
-                                    if (nextCategory.id === transaction.category.id) {
+                                    if (nextCategory.id === transaction.categoryId) {
                                         this.selectedCategory = nextCategory;
                                     }
                                 });
 
                                 this.accounts.forEach(nextAccount => {
-                                    if (nextAccount.id === transaction.account.id) {
+                                    if (nextAccount.id === transaction.accountId) {
                                         this.selectedAccount = nextAccount;
                                     }
                                 });
 
-                                this.performDataChange(transaction.date);
+                                this.performDataChange(MoneyService.stringToDate(transaction.date));
 
                                 this.lines.forEach(value2 => { value2.selected = false; });
                         }));
@@ -848,25 +849,24 @@ export class MoneyListComponent implements OnInit {
 
                 let newTransaction: Transaction = new Transaction();
                 newTransaction.amount = this.transactionAmount;
-                newTransaction.date = this.internalDate;
-                newTransaction.account = this.selectedAccount;
+                newTransaction.date =  MoneyService.dateToString(this.internalDate);
+                newTransaction.accountId = this.selectedAccount.id;
                 newTransaction.description = this.transactionDescription;
 
                 if (this.selectedXferAcc != null) {
-                    let category : ICategory = new Category("TRF", "Transfer", 0, false, "", "", false, "");
-
+                    newTransaction.categoryId = MoneyService.transferCategory();
                     transactions.push(newTransaction);
 
                     newTransaction = new Transaction();
                     newTransaction.amount = -1 * this.transactionAmount;
-                    newTransaction.date = this.internalDate;
-                    newTransaction.account = this.selectedXferAcc;
+                    newTransaction.date = MoneyService.dateToString(this.internalDate);
+                    newTransaction.accountId = this.selectedXferAcc.id;
                     newTransaction.description = this.transactionDescription;
-                    newTransaction.category = category;
+                    newTransaction.categoryId = MoneyService.transferCategory();
 
                     transactions.push(newTransaction);
                 } else {
-                    newTransaction.category = this.selectedCategory;
+                    newTransaction.categoryId = this.selectedCategory.id;
 
                     transactions.push(newTransaction);
                 }

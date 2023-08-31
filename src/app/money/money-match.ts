@@ -1,6 +1,6 @@
 import {ICategory} from './money-category';
 import {IAccount} from './money-jbaccount';
-import {ITransaction} from './list-row-line/list-row-summary';
+import {ITransaction} from './money-transaction';
 
 export interface IMatch {
     transaction: ITransaction;

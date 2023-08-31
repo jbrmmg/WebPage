@@ -10,15 +10,7 @@ import {IStatement, Statement} from './money-statement';
 import {IMatch} from './money-match';
 import {IRegular} from './money-regular';
 import {IFile} from './money-file';
-import {ITransaction} from './list-row-line/list-row-summary';
-
-export class Transaction {
-    date: Date;
-    amount: number;
-    category: ICategory;
-    account: IAccount;
-    description: string;
-}
+import {ITransaction, Transaction} from "./money-transaction";
 
 export class LockRequest {
     account: IAccount;
@@ -113,7 +105,7 @@ export class MoneyService {
         }
     }
 
-    private static dateToString(value: Date): string {
+    public static dateToString(value: Date): string {
         let result = '';
 
         result += value.getFullYear().toString();
@@ -131,7 +123,25 @@ export class MoneyService {
         return result;
     }
 
-    static getAccountImage(id: string): string {
+    public static stringToDate(value: string): Date {
+        let result : Date = new Date();
+
+        result.setFullYear(parseInt(value.substring(0,4)));
+        result.setMonth(parseInt(value.substring(5,7)));
+        result.setDate(parseInt(value.substring(8)));
+        result.setHours(0);
+        result.setMinutes(0);
+        result.setSeconds(0);
+        result.setMilliseconds(0);
+
+        return result;
+    }
+
+    public static transferCategory(): string {
+        return "TRF";
+    }
+
+    public static getAccountImage(id: string): string {
         if (environment.production) {
             return 'money/account/logo?disabled=false&id=' + id;
         } else {
@@ -139,7 +149,7 @@ export class MoneyService {
         }
     }
 
-    static getDisabledAccountImage(id: string): string {
+    public static getDisabledAccountImage(id: string): string {
         if (environment.production) {
             return 'money/account/logo?disabled=true&id=' + id;
         } else {
@@ -315,40 +325,34 @@ export class MoneyService {
     }
 
     addTransaction(transactions: Transaction[]) {
-        this.http.post<Transaction>(this.addUrl, transactions).subscribe(
-            (val) => {
-                console.log('POST call successful value returned in body', val);
-            },
-            (response) => {
-                console.log('POST call in error', response);
-            },
-            () => {
-                console.log('The POST observable is now complete (add)');
+        this.http.post<Transaction>(this.addUrl, transactions).subscribe({
+            next: (val) => { console.log('POST (add transaction) call successful value returned in body', val); },
+            error: (response) => { console.log('POST (add transaction) call in error', response); },
+            complete: () => {
+                console.log('The POST (add transaction) observable is now complete');
                 this.updateTransactions.emit(null);
             }
-        );
+        });
     }
 
     loadFileRequest(file: IFile) {
         const request: LoadFileRequest = new LoadFileRequest();
         request.filename = file.filename;
 
-        this.http.post<LoadFileRequest>(this.loadFileUrl, request).subscribe(
-            (val) => {
-                console.log('POST call successful value returned in body', val);
-            },
-            (response) => {
-                console.log('POST call in error', response);
+        this.http.post<LoadFileRequest>(this.loadFileUrl, request).subscribe({
+            next: (val)=> { console.log('POST (load file) call successful value returned in body', val); },
+            error: (response) => {
+                console.log('POST (load file) call in error', response);
                 if (!environment.production) {
                     console.log('Testing - process as complete.', response);
                     this.updateTransactions.emit(null);
                 }
             },
-            () => {
+            complete: () => {
                 console.log('The POST observable is now complete (load)');
                 this.updateTransactions.emit(null);
             }
-        );
+        });
     }
 
     updateTransaction(transaction: ITransaction) {
@@ -361,22 +365,23 @@ export class MoneyService {
         updateRequest.id = transaction.id;
         updateRequest.amount = transaction.amount;
         updateRequest.description = transaction.description;
-        updateRequest.categoryId = transaction.category.id;
+        updateRequest.categoryId = transaction.categoryId;
 
-        this.http.put<void>(url, updateRequest).subscribe(
-            () => {
+        this.http.put<void>(url, updateRequest).subscribe({
+            next:() => {
                 console.log(url);
             },
-            (response) => {
+            error: (response) => {
                 console.log('PUT call in error', response);
                 if (!environment.production) {
                     console.log('Testing - process as complete.', response);
                     this.updateTransactions.emit(null);
                 }
             },
-            () => {
+            complete: () => {
                 this.updateTransactions.emit(null);
-            });
+            }
+        });
     }
 
     confirmTransaction(transaction: ITransaction,
@@ -389,22 +394,22 @@ export class MoneyService {
         reconcileRequest.transactionId = transaction.id;
         reconcileRequest.reconcile = reconcile;
 
-        this.http.put<void>(url, reconcileRequest).subscribe(
-            () => {
+        this.http.put<void>(url, reconcileRequest).subscribe({
+            next: () => {
                 console.log(url);
             },
-            (response) => {
+            error: (response) => {
                 console.log('PUT call in error', response);
                 if (!environment.production) {
                     console.log('Testing - process as complete.', response);
                     this.updateTransactions.emit(null);
                 }
             },
-            () => {
+            complete: () => {
                 console.log('The PUT observable is now complete (confirm)');
                 this.updateTransactions.emit(null);
             }
-        );
+        });
     }
 
     getTransactionChangeEmitter() {
@@ -417,25 +422,23 @@ export class MoneyService {
 
     deleteTransaction(transaction: ITransaction ) {
         // Delete the transaction.
-
-        /*
-         this.http.post<Transaction>(this.addUrl, transactions).subscribe(
-         */
         this.http.delete<Transaction>(this.deleteTransactionUrl, {
             body: transaction
-        }).subscribe(() => {
-            console.log(this.deleteTransactionUrl);
-        },
-        (response) => {
-            console.log('DELETE call in error', response);
-            if (!environment.production) {
-                console.log('Testing - process as complete.', response);
+        }).subscribe({
+            next: () => {
+                console.log(this.deleteTransactionUrl);
+            },
+            error: (response) => {
+                console.log('DELETE call in error', response);
+                if (!environment.production) {
+                    console.log('Testing - process as complete.', response);
+                    this.updateTransactions.emit(null);
+                }
+            },
+            complete: () => {
+                console.log('The POST observable is now complete (delete)');
                 this.updateTransactions.emit(null);
             }
-        },
-        () => {
-            console.log('The POST observable is now complete (delete)');
-            this.updateTransactions.emit(null);
         });
     }
 
@@ -453,21 +456,23 @@ export class MoneyService {
         lockRequest.year = statement.id.year;
         lockRequest.month = statement.id.month;
 
-        this.http.post<void>(url, lockRequest).subscribe(() => {
-            console.log(url);
-        },
-        (response) => {
-            console.log('POST call in error', response);
-            if (!environment.production) {
-                console.log('Testing - process as complete.', response);
+        this.http.post<void>(url, lockRequest).subscribe({
+            next:() => {
+                console.log(url);
+            },
+            error: (response) => {
+                console.log('POST call in error', response);
+                if (!environment.production) {
+                    console.log('Testing - process as complete.', response);
+                    this.updateStatements.emit(null);
+                    this.updateTransactions.emit(null);
+                }
+            },
+            complete: () => {
+                console.log('The POST observable is now complete (lock)');
                 this.updateStatements.emit(null);
                 this.updateTransactions.emit(null);
             }
-        },
-        () => {
-            console.log('The POST observable is now complete (lock)');
-            this.updateStatements.emit(null);
-            this.updateTransactions.emit(null);
         });
     }
 
@@ -483,31 +488,35 @@ export class MoneyService {
 
     clearRecData() {
         // Clear the rec data.
-        this.http.delete<void>(this.clearDataUrl).subscribe(() => {
+        this.http.delete<void>(this.clearDataUrl).subscribe({
+            next:() => {
                 console.log(this.clearDataUrl);
             },
-            (response) => {
+            error: (response) => {
                 console.log('Clear POST call in error', response);
             },
-            () => {
+            complete: () => {
                 console.log('Clear The POST observable is now complete (delete)');
-            });
+            }
+        });
     }
 
     autoAccept() {
         // Auto accept the data.
-        this.http.put<void>(this.autoAcceptUrl, '').subscribe(() => {
+        this.http.put<void>(this.autoAcceptUrl, '').subscribe({
+            next:() => {
                 console.log(this.autoAcceptUrl);
             },
-            (response) => {
+            error: (response) => {
                 console.log('Auto Accept PUT call in error', response);
             },
-            () => {
+            complete: () => {
                 console.log('Auto Accept The PUT observable is now complete (delete)');
 
                 // Update transactions
                 this.updateTransactions.emit(null);
-            });
+            }
+        });
     }
 
     setCategory(matchRow: IMatch, category: ICategory) {
@@ -520,14 +529,16 @@ export class MoneyService {
         request.categoryId = category.id;
         request.type = 'rec';
 
-        this.http.put<void>(url, request).subscribe(() => {
+        this.http.put<void>(url, request).subscribe({
+            next:() => {
                 console.log(url);
             },
-            (response) => {
+            error: (response) => {
                 console.log('Set Cat PUT call in error', response);
             },
-            () => {
+            complete: () => {
                 console.log('Set Cat PUT observable is now complete (delete)');
-            });
+            }
+        });
     }
 }

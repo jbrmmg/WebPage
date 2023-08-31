@@ -11,7 +11,8 @@ import {IMatch} from '../money-match';
 import {IRegular} from '../money-regular';
 import {MoneyService} from '../money.service';
 import {IStatement} from '../money-statement';
-import {ITransaction, ListRowSummary} from './list-row-summary';
+import {ListRowSummary} from './list-row-summary';
+import {ITransaction} from '../money-transaction'
 
 
 export class ListRowLineFactory {
