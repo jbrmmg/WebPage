@@ -13,7 +13,7 @@ import {IFile} from './money-file';
 import {ITransaction, Transaction} from "./money-transaction";
 
 export class LockRequest {
-    account: IAccount;
+    accountId: string;
     year: number;
     month: number;
 }
@@ -452,9 +452,9 @@ export class MoneyService {
 
         const lockRequest = new LockRequest();
 
-        lockRequest.account = statement.id.account;
-        lockRequest.year = statement.id.year;
-        lockRequest.month = statement.id.month;
+        lockRequest.accountId = statement.accountId;
+        lockRequest.year = statement.year;
+        lockRequest.month = statement.month;
 
         this.http.post<void>(url, lockRequest).subscribe({
             next:() => {

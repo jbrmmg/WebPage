@@ -1,13 +1,23 @@
 import {IAccount} from './money-jbaccount';
 
+/*
+ * Equivalent of StatementIdDTO
+ */
+
 export interface IStatementId {
-    account: IAccount;
+    accountId: string;
     month: number;
     year: number;
 }
 
+/*
+ * Equivalent of StatementDTO
+ */
+
 export interface IStatement {
-    id: IStatementId;
+    accountId: string;
+    month: number;
+    year: number;
     openBalance: number;
     locked: boolean;
 }
@@ -15,7 +25,9 @@ export interface IStatement {
 export class Statement implements IStatement {
     selected: boolean;
 
-    constructor(public id: IStatementId,
+    constructor(public accountId: string,
+                public month: number,
+                public year: number,
                 public openBalance: number,
                 public locked: boolean ) {
     }

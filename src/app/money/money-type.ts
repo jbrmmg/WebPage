@@ -1,3 +1,6 @@
+/*
+ * Internal - loaded from a file.
+ */
 
 export interface ITransactionType {
     id: string;

@@ -1,3 +1,7 @@
+/*
+ * Equivalent of CategoryDTO
+ */
+
 export interface ICategory {
     id: string;
     name: string;
@@ -6,7 +10,7 @@ export interface ICategory {
     colour: string;
     group: string;
     systemUse: boolean;
-    source: string;
+    expense: boolean;
 }
 
 export class Category implements ICategory {
@@ -19,6 +23,6 @@ export class Category implements ICategory {
                 public colour: string,
                 public group: string,
                 public systemUse: boolean,
-                public source: string ) {
+                public expense: boolean ) {
     }
 }

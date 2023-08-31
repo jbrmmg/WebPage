@@ -11,18 +11,18 @@ export class ListRowLineRegular extends ListRowLine implements IListRowLineInter
         super();
 
         this.rowType = ListRowLineType.REGULAR_TRANSACTION;
-        if (regular.lastDate != null) {
+        if (regular.lastCreated != null) {
             this.hasDate = true;
-            const paymentDate: Date = new Date(regular.lastDate);
+            const paymentDate: Date = new Date(regular.lastCreated);
 
             this.dateDay = paymentDate.getDate().toString();
             this.dateMonth = ListRowLineTransaction.getMonthName(paymentDate.getMonth());
             this.dateYear = paymentDate.getFullYear().toString();
         }
         this.hasAccount = true;
-        this.account = regular.account;
+        this.accountId = regular.accountId;
         this.hasCategory = true;
-        this.category = regular.category;
+        this.categoryId = regular.categoryId;
         this.description = regular.description;
         this.amount = regular.amount;
         this.classButtonOne = '';
