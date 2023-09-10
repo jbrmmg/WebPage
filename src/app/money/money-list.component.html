@@ -91,20 +91,33 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-10">
+                                    <div class="col-11">
                                         <label style="width:100%;">
-                                            <input style="width:100%;" [(ngModel)]="transactionDescription"/>
+                                            <input id="input-description" style="width:100%;" [(ngModel)]="transactionDescription"/>
                                         </label>
                                     </div>
-                                    <div class="coll-1" *ngIf="transactionValid == true">
-                                        <label class="btn btn-primary float-right"
-                                               style="background-color: #008800;"
-                                               tabindex="0"
-                                               (click)="onClickCreate()">
-                                            <em class="fa fa-check-circle"></em>
-                                        </label>
+                                    <div class="col-1" *ngIf="transactionValid == true">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <label class="btn btn-primary float-right"
+                                                       style="background-color: #008800;"
+                                                       tabindex="0"
+                                                       (click)="onClickCreate()">
+                                                    <em class="fa fa-check-circle"></em>
+                                                </label>
+                                            </div>
+                                            <div class="col-6">
+                                                <label class="btn btn-primary float-right"
+                                                       style="background-color: #880000;"
+                                                       tabindex="0"
+                                                       (click)="onClearEdit()">
+                                                    <em class="fa fa-times-circle"></em>
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="coll-1" *ngIf="transactionValid == true">
+                                    <!--
+                                    <div class="col-1" *ngIf="transactionValid == true">
                                         <label class="btn btn-primary float-right"
                                                style="background-color: #008800;"
                                                tabindex="0"
@@ -112,6 +125,7 @@
                                             <em class="fa fa-times-circle"></em>
                                         </label>
                                     </div>
+                                    -->
                                 </div>
                             </div>
                         </div>
@@ -314,18 +328,18 @@
                             <td [ngClass]="{'trn-col':  true,
                                             'trn-account-col-total': nextTransaction.isTotalRow === true}">
                                 <div *ngIf="nextTransaction.hasAccount">
-                                    <img class="trn-account-img" src="{{getAccountImage(nextTransaction.account.id)}}" alt="Account"/>
+                                    <img class="trn-account-img" src="{{getAccountImage(nextTransaction.accountId)}}" alt="Account"/>
                                 </div>
                             </td>
                             <td [ngClass]="{'trn-col':  true,
                                             'trn-category-col-total': nextTransaction.isTotalRow === true}">
                                 <div *ngIf="nextTransaction.hasCategory" class="row" (click)="nextTransaction.select()">
                                     <div class="col-7 trn-category-txt">
-                                        {{nextTransaction.category.name}}
+                                        {{getCategoryName(nextTransaction.categoryId)}}
                                     </div>
                                     <div class="col-2 trn-category-img">
                                         <svg viewBox='0 0 100 100' width='98%' height='98%'>
-                                            <circle  cx='50' cy='50' r='48' [style.fill]="'#' + nextTransaction.category.colour" style="stroke:#006600"></circle>
+                                            <circle  cx='50' cy='50' r='48' [style.fill]="'#' + getCategoryColour(nextTransaction.categoryId)" style="stroke:#006600"></circle>
                                         </svg>
                                     </div>
                                     <div class="col-2">
@@ -429,18 +443,18 @@
                         <td [ngClass]="{'trn-col':  true,
                                             'trn-account-col-total': nextTransaction.isTotalRow === true}">
                             <div *ngIf="nextTransaction.hasAccount">
-                                <img class="trn-account-img" src="{{getAccountImage(nextTransaction.account.id)}}" alt="Account"/>
+                                <img class="trn-account-img" src="{{getAccountImage(nextTransaction.accountId)}}" alt="Account"/>
                             </div>
                         </td>
                         <td [ngClass]="{'trn-col':  true,
                                             'trn-category-col-total': nextTransaction.isTotalRow === true}">
                             <div *ngIf="nextTransaction.hasCategory" class="row" (click)="nextTransaction.select()">
                                 <div class="col-7 trn-category-txt">
-                                    {{nextTransaction.category.name}}
+                                    {{getCategoryName(nextTransaction.categoryId)}}
                                 </div>
                                 <div class="col-2 trn-category-img">
                                     <svg viewBox='0 0 100 100' width='98%' height='98%'>
-                                        <circle  cx='50' cy='50' r='48' [style.fill]="'#' + nextTransaction.category.colour" style="stroke:#006600"></circle>
+                                        <circle  cx='50' cy='50' r='48' [style.fill]="'#' + getCategoryColour(nextTransaction.categoryId)" style="stroke:#006600"></circle>
                                     </svg>
                                 </div>
                                 <div class="col-2">

@@ -1,5 +1,5 @@
 import {DomSanitizer} from '@angular/platform-browser';
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {MoneyService} from './money.service';
 import {Category, ICategory} from './money-category';
 import {IAccount, JbAccount} from './money-jbaccount';
@@ -36,9 +36,9 @@ export class MoneyListComponent implements OnInit {
     private internalRadioType: string;
     radioAccount: string;
     types: TransactionType[];
-    categories: Category[];
-    accounts: JbAccount[];
-    statements: Statement[];
+    categories: Category[] = [];
+    accounts: JbAccount[] = [];
+    statements: Statement[] = [];
     errorMessage: string;
     fromValue: Date = new Date();
     toValue: Date = new Date();
@@ -277,49 +277,47 @@ export class MoneyListComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log('here3');
-
-        this._moneyService.getTransactionTypes().subscribe(
-            types => {
+        this._moneyService.getTransactionTypes().subscribe({
+            next: (types) => {
                 this.types = types;
             },
-            error => this.errorMessage = <any>error
-        );
-        this._moneyService.getCategories().subscribe(
-            categories => {
+            error: (response) => this.errorMessage = <any> response
+        });
+        this._moneyService.getCategories().subscribe({
+            next: (categories) => {
                 this.categories = categories;
             },
-            error => this.errorMessage = <any>error,
-            () => {
+            error: (response) => this.errorMessage = <any> response,
+            complete: () => {
                 this.categories.forEach(value => {
                     value.selected = true;
                 });
                 this.emitCategoriesChanged();
             }
-        );
-        this._moneyService.getAccounts().subscribe(
-            accounts => {
+        });
+        this._moneyService.getAccounts().subscribe({
+            next: (accounts) => {
                 this.accounts = accounts;
             },
-            error => this.errorMessage = <any>error,
-            () => {
+            error: (response) => this.errorMessage = <any> response,
+            complete: () => {
                 this.accounts.forEach(value => {
                     value.selected = true;
                 });
             }
-        );
-        this._moneyService.getStatements().subscribe(
-            statements => {
+        });
+        this._moneyService.getStatements().subscribe({
+            next: (statements) => {
                 this.statements = statements;
             },
-            error => this.errorMessage = <any>error
-        );
-        this._moneyService.getFiles().subscribe(
-            files => {
+            error: (response) => this.errorMessage = <any> response
+        });
+        this._moneyService.getFiles().subscribe({
+            next: (files) => {
                 this.files = files;
             },
-            error => this.errorMessage = <any>error
-        );
+            error: (response) => this.errorMessage = <any> response
+        });
 
         this.transactionsUpdated = this._moneyService.getTransactionChangeEmitter()
             .subscribe(() => this.updateTransactions(UpdateTransactionReason.Event));
@@ -682,6 +680,44 @@ export class MoneyListComponent implements OnInit {
 
     getAccountImage(id: string): string {
         return MoneyService.getAccountImage(id);
+    }
+
+    @HostListener('document:keypress',['$event'])
+    handleKeyboardEvent(event: KeyboardEvent) {
+        console.info('new key:' + event.key + " " + event.target);
+
+        // Click the key that is linked to the key press.
+        /*
+        this.rows.forEach((row) => {
+            row.columns.forEach((button) => {
+                if(button.isLinkedKeyPress(event.key)) {
+                    this.onClick(button);
+                }
+            })
+        })
+         */
+    }
+
+    getCategoryName(id: string): string {
+        let found : ICategory = null;
+        this.categories.forEach(nextCategory => {
+            if (nextCategory.id === id) {
+                found = nextCategory;
+            }
+        });
+
+        return (found == null) ? "(unknown: " + id +")" : found.name;
+    }
+
+    getCategoryColour(id: string): string {
+        let found : ICategory = null;
+        this.categories.forEach(nextCategory => {
+            if (nextCategory.id === id) {
+                found = nextCategory;
+            }
+        });
+
+        return (found == null) ? "000000" : found.colour;
     }
 
     getSelectedAccountColour(): string {
