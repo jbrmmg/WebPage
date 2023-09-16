@@ -87,7 +87,7 @@ export class ListRowLineReconcile extends ListRowLine implements IListRowLineInt
     }
 
     select() {
-        if (this.categoryId.startsWith('XXXXX')) {
+        if (this.categoryId == null || this.categoryId.startsWith('XXXX')) {
             if (!this.selected) {
                 this.categoryId = 'XXXXs';
                 this.selected = true;

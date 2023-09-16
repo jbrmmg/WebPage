@@ -699,6 +699,14 @@ export class MoneyListComponent implements OnInit {
     }
 
     getCategoryName(id: string): string {
+        if(id == null || id == "XXXXns") {
+            return "Not Set";
+        }
+
+        if(id == "XXXXs") {
+            return "<Selected>";
+        }
+
         let found : ICategory = null;
         this.categories.forEach(nextCategory => {
             if (nextCategory.id === id) {
