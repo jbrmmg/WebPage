@@ -1,27 +1,15 @@
 import {IListRowLineInterface, ListRowLineType} from './list-row-line-interface';
 import {IMatch} from '../money-match';
-import {Category, ICategory} from '../money-category';
+import {ICategory} from '../money-category';
 import {ListRowLineTransaction} from './list-row-line-transaction';
-import {MoneyService, Transaction} from '../money.service';
+import {MoneyService} from '../money.service';
 import {ListRowLine} from './list-row-line';
+import {Transaction} from '../money-transaction'
 
 export class ListRowLineReconcile extends ListRowLine implements IListRowLineInterface {
-    private static unknownCategory: ICategory;
-    private static selectedCategory: ICategory;
-
     private readonly reconcile: IMatch;
     private moneyService: MoneyService;
     private readonly reconcileAction: boolean;
-
-    private static createUiCategories() {
-        if (ListRowLineReconcile.unknownCategory == null) {
-            ListRowLineReconcile.unknownCategory = new Category('XXXXXns', 'Not Set', 0, false, '000000', 'none', false, '');
-        }
-
-        if (ListRowLineReconcile.selectedCategory == null) {
-            ListRowLineReconcile.selectedCategory = new Category('XXXXXs', 'Selected', 0, false, '808080', 'none', false, '');
-        }
-    }
 
     constructor(moneyService: MoneyService,
                 reconcile: IMatch) {
@@ -35,9 +23,9 @@ export class ListRowLineReconcile extends ListRowLine implements IListRowLineInt
         this.dateMonth = ListRowLineTransaction.getMonthName(transactionDate.getMonth());
         this.dateYear = transactionDate.getFullYear().toString();
         this.hasAccount = true;
-        this.account = reconcile.account;
+        this.accountId = reconcile.accountId;
         this.hasCategory = true;
-        this.category = reconcile.category;
+        this.categoryId = reconcile.categoryId;
         this.description = reconcile.description;
         this.amount = reconcile.amount;
         this.hasButtonOne = true;
@@ -57,12 +45,6 @@ export class ListRowLineReconcile extends ListRowLine implements IListRowLineInt
             if (reconcile.transaction != null) {
                 this.description = reconcile.transaction.description;
             }
-        }
-
-        // If the category is null, create a special category for display.
-        ListRowLineReconcile.createUiCategories();
-        if (this.category == null) {
-            this.category = ListRowLineReconcile.unknownCategory;
         }
 
         // Buttons depend on the forward and backward actions.
@@ -105,12 +87,12 @@ export class ListRowLineReconcile extends ListRowLine implements IListRowLineInt
     }
 
     select() {
-        if (this.category.id.startsWith('XXXXX')) {
+        if (this.categoryId.startsWith('XXXXX')) {
             if (!this.selected) {
-                this.category = ListRowLineReconcile.selectedCategory;
+                this.categoryId = 'XXXXs';
                 this.selected = true;
             } else {
-                this.category = ListRowLineReconcile.unknownCategory;
+                this.categoryId = 'XXXXns';
                 this.selected = false;
             }
         }
@@ -128,9 +110,9 @@ export class ListRowLineReconcile extends ListRowLine implements IListRowLineInt
 
         newTransaction.amount = this.reconcile.amount;
         newTransaction.date = this.reconcile.date;
-        newTransaction.account = this.reconcile.account;
+        newTransaction.accountId = this.reconcile.accountId;
         newTransaction.description = this.reconcile.description;
-        newTransaction.category = this.reconcile.category;
+        newTransaction.categoryId = this.reconcile.categoryId;
 
         transactions.push(newTransaction);
 
@@ -152,7 +134,7 @@ export class ListRowLineReconcile extends ListRowLine implements IListRowLineInt
 
         // Update the category.
         this.moneyService.setCategory(this.reconcile, selectedCategory);
-        this.category = selectedCategory;
+        this.categoryId = selectedCategory.id;
         this.selected = false;
     }
 

@@ -1,8 +1,9 @@
 import {IListRowLineInterface, ListRowLineType} from './list-row-line-interface';
 import {ICategory} from '../money-category';
 import {MoneyService} from '../money.service';
-import {ITransaction, ListRowSummary} from './list-row-summary';
+import {ListRowSummary} from './list-row-summary';
 import {ListRowLine} from './list-row-line';
+import {ITransaction} from '../money-transaction'
 
 export class ListRowLineTransaction extends ListRowLine implements IListRowLineInterface {
     private _moneyService: MoneyService;
@@ -69,11 +70,11 @@ export class ListRowLineTransaction extends ListRowLine implements IListRowLineI
         this.dateDay = transactionDate.getDate().toString();
         this.dateMonth = ListRowLineTransaction.getMonthName(transactionDate.getMonth());
         this.dateYear = transactionDate.getFullYear().toString();
-        this.category = transaction.category;
+        this.categoryId = transaction.categoryId;
         this.description = transaction.description;
         this.amount = transaction.amount;
         this.hasAccount = true;
-        this.account = transaction.account;
+        this.accountId = transaction.accountId;
         this.hasCategory = true;
         this.hasButtonOne = true;
         this.hasButtonTwo = true;
@@ -82,8 +83,8 @@ export class ListRowLineTransaction extends ListRowLine implements IListRowLineI
         this.classButtonThree = 'fa fa-trash';
 
         // If the transaction is locked, set button one to a padlock.
-        if (transaction.statement != null) {
-            if (transaction.statement.locked) {
+        if (transaction.hasStatement) {
+            if (transaction.statementLocked) {
                 this.setButtons(ListRowLineTransaction.ReconciliationStatus.LOCKED);
             } else {
                 this.setButtons(ListRowLineTransaction.ReconciliationStatus.RECONCILED);
@@ -177,8 +178,8 @@ export class ListRowLineTransaction extends ListRowLine implements IListRowLineI
             return;
         }
 
-        if (this.transaction.category.id !== 'TRF') {
-            this.transaction.category.id = selectedCategory.id;
+        if (this.transaction.categoryId !== MoneyService.transferCategory()) {
+            this.transaction.categoryId = selectedCategory.id;
         }
 
         this.transaction.description = description;

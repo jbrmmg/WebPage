@@ -21,9 +21,9 @@ export interface IListRowLineInterface extends ListRowLine {
     dateMonth: string;
     dateYear: string;
     hasAccount: boolean;
-    account: IAccount;
+    accountId: string;
     hasCategory: boolean;
-    category: ICategory;
+    categoryId: string;
     description: string;
     amount: number;
     amountDisplay: string;

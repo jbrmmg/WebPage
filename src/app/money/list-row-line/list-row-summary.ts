@@ -1,18 +1,3 @@
-import {IAccount} from '../money-jbaccount';
-import {ICategory} from '../money-category';
-import {IStatement} from '../money-statement';
-
-export interface ITransaction {
-    id: number;
-    account: IAccount;
-    category: ICategory;
-    date: Date;
-    amount: number;
-    statement: IStatement;
-    description: string;
-    oppositeTransactionId: number;
-}
-
 export class ListRowSummary {
     totalsDisplay: Array<{ title: string,
         amount: number,

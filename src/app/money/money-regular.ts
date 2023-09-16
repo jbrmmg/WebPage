@@ -1,14 +1,15 @@
-import {IAccount} from './money-jbaccount';
-import {ICategory} from './money-category';
+/*
+ * Equivalent of RegularDTO
+ */
 
 export interface IRegular {
     id: number;
-    account: IAccount;
+    accountId: string;
     amount: number;
-    category: ICategory;
+    categoryId: string;
     frequency: string;
     weekendAdj: string;
-    start: Date;
-    lastDate: Date;
+    start: string;
+    lastCreated: string;
     description: string;
 }
