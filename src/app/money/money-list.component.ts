@@ -725,7 +725,15 @@ export class MoneyListComponent implements OnInit {
             }
         });
 
-        return (found == null) ? "000000" : found.colour;
+        return (found == null) ? "FFFFFF" : found.colour;
+    }
+
+    getCategoryTextColour(id: string): string {
+        if(MoneyService.getBrightness(this.getCategoryColour(id)) > 130) {
+            return '000000';
+        }
+
+        return 'FFFFFF';
     }
 
     getSelectedAccountColour(): string {
