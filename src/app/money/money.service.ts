@@ -63,6 +63,7 @@ export class MoneyService {
     private readonly getRegularUrl;
     private readonly getFilesUrl;
     private readonly loadFileUrl;
+    private readonly fileUpdate;
 
     @Output() updateTransactions: EventEmitter<any> = new EventEmitter();
     @Output() updateStatements: EventEmitter<any> = new EventEmitter();
@@ -86,6 +87,17 @@ export class MoneyService {
             this.getRegularUrl = 'money/transaction/regulars';
             this.getFilesUrl = 'money/reconciliation/files';
             this.loadFileUrl = 'money/reconciliation/load';
+            this.fileUpdate = new EventSource('money/reconciliation/file-updates');
+
+//            this.fileUpdate.addListener('message', message => {
+//                let n: Notification; //need to have this Notification model class in angular2
+//                n = JSON.parse(message.data);
+//                console.log(message.data);
+//            });
+
+//            this.fileUpdate.addListener('message', message => {
+//                console.log(message.data);
+//            });
         } else {
             this.categoryUrl = 'api/money/category.json';
             this.accountUrl = 'api/money/account.json';
@@ -540,5 +552,9 @@ export class MoneyService {
                 console.log('Set Cat PUT observable is now complete (delete)');
             }
         });
+    }
+
+    addListener(listener: any) {
+        this.fileUpdate.addListener('message',listener);
     }
 }

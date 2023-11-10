@@ -49,6 +49,7 @@ export class MoneyListComponent implements OnInit {
     selectedStatement: IStatement;
     files: IFile[];
     reconcileAccount: JbAccount;
+    updateListener: any;
 
     internalDate: Date = new Date();
     accountRadio: string;
@@ -105,6 +106,7 @@ export class MoneyListComponent implements OnInit {
         this.lastChangeTo = null;
         this.listMode = ListMode.Normal;
         this.reconcileAccount = null;
+        this.updateListener = function (e) { console.log(e.data) }
     }
 
     get isAddMode() {
@@ -326,6 +328,8 @@ export class MoneyListComponent implements OnInit {
             .subscribe(() => this.statements = []);
 
         this.performDataChange(new Date());
+
+        this._moneyService.addListener(this.updateListener);
     }
 
     private getTransactionType(id: string): TransactionType {
