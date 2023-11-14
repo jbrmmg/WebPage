@@ -30,6 +30,8 @@ import { BackupPhotoComponent } from "./backup/photo/backup-photo.component";
 import { BackupPrintsComponent } from "./backup/prints/backup-prints.component";
 import { MoneyRowDisplay } from "./money/exp/money-row-display";
 import { MoneyRowDispDate } from "./money/exp/money-row-disp-date";
+import { MoneyFiles } from "./money/files/money-files";
+import { MoneyFile } from "./money/files/money-file";
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { MoneyRowDispDate } from "./money/exp/money-row-disp-date";
     MoneyRowDisplay,
     MoneyRowDispDate,
     MoneyListComponent,
+    MoneyFiles,
+    MoneyFile,
     HouseComponent,
     WeightComponent,
     BackupListComponent,

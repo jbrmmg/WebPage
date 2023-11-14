@@ -14,8 +14,9 @@ import {ListRowLineFactory} from './list-row-line/list-row-line-factory';
 import {ListRowSummary} from './list-row-line/list-row-summary';
 import {IFile} from './money-file';
 import {ITransaction, Transaction} from './money-transaction'
+import {IFileUpdate, FileUpdate} from "./money-file-update";
 
-export enum ListMode { Normal, Add, Regulars, Reconciliation, Experiment }
+export enum ListMode { Normal, Add, Regulars, Reconciliation, Experiment, ReconciliationFiles }
 
 export enum UpdateTransactionReason {   Type,
                                         Event,
@@ -49,7 +50,6 @@ export class MoneyListComponent implements OnInit {
     selectedStatement: IStatement;
     files: IFile[];
     reconcileAccount: JbAccount;
-    updateListener: any;
 
     internalDate: Date = new Date();
     accountRadio: string;
@@ -106,7 +106,6 @@ export class MoneyListComponent implements OnInit {
         this.lastChangeTo = null;
         this.listMode = ListMode.Normal;
         this.reconcileAccount = null;
-        this.updateListener = function (e) { console.log(e.data) }
     }
 
     get isAddMode() {
@@ -137,17 +136,26 @@ export class MoneyListComponent implements OnInit {
         return this.listMode === ListMode.Reconciliation;
     }
 
-    selectExperimentMode() {
-        this.updateTransactions(UpdateTransactionReason.Account);
-        this.listMode = ListMode.Experiment;
+    selectReconcileMode() {
+        this.updateTransactions(UpdateTransactionReason.SelectReconcilation);
     }
 
     get isExperimentMode() {
         return this.listMode === ListMode.Experiment;
     }
 
-    selectReconcileMode() {
-        this.updateTransactions(UpdateTransactionReason.SelectReconcilation);
+    selectExperimentMode() {
+        this.updateTransactions(UpdateTransactionReason.Account);
+        this.listMode = ListMode.Experiment;
+    }
+
+    get isReconciliationFilesMode() : boolean {
+        return this.listMode === ListMode.ReconciliationFiles;
+    }
+
+    selectReconciliationFilesMode() : void {
+        this.updateTransactions(UpdateTransactionReason.Account);
+        this.listMode = ListMode.ReconciliationFiles;
     }
 
     emitCategoriesChanged() {
@@ -328,8 +336,6 @@ export class MoneyListComponent implements OnInit {
             .subscribe(() => this.statements = []);
 
         this.performDataChange(new Date());
-
-        this._moneyService.addListener(this.updateListener);
     }
 
     private getTransactionType(id: string): TransactionType {
