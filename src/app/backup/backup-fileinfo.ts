@@ -10,4 +10,5 @@ export class FileInfo {
     icon: string;
     path: string;
     locationName: string;
+    expiry: Date;
 }

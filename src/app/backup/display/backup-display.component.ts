@@ -16,7 +16,6 @@ export class BackupDisplayComponent implements OnInit  {
     initialHierarchy: HierarchyResponse;
     atTopLevel: boolean;
     selectedFile: FileInfo;
-    fileBackups: FileInfo[];
 
     @Output() selectPhoto = new EventEmitter();
 

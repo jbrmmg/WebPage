@@ -37,23 +37,10 @@
             <div class="row detail-size-row"><p class="detail-size">{{selectedFile.size}}</p></div>
             <div class="row detail-date-row"><p class="detail-date">{{selectedFile.date}}</p></div>
             <div class="row detail-md5-row"><p class="detail-md5">[{{selectedFile.md5}}]</p></div>
+            <div class="row detail-expiry-row" *ngIf="selectedFile.expiry != null"><p class="detail-expiry">Expiry: {{selectedFile.expiry}}</p></div>
+            <div class="row detail-expiry-row" *ngIf="selectedFile.expiry == null"><p class="detail-expiry">Expiry: does not expire</p></div>
             <div class="row">
-                <table aria-describedby="selected-file-id" *ngIf="fileBackups.length > 0">
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col" class="backup">Path</th>
-                        <th scope="col" class="backup">Date</th>
-                        <th scope="col" class="backup">MD5</th>
-                    </tr>
-                    <tr *ngFor="let nextBackup of fileBackups">
-                        <td>
-                            <em class="fa {{backupStatus(nextBackup)}}"></em>
-                        </td>
-                        <td class="backup">{{nextBackup.locationName}}</td>
-                        <td class="backup">{{nextBackup.date}}</td>
-                        <td class="backup">[{{nextBackup.md5}}]</td>
-                    </tr>
-                </table>
+                <jbr-backup-display-backups></jbr-backup-display-backups>
             </div>
             <div *ngIf="selectedFile.image">
                 <img src="{{imageUrl(selectedFile.id)}}" alt="Image File" width="420" (click)="selectPhotoMode()"/>
