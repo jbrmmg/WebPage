@@ -1,3 +1,15 @@
-.backup {
+.backups-margin {
+    margin-top: 20px;
+}
+
+.backups {
     font-size: 12px;
+}
+
+.status-green {
+    color: green;
+}
+
+.status-warn {
+    color: orange;
 }

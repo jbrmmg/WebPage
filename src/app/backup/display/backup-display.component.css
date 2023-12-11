@@ -3,10 +3,6 @@
     margin-top: 3px;
 }
 
-.detail-col {
-    padding-left: 30px;
-}
-
 .btn-delete {
     background-color: red;
 }
@@ -15,72 +11,9 @@
     margin-top: 20px;
 }
 
-.detail-name-icon {
-    font-size: 48px;
-}
-
-.detail-name {
-    padding-left: 10px;
-    font-size: 32px;
-    font-weight: bolder;
-}
-
-.detail-full-name-row {
-    margin: 0;
-}
-
-.detail-full-name {
-    margin: 0;
-    font-size: 12px;
-}
-
-.detail-size-row {
-    margin: 0;
-}
-
-.detail-size {
-    margin: 0;
-    font-size: 12px;
-}
-
-.detail-date-row {
-    margin: 0;
-}
-
-.detail-date {
-    margin: 0;
-    font-size: 12px;
-}
-
-.detail-md5-row {
-    margin: 0;
-}
-
-.detail-md5 {
-    margin: 0;
-    font-size: 12px;
-}
-
-.detail-expiry-row {
-    margin: 0;
-}
-
-.detail-expiry {
-    margin: 0;
-    font-size: 12px;
-}
-
 .list-container {
     overflow: auto;
     height: 600px;
-}
-
-.status-green {
-    color: green;
-}
-
-.status-warn {
-    color: orange;
 }
 
 .page-row {

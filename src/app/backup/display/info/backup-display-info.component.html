@@ -1,0 +1,12 @@
+<div class="row">
+    <em class="fa {{selectedFile.icon}} detail-name-icon"></em>
+    <p id="selected-file-id" class="detail-name">{{selectedFile.name}}</p>
+</div>
+<div class="row detail-full-name-row">
+    <p class="detail-full-name">{{selectedFile.fullFilename}}</p>
+</div>
+<div class="row detail-size-row"><p class="detail-size">{{selectedFile.size}}</p></div>
+<div class="row detail-date-row"><p class="detail-date">{{selectedFile.date}}</p></div>
+<div class="row detail-md5-row"><p class="detail-md5">[{{selectedFile.md5}}]</p></div>
+<div class="row detail-expiry-row" *ngIf="selectedFile.expiry != null"><p class="detail-expiry">Expiry: {{selectedFile.expiry}}</p></div>
+<div class="row detail-expiry-row" *ngIf="selectedFile.expiry == null"><p class="detail-expiry">Expiry: does not expire</p></div>

@@ -37,7 +37,9 @@ export class BackupService {
     private selectedPhoto : number;
 
     private selectedPhotos: number[];
+    private selectedFile: FileInfoExtra;
     @Output() printsUpdated = new EventEmitter();
+    @Output() fileLoaded : EventEmitter<FileInfoExtra> = new EventEmitter<FileInfoExtra>();
 
     private static handleError(err: HttpErrorResponse) {
         let errorMessage;
@@ -96,12 +98,39 @@ export class BackupService {
         }
     }
 
-    getFile(id: number): Observable<FileInfoExtra> {
-        return this.http.get<FileInfoExtra>(environment.production === true ? `backup/file?id=${id}` : `api/backup/file${id}.json` ).pipe(
+    /*
+     * -----------------------------------------------------------------------------------------------------------------------------------
+     * Selected File - request file, get details of selected file.
+     */
+    getFile(id: number): void {
+        this.http.get<FileInfoExtra>(environment.production === true ? `backup/file?id=${id}` : `api/backup/file${id}.json` ).pipe(
             tap(data => console.log(`All: ${JSON.stringify(data)}`)),
             catchError( err => BackupService.handleError(err))
-        );
+        ).subscribe({
+            next:(nextFile: FileInfoExtra) => {
+                this.fileLoaded.emit(nextFile);
+                this.selectedFile = nextFile;
+            },
+            error: (response) => {
+                console.error('Failed to get file information.', response)
+            },
+            complete: () => {
+                console.log('File loaded ' + id);
+            }
+        });
     }
+
+    fileHasBeenSelected(): boolean {
+        return this.selectedFile != null;
+    }
+
+    getSelectedFile(): FileInfoExtra {
+        return this.selectedFile;
+    }
+
+    /*
+     * -----------------------------------------------------------------------------------------------------------------------------------
+     */
 
     deleteFile(id: number) {
         this.http.delete<void>(`backup/file?id=${id}`).subscribe(() => {

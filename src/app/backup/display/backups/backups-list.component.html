@@ -1,16 +1,16 @@
-<table aria-describedby="selected-file-id" *ngIf="fileBackups.length > 0">
+<table class="backups-margin" aria-describedby="selected-file-id" *ngIf="fileBackups != null && fileBackups.length > 0">
     <tr>
         <th scope="col"></th>
-        <th scope="col" class="backup">Path</th>
-        <th scope="col" class="backup">Date</th>
-        <th scope="col" class="backup">MD5</th>
+        <th scope="col" class="backups">Path</th>
+        <th scope="col" class="backups">Date</th>
+        <th scope="col" class="backups">MD5</th>
     </tr>
     <tr *ngFor="let nextBackup of fileBackups">
         <td>
             <em class="fa {{backupStatus(nextBackup)}}"></em>
         </td>
-        <td class="backup">{{nextBackup.locationName}}</td>
-        <td class="backup">{{nextBackup.date}}</td>
-        <td class="backup">[{{nextBackup.md5}}]</td>
+        <td class="backups">{{nextBackup.locationName}}</td>
+        <td class="backups">{{nextBackup.date}}</td>
+        <td class="backups">[{{nextBackup.md5}}]</td>
     </tr>
 </table>
