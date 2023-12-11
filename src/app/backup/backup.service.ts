@@ -9,6 +9,7 @@ import {HierarchyResponse} from './backup-hierarchyresponse';
 import {FileInfoExtra} from './backup-fileinfoextra';
 import {environment} from '../../environments/environment';
 import {BackupSummary} from "./summary/backup-summary";
+import {FileExpiry} from "./backup-expiry";
 
 @Injectable({
     providedIn: 'root'
@@ -130,6 +131,38 @@ export class BackupService {
 
     /*
      * -----------------------------------------------------------------------------------------------------------------------------------
+     * File Expiry
+     */
+
+    setFileExpiry(id: number, expiry: Date) {
+        let fileExpiry: FileExpiry = new FileExpiry();
+        fileExpiry.id = id;
+        fileExpiry.expiry = expiry;
+
+        this.http.put<FileInfoExtra>(environment.production === true ? `backup/expire` : `api/backup/file${id}.json`,fileExpiry).pipe(
+            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+            catchError( err => BackupService.handleError(err))
+        ).subscribe({
+            next:(nextFile: FileInfoExtra) => {
+                this.fileLoaded.emit(nextFile);
+                this.selectedFile = nextFile;
+            },
+            error: (response) => {
+                console.error('Failed to expire file.', response)
+            },
+            complete: () => {
+                console.log('File loaded (expire)' + id);
+            }
+        });
+    }
+
+    clearFileExpiry(id: number) {
+
+    }
+
+    /*
+     * -----------------------------------------------------------------------------------------------------------------------------------
+     * Selected File - request file, get details of selected file.
      */
 
     deleteFile(id: number) {

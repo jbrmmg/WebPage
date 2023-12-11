@@ -30,6 +30,7 @@ import { BackupPhotoComponent } from "./backup/photo/backup-photo.component";
 import { BackupPrintsComponent } from "./backup/prints/backup-prints.component";
 import { BackupDisplayBackupsComponent } from "./backup/display/backups/backups-list.components";
 import { BackupDisplayInfoComponent } from "./backup/display/info/backup-display-info.component";
+import { BackupDisplayLabelComponent } from "./backup/display/label/backup-display-label.component";
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { BackupDisplayInfoComponent } from "./backup/display/info/backup-display
     BackupSummaryComponent,
     BackupSummarySourceComponent,
     BackupDisplayInfoComponent,
+    BackupDisplayLabelComponent,
     BackupDisplayBackupsComponent,
     BackupDisplayComponent,
     BackupActionComponent,

@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {FileInfo} from "../../backup-fileinfo";
 import {FileInfoExtra} from "../../backup-fileinfoextra";
 import {BackupService} from "../../backup.service";
+import {DatePipe} from "@angular/common";
 
 @Component({
     selector: 'jbr-backup-display-backups',
@@ -15,7 +16,8 @@ export class BackupDisplayBackupsComponent implements OnInit {
     selectedFile: FileInfo;
     fileBackups : FileInfo[];
 
-    constructor(private readonly _backupService: BackupService) {
+    constructor(private readonly _backupService: BackupService,
+                private datePipe: DatePipe) {
         if(_backupService.fileHasBeenSelected()) {
             this.selectedFile = _backupService.getSelectedFile().file;
             this.fileBackups = _backupService.getSelectedFile().backups;
@@ -50,5 +52,17 @@ export class BackupDisplayBackupsComponent implements OnInit {
         }
 
         return this.BACKUP_OK;
+    }
+
+    backupFileDate(backup: FileInfo): string {
+        if(backup == null) {
+            return "";
+        }
+
+        if(backup.date == null) {
+            return "";
+        }
+
+        return this.datePipe.transform(backup.date,'dd MMM yyyy HH:mm');
     }
 }

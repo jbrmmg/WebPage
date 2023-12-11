@@ -48,11 +48,29 @@
     font-size: 12px;
 }
 
+.detail-calendar-icon {
+    width: 18px;
+}
+
+.detail-expiry-clear-icon {
+    width: 18px;
+    color: red;
+}
+
 .detail-expiry-row {
     margin: 0;
+    flex-wrap: nowrap;
 }
 
 .detail-expiry {
     margin: 0;
     font-size: 12px;
+}
+
+.expiry-datepicker {
+    font-size: small;
+    padding: 0 0 0 2px;
+    margin-bottom: 2px;
+    margin-left: 10px;
+    width: 30%;
 }

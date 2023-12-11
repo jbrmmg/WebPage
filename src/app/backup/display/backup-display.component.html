@@ -28,6 +28,7 @@
     <div class="col-10 detail-col">
         <div *ngIf="selectedFile != null">
             <jbr-backup-display-info></jbr-backup-display-info>
+            <jbr-backup-display-labels></jbr-backup-display-labels>
             <jbr-backup-display-backups></jbr-backup-display-backups>
             <div *ngIf="selectedFile.image">
                 <img src="{{imageUrl(selectedFile.id)}}" alt="Image File" width="420" (click)="selectPhotoMode()"/>

@@ -10,7 +10,7 @@
             <em class="fa {{backupStatus(nextBackup)}}"></em>
         </td>
         <td class="backups">{{nextBackup.locationName}}</td>
-        <td class="backups">{{nextBackup.date}}</td>
+        <td class="backups">{{backupFileDate(nextBackup)}}</td>
         <td class="backups">[{{nextBackup.md5}}]</td>
     </tr>
 </table>
