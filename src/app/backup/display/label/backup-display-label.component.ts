@@ -1,6 +1,7 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, TemplateRef} from "@angular/core";
 import {BackupService} from "../../backup.service";
 import {FileInfoExtra} from "../../backup-fileinfoextra";
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 
 @Component({
     selector: 'jbr-backup-display-labels',
@@ -9,8 +10,10 @@ import {FileInfoExtra} from "../../backup-fileinfoextra";
 })
 export class BackupDisplayLabelComponent implements OnInit {
     labels: string[];
+    labelListModal: BsModalRef;
 
-    constructor(private readonly _backupService: BackupService) {
+    constructor(private readonly _backupService: BackupService,
+                private modalService: BsModalService) {
         if(_backupService.fileHasBeenSelected()) {
             this.labels = _backupService.getSelectedFile().labels;
         }
@@ -18,9 +21,14 @@ export class BackupDisplayLabelComponent implements OnInit {
 
     ngOnInit(): void {
         this._backupService.fileLoaded.subscribe((nextFile: FileInfoExtra) => this.fileLoaded(nextFile));
+        this.labelListModal.hide();
     }
 
     fileLoaded(file: FileInfoExtra): void {
         this.labels = file.labels;
+    }
+
+    showListSelector(template: TemplateRef<any>):void {
+        this.modalService.show(template, {});
     }
 }
