@@ -7,6 +7,34 @@
     background-color: cornflowerblue;
     color: white;
     width: 15%;
+    margin: 0 4px;
     text-align: center;
     border-radius: 5px;
+}
+
+.label-format-option {
+    background-color: cornflowerblue;
+    color: white;
+    margin: 0 auto;
+    text-align: center;
+    border-radius: 5px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.label-format-option-selected {
+    background-color: darkslateblue;
+    color: white;
+    margin: 0 auto;
+    text-align: center;
+    border-radius: 5px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.outer {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    padding: 4px;
 }

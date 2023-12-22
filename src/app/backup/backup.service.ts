@@ -10,6 +10,7 @@ import {FileInfoExtra} from './backup-fileinfoextra';
 import {environment} from '../../environments/environment';
 import {BackupSummary} from "./summary/backup-summary";
 import {FileExpiry} from "./backup-expiry";
+import {FileLabel, Label} from "./backup-label";
 
 @Injectable({
     providedIn: 'root'
@@ -27,6 +28,7 @@ export class BackupService {
     readonly BACKUP_URL_PRINTS = 'backup/prints';
     readonly BACKUP_URL_PRINT = 'backup/print';
     readonly BACKUP_URL_UNPRINT = 'backup/unprint';
+    readonly BACKUP_URL_LABELS = 'backup/labels';
 
     readonly TEST_BACKUP_URL_SUMMARY = 'api/backup/summary.json';
     readonly TEST_BACKUP_URL_ACTIONS = 'api/backup/actions.json';
@@ -34,6 +36,7 @@ export class BackupService {
     readonly TEST_BACKUP_URL_HIERARCHY = 'api/backup/hierarchy.json';
     readonly TEST_BACKUP_URL_LOGS = 'api/backup/logs.json';
     readonly TEST_BACKUP_URL_PRINTS = 'api/backup/prints.json';
+    readonly TEST_BACKUP_URL_LABELS = 'api/backup/labels.json';
 
     private selectedPhoto : number;
 
@@ -99,6 +102,13 @@ export class BackupService {
         }
     }
 
+    getLabels() : Observable<Label[]> {
+        return this.http.get<Label[]>(environment.production === true ? this.BACKUP_URL_LABELS : this.TEST_BACKUP_URL_LABELS).pipe(
+            tap(data=> console.log(`All: ${JSON.stringify(data)}`)),
+            catchError(err => BackupService.handleError(err))
+        );
+    }
+
     /*
      * -----------------------------------------------------------------------------------------------------------------------------------
      * Selected File - request file, get details of selected file.
@@ -117,6 +127,54 @@ export class BackupService {
             },
             complete: () => {
                 console.log('File loaded ' + id);
+            }
+        });
+    }
+
+    setFileLabel(id: number, labelId: number): void {
+        let fileLabel : FileLabel;
+        fileLabel = new FileLabel();
+        fileLabel.fileId = id;
+        fileLabel.labels = [];
+        fileLabel.labels.push(labelId);
+
+        this.http.post<FileInfoExtra>(environment.production === true ? 'backup/label' : 'api/backup/label.json', fileLabel).pipe(
+            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+            catchError(err => BackupService.handleError(err))
+        ).subscribe({
+            next:(nextFile: FileInfoExtra) => {
+                this.fileLoaded.emit(nextFile);
+                this.selectedFile = nextFile;
+            },
+            error: (response) => {
+                console.error('Failed to update file label', response)
+            },
+            complete: () => {
+                console.log('Label updated ' + id);
+            }
+        });
+    }
+
+    removeFileLabel(id: number, labelId: number): void {
+        let fileLabel : FileLabel;
+        fileLabel = new FileLabel();
+        fileLabel.fileId = id;
+        fileLabel.labels = [];
+        fileLabel.labels.push(labelId);
+
+        this.http.delete<FileInfoExtra>(environment.production === true ? 'backup/label' : 'api/backup/label.json', {body: fileLabel}).pipe(
+            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+            catchError(err => BackupService.handleError(err))
+        ).subscribe({
+            next:(nextFile: FileInfoExtra) => {
+                this.fileLoaded.emit(nextFile);
+                this.selectedFile = nextFile;
+            },
+            error: (response) => {
+                console.error('Failed to update file label', response)
+            },
+            complete: () => {
+                console.log('Label updated ' + id);
             }
         });
     }

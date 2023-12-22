@@ -5,8 +5,11 @@
 
 <ng-template #labelPicker>
     <div class="modal-header">
-        <h4 class="modal-title pull-left">Select Labels</h4>
+        <h4 class="modal-title pull-left">Select or Unselect Labels</h4>
     </div>
     <div class="body">
+        <div class="row outer" *ngFor="let nextLabel of allLabels">
+            <div><p [ngClass]="nextLabel.selected ? 'label-format-option-selected': 'label-format-option'" (click)="select(nextLabel.id)">{{nextLabel.name}}</p></div>
+        </div>
     </div>
 </ng-template>
