@@ -31,6 +31,8 @@ import { BackupPrintsComponent } from "./backup/prints/backup-prints.component";
 import { BackupDisplayBackupsComponent } from "./backup/display/backups/backups-list.components";
 import { BackupDisplayInfoComponent } from "./backup/display/info/backup-display-info.component";
 import { BackupDisplayLabelComponent } from "./backup/display/label/backup-display-label.component";
+import { MoneyRowDisplay } from "./money/exp/money-row-display";
+import { MoneyRowDispDate } from "./money/exp/money-row-disp-date";
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { BackupDisplayLabelComponent } from "./backup/display/label/backup-displ
     MoneyAddCalcComponent,
     MoneyCategoryPickerComponent,
     MoneyCategoryFilterComponent,
+    MoneyRowDisplay,
+    MoneyRowDispDate,
     MoneyListComponent,
     HouseComponent,
     WeightComponent,

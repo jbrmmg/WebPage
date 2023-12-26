@@ -459,6 +459,7 @@ export class MoneyListComponent implements OnInit {
             this.calculateBF();
             this.summaryRow.resetCreditsDebits();
             this.lines = [];
+            this.lines.push(ListRowLineFactory.createRowLineHeader());
             this.lines.push(ListRowLineFactory.createRowLineTotalBfwd(this.summaryRow));
             this.lines.push(ListRowLineFactory.createRowLineDebits(this.summaryRow));
             this.lines.push(ListRowLineFactory.createRowLineCredits(this.summaryRow));
