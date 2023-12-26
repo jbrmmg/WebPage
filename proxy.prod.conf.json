@@ -1,18 +1,10 @@
 {
   "/backup": {
-    "target": "http://localhost:12013/jbr/int",
+    "target": "http://localhost:12017/jbr/int",
     "secure": false
   },
   "/money": {
     "target": "http://localhost:12017/jbr/int",
-    "secure": false
-  },
-  "/podcast": {
-    "target": "http://localhost:12009/jbr/int",
-    "secure": false
-  },
-  "/log": {
-    "target": "http://localhost:12001/jbr/ext",
     "secure": false
   }
 }

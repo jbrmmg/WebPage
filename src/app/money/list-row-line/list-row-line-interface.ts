@@ -1,8 +1,8 @@
-import {IAccount} from '../money-jbaccount';
 import {ICategory} from '../money-category';
 import {ListRowLine} from './list-row-line';
 
 export enum ListRowLineType {
+    HEADER,
     TRANSACTION,
     TOTAL_BOUGHT_FORWARD,
     TOTAL_DEBITS,

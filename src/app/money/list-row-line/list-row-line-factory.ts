@@ -13,6 +13,7 @@ import {MoneyService} from '../money.service';
 import {IStatement} from '../money-statement';
 import {ListRowSummary} from './list-row-summary';
 import {ITransaction} from '../money-transaction'
+import {ListRowLineHeader} from "./list-row-line-header";
 
 
 export class ListRowLineFactory {
@@ -49,5 +50,9 @@ export class ListRowLineFactory {
 
     static createRowLineDebits(summary: ListRowSummary): IListRowLineInterface {
         return new ListRowLineTotalDebits(summary);
+    }
+
+    static createRowLineHeader() {
+        return new ListRowLineHeader();
     }
 }

@@ -1,7 +1,8 @@
-import {Component, EventEmitter, OnInit, Output} from "@angular/core";
+import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {BackupService} from "../backup.service";
 import {HierarchyResponse} from "../backup-hierarchyresponse";
 import {FileInfo} from "../backup-fileinfo";
+import {FileInfoExtra} from "../backup-fileinfoextra";
 
 @Component({
     selector: 'jbr-backup-display',
@@ -9,14 +10,10 @@ import {FileInfo} from "../backup-fileinfo";
     styleUrls: ['./backup-display.component.css']
 })
 export class BackupDisplayComponent implements OnInit  {
-    readonly BACKUP_WARNING = 'fa-exclamation-triangle status-warn';
-    readonly BACKUP_OK = 'fa-check-circle-o status-green';
-
     hierarchy: HierarchyResponse[];
     initialHierarchy: HierarchyResponse;
     atTopLevel: boolean;
     selectedFile: FileInfo;
-    fileBackups: FileInfo[];
 
     @Output() selectPhoto = new EventEmitter();
 
@@ -24,10 +21,10 @@ export class BackupDisplayComponent implements OnInit  {
     }
 
     ngOnInit(): void {
+        this._backupService.fileLoaded.subscribe((nextFile: FileInfoExtra) => this.fileLoaded(nextFile));
         this.initialHierarchy = new HierarchyResponse();
         this.initialHierarchy.id = -1;
         this.atTopLevel = true;
-        this.fileBackups = [];
         this.selectedFile = null;
 
         this._backupService.getHierarchy(this.initialHierarchy).subscribe(
@@ -53,38 +50,15 @@ export class BackupDisplayComponent implements OnInit  {
         );
     }
 
+    fileLoaded(file: FileInfoExtra): void {
+        this.selectedFile = file.file;
+    }
+
     displayFile(file: HierarchyResponse): void {
         console.log(`Select file ${file.displayName}`);
 
-        this._backupService.getFile(file.underlyingId).subscribe(
-            nextFile => {
-                this.selectedFile = nextFile.file;
-                this.fileBackups = nextFile.backups;
-            },
-            () => console.log('Failed to get the file'),
-            () => console.log('Get File complete.')
-        );
-    }
-
-    backupStatus(backup: FileInfo): string {
-        const selectedDate = new Date(this.selectedFile.date);
-        const backupDate = new Date(backup.date);
-        const difference = Math.abs(selectedDate.getTime() - backupDate.getTime()) / 1000.0;
-
-        if (difference > 30) {
-            console.log(`Difference - ${difference} ${backup.date} ${this.selectedFile.date}`);
-            return this.BACKUP_WARNING;
-        }
-
-        if (this.selectedFile.md5 === '') {
-            return this.BACKUP_WARNING;
-        }
-
-        if (this.selectedFile.md5 !== backup.md5) {
-            return this.BACKUP_WARNING;
-        }
-
-        return this.BACKUP_OK;
+        // Select file.
+        this._backupService.getFile(file.underlyingId);
     }
 
     imageUrl(id: number): string {

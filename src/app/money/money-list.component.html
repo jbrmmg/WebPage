@@ -29,6 +29,13 @@
                    aria-controls="reconcile">
                 <em class="fa fa-balance-scale"></em>
             </label>
+            <label class="btn btn-primary float-right btn-mode col-1"
+                   tabindex="0"
+                   (click)="selectExperimentMode()"
+                   [attr.aria-expanded]="isExperimentMode"
+                   aria-controls="reconcile">
+                <em class="fa fa-question"></em>
+            </label>
         </div>
         <div class="row" id="addTransaction" [collapse]="!isAddMode">
             <div class="col-12">
@@ -282,6 +289,11 @@
                         </td>
                     </tr>
                 </table>
+            </div>
+        </div>
+        <div id="experiment" [collapse]="!isExperimentMode">
+            <div class="row">
+                <jbr-money-row *ngFor="let nextLine of lines" [rowLine]="nextLine"></jbr-money-row>
             </div>
         </div>
         <div class="row">
