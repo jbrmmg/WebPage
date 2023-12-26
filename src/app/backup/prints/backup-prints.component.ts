@@ -46,7 +46,6 @@ export class BackupPrintsComponent implements OnInit {
             return false;
         }
 
-        console.log('R' + row + ' C' + col)
         return this.getIndex(row,col) < this.selectedPhotos.length;
     }
 

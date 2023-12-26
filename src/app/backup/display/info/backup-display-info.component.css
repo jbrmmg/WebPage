@@ -1,0 +1,76 @@
+.detail-col {
+    padding-left: 30px;
+}
+
+.detail-name-icon {
+    font-size: 48px;
+}
+
+.detail-name {
+    padding-left: 10px;
+    font-size: 32px;
+    font-weight: bolder;
+}
+
+.detail-full-name-row {
+    margin: 0;
+}
+
+.detail-full-name {
+    margin: 0;
+    font-size: 12px;
+}
+
+.detail-size-row {
+    margin: 0;
+}
+
+.detail-size {
+    margin: 0;
+    font-size: 12px;
+}
+
+.detail-date-row {
+    margin: 0;
+}
+
+.detail-date {
+    margin: 0;
+    font-size: 12px;
+}
+
+.detail-md5-row {
+    margin: 0;
+}
+
+.detail-md5 {
+    margin: 0;
+    font-size: 12px;
+}
+
+.detail-calendar-icon {
+    width: 18px;
+}
+
+.detail-expiry-clear-icon {
+    width: 18px;
+    color: red;
+}
+
+.detail-expiry-row {
+    margin: 0;
+    flex-wrap: nowrap;
+}
+
+.detail-expiry {
+    margin: 0;
+    font-size: 12px;
+}
+
+.expiry-datepicker {
+    font-size: small;
+    padding: 0 0 0 2px;
+    margin-bottom: 2px;
+    margin-left: 10px;
+    width: 30%;
+}

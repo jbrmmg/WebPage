@@ -1,0 +1,27 @@
+<div class="row">
+    <em class="fa {{selectedFile.icon}} detail-name-icon"></em>
+    <p id="selected-file-id" class="detail-name">{{selectedFile.name}}</p>
+</div>
+<div class="row detail-full-name-row">
+    <p class="detail-full-name">{{selectedFile.fullFilename}}</p>
+</div>
+<div class="row detail-size-row"><p class="detail-size">{{selectedFile.size}}</p></div>
+<div class="row detail-date-row"><p class="detail-date">{{formattedFileDate}}</p></div>
+<div class="row detail-md5-row"><p class="detail-md5">[{{selectedFile.md5}}]</p></div>
+<div class="row detail-expiry-row">
+    <em class="fa fa-calendar detail-calendar-icon" (click)="editDate()"></em>
+    <em class="fa fa-times detail-expiry-clear-icon" (click)="clearExpiry()" *ngIf="selectedFile.expiry != null && editDateEnable == false"></em>
+    <p class="detail-expiry" *ngIf="selectedFile.expiry != null && editDateEnable == false">Expiry: {{formattedExpiryDate}}</p>
+    <p class="detail-expiry" *ngIf="selectedFile.expiry == null && editDateEnable == false">File does not expire</p>
+    <input *ngIf="editDateEnable == true"
+           id="expiry-date"
+           type="text"
+           [bsValue]="internalExpiryDate"
+           (bsValueChange)="onChangeExpiry($event)"
+           placeholder="Expiry Date"
+           class="form-control expiry-datepicker"
+           bsDatepicker [bsConfig]="{
+                dateInputFormat: 'DD-MMMM-YYYY',
+                containerClass: 'theme-dark-blue',
+                selectFromOtherMonth: true }"/>
+</div>
