@@ -1,5 +1,7 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, TemplateRef} from "@angular/core";
 import {BackupService} from "../backup.service";
+import {SelectedPrint} from "../backup-selectedprint";
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 
 @Component({
     selector: 'jbr-backup-prints',
@@ -7,12 +9,14 @@ import {BackupService} from "../backup.service";
     styleUrls: ['./backup-prints.component.css']
 })
 export class BackupPrintsComponent implements OnInit {
-    selectedPhotos: number[];
+    selectedPhotos: SelectedPrint[];
+    printSizeModal: BsModalRef;
     rows: number[];
     cols: number[];
 
-    constructor(private readonly _backupService: BackupService) {
-        this.cols = [0,1,2,3,4];
+    constructor(private readonly _backupService: BackupService,
+                private readonly _modalService: BsModalService) {
+        this.cols = [0,1,2];
         this.selectedPhotos = [];
     }
 
@@ -22,10 +26,10 @@ export class BackupPrintsComponent implements OnInit {
     }
 
     updatePrints() {
-        console.log('UPDATE THE PRINGS')
+        console.log('UPDATE THE PRINTS')
         this.selectedPhotos = this._backupService.getSelectedPhotos();
 
-        let rowCount: number = this.selectedPhotos.length/5 + 1;
+        let rowCount: number = this.selectedPhotos.length/3 + 1;
         this.rows = [rowCount];
 
         for(let i:number = 0; i < rowCount; i++) {
@@ -34,11 +38,37 @@ export class BackupPrintsComponent implements OnInit {
     }
 
     private getIndex(row: number, col: number): number {
-        return row * 5 + col;
+        return row * 3 + col;
     }
 
     imageUrl(row: number, col: number): string {
-        return this._backupService.imageUrl(this.selectedPhotos[this.getIndex(row,col)]);
+        return this._backupService.imageUrl(this.selectedPhotos[this.getIndex(row,col)].fileId);
+    }
+
+    printInfo(row: number, col: number): string {
+        let text: string;
+        let photo: SelectedPrint;
+
+        photo = this.selectedPhotos[this.getIndex(row,col)];
+
+        text = photo.sizeName;
+
+        if(photo.blackWhite) {
+            text = text + " - Black & White";
+        } else {
+            text = text + " - Colour";
+        }
+
+        if(photo.border) {
+            text = text + " with border";
+        }
+
+        return text;
+    }
+
+    selectSize(row: number, col: number,template: TemplateRef<any>) {
+        console.log("here - " + row + "," + col)
+        this._modalService.show(template);
     }
 
     imageAvailable(row: number, col:number): boolean {
@@ -50,15 +80,23 @@ export class BackupPrintsComponent implements OnInit {
     }
 
     columns(): number {
-        return 5;
+        return 3;
     }
 
     unselect(row: number, col: number) {
-        this._backupService.unselectForPrint(this.selectedPhotos[this.getIndex(row,col)]);
+        this._backupService.unselectForPrint(this.selectedPhotos[this.getIndex(row,col)].fileId);
     }
 
     clearPrints() {
         console.log('Clear')
         this._backupService.clearPrints();
+    }
+
+    close() {
+        this._modalService.hide();
+    }
+
+    selectSizeAndStyle() {
+        this._modalService.hide();
     }
 }

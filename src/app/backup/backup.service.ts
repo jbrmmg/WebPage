@@ -11,6 +11,7 @@ import {environment} from '../../environments/environment';
 import {BackupSummary} from "./summary/backup-summary";
 import {FileExpiry} from "./backup-expiry";
 import {FileLabel, Label} from "./backup-label";
+import {SelectedPrint} from "./backup-selectedprint";
 
 @Injectable({
     providedIn: 'root'
@@ -38,9 +39,9 @@ export class BackupService {
     readonly TEST_BACKUP_URL_PRINTS = 'api/backup/prints.json';
     readonly TEST_BACKUP_URL_LABELS = 'api/backup/labels.json';
 
-    private selectedPhoto : number;
+    private selectedPhoto : SelectedPrint;
 
-    private selectedPhotos: number[];
+    private selectedPhotos: SelectedPrint[];
     private selectedFile: FileInfoExtra;
     @Output() printsUpdated = new EventEmitter();
     @Output() fileLoaded : EventEmitter<FileInfoExtra> = new EventEmitter<FileInfoExtra>();
@@ -371,19 +372,30 @@ export class BackupService {
     }
 
     setSelectedPhoto(selected: number) {
-        this.selectedPhoto = selected;
+        this.selectedPhoto = null;
+        let nextPhoto: String;
+
+        for(nextPhoto in this.selectedPhotos) {
+            if(this.selectedPhoto[nextPhoto].fileId === selected) {
+                this.selectedPhoto = this.selectedPhoto[nextPhoto];
+            }
+        }
     }
 
     getSelectedPhoto():number {
-        return this.selectedPhoto;
+        if(this.selectedPhoto == null) {
+            return null;
+        }
+
+        return this.selectedPhoto.fileId;
     }
 
-    getSelectedPhotos():number[] {
+    getSelectedPhotos():SelectedPrint[] {
         return this.selectedPhotos;
     }
 
     updatePrints() {
-        this.http.get<number[]>(environment.production === true ? this.BACKUP_URL_PRINTS : this.TEST_BACKUP_URL_PRINTS).subscribe(
+        this.http.get<SelectedPrint[]>(environment.production === true ? this.BACKUP_URL_PRINTS : this.TEST_BACKUP_URL_PRINTS).subscribe(
             (selected) => {
                 this.selectedPhotos = selected;
                 console.log('Selecting from print');
