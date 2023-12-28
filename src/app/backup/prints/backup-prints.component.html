@@ -5,13 +5,11 @@
 </div>
 <div *ngFor="let row of rows" class="row row-gap">
     <div *ngFor="let col of cols" class="col-4">
-        <div class="outer-image" *ngIf="imageAvailable(row,col)">
-            <img class="photo-thumbnail" src="{{imageUrl(row,col)}}" alt="Image File"/>
-            <label class="btn btn-primary btn-unselect">
-                <em class="fa fa-close" (click)="unselect(row,col)"></em>
-            </label>
-            <label class="size-information" (click)="selectSize(row,col,sizePicker)"><a>{{printInfo(row,col)}}</a></label>
-        </div>
+        <jbr-backup-print-image
+                [selectedPrint]="getPrintAtRowCol(row,col)"
+                (unselect)="unselectPrint($event)"
+                (updateSize)="updatePrintSize($event,sizePicker)">
+        </jbr-backup-print-image>
     </div>
 </div>
 
@@ -20,35 +18,8 @@
         <h4 class="modal-title pull-left">Choose Print Size and Style</h4>
     </div>
     <div class="body">
-        <div class="col col-border">
-            <div class="row g-0 row-option">
-                <label class="col-6"><a>Size</a></label>
-                <select class="col-6">
-                    <option>2x2 in</option>
-                    <option>2x3 in</option>
-                    <option>2x2.5 in [Retro]</option>
-                    <option>20x10 in [Panoramic]</option>
-                    <option>A4</option>
-                    <option>6x4 in</option>
-                </select>
-            </div>
-            <div class="row g-0 row-option ">
-                <label class="col-10"><a>Black & White</a></label>
-                <input class="col-2" type="checkbox"/>
-            </div>
-            <div class="row g-0 row-option ">
-                <label class="col-10"><a>Border</a></label>
-                <input class="col-2" type="checkbox"/>
-            </div>
-            <div class="row g-0">
-                <label class="btn btn-primary col-5 btn-left" (click)="selectSizeAndStyle()">
-                    <em class="fa fa-check"></em>
-                </label>
-                <div class="col-2"></div>
-                <label class="btn btn-primary col-5 btn-right" (click)="close()">
-                    <em class="fa fa-close"></em>
-                </label>
-            </div>
-        </div>
+        <jbr-backup-print-size-selector
+                [selectedPrint]=sizePhoto
+                (sizeChange)="onSizeChange($event)"></jbr-backup-print-size-selector>
     </div>
 </ng-template>

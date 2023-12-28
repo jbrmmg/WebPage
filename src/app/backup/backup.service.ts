@@ -11,7 +11,7 @@ import {environment} from '../../environments/environment';
 import {BackupSummary} from "./summary/backup-summary";
 import {FileExpiry} from "./backup-expiry";
 import {FileLabel, Label} from "./backup-label";
-import {SelectedPrint} from "./backup-selectedprint";
+import {PrintSize, SelectedPrint} from "./backup-selectedprint";
 
 @Injectable({
     providedIn: 'root'
@@ -30,6 +30,7 @@ export class BackupService {
     readonly BACKUP_URL_PRINT = 'backup/print';
     readonly BACKUP_URL_UNPRINT = 'backup/unprint';
     readonly BACKUP_URL_LABELS = 'backup/labels';
+    readonly BACKUP_URL_PRINT_SIZES = 'backup/print-size';
 
     readonly TEST_BACKUP_URL_SUMMARY = 'api/backup/summary.json';
     readonly TEST_BACKUP_URL_ACTIONS = 'api/backup/actions.json';
@@ -38,6 +39,7 @@ export class BackupService {
     readonly TEST_BACKUP_URL_LOGS = 'api/backup/logs.json';
     readonly TEST_BACKUP_URL_PRINTS = 'api/backup/prints.json';
     readonly TEST_BACKUP_URL_LABELS = 'api/backup/labels.json';
+    readonly TEST_BACKUP_URL_PRINT_SIZES = 'api/backup/print-size.json'
 
     private selectedPhoto : SelectedPrint;
 
@@ -106,6 +108,13 @@ export class BackupService {
     getLabels() : Observable<Label[]> {
         return this.http.get<Label[]>(environment.production === true ? this.BACKUP_URL_LABELS : this.TEST_BACKUP_URL_LABELS).pipe(
             tap(data=> console.log(`All: ${JSON.stringify(data)}`)),
+            catchError(err => BackupService.handleError(err))
+        );
+    }
+
+    getPrintSizes() : Observable<PrintSize[]> {
+        return this.http.get<PrintSize[]>(environment.production === true ? this.BACKUP_URL_PRINT_SIZES : this.TEST_BACKUP_URL_PRINT_SIZES).pipe(
+            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
             catchError(err => BackupService.handleError(err))
         );
     }

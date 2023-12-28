@@ -1,7 +1,7 @@
 import {Component, OnInit, TemplateRef} from "@angular/core";
 import {BackupService} from "../backup.service";
 import {SelectedPrint} from "../backup-selectedprint";
-import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
+import {BsModalService} from "ngx-bootstrap/modal";
 
 @Component({
     selector: 'jbr-backup-prints',
@@ -10,7 +10,7 @@ import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 })
 export class BackupPrintsComponent implements OnInit {
     selectedPhotos: SelectedPrint[];
-    printSizeModal: BsModalRef;
+    sizePhoto: SelectedPrint;
     rows: number[];
     cols: number[];
 
@@ -18,6 +18,7 @@ export class BackupPrintsComponent implements OnInit {
                 private readonly _modalService: BsModalService) {
         this.cols = [0,1,2];
         this.selectedPhotos = [];
+        this.sizePhoto = null;
     }
 
     ngOnInit(): void {
@@ -26,10 +27,9 @@ export class BackupPrintsComponent implements OnInit {
     }
 
     updatePrints() {
-        console.log('UPDATE THE PRINTS')
         this.selectedPhotos = this._backupService.getSelectedPhotos();
 
-        let rowCount: number = this.selectedPhotos.length/3 + 1;
+        let rowCount: number = this.selectedPhotos.length/this.columns() + 1;
         this.rows = [rowCount];
 
         for(let i:number = 0; i < rowCount; i++) {
@@ -37,54 +37,37 @@ export class BackupPrintsComponent implements OnInit {
         }
     }
 
-    private getIndex(row: number, col: number): number {
-        return row * 3 + col;
+    unselectPrint(print: SelectedPrint) {
+        this._backupService.unselectForPrint(print.fileId);
     }
 
-    imageUrl(row: number, col: number): string {
-        return this._backupService.imageUrl(this.selectedPhotos[this.getIndex(row,col)].fileId);
-    }
-
-    printInfo(row: number, col: number): string {
-        let text: string;
-        let photo: SelectedPrint;
-
-        photo = this.selectedPhotos[this.getIndex(row,col)];
-
-        text = photo.sizeName;
-
-        if(photo.blackWhite) {
-            text = text + " - Black & White";
-        } else {
-            text = text + " - Colour";
-        }
-
-        if(photo.border) {
-            text = text + " with border";
-        }
-
-        return text;
-    }
-
-    selectSize(row: number, col: number,template: TemplateRef<any>) {
-        console.log("here - " + row + "," + col)
+    updatePrintSize(print: SelectedPrint, template: TemplateRef<any>) {
+        // Store the selected print and show the dialog.
+        this.sizePhoto = print;
         this._modalService.show(template);
     }
 
-    imageAvailable(row: number, col:number): boolean {
+    getPrintAtRowCol(row: number, col: number): SelectedPrint {
         if(this.selectedPhotos == null) {
-            return false;
+            return null;
         }
 
-        return this.getIndex(row,col) < this.selectedPhotos.length;
+        let index: number = this.getIndex(row,col);
+
+        if(index < this.selectedPhotos.length) {
+            return this.selectedPhotos[index];
+        }
+
+        // No selection at this co-ordinate.
+        return null;
+    }
+
+    private getIndex(row: number, col: number): number {
+        return row * this.columns() + col;
     }
 
     columns(): number {
-        return 3;
-    }
-
-    unselect(row: number, col: number) {
-        this._backupService.unselectForPrint(this.selectedPhotos[this.getIndex(row,col)].fileId);
+        return this.cols.length;
     }
 
     clearPrints() {
@@ -92,11 +75,11 @@ export class BackupPrintsComponent implements OnInit {
         this._backupService.clearPrints();
     }
 
-    close() {
+    onSizeChange(selection: SelectedPrint) {
         this._modalService.hide();
-    }
 
-    selectSizeAndStyle() {
-        this._modalService.hide();
+        if(selection != null) {
+            // TODO - process the new selection.
+        }
     }
 }
