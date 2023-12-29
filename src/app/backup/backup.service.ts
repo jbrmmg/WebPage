@@ -31,6 +31,7 @@ export class BackupService {
     readonly BACKUP_URL_UNPRINT = 'backup/unprint';
     readonly BACKUP_URL_LABELS = 'backup/labels';
     readonly BACKUP_URL_PRINT_SIZES = 'backup/print-size';
+    readonly BACKUP_URL_PRINT_SIZE_UPDATE = 'backup/print';
 
     readonly TEST_BACKUP_URL_SUMMARY = 'api/backup/summary.json';
     readonly TEST_BACKUP_URL_ACTIONS = 'api/backup/actions.json';
@@ -443,6 +444,19 @@ export class BackupService {
                 this.updatePrints();
                 console.log('POST select for print completed');
             });
+    }
+
+    updatedPrint(print: SelectedPrint) {
+        this.http.put<void>(this.BACKUP_URL_PRINT_SIZE_UPDATE,print).subscribe(
+            {
+                error: (response) => {
+                    console.error('Failed to update file print size', response)
+                },
+                complete: () => {
+                    this.updatePrints();
+                }
+            }
+        )
     }
 
     clearPrints() {

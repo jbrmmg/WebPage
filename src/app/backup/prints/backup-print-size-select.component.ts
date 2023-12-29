@@ -13,6 +13,10 @@ export class BackupPrintSizeSelectComponent implements OnInit {
     @Output() sizeChange: EventEmitter<SelectedPrint> = new EventEmitter();
 
     sizes: PrintSize[];
+    selectedSizeName: string;
+    selectedSizeId: number;
+    border: boolean;
+    blackAndWhite: boolean;
 
     constructor(private readonly _backupService: BackupService) {
     }
@@ -36,6 +40,10 @@ export class BackupPrintSizeSelectComponent implements OnInit {
                 this.sizes.push(nextSize);
             });
         });
+        this.border = this.selectedPrint.border;
+        this.blackAndWhite = this.selectedPrint.blackWhite;
+        this.selectedSizeName = this.selectedPrint.sizeName;
+        this.selectedSizeId = this.selectedPrint.sizeId;
     }
 
     close() {
@@ -43,14 +51,26 @@ export class BackupPrintSizeSelectComponent implements OnInit {
         this.sizeChange.emit(null);
     }
 
+    changeSize(size: string) {
+        this.selectedSizeName = size;
+
+        this.sizes.forEach(nextSize => {
+            if(nextSize.name == size) {
+                this.selectedSizeId = nextSize.id;
+            }
+        })
+
+        console.log("Size selected " + this.selectedSizeName + " " + this.selectedSizeId);
+    }
+
     selectSizeAndStyle() {
         let selection: SelectedPrint = new SelectedPrint();
 
         selection.fileId = this.selectedPrint.fileId;
-        selection.sizeId = 0;  // TODO - get the size id
-        selection.sizeName = "what?" // TODO - get the size name
-        selection.border = false;   // TODO get the border
-        selection.blackWhite = false; // TODO get the blank & white flag.
+        selection.sizeId = this.selectedSizeId;
+        selection.sizeName = this.selectedSizeName;
+        selection.border = this.border;
+        selection.blackWhite = this.blackAndWhite;
 
         // Fire the change to the parent.
         this.sizeChange.emit(selection);

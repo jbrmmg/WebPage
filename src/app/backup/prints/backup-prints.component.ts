@@ -79,7 +79,7 @@ export class BackupPrintsComponent implements OnInit {
         this._modalService.hide();
 
         if(selection != null) {
-            // TODO - process the new selection.
+            this._backupService.updatedPrint(selection);
         }
     }
 }

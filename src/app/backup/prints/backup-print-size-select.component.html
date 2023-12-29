@@ -5,17 +5,17 @@
     </div>
     <div class="row g-0 row-option">
         <label class="col-4 label-title"><a>Size</a></label>
-        <select class="col-8">
+        <select #sizeOpt class="col-8" (change)="changeSize(sizeOpt.value)">
             <option *ngFor="let size of sizes" [selected]="isSelected(size.name)">{{size.name}}</option>
         </select>
     </div>
     <div class="row g-0 row-option">
         <label class="col-4 label-title"><a>Black & White</a></label>
-        <input class="col-8" type="checkbox"/>
+        <input [(ngModel)]="blackAndWhite" class="col-8" type="checkbox"/>
     </div>
     <div class="row g-0 row-option">
         <label class="col-4 label-title"><a>Border</a></label>
-        <input class="col-8" type="checkbox"/>
+        <input [(ngModel)]="border" class="col-8" type="checkbox"/>
     </div>
     <div class="row g-0">
         <label class="btn btn-primary col-5 btn-left" (click)="selectSizeAndStyle()">
