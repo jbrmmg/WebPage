@@ -4,12 +4,22 @@
     </label>
 </div>
 <div *ngFor="let row of rows" class="row row-gap">
-    <div *ngFor="let col of cols" class="col-2">
-        <div class="outer-image" *ngIf="imageAvailable(row,col)">
-            <img class="photo-thumbnail" src="{{imageUrl(row,col)}}" alt="Image File"/>
-            <label class="btn btn-primary btn-unselect">
-                <em class="fa fa-close" (click)="unselect(row,col)"></em>
-            </label>
-        </div>
+    <div *ngFor="let col of cols" class="col-4">
+        <jbr-backup-print-image
+                [selectedPrint]="getPrintAtRowCol(row,col)"
+                (unselect)="unselectPrint($event)"
+                (updateSize)="updatePrintSize($event,sizePicker)">
+        </jbr-backup-print-image>
     </div>
 </div>
+
+<ng-template #sizePicker>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Choose Print Size and Style</h4>
+    </div>
+    <div class="body">
+        <jbr-backup-print-size-selector
+                [selectedPrint]=sizePhoto
+                (sizeChange)="onSizeChange($event)"></jbr-backup-print-size-selector>
+    </div>
+</ng-template>

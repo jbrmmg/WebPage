@@ -11,6 +11,7 @@ import {environment} from '../../environments/environment';
 import {BackupSummary} from "./summary/backup-summary";
 import {FileExpiry} from "./backup-expiry";
 import {FileLabel, Label} from "./backup-label";
+import {PrintSize, SelectedPrint} from "./backup-selectedprint";
 
 @Injectable({
     providedIn: 'root'
@@ -29,6 +30,8 @@ export class BackupService {
     readonly BACKUP_URL_PRINT = 'backup/print';
     readonly BACKUP_URL_UNPRINT = 'backup/unprint';
     readonly BACKUP_URL_LABELS = 'backup/labels';
+    readonly BACKUP_URL_PRINT_SIZES = 'backup/print-size';
+    readonly BACKUP_URL_PRINT_SIZE_UPDATE = 'backup/print';
 
     readonly TEST_BACKUP_URL_SUMMARY = 'api/backup/summary.json';
     readonly TEST_BACKUP_URL_ACTIONS = 'api/backup/actions.json';
@@ -37,10 +40,11 @@ export class BackupService {
     readonly TEST_BACKUP_URL_LOGS = 'api/backup/logs.json';
     readonly TEST_BACKUP_URL_PRINTS = 'api/backup/prints.json';
     readonly TEST_BACKUP_URL_LABELS = 'api/backup/labels.json';
+    readonly TEST_BACKUP_URL_PRINT_SIZES = 'api/backup/print-size.json'
 
-    private selectedPhoto : number;
+    private selectedPhoto : SelectedPrint;
 
-    private selectedPhotos: number[];
+    private selectedPhotos: SelectedPrint[];
     private selectedFile: FileInfoExtra;
     @Output() printsUpdated = new EventEmitter();
     @Output() fileLoaded : EventEmitter<FileInfoExtra> = new EventEmitter<FileInfoExtra>();
@@ -105,6 +109,13 @@ export class BackupService {
     getLabels() : Observable<Label[]> {
         return this.http.get<Label[]>(environment.production === true ? this.BACKUP_URL_LABELS : this.TEST_BACKUP_URL_LABELS).pipe(
             tap(data=> console.log(`All: ${JSON.stringify(data)}`)),
+            catchError(err => BackupService.handleError(err))
+        );
+    }
+
+    getPrintSizes() : Observable<PrintSize[]> {
+        return this.http.get<PrintSize[]>(environment.production === true ? this.BACKUP_URL_PRINT_SIZES : this.TEST_BACKUP_URL_PRINT_SIZES).pipe(
+            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
             catchError(err => BackupService.handleError(err))
         );
     }
@@ -371,19 +382,30 @@ export class BackupService {
     }
 
     setSelectedPhoto(selected: number) {
-        this.selectedPhoto = selected;
+        this.selectedPhoto = null;
+        let nextPhoto: String;
+
+        for(nextPhoto in this.selectedPhotos) {
+            if(this.selectedPhoto[nextPhoto].fileId === selected) {
+                this.selectedPhoto = this.selectedPhoto[nextPhoto];
+            }
+        }
     }
 
     getSelectedPhoto():number {
-        return this.selectedPhoto;
+        if(this.selectedPhoto == null) {
+            return null;
+        }
+
+        return this.selectedPhoto.fileId;
     }
 
-    getSelectedPhotos():number[] {
+    getSelectedPhotos():SelectedPrint[] {
         return this.selectedPhotos;
     }
 
     updatePrints() {
-        this.http.get<number[]>(environment.production === true ? this.BACKUP_URL_PRINTS : this.TEST_BACKUP_URL_PRINTS).subscribe(
+        this.http.get<SelectedPrint[]>(environment.production === true ? this.BACKUP_URL_PRINTS : this.TEST_BACKUP_URL_PRINTS).subscribe(
             (selected) => {
                 this.selectedPhotos = selected;
                 console.log('Selecting from print');
@@ -422,6 +444,19 @@ export class BackupService {
                 this.updatePrints();
                 console.log('POST select for print completed');
             });
+    }
+
+    updatedPrint(print: SelectedPrint) {
+        this.http.put<void>(this.BACKUP_URL_PRINT_SIZE_UPDATE,print).subscribe(
+            {
+                error: (response) => {
+                    console.error('Failed to update file print size', response)
+                },
+                complete: () => {
+                    this.updatePrints();
+                }
+            }
+        )
     }
 
     clearPrints() {

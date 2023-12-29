@@ -1,0 +1,26 @@
+.photo-thumbnail {
+    width: 100%;
+    height: auto;
+}
+
+.outer-image {
+    position: relative;
+    display: inline-block;
+}
+
+.btn-unselect {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    padding: 0;
+    border: 0;
+}
+
+.size-information {
+    background-color: white;
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    padding: 0;
+    border: 0;
+}
