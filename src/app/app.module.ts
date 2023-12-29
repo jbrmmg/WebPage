@@ -33,6 +33,8 @@ import { BackupDisplayInfoComponent } from "./backup/display/info/backup-display
 import { BackupDisplayLabelComponent } from "./backup/display/label/backup-display-label.component";
 import { MoneyRowDisplay } from "./money/exp/money-row-display";
 import { MoneyRowDispDate } from "./money/exp/money-row-disp-date";
+import { BackupPrintSizeSelectComponent } from "./backup/prints/backup-print-size-select.component";
+import { BackupPrintImageComponent } from "./backup/prints/backup-print-image.component";
 
 @NgModule({
   declarations: [
@@ -57,7 +59,9 @@ import { MoneyRowDispDate } from "./money/exp/money-row-disp-date";
     BackupImportComponent,
     BackupLogComponent,
     BackupPhotoComponent,
-    BackupPrintsComponent
+    BackupPrintSizeSelectComponent,
+    BackupPrintsComponent,
+    BackupPrintImageComponent
   ],
   imports: [
     BrowserModule,
