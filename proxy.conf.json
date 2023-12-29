@@ -6,5 +6,5 @@
   "/money": {
     "target": "http://localhost:13013/jbr/int",
     "secure": false
-  },
+  }
 }
