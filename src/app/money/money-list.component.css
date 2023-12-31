@@ -82,21 +82,6 @@
     padding: 0 2px 1px 3px;
 }
 
-/* category selectors */
-
-.btn-category {
-    width: 20px;
-    height: 20px;
-    padding: 0;
-}
-
-.btn-category-off {
-    width: 20px;
-    height: 20px;
-    padding: 0;
-    border-width: 10px;
-}
-
 /* Header */
 
 .trn-date-header {
@@ -179,11 +164,6 @@
     font-size: small;
 }
 
-.trn-category-img {
-    height: 25px;
-    padding: 0;
-}
-
 .trn-description-col-total {
     border-top: 0;
 }
@@ -195,12 +175,6 @@
 
 .trn-amount-col-total {
     border-top: 0;
-}
-
-.trn-amount-edit {
-    padding-right: 16px;
-    text-align: right;
-    width: 100%;
 }
 
 .trn-amount-cr {
@@ -247,18 +221,6 @@
 
 .trn-button-to-right {
     border-left-width: 4px;
-}
-
-.status-text-success {
-    background:url(
-    data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAHklEQVQYV2MUOl72/51lFyOMZmRgYGBAFoTL4FQBANPXHKFm5MXbAAAAAElFTkSuQmCC
-    ) repeat;
-}
-
-.status-text-error {
-    background:url(
-    data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAKElEQVQYV2N85iP3X2rLI8YPYlb/BV4dY2RkYGBggHFANFwGphJDBQDSyxyDWYe4AwAAAABJRU5ErkJggg==
-    ) repeat;
 }
 
 .status-date-month {
@@ -316,27 +278,9 @@
     padding-bottom: 8px;
 }
 
-.btn-summary {
-    font-size: 30px;
-    width: 100%;
-    height: 80%;
-    margin-bottom: 16px;
-}
-
 .btn-account-img-select {
     width: 40px;
     height: 40px;
-}
-
-.btn-account-trf-img {
-    width: 20px;
-    height: 20px;
-}
-
-::ng-deep.bs-datepicker {
-    box-shadow: none;
-    margin-bottom: 10px;
-    width: 100%;
 }
 
 .cat-filter {
@@ -368,4 +312,16 @@
 .trn-table-files-acc-col {
     border: 0;
     padding: 2px;
+}
+
+.status-text-success {
+    background:url(
+    data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAHklEQVQYV2MUOl72/51lFyOMZmRgYGBAFoTL4FQBANPXHKFm5MXbAAAAAElFTkSuQmCC
+    ) repeat;
+}
+
+.status-text-error {
+    background:url(
+    data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAKElEQVQYV2N85iP3X2rLI8YPYlb/BV4dY2RkYGBggHFANFwGphJDBQDSyxyDWYe4AwAAAABJRU5ErkJggg==
+    ) repeat;
 }

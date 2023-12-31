@@ -5,12 +5,11 @@
         viewBox = "0 0 100 100"
         xmlns   = "http://www.w3.org/2000/svg">
     <style type="text/css">
-        <![CDATA[
          tspan.nw {
             font-weight: bold;
             font-size:   48px;
             line-height: 125%;
-            font-family: Arial;
+            font-family: Arial,sans-serif;
             text-align:  center;
             text-anchor: middle;
             fill:        #5C5C5C;
@@ -27,7 +26,6 @@
          rect.nw2border {
             fill: #ACACAC;
          }
-      ]]>
     </style>
     <rect class="nwborder" width="100" height="100" x="0" y="0"/>
     <rect class="nw2border" width="90" height="90" x="5" y="5"/>

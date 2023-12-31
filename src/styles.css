@@ -19,7 +19,9 @@ body .bs-datepicker-container .bs-datepicker-head {
     background-color: #007bff;
 }
 
-.top-buffer { margin-top:10px; }
+.top-buffer {
+    margin-top:10px;
+}
 
 .date-entry-modal-popup {
     max-width: 322px;

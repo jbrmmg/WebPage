@@ -8,15 +8,6 @@
     height: 40px;
 }
 
-.btn-ignore {
-    background-color: red;
-    width: 80%;
-}
-
-.btn-delete {
-    background-color: red;
-}
-
 .btn-left {
     width: 45%;
 }
@@ -47,23 +38,6 @@
     font-weight: bolder;
 }
 
-.category-input {
-    margin: 2px 3px 0 3px;
-    width: 80%;
-}
-
 .backup {
     font-size: 12px;
-}
-
-.status-green {
-    color: green;
-}
-
-.status-warn {
-    color: orange;
-}
-
-.delete-row {
-    margin-top: 20px;
 }

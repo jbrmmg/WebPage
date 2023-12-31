@@ -54,8 +54,6 @@
             }
 
             .letter_b_span {
-                font-style:     normal;
-                font-variant:   normal;
                 font-weight:    500;
                 font-stretch:   normal;
                 font-size:      51px;
@@ -76,8 +74,6 @@
             }
 
             .letter_r_span {
-                font-style:     normal;
-                font-variant:   normal;
                 font-weight:    500;
                 font-stretch:   normal;
                 font-size:      51px;
