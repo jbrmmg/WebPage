@@ -4,7 +4,7 @@ import {environment} from '../../environments/environment';
 import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {Category, ICategory} from './money-category';
-import {IAccount, JbAccount} from './money-jbaccount';
+import {JbAccount} from './money-jbaccount';
 import {ITransactionType, TransactionType} from './money-type';
 import {IStatement, Statement} from './money-statement';
 import {IMatch} from './money-match';

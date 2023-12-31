@@ -7,20 +7,6 @@
     color: black;
 }
 
-.btn-action {
-    margin: 0 3px;
-    height: 40px;
-}
-
-.btn-ignore {
-    background-color: red;
-    width: 80%;
-}
-
-.btn-delete {
-    background-color: red;
-}
-
 .btn-left {
     width: 45%;
 }
@@ -29,41 +15,6 @@
     width: 45%;
 }
 
-.btn-accept {
-    width: 80%;
-}
-
 .page-row {
     margin: 30px 0 0 0;
-}
-
-.info-row {
-    margin: 10px 0 0 0;
-}
-
-.info-row-2 {
-    margin: 2px 0 0 0;
-    font-size: 10px;
-}
-
-.action-txt {
-    margin-right: 2px;
-    font-weight: bolder;
-}
-
-.category-input {
-    margin: 2px 3px 0 3px;
-    width: 80%;
-}
-
-.status-green {
-    color: green;
-}
-
-.status-warn {
-    color: orange;
-}
-
-.delete-row {
-    margin-top: 20px;
 }
