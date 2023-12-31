@@ -7,85 +7,83 @@
         id="JbrLogo">
     <defs>
         <style type="text/css">
-            <![CDATA[
-                .border {
-                    fill:               none;
-                    stroke:             #000000;
-                    stroke-width:       8;
-                    stroke-miterlimit:  4;
-                    stroke-dasharray:   none;
-                    stroke-opacity:     1;
-                    image-rendering:    auto
-                }
+            .border {
+                fill:               none;
+                stroke:             #000000;
+                stroke-width:       8;
+                stroke-miterlimit:  4;
+                stroke-dasharray:   none;
+                stroke-opacity:     1;
+                image-rendering:    auto
+            }
 
-                .letter_j {
-                    font-size:      25px;
-                    line-height:    1.25;
-                    font-family:    Ubuntu,sans-serif;
-                    text-align:     center;
-                    letter-spacing: 0;
-                    word-spacing:   0;
-                    text-anchor:    middle;
-                    fill:           #000000;
-                    fill-opacity:   1;
-                    stroke:         none;
-                    stroke-width:   0.26458332
-                }
+            .letter_j {
+                font-size:      25px;
+                line-height:    1.25;
+                font-family:    Ubuntu,sans-serif;
+                text-align:     center;
+                letter-spacing: 0;
+                word-spacing:   0;
+                text-anchor:    middle;
+                fill:           #000000;
+                fill-opacity:   1;
+                stroke:         none;
+                stroke-width:   0.26458332
+            }
 
-                .letter_j_span {
-                    font-weight:    500;
-                    font-stretch:   normal;
-                    font-size:      51px;
-                    font-family:    Ubuntu,sans-serif;
-                    text-align:     center;
-                    text-anchor:    middle;
-                    stroke-width:   0.26458332
-                }
+            .letter_j_span {
+                font-weight:    500;
+                font-stretch:   normal;
+                font-size:      51px;
+                font-family:    Ubuntu,sans-serif;
+                text-align:     center;
+                text-anchor:    middle;
+                stroke-width:   0.26458332
+            }
 
-                .letter_b {
-                    font-size:          25px;
-                    line-height:        1.25;
-                    font-family:        Ubuntu,sans-serif;
-                    letter-spacing:     0;
-                    word-spacing:       0;
-                    fill:               #000000;
-                    fill-opacity:       1;
-                    stroke:             none;
-                    stroke-width:       0.26458332
-                }
+            .letter_b {
+                font-size:          25px;
+                line-height:        1.25;
+                font-family:        Ubuntu,sans-serif;
+                letter-spacing:     0;
+                word-spacing:       0;
+                fill:               #000000;
+                fill-opacity:       1;
+                stroke:             none;
+                stroke-width:       0.26458332
+            }
 
-                .letter_b_span {
-                    font-style:     normal;
-                    font-variant:   normal;
-                    font-weight:    500;
-                    font-stretch:   normal;
-                    font-size:      51px;
-                    font-family:    Ubuntu,sans-serif;
-                    stroke-width:   0.26458332
-                }
+            .letter_b_span {
+                font-style:     normal;
+                font-variant:   normal;
+                font-weight:    500;
+                font-stretch:   normal;
+                font-size:      51px;
+                font-family:    Ubuntu,sans-serif;
+                stroke-width:   0.26458332
+            }
 
-                .letter_r {
-                    font-size:      11px;
-                    line-height:    1.25;
-                    font-family:    sans-serif;
-                    letter-spacing: 0;
-                    word-spacing:   0;
-                    fill:           #000000;
-                    fill-opacity:   1;
-                    stroke:         none;
-                    stroke-width:   0.26458332
-                }
+            .letter_r {
+                font-size:      11px;
+                line-height:    1.25;
+                font-family:    sans-serif;
+                letter-spacing: 0;
+                word-spacing:   0;
+                fill:           #000000;
+                fill-opacity:   1;
+                stroke:         none;
+                stroke-width:   0.26458332
+            }
 
-                .letter_r_span {
-                    font-style:     normal;
-                    font-variant:   normal;
-                    font-weight:    500;
-                    font-stretch:   normal;
-                    font-size:      51px;
-                    font-family:    Ubuntu,sans-serif;
-                    stroke-width:   0.26458332
-                }
-            ]]>
+            .letter_r_span {
+                font-style:     normal;
+                font-variant:   normal;
+                font-weight:    500;
+                font-stretch:   normal;
+                font-size:      51px;
+                font-family:    Ubuntu,sans-serif;
+                stroke-width:   0.26458332
+            }
         </style>
     </defs>
     <g id="logo">
