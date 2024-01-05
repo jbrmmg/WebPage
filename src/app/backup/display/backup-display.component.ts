@@ -74,7 +74,7 @@ export class BackupDisplayComponent implements OnInit  {
     }
 
     selectPhotoMode() {
-        this._backupService.setSelectedPhoto(this.selectedFile.id);
+        this._backupService.setSelectedPhoto(this.selectedFile.id,this.selectedFile.name);
         this.selectPhoto.emit();
     }
 }

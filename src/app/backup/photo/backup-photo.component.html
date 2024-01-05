@@ -5,7 +5,7 @@
             <em class="fa fa-arrow-left"></em>
         </label>
         <label class="btn btn-primary btn-mode col-1"
-               (click)="selectForPrint()">
+               (click)="selectForPrint(sizePicker)">
             <em class="fa fa-check"></em>
         </label>
     </div>
@@ -13,3 +13,14 @@
         <img src="{{imageUrl()}}" alt="Image File" width="100%"/>
     </div>
 </div>
+
+<ng-template #sizePicker>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Choose Print Size and Style</h4>
+    </div>
+    <div class="body">
+        <jbr-backup-print-size-selector
+                [selectedPrint]=sizePhoto
+                (sizeChange)="onSizeChange($event)"></jbr-backup-print-size-selector>
+    </div>
+</ng-template>
