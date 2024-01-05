@@ -225,10 +225,6 @@ export class BackupService {
         });
     }
 
-    clearFileExpiry(id: number) {
-
-    }
-
     /*
      * -----------------------------------------------------------------------------------------------------------------------------------
      * Selected File - request file, get details of selected file.
@@ -381,23 +377,21 @@ export class BackupService {
         }
     }
 
-    setSelectedPhoto(selected: number) {
-        this.selectedPhoto = null;
-        let nextPhoto: String;
-
-        for(nextPhoto in this.selectedPhotos) {
-            if(this.selectedPhoto[nextPhoto].fileId === selected) {
-                this.selectedPhoto = this.selectedPhoto[nextPhoto];
-            }
-        }
+    setSelectedPhoto(selected: number, name: string) {
+        this.selectedPhoto = new SelectedPrint();
+        this.selectedPhoto.fileId = selected;
+        this.selectedPhoto.fileName = name;
+        this.selectedPhoto.sizeId = 10;
+        this.selectedPhoto.border = false;
+        this.selectedPhoto.blackWhite = false;
     }
 
-    getSelectedPhoto():number {
+    getSelectedPhoto(): SelectedPrint {
         if(this.selectedPhoto == null) {
             return null;
         }
 
-        return this.selectedPhoto.fileId;
+        return this.selectedPhoto;
     }
 
     getSelectedPhotos():SelectedPrint[] {
