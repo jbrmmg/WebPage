@@ -1,5 +1,5 @@
 <div class="col col-border">
-    <div class="row g-0 row-option ">
+    <div class="row g-0 row-option">
         <label class="col-4 label-title"><a>Image</a></label>
         <label class="col-8"><a>{{selectedPrint.fileName}}</a></label>
     </div>
@@ -18,11 +18,11 @@
         <input [(ngModel)]="border" class="col-8" type="checkbox"/>
     </div>
     <div class="row g-0">
-        <label class="btn btn-primary col-5 btn-left" (click)="selectSizeAndStyle()">
+        <label class="btn btn-primary col-5 btn-left" (click)="selectSizeAndStyle()" title="Select Size and Style">
             <em class="fa fa-check"></em>
         </label>
         <div class="col-2"></div>
-        <label class="btn btn-primary col-5 btn-right" (click)="close()">
+        <label class="btn btn-primary col-5 btn-right" (click)="close()" title="Discard">
             <em class="fa fa-close"></em>
         </label>
     </div>
