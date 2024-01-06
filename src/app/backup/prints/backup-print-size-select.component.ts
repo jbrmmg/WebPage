@@ -32,18 +32,30 @@ export class BackupPrintSizeSelectComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.border = this.selectedPrint.border;
+        this.blackAndWhite = this.selectedPrint.blackWhite;
+        this.selectedSizeName = this.selectedPrint.sizeName;
+        this.selectedSizeId = this.selectedPrint.sizeId;
+
         // Populate the combo values.
         this._backupService.getPrintSizes().subscribe(sizes => {
             this.sizes = [];
 
             sizes.forEach(nextSize => {
                 this.sizes.push(nextSize);
+
+                // If no size is set then choose the size that starts "6x4".
+                if((this.selectedSizeName == null) && (this.selectedSizeId == null)) {
+                    if(nextSize.name.startsWith("6x4 in")) {
+                        this.selectedSizeId = nextSize.id;
+                        this.selectedSizeName = nextSize.name;
+                        if(this.selectedPrint != null) {
+                            this.selectedPrint.sizeName = this.selectedSizeName;
+                        }
+                    }
+                }
             });
         });
-        this.border = this.selectedPrint.border;
-        this.blackAndWhite = this.selectedPrint.blackWhite;
-        this.selectedSizeName = this.selectedPrint.sizeName;
-        this.selectedSizeId = this.selectedPrint.sizeId;
     }
 
     close() {

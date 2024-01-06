@@ -381,7 +381,6 @@ export class BackupService {
         this.selectedPhoto = new SelectedPrint();
         this.selectedPhoto.fileId = selected;
         this.selectedPhoto.fileName = name;
-        this.selectedPhoto.sizeId = 10;
         this.selectedPhoto.border = false;
         this.selectedPhoto.blackWhite = false;
     }
