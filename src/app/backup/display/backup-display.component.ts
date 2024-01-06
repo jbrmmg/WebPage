@@ -27,13 +27,17 @@ export class BackupDisplayComponent implements OnInit  {
         this.atTopLevel = true;
         this.selectedFile = null;
 
-        this._backupService.getHierarchy(this.initialHierarchy).subscribe(
-            hierarchy => {
-                this.hierarchy = hierarchy;
+        this._backupService.getHierarchy(this.initialHierarchy).subscribe({
+            next: hierarchy => {
+                this.hierarchy = hierarchy
             },
-            () => console.log('Failed to get hierarchy'),
-            () => console.log('Load hierarchy complete')
-        );
+            error: err => {
+                console.log('Failed to get hierarchy ' + err);
+            },
+            complete: () => {
+                console.log('Load hierarchy complete')
+            }
+        });
     }
 
     changeHierarchy(parent: HierarchyResponse): void {
@@ -41,13 +45,17 @@ export class BackupDisplayComponent implements OnInit  {
 
         this.atTopLevel = parent.id === -1;
 
-        this._backupService.getHierarchy(parent).subscribe(
-            hierarchy => {
+        this._backupService.getHierarchy(parent).subscribe({
+            next: hierarchy => {
                 this.hierarchy = hierarchy;
             },
-            () => console.log('Failed to get hierarchy'),
-            () => console.log('Load hierarchy complete')
-        );
+            error: err => {
+                console.log('Failed to get hierarchy' + err);
+            },
+            complete: () => {
+                console.log('Load hierarchy complete')
+            }
+        });
     }
 
     fileLoaded(file: FileInfoExtra): void {
@@ -63,6 +71,10 @@ export class BackupDisplayComponent implements OnInit  {
 
     imageUrl(id: number): string {
         return this._backupService.imageUrl(id);
+    }
+
+    imageALT(): string {
+        return this.selectedFile.name;
     }
 
     videoUrl(id: number): string {

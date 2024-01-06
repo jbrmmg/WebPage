@@ -1,6 +1,6 @@
 <div class="row label-row">
     <p class="label-format" *ngFor="let nextLabel of labels">{{nextLabel}}</p>
-    <em class="fa fa-plus" (click)="showListSelector(labelPicker)"></em>
+    <em class="fa fa-plus" (click)="showListSelector(labelPicker)" title="Add or remove labels"></em>
 </div>
 
 <ng-template #labelPicker>

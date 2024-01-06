@@ -9,7 +9,7 @@
 <div class="row detail-date-row"><p class="detail-date">{{formattedFileDate}}</p></div>
 <div class="row detail-md5-row"><p class="detail-md5">[{{selectedFile.md5}}]</p></div>
 <div class="row detail-expiry-row">
-    <em class="fa fa-calendar detail-calendar-icon" (click)="editDate()"></em>
+    <em class="fa fa-calendar detail-calendar-icon" title="Modify expiry date" (click)="editDate()"></em>
     <em class="fa fa-times detail-expiry-clear-icon" (click)="clearExpiry()" *ngIf="selectedFile.expiry != null && editDateEnable == false"></em>
     <p class="detail-expiry" *ngIf="selectedFile.expiry != null && editDateEnable == false">Expiry: {{formattedExpiryDate}}</p>
     <p class="detail-expiry" *ngIf="selectedFile.expiry == null && editDateEnable == false">File does not expire</p>

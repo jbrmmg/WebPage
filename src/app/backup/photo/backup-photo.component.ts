@@ -1,7 +1,6 @@
-import {Component, EventEmitter, OnInit, Output, TemplateRef} from "@angular/core";
+import {Component, EventEmitter, OnInit, Output} from "@angular/core";
 import {BackupService} from "../backup.service";
-import {SelectedPrint} from "../backup-selectedprint";
-import {BsModalService} from "ngx-bootstrap/modal";
+import {PrintSize, SelectedPrint} from "../backup-selectedprint";
 
 @Component({
     selector: 'jbr-backup-photo',
@@ -9,15 +8,58 @@ import {BsModalService} from "ngx-bootstrap/modal";
     styleUrls: ['./backup-photo.component.css']
 })
 export class BackupPhotoComponent implements OnInit {
-    constructor(private readonly _backupService: BackupService,
-                private readonly _modalService: BsModalService) {
+    constructor(private readonly _backupService: BackupService) {
     }
 
     sizePhoto: SelectedPrint;
+    sizes: PrintSize[];
 
     @Output() exit = new EventEmitter();
 
     ngOnInit(): void {
+        this.sizePhoto = new SelectedPrint();
+        this.sizePhoto.border = false;
+        this.sizePhoto.blackWhite = false;
+
+        // Populate the combo values.
+        this._backupService.getPrintSizes().subscribe(sizes => {
+            this.sizes = [];
+
+            sizes.forEach(nextSize => {
+                this.sizes.push(nextSize);
+            });
+        });
+    }
+
+    displayText(name: string): string {
+        if(name.indexOf(' ') < 0) {
+            return name;
+        }
+        return name.substring(0,name.indexOf(' '));
+    }
+
+    getBorderClass(opt: boolean): string {
+        if(this.sizePhoto.border == opt) {
+            return "btn btn-primary col-4 photo-btn-2";
+        }
+
+        return "btn btn-outline-primary col-4 photo-btn-2";
+    }
+
+    toggleBorder() {
+        this.sizePhoto.border = !this.sizePhoto.border;
+    }
+
+    getBlackAndWhiteClass(opt: boolean): string {
+        if(this.sizePhoto.blackWhite == opt) {
+            return "btn btn-primary col-4 photo-btn-2";
+        }
+
+        return "btn btn-outline-primary col-4 photo-btn-2";
+    }
+
+    toggleBlackAndWhite() {
+        this.sizePhoto.blackWhite = !this.sizePhoto.blackWhite;
     }
 
     imageUrl(): string {
@@ -28,24 +70,20 @@ export class BackupPhotoComponent implements OnInit {
         return this._backupService.imageUrl(this._backupService.getSelectedPhoto().fileId);
     }
 
+    imageALT(): string {
+        return this.sizePhoto.fileName;
+    }
+
     exitPhoto() {
         this.exit.emit();
     }
 
-    selectForPrint(template: TemplateRef<any>) {
-        this.sizePhoto = this._backupService.getSelectedPhoto();
-        this._modalService.show(template);
-    }
-
-    onSizeChange(selection: SelectedPrint) {
-        this._modalService.hide();
-
-        if(selection != null) {
-            this._backupService.getSelectedPhoto().sizeId = selection.sizeId;
-            this._backupService.getSelectedPhoto().blackWhite = selection.blackWhite;
-            this._backupService.getSelectedPhoto().border = selection.border;
-            this._backupService.selectForPrint();
-        }
+    selectForPrint(size: PrintSize) {
+        this._backupService.getSelectedPhoto().sizeId = size.id;
+        this._backupService.getSelectedPhoto().sizeName = size.name;
+        this._backupService.getSelectedPhoto().blackWhite = this.sizePhoto.blackWhite;
+        this._backupService.getSelectedPhoto().border = this.sizePhoto.border;
+        this._backupService.selectForPrint();
 
         this.exit.emit();
     }

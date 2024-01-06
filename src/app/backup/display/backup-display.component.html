@@ -31,17 +31,18 @@
             <jbr-backup-display-labels></jbr-backup-display-labels>
             <jbr-backup-display-backups></jbr-backup-display-backups>
             <div *ngIf="selectedFile.image">
-                <img src="{{imageUrl(selectedFile.id)}}" alt="Image File" width="420" (click)="selectPhotoMode()"/>
+                <img src="{{imageUrl(selectedFile.id)}}" alt="{{imageALT()}}" title="{{imageALT()}} - click to request print" width="420" (click)="selectPhotoMode()"/>
             </div>
             <div *ngIf="selectedFile.video">
-                <video src="{{videoUrl(selectedFile.id)}}" width="420" controls></video>
+                <video src="{{videoUrl(selectedFile.id)}}" title="{{imageALT()}}" width="420" controls></video>
             </div>
             <div>
                 <div class="row delete-row">
                     <div class="col-1">
                         <label class="btn btn-primary btn-delete"
                                tabindex="1"
-                               (click)="deleteFile()">
+                               (click)="deleteFile()"
+                               title="Delete File">
                             <em class="fa fa-trash"></em>
                         </label>
                     </div>
