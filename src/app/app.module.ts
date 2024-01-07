@@ -28,10 +28,13 @@ import { BackupImportComponent } from "./backup/import/backup-import.component";
 import { BackupLogComponent } from "./backup/log/backup-log.component";
 import { BackupPhotoComponent } from "./backup/photo/backup-photo.component";
 import { BackupPrintsComponent } from "./backup/prints/backup-prints.component";
+import { BackupDisplayBackupsComponent } from "./backup/display/backups/backups-list.components";
+import { BackupDisplayInfoComponent } from "./backup/display/info/backup-display-info.component";
+import { BackupDisplayLabelComponent } from "./backup/display/label/backup-display-label.component";
 import { MoneyRowDisplay } from "./money/exp/money-row-display";
 import { MoneyRowDispDate } from "./money/exp/money-row-disp-date";
-import { MoneyFiles } from "./money/files/money-files";
-import { MoneyFile } from "./money/files/money-file";
+import { BackupPrintSizeSelectComponent } from "./backup/prints/backup-print-size-select.component";
+import { BackupPrintImageComponent } from "./backup/prints/backup-print-image.component";
 
 @NgModule({
   declarations: [
@@ -43,19 +46,22 @@ import { MoneyFile } from "./money/files/money-file";
     MoneyRowDisplay,
     MoneyRowDispDate,
     MoneyListComponent,
-    MoneyFiles,
-    MoneyFile,
     HouseComponent,
     WeightComponent,
     BackupListComponent,
     BackupSummaryComponent,
     BackupSummarySourceComponent,
+    BackupDisplayInfoComponent,
+    BackupDisplayLabelComponent,
+    BackupDisplayBackupsComponent,
     BackupDisplayComponent,
     BackupActionComponent,
     BackupImportComponent,
     BackupLogComponent,
     BackupPhotoComponent,
-    BackupPrintsComponent
+    BackupPrintSizeSelectComponent,
+    BackupPrintsComponent,
+    BackupPrintImageComponent
   ],
   imports: [
     BrowserModule,

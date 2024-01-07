@@ -5,25 +5,23 @@
         viewBox = "0 0 100 100"
         xmlns   = "http://www.w3.org/2000/svg">
     <style type="text/css">
-        <![CDATA[
-         tspan.am {
+        tspan.am {
             font-weight: bold;
             font-size:   56px;
             line-height: 125%;
-            font-family: Arial;
+            font-family: Arial,sans-serif;
             text-align:  center;
             text-anchor: middle;
             fill:        #5C5C5C;
-         }
+        }
 
-         rect.am {
+        rect.am {
             fill: #006FCF;
-         }
+        }
 
-         rect.amborder {
+        rect.amborder {
             fill: #5C5C5C;
-         }
-      ]]>
+        }
     </style>
     <rect class="amborder" width="100" height="100" x="0" y="0"/>
     <rect class="am" width="90" height="90" x="5" y="5"/>

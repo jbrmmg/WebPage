@@ -1,5 +1,3 @@
-import {IAccount} from './money-jbaccount';
-
 /*
  * Equivalent of StatementIdDTO
  */
