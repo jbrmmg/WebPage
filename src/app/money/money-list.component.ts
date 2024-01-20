@@ -14,7 +14,6 @@ import {ListRowLineFactory} from './list-row-line/list-row-line-factory';
 import {ListRowSummary} from './list-row-line/list-row-summary';
 import {IFile} from './money-file';
 import {ITransaction, Transaction} from './money-transaction'
-import {IFileUpdate, FileUpdate} from "./money-file-update";
 
 export enum ListMode { Normal, Add, Regulars, Reconciliation, Experiment, ReconciliationFiles }
 

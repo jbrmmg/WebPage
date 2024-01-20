@@ -4,7 +4,7 @@ import {environment} from '../../environments/environment';
 import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {Category, ICategory} from './money-category';
-import {IAccount, JbAccount} from './money-jbaccount';
+import {JbAccount} from './money-jbaccount';
 import {ITransactionType, TransactionType} from './money-type';
 import {IStatement, Statement} from './money-statement';
 import {IMatch} from './money-match';
@@ -47,22 +47,22 @@ export class MoneyService {
     private readonly testFormat = 'api/money/transaction.##type##.json';
     private readonly prodFormat = 'money/transaction?sortAscending=false&type=##type##[from][to][account][category]';
 
-    private readonly categoryUrl;
-    private readonly accountUrl;
-    private readonly addUrl;
-    private readonly typeUrl;
-    private readonly statementUrl;
-    private readonly updateTransactionUrl;
-    private readonly deleteTransactionUrl;
-    private readonly lockStatementUrl;
-    private readonly reconcileTransactionUrl;
-    private readonly matchUrl;
-    private readonly clearDataUrl;
-    private readonly autoAcceptUrl;
-    private readonly setCategoryUrl;
-    private readonly getRegularUrl;
-    private readonly getFilesUrl;
-    private readonly loadFileUrl;
+    private readonly categoryUrl: string;
+    private readonly accountUrl: string;
+    private readonly addUrl: string;
+    private readonly typeUrl: string;
+    private readonly statementUrl: string;
+    private readonly updateTransactionUrl: string;
+    private readonly deleteTransactionUrl: string;
+    private readonly lockStatementUrl: string;
+    private readonly reconcileTransactionUrl: string;
+    private readonly matchUrl: string;
+    private readonly clearDataUrl: string;
+    private readonly autoAcceptUrl: string;
+    private readonly setCategoryUrl: string;
+    private readonly getRegularUrl: string;
+    private readonly getFilesUrl: string;
+    private readonly loadFileUrl: string;
 
     @Output() updateTransactions: EventEmitter<any> = new EventEmitter();
     @Output() updateStatements: EventEmitter<any> = new EventEmitter();
@@ -158,14 +158,14 @@ export class MoneyService {
     }
 
     private static handleError(err: HttpErrorResponse) {
-        let errorMessage;
+        let errorMessage: string;
         if (err.error instanceof ErrorEvent) {
             errorMessage = 'An error occurred: ';
         } else {
             errorMessage = 'Server returned code ' + err.status + ', error message is: ' + err.message;
         }
         console.error(errorMessage);
-        return throwError(errorMessage);
+        return throwError(() => new Error(errorMessage) );
     }
 
     static getBrightness(colour: string): number {
