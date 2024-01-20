@@ -35,6 +35,7 @@ import { MoneyRowDisplay } from "./money/exp/money-row-display";
 import { MoneyRowDispDate } from "./money/exp/money-row-disp-date";
 import { BackupPrintSizeSelectComponent } from "./backup/prints/backup-print-size-select.component";
 import { BackupPrintImageComponent } from "./backup/prints/backup-print-image.component";
+import {WifiComponent} from "./wifi/wifi.component";
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { BackupPrintImageComponent } from "./backup/prints/backup-print-image.co
     BackupPhotoComponent,
     BackupPrintSizeSelectComponent,
     BackupPrintsComponent,
-    BackupPrintImageComponent
+    BackupPrintImageComponent,
+    WifiComponent
   ],
   imports: [
     BrowserModule,
@@ -80,6 +82,7 @@ import { BackupPrintImageComponent } from "./backup/prints/backup-print-image.co
       {path: 'house', component: HouseComponent},
       {path: 'bup', component: BackupListComponent},
       {path: 'weight', component: WeightComponent},
+      {path: 'wifi', component: WifiComponent},
       {path: '', redirectTo: 'welcome', pathMatch: 'full'},
       {path: '**', redirectTo: 'welcome', pathMatch: 'full'}
     ])
