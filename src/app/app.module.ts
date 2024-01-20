@@ -65,7 +65,7 @@ import { MoneyFiles } from "./money/files/money-files";
     BackupPrintSizeSelectComponent,
     BackupPrintsComponent,
     BackupPrintImageComponent,
-    WifiComponent
+    WifiComponent,
     MoneyFile,
     MoneyFiles
   ],
