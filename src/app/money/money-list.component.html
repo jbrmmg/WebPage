@@ -33,7 +33,14 @@
                    tabindex="0"
                    (click)="selectExperimentMode()"
                    [attr.aria-expanded]="isExperimentMode"
-                   aria-controls="reconcile">
+                   aria-controls="experiment">
+                <em class="fa fa-question"></em>
+            </label>
+            <label class="btn btn-primary float-right btn-mode col-1"
+                   tabindex="0"
+                   (click)="selectReconciliationFilesMode()"
+                   [attr.aria-expanded]="isReconciliationFilesMode"
+                   aria-controls="reconciliationFiles">
                 <em class="fa fa-question"></em>
             </label>
         </div>
@@ -294,6 +301,11 @@
         <div id="experiment" [collapse]="!isExperimentMode">
             <div class="row">
                 <jbr-money-row *ngFor="let nextLine of lines" [rowLine]="nextLine"></jbr-money-row>
+            </div>
+        </div>
+        <div id="reconciliationFiles" [collapse]="!isReconciliationFilesMode">
+            <div class="row">
+                <jbr-money-files></jbr-money-files>
             </div>
         </div>
         <div class="row">

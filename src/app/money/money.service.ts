@@ -541,4 +541,8 @@ export class MoneyService {
             }
         });
     }
+
+    fileUpdateSource() : EventSource {
+        return new EventSource('money/reconciliation/file-updates');
+    }
 }

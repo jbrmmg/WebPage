@@ -36,6 +36,8 @@ import { MoneyRowDispDate } from "./money/exp/money-row-disp-date";
 import { BackupPrintSizeSelectComponent } from "./backup/prints/backup-print-size-select.component";
 import { BackupPrintImageComponent } from "./backup/prints/backup-print-image.component";
 import {WifiComponent} from "./wifi/wifi.component";
+import { MoneyFile } from "./money/files/money-file";
+import { MoneyFiles } from "./money/files/money-files";
 
 @NgModule({
   declarations: [
@@ -64,6 +66,8 @@ import {WifiComponent} from "./wifi/wifi.component";
     BackupPrintsComponent,
     BackupPrintImageComponent,
     WifiComponent
+    MoneyFile,
+    MoneyFiles
   ],
   imports: [
     BrowserModule,
