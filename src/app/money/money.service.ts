@@ -63,12 +63,14 @@ export class MoneyService {
     private readonly getRegularUrl: string;
     private readonly getFilesUrl: string;
     private readonly loadFileUrl: string;
+    private reconcileAccount: JbAccount;
 
     @Output() updateTransactions: EventEmitter<any> = new EventEmitter();
     @Output() updateStatements: EventEmitter<any> = new EventEmitter();
 
     constructor(private http: HttpClient) {
         this.typeUrl = 'api/money/types.json';
+        this.reconcileAccount = null;
         if (environment.production) {
             // Use production URL's
             this.categoryUrl = 'money/categories';
@@ -174,6 +176,14 @@ export class MoneyService {
         const blue: number = parseInt(colour.substring(4, 6), 16);
 
         return Math.sqrt(red * red * .241 + green * green * .691 + blue * blue * .068);
+    }
+
+    public getReconcileAccount() : JbAccount {
+        return this.reconcileAccount;
+    }
+
+    public setReconcileAccount(account: JbAccount): void {
+        this.reconcileAccount = account;
     }
 
     getFiles(): Observable<IFile[]> {
@@ -338,6 +348,28 @@ export class MoneyService {
     loadFileRequest(file: IFile) {
         const request: LoadFileRequest = new LoadFileRequest();
         request.filename = file.filename;
+
+        this.http.post<LoadFileRequest>(this.loadFileUrl, request).subscribe({
+            next: (val)=> { console.log('POST (load file) call successful value returned in body', val); },
+            error: (response) => {
+                console.log('POST (load file) call in error', response);
+                if (!environment.production) {
+                    console.log('Testing - process as complete.', response);
+                    this.updateTransactions.emit(null);
+                }
+            },
+            complete: () => {
+                console.log('The POST observable is now complete (load)');
+                this.updateTransactions.emit(null);
+            }
+        });
+    }
+
+    loadFileRequest2(filename: string, account: JbAccount): void {
+        this.setReconcileAccount(account);
+
+        const request: LoadFileRequest = new LoadFileRequest();
+        request.filename = filename;
 
         this.http.post<LoadFileRequest>(this.loadFileUrl, request).subscribe({
             next: (val)=> { console.log('POST (load file) call successful value returned in body', val); },

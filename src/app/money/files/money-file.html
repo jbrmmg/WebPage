@@ -1,12 +1,10 @@
 <div *ngIf="file.error == null || file.error == ''">
     <div class="row">
-        <div class="col-1 col-account-img" *ngIf="file.account != null">
+        <div class="col-1 col-account-img" *ngIf="file.account != null" (click)="loadFile(file.filename,file.account)">
             <img class="account-img" src="{{getAccountImage(file.account.id)}}" alt="Account"/>
         </div>
-        <div class="col-8 filename">
+        <div class="col-8 filename" (click)="loadFile(file.filename,file.account)">
             <a>{{file.filename}}</a>
-        </div>
-        <div class="col-1">
         </div>
     </div>
     <div class="row">
