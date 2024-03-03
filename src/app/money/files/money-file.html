@@ -1,3 +1,29 @@
-<div class="row">
-    {{file.filename}}
+<div *ngIf="file.error == null || file.error == ''">
+    <div class="row">
+        <div class="col-1 col-account-img" *ngIf="file.account != null">
+            <img class="account-img" src="{{getAccountImage(file.account.id)}}" alt="Account"/>
+        </div>
+        <div class="col-8 filename">
+            <a>{{file.filename}}</a>
+        </div>
+        <div class="col-1">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 info">
+            <a>{{file.transactionCount}} transactions, from {{file.earliestTransaction}} to {{file.latestTransaction}}; credits {{file.creditSum.toFixed(2)}}; debits {{file.debitSum.toFixed(2)}}</a>
+        </div>
+    </div>
+</div>
+<div *ngIf="file.error != null && file.error != '' ">
+    <div class="row">
+        <div class="col-8 error filename">
+            <a>{{file.filename}}</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 error error-info">
+            <a>{{file.error}}</a>
+        </div>
+    </div>
 </div>

@@ -1,0 +1,25 @@
+.filename {
+    font-size: 40px;
+}
+
+.error {
+    color: firebrick;
+}
+
+.error-info {
+    font-size: 10px;
+}
+
+.info {
+    font-size: 10px;
+}
+
+.account-img {
+    width: 100%;
+    height: 30px;
+}
+
+.col-account-img {
+    display: flex;
+    align-items: center;
+}

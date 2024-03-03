@@ -12,4 +12,8 @@ export class MoneyFile {
 
     constructor(private _moneyService: MoneyService) {
     }
+
+    getAccountImage(id: string): string {
+        return MoneyService.getAccountImage(id);
+    }
 }
