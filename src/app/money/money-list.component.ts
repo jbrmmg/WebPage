@@ -14,7 +14,6 @@ import {ListRowLineFactory} from './list-row-line/list-row-line-factory';
 import {ListRowSummary} from './list-row-line/list-row-summary';
 import {IFile} from './money-file';
 import {ITransaction, Transaction} from './money-transaction'
-import {IFileUpdate, FileUpdate} from "./money-file-update";
 
 export enum ListMode { Normal, Add, Regulars, Reconciliation, Experiment, ReconciliationFiles }
 
@@ -49,7 +48,6 @@ export class MoneyListComponent implements OnInit {
     lines: IListRowLineInterface[];
     selectedStatement: IStatement;
     files: IFile[];
-    reconcileAccount: JbAccount;
 
     internalDate: Date = new Date();
     accountRadio: string;
@@ -105,7 +103,6 @@ export class MoneyListComponent implements OnInit {
         this.lastChangeFrom = null;
         this.lastChangeTo = null;
         this.listMode = ListMode.Normal;
-        this.reconcileAccount = null;
     }
 
     get isAddMode() {
@@ -557,8 +554,8 @@ export class MoneyListComponent implements OnInit {
             }
         }));
 
-        if (this.reconcileAccount != null) {
-            this._moneyService.getMatches(this.reconcileAccount).subscribe(
+        if (this._moneyService.getReconcileAccount() != null) {
+            this._moneyService.getMatches(this._moneyService.getReconcileAccount()).subscribe(
                 matches => {
                     matches.forEach(value => {
                         this.lines.push(ListRowLineFactory.createRowLineReconcile(this._moneyService, value));
@@ -665,7 +662,7 @@ export class MoneyListComponent implements OnInit {
     }
 
     onLoadRecForAccount(file: IFile, account: JbAccount) {
-        this.reconcileAccount = account;
+        this._moneyService.setReconcileAccount(account);
         this._moneyService.loadFileRequest(file);
     }
 
