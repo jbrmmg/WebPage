@@ -1,7 +1,6 @@
 import {Component, Input} from "@angular/core";
 import {MoneyService} from "../money.service";
 import {IFile} from "../money-file";
-import {JbAccount} from "../money-jbaccount";
 
 @Component({
     selector: 'jbr-money-file',
@@ -18,10 +17,8 @@ export class MoneyFile {
         return MoneyService.getAccountImage(id);
     }
 
-    loadFile(filename: string, account: JbAccount): void {
-        if(account != null) {
-            this._moneyService.loadFileRequest2(filename, account);
-            console.log(filename);
-        }
+    loadFile(file: IFile): void {
+        this._moneyService.loadFileRequest(file);
+        console.log(`Load file {}`, file.filename);
     }
 }
