@@ -4,7 +4,7 @@ import {environment} from '../../environments/environment';
 import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {Category, ICategory} from './money-category';
-import {JbAccount} from './money-jbaccount';
+import {JbAccount,IAccount} from './money-jbaccount';
 import {ITransactionType, TransactionType} from './money-type';
 import {IStatement, Statement} from './money-statement';
 import {IMatch} from './money-match';
@@ -63,7 +63,7 @@ export class MoneyService {
     private readonly getRegularUrl: string;
     private readonly getFilesUrl: string;
     private readonly loadFileUrl: string;
-    private reconcileAccount: JbAccount;
+    private reconcileAccount: IAccount;
 
     @Output() updateTransactions: EventEmitter<any> = new EventEmitter();
     @Output() updateStatements: EventEmitter<any> = new EventEmitter();
@@ -178,11 +178,11 @@ export class MoneyService {
         return Math.sqrt(red * red * .241 + green * green * .691 + blue * blue * .068);
     }
 
-    public getReconcileAccount() : JbAccount {
+    public getReconcileAccount() : IAccount {
         return this.reconcileAccount;
     }
 
-    public setReconcileAccount(account: JbAccount): void {
+    public setReconcileAccount(account: IAccount): void {
         this.reconcileAccount = account;
     }
 
@@ -346,30 +346,10 @@ export class MoneyService {
     }
 
     loadFileRequest(file: IFile) {
+        this.setReconcileAccount(file.account);
+
         const request: LoadFileRequest = new LoadFileRequest();
         request.filename = file.filename;
-
-        this.http.post<LoadFileRequest>(this.loadFileUrl, request).subscribe({
-            next: (val)=> { console.log('POST (load file) call successful value returned in body', val); },
-            error: (response) => {
-                console.log('POST (load file) call in error', response);
-                if (!environment.production) {
-                    console.log('Testing - process as complete.', response);
-                    this.updateTransactions.emit(null);
-                }
-            },
-            complete: () => {
-                console.log('The POST observable is now complete (load)');
-                this.updateTransactions.emit(null);
-            }
-        });
-    }
-
-    loadFileRequest2(filename: string, account: JbAccount): void {
-        this.setReconcileAccount(account);
-
-        const request: LoadFileRequest = new LoadFileRequest();
-        request.filename = filename;
 
         this.http.post<LoadFileRequest>(this.loadFileUrl, request).subscribe({
             next: (val)=> { console.log('POST (load file) call successful value returned in body', val); },
@@ -508,7 +488,7 @@ export class MoneyService {
         });
     }
 
-    getMatches(account: JbAccount): Observable<IMatch[]> {
+    getMatches(account: IAccount): Observable<IMatch[]> {
         let url = this.matchUrl;
         url = url.replace('##accountId##', account.id);
 

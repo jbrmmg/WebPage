@@ -15,7 +15,7 @@ import {ListRowSummary} from './list-row-line/list-row-summary';
 import {IFile} from './money-file';
 import {ITransaction, Transaction} from './money-transaction'
 
-export enum ListMode { Normal, Add, Regulars, Reconciliation, Experiment, ReconciliationFiles }
+export enum ListMode { Normal, Add, Regulars, Reconciliation, Experiment}
 
 export enum UpdateTransactionReason {   Type,
                                         Event,
@@ -144,15 +144,6 @@ export class MoneyListComponent implements OnInit {
     selectExperimentMode() {
         this.updateTransactions(UpdateTransactionReason.Account);
         this.listMode = ListMode.Experiment;
-    }
-
-    get isReconciliationFilesMode() : boolean {
-        return this.listMode === ListMode.ReconciliationFiles;
-    }
-
-    selectReconciliationFilesMode() : void {
-        this.updateTransactions(UpdateTransactionReason.Account);
-        this.listMode = ListMode.ReconciliationFiles;
     }
 
     emitCategoriesChanged() {
