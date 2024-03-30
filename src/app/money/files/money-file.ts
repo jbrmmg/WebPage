@@ -1,6 +1,6 @@
 import {Component, Input} from "@angular/core";
 import {MoneyService} from "../money.service";
-import {IFile} from "../money-file";
+import {IFile} from "./file";
 
 @Component({
     selector: 'jbr-money-file',

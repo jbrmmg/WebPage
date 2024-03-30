@@ -3,20 +3,16 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
-import {Category, ICategory} from './money-category';
+import {Category, ICategory} from './category/money-category';
 import {JbAccount,IAccount} from './money-jbaccount';
-import {ITransactionType, TransactionType} from './money-type';
+import {ITransactionType, TransactionType} from './transaction/type';
 import {IStatement, Statement} from './money-statement';
-import {IMatch} from './money-match';
+import {IMatch} from './reconciliation/match';
 import {IRegular} from './money-regular';
-import {IFile} from './money-file';
-import {ITransaction, Transaction} from "./money-transaction";
-
-export class LockRequest {
-    accountId: string;
-    year: number;
-    month: number;
-}
+import {IFile} from './files/file';
+import {ITransaction, Transaction} from "./transaction/transaction";
+import {LockRequest} from "./money-lockrequest";
+import {UpdateTransactionRequest} from "./transaction/updatetransactionrequest";
 
 export class ReconcileUpdate {
     id: number;
@@ -27,13 +23,6 @@ export class ReconcileUpdate {
 export class ReconcileTransaction {
     transactionId: number;
     reconcile: boolean;
-}
-
-export class UpdateTransactionRequest {
-    id: number;
-    amount: number;
-    description: string;
-    categoryId: string;
 }
 
 export class LoadFileRequest {

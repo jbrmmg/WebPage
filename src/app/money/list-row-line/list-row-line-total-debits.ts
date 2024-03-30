@@ -1,5 +1,5 @@
 import {IListRowLineInterface, ListRowLineType} from './list-row-line-interface';
-import {ICategory} from '../money-category';
+import {ICategory} from '../category/money-category';
 import {ListRowSummary} from './list-row-summary';
 import {ListRowLine} from './list-row-line';
 

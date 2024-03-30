@@ -1,19 +1,19 @@
 import {DomSanitizer} from '@angular/platform-browser';
 import {Component, HostListener, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {MoneyService} from './money.service';
-import {Category, ICategory} from './money-category';
+import {Category, ICategory} from './category/money-category';
 import {IAccount, JbAccount} from './money-jbaccount';
-import {TransactionType} from './money-type';
+import {TransactionType} from './transaction/type';
 import {IStatement, Statement} from './money-statement';
 import {BsModalService, BsModalRef} from 'ngx-bootstrap/modal';
-import {MoneyCategoryPickerSelectableOption} from './category-picker/money-cat-picker.component';
+import {MoneyCategoryPickerSelectableOption} from './category/money-cat-picker.component';
 import {DatePipe} from '@angular/common';
 import {Subject} from 'rxjs';
 import {IListRowLineInterface} from './list-row-line/list-row-line-interface';
 import {ListRowLineFactory} from './list-row-line/list-row-line-factory';
 import {ListRowSummary} from './list-row-line/list-row-summary';
-import {IFile} from './money-file';
-import {ITransaction, Transaction} from './money-transaction'
+import {IFile} from './files/file';
+import {ITransaction, Transaction} from './transaction/transaction'
 
 export enum ListMode { Normal, Add, Regulars, Reconciliation, Experiment}
 

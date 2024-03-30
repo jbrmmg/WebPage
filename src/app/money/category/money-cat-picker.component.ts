@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Category, ICategory} from '../money-category';
+import {Category, ICategory} from './money-category';
 import {MoneyService} from '../money.service';
 import {JbAccount} from '../money-jbaccount';
 

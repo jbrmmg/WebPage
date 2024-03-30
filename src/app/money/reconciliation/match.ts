@@ -1,4 +1,4 @@
-import {ITransaction} from './money-transaction';
+import {ITransaction} from '../transaction/transaction';
 
 /*
  * Equivalent of MatchDataDTO

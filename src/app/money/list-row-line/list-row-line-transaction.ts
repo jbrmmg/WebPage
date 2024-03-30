@@ -1,9 +1,9 @@
 import {IListRowLineInterface, ListRowLineType} from './list-row-line-interface';
-import {ICategory} from '../money-category';
+import {ICategory} from '../category/money-category';
 import {MoneyService} from '../money.service';
 import {ListRowSummary} from './list-row-summary';
 import {ListRowLine} from './list-row-line';
-import {ITransaction} from '../money-transaction'
+import {ITransaction} from '../transaction/transaction'
 
 export class ListRowLineTransaction extends ListRowLine implements IListRowLineInterface {
     private _moneyService: MoneyService;
