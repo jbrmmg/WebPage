@@ -1,0 +1,8 @@
+<!--suppress HtmlUnknownAttribute -->
+<label class="btn btn-primary float-right btn-mode col-1"
+       [tabIndex]="getIndex"
+       (click)="modeSelected()"
+       [attr.aria-expanded]="getMode(mode)"
+       [attr.aria-controls]="getModeName">
+    <em [ngClass]="getClass"></em>
+</label>
