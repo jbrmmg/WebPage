@@ -1,10 +1,10 @@
 import {DomSanitizer} from '@angular/platform-browser';
 import {Component, HostListener, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {MoneyService} from './money.service';
-import {Category, ICategory} from './category/money-category';
-import {IAccount, JbAccount} from './money-jbaccount';
+import {Category, ICategory} from './category/category';
+import {IAccount, JbAccount} from './account/jbaccount';
 import {TransactionType} from './transaction/type';
-import {IStatement, Statement} from './money-statement';
+import {IStatement, Statement} from './statement/statement';
 import {BsModalService, BsModalRef} from 'ngx-bootstrap/modal';
 import {MoneyCategoryPickerSelectableOption} from './category/money-cat-picker.component';
 import {DatePipe} from '@angular/common';

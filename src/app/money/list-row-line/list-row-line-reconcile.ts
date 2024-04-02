@@ -1,6 +1,6 @@
 import {IListRowLineInterface, ListRowLineType} from './list-row-line-interface';
 import {IMatch} from '../reconciliation/match';
-import {ICategory} from '../category/money-category';
+import {ICategory} from '../category/category';
 import {ListRowLineTransaction} from './list-row-line-transaction';
 import {MoneyService} from '../money.service';
 import {ListRowLine} from './list-row-line';

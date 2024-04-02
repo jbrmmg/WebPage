@@ -3,97 +3,31 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
-import {Category, ICategory} from './category/money-category';
-import {JbAccount,IAccount} from './money-jbaccount';
+import {Category, ICategory} from './category/category';
+import {JbAccount,IAccount} from './account/jbaccount';
 import {ITransactionType, TransactionType} from './transaction/type';
-import {IStatement, Statement} from './money-statement';
+import {IStatement, Statement} from './statement/statement';
 import {IMatch} from './reconciliation/match';
-import {IRegular} from './money-regular';
+import {IRegular} from './transaction/regular';
 import {IFile} from './files/file';
 import {ITransaction, Transaction} from "./transaction/transaction";
-import {LockRequest} from "./money-lockrequest";
+import {LockRequest} from "./statement/lockrequest";
 import {UpdateTransactionRequest} from "./transaction/updatetransactionrequest";
-
-export class ReconcileUpdate {
-    id: number;
-    categoryId: string;
-    type: string;
-}
-
-export class ReconcileTransaction {
-    transactionId: number;
-    reconcile: boolean;
-}
-
-export class LoadFileRequest {
-    filename: string;
-}
+import {ReconcileUpdate} from "./reconciliation/reconcileupdate";
+import {ReconcileTransaction} from "./reconciliation/reconciletransaction";
+import {LoadFileRequest} from "./files/loadfilerequest";
 
 @Injectable({
     providedIn: 'root'
 })
 export class MoneyService {
-    private readonly testFormat = 'api/money/transaction.##type##.json';
-    private readonly prodFormat = 'money/transaction?sortAscending=false&type=##type##[from][to][account][category]';
-
-    private readonly categoryUrl: string;
-    private readonly accountUrl: string;
-    private readonly addUrl: string;
-    private readonly typeUrl: string;
-    private readonly statementUrl: string;
-    private readonly updateTransactionUrl: string;
-    private readonly deleteTransactionUrl: string;
-    private readonly lockStatementUrl: string;
-    private readonly reconcileTransactionUrl: string;
-    private readonly matchUrl: string;
-    private readonly clearDataUrl: string;
-    private readonly autoAcceptUrl: string;
-    private readonly setCategoryUrl: string;
-    private readonly getRegularUrl: string;
-    private readonly getFilesUrl: string;
-    private readonly loadFileUrl: string;
     private reconcileAccount: IAccount;
 
     @Output() updateTransactions: EventEmitter<any> = new EventEmitter();
     @Output() updateStatements: EventEmitter<any> = new EventEmitter();
 
     constructor(private http: HttpClient) {
-        this.typeUrl = 'api/money/types.json';
         this.reconcileAccount = null;
-        if (environment.production) {
-            // Use production URL's
-            this.categoryUrl = 'money/categories';
-            this.accountUrl = 'money/accounts';
-            this.addUrl = 'money/transaction';
-            this.statementUrl = 'money/statement';
-            this.updateTransactionUrl = 'money/transaction';
-            this.deleteTransactionUrl = 'money/transaction';
-            this.lockStatementUrl = 'money/statement/lock';
-            this.reconcileTransactionUrl = 'money/reconcile';
-            this.matchUrl = 'money/match?account=##accountId##';
-            this.clearDataUrl = 'money/reconciliation/clear';
-            this.autoAcceptUrl = 'money/reconciliation/auto';
-            this.setCategoryUrl = 'money/reconciliation/update';
-            this.getRegularUrl = 'money/transaction/regulars';
-            this.getFilesUrl = 'money/reconciliation/files';
-            this.loadFileUrl = 'money/reconciliation/load';
-        } else {
-            this.categoryUrl = 'api/money/category.json';
-            this.accountUrl = 'api/money/account.json';
-            this.addUrl = 'api/money/account.json';
-            this.statementUrl = 'api/money/statements.json';
-            this.updateTransactionUrl = 'api/money/update.json';
-            this.deleteTransactionUrl = 'api/money/update.json';
-            this.lockStatementUrl = 'api/money/update.json';
-            this.reconcileTransactionUrl = 'api/money/update.json';
-            this.matchUrl = 'api/money/match.##accountId##.json';
-            this.clearDataUrl = 'api/money/update.json';
-            this.autoAcceptUrl = 'api/money/update.json';
-            this.setCategoryUrl = 'api/money/update.json';
-            this.getRegularUrl = 'api/money/regular.json';
-            this.getFilesUrl = 'api/money/reconcile.files.json';
-            this.loadFileUrl = 'api/money/reconcile.files.json';
-        }
     }
 
     public static dateToString(value: Date): string {
@@ -133,19 +67,11 @@ export class MoneyService {
     }
 
     public static getAccountImage(id: string): string {
-        if (environment.production) {
-            return 'money/account/logo?disabled=false&id=' + id;
-        } else {
-            return `assets/images/account/${id}.svg`;
-        }
+        return environment.moneyAccountImage.replace("##id##", id)
     }
 
     public static getDisabledAccountImage(id: string): string {
-        if (environment.production) {
-            return 'money/account/logo?disabled=true&id=' + id;
-        } else {
-            return `assets/images/account/${id}x.svg`;
-        }
+        return environment.moneyAccountDisabledImage.replace("##id##", id)
     }
 
     private static handleError(err: HttpErrorResponse) {
@@ -176,42 +102,42 @@ export class MoneyService {
     }
 
     getFiles(): Observable<IFile[]> {
-        return this.http.get<IFile[]>(this.getFilesUrl).pipe(
+        return this.http.get<IFile[]>(environment.moneyGetFilesUrl).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError( err => MoneyService.handleError(err))
         );
     }
 
     getCategories(): Observable<Category[]> {
-        return this.http.get<Category[]>(this.categoryUrl).pipe(
+        return this.http.get<Category[]>(environment.moneyCategoryUrl).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
     }
 
     getAccounts(): Observable<JbAccount[]> {
-        return this.http.get<JbAccount[]>(this.accountUrl).pipe(
+        return this.http.get<JbAccount[]>(environment.moneyAccountUrl).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
     }
 
     getTransactionTypes(): Observable<TransactionType[]> {
-        return this.http.get<TransactionType[]>(this.typeUrl).pipe(
+        return this.http.get<TransactionType[]>(environment.moneyTypeUrl).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
     }
 
     getStatements(): Observable<Statement[]> {
-        return this.http.get<Statement[]>(this.statementUrl).pipe(
+        return this.http.get<Statement[]>(environment.moneyStatementUrl).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
     }
 
     getRegularPayments(): Observable<IRegular[]> {
-        return this.http.get<IRegular[]>(this.getRegularUrl).pipe(
+        return this.http.get<IRegular[]>(environment.moneyGetRegularUrl).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
@@ -227,8 +153,8 @@ export class MoneyService {
         let toClause: string = null;
         let categoryClause: string = null;
         let accountClause: string = null;
-        let typeId = 'XX';
-        let result = (environment.production ? this.prodFormat : this.testFormat);
+        let typeId: string = 'XX';
+        let result: string = environment.moneyTransactionUrlFormat;
 
         // Calculate the clauses
         if (type != null) {
@@ -324,7 +250,7 @@ export class MoneyService {
     }
 
     addTransaction(transactions: Transaction[]) {
-        this.http.post<Transaction>(this.addUrl, transactions).subscribe({
+        this.http.post<Transaction>(environment.moneyAddUrl, transactions).subscribe({
             next: (val) => { console.log('POST (add transaction) call successful value returned in body', val); },
             error: (response) => { console.log('POST (add transaction) call in error', response); },
             complete: () => {
@@ -340,7 +266,7 @@ export class MoneyService {
         const request: LoadFileRequest = new LoadFileRequest();
         request.filename = file.filename;
 
-        this.http.post<LoadFileRequest>(this.loadFileUrl, request).subscribe({
+        this.http.post<LoadFileRequest>(environment.moneyLoadFileUrl, request).subscribe({
             next: (val)=> { console.log('POST (load file) call successful value returned in body', val); },
             error: (response) => {
                 console.log('POST (load file) call in error', response);
@@ -360,7 +286,7 @@ export class MoneyService {
         // Update the amount of the transaction.
         // TransactionId & Amount
 
-        const url = this.updateTransactionUrl;
+        const url = environment.moneyUpdateTransactionUrl;
 
         const updateRequest = new UpdateTransactionRequest();
         updateRequest.id = transaction.id;
@@ -389,7 +315,7 @@ export class MoneyService {
                        reconcile: boolean ) {
         // Set transaction to confirmed/unconfirmed
         // TransactionId & Flag
-        const url = this.reconcileTransactionUrl;
+        const url = environment.moneyReconcileTransactionUrl;
 
         const reconcileRequest: ReconcileTransaction = new ReconcileTransaction();
         reconcileRequest.transactionId = transaction.id;
@@ -423,11 +349,11 @@ export class MoneyService {
 
     deleteTransaction(transaction: ITransaction ) {
         // Delete the transaction.
-        this.http.delete<Transaction>(this.deleteTransactionUrl, {
+        this.http.delete<Transaction>(environment.moneyDeleteTransactionUrl, {
             body: transaction
         }).subscribe({
             next: () => {
-                console.log(this.deleteTransactionUrl);
+                console.log(environment.moneyDeleteTransactionUrl);
             },
             error: (response) => {
                 console.log('DELETE call in error', response);
@@ -449,7 +375,7 @@ export class MoneyService {
 
         statement.locked = true;
 
-        const url = this.lockStatementUrl;
+        const url = environment.moneyLockStatementUrl;
 
         const lockRequest = new LockRequest();
 
@@ -478,7 +404,7 @@ export class MoneyService {
     }
 
     getMatches(account: IAccount): Observable<IMatch[]> {
-        let url = this.matchUrl;
+        let url = environment.moneyMatchUrl;
         url = url.replace('##accountId##', account.id);
 
         return this.http.get<IMatch[]>(url).pipe(
@@ -489,9 +415,9 @@ export class MoneyService {
 
     clearRecData() {
         // Clear the rec data.
-        this.http.delete<void>(this.clearDataUrl).subscribe({
+        this.http.delete<void>(environment.moneyClearDataUrl).subscribe({
             next:() => {
-                console.log(this.clearDataUrl);
+                console.log(environment.moneyClearDataUrl);
             },
             error: (response) => {
                 console.log('Clear POST call in error', response);
@@ -504,9 +430,9 @@ export class MoneyService {
 
     autoAccept() {
         // Auto accept the data.
-        this.http.put<void>(this.autoAcceptUrl, '').subscribe({
+        this.http.put<void>(environment.moneyAutoAcceptUrl, '').subscribe({
             next:() => {
-                console.log(this.autoAcceptUrl);
+                console.log(environment.moneyAutoAcceptUrl);
             },
             error: (response) => {
                 console.log('Auto Accept PUT call in error', response);
@@ -522,7 +448,7 @@ export class MoneyService {
 
     setCategory(matchRow: IMatch, category: ICategory) {
         // Set the category
-        const url = this.setCategoryUrl;
+        const url = environment.moneySetCategoryUrl;
 
         const request: ReconcileUpdate = new ReconcileUpdate();
 

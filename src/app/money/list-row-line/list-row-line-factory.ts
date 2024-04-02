@@ -8,9 +8,9 @@ import {ListRowLineTotalDebits} from './list-row-line-total-debits';
 import {ListRowLineRegular} from './list-row-line-regular';
 import {ListRowLineReconcileTop} from './list-row-line-reconcile-top';
 import {IMatch} from '../reconciliation/match';
-import {IRegular} from '../money-regular';
+import {IRegular} from '../transaction/regular';
 import {MoneyService} from '../money.service';
-import {IStatement} from '../money-statement';
+import {IStatement} from '../statement/statement';
 import {ListRowSummary} from './list-row-summary';
 import {ITransaction} from '../transaction/transaction'
 import {ListRowLineHeader} from "./list-row-line-header";
