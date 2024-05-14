@@ -2,6 +2,9 @@
  * Equivalent of StatementIdDTO
  */
 
+import {FinancialAmount} from "../transaction/financialamount";
+import {IFinancialAmount} from "../transaction/financialamount";
+
 export interface IStatementId {
     accountId: string;
     month: number;
@@ -16,7 +19,7 @@ export interface IStatement {
     accountId: string;
     month: number;
     year: number;
-    openBalance: number;
+    openBalance: IFinancialAmount;
     locked: boolean;
 }
 
@@ -26,7 +29,7 @@ export class Statement implements IStatement {
     constructor(public accountId: string,
                 public month: number,
                 public year: number,
-                public openBalance: number,
+                public openBalance: FinancialAmount,
                 public locked: boolean ) {
     }
 }

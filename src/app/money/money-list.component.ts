@@ -343,6 +343,7 @@ export class MoneyListComponent implements OnInit {
     }
 
     calculateBF() {
+        console.log("Amt: set calcBF")
         this.summaryRow.boughtForward = 0;
 
         // For unreconciled and all, set bought forward to 0
@@ -359,7 +360,7 @@ export class MoneyListComponent implements OnInit {
         // For reconciled the bought forward comes from the current statement for the selected account.
         if (this.radioType === 'RC') {
             if (this.selectedStatement != null) {
-                BF = this.selectedStatement.openBalance;
+                BF = this.selectedStatement.openBalance.value;
             }
         }
 
@@ -369,7 +370,7 @@ export class MoneyListComponent implements OnInit {
                 if (!value.locked) {
                     this.accounts.forEach(account => {
                         if (account.selected && account.id === value.accountId) {
-                            BF += value.openBalance;
+                            BF += value.openBalance.value;
                         }
                     });
                 }
