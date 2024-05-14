@@ -12,9 +12,11 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { MoneyAddCalcComponent } from './money/calculator/money-add-calc.component';
-import { MoneyCategoryPickerComponent } from './money/category-picker/money-cat-picker.component';
-import { MoneyCategoryFilterComponent } from './money/category-picker/money-cat-filter.component';
+import { MoneyCategoryPickerComponent } from './money/category/money-cat-picker.component';
+import { MoneyCategoryFilterComponent } from './money/category/money-cat-filter.component';
 import { MoneyListComponent } from './money/money-list.component';
+import { MoneyListModeComponent } from "./money/mode/money-list-mode.component";
+import { MoneyListModesComponent } from "./money/mode/money-list-modes.component";
 import { HouseComponent } from './house/house.component';
 import { WeightComponent } from './weight/weight.component';
 import { BackupListComponent } from './backup/backup-list.component';
@@ -35,7 +37,7 @@ import { MoneyRowDisplay } from "./money/exp/money-row-display";
 import { MoneyRowDispDate } from "./money/exp/money-row-disp-date";
 import { BackupPrintSizeSelectComponent } from "./backup/prints/backup-print-size-select.component";
 import { BackupPrintImageComponent } from "./backup/prints/backup-print-image.component";
-import {WifiComponent} from "./wifi/wifi.component";
+import { WifiComponent } from "./wifi/wifi.component";
 import { MoneyFile } from "./money/files/money-file";
 import { MoneyFiles } from "./money/files/money-files";
 
@@ -49,6 +51,8 @@ import { MoneyFiles } from "./money/files/money-files";
     MoneyRowDisplay,
     MoneyRowDispDate,
     MoneyListComponent,
+    MoneyListModeComponent,
+    MoneyListModesComponent,
     HouseComponent,
     WeightComponent,
     BackupListComponent,

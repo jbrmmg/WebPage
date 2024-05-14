@@ -2,41 +2,7 @@
 <div class="card">
     <div class="card-body">
         <div class="row">
-            <label class="btn btn-primary float-right btn-mode col-1"
-                   tabindex="0"
-                   (click)="selectNormalMode()"
-                   [attr.aria-expanded]="isNormalMode"
-                   aria-controls="normal">
-                <em class="fa fa-align-justify"></em>
-            </label>
-            <label class="btn btn-primary float-right btn-mode col-1"
-                   tabindex="0"
-                   (click)="selectAddMode()"
-                   [attr.aria-expanded]="isAddMode"
-                   aria-controls="addTransaction">
-                <em class="fa fa-plus-circle"></em>
-            </label>
-            <label class="btn btn-primary float-right btn-mode col-1"
-                   tabindex="0"
-                   (click)="selectRegularMode()"
-                   [attr.aria-expanded]="isRegularMode"
-                   aria-controls="regular">
-                <em class="fa fa-recycle"></em>
-            </label>
-            <label class="btn btn-primary float-right btn-mode col-1"
-                   tabindex="0"
-                   (click)="selectReconcileMode()"
-                   [attr.aria-expanded]="isReconcileMode"
-                   aria-controls="reconcile">
-                <em class="fa fa-balance-scale"></em>
-            </label>
-            <label class="btn btn-primary float-right btn-mode col-1"
-                   tabindex="0"
-                   (click)="selectExperimentMode()"
-                   [attr.aria-expanded]="isExperimentMode"
-                   aria-controls="experiment">
-                <em class="fa fa-question"></em>
-            </label>
+            <jbr-money-list-modes (modeChange)="switchMode($event)"></jbr-money-list-modes>
         </div>
         <div class="row" id="addTransaction" [collapse]="!isAddMode">
             <div class="col-12">

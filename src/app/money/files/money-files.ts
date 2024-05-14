@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {MoneyService} from "../money.service";
-import {FileUpdate} from "../money-file-update";
-import {IFile} from "../money-file";
+import {FileUpdate} from "./fileupdate";
+import {IFile} from "./file";
 
 @Component({
     selector: 'jbr-money-files',

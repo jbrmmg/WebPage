@@ -1,21 +1,20 @@
 import {DomSanitizer} from '@angular/platform-browser';
 import {Component, HostListener, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {MoneyService} from './money.service';
-import {Category, ICategory} from './money-category';
-import {IAccount, JbAccount} from './money-jbaccount';
-import {TransactionType} from './money-type';
-import {IStatement, Statement} from './money-statement';
+import {Category, ICategory} from './category/category';
+import {IAccount, JbAccount} from './account/jbaccount';
+import {TransactionType} from './transaction/type';
+import {IStatement, Statement} from './statement/statement';
 import {BsModalService, BsModalRef} from 'ngx-bootstrap/modal';
-import {MoneyCategoryPickerSelectableOption} from './category-picker/money-cat-picker.component';
+import {MoneyCategoryPickerSelectableOption} from './category/money-cat-picker.component';
 import {DatePipe} from '@angular/common';
 import {Subject} from 'rxjs';
 import {IListRowLineInterface} from './list-row-line/list-row-line-interface';
 import {ListRowLineFactory} from './list-row-line/list-row-line-factory';
 import {ListRowSummary} from './list-row-line/list-row-summary';
-import {IFile} from './money-file';
-import {ITransaction, Transaction} from './money-transaction'
-
-export enum ListMode { Normal, Add, Regulars, Reconciliation, Experiment}
+import {IFile} from './files/file';
+import {ITransaction, Transaction} from './transaction/transaction'
+import {Mode} from "./mode/money-list-modes.component";
 
 export enum UpdateTransactionReason {   Type,
                                         Event,
@@ -55,7 +54,7 @@ export class MoneyListComponent implements OnInit {
     fromDateDisabled: boolean;
     toDateDisabled: boolean;
 
-    listMode: ListMode;
+    listMode2: Mode;
 
     // Transaction details.
     statusMonth = 'September';
@@ -81,13 +80,13 @@ export class MoneyListComponent implements OnInit {
     static convertTransactionUpdateToMode(update: UpdateTransactionReason) {
         switch (update) {
             case UpdateTransactionReason.SelectAdd:
-                return ListMode.Add;
+                return Mode.Add;
             case UpdateTransactionReason.SelectNormal:
-                return ListMode.Normal;
+                return Mode.Normal;
             case UpdateTransactionReason.SelectReconcilation:
-                return ListMode.Reconciliation;
+                return Mode.Reconcile;
             case UpdateTransactionReason.SelectRegular:
-                return ListMode.Regulars;
+                return Mode.Regular;
         }
 
         return null;
@@ -102,48 +101,51 @@ export class MoneyListComponent implements OnInit {
         this.lastChangeType = '';
         this.lastChangeFrom = null;
         this.lastChangeTo = null;
-        this.listMode = ListMode.Normal;
+        this.listMode2 = Mode.Normal;
     }
 
     get isAddMode() {
-        return this.listMode === ListMode.Add;
+        return this.listMode2 === Mode.Add;
     }
 
-    selectAddMode() {
-        this.updateTransactions(UpdateTransactionReason.SelectAdd);
+    switchMode(mode: Mode) {
+        console.log("Mode change " + mode)
+
+        switch(mode) {
+            case Mode.Normal:
+                this.updateTransactions(UpdateTransactionReason.SelectNormal);
+                break;
+            case Mode.Add:
+                this.updateTransactions(UpdateTransactionReason.SelectAdd);
+                break;
+            case Mode.Regular:
+                this.updateTransactions(UpdateTransactionReason.SelectRegular);
+                break;
+            case Mode.Reconcile:
+                this.updateTransactions(UpdateTransactionReason.SelectReconcilation);
+                break;
+            case Mode.Experimental:
+                this.updateTransactions(UpdateTransactionReason.Account);
+                break;
+        }
+
+        this.listMode2 = mode;
     }
 
     get isNormalMode() {
-        return this.listMode === ListMode.Normal;
-    }
-
-    selectNormalMode() {
-        this.updateTransactions(UpdateTransactionReason.SelectNormal);
+        return this.listMode2 === Mode.Normal;
     }
 
     get isRegularMode() {
-        return this.listMode === ListMode.Regulars;
-    }
-
-    selectRegularMode() {
-        this.updateTransactions(UpdateTransactionReason.SelectRegular);
+        return this.listMode2 === Mode.Regular;
     }
 
     get isReconcileMode() {
-        return this.listMode === ListMode.Reconciliation;
-    }
-
-    selectReconcileMode() {
-        this.updateTransactions(UpdateTransactionReason.SelectReconcilation);
+        return this.listMode2 === Mode.Reconcile;
     }
 
     get isExperimentMode() {
-        return this.listMode === ListMode.Experiment;
-    }
-
-    selectExperimentMode() {
-        this.updateTransactions(UpdateTransactionReason.Account);
-        this.listMode = ListMode.Experiment;
+        return this.listMode2 === Mode.Experimental;
     }
 
     emitCategoriesChanged() {
@@ -341,6 +343,7 @@ export class MoneyListComponent implements OnInit {
     }
 
     calculateBF() {
+        console.log("Amt: set calcBF")
         this.summaryRow.boughtForward = 0;
 
         // For unreconciled and all, set bought forward to 0
@@ -357,7 +360,7 @@ export class MoneyListComponent implements OnInit {
         // For reconciled the bought forward comes from the current statement for the selected account.
         if (this.radioType === 'RC') {
             if (this.selectedStatement != null) {
-                BF = this.selectedStatement.openBalance;
+                BF = this.selectedStatement.openBalance.value;
             }
         }
 
@@ -367,7 +370,7 @@ export class MoneyListComponent implements OnInit {
                 if (!value.locked) {
                     this.accounts.forEach(account => {
                         if (account.selected && account.id === value.accountId) {
-                            BF += value.openBalance;
+                            BF += value.openBalance.value;
                         }
                     });
                 }
@@ -378,29 +381,30 @@ export class MoneyListComponent implements OnInit {
     }
 
     updateTransactions(thisChange: UpdateTransactionReason) {
+        console.log("Update Transactions " + thisChange);
         if (thisChange === UpdateTransactionReason.SelectAdd || thisChange === UpdateTransactionReason.SelectNormal) {
-            if (this.listMode === ListMode.Normal || this.listMode === ListMode.Add) {
-                this.listMode = MoneyListComponent.convertTransactionUpdateToMode(thisChange);
+            if (this.listMode2 === Mode.Normal || this.listMode2 === Mode.Add) {
+                this.listMode2 = MoneyListComponent.convertTransactionUpdateToMode(thisChange);
                 return;
             }
 
-            this.listMode = MoneyListComponent.convertTransactionUpdateToMode(thisChange);
+            this.listMode2 = MoneyListComponent.convertTransactionUpdateToMode(thisChange);
         }
 
         if (thisChange === UpdateTransactionReason.SelectReconcilation) {
-            if (this.listMode === ListMode.Reconciliation) {
+            if (this.listMode2 === Mode.Reconcile) {
                 return;
             }
 
-            this.listMode = ListMode.Reconciliation;
+            this.listMode2 = Mode.Reconcile;
         }
 
         if (thisChange === UpdateTransactionReason.SelectRegular) {
-            if (this.listMode === ListMode.Regulars) {
+            if (this.listMode2 === Mode.Regular) {
                 return;
             }
 
-            this.listMode = ListMode.Regulars;
+            this.listMode2 = Mode.Regular;
         }
 
         if (thisChange === UpdateTransactionReason.ToDate) {
@@ -449,7 +453,7 @@ export class MoneyListComponent implements OnInit {
             });
         }
 
-        if (this.listMode === ListMode.Normal || this.listMode === ListMode.Add) {
+        if (this.listMode2 === Mode.Normal || this.listMode2 === Mode.Add) {
             this.lastChangeType = this.internalRadioType;
             this.lastChangeTo = this.toValue.toISOString();
             this.lastChangeFrom = this.fromValue.toISOString();
@@ -509,12 +513,12 @@ export class MoneyListComponent implements OnInit {
                     console.log('Request Transactions Complete.' + thisChange);
                 }
             );
-        } else if (this.listMode === ListMode.Regulars) {
+        } else if (this.listMode2 === Mode.Regular) {
             // Get the regulars.
             this.lines = [];
             this._moneyService.getRegularPayments().subscribe(
-                transctions => {
-                    transctions.forEach( value => {
+                transactions => {
+                    transactions.forEach( value => {
                         this.lines.push(ListRowLineFactory.createRowLineRegular(value));
                     });
                 },
@@ -523,7 +527,7 @@ export class MoneyListComponent implements OnInit {
                     console.log('Request Regular Transactions Complete.');
                 }
             );
-        } else if (this.listMode === ListMode.Reconciliation) {
+        } else if (this.listMode2 === Mode.Reconcile) {
             this.refreshReconcilation();
         }
     }
@@ -929,4 +933,6 @@ export class MoneyListComponent implements OnInit {
         // Clear the details.
         this.onClearEdit();
     }
+
+    protected readonly Mode = Mode;
 }

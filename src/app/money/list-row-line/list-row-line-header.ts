@@ -1,5 +1,5 @@
 import {IListRowLineInterface, ListRowLineType} from './list-row-line-interface';
-import {ICategory} from '../money-category';
+import {ICategory} from '../category/category';
 import {ListRowLine} from './list-row-line';
 
 export class ListRowLineHeader extends ListRowLine implements IListRowLineInterface {

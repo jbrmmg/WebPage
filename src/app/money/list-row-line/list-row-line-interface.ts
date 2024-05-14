@@ -1,4 +1,4 @@
-import {ICategory} from '../money-category';
+import {ICategory} from '../category/category';
 import {ListRowLine} from './list-row-line';
 
 export enum ListRowLineType {

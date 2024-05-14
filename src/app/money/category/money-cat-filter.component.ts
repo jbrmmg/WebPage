@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MoneyCatFilterEntry} from './money-cat-filter-entry';
-import {Category} from '../money-category';
+import {Category} from './category';
 import {Observable, Subscription} from 'rxjs';
 
 @Component({

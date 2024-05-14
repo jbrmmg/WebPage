@@ -1,10 +1,10 @@
 import {IListRowLineInterface, ListRowLineType} from './list-row-line-interface';
-import {IMatch} from '../money-match';
-import {ICategory} from '../money-category';
+import {IMatch} from '../reconciliation/match';
+import {ICategory} from '../category/category';
 import {ListRowLineTransaction} from './list-row-line-transaction';
 import {MoneyService} from '../money.service';
 import {ListRowLine} from './list-row-line';
-import {Transaction} from '../money-transaction'
+import {Transaction} from '../transaction/transaction'
 
 export class ListRowLineReconcile extends ListRowLine implements IListRowLineInterface {
     private readonly reconcile: IMatch;
