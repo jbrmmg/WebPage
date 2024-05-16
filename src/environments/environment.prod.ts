@@ -2,6 +2,7 @@ export const environment = {
   production: true,
 
   // Money URLs
+  moneyTransactionList: "money/transaction/list",
   moneyTransactionUrlFormat: "money/transaction?sortAscending=false&type=##type##[from][to][account][category]",
   moneyCategoryUrl: "money/categories",
   moneyAccountUrl: "money/accounts",

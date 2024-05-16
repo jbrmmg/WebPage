@@ -6,6 +6,7 @@ export const environment = {
   production: false,
 
   // Money URLs
+  moneyTransactionList: "api/money/transaction.json",
   moneyTransactionUrlFormat: "api/money/transaction.##type##.json",
   moneyCategoryUrl: "api/money/category.json",
   moneyAccountUrl: "api/money/account.json",

@@ -40,6 +40,7 @@ import { BackupPrintImageComponent } from "./backup/prints/backup-print-image.co
 import { WifiComponent } from "./wifi/wifi.component";
 import { MoneyFile } from "./money/files/money-file";
 import { MoneyFiles } from "./money/files/money-files";
+import {MoneyNewtrnDisplay} from "./money/exp/money-newtrn-display";
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { MoneyFiles } from "./money/files/money-files";
     MoneyListComponent,
     MoneyListModeComponent,
     MoneyListModesComponent,
+    MoneyNewtrnDisplay,
     HouseComponent,
     WeightComponent,
     BackupListComponent,

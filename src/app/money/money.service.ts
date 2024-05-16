@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
@@ -16,6 +16,8 @@ import {UpdateTransactionRequest} from "./transaction/updatetransactionrequest";
 import {ReconcileUpdate} from "./reconciliation/reconcileupdate";
 import {ReconcileTransaction} from "./reconciliation/reconciletransaction";
 import {LoadFileRequest} from "./files/loadfilerequest";
+import {TransactionFilter} from "./transaction/transactionFilter";
+import {ITransactionData} from "./transaction/TransactionData";
 
 @Injectable({
     providedIn: 'root'
@@ -244,6 +246,25 @@ export class MoneyService {
                     categories: Category[]): Observable<ITransaction[]> {
 
         return this.http.get<ITransaction[]>(this.getTransactionsUrl(type, from, to, accounts, categories)).pipe(
+            tap(data => console.log('All: ' + JSON.stringify(data))),
+            catchError(err => MoneyService.handleError(err))
+        );
+    }
+
+    getTransactions2(filter: TransactionFilter) : Observable<ITransactionData>  {
+        const options = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json'
+            }),
+            body: filter
+        };
+
+        console.log("Call web " + environment.moneyTransactionList)
+//        return this.http.get<ITransactionData>(environment.moneyTransactionList,options).pipe(
+//            tap(data => console.log('All: ' + JSON.stringify(data))),
+//            catchError(err => MoneyService.handleError(err))
+//        );
+        return this.http.get<ITransactionData>("money/transaction/list",options).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
