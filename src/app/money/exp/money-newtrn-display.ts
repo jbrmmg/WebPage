@@ -19,17 +19,22 @@ export class MoneyNewtrnDisplay implements OnInit {
         console.log("here")
 
         let filter : TransactionFilter = new TransactionFilter();
-        filter.accounts = [];
-        filter.categories = [];
-        filter.reconciliationAccount = "BANK"
-        filter.predicated = false;
+        filter.predicted = false;
         filter.locked = false;
         filter.fromReconciled = false;
 
         console.log("Filter setup")
 
-        this._moneyService.getTransactions2(filter);
-
-        console.log("Done")
+        this._moneyService.getTransactions2(filter).subscribe({
+            next: (val) => {
+                console.log('Next');
+            },
+            error: (response) => {
+                console.error("getTransactions2 Failed " + response);
+            },
+            complete: () => {
+                console.log("getTransactions2 Complete.")
+            }
+        });
     }
 }

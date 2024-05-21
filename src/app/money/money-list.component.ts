@@ -15,6 +15,7 @@ import {ListRowSummary} from './list-row-line/list-row-summary';
 import {IFile} from './files/file';
 import {ITransaction, Transaction} from './transaction/transaction'
 import {Mode} from "./mode/money-list-modes.component";
+import {TransactionFilter} from "./transaction/transactionFilter";
 
 export enum UpdateTransactionReason {   Type,
                                         Event,
@@ -466,11 +467,61 @@ export class MoneyListComponent implements OnInit {
             this.lines.push(ListRowLineFactory.createRowLineDebits(this.summaryRow));
             this.lines.push(ListRowLineFactory.createRowLineCredits(this.summaryRow));
             this.lines.push(ListRowLineFactory.createRowLineTotalCfwd(this._moneyService, this.summaryRow, this.selectedStatement));
-            this._moneyService.getTransactions(this.getTransactionType(this.internalRadioType),
-                this.fromValue,
-                this.toValue,
-                this.accounts,
-                this.categories).subscribe(
+
+            // Setup a default filter for non-locked
+            let filter : TransactionFilter = new TransactionFilter();
+            filter.predicted = false;
+            filter.locked = false;
+            filter.fromReconciled = false;
+
+            this._moneyService.getTransactions2(filter).subscribe({
+                next: (val) => {
+                    console.log('Next');
+                    val.transactions.forEach(value => {
+                       this.lines.push(ListRowLineFactory.createRowLineTransaction(
+                           this._moneyService,
+                           value,
+                           this.summaryRow,
+                           (transaction: ITransaction, clear: boolean ) => {
+                               if (clear) {
+                                   this.onClearEdit();
+                                   return;
+                               }
+
+                               console.log('Edit - ' + transaction.id);
+
+                               this.existingTransactionId = transaction.id;
+                               this.transactionDescription = transaction.description;
+                               this.transactionAmount = transaction.amount;
+
+                               this.categories.forEach(nextCategory => {
+                                   if (nextCategory.id === transaction.categoryId) {
+                                       this.selectedCategory = nextCategory;
+                                   }
+                               });
+
+                               this.accounts.forEach(nextAccount => {
+                                   if (nextAccount.id === transaction.accountId) {
+                                       this.selectedAccount = nextAccount;
+                                   }
+                               });
+
+                               this.performDataChange(MoneyService.stringToDate(transaction.date));
+
+                               this.lines.forEach(value2 => { value2.selected = false; });
+                           }));
+                    });
+                },
+                error: (response) => {
+                    console.error("getTransactions2 Failed " + response);
+                },
+                complete: () => {
+                    console.log("getTransactions2 Complete.")
+                }
+            });
+
+            /*
+                .subscribe(
                 transactions => {
                     transactions.forEach(value => {
                         this.lines.push(ListRowLineFactory.createRowLineTransaction(
@@ -513,8 +564,9 @@ export class MoneyListComponent implements OnInit {
                     console.log('Request Transactions Complete.' + thisChange);
                 }
             );
+             */
         } else if (this.listMode2 === Mode.Regular) {
-            // Get the regulars.
+            // Get the regulars (use different filters).
             this.lines = [];
             this._moneyService.getRegularPayments().subscribe(
                 transactions => {

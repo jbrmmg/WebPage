@@ -4,6 +4,7 @@ import {MoneyService} from '../money.service';
 import {ListRowSummary} from './list-row-summary';
 import {ListRowLine} from './list-row-line';
 import {ITransaction} from '../transaction/transaction'
+import {ITransactionReport} from "../transaction/TransactionReport";
 
 export class ListRowLineTransaction extends ListRowLine implements IListRowLineInterface {
     private _moneyService: MoneyService;
@@ -58,7 +59,7 @@ export class ListRowLineTransaction extends ListRowLine implements IListRowLineI
     }
 
     constructor(moneyService: MoneyService,
-                transaction: ITransaction,
+                transaction: ITransactionReport,
                 summary: ListRowSummary,
                 editSelect: (transaction: ITransaction, clear: boolean) => void ) {
         super();
@@ -70,11 +71,11 @@ export class ListRowLineTransaction extends ListRowLine implements IListRowLineI
         this.dateDay = transactionDate.getDate().toString();
         this.dateMonth = ListRowLineTransaction.getMonthName(transactionDate.getMonth());
         this.dateYear = transactionDate.getFullYear().toString();
-        this.categoryId = transaction.categoryId;
+        this.categoryId = transaction.category.id;
         this.description = transaction.description;
-        this.amount = transaction.amount;
+        this.amount = transaction.amount.value;
         this.hasAccount = true;
-        this.accountId = transaction.accountId;
+        this.accountId = transaction.account.id;
         this.hasCategory = true;
         this.hasButtonOne = true;
         this.hasButtonTwo = true;
@@ -83,17 +84,18 @@ export class ListRowLineTransaction extends ListRowLine implements IListRowLineI
         this.classButtonThree = 'fa fa-trash';
 
         // If the transaction is locked, set button one to a padlock.
-        if (transaction.hasStatement) {
-            if (transaction.statementLocked) {
-                this.setButtons(ListRowLineTransaction.ReconciliationStatus.LOCKED);
-            } else {
-                this.setButtons(ListRowLineTransaction.ReconciliationStatus.RECONCILED);
-            }
-        } else {
-            this.setButtons(ListRowLineTransaction.ReconciliationStatus.UNRECONCILED);
-        }
+        // TODO fix for type
+//        if (transaction.hasStatement) {
+//            if (transaction.statementLocked) {
+//                this.setButtons(ListRowLineTransaction.ReconciliationStatus.LOCKED);
+//            } else {
+//                this.setButtons(ListRowLineTransaction.ReconciliationStatus.RECONCILED);
+//            }
+//        } else {
+//            this.setButtons(ListRowLineTransaction.ReconciliationStatus.UNRECONCILED);
+//        }
 
-        this.transaction = transaction;
+//        this.transaction = transaction;
         this.summary = summary;
         this._moneyService = moneyService;
         this.editSelect = editSelect;

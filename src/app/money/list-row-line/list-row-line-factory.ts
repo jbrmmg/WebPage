@@ -14,11 +14,12 @@ import {IStatement} from '../statement/statement';
 import {ListRowSummary} from './list-row-summary';
 import {ITransaction} from '../transaction/transaction'
 import {ListRowLineHeader} from "./list-row-line-header";
+import {ITransactionReport} from "../transaction/TransactionReport";
 
 
 export class ListRowLineFactory {
     static createRowLineTransaction(moneyService: MoneyService,
-                                    transaction: ITransaction,
+                                    transaction: ITransactionReport,
                                     summary: ListRowSummary,
                                     editSelect: (transaction: ITransaction, clear: boolean) => void ): IListRowLineInterface {
         return new ListRowLineTransaction(moneyService, transaction, summary, editSelect);
