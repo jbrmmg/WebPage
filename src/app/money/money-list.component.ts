@@ -550,7 +550,7 @@ export class MoneyListComponent implements OnInit {
         }));
 
         if (this._moneyService.getReconcileAccount() != null) {
-            this._moneyService.getMatches(this._moneyService.getReconcileAccount()).subscribe(
+            this._moneyService.getMatches().subscribe(
                 matches => {
                     matches.forEach(value => {
                         this.lines.push(ListRowLineFactory.createRowLineReconcile(this._moneyService, value));

@@ -403,11 +403,8 @@ export class MoneyService {
         });
     }
 
-    getMatches(account: IAccount): Observable<IMatch[]> {
-        let url = environment.moneyMatchUrl;
-        url = url.replace('##accountId##', account.id);
-
-        return this.http.get<IMatch[]>(url).pipe(
+    getMatches(): Observable<IMatch[]> {
+        return this.http.get<IMatch[]>(environment.moneyMatchUrl).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
