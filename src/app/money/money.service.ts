@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
@@ -252,17 +252,8 @@ export class MoneyService {
     }
 
     getTransactions2(filter: TransactionFilter) : Observable<ITransactionData>  {
-        const options = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json',
-                'Accept': '*/*'
-            }),
-            body: filter
-        };
-
         console.log(JSON.stringify(filter));
 
-        console.log("Call web " + environment.moneyTransactionList)
         return this.http.post<ITransactionData>(environment.moneyTransactionList,filter).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))

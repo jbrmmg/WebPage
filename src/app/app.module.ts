@@ -41,6 +41,8 @@ import { WifiComponent } from "./wifi/wifi.component";
 import { MoneyFile } from "./money/files/money-file";
 import { MoneyFiles } from "./money/files/money-files";
 import {MoneyNewtrnDisplay} from "./money/exp/money-newtrn-display";
+import {GridHeaderDate} from "./money/grid/header/grid-header-date";
+import {GridDataDate} from "./money/grid/data/grid-data-date";
 
 @NgModule({
   declarations: [
@@ -75,28 +77,30 @@ import {MoneyNewtrnDisplay} from "./money/exp/money-newtrn-display";
     MoneyFile,
     MoneyFiles
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    HttpClientModule,
-    CollapseModule,
-    BsDatepickerModule.forRoot(),
-    ButtonsModule.forRoot(),
-    TooltipModule.forRoot(),
-    ModalModule.forRoot(),
-    BsDropdownModule.forRoot(),
-    RouterModule.forRoot([
-      {path: 'welcome', component: WelcomeComponent},
-      {path: 'money', component: MoneyListComponent},
-      {path: 'house', component: HouseComponent},
-      {path: 'bup', component: BackupListComponent},
-      {path: 'weight', component: WeightComponent},
-      {path: 'wifi', component: WifiComponent},
-      {path: '', redirectTo: 'welcome', pathMatch: 'full'},
-      {path: '**', redirectTo: 'welcome', pathMatch: 'full'}
-    ])
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        HttpClientModule,
+        CollapseModule,
+        BsDatepickerModule.forRoot(),
+        ButtonsModule.forRoot(),
+        TooltipModule.forRoot(),
+        ModalModule.forRoot(),
+        BsDropdownModule.forRoot(),
+        RouterModule.forRoot([
+            {path: 'welcome', component: WelcomeComponent},
+            {path: 'money', component: MoneyListComponent},
+            {path: 'house', component: HouseComponent},
+            {path: 'bup', component: BackupListComponent},
+            {path: 'weight', component: WeightComponent},
+            {path: 'wifi', component: WifiComponent},
+            {path: '', redirectTo: 'welcome', pathMatch: 'full'},
+            {path: '**', redirectTo: 'welcome', pathMatch: 'full'}
+        ]),
+        GridHeaderDate,
+        GridDataDate
+    ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
 })

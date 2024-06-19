@@ -233,7 +233,7 @@
                 <jbr-money-newtrn></jbr-money-newtrn>
             </div>
         </div>
-        <div class="row">
+        <div class="row" *ngIf="!isExperimentMode">
             <div class="table-responsive">
                 <table class="table trn-table" *ngIf="lines && lines.length">
                     <thead>
