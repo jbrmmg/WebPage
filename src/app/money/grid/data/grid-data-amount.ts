@@ -2,16 +2,17 @@ import {Component, Input} from "@angular/core";
 import {ITransactionReport} from "../../transaction/TransactionReport";
 
 @Component({
-    selector: 'jbr-grid-data-amount-credit',
-    templateUrl: './grid-data-amount-credit.html',
-    styleUrls: ['./grid-data-amount-credit.css'],
+    selector: 'jbr-grid-data-amount',
+    templateUrl: './grid-data-amount.html',
+    styleUrls: ['./grid-data-amount.css'],
     standalone: true
 })
-export class GridDataAmountCredit {
+export class GridDataAmount {
     @Input() transaction: ITransactionReport;
+    @Input() type: string;
 
     display() : string {
-        if(this.transaction == null || this.transaction.amount.type === "DB") {
+        if(this.transaction == null || this.transaction.amount.type != this.type) {
             return "";
         }
 

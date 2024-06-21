@@ -13,7 +13,7 @@ import {GridHeaderFlag} from "./header/grid-header-flag";
 import {GridHeaderStatementDate} from "./header/grid-header-statement-date";
 import {GridHeaderText} from "./header/grid-header-text";
 import {GridDataAccount} from "./data/grid-data-account";
-import {GridDataAmountCredit} from "./data/grid-data-amount-credit";
+import {GridDataAmount} from "./data/grid-data-amount";
 import {GridDataBalance} from "./data/grid-data-balance";
 import {GridDataCategory} from "./data/grid-data-category";
 import {GridDataDescription} from "./data/grid-data-description";
@@ -21,7 +21,6 @@ import {GridDataFromReconciliation} from "./data/grid-data-from-reconciliation";
 import {GridDataPredicted} from "./data/grid-data-predicted";
 import {GridDataStatement} from "./data/grid-data-statement";
 import {GridDataStatementDate} from "./data/grid-data-statement-date";
-import {GridDataAmountDebit} from "./data/grid-data-amount-debit";
 import {GridHeaderSelect} from "./header/grid-header-select";
 import {GridHeaderActions} from "./header/grid-header-actions";
 import {GridDataSelect} from "./data/grid-data-select";
@@ -45,8 +44,7 @@ import {GridDataActions} from "./data/grid-data-actions";
         GridHeaderActions,
         GridDataDate,
         GridDataAccount,
-        GridDataAmountCredit,
-        GridDataAmountDebit,
+        GridDataAmount,
         GridDataBalance,
         GridDataCategory,
         GridDataDescription,

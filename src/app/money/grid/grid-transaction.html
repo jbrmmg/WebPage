@@ -28,8 +28,8 @@
                 <td><jbr-grid-data-from-reconciliation [transaction]="transaction"></jbr-grid-data-from-reconciliation></td>
                 <td><jbr-grid-data-category [transaction]="transaction"></jbr-grid-data-category></td>
                 <td><jbr-grid-data-description [transaction]="transaction"></jbr-grid-data-description></td>
-                <td><jbr-grid-data-amount-credit [transaction]="transaction"></jbr-grid-data-amount-credit></td>
-                <td><jbr-grid-data-amount-debit [transaction]="transaction"></jbr-grid-data-amount-debit></td>
+                <td><jbr-grid-data-amount [transaction]="transaction" [type]="'CR'"></jbr-grid-data-amount></td>
+                <td><jbr-grid-data-amount [transaction]="transaction" [type]="'DB'"></jbr-grid-data-amount></td>
                 <td><jbr-grid-data-balance [transaction]="transaction"></jbr-grid-data-balance></td>
                 <td><jbr-grid-data-actions [transaction]="transaction"></jbr-grid-data-actions></td>
             </tr>
