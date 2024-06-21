@@ -3,6 +3,7 @@ import {ITransactionData} from "../transaction/TransactionData";
 import {TransactionFilter} from "../transaction/transactionFilter";
 import {MoneyService} from "../money.service";
 import {NgForOf, NgIf} from "@angular/common";
+import {FlagType} from "./header/grid-header-flag-type";
 import {GridHeaderDate} from "./header/grid-header-date";
 import {GridDataDate} from "./data/grid-data-date";
 import {GridHeaderAccount} from "./header/grid-header-account";
@@ -21,6 +22,10 @@ import {GridDataPredicted} from "./data/grid-data-predicted";
 import {GridDataStatement} from "./data/grid-data-statement";
 import {GridDataStatementDate} from "./data/grid-data-statement-date";
 import {GridDataAmountDebit} from "./data/grid-data-amount-debit";
+import {GridHeaderSelect} from "./header/grid-header-select";
+import {GridHeaderActions} from "./header/grid-header-actions";
+import {GridDataSelect} from "./data/grid-data-select";
+import {GridDataActions} from "./data/grid-data-actions";
 
 @Component({
     selector: 'jbr-grid-transaction',
@@ -28,17 +33,20 @@ import {GridDataAmountDebit} from "./data/grid-data-amount-debit";
     styleUrls: ['./grid-transaction.css'],
     imports: [
         NgForOf,
-        GridHeaderDate,
         NgIf,
-        GridDataDate,
+        GridHeaderDate,
         GridHeaderAccount,
         GridHeaderAmount,
         GridHeaderCategory,
         GridHeaderFlag,
         GridHeaderStatementDate,
         GridHeaderText,
+        GridHeaderSelect,
+        GridHeaderActions,
+        GridDataDate,
         GridDataAccount,
         GridDataAmountCredit,
+        GridDataAmountDebit,
         GridDataBalance,
         GridDataCategory,
         GridDataDescription,
@@ -46,11 +54,8 @@ import {GridDataAmountDebit} from "./data/grid-data-amount-debit";
         GridDataPredicted,
         GridDataStatement,
         GridDataStatementDate,
-        GridDataAmountCredit,
-        GridDataAmountCredit,
-        GridDataAmountCredit,
-        GridDataAmountCredit,
-        GridDataAmountDebit
+        GridDataSelect,
+        GridDataActions
     ],
     standalone: true
 })
@@ -78,27 +83,40 @@ export class GridTransaction implements OnInit {
         this.update();
     }
 
-    updateP() {
-        this.filter.predicted = true;
-        this.filter.locked = false;
-        this.filter.fromReconciled = false;
+    updatePredictedFilter() {
+        // Cycle around the values; true, false, null
+        if(this.filter.predicted == null) {
+            this.filter.predicted = true;
+        } else if(this.filter.predicted) {
+            this.filter.predicted = false;
+        } else {
+            this.filter.predicted = null;
+        }
         this.filter.maxPageSize = null;
         this.update();
     }
 
-    updateL() {
-        this.filter.predicted = false;
-        this.filter.locked = true;
-        this.filter.fromReconciled = false;
-        this.filter.maxPageSize = 3;
+    updateLockFilter() {
+        // Cycle around the values; true, false, null
+        if(this.filter.locked == null) {
+            this.filter.locked = true;
+        } else if(this.filter.locked) {
+            this.filter.locked = false;
+        } else {
+            this.filter.locked = null;
+        }
         this.update();
     }
 
-    updateR() {
-        this.filter.predicted = false;
-        this.filter.locked = false;
-        this.filter.fromReconciled = true;
-        this.filter.maxPageSize = 3;
+    updateReconciledFilter() {
+        // Cycle around the values; true, false, null
+        if(this.filter.fromReconciled == null) {
+            this.filter.fromReconciled = true;
+        } else if(this.filter.fromReconciled) {
+            this.filter.fromReconciled = false;
+        } else {
+            this.filter.fromReconciled = null;
+        }
         this.update();
     }
 
@@ -127,4 +145,6 @@ export class GridTransaction implements OnInit {
             }
         });
     }
+
+    protected readonly FlagType = FlagType;
 }

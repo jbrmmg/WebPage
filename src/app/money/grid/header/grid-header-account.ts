@@ -7,5 +7,5 @@ import {Component, Input} from "@angular/core";
     standalone: true
 })
 export class GridHeaderAccount {
-    @Input() header: String;
+    @Input() header: string;
 }

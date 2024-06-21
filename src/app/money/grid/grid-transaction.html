@@ -2,21 +2,24 @@
     <table>
         <thead>
             <tr>
+                <th><jbr-grid-header-select [header]="' '"></jbr-grid-header-select></th>
                 <th (click)="updateA()"><jbr-grid-header-date header="Date"></jbr-grid-header-date></th>
                 <th><jbr-grid-header-account [header]="'Acc.'"></jbr-grid-header-account></th>
                 <th><jbr-grid-header-statement-date [header]="'Statement Date'"></jbr-grid-header-statement-date></th>
-                <th (click)="updateL()"><jbr-grid-header-flag [header]="'Lck.'"></jbr-grid-header-flag></th>
-                <th (click)="updateP()"><jbr-grid-header-flag [header]="'Prd.'"></jbr-grid-header-flag></th>
-                <th (click)="updateR()"><jbr-grid-header-flag [header]="'Rec.'"></jbr-grid-header-flag></th>
+                <th (click)="updateLockFilter()"><jbr-grid-header-flag [header]="'Lck.'" [flagType]="FlagType.Locked" [filter]="filter"></jbr-grid-header-flag></th>
+                <th (click)="updatePredictedFilter()"><jbr-grid-header-flag [header]="'Prd.'" [flagType]="FlagType.Predicted" [filter]="filter"></jbr-grid-header-flag></th>
+                <th (click)="updateReconciledFilter()"><jbr-grid-header-flag [header]="'Rec.'" [flagType]="FlagType.Reconciled" [filter]="filter"></jbr-grid-header-flag></th>
                 <th><jbr-grid-header-category [header]="'Category'"></jbr-grid-header-category></th>
                 <th><jbr-grid-header-text [header]="'Description'"></jbr-grid-header-text></th>
                 <th><jbr-grid-header-amount [header]="'Credits'"></jbr-grid-header-amount></th>
                 <th><jbr-grid-header-amount [header]="'Debits'"></jbr-grid-header-amount></th>
                 <th><jbr-grid-header-amount [header]="'Balance'"></jbr-grid-header-amount></th>
+                <th><jbr-grid-header-actions [header]="'Actions'"></jbr-grid-header-actions></th>
             </tr>
         </thead>
         <tbody *ngIf="data && data.transactions && data.transactions.length">
             <tr *ngFor="let transaction of data.transactions">
+                <td><jbr-grid-data-select [transaction]="transaction"></jbr-grid-data-select></td>
                 <td><jbr-grid-data-date [transaction]="transaction"></jbr-grid-data-date></td>
                 <td><jbr-grid-data-account [transaction]="transaction"></jbr-grid-data-account></td>
                 <td><jbr-grid-data-statement-date [transaction]="transaction"></jbr-grid-data-statement-date></td>
@@ -28,6 +31,7 @@
                 <td><jbr-grid-data-amount-credit [transaction]="transaction"></jbr-grid-data-amount-credit></td>
                 <td><jbr-grid-data-amount-debit [transaction]="transaction"></jbr-grid-data-amount-debit></td>
                 <td><jbr-grid-data-balance [transaction]="transaction"></jbr-grid-data-balance></td>
+                <td><jbr-grid-data-actions [transaction]="transaction"></jbr-grid-data-actions></td>
             </tr>
     </table>
 </div>

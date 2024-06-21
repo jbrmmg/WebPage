@@ -6,7 +6,4 @@ import {Component} from "@angular/core";
     styleUrls: ['./money-newtrn-display.css']
 })
 export class MoneyNewtrnDisplay {
-    onClickA() {
-
-    }
 }

@@ -1,1 +1,4 @@
-{{header}}
+<p>{{header}}</p>
+<p class="fa fa-check" *ngIf="flagSpecified() && flagFilter()"></p>
+<p class="fa fa-times" *ngIf="flagSpecified() && !flagFilter()"></p>
+<p *ngIf="!flagSpecified()"></p>

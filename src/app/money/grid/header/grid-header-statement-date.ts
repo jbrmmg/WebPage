@@ -7,5 +7,5 @@ import {Component, Input} from "@angular/core";
     standalone: true
 })
 export class GridHeaderStatementDate {
-    @Input() header: String;
+    @Input() header: string;
 }
