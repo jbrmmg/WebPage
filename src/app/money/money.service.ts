@@ -95,6 +95,14 @@ export class MoneyService {
         return Math.sqrt(red * red * .241 + green * green * .691 + blue * blue * .068);
     }
 
+    static getTextColor(colour: string) {
+        if(MoneyService.getBrightness(colour) > 130) {
+            return '000000';
+        }
+
+        return 'FFFFFF';
+    }
+
     public getReconcileAccount() : IAccount {
         return this.reconcileAccount;
     }

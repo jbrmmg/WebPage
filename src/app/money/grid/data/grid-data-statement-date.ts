@@ -9,4 +9,12 @@ import {ITransactionReport} from "../../transaction/TransactionReport";
 })
 export class GridDataStatementDate {
     @Input() transaction: ITransactionReport;
+
+    display() : string {
+        if(this.transaction.statement) {
+            return String(this.transaction.statement.year) + "-" + String(this.transaction.statement.month);
+        }
+
+        return "";
+    }
 }

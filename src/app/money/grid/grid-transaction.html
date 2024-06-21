@@ -1,0 +1,33 @@
+<div class="row transaction-table">
+    <table>
+        <thead>
+            <tr>
+                <th (click)="updateA()"><jbr-grid-header-date header="Date"></jbr-grid-header-date></th>
+                <th><jbr-grid-header-account [header]="'Acc.'"></jbr-grid-header-account></th>
+                <th><jbr-grid-header-statement-date [header]="'Statement Date'"></jbr-grid-header-statement-date></th>
+                <th (click)="updateL()"><jbr-grid-header-flag [header]="'Lck.'"></jbr-grid-header-flag></th>
+                <th (click)="updateP()"><jbr-grid-header-flag [header]="'Prd.'"></jbr-grid-header-flag></th>
+                <th (click)="updateR()"><jbr-grid-header-flag [header]="'Rec.'"></jbr-grid-header-flag></th>
+                <th><jbr-grid-header-category [header]="'Category'"></jbr-grid-header-category></th>
+                <th><jbr-grid-header-text [header]="'Description'"></jbr-grid-header-text></th>
+                <th><jbr-grid-header-amount [header]="'Credits'"></jbr-grid-header-amount></th>
+                <th><jbr-grid-header-amount [header]="'Debits'"></jbr-grid-header-amount></th>
+                <th><jbr-grid-header-amount [header]="'Balance'"></jbr-grid-header-amount></th>
+            </tr>
+        </thead>
+        <tbody *ngIf="data && data.transactions && data.transactions.length">
+            <tr *ngFor="let transaction of data.transactions">
+                <td><jbr-grid-data-date [transaction]="transaction"></jbr-grid-data-date></td>
+                <td><jbr-grid-data-account [transaction]="transaction"></jbr-grid-data-account></td>
+                <td><jbr-grid-data-statement-date [transaction]="transaction"></jbr-grid-data-statement-date></td>
+                <td><jbr-grid-data-statement [transaction]="transaction"></jbr-grid-data-statement></td>
+                <td><jbr-grid-data-predicted [transaction]="transaction"></jbr-grid-data-predicted></td>
+                <td><jbr-grid-data-from-reconciliation [transaction]="transaction"></jbr-grid-data-from-reconciliation></td>
+                <td><jbr-grid-data-category [transaction]="transaction"></jbr-grid-data-category></td>
+                <td><jbr-grid-data-description [transaction]="transaction"></jbr-grid-data-description></td>
+                <td><jbr-grid-data-amount-credit [transaction]="transaction"></jbr-grid-data-amount-credit></td>
+                <td><jbr-grid-data-amount-debit [transaction]="transaction"></jbr-grid-data-amount-debit></td>
+                <td><jbr-grid-data-balance [transaction]="transaction"></jbr-grid-data-balance></td>
+            </tr>
+    </table>
+</div>

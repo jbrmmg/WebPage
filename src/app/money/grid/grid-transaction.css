@@ -1,0 +1,63 @@
+.transaction-table {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+th {
+    font-family: Helvetica, serif;
+    font-size: 10px;
+    font-weight: bold;
+    border: 1px solid dimgrey;
+    background: grey;
+}
+
+td {
+    font-family: Helvetica, serif;
+    font-size: 10px;
+    border: 1px solid dimgrey;
+}
+
+table td:first-child {
+    width: 6%;
+}
+
+table td:nth-child(2) {
+    width: 3%;
+}
+
+table td:nth-child(3) {
+    width: 7%;
+}
+
+table td:nth-child(4) {
+    width: 2%;
+}
+
+table td:nth-child(5) {
+    width: 2%;
+}
+
+table td:nth-child(6) {
+    width: 2%;
+}
+
+table td:nth-child(7) {
+    width: 7%;
+}
+
+table td:nth-child(8) {
+    width: 30%;
+}
+
+table td:nth-child(9) {
+    width: 7%;
+}
+
+table td:nth-child(10) {
+    width: 7%;
+}
+
+table td:nth-child(11) {
+    width: 7%;
+}

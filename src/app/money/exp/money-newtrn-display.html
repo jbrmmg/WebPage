@@ -1,12 +1,3 @@
 <div class="row transaction-table">
-    <button class="btn btn-primary trn-button trn-button-to-right"
-            (click)="onClickA()">
-        <em class="fa fa-check"></em>
-    </button>
-    <div class="row transaction-table">
-        <div class="table-responsive transaction-table" *ngIf="data && data.transactions.length">
-            <jbr-grid-header-row [filter]="filter"></jbr-grid-header-row>
-            <jbr-grid-data-row [transaction]="next" *ngFor="let next of data.transactions"></jbr-grid-data-row>
-        </div>
-    </div>
+    <jbr-grid-transaction class="transaction-table"></jbr-grid-transaction>
 </div>

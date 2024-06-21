@@ -1,5 +1,6 @@
 import {Component, Input} from "@angular/core";
 import {ITransactionReport} from "../../transaction/TransactionReport";
+import {MoneyService} from "../../money.service";
 
 @Component({
     selector: 'jbr-grid-data-description',
@@ -9,4 +10,5 @@ import {ITransactionReport} from "../../transaction/TransactionReport";
 })
 export class GridDataDescription {
     @Input() transaction: ITransactionReport;
+    protected readonly MoneyService = MoneyService;
 }

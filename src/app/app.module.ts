@@ -41,8 +41,7 @@ import { WifiComponent } from "./wifi/wifi.component";
 import { MoneyFile } from "./money/files/money-file";
 import { MoneyFiles } from "./money/files/money-files";
 import {MoneyNewtrnDisplay} from "./money/exp/money-newtrn-display";
-import {GridHeaderRow} from "./money/grid/header/grid-header-row";
-import {GridDataRow} from "./money/grid/data/grid-data-row";
+import {GridTransaction} from "./money/grid/grid-transaction";
 
 @NgModule({
   declarations: [
@@ -98,8 +97,7 @@ import {GridDataRow} from "./money/grid/data/grid-data-row";
             {path: '', redirectTo: 'welcome', pathMatch: 'full'},
             {path: '**', redirectTo: 'welcome', pathMatch: 'full'}
         ]),
-        GridHeaderRow,
-        GridDataRow
+        GridTransaction
     ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

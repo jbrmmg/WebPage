@@ -9,4 +9,12 @@ import {ITransactionReport} from "../../transaction/TransactionReport";
 })
 export class GridDataBalance {
     @Input() transaction: ITransactionReport;
+
+    display() : string {
+        if(this.transaction.balance == null) {
+            return "";
+        }
+
+        return String(this.transaction.balance.value);
+    }
 }

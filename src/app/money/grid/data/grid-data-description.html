@@ -1,1 +1,1 @@
-{{transaction.description}}
+<p [style.background]="'#' + transaction.category.colour" [style.color]="'#' + MoneyService.getTextColor(transaction.category.colour)">{{transaction.description}}</p>
