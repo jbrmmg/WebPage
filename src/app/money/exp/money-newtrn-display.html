@@ -1,17 +1,12 @@
-<div class="row base-money-row">
-    <p>Here</p>
+<div class="row transaction-table">
     <button class="btn btn-primary trn-button trn-button-to-right"
             (click)="onClickA()">
         <em class="fa fa-check"></em>
     </button>
-    <div class="row">
-        <div class="table-responsive" *ngIf="data && data.transactions.length">
-            <div class="row">
-                <jbr-grid-header-date></jbr-grid-header-date>
-            </div>
-            <div class="row" *ngFor="let next of data.transactions">
-                <jbr-grid-data-date [transaction]="next"></jbr-grid-data-date>
-            </div>
+    <div class="row transaction-table">
+        <div class="table-responsive transaction-table" *ngIf="data && data.transactions.length">
+            <jbr-grid-header-row [filter]="filter"></jbr-grid-header-row>
+            <jbr-grid-data-row [transaction]="next" *ngFor="let next of data.transactions"></jbr-grid-data-row>
         </div>
     </div>
 </div>

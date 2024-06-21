@@ -1,0 +1,9 @@
+.grid-header-row {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.grid-header-description {
+    flex: 1 0 0;
+}

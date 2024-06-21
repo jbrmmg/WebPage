@@ -10,26 +10,22 @@ import {ITransactionData} from "../transaction/TransactionData";
 })
 export class MoneyNewtrnDisplay implements OnInit {
     data : ITransactionData;
+    filter : TransactionFilter;
 
     constructor(private _moneyService: MoneyService) {
         this.data = null;
+        this.filter = new TransactionFilter();
     }
 
     ngOnInit(): void {
+        this.filter.predicted = false;
+        this.filter.locked = false;
+        this.filter.fromReconciled = false;
+        this.filter.maxPageSize = 3;
     }
 
     onClickA() {
-        console.log("here")
-
-        let filter : TransactionFilter = new TransactionFilter();
-        filter.predicted = false;
-        filter.locked = false;
-        filter.fromReconciled = false;
-        filter.maxPageSize = 3;
-
-        console.log("Filter setup")
-
-        this._moneyService.getTransactions2(filter).subscribe({
+        this._moneyService.getTransactions2(this.filter).subscribe({
             next: (val) => {
                 this.data = val;
                 console.log(val.openBalance.value);

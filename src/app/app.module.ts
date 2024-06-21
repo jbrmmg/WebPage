@@ -41,8 +41,8 @@ import { WifiComponent } from "./wifi/wifi.component";
 import { MoneyFile } from "./money/files/money-file";
 import { MoneyFiles } from "./money/files/money-files";
 import {MoneyNewtrnDisplay} from "./money/exp/money-newtrn-display";
-import {GridHeaderDate} from "./money/grid/header/grid-header-date";
-import {GridDataDate} from "./money/grid/data/grid-data-date";
+import {GridHeaderRow} from "./money/grid/header/grid-header-row";
+import {GridDataRow} from "./money/grid/data/grid-data-row";
 
 @NgModule({
   declarations: [
@@ -98,8 +98,8 @@ import {GridDataDate} from "./money/grid/data/grid-data-date";
             {path: '', redirectTo: 'welcome', pathMatch: 'full'},
             {path: '**', redirectTo: 'welcome', pathMatch: 'full'}
         ]),
-        GridHeaderDate,
-        GridDataDate
+        GridHeaderRow,
+        GridDataRow
     ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
