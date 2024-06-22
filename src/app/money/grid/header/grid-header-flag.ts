@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {TransactionFilter} from "../../transaction/transactionFilter";
 import {FlagType} from "./grid-header-flag-type";
 import {NgIf} from "@angular/common";
@@ -16,8 +16,9 @@ export class GridHeaderFlag {
     @Input() filter : TransactionFilter;
     @Input() header: string;
     @Input() flagType: FlagType;
+    @Output() change = new EventEmitter();
 
-    flagSpecified() : boolean {
+    unset() : boolean {
         let flag: boolean;
 
         switch(this.flagType) {
@@ -31,7 +32,7 @@ export class GridHeaderFlag {
                 flag = this.filter.predicted;
         }
 
-        return flag != null;
+        return flag == null;
     }
 
     flagFilter() : boolean {
@@ -53,5 +54,9 @@ export class GridHeaderFlag {
         }
 
         return flag == true;
+    }
+
+    changeValue() {
+        this.change.emit();
     }
 }

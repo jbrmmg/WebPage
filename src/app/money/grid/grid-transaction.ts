@@ -60,10 +60,12 @@ import {GridDataActions} from "./data/grid-data-actions";
 export class GridTransaction implements OnInit {
     data : ITransactionData;
     filter : TransactionFilter;
+    status: string;
 
     constructor(private _moneyService: MoneyService) {
         this.data = null;
         this.filter = new TransactionFilter();
+        this.status = "ready";
     }
 
     ngOnInit(): void {
@@ -119,6 +121,7 @@ export class GridTransaction implements OnInit {
     }
 
     update() {
+        this.status = "updating..."
         this._moneyService.getTransactions2(this.filter).subscribe({
             next: (val) => {
                 this.data = val;
@@ -136,9 +139,11 @@ export class GridTransaction implements OnInit {
                 })
             },
             error: (response) => {
+                this.status = "error"
                 console.error("getTransactions2 Failed " + response);
             },
             complete: () => {
+                this.status = "ready"
                 console.log("getTransactions2 Complete.")
             }
         });
