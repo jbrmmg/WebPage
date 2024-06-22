@@ -1,2 +1,23 @@
-<p>{{header}}</p>
-<jbr-filter-account></jbr-filter-account>
+<div (click)="openModal(templateAccount)">
+    <p>{{header}}</p>
+    <p>{{filter}}</p>
+</div>
+
+<ng-template #templateAccount>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Select Accounts (or all)</h4>
+    </div>
+    <div class="body">
+        <div class="row account-row" *ngFor="let nextAccount of accounts">
+            <div class="col-1 col-account col-centre">
+                <input type="checkbox"/>
+            </div>
+            <div class="col-1 col-account col-centre">
+                <img *ngIf="!nextAccount.all" class="account-img" src="{{getAccountImage(nextAccount.id)}}" alt="Account"/>
+            </div>
+            <div class="col-10 col-account">
+                <p class="name">{{nextAccount.display}}</p>
+            </div>
+        </div>
+    </div>
+</ng-template>

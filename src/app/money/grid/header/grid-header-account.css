@@ -1,0 +1,30 @@
+p {
+    padding: 0;
+    margin: 0;
+    font-family: Helvetica, serif;
+    font-size: 10px;
+}
+
+.account-img {
+    padding: 0;
+    margin: 0;
+    width: 25px;
+}
+
+.col-account {
+    padding-left: 3px;
+    padding-right: 0;
+}
+
+.account-row {
+    margin: 0;
+    vertical-align: middle;
+}
+
+.col-centre {
+    text-align: center;
+}
+
+.name {
+    padding-top: 6px;
+}
