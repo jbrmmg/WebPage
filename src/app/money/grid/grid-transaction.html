@@ -5,7 +5,7 @@
             <tr>
                 <th><jbr-grid-header-select [header]="' '"></jbr-grid-header-select></th>
                 <th (click)="updateA()"><jbr-grid-header-date header="Date"></jbr-grid-header-date></th>
-                <th><jbr-grid-header-account [header]="'Acc.'"></jbr-grid-header-account></th>
+                <th><jbr-grid-header-account [header]="'Acc.'" (filterChanged)="accountFilterChange($event)" [selected]="filter.accounts"></jbr-grid-header-account></th>
                 <th><jbr-grid-header-statement-date [header]="'Statement Date'"></jbr-grid-header-statement-date></th>
                 <th (change)="updateLockFilter()"><jbr-grid-header-flag [header]="'Lck.'" [flagType]="FlagType.Locked" [filter]="filter"></jbr-grid-header-flag></th>
                 <th (change)="updatePredictedFilter()"><jbr-grid-header-flag [header]="'Prd.'" [flagType]="FlagType.Predicted" [filter]="filter"></jbr-grid-header-flag></th>

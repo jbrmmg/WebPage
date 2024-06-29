@@ -2,8 +2,8 @@ import {Component, OnInit} from "@angular/core";
 import {ITransactionData} from "../transaction/TransactionData";
 import {TransactionFilter} from "../transaction/transactionFilter";
 import {MoneyService} from "../money.service";
-import {NgForOf, NgIf} from "@angular/common";
 import {FlagType} from "./header/grid-header-flag-type";
+import {NgForOf, NgIf} from "@angular/common";
 import {GridHeaderDate} from "./header/grid-header-date";
 import {GridDataDate} from "./data/grid-data-date";
 import {GridHeaderAccount} from "./header/grid-header-account";
@@ -25,6 +25,7 @@ import {GridHeaderSelect} from "./header/grid-header-select";
 import {GridHeaderActions} from "./header/grid-header-actions";
 import {GridDataSelect} from "./data/grid-data-select";
 import {GridDataActions} from "./data/grid-data-actions";
+import {JbAccount} from "../account/jbaccount";
 
 @Component({
     selector: 'jbr-grid-transaction',
@@ -58,6 +59,7 @@ import {GridDataActions} from "./data/grid-data-actions";
     standalone: true
 })
 export class GridTransaction implements OnInit {
+    protected readonly FlagType = FlagType;
     data : ITransactionData;
     filter : TransactionFilter;
     status: string;
@@ -72,14 +74,14 @@ export class GridTransaction implements OnInit {
         this.filter.predicted = false;
         this.filter.locked = false;
         this.filter.fromReconciled = false;
-        this.filter.maxPageSize = 3;
+        this.filter.maxPageSize = 25;
     }
 
     updateA() {
         this.filter.predicted = false;
         this.filter.locked = false;
         this.filter.fromReconciled = false;
-        this.filter.maxPageSize = 3;
+        this.filter.maxPageSize = 25;
         this.update();
     }
 
@@ -92,7 +94,7 @@ export class GridTransaction implements OnInit {
         } else {
             this.filter.predicted = null;
         }
-        this.filter.maxPageSize = null;
+        this.filter.maxPageSize = 25;
         this.update();
     }
 
@@ -149,5 +151,20 @@ export class GridTransaction implements OnInit {
         });
     }
 
-    protected readonly FlagType = FlagType;
+    accountFilterChange(selected: string[]){
+        // Set up the filter.
+        if(selected.length > 0) {
+            this.filter.accounts = [];
+
+            selected.forEach(value => {
+                let next: JbAccount = new JbAccount(value,null,null,null,null);
+                this.filter.accounts.push(next)
+            })
+        } else {
+            this.filter.accounts = [];
+        }
+
+        // Update the transactions.
+        this.update();
+    }
 }

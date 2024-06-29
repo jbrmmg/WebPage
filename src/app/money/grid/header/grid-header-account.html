@@ -9,29 +9,31 @@
     </div>
     <div class="body">
         <div class="row account-row" *ngFor="let nextAccount of accounts">
-            <div class="col-1 col-account col-centre">
-                <input type="checkbox"/>
+            <div class="col-1 remove-padding col-centre" (click)="changed(nextAccount.id)">
+                <input type="checkbox" [checked]="getChecked(nextAccount.id)"/>
             </div>
-            <div *ngIf="!nextAccount.all" class="col-1 col-account col-centre">
-                <img *ngIf="!nextAccount.all" class="account-img" src="{{getAccountImage(nextAccount.id)}}" alt="Account"/>
+            <div class="col-1 remove-padding">
+                <img class="account-img" src="{{getAccountImage(nextAccount.id)}}" alt="Account"/>
             </div>
-            <div *ngIf="!nextAccount.all" class="col-10 col-account">
+            <div class="col-10 remove-padding">
                 <p class="name">{{nextAccount.display}}</p>
             </div>
-            <div *ngIf="nextAccount.all" class="coll-11 col-account">
-                <p class="name">All</p>
-            </div>
         </div>
-        <div class="row button-row">
-            <div class="col-8 btn-parent"></div>
-            <div class="col-2 btn-parent">
+        <div class="row remove-margin">
+            <div class="col-2 remove-padding">
                 <div class="btn-exit-div">
-                    <label class="btn-exit btn btn-primary">Exit</label>
+                    <label class="btn-exit btn btn-primary" (click)="selectAll()">All</label>
                 </div>
             </div>
-            <div class="col-2 btn-parent">
+            <div class="col-6 remove-padding"></div>
+            <div class="col-2 remove-padding">
+                <div class="btn-exit-div">
+                    <label class="btn-exit btn btn-primary" (click)="exit()">Exit</label>
+                </div>
+            </div>
+            <div class="col-2 remove-padding">
                 <div class="btn-ok-div">
-                    <label class="btn-ok btn btn-primary">OK</label>
+                    <label class="btn-ok btn btn-primary" (click)="selectAccounts()">OK</label>
                 </div>
             </div>
         </div>

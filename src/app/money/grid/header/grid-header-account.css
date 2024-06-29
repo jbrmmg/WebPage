@@ -2,7 +2,8 @@ p {
     padding: 0;
     margin: 0;
     font-family: Helvetica, serif;
-    font-size: 10px;
+    font-size: 13px;
+    font-weight: bold;
 }
 
 .title {
@@ -18,7 +19,7 @@ p {
 .account-img {
     padding: 0;
     margin: 0;
-    width: 30px;
+    width: 23px;
 }
 
 .col-account {
@@ -40,16 +41,16 @@ p {
     padding-left: 10px;
 }
 
-.button-row {
+.remove-margin {
     margin: 0;
 }
 
-.btn-parent {
+.remove-padding {
     padding: 0;
 }
 
 .btn-exit-div {
-    padding: 0 0 4px 2px;
+    padding: 5px 0 4px 2px;
 }
 
 .btn-exit {
@@ -58,7 +59,7 @@ p {
 }
 
 .btn-ok-div {
-    padding: 0 2px 4px 2px;
+    padding: 5px 2px 4px 2px;
 }
 
 .btn-ok {
