@@ -11,4 +11,24 @@ import {MoneyService} from "../../money.service";
 export class GridDataCategory {
     @Input() transaction: ITransactionReport;
     protected readonly MoneyService = MoneyService;
+
+    getCategoryName(): string {
+        if(this.transaction == null || this.transaction.category == null || this.transaction.category.name == null) {
+            return "(none)";
+        }
+
+        return this.transaction.category.name;
+    }
+
+    getCategoryColour(): string {
+        if(this.transaction == null || this.transaction.category == null || this.transaction.category.colour == null) {
+            return "FFFFFF";
+        }
+
+        return this.transaction.category.colour;
+    }
+
+    getTextColour() {
+        return MoneyService.getTextColor(this.getCategoryColour());
+    }
 }
