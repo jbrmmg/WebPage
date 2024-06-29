@@ -47,7 +47,7 @@ export class GridHeaderAccount implements OnInit{
                     next.all = false;
                     next.display = value.name;
                     if(value.closed) {
-                        next.display += " (c)";
+                        next.display += " (closed)";
                     }
                     next.id = value.id;
 
@@ -66,6 +66,6 @@ export class GridHeaderAccount implements OnInit{
     }
 
     openModal(template: TemplateRef<any>) {
-        this.modalRef = this.modalService.show(template, {});
+        this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
     }
 }

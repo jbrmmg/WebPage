@@ -5,18 +5,34 @@
 
 <ng-template #templateAccount>
     <div class="modal-header">
-        <h4 class="modal-title pull-left">Select Accounts (or all)</h4>
+        <h4 class="modal-title pull-left title">Select Accounts (or all)</h4>
     </div>
     <div class="body">
         <div class="row account-row" *ngFor="let nextAccount of accounts">
             <div class="col-1 col-account col-centre">
                 <input type="checkbox"/>
             </div>
-            <div class="col-1 col-account col-centre">
+            <div *ngIf="!nextAccount.all" class="col-1 col-account col-centre">
                 <img *ngIf="!nextAccount.all" class="account-img" src="{{getAccountImage(nextAccount.id)}}" alt="Account"/>
             </div>
-            <div class="col-10 col-account">
+            <div *ngIf="!nextAccount.all" class="col-10 col-account">
                 <p class="name">{{nextAccount.display}}</p>
+            </div>
+            <div *ngIf="nextAccount.all" class="coll-11 col-account">
+                <p class="name">All</p>
+            </div>
+        </div>
+        <div class="row button-row">
+            <div class="col-8 btn-parent"></div>
+            <div class="col-2 btn-parent">
+                <div class="btn-exit-div">
+                    <label class="btn-exit btn btn-primary">Exit</label>
+                </div>
+            </div>
+            <div class="col-2 btn-parent">
+                <div class="btn-ok-div">
+                    <label class="btn-ok btn btn-primary">OK</label>
+                </div>
             </div>
         </div>
     </div>
