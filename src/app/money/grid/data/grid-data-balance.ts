@@ -1,10 +1,15 @@
 import {Component, Input} from "@angular/core";
 import {ITransactionReport} from "../../transaction/TransactionReport";
+import {CurrencyPipe, NgIf} from "@angular/common";
 
 @Component({
     selector: 'jbr-grid-data-balance',
     templateUrl: './grid-data-balance.html',
     styleUrls: ['./grid-data-balance.css'],
+    imports: [
+        CurrencyPipe,
+        NgIf
+    ],
     standalone: true
 })
 export class GridDataBalance {
@@ -15,6 +20,18 @@ export class GridDataBalance {
             return "";
         }
 
+        if(this.transaction.balance.value < 0) {
+            return String(this.transaction.balance.value * -1);
+        }
+
         return String(this.transaction.balance.value);
+    }
+
+    negative(): boolean {
+        if(this.transaction.balance == null) {
+            return false;
+        }
+
+        return this.transaction.balance.value < 0;
     }
 }

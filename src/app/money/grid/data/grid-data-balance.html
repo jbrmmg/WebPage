@@ -1,1 +1,2 @@
-<p>{{display()}}</p>
+<p *ngIf="!negative()">{{display() | currency : 'GBP' : true: '1.2-2'}}</p>
+<p *ngIf="negative()" class="negative">{{display() | currency : 'GBP' : true: '1.2-2'}}</p>

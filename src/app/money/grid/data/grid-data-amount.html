@@ -1,1 +1,2 @@
-<p>{{display()}}</p>
+<p *ngIf="!debit()">{{display() | currency : 'GBP' : true: '1.2-2'}}</p>
+<p *ngIf="debit()" class="debit">{{display() | currency : 'GBP' : true: '1.2-2'}}</p>
