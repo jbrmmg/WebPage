@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output, TemplateRef} from "@angular/core";
+import {Component, OnInit, TemplateRef} from "@angular/core";
 import {ButtonsModule} from "ngx-bootstrap/buttons";
 import {NgForOf, NgIf} from "@angular/common";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {MoneyService} from "../../money.service";
-import {JbAccount} from "../../account/jbaccount";
 import {FormsModule} from "@angular/forms";
+import {FilterEvent, GridHeader} from "./grid-header";
+import {JbAccount} from "../../account/jbaccount";
 
 class AccountFilterOption {
     id: string;
@@ -24,27 +25,23 @@ class AccountFilterOption {
     ],
     standalone: true
 })
-export class GridHeaderAccount implements OnInit{
-    @Input() header: string;
-    @Input() selected: JbAccount[];
-    @Output() filterChanged: EventEmitter<string[]> = new EventEmitter();
-    filter: string;
+export class GridHeaderAccount extends GridHeader implements OnInit {
     modalRef: BsModalRef;
     accounts: AccountFilterOption[] = [];
     errorMessage: string;
 
     constructor(private modalService: BsModalService,
                 private _moneyService: MoneyService ) {
-        this.filter = "(all)";
+        super();
     }
 
     isAccountSelected(id: string) : boolean {
-        if(this.selected == null || this.selected.length < 1) {
+        if(this.filter == null || this.filter.accounts == null || this.filter.accounts.length < 1) {
             return false;
         }
 
         let result: boolean = false;
-        this.selected.forEach(value => {
+        this.filter.accounts.forEach(value => {
             if(value.id == id) {
                 result = true;
                 return;
@@ -91,31 +88,39 @@ export class GridHeaderAccount implements OnInit{
 
     selectAll() {
         this.modalRef.hide();
-        this.filter = "(all)"
-        this.filterChanged.emit([]);
+        let event: FilterEvent = new FilterEvent();
+        event.filtered = false;
+        this.filterChanged.emit(event);
     }
 
     selectAccounts() {
         this.modalRef.hide();
 
         // Get the selected id's and check to see if all items are selected.
-        let selected: string[] = [];
+        let event: FilterEvent = new FilterEvent();
+
+        this.filter.accounts = [];
         let allSelected: boolean = true;
+        let noneSelected: boolean = true;
         this.accounts.forEach(value => {
             if(value.selected) {
-                selected.push(value.id);
+                this.filter.accounts.push(new JbAccount(value.id,null,null,null,null));
+                noneSelected = false;
             } else {
                 allSelected = false;
             }
         });
 
+        // Update the filter.
+
         // Fire the event.
-        if(allSelected) {
-            this.filter = "(all)"
-            this.filterChanged.emit([]);
+        if(allSelected || noneSelected) {
+            this.filter.accounts = [];
+            event.filtered = false;
+            this.filterChanged.emit(event);
         } else {
-            this.filter = "(selection)"
-            this.filterChanged.emit(selected);
+            event.filtered = true;
+            this.filterChanged.emit(event);
         }
     }
 

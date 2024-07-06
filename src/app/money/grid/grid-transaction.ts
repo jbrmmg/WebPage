@@ -25,7 +25,7 @@ import {GridHeaderSelect} from "./header/grid-header-select";
 import {GridHeaderActions} from "./header/grid-header-actions";
 import {GridDataSelect} from "./data/grid-data-select";
 import {GridDataActions} from "./data/grid-data-actions";
-import {JbAccount} from "../account/jbaccount";
+import {FilterEvent, GridHeader} from "./header/grid-header";
 
 @Component({
     selector: 'jbr-grid-transaction',
@@ -34,6 +34,7 @@ import {JbAccount} from "../account/jbaccount";
     imports: [
         NgForOf,
         NgIf,
+        GridHeader,
         GridHeaderDate,
         GridHeaderAccount,
         GridHeaderAmount,
@@ -63,62 +64,58 @@ export class GridTransaction implements OnInit {
     data : ITransactionData;
     filter : TransactionFilter;
     status: string;
+    accountFiltered: boolean;
+    lockedFiltered: boolean;
+    predictedFiltered: boolean;
+    reconciledFiltered: boolean;
 
     constructor(private _moneyService: MoneyService) {
         this.data = null;
         this.filter = new TransactionFilter();
         this.status = "ready";
+        this.accountFiltered = false;
     }
 
     ngOnInit(): void {
-        this.filter.predicted = false;
-        this.filter.locked = false;
-        this.filter.fromReconciled = false;
+        this.filter.predicted = null;
+        this.filter.locked = null;
+        this.filter.fromReconciled = null;
         this.filter.maxPageSize = 25;
     }
 
     updateA() {
-        this.filter.predicted = false;
-        this.filter.locked = false;
-        this.filter.fromReconciled = false;
+        this.filter.predicted = null;
+        this.filter.locked = null;
+        this.filter.fromReconciled = null;
         this.filter.maxPageSize = 25;
         this.update();
     }
 
-    updatePredictedFilter() {
-        // Cycle around the values; true, false, null
-        if(this.filter.predicted == null) {
-            this.filter.predicted = true;
-        } else if(this.filter.predicted) {
-            this.filter.predicted = false;
-        } else {
-            this.filter.predicted = null;
-        }
-        this.filter.maxPageSize = 25;
+    lockedChanged(event: FilterEvent) {
+        this.lockedFiltered = event.filtered;
+
+        // Update the transactions.
         this.update();
     }
 
-    updateLockFilter() {
-        // Cycle around the values; true, false, null
-        if(this.filter.locked == null) {
-            this.filter.locked = true;
-        } else if(this.filter.locked) {
-            this.filter.locked = false;
-        } else {
-            this.filter.locked = null;
-        }
+    predictedChanged(event: FilterEvent) {
+        this.predictedFiltered = event.filtered;
+
+        // Update the transactions.
         this.update();
     }
 
-    updateReconciledFilter() {
-        // Cycle around the values; true, false, null
-        if(this.filter.fromReconciled == null) {
-            this.filter.fromReconciled = true;
-        } else if(this.filter.fromReconciled) {
-            this.filter.fromReconciled = false;
-        } else {
-            this.filter.fromReconciled = null;
-        }
+    reconciledChanged(event: FilterEvent) {
+        this.reconciledFiltered = event.filtered;
+
+        // Update the transactions.
+        this.update();
+    }
+
+    accountChanged(event: FilterEvent){
+        this.accountFiltered = event.filtered;
+
+        // Update the transactions.
         this.update();
     }
 
@@ -149,22 +146,5 @@ export class GridTransaction implements OnInit {
                 console.log("getTransactions2 Complete.")
             }
         });
-    }
-
-    accountFilterChange(selected: string[]){
-        // Set up the filter.
-        if(selected.length > 0) {
-            this.filter.accounts = [];
-
-            selected.forEach(value => {
-                let next: JbAccount = new JbAccount(value,null,null,null,null);
-                this.filter.accounts.push(next)
-            })
-        } else {
-            this.filter.accounts = [];
-        }
-
-        // Update the transactions.
-        this.update();
     }
 }

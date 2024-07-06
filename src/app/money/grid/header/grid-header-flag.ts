@@ -1,7 +1,7 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core";
-import {TransactionFilter} from "../../transaction/transactionFilter";
+import {Component, Input} from "@angular/core";
 import {FlagType} from "./grid-header-flag-type";
 import {NgIf} from "@angular/common";
+import {FilterEvent, GridHeader} from "./grid-header";
 
 @Component({
     selector: 'jbr-grid-header-flag',
@@ -12,11 +12,8 @@ import {NgIf} from "@angular/common";
     ],
     standalone: true
 })
-export class GridHeaderFlag {
-    @Input() filter : TransactionFilter;
-    @Input() header: string;
+export class GridHeaderFlag extends GridHeader {
     @Input() flagType: FlagType;
-    @Output() change = new EventEmitter();
 
     unset() : boolean {
         let flag: boolean;
@@ -56,7 +53,32 @@ export class GridHeaderFlag {
         return flag == true;
     }
 
+    setFilter(value: boolean) {
+        switch(this.flagType) {
+            case FlagType.Locked:
+                this.filter.locked = value;
+                break;
+            case FlagType.Reconciled:
+                this.filter.fromReconciled = value;
+                break;
+            case FlagType.Predicted:
+                this.filter.predicted = value;
+        }
+    }
+
     changeValue() {
-        this.change.emit();
+        // Change the value.
+        if(this.unset()) {
+            this.setFilter(true);
+        } else if(this.flagFilter() == true) {
+            this.setFilter(false);
+        } else {
+            this.setFilter(null);
+        }
+
+        // Generate the event.
+        let event: FilterEvent = new FilterEvent();
+        event.filtered = !this.unset();
+        this.filterChanged.emit(event);
     }
 }
