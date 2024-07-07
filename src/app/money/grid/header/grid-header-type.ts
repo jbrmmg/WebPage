@@ -3,5 +3,10 @@ export enum HeaderType {
     Date,
     Locked,
     Predicted,
-    Reconciliation
+    Reconciliation,
+    StatementDate,
+    Category,
+    Description,
+    Credit,
+    Debit
 }
