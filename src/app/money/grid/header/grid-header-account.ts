@@ -36,22 +36,6 @@ export class GridHeaderAccount extends GridHeader implements OnInit {
         super();
     }
 
-    isAccountSelected(id: string) : boolean {
-        if(this.filter == null || this.filter.accounts == null || this.filter.accounts.length < 1) {
-            return false;
-        }
-
-        let result: boolean = false;
-        this.filter.accounts.forEach(value => {
-            if(value.id == id) {
-                result = true;
-                return;
-            }
-        });
-
-        return result;
-    }
-
     ngOnInit(): void {
         this._moneyService.getAccounts().subscribe({
             next: (accounts) => {
@@ -72,6 +56,22 @@ export class GridHeaderAccount extends GridHeader implements OnInit {
                 console.log("Account Options Loaded")
             }
         });
+    }
+
+    isAccountSelected(id: string) : boolean {
+        if(this.filter == null || this.filter.accounts == null || this.filter.accounts.length < 1) {
+            return false;
+        }
+
+        let result: boolean = false;
+        this.filter.accounts.forEach(value => {
+            if(value.id == id) {
+                result = true;
+                return;
+            }
+        });
+
+        return result;
     }
 
     getAccountImage(id: string) : string {

@@ -76,7 +76,7 @@ export class GridTransaction implements OnInit {
         this.filter.predicted = false;
         this.filter.locked = false;
         this.filter.fromReconciled = false;
-        this.filter.maxPageSize = 25;
+        this.filter.maxPageSize = 200;
         this.update();
     }
 
