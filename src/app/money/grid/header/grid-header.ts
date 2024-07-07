@@ -1,8 +1,9 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {TransactionFilter} from "../../transaction/transactionFilter";
+import {HeaderType} from "./grid-header-type";
 
 export class FilterEvent {
-    filtered: boolean;
+    source: HeaderType;
 }
 
 @Component({

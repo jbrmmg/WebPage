@@ -6,6 +6,7 @@ import {MoneyService} from "../../money.service";
 import {FormsModule} from "@angular/forms";
 import {FilterEvent, GridHeader} from "./grid-header";
 import {JbAccount} from "../../account/jbaccount";
+import {HeaderType} from "./grid-header-type";
 
 class AccountFilterOption {
     id: string;
@@ -88,8 +89,11 @@ export class GridHeaderAccount extends GridHeader implements OnInit {
 
     selectAll() {
         this.modalRef.hide();
+
+        this.filter.accounts = [];
+
         let event: FilterEvent = new FilterEvent();
-        event.filtered = false;
+        event.source = HeaderType.Account;
         this.filterChanged.emit(event);
     }
 
@@ -97,8 +101,6 @@ export class GridHeaderAccount extends GridHeader implements OnInit {
         this.modalRef.hide();
 
         // Get the selected id's and check to see if all items are selected.
-        let event: FilterEvent = new FilterEvent();
-
         this.filter.accounts = [];
         let allSelected: boolean = true;
         let noneSelected: boolean = true;
@@ -111,17 +113,15 @@ export class GridHeaderAccount extends GridHeader implements OnInit {
             }
         });
 
-        // Update the filter.
-
         // Fire the event.
         if(allSelected || noneSelected) {
             this.filter.accounts = [];
-            event.filtered = false;
-            this.filterChanged.emit(event);
-        } else {
-            event.filtered = true;
-            this.filterChanged.emit(event);
         }
+
+        // Update filter event.
+        let event: FilterEvent = new FilterEvent();
+        event.source = HeaderType.Account;
+        this.filterChanged.emit(event);
     }
 
     exit() {

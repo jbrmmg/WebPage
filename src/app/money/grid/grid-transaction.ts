@@ -26,6 +26,7 @@ import {GridHeaderActions} from "./header/grid-header-actions";
 import {GridDataSelect} from "./data/grid-data-select";
 import {GridDataActions} from "./data/grid-data-actions";
 import {FilterEvent, GridHeader} from "./header/grid-header";
+import {HeaderType} from "./header/grid-header-type";
 
 @Component({
     selector: 'jbr-grid-transaction',
@@ -64,56 +65,50 @@ export class GridTransaction implements OnInit {
     data : ITransactionData;
     filter : TransactionFilter;
     status: string;
-    accountFiltered: boolean;
-    lockedFiltered: boolean;
-    predictedFiltered: boolean;
-    reconciledFiltered: boolean;
 
     constructor(private _moneyService: MoneyService) {
         this.data = null;
         this.filter = new TransactionFilter();
         this.status = "ready";
-        this.accountFiltered = false;
     }
 
     ngOnInit(): void {
-        this.filter.predicted = null;
-        this.filter.locked = null;
-        this.filter.fromReconciled = null;
-        this.filter.maxPageSize = 25;
-    }
-
-    updateA() {
-        this.filter.predicted = null;
-        this.filter.locked = null;
-        this.filter.fromReconciled = null;
+        this.filter.predicted = false;
+        this.filter.locked = false;
+        this.filter.fromReconciled = false;
         this.filter.maxPageSize = 25;
         this.update();
     }
 
-    lockedChanged(event: FilterEvent) {
-        this.lockedFiltered = event.filtered;
+    headerFiltered(header: HeaderType): boolean {
+        // Determine if the header is filtered based on the filter.
 
-        // Update the transactions.
-        this.update();
+        // Header
+        if(header == HeaderType.Account) {
+            return !(this.filter.accounts == null || this.filter.accounts.length == 0);
+        }
+
+        // Locked flag
+        if(header == HeaderType.Locked) {
+            return this.filter.locked != null;
+        }
+
+        // Locked flag
+        if(header == HeaderType.Predicted) {
+            return this.filter.predicted != null;
+        }
+
+        // Locked flag
+        if(header == HeaderType.Reconciliation) {
+            return this.filter.fromReconciled != null;
+        }
+
+        // Default - not filtered
+        return false;
     }
 
-    predictedChanged(event: FilterEvent) {
-        this.predictedFiltered = event.filtered;
-
-        // Update the transactions.
-        this.update();
-    }
-
-    reconciledChanged(event: FilterEvent) {
-        this.reconciledFiltered = event.filtered;
-
-        // Update the transactions.
-        this.update();
-    }
-
-    accountChanged(event: FilterEvent){
-        this.accountFiltered = event.filtered;
+    filterChange(event: FilterEvent) {
+        console.log("Update from " + event.source);
 
         // Update the transactions.
         this.update();
@@ -147,4 +142,6 @@ export class GridTransaction implements OnInit {
             }
         });
     }
+
+    protected readonly HeaderType = HeaderType;
 }

@@ -2,6 +2,7 @@ import {Component, Input} from "@angular/core";
 import {FlagType} from "./grid-header-flag-type";
 import {NgIf} from "@angular/common";
 import {FilterEvent, GridHeader} from "./grid-header";
+import {HeaderType} from "./grid-header-type";
 
 @Component({
     selector: 'jbr-grid-header-flag',
@@ -66,6 +67,19 @@ export class GridHeaderFlag extends GridHeader {
         }
     }
 
+    getSourceFromFlagType() : HeaderType {
+        switch (this.flagType) {
+            case FlagType.Locked:
+                return HeaderType.Locked;
+
+            case FlagType.Predicted:
+                return HeaderType.Predicted;
+
+            case FlagType.Reconciled:
+                return HeaderType.Reconciliation;
+        }
+    }
+
     changeValue() {
         // Change the value.
         if(this.unset()) {
@@ -78,7 +92,7 @@ export class GridHeaderFlag extends GridHeader {
 
         // Generate the event.
         let event: FilterEvent = new FilterEvent();
-        event.filtered = !this.unset();
+        event.source = this.getSourceFromFlagType();
         this.filterChanged.emit(event);
     }
 }

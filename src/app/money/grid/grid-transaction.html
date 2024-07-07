@@ -3,36 +3,88 @@
     <table>
         <thead>
             <tr>
-                <th><jbr-grid-header-select [header]="' '"></jbr-grid-header-select></th>
-                <th (click)="updateA()"><jbr-grid-header-date header="Date"></jbr-grid-header-date></th>
-                <th [class]="accountFiltered ? 'filtered' : ''"><jbr-grid-header-account [header]="'Acc.'" (filterChanged)="accountChanged($event)" [filter]="filter"></jbr-grid-header-account></th>
-                <th><jbr-grid-header-statement-date [header]="'Statement Date'"></jbr-grid-header-statement-date></th>
-                <th [class]="lockedFiltered ? 'filtered' : ''"><jbr-grid-header-flag [header]="'Lck.'" [flagType]="FlagType.Locked" [filter]="filter" (filterChanged)="lockedChanged($event)"></jbr-grid-header-flag></th>
-                <th [class]="predictedFiltered ? 'filtered' : ''"><jbr-grid-header-flag [header]="'Prd.'" [flagType]="FlagType.Predicted" [filter]="filter" (filterChanged)="predictedChanged($event)"></jbr-grid-header-flag></th>
-                <th [class]="reconciledFiltered ? 'filtered' : ''"><jbr-grid-header-flag [header]="'Rec.'" [flagType]="FlagType.Reconciled" [filter]="filter" (filterChanged)="reconciledChanged($event)"></jbr-grid-header-flag></th>
-                <th><jbr-grid-header-category [header]="'Category'"></jbr-grid-header-category></th>
-                <th><jbr-grid-header-text [header]="'Description'"></jbr-grid-header-text></th>
-                <th><jbr-grid-header-amount [header]="'Credits'"></jbr-grid-header-amount></th>
-                <th><jbr-grid-header-amount [header]="'Debits'"></jbr-grid-header-amount></th>
-                <th><jbr-grid-header-amount [header]="'Balance'"></jbr-grid-header-amount></th>
-                <th><jbr-grid-header-actions [header]="'Actions'"></jbr-grid-header-actions></th>
+                <th>
+                    <jbr-grid-header-select [header]="' '"></jbr-grid-header-select>
+                </th>
+                <th>
+                    <jbr-grid-header-date [header]="'Date'"></jbr-grid-header-date>
+                </th>
+                <th [class]="headerFiltered(HeaderType.Account) ? 'filtered' : ''">
+                    <jbr-grid-header-account [header]="'Acc.'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-account>
+                </th>
+                <th>
+                    <jbr-grid-header-statement-date [header]="'Statement Date'"></jbr-grid-header-statement-date>
+                </th>
+                <th [class]="headerFiltered(HeaderType.Locked) ? 'filtered' : ''">
+                    <jbr-grid-header-flag [header]="'Lck.'" [flagType]="FlagType.Locked" [filter]="filter" (filterChanged)="filterChange($event)"></jbr-grid-header-flag>
+                </th>
+                <th [class]="headerFiltered(HeaderType.Predicted) ? 'filtered' : ''">
+                    <jbr-grid-header-flag [header]="'Prd.'" [flagType]="FlagType.Predicted" [filter]="filter" (filterChanged)="filterChange($event)"></jbr-grid-header-flag>
+                </th>
+                <th [class]="headerFiltered(HeaderType.Reconciliation) ? 'filtered' : ''">
+                    <jbr-grid-header-flag [header]="'Rec.'" [flagType]="FlagType.Reconciled" [filter]="filter" (filterChanged)="filterChange($event)"></jbr-grid-header-flag>
+                </th>
+                <th>
+                    <jbr-grid-header-category [header]="'Category'"></jbr-grid-header-category>
+                </th>
+                <th>
+                    <jbr-grid-header-text [header]="'Description'"></jbr-grid-header-text>
+                </th>
+                <th>
+                    <jbr-grid-header-amount [header]="'Credits'"></jbr-grid-header-amount>
+                </th>
+                <th>
+                    <jbr-grid-header-amount [header]="'Debits'"></jbr-grid-header-amount>
+                </th>
+                <th>
+                    <jbr-grid-header-amount [header]="'Balance'"></jbr-grid-header-amount>
+                </th>
+                <th>
+                    <jbr-grid-header-actions [header]="'Actions'"></jbr-grid-header-actions>
+                </th>
             </tr>
         </thead>
         <tbody *ngIf="data && data.transactions && data.transactions.length">
             <tr *ngFor="let transaction of data.transactions">
-                <td><jbr-grid-data-select [transaction]="transaction"></jbr-grid-data-select></td>
-                <td><jbr-grid-data-date [transaction]="transaction"></jbr-grid-data-date></td>
-                <td class="account"><jbr-grid-data-account [transaction]="transaction"></jbr-grid-data-account></td>
-                <td><jbr-grid-data-statement-date [transaction]="transaction"></jbr-grid-data-statement-date></td>
-                <td class="flag"><jbr-grid-data-statement [transaction]="transaction"></jbr-grid-data-statement></td>
-                <td class="flag"><jbr-grid-data-predicted [transaction]="transaction"></jbr-grid-data-predicted></td>
-                <td class="flag"><jbr-grid-data-from-reconciliation [transaction]="transaction"></jbr-grid-data-from-reconciliation></td>
-                <td><jbr-grid-data-category [transaction]="transaction"></jbr-grid-data-category></td>
-                <td><jbr-grid-data-description [transaction]="transaction"></jbr-grid-data-description></td>
-                <td><jbr-grid-data-amount [transaction]="transaction" [type]="'CR'"></jbr-grid-data-amount></td>
-                <td><jbr-grid-data-amount [transaction]="transaction" [type]="'DB'"></jbr-grid-data-amount></td>
-                <td><jbr-grid-data-balance [transaction]="transaction"></jbr-grid-data-balance></td>
-                <td><jbr-grid-data-actions [transaction]="transaction"></jbr-grid-data-actions></td>
+                <td>
+                    <jbr-grid-data-select [transaction]="transaction"></jbr-grid-data-select>
+                </td>
+                <td>
+                    <jbr-grid-data-date [transaction]="transaction"></jbr-grid-data-date>
+                </td>
+                <td class="account">
+                    <jbr-grid-data-account [transaction]="transaction"></jbr-grid-data-account>
+                </td>
+                <td>
+                    <jbr-grid-data-statement-date [transaction]="transaction"></jbr-grid-data-statement-date>
+                </td>
+                <td class="flag">
+                    <jbr-grid-data-statement [transaction]="transaction"></jbr-grid-data-statement>
+                </td>
+                <td class="flag">
+                    <jbr-grid-data-predicted [transaction]="transaction"></jbr-grid-data-predicted>
+                </td>
+                <td class="flag">
+                    <jbr-grid-data-from-reconciliation [transaction]="transaction"></jbr-grid-data-from-reconciliation>
+                </td>
+                <td>
+                    <jbr-grid-data-category [transaction]="transaction"></jbr-grid-data-category>
+                </td>
+                <td>
+                    <jbr-grid-data-description [transaction]="transaction"></jbr-grid-data-description>
+                </td>
+                <td>
+                    <jbr-grid-data-amount [transaction]="transaction" [type]="'CR'"></jbr-grid-data-amount>
+                </td>
+                <td>
+                    <jbr-grid-data-amount [transaction]="transaction" [type]="'DB'"></jbr-grid-data-amount>
+                </td>
+                <td>
+                    <jbr-grid-data-balance [transaction]="transaction"></jbr-grid-data-balance>
+                </td>
+                <td>
+                    <jbr-grid-data-actions [transaction]="transaction"></jbr-grid-data-actions>
+                </td>
             </tr>
     </table>
 </div>
