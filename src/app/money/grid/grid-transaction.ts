@@ -1,5 +1,4 @@
 import {Component, OnInit} from "@angular/core";
-import {ITransactionData} from "../transaction/TransactionData";
 import {TransactionFilter} from "../transaction/transactionFilter";
 import {MoneyService} from "../money.service";
 import {FlagType} from "./header/grid-header-flag-type";
@@ -27,6 +26,7 @@ import {GridDataSelect} from "./data/grid-data-select";
 import {GridDataActions} from "./data/grid-data-actions";
 import {FilterEvent, GridHeader} from "./header/grid-header";
 import {HeaderType} from "./header/grid-header-type";
+import {ITransactionReport} from "../transaction/TransactionReport";
 
 @Component({
     selector: 'jbr-grid-transaction',
@@ -62,7 +62,7 @@ import {HeaderType} from "./header/grid-header-type";
 })
 export class GridTransaction implements OnInit {
     protected readonly FlagType = FlagType;
-    data : ITransactionData;
+    data : ITransactionReport[];
     filter : TransactionFilter;
     status: string;
 
@@ -119,18 +119,6 @@ export class GridTransaction implements OnInit {
         this._moneyService.getTransactions2(this.filter).subscribe({
             next: (val) => {
                 this.data = val;
-                if(val.openBalance.value != null) {
-                    console.log(val.openBalance.value);
-                }
-                if(val.todayBalance.value != null) {
-                    console.log(val.todayBalance.value);
-                }
-                if(val.forwardBalance.value != null) {
-                    console.log(val.forwardBalance.value);
-                }
-                val.transactions.forEach(value => {
-                    console.log(value.amount.value);
-                })
             },
             error: (response) => {
                 this.status = "error"

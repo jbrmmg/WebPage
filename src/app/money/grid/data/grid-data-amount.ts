@@ -21,7 +21,7 @@ export class GridDataAmount {
     }
 
     display() : string {
-        if(this.transaction == null || this.transaction.amount.type != this.type) {
+        if(this.transaction == null || this.transaction.amount == null || this.transaction.amount.type != this.type) {
             return "";
         }
 

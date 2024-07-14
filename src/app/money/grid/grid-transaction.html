@@ -44,8 +44,8 @@
                 </th>
             </tr>
         </thead>
-        <tbody *ngIf="data && data.transactions && data.transactions.length">
-            <tr *ngFor="let transaction of data.transactions">
+        <tbody *ngIf="data && data && data.length">
+            <tr *ngFor="let transaction of data">
                 <td>
                     <jbr-grid-data-select [transaction]="transaction"></jbr-grid-data-select>
                 </td>

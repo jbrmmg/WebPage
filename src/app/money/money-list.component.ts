@@ -477,39 +477,43 @@ export class MoneyListComponent implements OnInit {
             this._moneyService.getTransactions2(filter).subscribe({
                 next: (val) => {
                     console.log('Next');
-                    val.transactions.forEach(value => {
-                       this.lines.push(ListRowLineFactory.createRowLineTransaction(
-                           this._moneyService,
-                           value,
-                           this.summaryRow,
-                           (transaction: ITransaction, clear: boolean ) => {
-                               if (clear) {
-                                   this.onClearEdit();
-                                   return;
-                               }
+                    val.forEach(value => {
+                        if(value.type == "TRANSACTION") {
+                            this.lines.push(ListRowLineFactory.createRowLineTransaction(
+                                this._moneyService,
+                                value,
+                                this.summaryRow,
+                                (transaction: ITransaction, clear: boolean) => {
+                                    if (clear) {
+                                        this.onClearEdit();
+                                        return;
+                                    }
 
-                               console.log('Edit - ' + transaction.id);
+                                    console.log('Edit - ' + transaction.id);
 
-                               this.existingTransactionId = transaction.id;
-                               this.transactionDescription = transaction.description;
-                               this.transactionAmount = transaction.amount;
+                                    this.existingTransactionId = transaction.id;
+                                    this.transactionDescription = transaction.description;
+                                    this.transactionAmount = transaction.amount;
 
-                               this.categories.forEach(nextCategory => {
-                                   if (nextCategory.id === transaction.categoryId) {
-                                       this.selectedCategory = nextCategory;
-                                   }
-                               });
+                                    this.categories.forEach(nextCategory => {
+                                        if (nextCategory.id === transaction.categoryId) {
+                                            this.selectedCategory = nextCategory;
+                                        }
+                                    });
 
-                               this.accounts.forEach(nextAccount => {
-                                   if (nextAccount.id === transaction.accountId) {
-                                       this.selectedAccount = nextAccount;
-                                   }
-                               });
+                                    this.accounts.forEach(nextAccount => {
+                                        if (nextAccount.id === transaction.accountId) {
+                                            this.selectedAccount = nextAccount;
+                                        }
+                                    });
 
-                               this.performDataChange(MoneyService.stringToDate(transaction.date));
+                                    this.performDataChange(MoneyService.stringToDate(transaction.date));
 
-                               this.lines.forEach(value2 => { value2.selected = false; });
-                           }));
+                                    this.lines.forEach(value2 => {
+                                        value2.selected = false;
+                                    });
+                                }));
+                        }
                     });
                 },
                 error: (response) => {

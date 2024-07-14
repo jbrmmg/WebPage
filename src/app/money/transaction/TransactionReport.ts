@@ -9,6 +9,7 @@ import {IStatement, Statement} from "../statement/statement";
 
 export interface ITransactionReport {
     id: number;
+    type: string;
     amount: IFinancialAmount;
     balance: IFinancialAmount;
     date: string;

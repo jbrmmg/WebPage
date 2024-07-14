@@ -17,7 +17,7 @@ import {ReconcileUpdate} from "./reconciliation/reconcileupdate";
 import {ReconcileTransaction} from "./reconciliation/reconciletransaction";
 import {LoadFileRequest} from "./files/loadfilerequest";
 import {TransactionFilter} from "./transaction/transactionFilter";
-import {ITransactionData} from "./transaction/TransactionData";
+import {ITransactionReport} from "./transaction/TransactionReport";
 
 @Injectable({
     providedIn: 'root'
@@ -259,10 +259,10 @@ export class MoneyService {
         );
     }
 
-    getTransactions2(filter: TransactionFilter) : Observable<ITransactionData>  {
+    getTransactions2(filter: TransactionFilter) : Observable<ITransactionReport[]>  {
         console.log(JSON.stringify(filter));
 
-        return this.http.post<ITransactionData>(environment.moneyTransactionList,filter).pipe(
+        return this.http.post<ITransactionReport[]>(environment.moneyTransactionList,filter).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );

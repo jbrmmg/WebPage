@@ -13,7 +13,15 @@ export class GridDataCategory {
     protected readonly MoneyService = MoneyService;
 
     getCategoryName(): string {
-        if(this.transaction == null || this.transaction.category == null || this.transaction.category.name == null) {
+        if(this.transaction == null) {
+            return "";
+        }
+
+        if(this.transaction.type != "TRANSACTION") {
+            return "";
+        }
+
+        if(this.transaction.category == null || this.transaction.category.name == null) {
             return "(none)";
         }
 

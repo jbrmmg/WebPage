@@ -12,6 +12,26 @@ export class GridDataDescription {
     @Input() transaction: ITransactionReport;
     protected readonly MoneyService = MoneyService;
 
+    getDescription(): string {
+        if(this.transaction.type == "TRANSACTION") {
+            return this.transaction.description;
+        }
+
+        if(this.transaction.type == "OPEN_BALANCE") {
+            return "Opening Balance"
+        }
+
+        if(this.transaction.type == "TODAY_BALANCE") {
+            return "Balance Today"
+        }
+
+        if(this.transaction.type == "FUTURE_BALANCE") {
+            return "Future Balance"
+        }
+
+        return "";
+    }
+
     getCategoryColour(): string {
         if(this.transaction == null || this.transaction.category == null || this.transaction.category.colour == null) {
             return "FFFFFF";
