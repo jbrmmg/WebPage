@@ -24,8 +24,8 @@
                 <th [class]="headerFiltered(HeaderType.Reconciliation) ? 'filtered' : ''">
                     <jbr-grid-header-flag [header]="'Rec.'" [flagType]="FlagType.Reconciled" [filter]="filter" (filterChanged)="filterChange($event)"></jbr-grid-header-flag>
                 </th>
-                <th>
-                    <jbr-grid-header-category [header]="'Category'"></jbr-grid-header-category>
+                <th [class]="headerFiltered(HeaderType.Category) ? 'filtered' : ''">
+                    <jbr-grid-header-category [header]="'Category'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-category>
                 </th>
                 <th>
                     <jbr-grid-header-text [header]="'Description'"></jbr-grid-header-text>

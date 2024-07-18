@@ -1,7 +1,11 @@
 import {Component, OnInit, TemplateRef} from "@angular/core";
-import {GridHeader} from "./grid-header";
+import {FilterEvent, GridHeader} from "./grid-header";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {MoneyService} from "../../money.service";
+import {NgForOf, NgIf} from "@angular/common";
+import {ButtonsModule} from "ngx-bootstrap/buttons";
+import {Category} from "../../category/category";
+import {HeaderType} from "./grid-header-type";
 
 class CategoryFilterOption {
     id: string;
@@ -15,11 +19,17 @@ class CategoryFilterOption {
     selector: 'jbr-grid-header-category',
     templateUrl: './grid-header-category.html',
     styleUrls: ['./grid-header-category.css'],
+    imports: [
+        NgForOf,
+        ButtonsModule,
+        NgIf
+    ],
     standalone: true
 })
 export class GridHeaderCategory extends GridHeader implements OnInit {
     modalRef: BsModalRef;
-    categories: CategoryFilterOption[] = [];
+    columns: number = 4;
+    categories: CategoryFilterOption[][] = [];
     errorMessage: string;
 
     constructor(private modalService: BsModalService,
@@ -29,8 +39,11 @@ export class GridHeaderCategory extends GridHeader implements OnInit {
 
     ngOnInit(): void {
         this._moneyService.getCategories().subscribe({
-            next: (accounts) => {
-                accounts.forEach(value => {
+            next: (categories) => {
+                let row: CategoryFilterOption[] = [];
+                this.categories.push(row);
+
+                categories.forEach(value => {
                     let next: CategoryFilterOption = new CategoryFilterOption();
                     next.selected = this.isCategorySelected(value.id);
                     next.display = value.name;
@@ -38,38 +51,114 @@ export class GridHeaderCategory extends GridHeader implements OnInit {
                     next.colour = value.colour;
                     next.textColour = MoneyService.getTextColor(value.colour);
 
-                    this.categories.push(next);
+                    if(row.length == this.columns) {
+                        row = [];
+                        this.categories.push(row);
+                    }
+
+                    row.push(next);
                 })
             },
             error: (response) => this.errorMessage = <any> response,
             complete: () => {
-                console.log("Account Options Loaded")
+                console.log("Category Options Loaded")
             }
         });
     }
 
-    isCategorySelected(id: string) : boolean {
-        if(this.filter == null || this.filter.categories == null || this.filter.categories.length < 1) {
+    clickCategory(item: CategoryFilterOption) {
+        item.selected = !item.selected;
+    }
+
+    isCategorySelected(id: string): boolean {
+        // If there is no filter, then return false.
+        if(this.filter == null || this.filter.categories == null || this.filter.categories.length == 0) {
             return false;
         }
 
         let result: boolean = false;
         this.filter.categories.forEach(value => {
-            if(value.id == id) {
-                result = true;
-                return;
+                if(value.id == id) {
+                    result = true;
+                    return;
+                }
             }
-        });
+        )
 
         return result;
     }
 
-    openModal(template: TemplateRef<any>) {
-        // Update the selections from the list of selected ids.
-        this.categories.forEach(value => {
-            value.selected = this.isCategorySelected(value.id);
+    selectAll() {
+        this.categories.forEach(row => {
+            row.forEach(col => {
+                col.selected = true;
+            })
+        });
+    }
+
+    clear() {
+        this.filter.categories = [];
+        this.modalRef.hide();
+
+        let event: FilterEvent = new FilterEvent();
+        event.source = HeaderType.Category;
+        this.filterChanged.emit(event);
+    }
+
+    exit() {
+        this.modalRef.hide();
+    }
+
+    selectAccounts() {
+        this.modalRef.hide();
+
+        this.filter.categories = [];
+
+        // Are all the values the same?
+        let anySelected: boolean = false;
+        let allSelected: boolean = true;
+
+        this.categories.forEach(row => {
+            row.forEach(col => {
+                if(col.selected) {
+                    anySelected = true;
+                } else {
+                    allSelected = false;
+                }
+            })
         })
 
-        this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+        if(anySelected || !allSelected) {
+            // Generate a list of categories.
+            this.categories.forEach(row => {
+                row.forEach(col => {
+                    if(col.selected) {
+                        this.filter.categories.push(new Category(col.id,
+                            col.display,
+                            1,
+                            false,
+                            col.colour,
+                            "",
+                            false,
+                            false));
+                    }
+                })
+            })
+
+            let event: FilterEvent = new FilterEvent();
+            event.source = HeaderType.Category;
+            this.filterChanged.emit(event);
+        }
+    }
+
+    openModal(template: TemplateRef<any>) {
+        // Update the selections from the list of selected ids.
+        this.categories.forEach(row => {
+            row.forEach(col => {
+                col.selected = this.isCategorySelected(col.id);
+            })
+        })
+
+        this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
     }
 }

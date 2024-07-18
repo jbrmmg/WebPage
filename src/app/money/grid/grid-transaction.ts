@@ -103,6 +103,11 @@ export class GridTransaction implements OnInit {
             return this.filter.fromReconciled != null;
         }
 
+        // Category
+        if(header == HeaderType.Category) {
+            return !(this.filter.categories == null || this.filter.categories.length == 0);
+        }
+
         // Default - not filtered
         return false;
     }
