@@ -1,1 +1,34 @@
-<p>{{header}}</p>
+<p (click)="openModal(templateStatementDate)">{{header}}</p>
+
+<ng-template #templateStatementDate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Select Statement Date</h4>
+    </div>
+    <div class="body">
+        <p *ngFor="let row of statements">{{row.display}}</p>
+    </div>
+    <div class="row row-no-margin" *ngFor="let row of statements">
+        <div class="col-2 btn-no-margin" *ngFor="let col of row">
+            <div class="btn-padding">
+                <label class="btn btn-primary btn-statement"
+                       tabindex="0"
+                       (click)="clickCategory(col)">
+                    {{col.display}}
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row row-no-margin">
+        <div class="col-10 btn-no-margin">
+        </div>
+        <div class="col-2 btn-no-margin">
+            <div class="btn-padding">
+                <label class="btn btn-primary btn-statement"
+                       tabindex="0"
+                       (click)="clear()">
+                    (clear)
+                </label>
+            </div>
+        </div>
+    </div>
+</ng-template>
