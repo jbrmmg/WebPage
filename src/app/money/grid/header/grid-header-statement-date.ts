@@ -1,16 +1,34 @@
 import {Component, Input, OnInit, TemplateRef} from "@angular/core";
-import {GridHeader} from "./grid-header";
+import {FilterEvent, GridHeader} from "./grid-header";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {NgForOf, NgIf} from "@angular/common";
 import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
 import {MoneyService} from "../../money.service";
-import {Statement} from "../../statement/statement";
+import {StatementDate} from "../../statement/statementDate"
+import {HeaderType} from "./grid-header-type";
 
-class StatementFilterOption {
+class MonthOption {
     display: string;
-    year: number;
     month: number;
     selected: boolean;
+
+    constructor(display: string, month: number) {
+        this.display = display;
+        this.month = month;
+        this.selected = false;
+    }
+}
+
+class YearOption {
+    display: string;
+    year: number;
+    selected: boolean;
+
+    constructor(year: number) {
+        this.display = year.toString();
+        this.year = year;
+        this.selected = false;
+    }
 }
 
 @Component({
@@ -27,48 +45,40 @@ class StatementFilterOption {
 export class GridHeaderStatementDate extends GridHeader implements OnInit {
     modalRef: BsModalRef;
     errorMessage: string;
-    columns: number = 6;
-    statements: StatementFilterOption[][];
-    blankStatementDisplay: string = "(none)";
+    years: YearOption[];
+    months1: MonthOption[];
+    months2: MonthOption[];
 
     constructor(private modalService: BsModalService,
                 private _moneyService: MoneyService) {
         super();
-    }
 
-    getDateFormat(statement: Statement): string {
-        if(statement.month < 10) {
-            return statement.year + "-0" + statement.month;
-        }
-
-        return statement.year + "-" + statement.month;
+        this.months1 = [];
+        this.months1.push(new MonthOption("Jan", 1));
+        this.months1.push(new MonthOption("Feb", 2));
+        this.months1.push(new MonthOption("Mar", 3));
+        this.months1.push(new MonthOption("Apr", 4));
+        this.months1.push(new MonthOption("May", 5));
+        this.months1.push(new MonthOption("Jun", 6));
+        this.months2 = [];
+        this.months2.push(new MonthOption("Jul", 7));
+        this.months2.push(new MonthOption("Aug", 8));
+        this.months2.push(new MonthOption("Sep", 9));
+        this.months2.push(new MonthOption("Oct", 10));
+        this.months2.push(new MonthOption("Nov", 11));
+        this.months2.push(new MonthOption("Dec", 12));
     }
 
     ngOnInit(): void {
         this._moneyService.getStatements().subscribe({
             next: (statements) => {
-                this.statements = [];
-
-                let tempList: StatementFilterOption[] = [];
-
-                let blank: StatementFilterOption = new StatementFilterOption();
-                blank.year = null;
-                blank.month = null;
-                blank.selected = false;
-                blank.display = this.blankStatementDisplay;
-                tempList.push(blank);
+                this.years = [];
 
                 statements.forEach(value => {
-                    let next: StatementFilterOption = new StatementFilterOption();
-                    next.selected = false;
-                    next.month = value.month;
-                    next.year = value.year;
-                    next.display = this.getDateFormat(value);
-
                     // Is this already in the list?
                     let add: boolean = true;
-                    tempList.forEach(value =>{
-                        if(value.month == next.month && value.year == next.year) {
+                    this.years.forEach(year => {
+                        if(value.year == year.year) {
                             add = false;
                             return;
                         }
@@ -76,42 +86,63 @@ export class GridHeaderStatementDate extends GridHeader implements OnInit {
 
                     // Add if required.
                     if(add) {
-                        tempList.push(next);
+                        this.years.push(new YearOption(value.year));
                     }}
                 );
 
                 // Sort
-                tempList.sort((lhs, rhs) => {
-                    if(lhs.display == this.blankStatementDisplay) {
+                this.years.sort((lhs, rhs) => {
+                    if(lhs == rhs)
+                        return 0;
+
+                    if(lhs > rhs)
                         return 1;
-                    }
 
-                    if(rhs.display == this.blankStatementDisplay) {
-                        return -1;
-                    }
-
-                    return lhs.display.localeCompare(rhs.display);
+                    return -1;
                 })
-
-                // Copy the list into the 2d array.
-                let nextRow: StatementFilterOption[] = [];
-                tempList.forEach(value => {
-                    nextRow.push(value);
-
-                    if(nextRow.length == this.columns) {
-                        this.statements.push(nextRow);
-                        nextRow = [];
-                    }
-                })
-                if(nextRow.length > 0) {
-                    this.statements.push(nextRow);
-                }
             },
             error: (response) => this.errorMessage = <any> response,
             complete: () => {
                 console.log("Category Options Loaded")
             }
         });
+    }
+
+    clickYear(year: YearOption) {
+        this.years.forEach(next => {
+            next.selected = next.year == year.year;
+        })
+    }
+
+    yearSelected() {
+        let result: boolean = false;
+        this.years.forEach(next => {
+            if(next.selected) {
+                result = true;
+            }
+        });
+
+        return result;
+    }
+
+    clickMonth(month: MonthOption) {
+        this.modalRef.hide();
+
+        let year: number = 0;
+        this.years.forEach(next => {
+            if(next.selected) {
+                year = next.year;
+            }
+        })
+
+        // Set the filter and then exit.
+        if(this.filter != null) {
+            this.filter.statementDate = new StatementDate(year,month.month);
+        }
+
+        let event: FilterEvent = new FilterEvent();
+        event.source = HeaderType.Category;
+        this.filterChanged.emit(event);
     }
 
     openModal(template: TemplateRef<any>) {
