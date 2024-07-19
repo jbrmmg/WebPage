@@ -108,6 +108,11 @@ export class GridTransaction implements OnInit {
             return !(this.filter.categories == null || this.filter.categories.length == 0);
         }
 
+        // Statement Date
+        if(header == HeaderType.StatementDate) {
+            return this.filter.statementDate != null;
+        }
+
         // Default - not filtered
         return false;
     }

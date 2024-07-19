@@ -12,8 +12,8 @@
                 <th [class]="headerFiltered(HeaderType.Account) ? 'filtered' : ''">
                     <jbr-grid-header-account [header]="'Acc.'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-account>
                 </th>
-                <th>
-                    <jbr-grid-header-statement-date [header]="'Statement Date'"></jbr-grid-header-statement-date>
+                <th [class]="headerFiltered(HeaderType.StatementDate) ? 'filtered' : ''">
+                    <jbr-grid-header-statement-date [header]="'Statement Date'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-statement-date>
                 </th>
                 <th [class]="headerFiltered(HeaderType.Locked) ? 'filtered' : ''">
                     <jbr-grid-header-flag [header]="'Lck.'" [flagType]="FlagType.Locked" [filter]="filter" (filterChanged)="filterChange($event)"></jbr-grid-header-flag>

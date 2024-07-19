@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, TemplateRef} from "@angular/core";
+import {Component, OnInit, TemplateRef} from "@angular/core";
 import {FilterEvent, GridHeader} from "./grid-header";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {NgForOf, NgIf} from "@angular/common";
@@ -141,7 +141,31 @@ export class GridHeaderStatementDate extends GridHeader implements OnInit {
         }
 
         let event: FilterEvent = new FilterEvent();
-        event.source = HeaderType.Category;
+        event.source = HeaderType.StatementDate;
+        this.filterChanged.emit(event);
+    }
+
+    blank() {
+        this.modalRef.hide();
+
+        if(this.filter != null) {
+            this.filter.statementDate = new StatementDate(null,null);
+        }
+
+        let event: FilterEvent = new FilterEvent();
+        event.source = HeaderType.StatementDate;
+        this.filterChanged.emit(event);
+    }
+
+    clear() {
+        this.modalRef.hide();
+
+        if(this.filter != null) {
+            this.filter.statementDate = null;
+        }
+
+        let event: FilterEvent = new FilterEvent();
+        event.source = HeaderType.StatementDate;
         this.filterChanged.emit(event);
     }
 
