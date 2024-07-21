@@ -1,7 +1,7 @@
 import {Component, OnInit, TemplateRef} from "@angular/core";
 import {FilterEvent, GridHeader} from "./grid-header";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import {NgForOf, NgIf} from "@angular/common";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
 import {MoneyService} from "../../money.service";
 import {StatementDate} from "../../statement/statementDate"
@@ -38,7 +38,8 @@ class YearOption {
     imports: [
         NgForOf,
         NgIf,
-        BsDatepickerModule
+        BsDatepickerModule,
+        NgClass
     ],
     standalone: true
 })
@@ -46,27 +47,28 @@ export class GridHeaderStatementDate extends GridHeader implements OnInit {
     modalRef: BsModalRef;
     errorMessage: string;
     years: YearOption[];
-    months1: MonthOption[];
-    months2: MonthOption[];
+    months: MonthOption[][] = [];
 
     constructor(private modalService: BsModalService,
                 private _moneyService: MoneyService) {
         super();
 
-        this.months1 = [];
-        this.months1.push(new MonthOption("Jan", 1));
-        this.months1.push(new MonthOption("Feb", 2));
-        this.months1.push(new MonthOption("Mar", 3));
-        this.months1.push(new MonthOption("Apr", 4));
-        this.months1.push(new MonthOption("May", 5));
-        this.months1.push(new MonthOption("Jun", 6));
-        this.months2 = [];
-        this.months2.push(new MonthOption("Jul", 7));
-        this.months2.push(new MonthOption("Aug", 8));
-        this.months2.push(new MonthOption("Sep", 9));
-        this.months2.push(new MonthOption("Oct", 10));
-        this.months2.push(new MonthOption("Nov", 11));
-        this.months2.push(new MonthOption("Dec", 12));
+        let nextMonths: MonthOption[] = [];
+        this.months.push(nextMonths);
+        nextMonths.push(new MonthOption("Jan", 1));
+        nextMonths.push(new MonthOption("Feb", 2));
+        nextMonths.push(new MonthOption("Mar", 3));
+        nextMonths.push(new MonthOption("Apr", 4));
+        nextMonths.push(new MonthOption("May", 5));
+        nextMonths.push(new MonthOption("Jun", 6));
+        nextMonths = [];
+        this.months.push(nextMonths);
+        nextMonths.push(new MonthOption("Jul", 7));
+        nextMonths.push(new MonthOption("Aug", 8));
+        nextMonths.push(new MonthOption("Sep", 9));
+        nextMonths.push(new MonthOption("Oct", 10));
+        nextMonths.push(new MonthOption("Nov", 11));
+        nextMonths.push(new MonthOption("Dec", 12));
     }
 
     ngOnInit(): void {
@@ -114,17 +116,6 @@ export class GridHeaderStatementDate extends GridHeader implements OnInit {
         })
     }
 
-    yearSelected() {
-        let result: boolean = false;
-        this.years.forEach(next => {
-            if(next.selected) {
-                result = true;
-            }
-        });
-
-        return result;
-    }
-
     clickMonth(month: MonthOption) {
         this.modalRef.hide();
 
@@ -169,7 +160,68 @@ export class GridHeaderStatementDate extends GridHeader implements OnInit {
         this.filterChanged.emit(event);
     }
 
+    exit() {
+        this.modalRef.hide();
+    }
+
+    selectStatement() {
+        this.modalRef.hide()
+
+        // If there is a selection displayed then select it.
+        let year: number = 0;
+        this.years.forEach(next => {
+            if(next.selected) {
+                year = next.year;
+            }
+        })
+
+        let month: number =  0;
+        this.months.forEach(row => {
+            row.forEach(col => {
+                if(col.selected) {
+                    month = col.month;
+                }
+            })
+        })
+
+        // Set the filter and then exit.
+        if(this.filter != null) {
+            if(year != 0 && month != 0) {
+                this.filter.statementDate = new StatementDate(year, month);
+            } else {
+                this.filter.statementDate = null;
+            }
+        }
+
+        let event: FilterEvent = new FilterEvent();
+        event.source = HeaderType.StatementDate;
+        this.filterChanged.emit(event);
+    }
+
     openModal(template: TemplateRef<any>) {
+        // If the filter has a value, then highlight it.
+        if(this.filter != null && this.filter.statementDate != null) {
+            this.years.forEach(year => {
+                year.selected = year.year == this.filter.statementDate.year;
+            })
+
+            this.months.forEach(row => {
+                row.forEach(col => {
+                    col.selected = col.month == this.filter.statementDate.month;
+                })
+            })
+        } else {
+            this.years.forEach(year => {
+                year.selected = false;
+            })
+
+            this.months.forEach(row => {
+                row.forEach(col => {
+                    col.selected = false;
+                })
+            })
+        }
+
         this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
     }
 }

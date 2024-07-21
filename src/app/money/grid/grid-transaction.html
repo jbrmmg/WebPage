@@ -4,7 +4,7 @@
         <thead>
             <tr>
                 <th>
-                    <jbr-grid-header-select [header]="' '"></jbr-grid-header-select>
+                    <jbr-grid-header-select class="header" [header]="' '"></jbr-grid-header-select>
                 </th>
                 <th [class]="headerFiltered(HeaderType.Date) ? 'filtered' : ''">
                     <jbr-grid-header-date [header]="'Date'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-date>

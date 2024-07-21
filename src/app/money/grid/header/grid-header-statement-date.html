@@ -8,30 +8,18 @@
         <div class="row row-no-margin">
             <div class="col-2 btn-no-margin" *ngFor="let col of years">
                 <div class="btn-padding">
-                    <label class="btn btn-primary btn-statement"
+                    <label [ngClass]="col.selected ? 'btn btn-success btn-action': 'btn btn-outline-primary btn-action'"
                            tabindex="0"
                            (click)="clickYear(col)">
                         {{col.display}}
-                        <em *ngIf="col.selected" class="fa fa-check-circle"></em>
                     </label>
                 </div>
             </div>
         </div>
-        <div class="row row-no-margin" *ngIf="yearSelected()">
-            <div class="col-2 btn-no-margin" *ngFor="let col of months1">
+        <div class="row row-no-margin" *ngFor="let row of months">
+            <div class="col-2 btn-no-margin" *ngFor="let col of row">
                 <div class="btn-padding">
-                    <label class="btn btn-primary btn-statement"
-                           tabindex="0"
-                           (click)="clickMonth(col)">
-                        {{col.display}}
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="row row-no-margin" *ngIf="yearSelected()">
-            <div class="col-2 btn-no-margin" *ngFor="let col of months2">
-                <div class="btn-padding">
-                    <label class="btn btn-primary btn-statement"
+                    <label [ngClass]="col.selected ? 'btn btn-success btn-statement': 'btn btn-outline-primary btn-statement'"
                            tabindex="0"
                            (click)="clickMonth(col)">
                         {{col.display}}
@@ -40,24 +28,33 @@
             </div>
         </div>
         <div class="row row-no-margin">
+            <div class="col-10 btn-no-margin">
+            </div>
             <div class="col-2 btn-no-margin">
                 <div class="btn-padding">
                     <label class="btn btn-primary btn-statement"
                            tabindex="0"
                            (click)="blank()">
-                        (none)
+                        No Statement
                     </label>
                 </div>
             </div>
-            <div class="col-8 btn-no-margin">
+        </div>
+        <div class="row row-no-margin">
+            <div class="col-2 btn-no-margin">
+                <div class="btn-action">
+                    <label class="btn-action btn btn-primary" (click)="exit()">Exit</label>
+                </div>
             </div>
             <div class="col-2 btn-no-margin">
-                <div class="btn-padding">
-                    <label class="btn btn-primary btn-statement"
-                           tabindex="0"
-                           (click)="clear()">
-                        (clear)
-                    </label>
+                <div class="btn-action">
+                    <label class="btn-action btn btn-primary" (click)="clear()">Clear</label>
+                </div>
+            </div>
+            <div class="col-6 btn-no-margin"></div>
+            <div class="col-2 btn-no-margin">
+                <div class="btn-action">
+                    <label class="btn-action btn btn-primary" (click)="selectStatement()">OK</label>
                 </div>
             </div>
         </div>

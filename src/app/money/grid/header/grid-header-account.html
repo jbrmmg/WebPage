@@ -7,32 +7,49 @@
         <h4 class="modal-title pull-left title">Select Accounts (or all)</h4>
     </div>
     <div class="body">
-        <div class="row account-row" *ngFor="let nextAccount of accounts">
-            <div class="col-1 remove-padding col-centre" (click)="changed(nextAccount.id)">
-                <input type="checkbox" [checked]="getChecked(nextAccount.id)"/>
-            </div>
-            <div class="col-1 remove-padding">
-                <img class="account-img" src="{{getAccountImage(nextAccount.id)}}" alt="Account"/>
-            </div>
-            <div class="col-10 remove-padding">
-                <p class="name">{{nextAccount.display}}</p>
+        <div class="row row-no-margin" *ngFor="let row of accounts">
+            <div class="col-3 btn-no-margin" *ngFor="let col of row">
+                <div class="btn-padding">
+                    <label [ngClass]="col.selected ? 'btn btn-success btn-action': 'btn btn-outline-primary btn-action'"
+                           tabindex="0"
+                           (click)="clickAccount(col)">
+                        <img class="account-img" src="{{getAccountImage(col.id)}}" alt="Account"/>
+                        {{col.display}}
+                    </label>
+                </div>
             </div>
         </div>
-        <div class="row remove-margin">
-            <div class="col-2 remove-padding">
-                <div class="btn-exit-div">
-                    <label class="btn-exit btn btn-primary" (click)="selectAll()">All</label>
+        <div class="row row-no-margin">
+            <div class="col-9 btn-no-margin">
+            </div>
+            <div class="col-3 btn-no-margin">
+                <div class="btn-action">
+                    <label class="btn btn-primary btn-account"
+                           [style.background-color]="'#0D6EFD'"
+                           [style.color]="'#FFFFFF'"
+                           tabindex="0"
+                           (click)="selectAll()">
+                        <em class="fa fa-check-circle"></em>
+                        Select All Accounts
+                    </label>
                 </div>
             </div>
-            <div class="col-6 remove-padding"></div>
-            <div class="col-2 remove-padding">
-                <div class="btn-exit-div">
-                    <label class="btn-exit btn btn-primary" (click)="exit()">Exit</label>
+        </div>
+        <div class="row row-no-margin">
+            <div class="col-2 btn-no-margin">
+                <div class="btn-action">
+                    <label class="btn-action btn btn-primary" (click)="exit()">Exit</label>
                 </div>
             </div>
-            <div class="col-2 remove-padding">
-                <div class="btn-ok-div">
-                    <label class="btn-ok btn btn-primary" (click)="selectAccounts()">OK</label>
+            <div class="col-2 btn-no-margin">
+                <div class="btn-action">
+                    <label class="btn-action btn btn-primary" (click)="clear()">Clear</label>
+                </div>
+            </div>
+            <div class="col-6 btn-no-margin"></div>
+            <div class="col-2 btn-no-margin">
+                <div class="btn-action">
+                    <label class="btn-action btn btn-primary" (click)="selectAccounts()">OK</label>
                 </div>
             </div>
         </div>

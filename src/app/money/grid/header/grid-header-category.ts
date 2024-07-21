@@ -66,6 +66,10 @@ export class GridHeaderCategory extends GridHeader implements OnInit {
         });
     }
 
+    categoryDisplay(item: CategoryFilterOption): string {
+        return item.display + " (" + item.id + ")";
+    }
+
     clickCategory(item: CategoryFilterOption) {
         item.selected = !item.selected;
     }
@@ -160,5 +164,29 @@ export class GridHeaderCategory extends GridHeader implements OnInit {
         })
 
         this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
+    }
+
+    backgroundColour(item: CategoryFilterOption) {
+        if(item.selected) {
+            return '#' + item.colour;
+        }
+
+        return '#FFFFFF';
+    }
+
+    textColour(item: CategoryFilterOption) {
+        if(item.selected) {
+            return '#' + item.textColour;
+        }
+
+        return '#000000';
+    }
+
+    borderColor(item: CategoryFilterOption) {
+        if(item.selected) {
+            return '#000000';
+        }
+
+        return '#' + item.colour;
     }
 }

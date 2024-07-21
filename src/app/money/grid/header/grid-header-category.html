@@ -9,37 +9,47 @@
             <div class="col-3 btn-no-margin" *ngFor="let col of row">
                 <div class="btn-padding">
                     <label class="btn btn-primary btn-category"
-                           [style.background-color]="'#' + col.colour"
-                           [style.color]="'#' + col.textColour"
+                           [style.background-color]=backgroundColour(col)
+                           [style.color]=textColour(col)
+                           [style.border-color]=borderColor(col)
                            tabindex="0"
                            (click)="clickCategory(col)">
-                        <em *ngIf="col.selected" class="fa fa-check-circle"></em>
-                        <em *ngIf="!col.selected" class="fa fa-times-circle"></em>
-                        {{col.display}}
+                        {{categoryDisplay(col)}}
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row row-no-margin">
+            <div class="col-9 btn-no-margin">
+            </div>
+            <div class="col-3 btn-no-margin">
+                <div class="btn-action">
+                    <label class="btn btn-primary btn-category"
+                           [style.background-color]="'#0D6EFD'"
+                           [style.color]="'#FFFFFF'"
+                           tabindex="0"
+                           (click)="selectAll()">
+                        <em class="fa fa-check-circle"></em>
+                        Select All Categories
                     </label>
                 </div>
             </div>
         </div>
         <div class="row row-no-margin">
             <div class="col-2 btn-no-margin">
-                <div class="action-btn">
-                    <label class="action-btn btn btn-primary" (click)="selectAll()">All</label>
+                <div class="btn-action">
+                    <label class="btn-action btn btn-primary" (click)="exit()">Exit</label>
                 </div>
             </div>
             <div class="col-2 btn-no-margin">
-                <div class="action-btn">
-                    <label class="action-btn btn btn-primary" (click)="clear()">Clear</label>
+                <div class="btn-action">
+                    <label class="btn-action btn btn-primary" (click)="clear()">Clear</label>
                 </div>
             </div>
-            <div class="col-4 btn-no-margin"></div>
+            <div class="col-6 btn-no-margin"></div>
             <div class="col-2 btn-no-margin">
-                <div class="action-btn">
-                    <label class="action-btn btn btn-primary" (click)="exit()">Exit</label>
-                </div>
-            </div>
-            <div class="col-2 btn-no-margin">
-                <div class="action-btn">
-                    <label class="action-btn btn btn-primary" (click)="selectAccounts()">OK</label>
+                <div class="btn-action">
+                    <label class="btn-action btn btn-primary" (click)="selectAccounts()">OK</label>
                 </div>
             </div>
         </div>
