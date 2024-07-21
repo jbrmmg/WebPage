@@ -1,4 +1,5 @@
-import {Component, Input} from "@angular/core";
+import {Component} from "@angular/core";
+import {GridHeader} from "./grid-header";
 
 @Component({
     selector: 'jbr-grid-header-amount',
@@ -6,6 +7,5 @@ import {Component, Input} from "@angular/core";
     styleUrls: ['./grid-header-amount.css'],
     standalone: true
 })
-export class GridHeaderAmount {
-    @Input() header: string;
+export class GridHeaderAmount extends GridHeader {
 }

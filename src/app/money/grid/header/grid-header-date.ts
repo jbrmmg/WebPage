@@ -1,4 +1,5 @@
-import {Component, Input} from "@angular/core";
+import {Component} from "@angular/core";
+import {GridHeader} from "./grid-header";
 
 @Component({
     selector: 'jbr-grid-header-date',
@@ -6,6 +7,5 @@ import {Component, Input} from "@angular/core";
     styleUrls: ['./grid-header-date.css'],
     standalone: true
 })
-export class GridHeaderDate {
-    @Input() header: string;
+export class GridHeaderDate extends GridHeader {
 }

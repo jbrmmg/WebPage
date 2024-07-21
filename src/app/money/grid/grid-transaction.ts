@@ -83,34 +83,34 @@ export class GridTransaction implements OnInit {
     headerFiltered(header: HeaderType): boolean {
         // Determine if the header is filtered based on the filter.
 
-        // Header
-        if(header == HeaderType.Account) {
-            return !(this.filter.accounts == null || this.filter.accounts.length == 0);
-        }
+        switch (header) {
+            case HeaderType.Account:
+                return !(this.filter.accounts == null || this.filter.accounts.length == 0);
 
-        // Locked flag
-        if(header == HeaderType.Locked) {
-            return this.filter.locked != null;
-        }
+            case HeaderType.Locked:
+                return this.filter.locked != null;
 
-        // Locked flag
-        if(header == HeaderType.Predicted) {
-            return this.filter.predicted != null;
-        }
+            case HeaderType.Predicted:
+                return this.filter.predicted != null;
 
-        // Locked flag
-        if(header == HeaderType.Reconciliation) {
-            return this.filter.fromReconciled != null;
-        }
+            case HeaderType.Reconciliation:
+                return this.filter.fromReconciled != null;
 
-        // Category
-        if(header == HeaderType.Category) {
-            return !(this.filter.categories == null || this.filter.categories.length == 0);
-        }
+            case HeaderType.Category:
+                return !(this.filter.categories == null || this.filter.categories.length == 0);
 
-        // Statement Date
-        if(header == HeaderType.StatementDate) {
-            return this.filter.statementDate != null;
+            case HeaderType.StatementDate:
+                return this.filter.statementDate != null;
+
+            case HeaderType.Date:
+                return this.filter.dateRange != null;
+
+            case HeaderType.Description:
+                return this.filter.description != null;
+
+            case HeaderType.Credit:
+            case HeaderType.Debit:
+                return this.filter.valueRange != null;
         }
 
         // Default - not filtered

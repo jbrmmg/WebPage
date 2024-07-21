@@ -17,6 +17,7 @@ export interface ITransactionFilter {
     locked?: boolean;
     predicted?: boolean;
     fromReconciled?: boolean;
+    description?: string;
     reconciliationAccount?: string;
     maxPageSize: number;
     pageNumber: number;
@@ -31,6 +32,7 @@ export class TransactionFilter {
     public locked?: boolean;
     public predicted?: boolean;
     public fromReconciled?: boolean;
+    public description?: string;
     public reconciliationAccount?: string;
     public maxPageSize?: number;
     public pageNumber?: number;

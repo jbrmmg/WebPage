@@ -6,8 +6,8 @@
                 <th>
                     <jbr-grid-header-select [header]="' '"></jbr-grid-header-select>
                 </th>
-                <th>
-                    <jbr-grid-header-date [header]="'Date'"></jbr-grid-header-date>
+                <th [class]="headerFiltered(HeaderType.Date) ? 'filtered' : ''">
+                    <jbr-grid-header-date [header]="'Date'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-date>
                 </th>
                 <th [class]="headerFiltered(HeaderType.Account) ? 'filtered' : ''">
                     <jbr-grid-header-account [header]="'Acc.'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-account>
@@ -27,14 +27,14 @@
                 <th [class]="headerFiltered(HeaderType.Category) ? 'filtered' : ''">
                     <jbr-grid-header-category [header]="'Category'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-category>
                 </th>
-                <th>
-                    <jbr-grid-header-text [header]="'Description'"></jbr-grid-header-text>
+                <th [class]="headerFiltered(HeaderType.Description) ? 'filtered' : ''">
+                    <jbr-grid-header-text [header]="'Description'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-text>
                 </th>
-                <th>
-                    <jbr-grid-header-amount [header]="'Credits'"></jbr-grid-header-amount>
+                <th [class]="headerFiltered(HeaderType.Credit) ? 'filtered' : ''">
+                    <jbr-grid-header-amount [header]="'Credits'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-amount>
                 </th>
-                <th>
-                    <jbr-grid-header-amount [header]="'Debits'"></jbr-grid-header-amount>
+                <th [class]="headerFiltered(HeaderType.Debit) ? 'filtered' : ''">
+                    <jbr-grid-header-amount [header]="'Debits'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-amount>
                 </th>
                 <th>
                     <jbr-grid-header-amount [header]="'Balance'"></jbr-grid-header-amount>
