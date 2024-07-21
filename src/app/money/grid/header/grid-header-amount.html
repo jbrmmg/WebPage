@@ -1,1 +1,27 @@
-<p>{{header}}</p>
+<p (click)="openModal(templateAmountFilter)">{{header}}</p>
+
+<ng-template #templateAmountFilter>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Select Range of Amounts</h4>
+    </div>
+    <div class="body">
+        <div class="row row-no-margin">
+            <div class="col-2 btn-no-margin">
+                <div class="btn-action">
+                    <label class="btn-action btn btn-primary" (click)="exit()">Exit</label>
+                </div>
+            </div>
+            <div class="col-2 btn-no-margin">
+                <div class="btn-action">
+                    <label class="btn-action btn btn-primary" (click)="clear()">Clear</label>
+                </div>
+            </div>
+            <div class="col-6 btn-no-margin"></div>
+            <div class="col-2 btn-no-margin">
+                <div class="btn-action">
+                    <label class="btn-action btn btn-primary" (click)="selectAmounts()">OK</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

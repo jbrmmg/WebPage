@@ -82,7 +82,6 @@ export class GridTransaction implements OnInit {
 
     headerFiltered(header: HeaderType): boolean {
         // Determine if the header is filtered based on the filter.
-
         switch (header) {
             case HeaderType.Account:
                 return !(this.filter.accounts == null || this.filter.accounts.length == 0);

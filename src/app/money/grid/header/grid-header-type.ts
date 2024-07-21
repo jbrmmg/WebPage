@@ -8,5 +8,6 @@ export enum HeaderType {
     Category,
     Description,
     Credit,
-    Debit
+    Debit,
+    AllFlag
 }

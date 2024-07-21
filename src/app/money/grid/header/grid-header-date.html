@@ -1,1 +1,27 @@
-<p>{{header}}</p>
+<p (click)="openModal(templateDateFilter)">{{header}}</p>
+
+<ng-template #templateDateFilter>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Select Start and End Dates</h4>
+    </div>
+    <div class="body">
+        <div class="row row-no-margin">
+            <div class="col-2 btn-no-margin">
+                <div class="btn-action">
+                    <label class="btn-action btn btn-primary" (click)="exit()">Exit</label>
+                </div>
+            </div>
+            <div class="col-2 btn-no-margin">
+                <div class="btn-action">
+                    <label class="btn-action btn btn-primary" (click)="clear()">Clear</label>
+                </div>
+            </div>
+            <div class="col-6 btn-no-margin"></div>
+            <div class="col-2 btn-no-margin">
+                <div class="btn-action">
+                    <label class="btn-action btn btn-primary" (click)="selectDates()">OK</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
