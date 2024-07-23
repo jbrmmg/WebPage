@@ -6,6 +6,28 @@
     </div>
     <div class="body">
         <div class="row row-no-margin">
+            <div class="col-6 amount-col-margin">
+                <div class="col-12">
+                    <div>From Amount</div>
+                    <input id="from-amount"
+                           [(ngModel)]="fromAmount"
+                           (input)="fromChanged($event)"
+                           type="text"
+                           class="amount-entry"/>
+                </div>
+            </div>
+            <div class="col-6 amount-col-margin">
+                <div class="col-12">
+                    <div>To Amount</div>
+                    <input id="to-amount"
+                           [(ngModel)]="toAmount"
+                           (input)="toChanged($event)"
+                           type="text"
+                           class="amount-entry"/>
+                </div>
+            </div>
+        </div>
+        <div class="row row-no-margin">
             <div class="col-2 btn-no-margin">
                 <div class="btn-action">
                     <label class="btn-action btn btn-primary" (click)="exit()">Exit</label>
