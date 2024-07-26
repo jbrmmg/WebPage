@@ -27,6 +27,8 @@ import {GridDataActions} from "./data/grid-data-actions";
 import {FilterEvent, GridHeader} from "./header/grid-header";
 import {HeaderType} from "./header/grid-header-type";
 import {ITransactionReport, TransactionReport} from "../transaction/TransactionReport";
+import {JbAccount} from "../account/jbaccount";
+import {FinancialAmount} from "../transaction/financialamount";
 
 @Component({
     selector: 'jbr-grid-transaction',
@@ -133,6 +135,11 @@ export class GridTransaction implements OnInit {
                 add.new = true;
                 add.date = "2024-07-23";
                 add.description = "";
+                add.account = new JbAccount("UNKN", "Unknown", "", "FFFFFF", false);
+                add.fromReconciliation = false;
+                add.predicted = false;
+                add.amount = new FinancialAmount(0,"DB");
+                add.balance = new FinancialAmount(0,"DB");
                 this.data.push(add)
             },
             error: (response) => {
