@@ -26,7 +26,7 @@ import {GridDataSelect} from "./data/grid-data-select";
 import {GridDataActions} from "./data/grid-data-actions";
 import {FilterEvent, GridHeader} from "./header/grid-header";
 import {HeaderType} from "./header/grid-header-type";
-import {ITransactionReport} from "../transaction/TransactionReport";
+import {ITransactionReport, TransactionReport} from "../transaction/TransactionReport";
 
 @Component({
     selector: 'jbr-grid-transaction',
@@ -128,6 +128,12 @@ export class GridTransaction implements OnInit {
         this._moneyService.getTransactions2(this.filter).subscribe({
             next: (val) => {
                 this.data = val;
+
+                let add : ITransactionReport = new TransactionReport();
+                add.new = true;
+                add.date = "2024-07-23";
+                add.description = "";
+                this.data.push(add)
             },
             error: (response) => {
                 this.status = "error"

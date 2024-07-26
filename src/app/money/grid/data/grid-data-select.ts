@@ -9,4 +9,11 @@ import {ITransactionReport} from "../../transaction/TransactionReport";
 })
 export class GridDataSelect {
     @Input() transaction: ITransactionReport;
+
+    constructor() {
+    }
+
+    text(): string {
+        return this.transaction.new ? "*" : "";
+    }
 }

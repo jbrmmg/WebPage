@@ -8,6 +8,7 @@ import {Category, ICategory} from "../category/category";
 import {IStatement, Statement} from "../statement/statement";
 
 export interface ITransactionReport {
+    new: boolean;
     id: number;
     type: string;
     amount: IFinancialAmount;
@@ -22,18 +23,22 @@ export interface ITransactionReport {
     fromReconciliation: boolean;
 }
 
-export class TransactionReport {
-    constructor(
-        public id: number,
-        public amount: FinancialAmount,
-        public balance: FinancialAmount,
-        public date: string,
-        public account: JbAccount,
-        public category: Category,
-        public description: string,
-        public oppositeId: number,
-        public statement: Statement,
-        public predicted: boolean,
-        public fromReconciliation: boolean) {
+export class TransactionReport implements ITransactionReport {
+    new: boolean;
+    account: IAccount;
+    amount: IFinancialAmount;
+    balance: IFinancialAmount;
+    category: ICategory;
+    date: string;
+    description: string;
+    fromReconciliation: boolean;
+    id: number;
+    oppositeId: number;
+    predicted: boolean;
+    statement: IStatement;
+    type: string;
+
+    constructor() {
+        this.new = true;
     }
 }
