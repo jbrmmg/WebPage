@@ -1,4 +1,8 @@
-import {Component, Input} from "@angular/core";
+import {Component, EventEmitter, Input, Output} from "@angular/core";
+
+export class SelectChange {
+    selection: boolean;
+}
 
 @Component({
     selector: 'jbr-grid-header-select',
@@ -8,4 +12,17 @@ import {Component, Input} from "@angular/core";
 })
 export class GridHeaderSelect {
     @Input() header: string;
+    @Output() selectionChange: EventEmitter<SelectChange> = new EventEmitter();
+
+    selectAll() {
+        let event: SelectChange = new SelectChange();
+        event.selection = true;
+        this.selectionChange.emit(event);
+    }
+
+    selectNone() {
+        let event: SelectChange = new SelectChange();
+        event.selection = false;
+        this.selectionChange.emit(event);
+    }
 }

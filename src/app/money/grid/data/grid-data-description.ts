@@ -1,5 +1,5 @@
 import {Component, Input} from "@angular/core";
-import {ITransactionReport} from "../../transaction/TransactionReport";
+import {ITransactionReport, TransactionReport} from "../../transaction/TransactionReport";
 import {MoneyService} from "../../money.service";
 
 @Component({
@@ -13,19 +13,19 @@ export class GridDataDescription {
     protected readonly MoneyService = MoneyService;
 
     getDescription(): string {
-        if(this.transaction.type == "TRANSACTION") {
+        if(this.transaction.type == TransactionReport.TRANSACTION) {
             return this.transaction.description;
         }
 
-        if(this.transaction.type == "OPEN_BALANCE") {
+        if(this.transaction.type == TransactionReport.OPEN_BALANCE) {
             return "Opening Balance"
         }
 
-        if(this.transaction.type == "TODAY_BALANCE") {
+        if(this.transaction.type == TransactionReport.TODAY_BALANCE) {
             return "Balance Today"
         }
 
-        if(this.transaction.type == "FUTURE_BALANCE") {
+        if(this.transaction.type == TransactionReport.FUTURE_BALANCE) {
             return "Future Balance"
         }
 

@@ -1,5 +1,5 @@
 import {Component, Input} from "@angular/core";
-import {ITransactionReport} from "../../transaction/TransactionReport";
+import {ITransactionReport, TransactionReport} from "../../transaction/TransactionReport";
 import {MoneyService} from "../../money.service";
 
 @Component({
@@ -17,7 +17,7 @@ export class GridDataCategory {
             return "";
         }
 
-        if(this.transaction.type != "TRANSACTION") {
+        if(this.transaction.type != TransactionReport.TRANSACTION) {
             return "";
         }
 

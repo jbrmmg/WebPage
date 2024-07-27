@@ -20,7 +20,7 @@ import {GridDataFromReconciliation} from "./data/grid-data-from-reconciliation";
 import {GridDataPredicted} from "./data/grid-data-predicted";
 import {GridDataStatement} from "./data/grid-data-statement";
 import {GridDataStatementDate} from "./data/grid-data-statement-date";
-import {GridHeaderSelect} from "./header/grid-header-select";
+import {GridHeaderSelect, SelectChange} from "./header/grid-header-select";
 import {GridHeaderActions} from "./header/grid-header-actions";
 import {GridDataSelect} from "./data/grid-data-select";
 import {GridDataActions} from "./data/grid-data-actions";
@@ -66,6 +66,7 @@ export class GridTransaction implements OnInit {
     protected readonly FlagType = FlagType;
     data : ITransactionReport[];
     filter : TransactionFilter;
+    newTransaction: TransactionReport = new TransactionReport();
     status: string;
 
     constructor(private _moneyService: MoneyService) {
@@ -125,29 +126,46 @@ export class GridTransaction implements OnInit {
         this.update();
     }
 
+    selectionChange(event: SelectChange) {
+        this.data.forEach(value => {
+            value.selected = event.selection;
+        })
+    }
+
     update() {
-        this.status = "updating..."
+        this.status = "Updating transactions ..."
+        this.data = [];
         this._moneyService.getTransactions2(this.filter).subscribe({
             next: (val) => {
                 this.data = val;
 
-                let add : ITransactionReport = new TransactionReport();
-                add.new = true;
-                add.date = "2024-07-23";
-                add.description = "";
-                add.account = new JbAccount("UNKN", "Unknown", "", "FFFFFF", false);
-                add.fromReconciliation = false;
-                add.predicted = false;
-                add.amount = new FinancialAmount(0,"DB");
-                add.balance = new FinancialAmount(0,"DB");
-                this.data.push(add)
+                // Create a placeholder for the new transaction.
+                this.newTransaction.new = true;
+                this.newTransaction.type = TransactionReport.TRANSACTION;
+                this.newTransaction.date = "2024-07-23";
+                this.newTransaction.description = "";
+                this.newTransaction.account = new JbAccount("UNKN", "Unknown", "", "FFFFFF", false);
+                this.newTransaction.fromReconciliation = false;
+                this.newTransaction.predicted = false;
+                this.newTransaction.amount = new FinancialAmount(0,"CR");
+                this.newTransaction.balance = new FinancialAmount(0,"CR");
+                this.newTransaction.selectable = false;
+                this.data.unshift(this.newTransaction)
             },
             error: (response) => {
-                this.status = "error"
+                this.status = "Update failed " + response;
                 console.error("getTransactions2 Failed " + response);
             },
             complete: () => {
-                this.status = "ready"
+                // Mark the rows that are selectable.
+                this.data.forEach(value => {
+                    if(value.type == TransactionReport.TRANSACTION) {
+                        value.selectable = value.new != true;
+                    } else {
+                        value.selectable = false;
+                    }
+                })
+                this.status = this.data.length + " transactions displayed."
                 console.log("getTransactions2 Complete.")
             }
         });
