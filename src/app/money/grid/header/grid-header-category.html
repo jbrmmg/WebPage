@@ -5,53 +5,13 @@
         <h4 class="modal-title pull-left">Select Categories</h4>
     </div>
     <div class="body">
-        <div class="row row-no-margin" *ngFor="let row of categories">
-            <div class="col-3 btn-no-margin" *ngFor="let col of row">
-                <div class="btn-padding">
-                    <label class="btn btn-primary btn-category"
-                           [style.background-color]=backgroundColour(col)
-                           [style.color]=textColour(col)
-                           [style.border-color]=borderColor(col)
-                           tabindex="0"
-                           (click)="clickCategory(col)">
-                        {{categoryDisplay(col)}}
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="row row-no-margin">
-            <div class="col-9 btn-no-margin">
-            </div>
-            <div class="col-3 btn-no-margin">
-                <div class="btn-action">
-                    <label class="btn btn-primary btn-category"
-                           [style.background-color]="'#0D6EFD'"
-                           [style.color]="'#FFFFFF'"
-                           tabindex="0"
-                           (click)="selectAll()">
-                        <em class="fa fa-check-circle"></em>
-                        Select All Categories
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="row row-no-margin">
-            <div class="col-2 btn-no-margin">
-                <div class="btn-action">
-                    <label class="btn-action btn btn-primary" (click)="exit()">Exit</label>
-                </div>
-            </div>
-            <div class="col-2 btn-no-margin">
-                <div class="btn-action">
-                    <label class="btn-action btn btn-primary" (click)="clear()">Clear</label>
-                </div>
-            </div>
-            <div class="col-6 btn-no-margin"></div>
-            <div class="col-2 btn-no-margin">
-                <div class="btn-action">
-                    <label class="btn-action btn btn-primary" (click)="selectAccounts()">OK</label>
-                </div>
-            </div>
-        </div>
+        <jbr-category style="width:100%"
+            [filterMode]="true"
+            [allowTransfer]="false"
+            [selectedCategoryIds]="categoryIds"
+            (cleared)="onClear()"
+            (selected)="onSelect($event)"
+            (exit)="onExit()">
+        </jbr-category>
     </div>
 </ng-template>

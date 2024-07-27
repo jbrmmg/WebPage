@@ -1,16 +1,25 @@
-import {Component, Input} from "@angular/core";
+import {Component, Input, TemplateRef} from "@angular/core";
 import {ITransactionReport, TransactionReport} from "../../transaction/TransactionReport";
 import {MoneyService} from "../../money.service";
+import {MoneyCategory} from "../../category/money-cat.component";
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
+import {Category} from "../../category/category";
 
 @Component({
     selector: 'jbr-grid-data-category',
     templateUrl: './grid-data-category.html',
     styleUrls: ['./grid-data-category.css'],
+    imports: [
+        MoneyCategory
+    ],
     standalone: true
 })
 export class GridDataCategory {
     @Input() transaction: ITransactionReport;
-    protected readonly MoneyService = MoneyService;
+    modalRef: BsModalRef;
+
+    constructor(private modalService: BsModalService) {
+    }
 
     getCategoryName(): string {
         if(this.transaction == null) {
@@ -38,5 +47,34 @@ export class GridDataCategory {
 
     getTextColour() {
         return MoneyService.getTextColor(this.getCategoryColour());
+    }
+
+    openModal(template: TemplateRef<any>) {
+        this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
+    }
+
+    onClear() {
+        this.modalRef.hide();
+    }
+
+    onExit() {
+        this.modalRef.hide();
+    }
+
+    onSelect(category: Category) {
+        this.modalRef.hide();
+
+        this.transaction.category = category;
+    }
+
+    onSelectTransfer(id: string) {
+        this.modalRef.hide();
+
+        // Account transfer
+        this.transaction.category = new Category("TRF", "Transfer (" + id + ")", 0, false, "FFFFFF", id, false, false)
+    }
+
+    allowTransfer(): boolean {
+        return this.transaction.new;
     }
 }
