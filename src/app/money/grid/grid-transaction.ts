@@ -171,5 +171,11 @@ export class GridTransaction implements OnInit {
         });
     }
 
+    onEdit() {
+        this.data.forEach(value => {
+            value.editing = false;
+        });
+    }
+
     protected readonly HeaderType = HeaderType;
 }

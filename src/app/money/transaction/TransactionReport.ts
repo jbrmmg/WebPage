@@ -9,6 +9,7 @@ import {IStatement} from "../statement/statement";
 
 export interface ITransactionReport {
     new: boolean;
+    editing: boolean;
     id: number;
     type: string;
     amount: IFinancialAmount;
@@ -27,6 +28,7 @@ export interface ITransactionReport {
 
 export class TransactionReport implements ITransactionReport {
     new: boolean;
+    editing: boolean;
     account: IAccount;
     amount: IFinancialAmount;
     balance: IFinancialAmount;
@@ -46,6 +48,7 @@ export class TransactionReport implements ITransactionReport {
         this.new = false;
         this.selected = false;
         this.selectable = false;
+        this.editing = false;
     }
 
     public static get TRANSACTION():string {return "TRANSACTION"};

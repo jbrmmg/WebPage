@@ -1,16 +1,25 @@
-import {Component, Input} from "@angular/core";
+import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {ITransactionReport, TransactionReport} from "../../transaction/TransactionReport";
 import {MoneyService} from "../../money.service";
+import {NgIf} from "@angular/common";
 
 @Component({
     selector: 'jbr-grid-data-description',
     templateUrl: './grid-data-description.html',
     styleUrls: ['./grid-data-description.css'],
+    imports: [
+        NgIf
+    ],
     standalone: true
 })
 export class GridDataDescription {
     @Input() transaction: ITransactionReport;
+    @Output() edit: EventEmitter<void> = new EventEmitter();
+
     protected readonly MoneyService = MoneyService;
+
+    constructor() {
+    }
 
     getDescription(): string {
         if(this.transaction.type == TransactionReport.TRANSACTION) {
@@ -42,5 +51,20 @@ export class GridDataDescription {
 
     getTextColour() {
         return MoneyService.getTextColor(this.getCategoryColour());
+    }
+
+    onClick() {
+        // Is this field editable?
+        if(this.transaction.type == TransactionReport.TRANSACTION) {
+            if(!this.transaction.editing) {
+                this.edit.emit();
+                this.transaction.editing = true;
+            } else {
+                this.transaction.editing = false;
+            }
+            return;
+        }
+
+        this.transaction.editing = false;
     }
 }

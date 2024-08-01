@@ -71,7 +71,7 @@
                     <jbr-grid-data-category [transaction]="transaction"></jbr-grid-data-category>
                 </td>
                 <td>
-                    <jbr-grid-data-description [transaction]="transaction"></jbr-grid-data-description>
+                    <jbr-grid-data-description (edit)="onEdit()" [transaction]="transaction"></jbr-grid-data-description>
                 </td>
                 <td>
                     <jbr-grid-data-amount [transaction]="transaction" [type]="'CR'"></jbr-grid-data-amount>

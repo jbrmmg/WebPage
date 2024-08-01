@@ -1,1 +1,2 @@
-<p [style.background]="'#' + getCategoryColour()" [style.color]="'#' + getTextColour()">{{getDescription()}}</p>
+<p *ngIf="!transaction.editing" (click)="onClick()" [style.background]="'#' + getCategoryColour()" [style.color]="'#' + getTextColour()">{{getDescription()}}</p>
+<input *ngIf="transaction.editing" style="width:100%" type="text"/>
