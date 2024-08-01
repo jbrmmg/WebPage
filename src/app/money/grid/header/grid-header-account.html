@@ -7,51 +7,12 @@
         <h4 class="modal-title pull-left title">Select Accounts (or all)</h4>
     </div>
     <div class="body">
-        <div class="row row-no-margin" *ngFor="let row of accounts">
-            <div class="col-3 btn-no-margin" *ngFor="let col of row">
-                <div class="btn-padding">
-                    <label [ngClass]="col.selected ? 'btn btn-success btn-action': 'btn btn-outline-primary btn-action'"
-                           tabindex="0"
-                           (click)="clickAccount(col)">
-                        <img class="account-img" src="{{getAccountImage(col.id)}}" alt="Account"/>
-                        {{col.display}}
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="row row-no-margin">
-            <div class="col-9 btn-no-margin">
-            </div>
-            <div class="col-3 btn-no-margin">
-                <div class="btn-action">
-                    <label class="btn btn-primary btn-account"
-                           [style.background-color]="'#0D6EFD'"
-                           [style.color]="'#FFFFFF'"
-                           tabindex="0"
-                           (click)="selectAll()">
-                        <em class="fa fa-check-circle"></em>
-                        Select All Accounts
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="row row-no-margin">
-            <div class="col-2 btn-no-margin">
-                <div class="btn-action">
-                    <label class="btn-action btn btn-primary" (click)="exit()">Exit</label>
-                </div>
-            </div>
-            <div class="col-2 btn-no-margin">
-                <div class="btn-action">
-                    <label class="btn-action btn btn-primary" (click)="clear()">Clear</label>
-                </div>
-            </div>
-            <div class="col-6 btn-no-margin"></div>
-            <div class="col-2 btn-no-margin">
-                <div class="btn-action">
-                    <label class="btn-action btn btn-primary" (click)="selectAccounts()">OK</label>
-                </div>
-            </div>
-        </div>
+        <jbr-account style="width:100%"
+                     [filterMode]="true"
+                     [allowClosed]="true"
+                     [selectedAccountIds]="accountIds"
+                     (cleared)="onClear()"
+                     (selected)="onSelect($event)"
+                     (exit)="onExit()"></jbr-account>
     </div>
 </ng-template>

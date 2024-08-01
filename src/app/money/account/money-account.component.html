@@ -1,10 +1,10 @@
 <div class="row row-no-margin" *ngFor="let row of accounts">
     <div class="col-3 btn-no-margin" *ngFor="let col of row">
         <div class="btn-padding">
-            <label [ngClass]="col.selected ? 'btn btn-success btn-action': 'btn btn-outline-primary btn-action'"
+            <label [ngClass]="isAccountSelected(col) ? 'btn btn-success btn-action': 'btn btn-outline-primary btn-action'"
                    tabindex="0"
                    (click)="clickAccount(col)">
-                <img class="account-img" src="{{getAccountImage(col.id)}}" alt="Account"/>
+                <img class="account-img" src="{{getAccountImage(col)}}" alt="Account"/>
                 {{col.display}}
             </label>
         </div>

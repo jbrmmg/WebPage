@@ -4,7 +4,6 @@ import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {MoneyService} from "../money.service";
 import {JbAccount} from "./jbaccount";
-import {Category} from "../category/category";
 
 class AccountOption {
     id: string;
@@ -33,7 +32,7 @@ export class MoneyAccount implements OnInit {
     @Input() filterMode: boolean;
     @Input() allowClosed: boolean;
     @Output() cleared: EventEmitter<void> = new EventEmitter();
-    @Output() selected: EventEmitter<string[]> = new EventEmitter();
+    @Output() selected: EventEmitter<JbAccount[]> = new EventEmitter();
     @Output() selectAccount: EventEmitter<JbAccount> = new EventEmitter();
     @Output() account: EventEmitter<string> = new EventEmitter();
     @Output() exit: EventEmitter<void> = new EventEmitter();
@@ -71,7 +70,7 @@ export class MoneyAccount implements OnInit {
         });
     }
 
-    isAccountSelected(item: JbAccount): boolean {
+    isAccountSelected(item: AccountOption): boolean {
         if(!this.filterMode) {
             return true;
         }
@@ -86,5 +85,69 @@ export class MoneyAccount implements OnInit {
         })
 
         return result;
+    }
+
+    clickAccount(item: AccountOption) {
+        if(!this.filterMode) {
+            this.selectAccount.emit(item.account);
+            return;
+        }
+
+        if(this.isAccountSelected(item)) {
+            const index = this.selectedAccountIds.indexOf(item.id,0);
+
+            if(index > -1) {
+                this.selectedAccountIds.splice(index,1);
+            }
+        } else {
+            this.selectedAccountIds.push(item.id);
+        }
+    }
+
+    getAccountImage(item: AccountOption): string {
+        return MoneyService.getAccountImage(item.id);
+    }
+
+    selectAll() {
+        this.selectedAccountIds = [];
+
+        // Add all to the selection.
+        this.accounts.forEach(row => {
+            row.forEach(col => {
+                this.selectedAccountIds.push(col.id);
+            });
+        });
+    }
+
+    onExit() {
+        this.exit.emit();
+    }
+
+    onClear() {
+        this.selectedAccountIds = [];
+        this.cleared.emit();
+    }
+
+    onOK() {
+        let anySelected: boolean = false;
+        let allSelected: boolean = true;
+        let selection: JbAccount[] = [];
+
+        this.accounts.forEach(row => {
+            row.forEach(col => {
+                if(this.isAccountSelected(col)) {
+                    selection.push(col.account);
+                    anySelected = true;
+                } else {
+                    allSelected = false;
+                }
+            });
+        });
+
+        if(allSelected || !anySelected) {
+            this.cleared.emit();
+        } else {
+            this.selected.emit(selection);
+        }
     }
 }

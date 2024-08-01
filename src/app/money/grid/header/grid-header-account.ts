@@ -1,18 +1,13 @@
-import {Component, OnInit, TemplateRef} from "@angular/core";
+import {Component, TemplateRef} from "@angular/core";
 import {ButtonsModule} from "ngx-bootstrap/buttons";
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import {MoneyService} from "../../money.service";
 import {FormsModule} from "@angular/forms";
 import {FilterEvent, GridHeader} from "./grid-header";
-import {JbAccount} from "../../account/jbaccount";
 import {HeaderType} from "./grid-header-type";
-
-class AccountFilterOption {
-    id: string;
-    display: string;
-    selected: boolean;
-}
+import {MoneyAccount} from "../../account/money-account.component";
+import {MoneyCategory} from "../../category/money-cat.component";
+import {JbAccount} from "../../account/jbaccount";
 
 @Component({
     selector: 'jbr-grid-header-account',
@@ -23,112 +18,34 @@ class AccountFilterOption {
         NgForOf,
         NgIf,
         FormsModule,
-        NgClass
+        NgClass,
+        MoneyAccount,
+        MoneyCategory
     ],
     standalone: true
 })
-export class GridHeaderAccount extends GridHeader implements OnInit {
+export class GridHeaderAccount extends GridHeader {
     modalRef: BsModalRef;
     columns: number = 4;
-    accounts: AccountFilterOption[][] = [];
-    errorMessage: string;
+    accountIds: string[] = [];
 
-    constructor(private modalService: BsModalService,
-                private _moneyService: MoneyService ) {
+    constructor(private modalService: BsModalService) {
         super();
     }
 
-    ngOnInit(): void {
-        this._moneyService.getAccounts().subscribe({
-            next: (accounts) => {
-                let row: AccountFilterOption[] = [];
-                this.accounts.push(row);
-
-                accounts.forEach(value => {
-                    let next: AccountFilterOption = new AccountFilterOption();
-                    next.selected = this.isAccountSelected(value.id);
-                    next.display = value.name;
-                    if(value.closed) {
-                        next.display += " (closed)";
-                    }
-                    next.id = value.id;
-
-                    if(row.length == this.columns) {
-                        row = [];
-                        this.accounts.push(row);
-                    }
-
-                    row.push(next);
-                })
-            },
-            error: (response) => this.errorMessage = <any> response,
-            complete: () => {
-                console.log("Account Options Loaded")
-            }
-        });
-    }
-
-    isAccountSelected(id: string) : boolean {
-        if(this.filter == null || this.filter.accounts == null || this.filter.accounts.length < 1) {
-            return false;
-        }
-
-        let result: boolean = false;
-        this.filter.accounts.forEach(value => {
-            if(value.id == id) {
-                result = true;
-                return;
-            }
-        });
-
-        return result;
-    }
-
-    getAccountImage(id: string) : string {
-        return MoneyService.getAccountImage(id);
-    }
-
     openModal(template: TemplateRef<any>) {
-        // Update the selections from the list of selected ids.
-        this.accounts.forEach(row => {
-            row.forEach(col => {
-                col.selected = this.isAccountSelected(col.id);
-            })
-        })
-
         this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
     }
 
-    selectAll() {
-        this.accounts.forEach(row => {
-            row.forEach(col => {
-                col.selected = true;
-            })
-        })
+    onExit() {
+        this.modalRef.hide();
     }
 
-    selectAccounts() {
+    onClear() {
         this.modalRef.hide();
 
-        // Get the selected id's and check to see if all items are selected.
+        this.accountIds = [];
         this.filter.accounts = [];
-        let allSelected: boolean = true;
-        let noneSelected: boolean = true;
-        this.accounts.forEach(row => {
-            row.forEach(col => {
-                if(col.selected) {
-                    this.filter.accounts.push(new JbAccount(col.id,null,null,null,null));
-                    noneSelected = false;
-                } else {
-                    allSelected = false;
-                }
-            })
-        });
-
-        // Fire the event.
-        if(allSelected || noneSelected) {
-            this.filter.accounts = [];
-        }
 
         // Update filter event.
         let event: FilterEvent = new FilterEvent();
@@ -136,26 +53,14 @@ export class GridHeaderAccount extends GridHeader implements OnInit {
         this.filterChanged.emit(event);
     }
 
-    exit() {
+    onSelect(selected: JbAccount[]) {
         this.modalRef.hide();
-    }
-
-    clickAccount(item: AccountFilterOption) {
-        item.selected = !item.selected;
-    }
-
-    clear() {
-        this.modalRef.hide();
-
-        this.accounts.forEach(row => {
-            row.forEach(col => {
-                col.selected = false;
-            })
-        })
 
         this.filter.accounts = [];
+        selected.forEach(next => {
+            this.filter.accounts.push(next);
+        })
 
-        // Update filter event.
         let event: FilterEvent = new FilterEvent();
         event.source = HeaderType.Account;
         this.filterChanged.emit(event);
