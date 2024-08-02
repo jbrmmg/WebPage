@@ -64,6 +64,7 @@ import {FinancialAmount} from "../transaction/financialamount";
 })
 export class GridTransaction implements OnInit {
     protected readonly FlagType = FlagType;
+    protected readonly HeaderType = HeaderType;
     data : ITransactionReport[];
     filter : TransactionFilter;
     newTransaction: TransactionReport = new TransactionReport();
@@ -176,6 +177,4 @@ export class GridTransaction implements OnInit {
             value.editing = false;
         });
     }
-
-    protected readonly HeaderType = HeaderType;
 }

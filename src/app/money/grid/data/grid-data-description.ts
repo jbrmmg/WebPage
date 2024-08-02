@@ -1,20 +1,24 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from "@angular/core";
 import {ITransactionReport, TransactionReport} from "../../transaction/TransactionReport";
 import {MoneyService} from "../../money.service";
 import {NgIf} from "@angular/common";
+import {FormsModule} from "@angular/forms";
 
 @Component({
     selector: 'jbr-grid-data-description',
     templateUrl: './grid-data-description.html',
     styleUrls: ['./grid-data-description.css'],
     imports: [
-        NgIf
+        NgIf,
+        FormsModule
     ],
     standalone: true
 })
 export class GridDataDescription {
     @Input() transaction: ITransactionReport;
     @Output() edit: EventEmitter<void> = new EventEmitter();
+
+    @ViewChild('input') input: ElementRef;
 
     protected readonly MoneyService = MoneyService;
 
@@ -23,7 +27,11 @@ export class GridDataDescription {
 
     getDescription(): string {
         if(this.transaction.type == TransactionReport.TRANSACTION) {
-            return this.transaction.description;
+            if(this.transaction.description == null || this.transaction.description.length == 0) {
+                return "&nbsp;";
+            } else {
+                return this.transaction.description;
+            }
         }
 
         if(this.transaction.type == TransactionReport.OPEN_BALANCE) {
@@ -38,7 +46,17 @@ export class GridDataDescription {
             return "Future Balance"
         }
 
-        return "";
+        return "&nbsp;";
+    }
+
+    blank(): boolean {
+        if(this.transaction.type == TransactionReport.TRANSACTION) {
+            return this.transaction.description == null || this.transaction.description.length == 0;
+        }
+
+        return !((this.transaction.type == TransactionReport.OPEN_BALANCE) ||
+            (this.transaction.type == TransactionReport.TODAY_BALANCE) ||
+            (this.transaction.type == TransactionReport.FUTURE_BALANCE));
     }
 
     getCategoryColour(): string {
@@ -59,12 +77,26 @@ export class GridDataDescription {
             if(!this.transaction.editing) {
                 this.edit.emit();
                 this.transaction.editing = true;
-            } else {
-                this.transaction.editing = false;
+                setTimeout(()=> {
+                    this.input.nativeElement.focus();
+                },0);
             }
             return;
         }
 
         this.transaction.editing = false;
+    }
+
+    onKeydown(event: any) {
+        if(event.key === "Escape") {
+            this.transaction.editing = false;
+            return;
+        }
+
+        if(event.key === "Enter") {
+            this.transaction.description = this.input.nativeElement.value;
+            this.transaction.editing = false;
+            return;
+        }
     }
 }
