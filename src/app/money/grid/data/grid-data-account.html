@@ -1,2 +1,15 @@
-<img src="{{getAccountImage()}}" alt="Selected Account" *ngIf="hasAccount()">
+<img src="{{getAccountImage()}}" alt="Selected Account" *ngIf="hasAccount()" (click)="openModal(templateAccountSelect)">
 
+<ng-template #templateAccountSelect>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Select an Account</h4>
+    </div>
+    <div class="body">
+        <jbr-account style="width:100%"
+                     [filterMode]="false"
+                     [allowClosed]="false"
+                     (selectAccount)="onSelect($event)"
+                     (exit)="onExit()">
+        </jbr-account>
+    </div>
+</ng-template>

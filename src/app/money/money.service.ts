@@ -72,6 +72,10 @@ export class MoneyService {
         return environment.moneyAccountImage.replace("##id##", id)
     }
 
+    public static getDate(text: string) : string {
+        return "2024-Jul-23";
+    }
+
     public static getDisabledAccountImage(id: string): string {
         return environment.moneyAccountDisabledImage.replace("##id##", id)
     }

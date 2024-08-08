@@ -34,4 +34,8 @@ export class GridDataBalance {
 
         return this.transaction.balance.value < 0;
     }
+
+    blank(): boolean {
+        return this.transaction != null && this.transaction.new;
+    }
 }

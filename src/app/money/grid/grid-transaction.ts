@@ -2,7 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {TransactionFilter} from "../transaction/transactionFilter";
 import {MoneyService} from "../money.service";
 import {FlagType} from "./header/grid-header-flag-type";
-import {NgForOf, NgIf} from "@angular/common";
+import {formatCurrency, NgForOf, NgIf} from "@angular/common";
 import {GridHeaderDate} from "./header/grid-header-date";
 import {GridDataDate} from "./data/grid-data-date";
 import {GridHeaderAccount} from "./header/grid-header-account";
@@ -159,15 +159,25 @@ export class GridTransaction implements OnInit {
             },
             complete: () => {
                 // Mark the rows that are selectable.
+                let credits: number = 0;
+                let debits: number = 0;
                 this.data.forEach(value => {
                     if(value.type == TransactionReport.TRANSACTION) {
                         value.selectable = value.new != true;
+
+                        if(!value.new) {
+                            if(value.amount.type == "DB") {
+                                debits -= value.amount.value;
+                            } else {
+                                credits += value.amount.value;
+                            }
+                        }
                     } else {
                         value.selectable = false;
                     }
                 })
-                this.status = this.data.length + " transactions displayed."
-                console.log("getTransactions Complete.")
+                this.status = this.data.length + " transactions displayed. Debits: " + formatCurrency(debits, "en-UK","£","GBP","1.2-2") + ", Credits: " + formatCurrency(credits, "en-UK","£","GBP","1.2-2");
+                console.log("getTransactions Complete. " + this.status)
             }
         });
     }

@@ -10,7 +10,7 @@
         </div>
     </div>
 </div>
-<div class="row row-no-margin">
+<div class="row row-no-margin" *ngIf="filterMode">
     <div class="col-9 btn-no-margin">
     </div>
     <div class="col-3 btn-no-margin">
@@ -32,13 +32,13 @@
             <label class="btn-action btn btn-primary" (click)="onExit()">Exit</label>
         </div>
     </div>
-    <div class="col-2 btn-no-margin">
+    <div class="col-2 btn-no-margin" *ngIf="filterMode">
         <div class="btn-action">
             <label class="btn-action btn btn-primary" (click)="onClear()">Clear</label>
         </div>
     </div>
     <div class="col-6 btn-no-margin"></div>
-    <div class="col-2 btn-no-margin">
+    <div class="col-2 btn-no-margin" *ngIf="filterMode">
         <div class="btn-action">
             <label class="btn-action btn btn-primary" (click)="onOK()">OK</label>
         </div>

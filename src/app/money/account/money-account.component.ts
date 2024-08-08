@@ -48,9 +48,14 @@ export class MoneyAccount implements OnInit {
 
                 accounts.forEach(value => {
                     let next: AccountOption = new AccountOption();
+                    let allowed: boolean = true;
                     next.display = value.name;
                     if(value.closed) {
                         next.display += " (closed)";
+
+                        if(!this.allowClosed) {
+                            allowed = false;
+                        }
                     }
                     next.id = value.id;
                     next.account = value;
@@ -60,7 +65,9 @@ export class MoneyAccount implements OnInit {
                         this.accounts.push(row);
                     }
 
-                    row.push(next);
+                    if(allowed) {
+                        row.push(next);
+                    }
                 })
             },
             error: (response) => this.errorMessage = <any> response,
@@ -72,7 +79,7 @@ export class MoneyAccount implements OnInit {
 
     isAccountSelected(item: AccountOption): boolean {
         if(!this.filterMode) {
-            return true;
+            return false;
         }
 
         let result: boolean = false;
