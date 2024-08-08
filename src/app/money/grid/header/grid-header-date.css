@@ -1,3 +1,7 @@
+p {
+    margin: 0;
+}
+
 .row-no-margin {
     margin: 3px 0 0 0;
 }

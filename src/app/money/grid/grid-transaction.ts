@@ -136,7 +136,7 @@ export class GridTransaction implements OnInit {
     update() {
         this.status = "Updating transactions ..."
         this.data = [];
-        this._moneyService.getTransactions2(this.filter).subscribe({
+        this._moneyService.getTransactions(this.filter).subscribe({
             next: (val) => {
                 this.data = val;
 
@@ -155,7 +155,7 @@ export class GridTransaction implements OnInit {
             },
             error: (response) => {
                 this.status = "Update failed " + response;
-                console.error("getTransactions2 Failed " + response);
+                console.error("getTransactions Failed " + response);
             },
             complete: () => {
                 // Mark the rows that are selectable.
@@ -167,7 +167,7 @@ export class GridTransaction implements OnInit {
                     }
                 })
                 this.status = this.data.length + " transactions displayed."
-                console.log("getTransactions2 Complete.")
+                console.log("getTransactions Complete.")
             }
         });
     }

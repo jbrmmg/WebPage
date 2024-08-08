@@ -247,19 +247,7 @@ export class MoneyService {
         return result;
     }
 
-    getTransactions(type: ITransactionType,
-                    from: Date,
-                    to: Date,
-                    accounts: JbAccount[],
-                    categories: Category[]): Observable<ITransaction[]> {
-
-        return this.http.get<ITransaction[]>(this.getTransactionsUrl(type, from, to, accounts, categories)).pipe(
-            tap(data => console.log('All: ' + JSON.stringify(data))),
-            catchError(err => MoneyService.handleError(err))
-        );
-    }
-
-    getTransactions2(filter: TransactionFilter) : Observable<ITransactionReport[]>  {
+    getTransactions(filter: TransactionFilter) : Observable<ITransactionReport[]>  {
         console.log(JSON.stringify(filter));
 
         return this.http.post<ITransactionReport[]>(environment.moneyTransactionList,filter).pipe(
