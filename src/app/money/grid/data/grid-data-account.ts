@@ -1,11 +1,11 @@
-import {Component, Input, TemplateRef} from "@angular/core";
-import {ITransactionReport} from "../../transaction/TransactionReport";
+import {Component, TemplateRef} from "@angular/core";
 import {MoneyService} from "../../money.service";
 import {NgIf} from "@angular/common";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {MoneyCategory} from "../../category/money-cat.component";
 import {MoneyAccount} from "../../account/money-account.component";
 import {JbAccount} from "../../account/jbaccount";
+import {GridData} from "./grid-data";
 
 @Component({
     selector: 'jbr-grid-data-account',
@@ -18,11 +18,11 @@ import {JbAccount} from "../../account/jbaccount";
     ],
     standalone: true
 })
-export class GridDataAccount {
-    @Input() transaction: ITransactionReport;
+export class GridDataAccount extends GridData {
     modalRef: BsModalRef;
 
     constructor(private modalService: BsModalService) {
+        super();
     }
 
     hasAccount() : boolean {

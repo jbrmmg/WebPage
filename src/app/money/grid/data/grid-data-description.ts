@@ -1,8 +1,9 @@
-import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from "@angular/core";
-import {ITransactionReport, TransactionReport} from "../../transaction/TransactionReport";
+import {Component, ElementRef, EventEmitter, Output, ViewChild} from "@angular/core";
+import {TransactionReport} from "../../transaction/TransactionReport";
 import {MoneyService} from "../../money.service";
 import {NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import {GridData} from "./grid-data";
 
 @Component({
     selector: 'jbr-grid-data-description',
@@ -14,8 +15,7 @@ import {FormsModule} from "@angular/forms";
     ],
     standalone: true
 })
-export class GridDataDescription {
-    @Input() transaction: ITransactionReport;
+export class GridDataDescription extends GridData {
     @Output() edit: EventEmitter<void> = new EventEmitter();
 
     @ViewChild('input') input: ElementRef;
@@ -23,6 +23,7 @@ export class GridDataDescription {
     protected readonly MoneyService = MoneyService;
 
     constructor() {
+        super();
     }
 
     getDescription(): string {

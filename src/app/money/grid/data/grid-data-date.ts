@@ -1,7 +1,7 @@
-import {Component, ElementRef, Input, ViewChild} from "@angular/core";
-import {ITransactionReport} from "../../transaction/TransactionReport";
+import {Component, ElementRef, ViewChild} from "@angular/core";
 import {DatePipe, NgIf} from "@angular/common";
 import {MoneyService} from "../../money.service";
+import {GridData} from "./grid-data";
 
 @Component({
     selector: 'jbr-grid-data-date',
@@ -13,9 +13,7 @@ import {MoneyService} from "../../money.service";
     ],
     standalone: true
 })
-export class GridDataDate {
-    @Input() transaction: ITransactionReport;
-
+export class GridDataDate extends GridData {
     @ViewChild('input') input: ElementRef;
 
     isEditing() {

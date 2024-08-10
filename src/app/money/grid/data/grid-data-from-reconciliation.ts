@@ -1,6 +1,6 @@
-import {Component, Input} from "@angular/core";
-import {ITransactionReport} from "../../transaction/TransactionReport";
+import {Component} from "@angular/core";
 import {NgIf} from "@angular/common";
+import {GridData} from "./grid-data";
 
 @Component({
     selector: 'jbr-grid-data-from-reconciliation',
@@ -11,6 +11,5 @@ import {NgIf} from "@angular/common";
     ],
     standalone: true
 })
-export class GridDataFromReconciliation {
-    @Input() transaction: ITransactionReport;
+export class GridDataFromReconciliation extends GridData {
 }

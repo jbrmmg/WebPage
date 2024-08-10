@@ -1,6 +1,6 @@
 import {Component, Input} from "@angular/core";
-import {ITransactionReport} from "../../transaction/TransactionReport";
 import {CurrencyPipe, NgIf} from "@angular/common";
+import {GridData} from "./grid-data";
 
 @Component({
     selector: 'jbr-grid-data-amount',
@@ -12,8 +12,7 @@ import {CurrencyPipe, NgIf} from "@angular/common";
     ],
     standalone: true
 })
-export class GridDataAmount {
-    @Input() transaction: ITransactionReport;
+export class GridDataAmount extends GridData {
     @Input() type: string;
 
     debit(): boolean {

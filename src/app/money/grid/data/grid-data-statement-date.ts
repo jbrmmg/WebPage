@@ -1,6 +1,6 @@
-import {Component, Input} from "@angular/core";
-import {ITransactionReport} from "../../transaction/TransactionReport";
+import {Component} from "@angular/core";
 import {DatePipe} from "@angular/common";
+import {GridData} from "./grid-data";
 
 @Component({
     selector: 'jbr-grid-data-statement-date',
@@ -11,9 +11,7 @@ import {DatePipe} from "@angular/common";
     ],
     standalone: true
 })
-export class GridDataStatementDate {
-    @Input() transaction: ITransactionReport;
-
+export class GridDataStatementDate extends GridData {
     display() : string {
         if(this.transaction.statement) {
             return String(this.transaction.statement.year) + "-" + String(this.transaction.statement.month);

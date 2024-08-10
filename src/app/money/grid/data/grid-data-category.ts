@@ -1,9 +1,10 @@
-import {Component, Input, TemplateRef} from "@angular/core";
-import {ITransactionReport, TransactionReport} from "../../transaction/TransactionReport";
+import {Component, TemplateRef} from "@angular/core";
+import {TransactionReport} from "../../transaction/TransactionReport";
 import {MoneyService} from "../../money.service";
 import {MoneyCategory} from "../../category/money-cat.component";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {Category} from "../../category/category";
+import {GridData} from "./grid-data";
 
 @Component({
     selector: 'jbr-grid-data-category',
@@ -14,11 +15,11 @@ import {Category} from "../../category/category";
     ],
     standalone: true
 })
-export class GridDataCategory {
-    @Input() transaction: ITransactionReport;
+export class GridDataCategory extends GridData {
     modalRef: BsModalRef;
 
     constructor(private modalService: BsModalService) {
+        super();
     }
 
     getCategoryName(): string {

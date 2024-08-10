@@ -1,5 +1,9 @@
-import {Component, Input} from "@angular/core";
-import {ITransactionReport} from "../../transaction/TransactionReport";
+import {Component, OnInit} from "@angular/core";
+import {GridData} from "./grid-data";
+
+class ActionOption {
+    text: string;
+}
 
 @Component({
     selector: 'jbr-grid-data-actions',
@@ -7,6 +11,9 @@ import {ITransactionReport} from "../../transaction/TransactionReport";
     styleUrls: ['./grid-data-actions.css'],
     standalone: true
 })
-export class GridDataActions {
-    @Input() transaction: ITransactionReport;
+export class GridDataActions extends GridData implements OnInit {
+    actions: ActionOption[] = [];
+
+    ngOnInit(): void {
+    }
 }

@@ -1,7 +1,7 @@
-import {Component, Input} from "@angular/core";
-import {ITransactionReport, TransactionReport} from "../../transaction/TransactionReport";
+import {Component} from "@angular/core";
 import {NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import {GridData} from "./grid-data";
 
 @Component({
     selector: 'jbr-grid-data-select',
@@ -13,10 +13,9 @@ import {FormsModule} from "@angular/forms";
     ],
     standalone: true
 })
-export class GridDataSelect {
-    @Input() transaction: ITransactionReport;
-
+export class GridDataSelect extends GridData {
     constructor() {
+        super();
     }
 
     selected(): boolean {
