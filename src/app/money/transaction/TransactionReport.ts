@@ -24,6 +24,11 @@ export interface ITransactionReport {
     fromReconciliation: boolean;
     selected: boolean;
     selectable: boolean;
+    actionUpdateCategory: boolean;
+    actionUpdate: boolean;
+    actionReconcile: boolean;
+    actionUnreconcile: boolean;
+    actionDelete: boolean;
 }
 
 export class TransactionReport implements ITransactionReport {
@@ -43,6 +48,11 @@ export class TransactionReport implements ITransactionReport {
     type: string;
     selected: boolean;
     selectable: boolean;
+    actionUpdateCategory: boolean;
+    actionUpdate: boolean;
+    actionReconcile: boolean;
+    actionUnreconcile: boolean;
+    actionDelete: boolean;
 
     constructor() {
         this.new = false;

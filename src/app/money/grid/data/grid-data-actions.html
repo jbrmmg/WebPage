@@ -1,0 +1,5 @@
+<div class="row btn-row">
+    <div class="col-3 btn-col" *ngFor="let action of actions">
+        <label class="btn-action btn btn-primary" (click)="doAction(action)">{{action.code}}</label>
+    </div>
+</div>
