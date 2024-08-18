@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {GridData} from "./grid-data";
 import {GridDataActionType} from "./grid-data-action-type";
-import {NgForOf} from "@angular/common";
+import {NgClass, NgForOf} from "@angular/common";
 
 class ActionOption {
     text: string;
@@ -14,7 +14,8 @@ class ActionOption {
     templateUrl: './grid-data-actions.html',
     styleUrls: ['./grid-data-actions.css'],
     imports: [
-        NgForOf
+        NgForOf,
+        NgClass
     ],
     standalone: true
 })
@@ -71,6 +72,48 @@ export class GridDataActions extends GridData implements OnInit {
             clear.type = GridDataActionType.ClearAdd;
             this.actions.push(clear);
         }
+    }
+
+    getClass(action: ActionOption){
+        switch(action.code) {
+            case "C":
+            case "D":
+                return "btn-action btn btn-danger";
+
+            case "P":
+                return "btn-action btn btn-secondary";
+
+            case "R":
+                return "btn-action btn btn-success";
+
+            case "UN":
+                return "btn-action btn btn-warning";
+        }
+
+        return "btn-action btn btn-primary";
+    }
+
+    getIconClass(action: ActionOption): string {
+        switch(action.code) {
+            case "C":
+            case "UN":
+                return "fa fa-times";
+            case "UC":
+                return "fa fa-list";
+            case "U":
+                return "fa fa-pencil";
+            case "R":
+            case "P":
+                return "fa fa-check";
+            case "D":
+                return "fa fa-trash";
+        }
+
+        return "fa fa-save";
+    }
+
+    getTitle(action: ActionOption): string {
+        return action.text;
     }
 
     doAction(action: ActionOption) {
