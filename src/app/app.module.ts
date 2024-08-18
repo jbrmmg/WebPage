@@ -34,38 +34,34 @@ import { BackupDisplayLabelComponent } from "./backup/display/label/backup-displ
 import { BackupPrintSizeSelectComponent } from "./backup/prints/backup-print-size-select.component";
 import { BackupPrintImageComponent } from "./backup/prints/backup-print-image.component";
 import { WifiComponent } from "./wifi/wifi.component";
-import { MoneyFile } from "./money/files/money-file";
-import { MoneyFiles } from "./money/files/money-files";
 import { GridTransaction } from "./money/grid/grid-transaction";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    WelcomeComponent,
-    MoneyAddCalcComponent,
-    MoneyCategoryPickerComponent,
-    MoneyCategoryFilterComponent,
-    MoneyComponent,
-    HouseComponent,
-    WeightComponent,
-    BackupListComponent,
-    BackupSummaryComponent,
-    BackupSummarySourceComponent,
-    BackupDisplayInfoComponent,
-    BackupDisplayLabelComponent,
-    BackupDisplayBackupsComponent,
-    BackupDisplayComponent,
-    BackupActionComponent,
-    BackupImportComponent,
-    BackupLogComponent,
-    BackupPhotoComponent,
-    BackupPrintSizeSelectComponent,
-    BackupPrintsComponent,
-    BackupPrintImageComponent,
-    WifiComponent,
-    MoneyFile,
-    MoneyFiles
-  ],
+    declarations: [
+        AppComponent,
+        WelcomeComponent,
+        MoneyAddCalcComponent,
+        MoneyCategoryPickerComponent,
+        MoneyCategoryFilterComponent,
+        MoneyComponent,
+        HouseComponent,
+        WeightComponent,
+        BackupListComponent,
+        BackupSummaryComponent,
+        BackupSummarySourceComponent,
+        BackupDisplayInfoComponent,
+        BackupDisplayLabelComponent,
+        BackupDisplayBackupsComponent,
+        BackupDisplayComponent,
+        BackupActionComponent,
+        BackupImportComponent,
+        BackupLogComponent,
+        BackupPhotoComponent,
+        BackupPrintSizeSelectComponent,
+        BackupPrintsComponent,
+        BackupPrintImageComponent,
+        WifiComponent
+    ],
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
@@ -89,7 +85,7 @@ import { GridTransaction } from "./money/grid/grid-transaction";
         ]),
         GridTransaction
     ],
-  providers: [DatePipe],
-  bootstrap: [AppComponent]
+    providers: [DatePipe],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

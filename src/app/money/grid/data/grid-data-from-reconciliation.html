@@ -1,1 +1,12 @@
-<p class="fa fa-check" *ngIf="transaction.fromReconciliation"></p>
+<p class="fa fa-check" *ngIf="transaction.fromReconciliation" (click)="selectFile(templateSelectFile)"></p>
+<p class="" *ngIf="!transaction.fromReconciliation" (click)="selectFile(templateSelectFile)">&nbsp;</p>
+
+<ng-template #templateSelectFile>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Select a File to load</h4>
+    </div>
+    <div class="body">
+        <jbr-money-files>
+        </jbr-money-files>
+    </div>
+</ng-template>

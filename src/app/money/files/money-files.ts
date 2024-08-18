@@ -2,11 +2,24 @@ import {Component, OnInit} from "@angular/core";
 import {MoneyService} from "../money.service";
 import {FileUpdate} from "./fileupdate";
 import {IFile} from "./file";
+import {ButtonsModule} from "ngx-bootstrap/buttons";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {FormsModule} from "@angular/forms";
+import { MoneyFile } from "./money-file";
 
 @Component({
     selector: 'jbr-money-files',
     templateUrl: './money-files.html',
-    styleUrls: ['./money-files.css']
+    styleUrls: ['./money-files.css'],
+    imports: [
+        ButtonsModule,
+        NgForOf,
+        NgIf,
+        FormsModule,
+        NgClass,
+        MoneyFile
+    ],
+    standalone: true
 })
 export class MoneyFiles implements OnInit {
     updateText: string;
