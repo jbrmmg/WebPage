@@ -79,6 +79,7 @@ export class GridDataDescription extends GridData {
                 this.edit.emit();
                 this.transaction.editing = true;
                 setTimeout(()=> {
+                    this.input.nativeElement.value = this.transaction.description;
                     this.input.nativeElement.focus();
                 },0);
             }

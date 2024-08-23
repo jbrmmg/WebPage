@@ -72,8 +72,122 @@ export class MoneyService {
         return environment.moneyAccountImage.replace("##id##", id)
     }
 
+    public static getDateString(date: Date) : string {
+        return date.toISOString().split('T')[0];
+    }
+
+    public static getValidDateForMonth(text: string, month: number, year: number): number {
+        let number = Number(text);
+        if(!isNaN(number)) {
+            switch(month) {
+                case 1:
+                case 3:
+                case 5:
+                case 7:
+                case 8:
+                case 10:
+                case 12: {
+                    if(number >= 1 && number <= 31) {
+                        return number;
+                    }
+                    break;
+                }
+
+                case 4:
+                case 6:
+                case 9:
+                case 11: {
+                    if(number >= 1 && number <= 30) {
+                        return number;
+                    }
+                    break;
+                }
+
+                case 2: {
+                    if(number >= 1) {
+                        if (number <= 28) {
+                            return number;
+                        }
+
+                        if(number <= 29) {
+                            let divBy4: boolean = (year % 4) == 0;
+                            let divBy100: boolean = (year % 100) == 0;
+                            let divBy400: boolean = (year % 400) == 0;
+
+                            if(divBy4 && !divBy100 && divBy400) {
+                                return number;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    public static isStringADate(text: string): string {
+        let dateParts: string[] = text.split("-");
+
+        if(dateParts.length != 3) {
+            return null;
+        }
+
+        let year = Number(dateParts[0]);
+        if(isNaN(year)) {
+            return null;
+        }
+
+        let month = Number(dateParts[1]);
+        if(isNaN(month)) {
+            return null;
+        }
+
+        if(year < 100) {
+            year = year + 2000;
+        }
+
+        if(year > 2070 || year < 2010) {
+            return null;
+        }
+
+        if(month < 1 || month > 12) {
+            return null;
+        }
+
+        let day = this.getValidDateForMonth(dateParts[2],month,year);
+        if(day == 0) {
+            return null;
+        }
+
+        let thisDate = new Date(year,month - 1,day);
+
+        return this.dateToString(thisDate);
+    }
+
     public static getDate(text: string) : string {
-        return "2024-Jul-23";
+        // Setup today
+        let today = new Date();
+
+        // If the text is blank, empty or a T then set the date to today.
+        if(text == null || text.toLowerCase() == "t" || text == "") {
+            return this.getDateString(today);
+        }
+
+        // Is the value a number that can be interpreted as the day of the current month.
+        let day = this.getValidDateForMonth(text, today.getMonth() + 1, today.getFullYear());
+        if(day > 0) {
+            today.setDate(day);
+            return MoneyService.getDateString(today);
+        }
+
+        // Try to interpret the string as a date.
+        let dateString = this.isStringADate(text);
+        if(dateString != null) {
+            return dateString;
+        }
+
+        return MoneyService.getDateString(today);
     }
 
     public static getDisabledAccountImage(id: string): string {

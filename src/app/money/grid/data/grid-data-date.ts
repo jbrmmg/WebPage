@@ -44,7 +44,7 @@ export class GridDataDate extends GridData {
 
         if(event.key === "Enter") {
             // Convert the text entered into a date.
-            this.transaction.date = MoneyService.getDate("");
+            this.transaction.date = MoneyService.getDate(this.input.nativeElement.value);
             this.transaction.editing = false;
             return;
         }
