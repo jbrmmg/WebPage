@@ -49,10 +49,10 @@
                     <jbr-grid-data-select [transaction]="transaction"></jbr-grid-data-select>
                 </td>
                 <td>
-                    <jbr-grid-data-date [transaction]="transaction"></jbr-grid-data-date>
+                    <jbr-grid-data-date [transaction]="transaction" (valueChanged)="valueChanged($event)"></jbr-grid-data-date>
                 </td>
                 <td class="account">
-                    <jbr-grid-data-account [transaction]="transaction"></jbr-grid-data-account>
+                    <jbr-grid-data-account [transaction]="transaction" (valueChanged)="valueChanged($event)"></jbr-grid-data-account>
                 </td>
                 <td>
                     <jbr-grid-data-statement-date [transaction]="transaction"></jbr-grid-data-statement-date>
@@ -67,22 +67,22 @@
                     <jbr-grid-data-from-reconciliation [transaction]="transaction"></jbr-grid-data-from-reconciliation>
                 </td>
                 <td>
-                    <jbr-grid-data-category [transaction]="transaction"></jbr-grid-data-category>
+                    <jbr-grid-data-category [transaction]="transaction" (valueChanged)="valueChanged($event)"></jbr-grid-data-category>
                 </td>
                 <td>
-                    <jbr-grid-data-description (edit)="onEdit()" [transaction]="transaction"></jbr-grid-data-description>
+                    <jbr-grid-data-description (edit)="onEdit()" [transaction]="transaction" (valueChanged)="valueChanged($event)"></jbr-grid-data-description>
                 </td>
                 <td>
-                    <jbr-grid-data-amount [transaction]="transaction" [type]="'CR'"></jbr-grid-data-amount>
+                    <jbr-grid-data-amount [transaction]="transaction" [type]="'CR'" (valueChanged)="valueChanged($event)"></jbr-grid-data-amount>
                 </td>
                 <td>
-                    <jbr-grid-data-amount [transaction]="transaction" [type]="'DB'"></jbr-grid-data-amount>
+                    <jbr-grid-data-amount [transaction]="transaction" [type]="'DB'" (valueChanged)="valueChanged($event)"></jbr-grid-data-amount>
                 </td>
                 <td>
                     <jbr-grid-data-balance [transaction]="transaction"></jbr-grid-data-balance>
                 </td>
                 <td>
-                    <jbr-grid-data-actions [transaction]="transaction"></jbr-grid-data-actions>
+                    <jbr-grid-data-actions [transaction]="transaction" [gridDataChangeHandler]="gridDataChangeHandler"></jbr-grid-data-actions>
                 </td>
             </tr>
     </table>

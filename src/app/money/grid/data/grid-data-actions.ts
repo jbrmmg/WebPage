@@ -1,7 +1,8 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, EventEmitter, Input, OnInit} from "@angular/core";
 import {GridData} from "./grid-data";
 import {GridDataActionType} from "./grid-data-action-type";
 import {NgClass, NgForOf} from "@angular/common";
+import {GridDataChangeEvent} from "./grid-data-change-event";
 
 class ActionOption {
     text: string;
@@ -21,8 +22,17 @@ class ActionOption {
 })
 export class GridDataActions extends GridData implements OnInit {
     actions: ActionOption[] = [];
+    addOption: ActionOption = null;
+    @Input() gridDataChangeHandler: EventEmitter<GridDataChangeEvent>;
 
     ngOnInit():void {
+        this.gridDataChangeHandler.asObservable().subscribe(next => {
+            // Check if this is the same transaction for this action.
+            if(this.transaction == next.transaction) {
+                this.handleTransactionChange(next);
+            }
+        });
+
         // Check what actions are allowed.
         if(this.transaction.actionUpdateCategory) {
             let updateCategory: ActionOption = new ActionOption();
@@ -64,6 +74,7 @@ export class GridDataActions extends GridData implements OnInit {
             add.text = "Add (Pending)"
             add.code = "P";
             add.type = GridDataActionType.PendingAdd;
+            this.addOption = add;
             this.actions.push(add);
 
             let clear: ActionOption = new ActionOption();
@@ -84,6 +95,7 @@ export class GridDataActions extends GridData implements OnInit {
                 return "btn-action btn btn-secondary";
 
             case "R":
+            case "A":
                 return "btn-action btn btn-success";
 
             case "UN":
@@ -118,5 +130,40 @@ export class GridDataActions extends GridData implements OnInit {
 
     doAction(action: ActionOption) {
         console.log("Do Action: " + action.text);
+    }
+
+    handleNewTransactionChange() {
+        // Is the transaction now able to be added?
+        if(this.transaction != null) {
+            if ( this.transaction.date != null &&
+                    this.transaction.account != null &&
+                    this.transaction.category != null &&
+                    this.transaction.description != null &&
+                    this.transaction.description.length > 0 &&
+                    this.transaction.amount.value != 0) {
+                this.addOption.text = "Add";
+                this.addOption.code = "A";
+                this.addOption.type = GridDataActionType.Add;
+            } else {
+                this.addOption.text = "Add (Pending)"
+                this.addOption.code = "P";
+                this.addOption.type = GridDataActionType.PendingAdd;
+            }
+        }
+    }
+
+    handleStandardTransactionChange(event: GridDataChangeEvent) {
+
+    }
+
+    handleTransactionChange(event: GridDataChangeEvent) {
+        console.log("Change: " + event.transaction.description + " " + event.transaction.new + " " + event.source);
+
+        // Is this a new transaction?
+        if(this.transaction != null && this.transaction.new) {
+            this.handleNewTransactionChange();
+        } else {
+            this.handleStandardTransactionChange(event);
+        }
     }
 }

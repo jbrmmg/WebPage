@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, EventEmitter, OnInit, Output} from "@angular/core";
 import {TransactionFilter} from "../transaction/transactionFilter";
 import {MoneyService} from "../money.service";
 import {FlagType} from "./header/grid-header-flag-type";
@@ -30,6 +30,7 @@ import {ITransactionReport, TransactionReport} from "../transaction/TransactionR
 import {JbAccount} from "../account/jbaccount";
 import {FinancialAmount} from "../transaction/financialamount";
 import {TransactionEditType} from "../transaction/transactionEditType";
+import {GridDataChangeEvent} from "./data/grid-data-change-event";
 
 @Component({
     selector: 'jbr-grid-transaction',
@@ -70,6 +71,7 @@ export class GridTransaction implements OnInit {
     filter : TransactionFilter;
     newTransaction: TransactionReport = new TransactionReport();
     status: string;
+    @Output() gridDataChangeHandler: EventEmitter<any> = new EventEmitter();
 
     constructor(private _moneyService: MoneyService) {
         this.data = null;
@@ -187,5 +189,9 @@ export class GridTransaction implements OnInit {
         this.data.forEach(value => {
             value.editing = TransactionEditType.None;
         });
+    }
+
+    valueChanged(event: GridDataChangeEvent) {
+        this.gridDataChangeHandler.emit(event);
     }
 }

@@ -6,6 +6,8 @@ import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {Category} from "../../category/category";
 import {GridData} from "./grid-data";
 import {TransactionEditType} from "../../transaction/transactionEditType";
+import {GridDataChangeEvent} from "./grid-data-change-event";
+import {HeaderType} from "../header/grid-header-type";
 
 @Component({
     selector: 'jbr-grid-data-category',
@@ -70,6 +72,11 @@ export class GridDataCategory extends GridData {
         this.modalRef.hide();
 
         this.transaction.category = category;
+
+        let event: GridDataChangeEvent = new GridDataChangeEvent();
+        event.transaction = this.transaction;
+        event.source = HeaderType.Category;
+        this.valueChanged.emit(event);
     }
 
     onSelectTransfer(id: string) {

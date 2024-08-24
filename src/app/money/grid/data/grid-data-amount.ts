@@ -3,6 +3,8 @@ import {CurrencyPipe, NgIf} from "@angular/common";
 import {MoneyService} from "../../money.service";
 import {GridDataInlineEdit} from "./grid-data-inline-edit";
 import {TransactionEditType} from "../../transaction/transactionEditType";
+import {GridDataChangeEvent} from "./grid-data-change-event";
+import {HeaderType} from "../header/grid-header-type";
 
 @Component({
     selector: 'jbr-grid-data-amount',
@@ -44,23 +46,32 @@ export class GridDataAmount extends GridDataInlineEdit {
     interpretInput(text: string): void {
         let number = MoneyService.getFinanceValue(text);
 
+        let event: GridDataChangeEvent = new GridDataChangeEvent();
+        event.transaction = this.transaction;
+
         if(this.type == "DB") {
             if(number < 0) {
                 this.transaction.amount.value = number * -1;
                 this.transaction.amount.type = "CR";
+                event.source = HeaderType.Credit;
             } else {
                 this.transaction.amount.value = number * -1;
                 this.transaction.amount.type = "DB";
+                event.source = HeaderType.Debit;
             }
         } else {
             if(number < 0) {
                 this.transaction.amount.value = number;
                 this.transaction.amount.type = "DB";
+                event.source = HeaderType.Debit;
             } else {
                 this.transaction.amount.value = number;
                 this.transaction.amount.type = "CR";
+                event.source = HeaderType.Credit;
             }
         }
+
+        this.valueChanged.emit(event);
     }
 
     getValueForEdit(): string {

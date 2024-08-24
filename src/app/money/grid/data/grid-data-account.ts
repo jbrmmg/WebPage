@@ -7,6 +7,8 @@ import {MoneyAccount} from "../../account/money-account.component";
 import {JbAccount} from "../../account/jbaccount";
 import {GridData} from "./grid-data";
 import {TransactionEditType} from "../../transaction/transactionEditType";
+import {GridDataChangeEvent} from "./grid-data-change-event";
+import {HeaderType} from "../header/grid-header-type";
 
 @Component({
     selector: 'jbr-grid-data-account',
@@ -44,6 +46,11 @@ export class GridDataAccount extends GridData {
     onSelect(account: JbAccount) {
         if(this.transaction !=null) {
             this.transaction.account = account;
+
+            let event: GridDataChangeEvent = new GridDataChangeEvent();
+            event.transaction = this.transaction;
+            event.source = HeaderType.Account;
+            this.valueChanged.emit(event);
         }
 
         this.modalRef.hide();
