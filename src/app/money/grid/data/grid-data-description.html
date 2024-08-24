@@ -1,3 +1,3 @@
-<p *ngIf="!transaction.editing && !blank()" (click)="onClick()" [style.background]="'#' + getCategoryColour()" [style.color]="'#' + getTextColour()">{{getDescription()}}</p>
-<input *ngIf="transaction.editing" (keydown)="onKeydown($event)" style="width:100%" #input type="text"/>
-<p *ngIf="!transaction.editing && blank()" (click)="onClick()" style="height: 100%">&nbsp;</p>
+<p *ngIf="!isEditing() && !blank()" (click)="onClick()" [style.background]="'#' + getCategoryColour()" [style.color]="'#' + getTextColour()">{{getDescription()}}</p>
+<p *ngIf="!isEditing() && blank()" (click)="onClick()" style="height: 100%">&nbsp;</p>
+<input *ngIf="isEditing()" (keydown)="onKeydown($event)" style="width:100%" #input type="text"/>

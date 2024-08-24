@@ -1,9 +1,10 @@
-import {Component, ElementRef, EventEmitter, Output, ViewChild} from "@angular/core";
+import {Component, EventEmitter, Output} from "@angular/core";
 import {TransactionReport} from "../../transaction/TransactionReport";
 import {MoneyService} from "../../money.service";
 import {NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
-import {GridData} from "./grid-data";
+import {TransactionEditType} from "../../transaction/transactionEditType";
+import {GridDataInlineEdit} from "./grid-data-inline-edit";
 
 @Component({
     selector: 'jbr-grid-data-description',
@@ -15,15 +16,13 @@ import {GridData} from "./grid-data";
     ],
     standalone: true
 })
-export class GridDataDescription extends GridData {
+export class GridDataDescription extends GridDataInlineEdit {
     @Output() edit: EventEmitter<void> = new EventEmitter();
-
-    @ViewChild('input') input: ElementRef;
 
     protected readonly MoneyService = MoneyService;
 
     constructor() {
-        super();
+        super(TransactionEditType.Description);
     }
 
     getDescription(): string {
@@ -72,33 +71,11 @@ export class GridDataDescription extends GridData {
         return MoneyService.getTextColor(this.getCategoryColour());
     }
 
-    onClick() {
-        // Is this field editable?
-        if(this.transaction.type == TransactionReport.TRANSACTION) {
-            if(!this.transaction.editing) {
-                this.edit.emit();
-                this.transaction.editing = true;
-                setTimeout(()=> {
-                    this.input.nativeElement.value = this.transaction.description;
-                    this.input.nativeElement.focus();
-                },0);
-            }
-            return;
-        }
-
-        this.transaction.editing = false;
+    interpretInput(text: string): void {
+        this.transaction.description = text;
     }
 
-    onKeydown(event: any) {
-        if(event.key === "Escape") {
-            this.transaction.editing = false;
-            return;
-        }
-
-        if(event.key === "Enter") {
-            this.transaction.description = this.input.nativeElement.value;
-            this.transaction.editing = false;
-            return;
-        }
+    getValueForEdit(): string {
+        return this.transaction.description;
     }
 }

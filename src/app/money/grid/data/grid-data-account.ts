@@ -6,6 +6,7 @@ import {MoneyCategory} from "../../category/money-cat.component";
 import {MoneyAccount} from "../../account/money-account.component";
 import {JbAccount} from "../../account/jbaccount";
 import {GridData} from "./grid-data";
+import {TransactionEditType} from "../../transaction/transactionEditType";
 
 @Component({
     selector: 'jbr-grid-data-account',
@@ -35,6 +36,7 @@ export class GridDataAccount extends GridData {
 
     openModal(template: TemplateRef<any>) {
         if(this.transaction != null && this.transaction.new) {
+            this.transaction.editing = TransactionEditType.None;
             this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
         }
     }

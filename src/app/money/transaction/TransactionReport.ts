@@ -6,10 +6,11 @@ import {IFinancialAmount} from "./financialamount";
 import {IAccount} from "../account/jbaccount";
 import {ICategory} from "../category/category";
 import {IStatement} from "../statement/statement";
+import {TransactionEditType} from "./transactionEditType";
 
 export interface ITransactionReport {
     new: boolean;
-    editing: boolean;
+    editing: TransactionEditType;
     id: number;
     type: string;
     amount: IFinancialAmount;
@@ -33,7 +34,7 @@ export interface ITransactionReport {
 
 export class TransactionReport implements ITransactionReport {
     new: boolean;
-    editing: boolean;
+    editing: TransactionEditType;
     account: IAccount;
     amount: IFinancialAmount;
     balance: IFinancialAmount;
@@ -58,7 +59,7 @@ export class TransactionReport implements ITransactionReport {
         this.new = false;
         this.selected = false;
         this.selectable = false;
-        this.editing = false;
+        this.editing = TransactionEditType.None;
     }
 
     public static get TRANSACTION():string {return "TRANSACTION"};

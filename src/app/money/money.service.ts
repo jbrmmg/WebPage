@@ -190,6 +190,20 @@ export class MoneyService {
         return MoneyService.getDateString(today);
     }
 
+    public static getFinanceValue(text: string): number {
+        // Remove £ and , for the evaluation.
+        text = text.replace("£","").replace(",","");
+
+        // Is the value a number?
+        let number = Number(text);
+
+        if(isNaN(number)) {
+            return 0;
+        }
+
+        return number;
+    }
+
     public static getDisabledAccountImage(id: string): string {
         return environment.moneyAccountDisabledImage.replace("##id##", id)
     }

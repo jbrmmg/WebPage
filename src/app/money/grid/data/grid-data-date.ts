@@ -1,7 +1,8 @@
-import {Component, ElementRef, ViewChild} from "@angular/core";
+import {Component} from "@angular/core";
 import {DatePipe, NgIf} from "@angular/common";
 import {MoneyService} from "../../money.service";
-import {GridData} from "./grid-data";
+import {TransactionEditType} from "../../transaction/transactionEditType";
+import {GridDataInlineEdit} from "./grid-data-inline-edit";
 
 @Component({
     selector: 'jbr-grid-data-date',
@@ -13,40 +14,16 @@ import {GridData} from "./grid-data";
     ],
     standalone: true
 })
-export class GridDataDate extends GridData {
-    @ViewChild('input') input: ElementRef;
-
-    isEditing() {
-        return this.transaction != null && this.transaction.editing;
+export class GridDataDate extends GridDataInlineEdit {
+    constructor() {
+        super(TransactionEditType.Date);
     }
 
-    onClick() {
-        if(this.transaction != null && this.transaction.new) {
-            if(!this.transaction.editing) {
-                this.transaction.editing = true;
-                setTimeout(()=> {
-                    this.input.nativeElement.focus();
-                },0);
-            }
-            return;
-        }
-
-        if(this.transaction != null) {
-            this.transaction.editing = false;
-        }
+    interpretInput(text: string): void {
+        this.transaction.date = MoneyService.getDate(text);
     }
 
-    onKeydown(event: any) {
-        if(event.key === "Escape") {
-            this.transaction.editing = false;
-            return;
-        }
-
-        if(event.key === "Enter") {
-            // Convert the text entered into a date.
-            this.transaction.date = MoneyService.getDate(this.input.nativeElement.value);
-            this.transaction.editing = false;
-            return;
-        }
+    getValueForEdit(): string {
+        return "";
     }
 }

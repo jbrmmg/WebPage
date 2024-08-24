@@ -29,6 +29,7 @@ import {HeaderType} from "./header/grid-header-type";
 import {ITransactionReport, TransactionReport} from "../transaction/TransactionReport";
 import {JbAccount} from "../account/jbaccount";
 import {FinancialAmount} from "../transaction/financialamount";
+import {TransactionEditType} from "../transaction/transactionEditType";
 
 @Component({
     selector: 'jbr-grid-transaction',
@@ -143,7 +144,7 @@ export class GridTransaction implements OnInit {
                 // Create a placeholder for the new transaction.
                 this.newTransaction.new = true;
                 this.newTransaction.type = TransactionReport.TRANSACTION;
-                this.newTransaction.date = "2024-07-23";
+                this.newTransaction.date = MoneyService.getDateString(new Date());
                 this.newTransaction.description = "";
                 this.newTransaction.account = new JbAccount("UNKN", "Unknown", "", "FFFFFF", false);
                 this.newTransaction.fromReconciliation = false;
@@ -184,7 +185,7 @@ export class GridTransaction implements OnInit {
 
     onEdit() {
         this.data.forEach(value => {
-            value.editing = false;
+            value.editing = TransactionEditType.None;
         });
     }
 }

@@ -5,6 +5,7 @@ import {MoneyCategory} from "../../category/money-cat.component";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {Category} from "../../category/category";
 import {GridData} from "./grid-data";
+import {TransactionEditType} from "../../transaction/transactionEditType";
 
 @Component({
     selector: 'jbr-grid-data-category',
@@ -51,6 +52,9 @@ export class GridDataCategory extends GridData {
     }
 
     openModal(template: TemplateRef<any>) {
+        if(this.transaction != null && this.transaction.editing != TransactionEditType.None) {
+            this.transaction.editing = TransactionEditType.None;
+        }
         this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
     }
 

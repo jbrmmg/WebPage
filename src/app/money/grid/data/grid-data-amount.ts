@@ -1,6 +1,8 @@
 import {Component, Input} from "@angular/core";
 import {CurrencyPipe, NgIf} from "@angular/common";
-import {GridData} from "./grid-data";
+import {MoneyService} from "../../money.service";
+import {GridDataInlineEdit} from "./grid-data-inline-edit";
+import {TransactionEditType} from "../../transaction/transactionEditType";
 
 @Component({
     selector: 'jbr-grid-data-amount',
@@ -12,8 +14,12 @@ import {GridData} from "./grid-data";
     ],
     standalone: true
 })
-export class GridDataAmount extends GridData {
+export class GridDataAmount extends GridDataInlineEdit {
     @Input() type: string;
+
+    constructor() {
+        super(TransactionEditType.Amount);
+    }
 
     debit(): boolean {
         return this.type == "DB";
@@ -29,5 +35,43 @@ export class GridDataAmount extends GridData {
         }
 
         return String(this.transaction.amount.value);
+    }
+
+    isBlank(): boolean {
+        return this.transaction == null || this.transaction.amount == null || this.transaction.amount.type != this.type;
+    }
+
+    interpretInput(text: string): void {
+        let number = MoneyService.getFinanceValue(text);
+
+        if(this.type == "DB") {
+            if(number < 0) {
+                this.transaction.amount.value = number * -1;
+                this.transaction.amount.type = "CR";
+            } else {
+                this.transaction.amount.value = number * -1;
+                this.transaction.amount.type = "DB";
+            }
+        } else {
+            if(number < 0) {
+                this.transaction.amount.value = number;
+                this.transaction.amount.type = "DB";
+            } else {
+                this.transaction.amount.value = number;
+                this.transaction.amount.type = "CR";
+            }
+        }
+    }
+
+    getValueForEdit(): string {
+        let text: string;
+
+        text = "";
+        if(this.transaction != null && this.transaction.amount != null && this.transaction.amount.value != 0) {
+            text = this.transaction.amount.value.toString();
+            text = text.replace("-", "");
+        }
+
+        return text;
     }
 }
