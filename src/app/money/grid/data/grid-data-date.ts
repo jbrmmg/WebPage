@@ -3,7 +3,7 @@ import {DatePipe, NgIf} from "@angular/common";
 import {MoneyService} from "../../money.service";
 import {TransactionEditType} from "../../transaction/transactionEditType";
 import {GridDataInlineEdit} from "./grid-data-inline-edit";
-import {GridDataChangeEvent} from "./grid-data-change-event";
+import {GridDataEvent} from "./grid-data-event";
 import {HeaderType} from "../header/grid-header-type";
 
 @Component({
@@ -24,7 +24,7 @@ export class GridDataDate extends GridDataInlineEdit {
     interpretInput(text: string): void {
         this.transaction.date = MoneyService.getDate(text);
 
-        let event: GridDataChangeEvent = new GridDataChangeEvent();
+        let event: GridDataEvent = new GridDataEvent();
         event.transaction = this.transaction;
         event.source = HeaderType.Date;
         this.valueChanged.emit(event);

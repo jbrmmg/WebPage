@@ -6,7 +6,7 @@ import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {Category} from "../../category/category";
 import {GridData} from "./grid-data";
 import {TransactionEditType} from "../../transaction/transactionEditType";
-import {GridDataChangeEvent} from "./grid-data-change-event";
+import {GridDataEvent} from "./grid-data-event";
 import {HeaderType} from "../header/grid-header-type";
 
 @Component({
@@ -54,6 +54,12 @@ export class GridDataCategory extends GridData {
     }
 
     openModal(template: TemplateRef<any>) {
+        // If the category is a system category, do not allow amendment.
+        if(this.transaction != null && this.transaction.category != null && this.transaction.category.systemUse) {
+            return;
+        }
+
+        // Stop the editing of other transactions.
         if(this.transaction != null && this.transaction.editing != TransactionEditType.None) {
             this.transaction.editing = TransactionEditType.None;
         }
@@ -72,8 +78,9 @@ export class GridDataCategory extends GridData {
         this.modalRef.hide();
 
         this.transaction.category = category;
+        this.transaction.modified = true;
 
-        let event: GridDataChangeEvent = new GridDataChangeEvent();
+        let event: GridDataEvent = new GridDataEvent();
         event.transaction = this.transaction;
         event.source = HeaderType.Category;
         this.valueChanged.emit(event);
@@ -83,7 +90,14 @@ export class GridDataCategory extends GridData {
         this.modalRef.hide();
 
         // Account transfer
-        this.transaction.category = new Category("TRF", "Transfer (" + id + ")", 0, false, "FFFFFF", id, false, false)
+        this.transaction.category = new Category("TRF", "Transfer (" + id + ")", 0, false, "FFFFFF", id, false, false);
+        this.transaction.modified = true;
+        this.transaction.transferAccountId = id;
+
+        let event: GridDataEvent = new GridDataEvent();
+        event.transaction = this.transaction;
+        event.source = HeaderType.Category;
+        this.valueChanged.emit(event);
     }
 
     allowTransfer(): boolean {

@@ -9,5 +9,6 @@ export enum HeaderType {
     Description,
     Credit,
     Debit,
-    AllFlag
+    AllFlag,
+    Action
 }

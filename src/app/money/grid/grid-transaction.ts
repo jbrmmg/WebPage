@@ -30,7 +30,9 @@ import {ITransactionReport, TransactionReport} from "../transaction/TransactionR
 import {JbAccount} from "../account/jbaccount";
 import {FinancialAmount} from "../transaction/financialamount";
 import {TransactionEditType} from "../transaction/transactionEditType";
-import {GridDataChangeEvent} from "./data/grid-data-change-event";
+import {GridDataEvent} from "./data/grid-data-event";
+import {GridDataActionType} from "./data/grid-data-action-type";
+import {Transaction} from "../transaction/transaction";
 
 @Component({
     selector: 'jbr-grid-transaction',
@@ -136,6 +138,19 @@ export class GridTransaction implements OnInit {
         })
     }
 
+    clearTransaction(transaction: ITransactionReport) {
+        transaction.new = true;
+        transaction.type = TransactionReport.TRANSACTION;
+        transaction.date = MoneyService.getDateString(new Date());
+        transaction.description = "";
+        transaction.account = new JbAccount("UNKN", "Unknown", "", "FFFFFF", false);
+        transaction.fromReconciliation = false;
+        transaction.predicted = false;
+        transaction.amount = new FinancialAmount(0,"CR");
+        transaction.balance = new FinancialAmount(0,"CR");
+        transaction.selectable = false;
+    }
+
     update() {
         this.status = "Updating transactions ..."
         this.data = [];
@@ -144,16 +159,7 @@ export class GridTransaction implements OnInit {
                 this.data = val;
 
                 // Create a placeholder for the new transaction.
-                this.newTransaction.new = true;
-                this.newTransaction.type = TransactionReport.TRANSACTION;
-                this.newTransaction.date = MoneyService.getDateString(new Date());
-                this.newTransaction.description = "";
-                this.newTransaction.account = new JbAccount("UNKN", "Unknown", "", "FFFFFF", false);
-                this.newTransaction.fromReconciliation = false;
-                this.newTransaction.predicted = false;
-                this.newTransaction.amount = new FinancialAmount(0,"CR");
-                this.newTransaction.balance = new FinancialAmount(0,"CR");
-                this.newTransaction.selectable = false;
+                this.clearTransaction(this.newTransaction);
                 this.data.unshift(this.newTransaction)
             },
             error: (response) => {
@@ -165,6 +171,7 @@ export class GridTransaction implements OnInit {
                 let credits: number = 0;
                 let debits: number = 0;
                 this.data.forEach(value => {
+                    value.modified = false;
                     if(value.type == TransactionReport.TRANSACTION) {
                         value.selectable = value.new != true;
 
@@ -191,7 +198,108 @@ export class GridTransaction implements OnInit {
         });
     }
 
-    valueChanged(event: GridDataChangeEvent) {
+    valueChanged(event: GridDataEvent) {
         this.gridDataChangeHandler.emit(event);
+    }
+
+    performActionUpdate(transaction: ITransactionReport): boolean {
+        console.log("Update");
+        return false;
+    }
+
+    performActionAdd(transaction: ITransactionReport): boolean {
+        // Create the new transaction (if transfer then its two).
+        let transactions: Transaction[] = [];
+
+        let newTransaction: Transaction = new Transaction();
+        transactions.push(newTransaction);
+        newTransaction.date = transaction.date;
+        newTransaction.amount = transaction.amount.value;
+        newTransaction.description = transaction.description;
+        newTransaction.accountId = transaction.account.id;
+
+        if(transaction.category.id == "TRF") {
+            // This is a transfer.
+            newTransaction.categoryId = transaction.category.id;
+
+            newTransaction = new Transaction();
+            transactions.push(newTransaction);
+            newTransaction.date = transaction.date;
+            newTransaction.amount = transaction.amount.value;
+            newTransaction.description = transaction.description;
+            newTransaction.accountId = transaction.transferAccountId;
+        } else {
+            // Standard transaction.
+            newTransaction.categoryId = transaction.category.id;
+        }
+
+        this._moneyService.addTransaction(transactions).subscribe({
+            next: (val) => {
+                console.log("Created TRN: " + val.date + " " + val.amount);
+            },
+            error: (response) => {
+                console.log("Failed to add TRN: " + response);
+            },
+            complete: () => {
+                this.update();
+            }
+        });
+
+        return false;
+    }
+
+    performActionReconcile(transaction: ITransactionReport): boolean {
+        console.log("Reconcile");
+        return false;
+    }
+
+    performActionUnreconcile(transaction: ITransactionReport): boolean {
+        console.log("Unreconcile");
+        return false;
+    }
+
+    performActionDelete(transaction: ITransactionReport): boolean {
+        console.log("Delete");
+        return false;
+    }
+
+    performActionClearAdd(transaction: ITransactionReport) {
+        this.clearTransaction(transaction);
+
+        // Indicate that the transaction changed.
+        let event: GridDataEvent = new GridDataEvent();
+        event.transaction = transaction;
+        event.action = GridDataActionType.ClearAdd;
+        event.source = HeaderType.Action;
+
+        this.gridDataChangeHandler.emit(event);
+    }
+
+    performAction(event: GridDataEvent) {
+        // Perform the action specified.
+        switch(event.action) {
+            case GridDataActionType.Update:
+                this.performActionUpdate(event.transaction);
+                break;
+            case GridDataActionType.Add:
+                this.performActionAdd(event.transaction);
+                break;
+            case GridDataActionType.Reconcile:
+                this.performActionReconcile(event.transaction);
+                break;
+            case GridDataActionType.Unreconcile:
+                this.performActionUnreconcile(event.transaction);
+                break;
+            case GridDataActionType.Delete:
+                this.performActionDelete(event.transaction);
+                break;
+            case GridDataActionType.ClearAdd:
+                this.performActionClearAdd(event.transaction);
+                break;
+            case GridDataActionType.PendingUpdate:
+            case GridDataActionType.PendingAdd:
+                console.log("Pending actions are ignored - " + event.action);
+                break;
+        }
     }
 }

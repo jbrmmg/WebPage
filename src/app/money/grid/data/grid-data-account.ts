@@ -7,7 +7,7 @@ import {MoneyAccount} from "../../account/money-account.component";
 import {JbAccount} from "../../account/jbaccount";
 import {GridData} from "./grid-data";
 import {TransactionEditType} from "../../transaction/transactionEditType";
-import {GridDataChangeEvent} from "./grid-data-change-event";
+import {GridDataEvent} from "./grid-data-event";
 import {HeaderType} from "../header/grid-header-type";
 
 @Component({
@@ -47,7 +47,7 @@ export class GridDataAccount extends GridData {
         if(this.transaction !=null) {
             this.transaction.account = account;
 
-            let event: GridDataChangeEvent = new GridDataChangeEvent();
+            let event: GridDataEvent = new GridDataEvent();
             event.transaction = this.transaction;
             event.source = HeaderType.Account;
             this.valueChanged.emit(event);

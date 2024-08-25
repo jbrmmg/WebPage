@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Input, OnInit} from "@angular/core";
+import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {GridData} from "./grid-data";
 import {GridDataActionType} from "./grid-data-action-type";
 import {NgClass, NgForOf} from "@angular/common";
-import {GridDataChangeEvent} from "./grid-data-change-event";
+import {GridDataEvent} from "./grid-data-event";
+import {HeaderType} from "../header/grid-header-type";
 
 class ActionOption {
     text: string;
@@ -23,7 +24,9 @@ class ActionOption {
 export class GridDataActions extends GridData implements OnInit {
     actions: ActionOption[] = [];
     addOption: ActionOption = null;
-    @Input() gridDataChangeHandler: EventEmitter<GridDataChangeEvent>;
+    updateOption: ActionOption = null;
+    @Input() gridDataChangeHandler: EventEmitter<GridDataEvent>;
+    @Output() performAction: EventEmitter<GridDataEvent> = new EventEmitter();
 
     ngOnInit():void {
         this.gridDataChangeHandler.asObservable().subscribe(next => {
@@ -34,18 +37,12 @@ export class GridDataActions extends GridData implements OnInit {
         });
 
         // Check what actions are allowed.
-        if(this.transaction.actionUpdateCategory) {
-            let updateCategory: ActionOption = new ActionOption();
-            updateCategory.text = "Update Category";
-            updateCategory.code = "UC";
-            updateCategory.type = GridDataActionType.UpdateCategory;
-            this.actions.push(updateCategory)
-        }
         if(this.transaction.actionUpdate) {
             let update: ActionOption = new ActionOption();
-            update.text = "Update";
-            update.code = "U";
-            update.type = GridDataActionType.Update;
+            update.text = "Update (pending)";
+            update.code = "UP";
+            update.type = GridDataActionType.PendingUpdate;
+            this.updateOption = update;
             this.actions.push(update);
         }
         if(this.transaction.actionReconcile) {
@@ -92,6 +89,7 @@ export class GridDataActions extends GridData implements OnInit {
                 return "btn-action btn btn-danger";
 
             case "P":
+            case "UP":
                 return "btn-action btn btn-secondary";
 
             case "R":
@@ -110,9 +108,8 @@ export class GridDataActions extends GridData implements OnInit {
             case "C":
             case "UN":
                 return "fa fa-times";
-            case "UC":
-                return "fa fa-list";
             case "U":
+            case "UP":
                 return "fa fa-pencil";
             case "R":
             case "P":
@@ -129,7 +126,12 @@ export class GridDataActions extends GridData implements OnInit {
     }
 
     doAction(action: ActionOption) {
-        console.log("Do Action: " + action.text);
+        let event: GridDataEvent = new GridDataEvent();
+        event.action = action.type;
+        event.transaction = this.transaction;
+        event.source = HeaderType.Action;
+
+        this.performAction.emit(event);
     }
 
     handleNewTransactionChange() {
@@ -152,18 +154,28 @@ export class GridDataActions extends GridData implements OnInit {
         }
     }
 
-    handleStandardTransactionChange(event: GridDataChangeEvent) {
-
+    handleStandardTransactionChange() {
+        if(this.transaction != null) {
+            if(this.transaction.modified) {
+                this.updateOption.text = "Update";
+                this.updateOption.code = "U";
+                this.updateOption.type = GridDataActionType.Update;
+            } else {
+                this.updateOption.text = "Update (pending)";
+                this.updateOption.code = "UP";
+                this.updateOption.type = GridDataActionType.PendingUpdate;
+            }
+        }
     }
 
-    handleTransactionChange(event: GridDataChangeEvent) {
+    handleTransactionChange(event: GridDataEvent) {
         console.log("Change: " + event.transaction.description + " " + event.transaction.new + " " + event.source);
 
         // Is this a new transaction?
         if(this.transaction != null && this.transaction.new) {
             this.handleNewTransactionChange();
         } else {
-            this.handleStandardTransactionChange(event);
+            this.handleStandardTransactionChange();
         }
     }
 }

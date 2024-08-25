@@ -82,7 +82,7 @@
                     <jbr-grid-data-balance [transaction]="transaction"></jbr-grid-data-balance>
                 </td>
                 <td>
-                    <jbr-grid-data-actions [transaction]="transaction" [gridDataChangeHandler]="gridDataChangeHandler"></jbr-grid-data-actions>
+                    <jbr-grid-data-actions [transaction]="transaction" [gridDataChangeHandler]="gridDataChangeHandler" (performAction)="performAction($event)"></jbr-grid-data-actions>
                 </td>
             </tr>
     </table>

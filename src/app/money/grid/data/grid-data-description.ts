@@ -5,7 +5,7 @@ import {NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {TransactionEditType} from "../../transaction/transactionEditType";
 import {GridDataInlineEdit} from "./grid-data-inline-edit";
-import {GridDataChangeEvent} from "./grid-data-change-event";
+import {GridDataEvent} from "./grid-data-event";
 import {HeaderType} from "../header/grid-header-type";
 
 @Component({
@@ -76,7 +76,7 @@ export class GridDataDescription extends GridDataInlineEdit {
     interpretInput(text: string): void {
         this.transaction.description = text;
 
-        let event: GridDataChangeEvent = new GridDataChangeEvent();
+        let event: GridDataEvent = new GridDataEvent();
         event.transaction = this.transaction;
         event.source = HeaderType.Description;
         this.valueChanged.emit(event);

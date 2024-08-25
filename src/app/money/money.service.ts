@@ -5,10 +5,9 @@ import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {Category, ICategory} from './category/category';
 import {JbAccount,IAccount} from './account/jbaccount';
-import {ITransactionType, TransactionType} from './transaction/type';
+import {TransactionType} from './transaction/type';
 import {IStatement, Statement} from './statement/statement';
 import {IMatch} from './reconciliation/match';
-import {IRegular} from './transaction/regular';
 import {IFile} from './files/file';
 import {ITransaction, Transaction} from "./transaction/transaction";
 import {LockRequest} from "./statement/lockrequest";
@@ -278,107 +277,6 @@ export class MoneyService {
         );
     }
 
-    getRegularPayments(): Observable<IRegular[]> {
-        return this.http.get<IRegular[]>(environment.moneyGetRegularUrl).pipe(
-            tap(data => console.log('All: ' + JSON.stringify(data))),
-            catchError(err => MoneyService.handleError(err))
-        );
-    }
-
-    private getTransactionsUrl(type: ITransactionType,
-                               from: Date,
-                               to: Date,
-                               accounts: JbAccount[],
-                               categories: Category[]): string {
-
-        let fromClause: string = null;
-        let toClause: string = null;
-        let categoryClause: string = null;
-        let accountClause: string = null;
-        let typeId: string = 'XX';
-        let result: string = environment.moneyTransactionUrlFormat;
-
-        // Calculate the clauses
-        if (type != null) {
-            typeId = type.id;
-
-            if (from != null) {
-                if (type.id === 'RC' || type.id === 'AL') {
-                    fromClause = '&from=' + MoneyService.dateToString(from);
-                }
-            }
-
-            if (to != null) {
-                if (type.id === 'AL') {
-                    toClause = '&to=' + MoneyService.dateToString(to);
-                }
-            }
-        }
-
-        if (accounts != null) {
-            let allAccount = true;
-
-            accounts.forEach(value => {
-                if (!value.selected) {
-                    allAccount = false;
-                }
-            });
-
-            if (!allAccount) {
-                let addComma = false;
-                accountClause = '&account=';
-
-                accounts.forEach(value => {
-                    if (value.selected) {
-                        if (addComma) {
-                            accountClause += ',';
-                        }
-                        accountClause += value.id;
-                        addComma = true;
-                    }
-                });
-            }
-        }
-
-        if (categories != null) {
-            let allCategories = true;
-
-            categories.forEach(value => {
-                if (!value.selected) {
-                    allCategories = false;
-                }
-            });
-
-            if (!allCategories) {
-                let addComma = false;
-                categoryClause = '&category=';
-
-                categories.forEach(value => {
-                    if (value.selected) {
-                        if (addComma) {
-                            categoryClause += ',';
-                        }
-                        categoryClause += value.id;
-                        addComma = true;
-                    }
-                });
-            }
-        }
-
-        console.log('Criteria -  ' + fromClause + ' ' + toClause + ' ' + accountClause + ' ' + categoryClause);
-
-        // Apply the clauses.
-        result = result.replace('##type##', typeId);
-        result = result.replace('[from]', (fromClause == null ? '' : fromClause));
-        result = result.replace('[to]', (toClause == null ? '' : toClause));
-        result = result.replace('[account]', (accountClause == null ? '' : accountClause));
-        result = result.replace('[category]', (categoryClause == null ? '' : categoryClause));
-
-        console.log(result);
-
-        return result;
-    }
-
     getTransactions(filter: TransactionFilter) : Observable<ITransactionReport[]>  {
         console.log(JSON.stringify(filter));
 
@@ -388,15 +286,8 @@ export class MoneyService {
         );
     }
 
-    addTransaction(transactions: Transaction[]) {
-        this.http.post<Transaction>(environment.moneyAddUrl, transactions).subscribe({
-            next: (val) => { console.log('POST (add transaction) call successful value returned in body', val); },
-            error: (response) => { console.log('POST (add transaction) call in error', response); },
-            complete: () => {
-                console.log('The POST (add transaction) observable is now complete');
-                this.updateTransactions.emit(null);
-            }
-        });
+    addTransaction(transactions: Transaction[]): Observable<Transaction> {
+        return this.http.post<Transaction>(environment.moneyAddUrl, transactions);
     }
 
     loadFileRequest(file: IFile) {

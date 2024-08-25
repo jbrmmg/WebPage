@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {ITransactionReport} from "../../transaction/TransactionReport";
-import {GridDataChangeEvent} from "./grid-data-change-event";
+import {GridDataEvent} from "./grid-data-event";
 
 @Component({
     selector: '',
@@ -10,5 +10,5 @@ import {GridDataChangeEvent} from "./grid-data-change-event";
 })
 export class GridData {
     @Input() transaction: ITransactionReport;
-    @Output() valueChanged: EventEmitter<GridDataChangeEvent> = new EventEmitter();
+    @Output() valueChanged: EventEmitter<GridDataEvent> = new EventEmitter();
 }

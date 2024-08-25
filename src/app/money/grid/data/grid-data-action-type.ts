@@ -1,6 +1,6 @@
 export enum GridDataActionType {
-    UpdateCategory,
     Update,
+    PendingUpdate,
     Reconcile,
     Unreconcile,
     Delete,

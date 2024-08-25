@@ -7,6 +7,7 @@
     "startint": "ng serve --configuration=debug",
     "startpdn": "ng serve --configuration=debug-web --proxy-config proxy.prod.conf.json",
     "startdev": "ng serve --configuration=debug-web --proxy-config proxy.dev.conf.json",
+    "startdevdbg": "ng serve --configuration=debug-web --proxy-config proxy.dev-dbg.conf.json",
     "startdbg": "ng serve --configuration=debug-web --proxy-config proxy.conf.json",
     "build": "ng build --configuration=production",
     "test": "ng test",

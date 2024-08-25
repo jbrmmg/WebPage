@@ -11,6 +11,8 @@ import {TransactionEditType} from "./transactionEditType";
 export interface ITransactionReport {
     new: boolean;
     editing: TransactionEditType;
+    modified: boolean;
+    transferAccountId: string;
     id: number;
     type: string;
     amount: IFinancialAmount;
@@ -25,7 +27,6 @@ export interface ITransactionReport {
     fromReconciliation: boolean;
     selected: boolean;
     selectable: boolean;
-    actionUpdateCategory: boolean;
     actionUpdate: boolean;
     actionReconcile: boolean;
     actionUnreconcile: boolean;
@@ -35,6 +36,8 @@ export interface ITransactionReport {
 export class TransactionReport implements ITransactionReport {
     new: boolean;
     editing: TransactionEditType;
+    modified: boolean;
+    transferAccountId: string;
     account: IAccount;
     amount: IFinancialAmount;
     balance: IFinancialAmount;
@@ -49,7 +52,6 @@ export class TransactionReport implements ITransactionReport {
     type: string;
     selected: boolean;
     selectable: boolean;
-    actionUpdateCategory: boolean;
     actionUpdate: boolean;
     actionReconcile: boolean;
     actionUnreconcile: boolean;
@@ -60,6 +62,8 @@ export class TransactionReport implements ITransactionReport {
         this.selected = false;
         this.selectable = false;
         this.editing = TransactionEditType.None;
+        this.modified = false;
+        this.transferAccountId = "";
     }
 
     public static get TRANSACTION():string {return "TRANSACTION"};
