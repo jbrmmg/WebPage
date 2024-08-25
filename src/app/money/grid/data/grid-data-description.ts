@@ -75,6 +75,7 @@ export class GridDataDescription extends GridDataInlineEdit {
 
     interpretInput(text: string): void {
         this.transaction.description = text;
+        this.transaction.modified = true;
 
         let event: GridDataEvent = new GridDataEvent();
         event.transaction = this.transaction;
@@ -84,5 +85,10 @@ export class GridDataDescription extends GridDataInlineEdit {
 
     getValueForEdit(): string {
         return this.transaction.description;
+    }
+
+    canEdit(): boolean {
+        // Description can always be edited.
+        return true;
     }
 }

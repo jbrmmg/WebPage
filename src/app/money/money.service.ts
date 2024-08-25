@@ -11,7 +11,6 @@ import {IMatch} from './reconciliation/match';
 import {IFile} from './files/file';
 import {DeleteTransaction, ITransaction, Transaction} from "./transaction/transaction";
 import {LockRequest} from "./statement/lockrequest";
-import {UpdateTransactionRequest} from "./transaction/updatetransactionrequest";
 import {ReconcileUpdate} from "./reconciliation/reconcileupdate";
 import {ReconcileTransaction} from "./reconciliation/reconciletransaction";
 import {LoadFileRequest} from "./files/loadfilerequest";
@@ -313,42 +312,21 @@ export class MoneyService {
         });
     }
 
-    updateTransaction(transaction: ITransaction) {
-        // Update the amount of the transaction.
-        // TransactionId & Amount
-
-        const url = environment.moneyUpdateTransactionUrl;
-
-        const updateRequest = new UpdateTransactionRequest();
-        updateRequest.id = transaction.id;
-        updateRequest.amount = transaction.amount;
-        updateRequest.description = transaction.description;
-        updateRequest.categoryId = transaction.categoryId;
-
-        this.http.put<void>(url, updateRequest).subscribe({
-            next:() => {
-                console.log(url);
-            },
-            error: (response) => {
-                console.log('PUT call in error', response);
-                if (!environment.production) {
-                    console.log('Testing - process as complete.', response);
-                    this.updateTransactions.emit(null);
-                }
-            },
-            complete: () => {
-                this.updateTransactions.emit(null);
-            }
-        });
+    updateTransaction(transaction: ITransactionReport[]): Observable<ITransaction> {
+        // Update the transaction provided.
+        return this.http.put<ITransaction>(environment.moneyUpdateTransactionUrl, transaction);
     }
 
-    reconcile(id: number, reconcile: boolean): Observable<ReconcileStatus> {
+    reconcile(transactions: ITransactionReport[], reconcile: boolean): Observable<ReconcileStatus> {
         // Set transaction to confirmed/unconfirmed
         // TransactionId & Flag
         const url = environment.moneyReconcileTransactionUrl;
 
         const reconcileRequest: ReconcileTransaction = new ReconcileTransaction();
-        reconcileRequest.transactionId = id;
+        reconcileRequest.transactions = [];
+        transactions.forEach(value => {
+            reconcileRequest.transactions.push(value.transactionId);
+        })
         reconcileRequest.reconcile = reconcile;
 
         return this.http.put<ReconcileStatus>(url, reconcileRequest);
@@ -362,12 +340,18 @@ export class MoneyService {
         return this.updateStatements;
     }
 
-    deleteTransaction(id: number): Observable<Transaction> {
+    deleteTransaction(transactions: ITransactionReport[]): Observable<Transaction> {
         // Create the request.
-        let request: DeleteTransaction = new DeleteTransaction();
-        request.id = id;
+        let request: DeleteTransaction[] = [];
 
-        // Delete the transaction.
+        transactions.forEach(value => {
+            let nextRequest: DeleteTransaction = new DeleteTransaction();
+            nextRequest.id = value.transactionId;
+
+            request.push(nextRequest);
+        })
+
+        // Delete the transactions.
         return this.http.delete<Transaction>(environment.moneyDeleteTransactionUrl, {
             body: request
         });

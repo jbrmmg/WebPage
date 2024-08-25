@@ -33,4 +33,9 @@ export class GridDataDate extends GridDataInlineEdit {
     getValueForEdit(): string {
         return "";
     }
+
+    canEdit(): boolean {
+        // Date can only be edited if the transaction is new or not reconciled.
+        return this.transaction.new || this.transaction.statement == null;
+    }
 }

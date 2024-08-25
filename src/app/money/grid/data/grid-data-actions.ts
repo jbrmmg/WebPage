@@ -31,7 +31,7 @@ export class GridDataActions extends GridData implements OnInit {
     ngOnInit():void {
         this.gridDataChangeHandler.asObservable().subscribe(next => {
             // Check if this is the same transaction for this action.
-            if(this.transaction == next.transaction) {
+            if(this.transaction == next.transaction || (next.transaction.selected && this.transaction.selected)) {
                 this.handleTransactionChange(next);
             }
         });

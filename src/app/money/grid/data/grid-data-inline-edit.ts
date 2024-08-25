@@ -22,12 +22,14 @@ export abstract class GridDataInlineEdit extends GridData {
 
     abstract getValueForEdit(): string;
 
+    abstract canEdit(): boolean;
+
     isEditing(): boolean {
         return this.transaction != null && this.transaction.editing == this.editType;
     }
 
     onClick() {
-        if(this.transaction != null && this.transaction.new) {
+        if(this.transaction != null && this.canEdit()) {
             if(this.transaction.editing != this.editType) {
                 this.transaction.editing = this.editType;
                 setTimeout(()=> {

@@ -199,11 +199,31 @@ export class GridTransaction implements OnInit {
     }
 
     valueChanged(event: GridDataEvent) {
+        // If this is a category change from a selected row then apply to the other selected rows.
+        if(event.source == HeaderType.Category && event.transaction.selected && !event.transaction.category.systemUse) {
+            this.data.forEach(next => {
+                if(next.selected &&  next.id != event.transaction.id) {
+                    next.category = event.transaction.category;
+                    next.modified = true;
+                }
+            });
+        }
+
         this.gridDataChangeHandler.emit(event);
     }
 
-    performActionUpdate(transaction: ITransactionReport) {
-        console.log("Update");
+    performActionUpdate(transactions: ITransactionReport[]) {
+        this._moneyService.updateTransaction(transactions).subscribe({
+            next: (val) => {
+                console.log("Updated TRN: " + val.date + " " + val.amount + " " + val.error);
+            },
+            error: (response) => {
+                console.log("Failed to update TRN: " + response);
+            },
+            complete: () => {
+                this.update();
+            }
+        });
     }
 
     performActionAdd(transaction: ITransactionReport) {
@@ -245,8 +265,8 @@ export class GridTransaction implements OnInit {
         });
     }
 
-    performActionReconcile(transaction: ITransactionReport) {
-        this._moneyService.reconcile(transaction.transactionId,true).subscribe({
+    performActionReconcile(transactions: ITransactionReport[]) {
+        this._moneyService.reconcile(transactions,true).subscribe({
             error: (response) => {
                 console.log("Failed to reconcile TRN: " + response);
             },
@@ -256,8 +276,8 @@ export class GridTransaction implements OnInit {
         });
     }
 
-    performActionUnreconcile(transaction: ITransactionReport) {
-        this._moneyService.reconcile(transaction.transactionId,false).subscribe({
+    performActionUnreconcile(transactions: ITransactionReport[]) {
+        this._moneyService.reconcile(transactions,false).subscribe({
             error: (response) => {
                 console.log("Failed to reconcile TRN: " + response);
             },
@@ -267,9 +287,9 @@ export class GridTransaction implements OnInit {
         });
     }
 
-    performActionDelete(transaction: ITransactionReport) {
+    performActionDelete(transactions: ITransactionReport[]) {
         // Delete this transaction.
-        this._moneyService.deleteTransaction(transaction.transactionId).subscribe({
+        this._moneyService.deleteTransaction(transactions).subscribe({
             error: (response) => {
                 console.log("Failed to delete TRN: " + response);
             },
@@ -292,25 +312,48 @@ export class GridTransaction implements OnInit {
     }
 
     performAction(event: GridDataEvent) {
+        // If multiple transactions are selected, then they should all be processed together.
+        let transactions: ITransactionReport[] = [];
+
+        if(event.transaction.selected) {
+            // Pass all selected modified transactions
+            this.data.forEach(next => {
+                switch (event.action) {
+                    case GridDataActionType.Update:
+                        if(next.selected && next.modified) {
+                            transactions.push(next);
+                        }
+                        break;
+                    default:
+                        if(next.selected) {
+                            transactions.push(next);
+                        }
+                        break;
+                }
+            });
+        } else {
+            transactions.push(event.transaction);
+        }
+
         // Perform the action specified.
         switch(event.action) {
             case GridDataActionType.Update:
-                this.performActionUpdate(event.transaction);
-                break;
-            case GridDataActionType.Add:
-                this.performActionAdd(event.transaction);
+                this.performActionUpdate(transactions);
                 break;
             case GridDataActionType.Reconcile:
-                this.performActionReconcile(event.transaction);
+                this.performActionReconcile(transactions);
                 break;
             case GridDataActionType.Unreconcile:
-                this.performActionUnreconcile(event.transaction);
+                this.performActionUnreconcile(transactions);
                 break;
             case GridDataActionType.Delete:
-                this.performActionDelete(event.transaction);
+                this.performActionDelete(transactions);
                 break;
             case GridDataActionType.ClearAdd:
                 this.performActionClearAdd(event.transaction);
+                break;
+            case GridDataActionType.Add:
+                this.performActionAdd(event.transaction);
                 break;
             case GridDataActionType.PendingUpdate:
             case GridDataActionType.PendingAdd:

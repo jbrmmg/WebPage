@@ -14,6 +14,7 @@ export interface ITransaction {
     statementLocked: boolean;
     description: string;
     oppositeTransactionId: number;
+    error: string;
 }
 
 export class Transaction {

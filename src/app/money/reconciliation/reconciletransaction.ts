@@ -1,4 +1,4 @@
 export class ReconcileTransaction {
-    transactionId: number;
+    transactions: number[];
     reconcile: boolean;
 }

@@ -85,4 +85,9 @@ export class GridDataAmount extends GridDataInlineEdit {
 
         return text;
     }
+
+    canEdit(): boolean {
+        // Amount can only be edited if new or not reconciled.
+        return this.transaction.new || this.transaction.statement == null;
+    }
 }
