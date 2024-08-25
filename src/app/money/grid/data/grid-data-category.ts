@@ -1,5 +1,5 @@
 import {Component, TemplateRef} from "@angular/core";
-import {TransactionReport} from "../../transaction/TransactionReport";
+import {TransactionReport} from "../../transaction/transactionReport";
 import {MoneyService} from "../../money.service";
 import {MoneyCategory} from "../../category/money-cat.component";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";

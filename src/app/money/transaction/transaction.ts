@@ -23,3 +23,7 @@ export class Transaction {
     accountId: string;
     description: string;
 }
+
+export class DeleteTransaction {
+    id: number;
+}

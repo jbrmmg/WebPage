@@ -9,14 +9,15 @@ import {TransactionType} from './transaction/type';
 import {IStatement, Statement} from './statement/statement';
 import {IMatch} from './reconciliation/match';
 import {IFile} from './files/file';
-import {ITransaction, Transaction} from "./transaction/transaction";
+import {DeleteTransaction, ITransaction, Transaction} from "./transaction/transaction";
 import {LockRequest} from "./statement/lockrequest";
 import {UpdateTransactionRequest} from "./transaction/updatetransactionrequest";
 import {ReconcileUpdate} from "./reconciliation/reconcileupdate";
 import {ReconcileTransaction} from "./reconciliation/reconciletransaction";
 import {LoadFileRequest} from "./files/loadfilerequest";
 import {TransactionFilter} from "./transaction/transactionFilter";
-import {ITransactionReport} from "./transaction/TransactionReport";
+import {ITransactionReport} from "./transaction/transactionReport";
+import {ReconcileStatus} from "./reconciliation/reconcileStatus";
 
 @Injectable({
     providedIn: 'root'
@@ -341,32 +342,16 @@ export class MoneyService {
         });
     }
 
-    confirmTransaction(transaction: ITransaction,
-                       reconcile: boolean ) {
+    reconcile(id: number, reconcile: boolean): Observable<ReconcileStatus> {
         // Set transaction to confirmed/unconfirmed
         // TransactionId & Flag
         const url = environment.moneyReconcileTransactionUrl;
 
         const reconcileRequest: ReconcileTransaction = new ReconcileTransaction();
-        reconcileRequest.transactionId = transaction.id;
+        reconcileRequest.transactionId = id;
         reconcileRequest.reconcile = reconcile;
 
-        this.http.put<void>(url, reconcileRequest).subscribe({
-            next: () => {
-                console.log(url);
-            },
-            error: (response) => {
-                console.log('PUT call in error', response);
-                if (!environment.production) {
-                    console.log('Testing - process as complete.', response);
-                    this.updateTransactions.emit(null);
-                }
-            },
-            complete: () => {
-                console.log('The PUT observable is now complete (confirm)');
-                this.updateTransactions.emit(null);
-            }
-        });
+        return this.http.put<ReconcileStatus>(url, reconcileRequest);
     }
 
     getTransactionChangeEmitter() {
@@ -377,25 +362,14 @@ export class MoneyService {
         return this.updateStatements;
     }
 
-    deleteTransaction(transaction: ITransaction ) {
+    deleteTransaction(id: number): Observable<Transaction> {
+        // Create the request.
+        let request: DeleteTransaction = new DeleteTransaction();
+        request.id = id;
+
         // Delete the transaction.
-        this.http.delete<Transaction>(environment.moneyDeleteTransactionUrl, {
-            body: transaction
-        }).subscribe({
-            next: () => {
-                console.log(environment.moneyDeleteTransactionUrl);
-            },
-            error: (response) => {
-                console.log('DELETE call in error', response);
-                if (!environment.production) {
-                    console.log('Testing - process as complete.', response);
-                    this.updateTransactions.emit(null);
-                }
-            },
-            complete: () => {
-                console.log('The POST observable is now complete (delete)');
-                this.updateTransactions.emit(null);
-            }
+        return this.http.delete<Transaction>(environment.moneyDeleteTransactionUrl, {
+            body: request
         });
     }
 

@@ -26,7 +26,7 @@ import {GridDataSelect} from "./data/grid-data-select";
 import {GridDataActions} from "./data/grid-data-actions";
 import {FilterEvent, GridHeader} from "./header/grid-header";
 import {HeaderType} from "./header/grid-header-type";
-import {ITransactionReport, TransactionReport} from "../transaction/TransactionReport";
+import {ITransactionReport, TransactionReport} from "../transaction/transactionReport";
 import {JbAccount} from "../account/jbaccount";
 import {FinancialAmount} from "../transaction/financialamount";
 import {TransactionEditType} from "../transaction/transactionEditType";
@@ -202,12 +202,11 @@ export class GridTransaction implements OnInit {
         this.gridDataChangeHandler.emit(event);
     }
 
-    performActionUpdate(transaction: ITransactionReport): boolean {
+    performActionUpdate(transaction: ITransactionReport) {
         console.log("Update");
-        return false;
     }
 
-    performActionAdd(transaction: ITransactionReport): boolean {
+    performActionAdd(transaction: ITransactionReport) {
         // Create the new transaction (if transfer then its two).
         let transactions: Transaction[] = [];
 
@@ -244,23 +243,40 @@ export class GridTransaction implements OnInit {
                 this.update();
             }
         });
-
-        return false;
     }
 
-    performActionReconcile(transaction: ITransactionReport): boolean {
-        console.log("Reconcile");
-        return false;
+    performActionReconcile(transaction: ITransactionReport) {
+        this._moneyService.reconcile(transaction.transactionId,true).subscribe({
+            error: (response) => {
+                console.log("Failed to reconcile TRN: " + response);
+            },
+            complete: () => {
+                this.update();
+            }
+        });
     }
 
-    performActionUnreconcile(transaction: ITransactionReport): boolean {
-        console.log("Unreconcile");
-        return false;
+    performActionUnreconcile(transaction: ITransactionReport) {
+        this._moneyService.reconcile(transaction.transactionId,false).subscribe({
+            error: (response) => {
+                console.log("Failed to reconcile TRN: " + response);
+            },
+            complete: () => {
+                this.update();
+            }
+        });
     }
 
-    performActionDelete(transaction: ITransactionReport): boolean {
-        console.log("Delete");
-        return false;
+    performActionDelete(transaction: ITransactionReport) {
+        // Delete this transaction.
+        this._moneyService.deleteTransaction(transaction.transactionId).subscribe({
+            error: (response) => {
+                console.log("Failed to delete TRN: " + response);
+            },
+            complete: () => {
+                this.update();
+            }
+        });
     }
 
     performActionClearAdd(transaction: ITransactionReport) {

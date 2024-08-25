@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Output} from "@angular/core";
-import {TransactionReport} from "../../transaction/TransactionReport";
+import {TransactionReport} from "../../transaction/transactionReport";
 import {MoneyService} from "../../money.service";
 import {NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";

@@ -22,6 +22,7 @@ export interface ITransactionReport {
     category: ICategory;
     description: string;
     oppositeId: number;
+    transactionId: number;
     statement: IStatement;
     predicted: boolean;
     fromReconciliation: boolean;
@@ -47,6 +48,7 @@ export class TransactionReport implements ITransactionReport {
     fromReconciliation: boolean;
     id: number;
     oppositeId: number;
+    transactionId: number;
     predicted: boolean;
     statement: IStatement;
     type: string;
