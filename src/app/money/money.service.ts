@@ -305,26 +305,13 @@ export class MoneyService {
         return this.http.post<Transaction>(environment.moneyAddUrl, transactions);
     }
 
-    loadFileRequest(file: IFile) {
+    loadFileRequest(file: IFile): Observable<LoadFileRequest> {
         this.setReconcileAccount(file.account);
 
         const request: LoadFileRequest = new LoadFileRequest();
         request.filename = file.filename;
 
-        this.http.post<LoadFileRequest>(environment.moneyLoadFileUrl, request).subscribe({
-            next: (val)=> { console.log('POST (load file) call successful value returned in body', val); },
-            error: (response) => {
-                console.log('POST (load file) call in error', response);
-                if (!environment.production) {
-                    console.log('Testing - process as complete.', response);
-                    this.updateTransactions.emit(null);
-                }
-            },
-            complete: () => {
-                console.log('The POST observable is now complete (load)');
-                this.updateTransactions.emit(null);
-            }
-        });
+        return this.http.post<LoadFileRequest>(environment.moneyLoadFileUrl, request);
     }
 
     updateTransaction(transaction: ITransactionReport[]): Observable<ITransaction> {
@@ -399,19 +386,9 @@ export class MoneyService {
         );
     }
 
-    clearRecData() {
+    clearRecData(): Observable<void> {
         // Clear the rec data.
-        this.http.delete<void>(environment.moneyClearDataUrl).subscribe({
-            next:() => {
-                console.log(environment.moneyClearDataUrl);
-            },
-            error: (response) => {
-                console.log('Clear POST call in error', response);
-            },
-            complete: () => {
-                console.log('Clear The POST observable is now complete (delete)');
-            }
-        });
+        return this.http.delete<void>(environment.moneyClearDataUrl);
     }
 
     fileUpdateSource() : EventSource {

@@ -64,7 +64,7 @@
                     <jbr-grid-data-predicted [transaction]="transaction"></jbr-grid-data-predicted>
                 </td>
                 <td class="flag">
-                    <jbr-grid-data-from-reconciliation [transaction]="transaction"></jbr-grid-data-from-reconciliation>
+                    <jbr-grid-data-from-reconciliation [transaction]="transaction" (clearFileEmitter)="clearRecData()" (selectFileEmitter)="selectRecData($event)"></jbr-grid-data-from-reconciliation>
                 </td>
                 <td>
                     <jbr-grid-data-category [transaction]="transaction" (valueChanged)="valueChanged($event)"></jbr-grid-data-category>

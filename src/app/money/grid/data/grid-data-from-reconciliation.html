@@ -6,7 +6,7 @@
         <h4 class="modal-title pull-left">Select a File to load</h4>
     </div>
     <div class="body">
-        <jbr-money-files (exitEmitter)="onExit()">
+        <jbr-money-files (exitEmitter)="onExit()" (clearFileEmitter)="onClearFile()" (selectFileEmitter)="onSelectFile($event)">
         </jbr-money-files>
     </div>
 </ng-template>

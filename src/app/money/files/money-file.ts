@@ -20,7 +20,7 @@ import {FormsModule} from "@angular/forms";
 })
 export class MoneyFile {
     @Input() file: IFile;
-    @Output() exitEmitter: EventEmitter<void> = new EventEmitter();
+    @Output() selectEmitter: EventEmitter<IFile> = new EventEmitter();
 
     constructor(private _moneyService: MoneyService) {
     }
@@ -30,8 +30,6 @@ export class MoneyFile {
     }
 
     loadFile(file: IFile): void {
-        this._moneyService.loadFileRequest(file);
-        console.log(`Load file {}`, file.filename);
-        this.exitEmitter.emit();
+        this.selectEmitter.emit(file);
     }
 }

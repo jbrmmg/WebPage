@@ -28,6 +28,8 @@ export class MoneyFiles implements OnInit {
     files: IFile[];
     errorMessage: string;
     @Output() exitEmitter: EventEmitter<void> = new EventEmitter();
+    @Output() clearFileEmitter: EventEmitter<void> = new EventEmitter();
+    @Output() selectFileEmitter: EventEmitter<IFile> = new EventEmitter();
 
     constructor(private _moneyService: MoneyService) {
         this.fileUpdateTime = null;
@@ -75,5 +77,13 @@ export class MoneyFiles implements OnInit {
 
     onExit() {
         this.exitEmitter.emit();
+    }
+
+    onClear() {
+        this.clearFileEmitter.emit();
+    }
+
+    onSelectFile(file: IFile) {
+        this.selectFileEmitter.emit(file);
     }
 }

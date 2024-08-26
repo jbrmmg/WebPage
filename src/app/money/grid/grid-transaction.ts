@@ -34,6 +34,8 @@ import {GridDataEvent} from "./data/grid-data-event";
 import {GridDataActionType} from "./data/grid-data-action-type";
 import {Transaction} from "../transaction/transaction";
 import {IStatement} from "../statement/statement";
+import {IFile} from "../files/file";
+import {environment} from "../../../environments/environment.prod";
 
 @Component({
     selector: 'jbr-grid-transaction',
@@ -368,6 +370,37 @@ export class GridTransaction implements OnInit {
         this._moneyService.lockStatement(statement).subscribe({
             error: (response) => {
                 console.log("Failed to lock statement " + response);
+            },
+            complete: () => {
+                this.update();
+            }
+        });
+    }
+
+    clearRecData() {
+        console.log(`Clear reconciliation data file {}`);
+
+        this._moneyService.clearRecData().subscribe({
+            error: (response) => {
+                console.log("Failed to clear rec data " + response);
+            },
+            complete: () => {
+                this.update();
+            }
+        });
+    }
+
+    selectRecData(file: IFile) {
+        console.log(`Load file {}`, file.filename);
+
+        this._moneyService.loadFileRequest(file).subscribe({
+            error: (response) => {
+                if(!environment.production) {
+                    // Treat as complete.
+                    this.update();
+                } else {
+                    console.log("Failed to load file " + response);
+                }
             },
             complete: () => {
                 this.update();
