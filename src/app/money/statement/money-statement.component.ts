@@ -127,11 +127,13 @@ export class MoneyStatement implements OnInit {
     getOpenBalance(): number {
         // Find the open balance.
         let result: number = 0;
-        this.balances.forEach(next => {
-            if(next.type == TransactionReport.OPEN_BALANCE) {
-                result = next.balance.value;
-            }
-        });
+        if(this.balances != null) {
+            this.balances.forEach(next => {
+                if (next.type == TransactionReport.OPEN_BALANCE) {
+                    result = next.balance.value;
+                }
+            });
+        }
 
         return result;
     }
@@ -139,11 +141,13 @@ export class MoneyStatement implements OnInit {
     getCredits(): number {
         // Sum the credit values.
         let result: number = 0;
-        this.transactions.forEach(next => {
-            if(next.amount != null && next.amount.type == FinancialAmount.CREDIT) {
-                result = result + next.amount.value;
-            }
-        });
+        if(this.transactions != null) {
+            this.transactions.forEach(next => {
+                if (next.amount != null && next.amount.type == FinancialAmount.CREDIT) {
+                    result = result + next.amount.value;
+                }
+            });
+        }
 
         return result;
     }
@@ -151,11 +155,13 @@ export class MoneyStatement implements OnInit {
     getDebits(): number {
         // Sum the debits values.
         let result: number = 0;
-        this.transactions.forEach(next => {
-            if(next.amount != null && next.amount.type == FinancialAmount.DEBIT) {
-                result = result + next.amount.value;
-            }
-        });
+        if (this.transactions != null) {
+            this.transactions.forEach(next => {
+                if (next.amount != null && next.amount.type == FinancialAmount.DEBIT) {
+                    result = result + next.amount.value;
+                }
+            });
+        }
 
         return result * -1;
     }
@@ -164,13 +170,16 @@ export class MoneyStatement implements OnInit {
         // Find the closing balance (use future balance if available, else today balance.).
         let result: number = 0;
         let resultSet: boolean = false;
-        this.balances.forEach(next => {
-            if(next.type == TransactionReport.FUTURE_BALANCE) {
-                result = next.balance.value;
-            } else if(next.type == TransactionReport.TODAY_BALANCE && !resultSet) {
-                result = next.balance.value;
-            }
-        });
+
+        if(this.balances != null) {
+            this.balances.forEach(next => {
+                if (next.type == TransactionReport.FUTURE_BALANCE) {
+                    result = next.balance.value;
+                } else if (next.type == TransactionReport.TODAY_BALANCE && !resultSet) {
+                    result = next.balance.value;
+                }
+            });
+        }
 
         return result;
     }

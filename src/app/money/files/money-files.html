@@ -1,3 +1,11 @@
-<div class="row">
-    <jbr-money-file *ngFor="let nextFile of files" [file]="nextFile"></jbr-money-file>
+<div class="col">
+    <div class="row no-pad" *ngFor="let nextFile of files">
+        <jbr-money-file [file]="nextFile" (exitEmitter)="onExit()"></jbr-money-file>
+    </div>
+    <div class="row no-pad">
+        <div class="col-10">&nbsp;</div>
+        <div class="col-2">
+            <label class="btn-action btn btn-primary" (click)="onExit()">Exit</label>
+        </div>
+    </div>
 </div>

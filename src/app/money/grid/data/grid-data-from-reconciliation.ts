@@ -24,4 +24,8 @@ export class GridDataFromReconciliation extends GridData {
     selectFile(template: TemplateRef<any>) {
         this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
     }
+
+    onExit() {
+        this.modalRef.hide();
+    }
 }

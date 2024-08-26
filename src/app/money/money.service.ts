@@ -11,7 +11,7 @@ import {IFile} from './files/file';
 import {DeleteTransaction, ITransaction, Transaction} from "./transaction/transaction";
 import {LockRequest} from "./statement/lockRequest";
 import {ReconcileTransaction} from "./reconciliation/reconciletransaction";
-import {LoadFileRequest} from "./files/loadfilerequest";
+import {LoadFileRequest} from "./files/loadFileRequest";
 import {TransactionFilter} from "./transaction/transactionFilter";
 import {ITransactionReport, TransactionReport} from "./transaction/transactionReport";
 import {ReconcileStatus} from "./reconciliation/reconcileStatus";

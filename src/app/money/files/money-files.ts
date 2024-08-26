@@ -1,6 +1,6 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, EventEmitter, OnInit, Output} from "@angular/core";
 import {MoneyService} from "../money.service";
-import {FileUpdate} from "./fileupdate";
+import {FileUpdate} from "./fileUpdate";
 import {IFile} from "./file";
 import {ButtonsModule} from "ngx-bootstrap/buttons";
 import {NgClass, NgForOf, NgIf} from "@angular/common";
@@ -27,6 +27,7 @@ export class MoneyFiles implements OnInit {
     fileUpdateTime: Date;
     files: IFile[];
     errorMessage: string;
+    @Output() exitEmitter: EventEmitter<void> = new EventEmitter();
 
     constructor(private _moneyService: MoneyService) {
         this.fileUpdateTime = null;
@@ -49,7 +50,7 @@ export class MoneyFiles implements OnInit {
     handleBeforeUnload(event: BeforeUnloadEvent) : void {
         this.fileUpdateSource.removeEventListener('message', this.fileUpdate.bind(this));
         this.fileUpdateSource.close();
-        console.log("Cleanup before unload.");
+        console.log("Cleanup before unload." + event);
     }
 
     updateFileData() {
@@ -70,5 +71,9 @@ export class MoneyFiles implements OnInit {
             this.fileUpdateTime = update.updateTime;
             this.updateFileData();
         }
+    }
+
+    onExit() {
+        this.exitEmitter.emit();
     }
 }
