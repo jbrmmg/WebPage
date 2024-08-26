@@ -22,7 +22,7 @@ export class MoneyFile {
     @Input() file: IFile;
     @Output() selectEmitter: EventEmitter<IFile> = new EventEmitter();
 
-    constructor(private _moneyService: MoneyService) {
+    constructor() {
     }
 
     getAccountImage(id: string): string {

@@ -21,7 +21,6 @@ import {HeaderType} from "./grid-header-type";
 })
 export class GridHeaderCategory extends GridHeader {
     modalRef: BsModalRef;
-    errorMessage: string;
     categoryIds: string[];
 
     constructor(private modalService: BsModalService) {

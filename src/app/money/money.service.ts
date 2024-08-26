@@ -1,16 +1,15 @@
-import {EventEmitter, Injectable, Output} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {Category} from './category/category';
-import {JbAccount,IAccount} from './account/jbAccount';
+import {JbAccount} from './account/jbAccount';
 import {IStatement, Statement} from './statement/statement';
-import {IMatch} from './reconciliation/match';
 import {IFile} from './files/file';
 import {DeleteTransaction, ITransaction, Transaction} from "./transaction/transaction";
 import {LockRequest} from "./statement/lockRequest";
-import {ReconcileTransaction} from "./reconciliation/reconciletransaction";
+import {ReconcileTransaction} from "./reconciliation/reconcileTransaction";
 import {LoadFileRequest} from "./files/loadFileRequest";
 import {TransactionFilter} from "./transaction/transactionFilter";
 import {ITransactionReport, TransactionReport} from "./transaction/transactionReport";
@@ -20,13 +19,7 @@ import {ReconcileStatus} from "./reconciliation/reconcileStatus";
     providedIn: 'root'
 })
 export class MoneyService {
-    private reconcileAccount: IAccount;
-
-    @Output() updateTransactions: EventEmitter<any> = new EventEmitter();
-    @Output() updateStatements: EventEmitter<any> = new EventEmitter();
-
     constructor(private http: HttpClient) {
-        this.reconcileAccount = null;
     }
 
     public static dateToString(value: Date): string {
@@ -256,14 +249,6 @@ export class MoneyService {
         return 'FFFFFF';
     }
 
-    public getReconcileAccount() : IAccount {
-        return this.reconcileAccount;
-    }
-
-    public setReconcileAccount(account: IAccount): void {
-        this.reconcileAccount = account;
-    }
-
     getFiles(): Observable<IFile[]> {
         return this.http.get<IFile[]>(environment.moneyGetFilesUrl).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
@@ -306,8 +291,6 @@ export class MoneyService {
     }
 
     loadFileRequest(file: IFile): Observable<LoadFileRequest> {
-        this.setReconcileAccount(file.account);
-
         const request: LoadFileRequest = new LoadFileRequest();
         request.filename = file.filename;
 
@@ -332,14 +315,6 @@ export class MoneyService {
         reconcileRequest.reconcile = reconcile;
 
         return this.http.put<ReconcileStatus>(url, reconcileRequest);
-    }
-
-    getTransactionChangeEmitter() {
-        return this.updateTransactions;
-    }
-
-    getStatementChangeEmitter() {
-        return this.updateStatements;
     }
 
     deleteTransaction(transactions: ITransactionReport[]): Observable<Transaction> {
@@ -374,16 +349,6 @@ export class MoneyService {
         lockRequest.month = statement.month;
 
         return this.http.post<void>(url, lockRequest);
-    }
-
-    getMatches(account: IAccount): Observable<IMatch[]> {
-        let url = environment.moneyMatchUrl;
-        url = url.replace('##accountId##', account.id);
-
-        return this.http.get<IMatch[]>(url).pipe(
-            tap(data => console.log('All: ' + JSON.stringify(data))),
-            catchError(err => MoneyService.handleError(err))
-        );
     }
 
     clearRecData(): Observable<void> {

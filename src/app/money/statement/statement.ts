@@ -4,12 +4,6 @@
 
 import {IFinancialAmount, FinancialAmount} from "../transaction/financialAmount";
 
-export interface IStatementId {
-    accountId: string;
-    month: number;
-    year: number;
-}
-
 /*
  * Equivalent of StatementDTO
  */

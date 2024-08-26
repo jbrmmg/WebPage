@@ -2,26 +2,11 @@
 * Equivalent of TransactionFilterDTO
 */
 
-import {IValueRange, ValueRange} from "../range/valueRange";
-import {DateRange, IDateRange} from "../range/dateRange";
-import {IStatementDate, StatementDate} from "../statement/statementDate";
-import {IAccount,JbAccount} from "../account/jbAccount";
-import {Category, ICategory} from "../category/category";
-
-export interface ITransactionFilter {
-    valueRange?: IValueRange;
-    dateRange?: IDateRange;
-    statementDate?: IStatementDate;
-    accounts?: IAccount[];
-    categories?: ICategory[];
-    locked?: boolean;
-    predicted?: boolean;
-    fromReconciled?: boolean;
-    description?: string;
-    reconciliationAccount?: string;
-    maxPageSize: number;
-    pageNumber: number;
-}
+import {ValueRange} from "../range/valueRange";
+import {DateRange} from "../range/dateRange";
+import {StatementDate} from "../statement/statementDate";
+import {JbAccount} from "../account/jbAccount";
+import {Category} from "../category/category";
 
 export class TransactionFilter {
     public valueRange?: ValueRange;
@@ -33,7 +18,6 @@ export class TransactionFilter {
     public predicted?: boolean;
     public fromReconciled?: boolean;
     public description?: string;
-    public reconciliationAccount?: string;
     public maxPageSize?: number;
     public pageNumber?: number;
 }
