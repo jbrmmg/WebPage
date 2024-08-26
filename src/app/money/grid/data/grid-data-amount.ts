@@ -48,6 +48,7 @@ export class GridDataAmount extends GridDataInlineEdit {
 
         let event: GridDataEvent = new GridDataEvent();
         event.transaction = this.transaction;
+        this.transaction.modified = true;
 
         if(this.type == "DB") {
             if(number < 0) {
@@ -88,6 +89,6 @@ export class GridDataAmount extends GridDataInlineEdit {
 
     canEdit(): boolean {
         // Amount can only be edited if new or not reconciled.
-        return this.transaction.new || this.transaction.statement == null;
+        return this.transaction.new || (this.transaction.statement == null && this.transaction.category != null);
     }
 }

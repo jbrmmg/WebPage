@@ -2,8 +2,8 @@
  * Equivalent TransactionReportDTO
  */
 
-import {IFinancialAmount} from "./financialamount";
-import {IAccount} from "../account/jbaccount";
+import {IFinancialAmount} from "./financialAmount";
+import {IAccount} from "../account/jbAccount";
 import {ICategory} from "../category/category";
 import {IStatement} from "../statement/statement";
 import {TransactionEditType} from "./transactionEditType";

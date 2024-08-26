@@ -3,19 +3,17 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
-import {Category, ICategory} from './category/category';
-import {JbAccount,IAccount} from './account/jbaccount';
-import {TransactionType} from './transaction/type';
+import {Category} from './category/category';
+import {JbAccount,IAccount} from './account/jbAccount';
 import {IStatement, Statement} from './statement/statement';
 import {IMatch} from './reconciliation/match';
 import {IFile} from './files/file';
 import {DeleteTransaction, ITransaction, Transaction} from "./transaction/transaction";
-import {LockRequest} from "./statement/lockrequest";
-import {ReconcileUpdate} from "./reconciliation/reconcileupdate";
+import {LockRequest} from "./statement/lockRequest";
 import {ReconcileTransaction} from "./reconciliation/reconciletransaction";
 import {LoadFileRequest} from "./files/loadfilerequest";
 import {TransactionFilter} from "./transaction/transactionFilter";
-import {ITransactionReport} from "./transaction/transactionReport";
+import {ITransactionReport, TransactionReport} from "./transaction/transactionReport";
 import {ReconcileStatus} from "./reconciliation/reconcileStatus";
 
 @Injectable({
@@ -226,6 +224,30 @@ export class MoneyService {
         return Math.sqrt(red * red * .241 + green * green * .691 + blue * blue * .068);
     }
 
+    static getTransactionDescription(transaction: ITransactionReport): string {
+        if(transaction.type == TransactionReport.TRANSACTION) {
+            if(transaction.description == null || transaction.description.length == 0) {
+                return "&nbsp;";
+            } else {
+                return transaction.description;
+            }
+        }
+
+        if(transaction.type == TransactionReport.OPEN_BALANCE) {
+            return "Opening Balance"
+        }
+
+        if(transaction.type == TransactionReport.TODAY_BALANCE) {
+            return "Balance Today"
+        }
+
+        if(transaction.type == TransactionReport.FUTURE_BALANCE) {
+            return "Future Balance"
+        }
+
+        return "&nbsp;";
+    }
+
     static getTextColor(colour: string) {
         if(MoneyService.getBrightness(colour) > 130) {
             return '000000';
@@ -258,13 +280,6 @@ export class MoneyService {
 
     getAccounts(): Observable<JbAccount[]> {
         return this.http.get<JbAccount[]>(environment.moneyAccountUrl).pipe(
-            tap(data => console.log('All: ' + JSON.stringify(data))),
-            catchError(err => MoneyService.handleError(err))
-        );
-    }
-
-    getTransactionTypes(): Observable<TransactionType[]> {
-        return this.http.get<TransactionType[]>(environment.moneyTypeUrl).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
@@ -416,48 +431,11 @@ export class MoneyService {
         });
     }
 
-    autoAccept() {
-        // Auto accept the data.
-        this.http.put<void>(environment.moneyAutoAcceptUrl, '').subscribe({
-            next:() => {
-                console.log(environment.moneyAutoAcceptUrl);
-            },
-            error: (response) => {
-                console.log('Auto Accept PUT call in error', response);
-            },
-            complete: () => {
-                console.log('Auto Accept The PUT observable is now complete (delete)');
-
-                // Update transactions
-                this.updateTransactions.emit(null);
-            }
-        });
-    }
-
-    setCategory(matchRow: IMatch, category: ICategory) {
-        // Set the category
-        const url = environment.moneySetCategoryUrl;
-
-        const request: ReconcileUpdate = new ReconcileUpdate();
-
-        request.id = matchRow.id;
-        request.categoryId = category.id;
-        request.type = 'rec';
-
-        this.http.put<void>(url, request).subscribe({
-            next:() => {
-                console.log(url);
-            },
-            error: (response) => {
-                console.log('Set Cat PUT call in error', response);
-            },
-            complete: () => {
-                console.log('Set Cat PUT observable is now complete (delete)');
-            }
-        });
-    }
-
     fileUpdateSource() : EventSource {
-        return new EventSource('money/reconciliation/file-updates');
+        return new EventSource(environment.moneyFileUpdates);
+    }
+
+    getAccountImage(id: string): string {
+        return MoneyService.getAccountImage(id);
     }
 }

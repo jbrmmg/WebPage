@@ -16,7 +16,7 @@ export const environment = {
   moneyUpdateTransactionUrl: "api/money/update.json",
   moneyDeleteTransactionUrl: "api/money/update.json",
   moneyLockStatementUrl: "api/money/update.json",
-  moneyReconcileTransactionUrl: "api/money/update.jso",
+  moneyReconcileTransactionUrl: "api/money/update.json",
   moneyMatchUrl: "api/money/match.##accountId##.json",
   moneyClearDataUrl: "api/money/update.json",
   moneyAutoAcceptUrl: "api/money/update.json",
@@ -24,6 +24,7 @@ export const environment = {
   moneyGetRegularUrl: "api/money/regular.json",
   moneyGetFilesUrl: "api/money/reconcile.files.json",
   moneyLoadFileUrl: "api/money/reconcile.files.json",
-  moneyAccountImage: "assets/images/account/##id##.svg`",
-  moneyAccountDisabledImage: "assets/images/account/##id##x.svg`"
+  moneyAccountImage: "assets/images/account/##id##.svg",
+  moneyAccountDisabledImage: "assets/images/account/##id##x.svg",
+  moneyFileUpdates: "money/reconciliation/file-updates"
 };

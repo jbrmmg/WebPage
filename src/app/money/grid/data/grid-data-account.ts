@@ -4,7 +4,7 @@ import {NgIf} from "@angular/common";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {MoneyCategory} from "../../category/money-cat.component";
 import {MoneyAccount} from "../../account/money-account.component";
-import {JbAccount} from "../../account/jbaccount";
+import {JbAccount} from "../../account/jbAccount";
 import {GridData} from "./grid-data";
 import {TransactionEditType} from "../../transaction/transactionEditType";
 import {GridDataEvent} from "./grid-data-event";

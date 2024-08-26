@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Category, ICategory} from './category';
 import {MoneyService} from '../money.service';
-import {JbAccount} from '../account/jbaccount';
+import {JbAccount} from '../account/jbAccount';
 
 export class MoneyCategoryPickerSelectableOption {
     category: ICategory;

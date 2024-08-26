@@ -3,7 +3,7 @@ import {ButtonsModule} from "ngx-bootstrap/buttons";
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {MoneyService} from "../money.service";
-import {JbAccount} from "./jbaccount";
+import {JbAccount} from "./jbAccount";
 
 class AccountOption {
     id: string;

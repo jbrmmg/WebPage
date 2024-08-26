@@ -1,0 +1,51 @@
+<div class="row no-pad">
+    <div class="row no-pad">
+        <div class="col-9 no-col-pad"></div>
+        <div class="col-3 no-col-pad">
+            <table class="balances">
+                <tbody>
+                    <tr>
+                        <td class="description">Opening Balance</td>
+                        <td [class]="openBalanceClass()">{{getOpenBalance() | currency : 'GBP' : true: '1.2-2'}}</td>
+                    </tr>
+                    <tr>
+                        <td class="description">Credits</td>
+                        <td class="amount">{{getCredits() | currency : 'GBP' : true: '1.2-2'}}</td>
+                    </tr>
+                    <tr>
+                        <td class="description">Debits</td>
+                        <td class="amount debit">{{getDebits() | currency : 'GBP' : true: '1.2-2'}}</td>
+                    </tr>
+                    <tr>
+                        <td class="description">Closing Balance</td>
+                        <td [class]="closeBalanceClass()">{{getCloseBalance() | currency : 'GBP' : true: '1.2-2'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row no-pad">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Credit</th>
+                    <th>Debit</th>
+                    <th>Balance</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="transactions && transactions.length">
+                <tr *ngFor="let transaction of transactions">
+                    <td>{{transaction.date}}</td>
+                    <td class="description">{{getDescription(transaction)}}</td>
+                    <td *ngIf="!isBlank(transaction,true)" class="amount">{{getCredit(transaction) | currency : 'GBP' : true: '1.2-2'}}</td>
+                    <td *ngIf="isBlank(transaction,true)">&nbsp;</td>
+                    <td *ngIf="!isBlank(transaction,false)" class="amount debit">{{getDebit(transaction) | currency : 'GBP' : true: '1.2-2'}}</td>
+                    <td *ngIf="isBlank(transaction,false)">&nbsp;</td>
+                    <td [class]="getBalanceClass(transaction)" class="amount">{{getBalance(transaction) | currency : 'GBP' : true: '1.2-2'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

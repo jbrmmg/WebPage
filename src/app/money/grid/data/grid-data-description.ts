@@ -21,34 +21,12 @@ import {HeaderType} from "../header/grid-header-type";
 export class GridDataDescription extends GridDataInlineEdit {
     @Output() edit: EventEmitter<void> = new EventEmitter();
 
-    protected readonly MoneyService = MoneyService;
-
     constructor() {
         super(TransactionEditType.Description);
     }
 
     getDescription(): string {
-        if(this.transaction.type == TransactionReport.TRANSACTION) {
-            if(this.transaction.description == null || this.transaction.description.length == 0) {
-                return "&nbsp;";
-            } else {
-                return this.transaction.description;
-            }
-        }
-
-        if(this.transaction.type == TransactionReport.OPEN_BALANCE) {
-            return "Opening Balance"
-        }
-
-        if(this.transaction.type == TransactionReport.TODAY_BALANCE) {
-            return "Balance Today"
-        }
-
-        if(this.transaction.type == TransactionReport.FUTURE_BALANCE) {
-            return "Future Balance"
-        }
-
-        return "&nbsp;";
+        return MoneyService.getTransactionDescription(this.transaction);
     }
 
     blank(): boolean {
@@ -88,7 +66,7 @@ export class GridDataDescription extends GridDataInlineEdit {
     }
 
     canEdit(): boolean {
-        // Description can always be edited.
-        return true;
+        // Can only edit description on transactions that are real.
+        return this.transaction.category != null;
     }
 }

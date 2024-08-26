@@ -1,3 +1,12 @@
 p {
     margin: 0;
 }
+
+.statement {
+    font-size: 40px;
+}
+
+.date {
+    font-size: 20px;
+    color: darkgrey;
+}

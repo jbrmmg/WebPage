@@ -7,7 +7,7 @@ import {FilterEvent, GridHeader} from "./grid-header";
 import {HeaderType} from "./grid-header-type";
 import {MoneyAccount} from "../../account/money-account.component";
 import {MoneyCategory} from "../../category/money-cat.component";
-import {JbAccount} from "../../account/jbaccount";
+import {JbAccount} from "../../account/jbAccount";
 
 @Component({
     selector: 'jbr-grid-header-account',
