@@ -33,6 +33,7 @@ import {TransactionEditType} from "../transaction/transactionEditType";
 import {GridDataEvent} from "./data/grid-data-event";
 import {GridDataActionType} from "./data/grid-data-action-type";
 import {Transaction} from "../transaction/transaction";
+import {IStatement} from "../statement/statement";
 
 @Component({
     selector: 'jbr-grid-transaction',
@@ -360,5 +361,17 @@ export class GridTransaction implements OnInit {
                 console.log("Pending actions are ignored - " + event.action);
                 break;
         }
+    }
+
+    lockStatement(statement: IStatement) {
+        console.log("Lock Statement");
+        this._moneyService.lockStatement(statement).subscribe({
+            error: (response) => {
+                console.log("Failed to lock statement " + response);
+            },
+            complete: () => {
+                this.update();
+            }
+        });
     }
 }

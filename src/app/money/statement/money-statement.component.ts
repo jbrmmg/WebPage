@@ -1,5 +1,5 @@
-import {Component, Input, OnInit} from "@angular/core";
-import {CurrencyPipe, NgForOf, NgIf} from "@angular/common";
+import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import {CurrencyPipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {ButtonsModule} from "ngx-bootstrap/buttons";
 import {MoneyService} from "../money.service";
 import {IAccount, JbAccount} from "../account/jbAccount";
@@ -17,7 +17,8 @@ import {FinancialAmount} from "../transaction/financialAmount";
         NgForOf,
         ButtonsModule,
         NgIf,
-        CurrencyPipe
+        CurrencyPipe,
+        NgClass
     ],
     standalone: true
 })
@@ -27,6 +28,8 @@ export class MoneyStatement implements OnInit {
     data: ITransactionReport[];
     transactions : ITransactionReport[];
     balances: ITransactionReport[];
+    @Output() lockEmitter: EventEmitter<void> = new EventEmitter();
+    @Output() exitEmitter: EventEmitter<void> = new EventEmitter();
 
     constructor(private _moneyService: MoneyService) {
     }
@@ -182,5 +185,19 @@ export class MoneyStatement implements OnInit {
         }
 
         return result;
+    }
+
+    lock() {
+        if(!this.statement.locked){
+            this.lockEmitter.emit();
+        }
+    }
+
+    isLocked() {
+        return this.statement.locked;
+    }
+
+    onExit() {
+        this.exitEmitter.emit();
     }
 }

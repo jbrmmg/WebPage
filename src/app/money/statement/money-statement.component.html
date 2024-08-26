@@ -1,6 +1,10 @@
 <div class="row no-pad">
     <div class="row no-pad">
-        <div class="col-9 no-col-pad"></div>
+        <div class="col-9 no-col-pad">
+            <label [ngClass]="isLocked() ? 'btn btn-primary': 'btn btn-outline-primary'" (click)="lock()" [title]="isLocked() ? 'Locked' : 'Lock Statement'">
+                <em class="fa fa-lock"></em>
+            </label>
+        </div>
         <div class="col-3 no-col-pad">
             <table class="balances">
                 <tbody>
@@ -47,5 +51,11 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div class="row no-pad">
+        <div class="col-10"></div>
+        <div class="col-2 no-col-pad">
+            <label class="btn btn-primary exit-btn" (click)="onExit()">Exit</label>
+        </div>
     </div>
 </div>

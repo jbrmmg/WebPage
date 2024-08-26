@@ -15,7 +15,7 @@
         </h4>
     </div>
     <div class="body">
-        <jbr-statement [account]="transaction.account" [statement]="transaction.statement">
+        <jbr-statement [account]="transaction.account" [statement]="transaction.statement" (lockEmitter)="lock()" (exitEmitter)="close()">
         </jbr-statement>
     </div>
 </ng-template>

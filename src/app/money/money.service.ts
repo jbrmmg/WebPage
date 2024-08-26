@@ -372,7 +372,7 @@ export class MoneyService {
         });
     }
 
-    lockStatement(statement: IStatement) {
+    lockStatement(statement: IStatement): Observable<void> {
         // Lock the statement.
         // Account, Month & Year
 
@@ -386,24 +386,7 @@ export class MoneyService {
         lockRequest.year = statement.year;
         lockRequest.month = statement.month;
 
-        this.http.post<void>(url, lockRequest).subscribe({
-            next:() => {
-                console.log(url);
-            },
-            error: (response) => {
-                console.log('POST call in error', response);
-                if (!environment.production) {
-                    console.log('Testing - process as complete.', response);
-                    this.updateStatements.emit(null);
-                    this.updateTransactions.emit(null);
-                }
-            },
-            complete: () => {
-                console.log('The POST observable is now complete (lock)');
-                this.updateStatements.emit(null);
-                this.updateTransactions.emit(null);
-            }
-        });
+        return this.http.post<void>(url, lockRequest);
     }
 
     getMatches(account: IAccount): Observable<IMatch[]> {
