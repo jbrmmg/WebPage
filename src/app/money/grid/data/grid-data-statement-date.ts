@@ -6,6 +6,8 @@ import {MoneyStatement} from "../../statement/money-statement.component";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {MoneyService} from "../../money.service";
 import {IStatement} from "../../statement/statement";
+import {PopupHeaderComponent} from "../../standard/popup-header.component";
+import {PopupButtonBarComponent} from "../../standard/popup-button-bar.component";
 
 @Component({
     selector: 'jbr-grid-data-statement-date',
@@ -15,7 +17,9 @@ import {IStatement} from "../../statement/statement";
         DatePipe,
         MoneyAccount,
         NgIf,
-        MoneyStatement
+        MoneyStatement,
+        PopupHeaderComponent,
+        PopupButtonBarComponent
     ],
     standalone: true
 })
@@ -24,7 +28,8 @@ export class GridDataStatementDate extends GridData {
     @Output() statementLock: EventEmitter<IStatement> = new EventEmitter();
 
     constructor(protected _moneyService: MoneyService,
-                private modalService: BsModalService) {
+                private modalService: BsModalService,
+                private datePipe: DatePipe) {
         super();
     }
 
@@ -42,8 +47,8 @@ export class GridDataStatementDate extends GridData {
         }
     }
 
-    getDate(): Date {
-        return new Date(this.transaction.statement.year,this.transaction.statement.month - 1,1);
+    getDateDisplay(): string {
+        return this.datePipe.transform(new Date(this.transaction.statement.year,this.transaction.statement.month - 1,1),'MMMM yyyy');
     }
 
     lock() {

@@ -10,3 +10,7 @@ p {
     font-size: 20px;
     color: darkgrey;
 }
+
+.header-no-pad {
+    padding: 0;
+}

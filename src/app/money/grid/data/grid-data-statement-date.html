@@ -1,21 +1,16 @@
 <p (click)="openModal(templateStatement)">{{display() | date : 'yyyy-MMM'}}</p>
 
+<!--Check: https://v17.angular.io/guide/dynamic-component-loader -->
+
 <ng-template #templateStatement>
-    <div class="modal-header">
-        <h4 class="modal-title pull-left">
-            <div class="row">
-                <div class="col">
-                    <img src="{{_moneyService.getAccountImage(transaction.account.id)}}" alt="Selected Account">
-                </div>
-                <div class="col">
-                    <div class="row statement">Statement</div>
-                    <div class="row date">{{getDate() | date : 'MMMM yyyy'}}</div>
-                </div>
-            </div>
-        </h4>
+    <div class="modal-header header-no-pad">
+        <jbr-popup-header [title]="'Statement'" [subTitle]="getDateDisplay()" [imageUrl]="_moneyService.getAccountImage(transaction.account.id)">
+        </jbr-popup-header>
     </div>
     <div class="body">
         <jbr-statement [account]="transaction.account" [statement]="transaction.statement" (lockEmitter)="lock()" (exitEmitter)="close()">
         </jbr-statement>
+        <jbr-popup-body (okEvent)="close()" [ok]="true" [exit]="true" [clear]="true">
+        </jbr-popup-body>
     </div>
 </ng-template>

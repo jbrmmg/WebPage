@@ -67,6 +67,6 @@ export class GridDataDescription extends GridDataInlineEdit {
 
     canEdit(): boolean {
         // Can only edit description on transactions that are real.
-        return this.transaction.category != null;
+        return this.transaction.category != null || this.transaction.new;
     }
 }

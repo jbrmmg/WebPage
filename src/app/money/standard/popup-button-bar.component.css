@@ -1,0 +1,19 @@
+.row-no-margin {
+    margin: 0 6px 6px 6px;
+}
+
+.col-left {
+    padding: 0 2px 0 0;
+}
+
+.col-right {
+    padding: 0 0 0 2px;
+}
+
+.col-far-right {
+    padding: 0 0 0 4px;
+}
+
+.btn-bar {
+    width: 100%;
+}
