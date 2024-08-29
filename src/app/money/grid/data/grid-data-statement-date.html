@@ -8,9 +8,7 @@
         </jbr-popup-header>
     </div>
     <div class="body">
-        <jbr-statement [account]="transaction.account" [statement]="transaction.statement" (lockEmitter)="lock()" (exitEmitter)="close()">
-        </jbr-statement>
-        <jbr-popup-body (okEvent)="close()" [ok]="true" [exit]="true" [clear]="true">
+        <jbr-popup-body (okEvent)="close()" [ok]="true" [content]="content" [inputs]="inputs">
         </jbr-popup-body>
     </div>
 </ng-template>

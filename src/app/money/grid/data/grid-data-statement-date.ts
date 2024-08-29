@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output, TemplateRef} from "@angular/core";
+import {Component, EventEmitter, OnInit, Output, TemplateRef, Type} from "@angular/core";
 import {DatePipe, NgIf} from "@angular/common";
 import {GridData} from "./grid-data";
 import {MoneyAccount} from "../../account/money-account.component";
@@ -7,7 +7,7 @@ import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {MoneyService} from "../../money.service";
 import {IStatement} from "../../statement/statement";
 import {PopupHeaderComponent} from "../../standard/popup-header.component";
-import {PopupButtonBarComponent} from "../../standard/popup-button-bar.component";
+import {PopupBodyComponent} from "../../standard/popup-body.component";
 
 @Component({
     selector: 'jbr-grid-data-statement-date',
@@ -19,18 +19,34 @@ import {PopupButtonBarComponent} from "../../standard/popup-button-bar.component
         NgIf,
         MoneyStatement,
         PopupHeaderComponent,
-        PopupButtonBarComponent
+        PopupBodyComponent
     ],
     standalone: true
 })
-export class GridDataStatementDate extends GridData {
+export class GridDataStatementDate extends GridData implements OnInit {
     modalRef: BsModalRef;
     @Output() statementLock: EventEmitter<IStatement> = new EventEmitter();
+
+    content: Type<any>;
+    inputs: Record<string,unknown>;
+    lockEmitter: EventEmitter<void>;
 
     constructor(protected _moneyService: MoneyService,
                 private modalService: BsModalService,
                 private datePipe: DatePipe) {
         super();
+    }
+
+    ngOnInit(): void {
+        this.lockEmitter = new EventEmitter();
+        this.lockEmitter.subscribe(() => {
+           this.lock();
+        });
+
+        this.content = MoneyStatement;
+        this.inputs = { account: this.transaction.account,
+            statement: this.transaction.statement,
+            lockEmitter: this.lockEmitter};
     }
 
     display() : string {

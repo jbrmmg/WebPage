@@ -1,5 +1,3 @@
-@import "../standard/popup-body.css";
-
 td {
     font-family: Helvetica, serif;
     font-size: 10px;
@@ -20,12 +18,6 @@ th {
     width: 100%;
     margin: 0 0 6px 0;
 }
-
-/*
-.no-pad {
-    margin: 4px;
-}
- */
 
 .no-col-pad {
     padding: 0;

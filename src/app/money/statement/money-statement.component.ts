@@ -25,11 +25,11 @@ import {FinancialAmount} from "../transaction/financialAmount";
 export class MoneyStatement implements OnInit {
     @Input() account: IAccount;
     @Input() statement: IStatement;
+    @Input() lockEmitter: EventEmitter<void>;
     data: ITransactionReport[];
     transactions : ITransactionReport[];
     balances: ITransactionReport[];
-    @Output() lockEmitter: EventEmitter<void> = new EventEmitter();
-    @Output() exitEmitter: EventEmitter<void> = new EventEmitter();
+//    @Output() lockEmitter: EventEmitter<void> = new EventEmitter();
 
     constructor(private _moneyService: MoneyService) {
     }
@@ -195,9 +195,5 @@ export class MoneyStatement implements OnInit {
 
     isLocked() {
         return this.statement.locked;
-    }
-
-    onExit() {
-        this.exitEmitter.emit();
     }
 }
