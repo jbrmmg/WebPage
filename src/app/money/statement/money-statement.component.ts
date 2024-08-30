@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import {Component, EventEmitter, Input, OnInit} from "@angular/core";
 import {CurrencyPipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {ButtonsModule} from "ngx-bootstrap/buttons";
 import {MoneyService} from "../money.service";
@@ -29,7 +29,6 @@ export class MoneyStatement implements OnInit {
     data: ITransactionReport[];
     transactions : ITransactionReport[];
     balances: ITransactionReport[];
-//    @Output() lockEmitter: EventEmitter<void> = new EventEmitter();
 
     constructor(private _moneyService: MoneyService) {
     }
