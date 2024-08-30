@@ -6,8 +6,7 @@ import {MoneyStatement} from "../../statement/money-statement.component";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {MoneyService} from "../../money.service";
 import {IStatement} from "../../statement/statement";
-import {PopupHeaderComponent} from "../../standard/popup-header.component";
-import {PopupBodyComponent} from "../../standard/popup-body.component";
+import {PopupComponent} from "../../../standard/popup.component";
 
 @Component({
     selector: 'jbr-grid-data-statement-date',
@@ -18,8 +17,7 @@ import {PopupBodyComponent} from "../../standard/popup-body.component";
         MoneyAccount,
         NgIf,
         MoneyStatement,
-        PopupHeaderComponent,
-        PopupBodyComponent
+        PopupComponent
     ],
     standalone: true
 })

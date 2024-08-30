@@ -1,3 +1,21 @@
+.title {
+    font-size: 40px;
+}
+
+.sub-title {
+    font-size: 20px;
+    color: darkgrey;
+}
+
+.row-no-margin-or-pad {
+    margin: 0;
+    padding: 0;
+}
+
+.col-no-pad {
+    padding: 0;
+}
+
 .popup-body-row {
     margin: 6px;
 }
