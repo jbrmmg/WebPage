@@ -36,20 +36,6 @@ export class GridDataAccount extends GridData implements OnInit {
     }
 
     ngOnInit(): void {
-//        this.lockEmitter = new EventEmitter();
-//        this.lockEmitter.subscribe(() => {
-//            this.lock();
-//        });
-        /*
-            @Input() selectedAccountIds : string[];
-    @Input() filterMode: boolean;
-    @Input() allowClosed: boolean;
-    @Output() cleared: EventEmitter<void> = new EventEmitter();
-    @Output() selected: EventEmitter<JbAccount[]> = new EventEmitter();
-    @Output() selectAccount: EventEmitter<JbAccount> = new EventEmitter();
-    @Output() account: EventEmitter<string> = new EventEmitter();
-    @Output() exit: EventEmitter<void> = new EventEmitter();
-         */
         this.selectEvent = new EventEmitter();
         this.selectEvent.subscribe(account => {
             this.onSelect(account);

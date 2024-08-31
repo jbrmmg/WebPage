@@ -1,12 +1,14 @@
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {NgForOf, NgIf} from "@angular/common";
+import {Component, EventEmitter, Input, OnInit} from "@angular/core";
+import {NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {ButtonsModule} from "ngx-bootstrap/buttons";
 import {MoneyService} from "../money.service";
 import {Category} from "./category";
+import {JbAccount} from "../account/jbAccount";
 
 class AccountOption {
     id: string;
     name: string;
+    account: JbAccount;
 }
 
 @Component({
@@ -16,8 +18,10 @@ class AccountOption {
     imports: [
         NgForOf,
         ButtonsModule,
-        NgIf
+        NgIf,
+        NgOptimizedImage
     ],
+    host: {'style': 'padding: 0;'},
     standalone: true
 })
 export class MoneyCategory implements OnInit {
@@ -25,14 +29,14 @@ export class MoneyCategory implements OnInit {
     categories: Category[][] = [];
     accounts: AccountOption[][] = [];
     errorMessage: string;
-    @Input() selectedCategoryIds : string[];
+
     @Input() filterMode: boolean;
     @Input() allowTransfer: boolean;
-    @Output() cleared: EventEmitter<void> = new EventEmitter();
-    @Output() selected: EventEmitter<string[]> = new EventEmitter();
-    @Output() selectCategory: EventEmitter<Category> = new EventEmitter();
-    @Output() account: EventEmitter<string> = new EventEmitter();
-    @Output() exit: EventEmitter<void> = new EventEmitter();
+    @Input() selectedCategories : Category[];
+    @Input() allSelected: boolean;
+
+    @Input() selectCategoryEvent: EventEmitter<Category>;
+    @Input() selectTransferEvent: EventEmitter<JbAccount>;
 
     constructor(private _moneyService: MoneyService) {
     }
@@ -68,6 +72,7 @@ export class MoneyCategory implements OnInit {
                         let next: AccountOption = new AccountOption();
                         next.id = value.id;
                         next.name = value.name;
+                        next.account = value;
 
                         if (row.length == this.columns) {
                             row = [];
@@ -94,7 +99,7 @@ export class MoneyCategory implements OnInit {
     }
 
     clickTransfer(item: AccountOption) {
-        this.account.emit(item.id);
+        this.selectTransferEvent.emit(item.account);
     }
 
     transferDisplay(item: AccountOption): string {
@@ -108,8 +113,8 @@ export class MoneyCategory implements OnInit {
 
         let result: boolean = false;
 
-        this.selectedCategoryIds.forEach(id => {
-            if(item.id == id) {
+        this.selectedCategories.forEach(category => {
+            if(item.id == category.id) {
                 result = true;
                 return;
             }
@@ -128,50 +133,18 @@ export class MoneyCategory implements OnInit {
                 return;
             }
 
-            this.selectCategory.emit(item);
+            this.selectCategoryEvent.emit(item);
             return;
         }
 
         if(this.isCategorySelected(item)) {
-            const index = this.selectedCategoryIds.indexOf(item.id,0);
+            const index = this.selectedCategories.indexOf(item,0);
 
             if(index > -1) {
-                this.selectedCategoryIds.splice(index,1);
+                this.selectedCategories.splice(index,1);
             }
         } else {
-            this.selectedCategoryIds.push(item.id);
-        }
-    }
-
-    onClear() {
-        this.cleared.emit();
-    }
-
-    onExit() {
-        this.exit.emit();
-    }
-
-    onOK() {
-        // Are all the values the same?
-        let anySelected: boolean = false;
-        let allSelected: boolean = true;
-        let selection: string[] = [];
-
-        this.categories.forEach(row => {
-            row.forEach(col => {
-                if(this.isCategorySelected(col)) {
-                    selection.push(col.id);
-                    anySelected = true;
-                } else {
-                    allSelected = false;
-                }
-            })
-        });
-
-        if(allSelected || !anySelected) {
-            this.cleared.emit();
-        } else {
-            this.selected.emit(selection);
+            this.selectedCategories.push(item);
         }
     }
 
@@ -212,12 +185,12 @@ export class MoneyCategory implements OnInit {
     }
 
     onSelectAll() {
-        this.selectedCategoryIds = [];
+        this.selectedCategories = [];
 
         // Add all to the selection.
         this.categories.forEach(row => {
             row.forEach(col => {
-                this.selectedCategoryIds.push(col.id);
+                this.selectedCategories.push(col);
             })
         });
     }

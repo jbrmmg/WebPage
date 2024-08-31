@@ -1,4 +1,4 @@
-import {Component, TemplateRef} from "@angular/core";
+import {Component, EventEmitter, OnInit, TemplateRef, Type} from "@angular/core";
 import {TransactionReport} from "../../transaction/transactionReport";
 import {MoneyService} from "../../money.service";
 import {MoneyCategory} from "../../category/money-cat.component";
@@ -8,21 +8,48 @@ import {GridData} from "./grid-data";
 import {TransactionEditType} from "../../transaction/transactionEditType";
 import {GridDataEvent} from "./grid-data-event";
 import {HeaderType} from "../header/grid-header-type";
+import {PopupComponent} from "../../../standard/popup.component";
+import {JbAccount} from "../../account/jbAccount";
 
 @Component({
     selector: 'jbr-grid-data-category',
     templateUrl: './grid-data-category.html',
     styleUrls: ['./grid-data-category.css'],
     imports: [
-        MoneyCategory
+        MoneyCategory,
+        PopupComponent
     ],
     standalone: true
 })
-export class GridDataCategory extends GridData {
+export class GridDataCategory extends GridData implements OnInit {
     modalRef: BsModalRef;
+
+    content: Type<any>;
+    inputs: Record<string,unknown>;
+
+    selectCategoryEvent: EventEmitter<Category>;
+    selectTransferEvent: EventEmitter<JbAccount>
 
     constructor(private modalService: BsModalService) {
         super();
+    }
+
+    ngOnInit(): void {
+        this.selectCategoryEvent = new EventEmitter();
+        this.selectCategoryEvent.subscribe(category => {
+            this.onSelect(category);
+        });
+
+        this.selectTransferEvent = new EventEmitter();
+        this.selectTransferEvent.subscribe(account => {
+            this.onSelectTransfer(account);
+        });
+
+        this.content = MoneyCategory;
+        this.inputs = { filterMode: false,
+            allowTransfer: this.transaction.new,
+            selectCategoryEvent: this.selectCategoryEvent,
+            selectTransferEvent: this.selectTransferEvent };
     }
 
     getCategoryName(): string {
@@ -66,10 +93,6 @@ export class GridDataCategory extends GridData {
         this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
     }
 
-    onClear() {
-        this.modalRef.hide();
-    }
-
     onExit() {
         this.modalRef.hide();
     }
@@ -86,21 +109,17 @@ export class GridDataCategory extends GridData {
         this.valueChanged.emit(event);
     }
 
-    onSelectTransfer(id: string) {
+    onSelectTransfer(account: JbAccount) {
         this.modalRef.hide();
 
         // Account transfer
-        this.transaction.category = new Category("TRF", "Transfer (" + id + ")", 0, false, "FFFFFF", id, false, false);
+        this.transaction.category = new Category("TRF", "Transfer (" + account.id + ")", 0, false, "FFFFFF", account.id, false, false);
         this.transaction.modified = true;
-        this.transaction.transferAccountId = id;
+        this.transaction.transferAccountId = account.id;
 
         let event: GridDataEvent = new GridDataEvent();
         event.transaction = this.transaction;
         event.source = HeaderType.Category;
         this.valueChanged.emit(event);
-    }
-
-    allowTransfer(): boolean {
-        return this.transaction.new;
     }
 }

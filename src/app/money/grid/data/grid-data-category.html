@@ -4,17 +4,10 @@
     {{getCategoryName()}}</p>
 
 <ng-template #templateCategorySelect>
-    <div class="modal-header">
-        <h4 class="modal-title pull-left">Select a Category</h4>
-    </div>
-    <div class="body">
-        <jbr-category style="width:100%"
-                      [filterMode]="false"
-                      [allowTransfer]="allowTransfer()"
-                      (cleared)="onClear()"
-                      (selectCategory)="onSelect($event)"
-                      (account)="onSelectTransfer($event)"
-                      (exit)="onExit()">
-        </jbr-category>
-    </div>
+    <jbr-popup [title]="'Select a Category'"
+               [imageUrl]="'../../../../assets/images/money/default-popup.svg'"
+               [content]="content" [inputs]="inputs"
+               [exit]="true"
+               (exitEvent)="onExit()">
+    </jbr-popup>
 </ng-template>

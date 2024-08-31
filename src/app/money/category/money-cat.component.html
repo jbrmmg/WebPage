@@ -1,3 +1,15 @@
+<div *ngIf="filterMode" class="row row-no-margin">
+    <div class="col-3 btn-no-margin">
+        <div class="btn-action">
+            <label class="btn btn-outline-info btn-category"
+                   tabindex="0"
+                   (click)="onSelectAll()">
+                <em class="fa fa-check-circle"></em>
+                Select All
+            </label>
+        </div>
+    </div>
+</div>
 <div class="row row-no-margin" *ngFor="let row of categories">
     <div class="col-3 btn-no-margin" *ngFor="let col of row">
         <div class="btn-padding">
@@ -12,22 +24,6 @@
         </div>
     </div>
 </div>
-<div *ngIf="filterMode" class="row row-no-margin">
-    <div class="col-9 btn-no-margin">
-    </div>
-    <div class="col-3 btn-no-margin">
-        <div class="btn-action">
-            <label class="btn btn-primary btn-category"
-                   [style.background-color]="'#0D6EFD'"
-                   [style.color]="'#FFFFFF'"
-                   tabindex="0"
-                   (click)="onSelectAll()">
-                <em class="fa fa-check-circle"></em>
-                Select All Categories
-            </label>
-        </div>
-    </div>
-</div>
 <div class="row row-no-margin" *ngFor="let row of getAccounts()">
     <div class="col-3 btn-no-margin" *ngFor="let col of row">
         <div class="btn-padding">
@@ -37,27 +33,9 @@
                    [style.border-color]="'#0D6EFD'"
                    tabindex="0"
                    (click)="clickTransfer(col)">
-                <img class="account-img" src="{{getAccountImage(col)}}" alt="Account"/>
+                <img class="account-img" ngSrc="{{getAccountImage(col)}}" alt="Transfer Account" width="15px" height="15px"/>
                 {{transferDisplay(col)}}
             </label>
-        </div>
-    </div>
-</div>
-<div class="row row-no-margin">
-    <div class="col-2 btn-no-margin">
-        <div class="btn-action">
-            <label class="btn-action btn btn-primary" (click)="onExit()">Exit</label>
-        </div>
-    </div>
-    <div *ngIf="filterMode" class="col-2 btn-no-margin">
-        <div class="btn-action">
-            <label class="btn-action btn btn-primary" (click)="onClear()">Clear</label>
-        </div>
-    </div>
-    <div *ngIf="filterMode" class="col-6 btn-no-margin"></div>
-    <div *ngIf="filterMode" class="col-2 btn-no-margin">
-        <div class="btn-action">
-            <label class="btn-action btn btn-primary" (click)="onOK()">OK</label>
         </div>
     </div>
 </div>

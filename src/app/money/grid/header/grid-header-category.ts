@@ -1,11 +1,11 @@
-import {Component, TemplateRef} from "@angular/core";
+import {Component, OnInit, TemplateRef, Type} from "@angular/core";
 import {FilterEvent, GridHeader} from "./grid-header";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {NgForOf, NgIf} from "@angular/common";
 import {ButtonsModule} from "ngx-bootstrap/buttons";
 import {MoneyCategory} from "../../category/money-cat.component";
-import {Category} from "../../category/category";
 import {HeaderType} from "./grid-header-type";
+import {PopupComponent} from "../../../standard/popup.component";
 
 @Component({
     selector: 'jbr-grid-header-category',
@@ -15,27 +15,35 @@ import {HeaderType} from "./grid-header-type";
         NgForOf,
         ButtonsModule,
         NgIf,
-        MoneyCategory
+        MoneyCategory,
+        PopupComponent
     ],
     standalone: true
 })
-export class GridHeaderCategory extends GridHeader {
+export class GridHeaderCategory extends GridHeader implements OnInit {
     modalRef: BsModalRef;
-    categoryIds: string[];
+    allSelected: boolean;
+    content: Type<any>;
+    inputs: Record<string,unknown>;
 
     constructor(private modalService: BsModalService) {
         super();
     }
 
-    openModal(template: TemplateRef<any>) {
-        // Update the selections from the list of selected ids.
-        this.categoryIds = [];
-        if(this.filter != null && this.filter.categories != null) {
-            this.filter.categories.forEach(category => {
-                this.categoryIds.push(category.id);
-            })
+    ngOnInit(): void {
+        if(this.filter.categories == null) {
+            this.filter.categories = [];
         }
 
+        // Set up the content
+        this.content = MoneyCategory;
+        this.inputs = { filterMode: true,
+            allowTransfer: false,
+            selectedCategories: this.filter.categories,
+            allSelected: this.allSelected };
+    }
+
+    openModal(template: TemplateRef<any>) {
         this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
     }
 
@@ -55,19 +63,16 @@ export class GridHeaderCategory extends GridHeader {
         this.modalRef.hide();
     }
 
-    onSelect(ids: string[]) {
+    onOK() {
         this.modalRef.hide();
 
-        if (this.filter != null) {
-            console.log("notn noull")
+        // If all are selected then clear the filter as it's the same as no filter.
+        if(this.allSelected) {
             this.filter.categories = [];
-            ids.forEach(id => {
-                this.filter.categories.push(new Category(id,"",0,false,null,null, false, false))
-            });
-
-            let event: FilterEvent = new FilterEvent();
-            event.source = HeaderType.Category;
-            this.filterChanged.emit(event);
         }
+
+        let event: FilterEvent = new FilterEvent();
+        event.source = HeaderType.Category;
+        this.filterChanged.emit(event);
     }
 }
