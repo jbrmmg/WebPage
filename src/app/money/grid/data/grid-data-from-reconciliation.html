@@ -2,11 +2,12 @@
 <p class="" *ngIf="!transaction.fromReconciliation" (click)="selectFile(templateSelectFile)">&nbsp;</p>
 
 <ng-template #templateSelectFile>
-    <div class="modal-header">
-        <h4 class="modal-title pull-left">Select a File to load</h4>
-    </div>
-    <div class="body">
-        <jbr-money-files (exitEmitter)="onExit()" (clearFileEmitter)="onClearFile()" (selectFileEmitter)="onSelectFile($event)">
-        </jbr-money-files>
-    </div>
+    <jbr-popup [title]="'Select a File'"
+               [imageUrl]="'../../../../assets/images/money/default-popup.svg'"
+               [content]="content" [inputs]="inputs"
+               [exit]="true"
+               [clear]="true"
+               (exitEvent)="onExit()"
+               (clearEvent)="onClearFile()">
+    </jbr-popup>
 </ng-template>

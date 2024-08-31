@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from "@angular/core";
+import {Component, EventEmitter, Input, OnInit} from "@angular/core";
 import {MoneyService} from "../money.service";
 import {FileUpdate} from "./fileUpdate";
 import {IFile} from "./file";
@@ -19,6 +19,7 @@ import { MoneyFile } from "./money-file";
         NgClass,
         MoneyFile
     ],
+    host: {'style': 'padding: 0;'},
     standalone: true
 })
 export class MoneyFiles implements OnInit {
@@ -27,9 +28,7 @@ export class MoneyFiles implements OnInit {
     fileUpdateTime: Date;
     files: IFile[];
     errorMessage: string;
-    @Output() exitEmitter: EventEmitter<void> = new EventEmitter();
-    @Output() clearFileEmitter: EventEmitter<void> = new EventEmitter();
-    @Output() selectFileEmitter: EventEmitter<IFile> = new EventEmitter();
+    @Input() selectFileEmitter: EventEmitter<IFile>;
 
     constructor(private _moneyService: MoneyService) {
         this.fileUpdateTime = null;
@@ -73,14 +72,6 @@ export class MoneyFiles implements OnInit {
             this.fileUpdateTime = update.updateTime;
             this.updateFileData();
         }
-    }
-
-    onExit() {
-        this.exitEmitter.emit();
-    }
-
-    onClear() {
-        this.clearFileEmitter.emit();
     }
 
     onSelectFile(file: IFile) {
