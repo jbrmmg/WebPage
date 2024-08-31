@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
+import {Component, EventEmitter, Input, OnInit} from "@angular/core";
 import {ButtonsModule} from "ngx-bootstrap/buttons";
-import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {NgClass, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {MoneyService} from "../money.service";
 import {JbAccount} from "./jbAccount";
@@ -20,22 +20,23 @@ class AccountOption {
         NgForOf,
         NgIf,
         FormsModule,
-        NgClass
+        NgClass,
+        NgOptimizedImage
     ],
+    host: {'style': 'padding: 0;'},
     standalone: true
 })
 export class MoneyAccount implements OnInit {
     columns: number = 4;
     accounts: AccountOption[][] = [];
     errorMessage: string;
-    @Input() selectedAccountIds : string[];
+
     @Input() filterMode: boolean;
     @Input() allowClosed: boolean;
-    @Output() cleared: EventEmitter<void> = new EventEmitter();
-    @Output() selected: EventEmitter<JbAccount[]> = new EventEmitter();
-    @Output() selectAccount: EventEmitter<JbAccount> = new EventEmitter();
-    @Output() account: EventEmitter<string> = new EventEmitter();
-    @Output() exit: EventEmitter<void> = new EventEmitter();
+    @Input() selectedAccounts: JbAccount[];
+    @Input() allSelected: boolean;
+
+    @Input() selectEvent: EventEmitter<JbAccount>;
 
     constructor(private _moneyService: MoneyService) {
     }
@@ -84,31 +85,34 @@ export class MoneyAccount implements OnInit {
 
         let result: boolean = false;
 
-        this.selectedAccountIds.forEach(id => {
-            if(item.id == id) {
+        this.selectedAccounts.forEach(account => {
+            if(account.id == item.id) {
                 result = true;
                 return;
             }
-        })
+        });
 
         return result;
     }
 
     clickAccount(item: AccountOption) {
         if(!this.filterMode) {
-            this.selectAccount.emit(item.account);
+            this.selectEvent.emit(item.account);
             return;
         }
 
         if(this.isAccountSelected(item)) {
-            const index = this.selectedAccountIds.indexOf(item.id,0);
+            const index = this.selectedAccounts.indexOf(item.account,0);
 
             if(index > -1) {
-                this.selectedAccountIds.splice(index,1);
+                this.selectedAccounts.splice(index,1);
             }
         } else {
-            this.selectedAccountIds.push(item.id);
+            this.selectedAccounts.push(item.account);
         }
+
+        // Set the all selected flag if we have selected all accounts.
+        this.allSelected = (this.selectedAccounts.length == this.accounts.length);
     }
 
     getAccountImage(item: AccountOption): string {
@@ -116,45 +120,14 @@ export class MoneyAccount implements OnInit {
     }
 
     selectAll() {
-        this.selectedAccountIds = [];
+        this.selectedAccounts = [];
 
         // Add all to the selection.
         this.accounts.forEach(row => {
             row.forEach(col => {
-                this.selectedAccountIds.push(col.id);
+                this.selectedAccounts.push(col.account);
             });
         });
-    }
-
-    onExit() {
-        this.exit.emit();
-    }
-
-    onClear() {
-        this.selectedAccountIds = [];
-        this.cleared.emit();
-    }
-
-    onOK() {
-        let anySelected: boolean = false;
-        let allSelected: boolean = true;
-        let selection: JbAccount[] = [];
-
-        this.accounts.forEach(row => {
-            row.forEach(col => {
-                if(this.isAccountSelected(col)) {
-                    selection.push(col.account);
-                    anySelected = true;
-                } else {
-                    allSelected = false;
-                }
-            });
-        });
-
-        if(allSelected || !anySelected) {
-            this.cleared.emit();
-        } else {
-            this.selected.emit(selection);
-        }
+        this.allSelected = true;
     }
 }

@@ -1,4 +1,5 @@
 <p (click)="openModal(templateStatement)">{{display() | date : 'yyyy-MMM'}}</p>
+
 <ng-template #templateStatement>
     <jbr-popup [title]="'Statement'"
                [subTitle]="getDateDisplay()"

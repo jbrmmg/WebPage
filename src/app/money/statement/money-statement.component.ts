@@ -20,6 +20,7 @@ import {FinancialAmount} from "../transaction/financialAmount";
         CurrencyPipe,
         NgClass
     ],
+    host: {'style': 'padding: 0;'},
     standalone: true
 })
 export class MoneyStatement implements OnInit {

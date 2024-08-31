@@ -1,4 +1,4 @@
-import {Component, TemplateRef} from "@angular/core";
+import {Component, EventEmitter, OnInit, TemplateRef, Type} from "@angular/core";
 import {MoneyService} from "../../money.service";
 import {NgIf} from "@angular/common";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
@@ -9,6 +9,7 @@ import {GridData} from "./grid-data";
 import {TransactionEditType} from "../../transaction/transactionEditType";
 import {GridDataEvent} from "./grid-data-event";
 import {HeaderType} from "../header/grid-header-type";
+import {PopupComponent} from "../../../standard/popup.component";
 
 @Component({
     selector: 'jbr-grid-data-account',
@@ -17,15 +18,47 @@ import {HeaderType} from "../header/grid-header-type";
     imports: [
         NgIf,
         MoneyCategory,
-        MoneyAccount
+        MoneyAccount,
+        PopupComponent
     ],
     standalone: true
 })
-export class GridDataAccount extends GridData {
+export class GridDataAccount extends GridData implements OnInit {
     modalRef: BsModalRef;
+
+    content: Type<any>;
+    inputs: Record<string,unknown>;
+
+    selectEvent: EventEmitter<JbAccount>;
 
     constructor(private modalService: BsModalService) {
         super();
+    }
+
+    ngOnInit(): void {
+//        this.lockEmitter = new EventEmitter();
+//        this.lockEmitter.subscribe(() => {
+//            this.lock();
+//        });
+        /*
+            @Input() selectedAccountIds : string[];
+    @Input() filterMode: boolean;
+    @Input() allowClosed: boolean;
+    @Output() cleared: EventEmitter<void> = new EventEmitter();
+    @Output() selected: EventEmitter<JbAccount[]> = new EventEmitter();
+    @Output() selectAccount: EventEmitter<JbAccount> = new EventEmitter();
+    @Output() account: EventEmitter<string> = new EventEmitter();
+    @Output() exit: EventEmitter<void> = new EventEmitter();
+         */
+        this.selectEvent = new EventEmitter();
+        this.selectEvent.subscribe(account => {
+            this.onSelect(account);
+        });
+
+        this.content = MoneyAccount;
+        this.inputs = { filterMode: false,
+            allowClosed: false,
+            selectEvent: this.selectEvent };
     }
 
     hasAccount() : boolean {

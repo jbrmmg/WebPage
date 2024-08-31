@@ -1,4 +1,4 @@
-import {Component, TemplateRef} from "@angular/core";
+import {Component, OnInit, TemplateRef, Type} from "@angular/core";
 import {ButtonsModule} from "ngx-bootstrap/buttons";
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
@@ -7,7 +7,7 @@ import {FilterEvent, GridHeader} from "./grid-header";
 import {HeaderType} from "./grid-header-type";
 import {MoneyAccount} from "../../account/money-account.component";
 import {MoneyCategory} from "../../category/money-cat.component";
-import {JbAccount} from "../../account/jbAccount";
+import {PopupComponent} from "../../../standard/popup.component";
 
 @Component({
     selector: 'jbr-grid-header-account',
@@ -20,17 +20,33 @@ import {JbAccount} from "../../account/jbAccount";
         FormsModule,
         NgClass,
         MoneyAccount,
-        MoneyCategory
+        MoneyCategory,
+        PopupComponent
     ],
     standalone: true
 })
-export class GridHeaderAccount extends GridHeader {
+export class GridHeaderAccount extends GridHeader implements OnInit {
     modalRef: BsModalRef;
     columns: number = 4;
-    accountIds: string[] = [];
+    allSelected: boolean;
+    content: Type<any>;
+    inputs: Record<string,unknown>;
 
     constructor(private modalService: BsModalService) {
         super();
+    }
+
+    ngOnInit(): void {
+        if(this.filter.accounts == null) {
+            this.filter.accounts = [];
+        }
+
+        // Set up the content
+        this.content = MoneyAccount;
+        this.inputs = { filterMode: true,
+            allowClosed: true,
+            selectedAccounts: this.filter.accounts,
+            allSelected: this.allSelected };
     }
 
     openModal(template: TemplateRef<any>) {
@@ -44,7 +60,6 @@ export class GridHeaderAccount extends GridHeader {
     onClear() {
         this.modalRef.hide();
 
-        this.accountIds = [];
         this.filter.accounts = [];
 
         // Update filter event.
@@ -53,13 +68,13 @@ export class GridHeaderAccount extends GridHeader {
         this.filterChanged.emit(event);
     }
 
-    onSelect(selected: JbAccount[]) {
+    onOK() {
         this.modalRef.hide();
 
-        this.filter.accounts = [];
-        selected.forEach(next => {
-            this.filter.accounts.push(next);
-        })
+        // If all are selected then clear the filter as it's the same as no filter.
+        if(this.allSelected) {
+            this.filter.accounts = [];
+        }
 
         let event: FilterEvent = new FilterEvent();
         event.source = HeaderType.Account;

@@ -3,16 +3,15 @@
 </div>
 
 <ng-template #templateAccount>
-    <div class="modal-header">
-        <h4 class="modal-title pull-left title">Select Accounts (or all)</h4>
-    </div>
-    <div class="body">
-        <jbr-account style="width:100%"
-                     [filterMode]="true"
-                     [allowClosed]="true"
-                     [selectedAccountIds]="accountIds"
-                     (cleared)="onClear()"
-                     (selected)="onSelect($event)"
-                     (exit)="onExit()"></jbr-account>
-    </div>
+    <jbr-popup [title]="'Select Accounts'"
+               [subTitle]="'or select All'"
+               [imageUrl]="'../../../../assets/images/money/default-popup.svg'"
+               [content]="content" [inputs]="inputs"
+               [ok]="true"
+               [exit]="true"
+               [clear]="true"
+               (okEvent)="onOK()"
+               (clearEvent)="onClear()"
+               (exitEvent)="onExit()">
+    </jbr-popup>
 </ng-template>

@@ -1,3 +1,5 @@
+@import "./standard-popup.css";
+
 .title {
     font-size: 40px;
 }
@@ -5,24 +7,6 @@
 .sub-title {
     font-size: 20px;
     color: darkgrey;
-}
-
-.row-no-margin-or-pad {
-    margin: 0;
-    padding: 0;
-}
-
-.col-no-pad {
-    padding: 0;
-}
-
-.popup-body-row {
-    margin: 6px;
-}
-
-.row-no-margin {
-    margin: 6px 0 0 0;
-    padding: 0;
 }
 
 .col-left {
@@ -33,10 +17,19 @@
     padding: 0 0 0 2px;
 }
 
+.full-width {
+    width: 100%;
+}
+
 .col-far-right {
     padding: 0 0 0 4px;
 }
 
 .btn-bar {
     width: 100%;
+}
+
+.row-no-margin {
+    margin: 6px 0 0 0;
+    padding: 0;
 }

@@ -1,3 +1,5 @@
+@import "../../standard/standard-popup.css";
+
 p {
     padding: 0;
     margin: 0;
@@ -10,10 +12,6 @@ p {
     font-family: Helvetica, serif;
     font-size: 14px;
     font-weight: bold;
-}
-
-.modal-sm {
-    width: 300px;
 }
 
 .account-img {

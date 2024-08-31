@@ -1,3 +1,5 @@
+@import "../../standard/standard-popup.css";
+
 td {
     font-family: Helvetica, serif;
     font-size: 10px;
@@ -17,15 +19,6 @@ th {
 .balances {
     width: 100%;
     margin: 0 0 6px 0;
-}
-
-.no-col-pad {
-    padding: 0;
-}
-
-.row-no-margin-or-pad {
-    margin: 0;
-    padding: 0;
 }
 
 .description {

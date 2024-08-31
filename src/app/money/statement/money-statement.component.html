@@ -1,11 +1,11 @@
-<div class="row popup-body-row">
+<div class="row row-no-margin-or-pad">
     <div class="row row-no-margin-or-pad">
-        <div class="col-9 no-col-pad">
+        <div class="col-9 col-no-pad">
             <label [ngClass]="isLocked() ? 'btn btn-primary': 'btn btn-outline-primary'" (click)="lock()" [title]="isLocked() ? 'Locked' : 'Lock Statement'">
                 <em class="fa fa-lock"></em>
             </label>
         </div>
-        <div class="col-3 no-col-pad">
+        <div class="col-3 col-no-pad">
             <table class="balances">
                 <tbody>
                     <tr>

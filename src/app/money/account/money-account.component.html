@@ -1,46 +1,28 @@
-<div class="row row-no-margin" *ngFor="let row of accounts">
-    <div class="col-3 btn-no-margin" *ngFor="let col of row">
-        <div class="btn-padding">
-            <label [ngClass]="isAccountSelected(col) ? 'btn btn-success btn-action': 'btn btn-outline-primary btn-action'"
-                   tabindex="0"
-                   (click)="clickAccount(col)">
-                <img class="account-img" src="{{getAccountImage(col)}}" alt="Account"/>
-                {{col.display}}
-            </label>
+<div class="row row-no-margin-or-pad">
+    <div class="row row-no-margin-or-pad" *ngIf="filterMode">
+        <div class="col-3 btn-no-margin">
+            <div class="btn-action">
+                <label class="btn btn-outline-info btn-account"
+                       tabindex="0"
+                       (click)="selectAll()">
+                    <em class="fa fa-check-circle"></em>
+                    Select All
+                </label>
+            </div>
+        </div>
+        <div class="col-9 btn-no-margin">
         </div>
     </div>
-</div>
-<div class="row row-no-margin" *ngIf="filterMode">
-    <div class="col-9 btn-no-margin">
-    </div>
-    <div class="col-3 btn-no-margin">
-        <div class="btn-action">
-            <label class="btn btn-primary btn-account"
-                   [style.background-color]="'#0D6EFD'"
-                   [style.color]="'#FFFFFF'"
-                   tabindex="0"
-                   (click)="selectAll()">
-                <em class="fa fa-check-circle"></em>
-                Select All Accounts
-            </label>
-        </div>
-    </div>
-</div>
-<div class="row row-no-margin">
-    <div class="col-2 btn-no-margin">
-        <div class="btn-action">
-            <label class="btn-action btn btn-primary" (click)="onExit()">Exit</label>
-        </div>
-    </div>
-    <div class="col-2 btn-no-margin" *ngIf="filterMode">
-        <div class="btn-action">
-            <label class="btn-action btn btn-primary" (click)="onClear()">Clear</label>
-        </div>
-    </div>
-    <div class="col-6 btn-no-margin"></div>
-    <div class="col-2 btn-no-margin" *ngIf="filterMode">
-        <div class="btn-action">
-            <label class="btn-action btn btn-primary" (click)="onOK()">OK</label>
+    <div class="row row-no-margin-or-pad" *ngFor="let row of accounts">
+        <div class="col-3 btn-no-margin" *ngFor="let col of row">
+            <div class="btn-padding">
+                <label [ngClass]="isAccountSelected(col) ? 'btn btn-success btn-action': 'btn btn-outline-primary btn-action'"
+                       tabindex="0"
+                       (click)="clickAccount(col)">
+                    <img class="account-img" ngSrc="{{getAccountImage(col)}}" alt="Account" width="15px" height="15px"/>
+                    {{col.display}}
+                </label>
+            </div>
         </div>
     </div>
 </div>

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output, Type} from "@angular/core";
-import {NgComponentOutlet, NgIf} from "@angular/common";
+import {NgComponentOutlet, NgIf, NgOptimizedImage} from "@angular/common";
 
 @Component({
     selector: 'jbr-popup',
@@ -7,7 +7,8 @@ import {NgComponentOutlet, NgIf} from "@angular/common";
     styleUrls: ['./popup.component.css'],
     imports: [
         NgIf,
-        NgComponentOutlet
+        NgComponentOutlet,
+        NgOptimizedImage
     ],
     standalone: true
 })
