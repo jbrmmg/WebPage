@@ -1,11 +1,12 @@
-import {Component, TemplateRef} from "@angular/core";
+import {Component, EventEmitter, OnInit, TemplateRef, Type} from "@angular/core";
 import {FilterEvent, GridHeader} from "./grid-header";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
 import {DatePipe} from "@angular/common";
 import {FormsModule} from "@angular/forms";
-import {ValueRange} from "../../range/valueRange";
 import {HeaderType} from "./grid-header-type";
+import {PopupComponent} from "../../../standard/popup.component";
+import {GridFilterAmount} from "../filters/grid-filter-amount";
 
 @Component({
     selector: 'jbr-grid-header-amount',
@@ -14,41 +15,38 @@ import {HeaderType} from "./grid-header-type";
     imports: [
         BsDatepickerModule,
         DatePipe,
-        FormsModule
+        FormsModule,
+        PopupComponent
     ],
     standalone: true
 })
-export class GridHeaderAmount extends GridHeader {
+export class GridHeaderAmount extends GridHeader implements OnInit {
     modalRef: BsModalRef;
-    fromAmount: string;
-    toAmount: string;
+    content: Type<any>;
+    inputs: Record<string,unknown>;
+    clearEvent: EventEmitter<void> = new EventEmitter();
+    okEvent: EventEmitter<void> = new EventEmitter();
 
     constructor(private modalService: BsModalService ) {
         super();
     }
 
-    fromChanged(event: any) {
-        this.fromAmount = event.target.value;
+    ngOnInit(): void {
+        this.content = GridFilterAmount;
+        this.inputs = { filter: this.filter,
+            clearEvent: this.clearEvent,
+            okEvent: this.okEvent };
     }
 
-    toChanged(event: any) {
-        this.toAmount = event.target.value;
-    }
-
-    exit() {
+    onExit() {
         this.modalRef.hide();
     }
 
     openModal(template: TemplateRef<any>) {
-        if(this.filter != null && this.filter.valueRange != null) {
-            this.fromAmount = this.filter.valueRange.minimum.toString();
-            this.toAmount = this.filter.valueRange.maximum.toString();
-        }
-
         this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
     }
 
-    clear() {
+    onClear() {
         this.modalRef.hide();
 
         if(this.filter != null) {
@@ -60,26 +58,13 @@ export class GridHeaderAmount extends GridHeader {
         this.filterChanged.emit(event);
     }
 
-    selectAmounts() {
+    onOK() {
         this.modalRef.hide();
 
-        if(this.filter != null) {
-            let min: number = parseInt(this.fromAmount);
-            let max: number = parseInt(this.toAmount);
+        this.okEvent.emit();
 
-            if(min > max) {
-                this.fromAmount = max.toString();
-                this.toAmount = min.toString();
-
-                min = parseInt(this.fromAmount);
-                max = parseInt(this.toAmount);
-            }
-
-            this.filter.valueRange = new ValueRange(min,max);
-
-            let event: FilterEvent = new FilterEvent();
-            event.source = HeaderType.Credit;
-            this.filterChanged.emit(event);
-        }
+        let event: FilterEvent = new FilterEvent();
+        event.source = HeaderType.Credit;
+        this.filterChanged.emit(event);
     }
 }

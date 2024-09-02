@@ -1,10 +1,11 @@
-import {Component, TemplateRef} from "@angular/core";
+import {Component, EventEmitter, OnInit, TemplateRef, Type} from "@angular/core";
 import {FilterEvent, GridHeader} from "./grid-header";
 import {DatePipe, NgForOf} from "@angular/common";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
-import {DateRange} from "../../range/dateRange";
 import {HeaderType} from "./grid-header-type";
+import {PopupComponent} from "../../../standard/popup.component";
+import {GridFilterDate} from "../filters/grid-filter-date";
 
 @Component({
     selector: 'jbr-grid-header-date',
@@ -13,93 +14,38 @@ import {HeaderType} from "./grid-header-type";
     imports: [
         NgForOf,
         BsDatepickerModule,
-        DatePipe
+        DatePipe,
+        PopupComponent
     ],
     standalone: true
 })
-export class GridHeaderDate extends GridHeader {
+export class GridHeaderDate extends GridHeader implements OnInit {
     modalRef: BsModalRef;
-    toValue: Date = new Date();
-    fromValue: Date = new Date();
-    datePipe: DatePipe = new DatePipe('en-UK');
+    content: Type<any>;
+    inputs: Record<string,unknown>;
+    clearEvent: EventEmitter<void> = new EventEmitter();
+    okEvent: EventEmitter<void> = new EventEmitter();
 
     constructor(private modalService: BsModalService ) {
         super();
     }
 
-    onDateChangeFrom(newDate: Date): void {
-        this.fromValue = newDate;
+    ngOnInit(): void {
+        this.content = GridFilterDate;
+        this.inputs = { filter: this.filter,
+            clearEvent: this.clearEvent,
+            okEvent: this.okEvent };
     }
 
-    onDateChangeTo(newDate: Date): void {
-        this.toValue = newDate;
-    }
-
-    exit() {
+    onExit() {
         this.modalRef.hide();
     }
 
-    yearToDate() {
-        let today = new Date();
-
-        this.fromValue = new Date(today.getFullYear(),0,1);
-        this.toValue = today;
-    }
-
-    last12Months(){
-        let today = new Date();
-
-        this.fromValue = new Date(today.getFullYear() - 1,today.getMonth(),today.getDate());
-        this.toValue = today;
-    }
-
-    lastYear(){
-        let today = new Date();
-
-        this.fromValue = new Date(today.getFullYear() - 1,0,1);
-        this.toValue = new Date(today.getFullYear() - 1,11,31);
-    }
-
-    monthToDate(){
-        let today = new Date();
-
-        this.fromValue = new Date(today.getFullYear(),today.getMonth(),1);
-        this.toValue = today;
-    }
-
-    lastMonth(){
-        let today = new Date();
-
-        if(today.getMonth() == 0) {
-            this.fromValue = new Date(today.getFullYear() - 1, 11, today.getDate());
-        } else {
-            this.fromValue = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
-        }
-        this.toValue = today;
-    }
-
-    previousMonth(){
-        let today = new Date();
-
-        if(today.getMonth() == 0) {
-            this.fromValue = new Date(today.getFullYear() - 1, 11, 1);
-        } else {
-            this.fromValue = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
-        }
-        this.toValue = today;
-    }
-
     openModal(template: TemplateRef<any>) {
-        // If there is already a filter then display it.
-        if(this.filter != null && this.filter.dateRange != null) {
-            this.toValue = new Date(this.filter.dateRange.to + 'T00:00:00');
-            this.fromValue = new Date(this.filter.dateRange.from + 'T00:00:00');
-        }
-
         this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
     }
 
-    clear() {
+    onClear() {
         this.modalRef.hide();
 
         if(this.filter != null) {
@@ -111,14 +57,10 @@ export class GridHeaderDate extends GridHeader {
         this.filterChanged.emit(event);
     }
 
-    selectDates() {
+    onOK() {
         this.modalRef.hide();
 
-        if(this.filter != null) {
-            let fromValueString: string = this.datePipe.transform(this.fromValue,'yyyy-MM-dd');
-            let toValueString: string = this.datePipe.transform(this.toValue,'yyyy-MM-dd');
-            this.filter.dateRange = new DateRange(fromValueString,toValueString)
-        }
+        this.okEvent.emit();
 
         let event: FilterEvent = new FilterEvent();
         event.source = HeaderType.Date;

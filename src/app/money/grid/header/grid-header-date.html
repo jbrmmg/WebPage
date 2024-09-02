@@ -1,95 +1,14 @@
 <p (click)="openModal(templateDateFilter)">{{header}}</p>
 
 <ng-template #templateDateFilter>
-    <div class="modal-header">
-        <h4 class="modal-title pull-left">Select Start and End Dates</h4>
-    </div>
-    <div class="body">
-        <div>
-            <div class="row row-no-margin">
-                <div class="col-6 date-col-margin">
-                    <div class="col-12">
-                        <div>From Date</div>
-                        <input id="from-date"
-                               type="text"
-                               placeholder="Datepicker"
-                               class="form-control filter-datepicker date-entry"
-                               [bsValue]="fromValue"
-                               (bsValueChange)="onDateChangeFrom($event)"
-                               value="{{ fromValue | date:'dd-MMMM-yyyy'}}"
-                               bsDatepicker [bsConfig]="{
-                                                dateInputFormat: 'DD-MMMM-YYYY',
-                                                containerClass: 'theme-dark-blue',
-                                                selectFromOtherMonth: true }"/>
-                    </div>
-                </div>
-                <div class="col-6 date-col-margin">
-                    <div class="col-12">
-                        <div>To Date</div>
-                        <input id="to-date"
-                               type="text"
-                               placeholder="Datepicker"
-                               class="form-control filter-datepicker date-entry"
-                               [bsValue]="toValue"
-                               (bsValueChange)="onDateChangeTo($event)"
-                               value="{{ toValue | date:'dd-MMMM-yyyy'}}"
-                               bsDatepicker [bsConfig]="{
-                                                dateInputFormat: 'DD-MMMM-YYYY',
-                                                containerClass: 'theme-dark-blue',
-                                                selectFromOtherMonth: true }"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row row-no-margin">
-            <div class="col-2 btn-no-margin">
-                <div class="btn-action">
-                    <label class="btn-action btn btn-primary" (click)="yearToDate()">YTD</label>
-                </div>
-            </div>
-            <div class="col-2 btn-no-margin">
-                <div class="btn-action">
-                    <label class="btn-action btn btn-primary" (click)="last12Months()">Last 12 Months</label>
-                </div>
-            </div>
-            <div class="col-2 btn-no-margin">
-                <div class="btn-action">
-                    <label class="btn-action btn btn-primary" (click)="lastYear()">Last Year</label>
-                </div>
-            </div>
-            <div class="col-2 btn-no-margin">
-                <div class="btn-action">
-                    <label class="btn-action btn btn-primary" (click)="monthToDate()">MTD</label>
-                </div>
-            </div>
-            <div class="col-2 btn-no-margin">
-                <div class="btn-action">
-                    <label class="btn-action btn btn-primary" (click)="lastMonth()">Last Month</label>
-                </div>
-            </div>
-            <div class="col-2 btn-no-margin">
-                <div class="btn-action">
-                    <label class="btn-action btn btn-primary" (click)="previousMonth()">Previous Month</label>
-                </div>
-            </div>
-        </div>
-        <div class="row row-no-margin">
-            <div class="col-2 btn-no-margin">
-                <div class="btn-action">
-                    <label class="btn-action btn btn-primary" (click)="exit()">Exit</label>
-                </div>
-            </div>
-            <div class="col-2 btn-no-margin">
-                <div class="btn-action">
-                    <label class="btn-action btn btn-primary" (click)="clear()">Clear</label>
-                </div>
-            </div>
-            <div class="col-6 btn-no-margin"></div>
-            <div class="col-2 btn-no-margin">
-                <div class="btn-action">
-                    <label class="btn-action btn btn-primary" (click)="selectDates()">OK</label>
-                </div>
-            </div>
-        </div>
-    </div>
+    <jbr-popup [title]="'Select Date Range'"
+               [imageUrl]="'../../../../assets/images/money/default-popup.svg'"
+               [content]="content" [inputs]="inputs"
+               [ok]="true"
+               [exit]="true"
+               [clear]="true"
+               (okEvent)="onOK()"
+               (clearEvent)="onClear()"
+               (exitEvent)="onExit()">
+    </jbr-popup>
 </ng-template>

@@ -1,0 +1,14 @@
+.amount-entry {
+    border-radius: 0;
+    padding: 3px 0 0 0;
+    width: 100%;
+}
+
+.amount-col-margin {
+    padding: 0 3px 0 2px;
+    margin: 0;
+}
+
+.row-no-margin {
+    margin: 0;
+}

@@ -2,33 +2,15 @@
 <input type="checkbox" [indeterminate]="unset()" [checked]="flagFilter()" (change)="changeValue()">
 
 <ng-template #templateFlagFilter>
-    <div class="modal-header">
-        <h4 class="modal-title pull-left">Select Flags</h4>
-    </div>
-    <div class="body">
-        <div class="row row-no-margin">
-            <div class="row row-no-margin" *ngFor="let row of flags">
-                <div class="col-4 btn-no-margin" *ngFor="let col of row">
-                    <div class="btn-padding">
-                        <label [ngClass]="col.selected ? 'btn btn-success btn-flag' : 'btn btn-outline-primary btn-flag'"
-                               tabindex="0"
-                               (click)="clickFlag(col)">
-                            {{col.display}}
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="col-2 btn-no-margin">
-                <div class="btn-action">
-                    <label class="btn-action btn btn-primary" (click)="exit()">Exit</label>
-                </div>
-            </div>
-            <div class="col-8 btn-no-margin"></div>
-            <div class="col-2 btn-no-margin">
-                <div class="btn-action">
-                    <label class="btn-action btn btn-primary" (click)="selectFlags()">OK</label>
-                </div>
-            </div>
-        </div>
-    </div>
+    <jbr-popup [title]="'Select Flags'"
+               [subTitle]="'or select All'"
+               [imageUrl]="'../../../../assets/images/money/default-popup.svg'"
+               [content]="content" [inputs]="inputs"
+               [ok]="true"
+               [exit]="true"
+               [clear]="true"
+               (okEvent)="onOK()"
+               (clearEvent)="onClear()"
+               (exitEvent)="onExit()">
+    </jbr-popup>
 </ng-template>

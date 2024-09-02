@@ -1,49 +1,14 @@
 <p (click)="openModal(templateAmountFilter)">{{header}}</p>
 
 <ng-template #templateAmountFilter>
-    <div class="modal-header">
-        <h4 class="modal-title pull-left">Select Range of Amounts</h4>
-    </div>
-    <div class="body">
-        <div class="row row-no-margin">
-            <div class="col-6 amount-col-margin">
-                <div class="col-12">
-                    <div>From Amount</div>
-                    <input id="from-amount"
-                           [(ngModel)]="fromAmount"
-                           (input)="fromChanged($event)"
-                           type="text"
-                           class="amount-entry"/>
-                </div>
-            </div>
-            <div class="col-6 amount-col-margin">
-                <div class="col-12">
-                    <div>To Amount</div>
-                    <input id="to-amount"
-                           [(ngModel)]="toAmount"
-                           (input)="toChanged($event)"
-                           type="text"
-                           class="amount-entry"/>
-                </div>
-            </div>
-        </div>
-        <div class="row row-no-margin">
-            <div class="col-2 btn-no-margin">
-                <div class="btn-action">
-                    <label class="btn-action btn btn-primary" (click)="exit()">Exit</label>
-                </div>
-            </div>
-            <div class="col-2 btn-no-margin">
-                <div class="btn-action">
-                    <label class="btn-action btn btn-primary" (click)="clear()">Clear</label>
-                </div>
-            </div>
-            <div class="col-6 btn-no-margin"></div>
-            <div class="col-2 btn-no-margin">
-                <div class="btn-action">
-                    <label class="btn-action btn btn-primary" (click)="selectAmounts()">OK</label>
-                </div>
-            </div>
-        </div>
-    </div>
+    <jbr-popup [title]="'Select Amount Range'"
+               [imageUrl]="'../../../../assets/images/money/default-popup.svg'"
+               [content]="content" [inputs]="inputs"
+               [ok]="true"
+               [exit]="true"
+               [clear]="true"
+               (okEvent)="onOK()"
+               (clearEvent)="onClear()"
+               (exitEvent)="onExit()">
+    </jbr-popup>
 </ng-template>
