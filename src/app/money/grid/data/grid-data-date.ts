@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, HostListener} from "@angular/core";
 import {DatePipe, NgIf} from "@angular/common";
 import {MoneyService} from "../../money.service";
 import {TransactionEditType} from "../../transaction/transactionEditType";
@@ -19,6 +19,18 @@ import {HeaderType} from "../header/grid-header-type";
 export class GridDataDate extends GridDataInlineEdit {
     constructor() {
         super(TransactionEditType.Date);
+    }
+
+    @HostListener('document:click', ['$event'])
+    clickOut(event) {
+        if(this.inputElement != null) {
+            if (!this.inputElement.nativeElement.contains(event.target)) {
+                let value: string = this.inputElement.nativeElement.value;
+                if(this.isEditing() && value.length > 0) {
+                    this.completeEdit();
+                }
+            }
+        }
     }
 
     interpretInput(text: string): void {

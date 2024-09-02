@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from "@angular/core";
+import {Component, EventEmitter, HostListener, Output} from "@angular/core";
 import {TransactionReport} from "../../transaction/transactionReport";
 import {MoneyService} from "../../money.service";
 import {NgIf} from "@angular/common";
@@ -23,6 +23,18 @@ export class GridDataDescription extends GridDataInlineEdit {
 
     constructor() {
         super(TransactionEditType.Description);
+    }
+
+    @HostListener('document:click', ['$event'])
+    clickOut(event) {
+        if(this.inputElement != null) {
+            if (!this.inputElement.nativeElement.contains(event.target)) {
+                let value: string = this.inputElement.nativeElement.value;
+                if(this.isEditing() && value.length > 0) {
+                    this.completeEdit();
+                }
+            }
+        }
     }
 
     getDescription(): string {

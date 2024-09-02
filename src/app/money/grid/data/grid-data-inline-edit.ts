@@ -45,6 +45,11 @@ export abstract class GridDataInlineEdit extends GridData {
         }
     }
 
+    completeEdit() {
+        this.interpretInput(this.inputElement.nativeElement.value);
+        this.transaction.editing = TransactionEditType.None;
+    }
+
     onKeydown(event: any) {
         if(event.key === "Escape") {
             this.transaction.editing = TransactionEditType.None;
@@ -53,8 +58,7 @@ export abstract class GridDataInlineEdit extends GridData {
 
         if(event.key === "Enter") {
             // Convert the text entered into a date.
-            this.interpretInput(this.inputElement.nativeElement.value);
-            this.transaction.editing = TransactionEditType.None;
+            this.completeEdit();
             return;
         }
     }

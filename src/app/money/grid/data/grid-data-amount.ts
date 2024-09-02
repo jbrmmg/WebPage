@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, HostListener, Input} from "@angular/core";
 import {CurrencyPipe, NgIf} from "@angular/common";
 import {MoneyService} from "../../money.service";
 import {GridDataInlineEdit} from "./grid-data-inline-edit";
@@ -21,6 +21,18 @@ export class GridDataAmount extends GridDataInlineEdit {
 
     constructor() {
         super(TransactionEditType.Amount);
+    }
+
+    @HostListener('document:click', ['$event'])
+    clickOut(event) {
+        if(this.inputElement != null) {
+            if (!this.inputElement.nativeElement.contains(event.target)) {
+                let value: string = this.inputElement.nativeElement.value;
+                if(this.isEditing() && value.length > 0) {
+                    this.completeEdit();
+                }
+            }
+        }
     }
 
     debit(): boolean {
