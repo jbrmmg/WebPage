@@ -13,7 +13,7 @@ export const environment = {
   moneyDeleteTransactionUrl: "money/transaction",
   moneyLockStatementUrl: "money/statement/lock",
   moneyReconcileTransactionUrl: "money/reconcile",
-  moneyMatchUrl: "money/match?account=##accountId##",
+  moneyMatchUrl: "money/match",
   moneyClearDataUrl: "money/reconciliation/clear",
   moneyAutoAcceptUrl: "money/reconciliation/auto",
   moneySetCategoryUrl: "money/reconciliation/update",
