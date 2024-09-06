@@ -1,0 +1,17 @@
+<div (click)="openModal(templateAccount)">
+    <p>{{header}}</p>
+</div>
+
+<ng-template #templateAccount>
+    <jbr-popup [title]="'Select Accounts'"
+               [subTitle]="'or select All'"
+               [imageUrl]="'../../../../assets/images/money/default-popup.svg'"
+               [content]="content" [inputs]="inputs"
+               [ok]="true"
+               [exit]="true"
+               [clear]="true"
+               (okEvent)="onOK()"
+               (clearEvent)="onClear()"
+               (exitEvent)="onExit()">
+    </jbr-popup>
+</ng-template>

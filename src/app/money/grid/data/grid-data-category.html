@@ -1,0 +1,13 @@
+<p [style.background]="'#' + getCategoryColour()"
+   [style.color]="'#' + getTextColour()"
+   (click)="openModal(templateCategorySelect)">
+    {{getCategoryName()}}</p>
+
+<ng-template #templateCategorySelect>
+    <jbr-popup [title]="'Select a Category'"
+               [imageUrl]="'../../../../assets/images/money/default-popup.svg'"
+               [content]="content" [inputs]="inputs"
+               [exit]="true"
+               (exitEvent)="onExit()">
+    </jbr-popup>
+</ng-template>

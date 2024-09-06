@@ -14,6 +14,7 @@ export interface ITransaction {
     statementLocked: boolean;
     description: string;
     oppositeTransactionId: number;
+    error: string;
 }
 
 export class Transaction {
@@ -22,4 +23,8 @@ export class Transaction {
     categoryId: string;
     accountId: string;
     description: string;
+}
+
+export class DeleteTransaction {
+    id: number;
 }

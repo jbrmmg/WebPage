@@ -1,4 +1,4 @@
-import {IAccount} from "../account/jbaccount";
+import {IAccount} from "../account/jbAccount";
 
 export interface IFile {
     filename: string;

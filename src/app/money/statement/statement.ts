@@ -2,14 +2,7 @@
  * Equivalent of StatementIdDTO
  */
 
-import {FinancialAmount} from "../transaction/financialamount";
-import {IFinancialAmount} from "../transaction/financialamount";
-
-export interface IStatementId {
-    accountId: string;
-    month: number;
-    year: number;
-}
+import {IFinancialAmount, FinancialAmount} from "../transaction/financialAmount";
 
 /*
  * Equivalent of StatementDTO

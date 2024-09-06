@@ -1,0 +1,24 @@
+.row-no-margin {
+    margin: 3px 0 0 0;
+}
+
+.btn-no-margin {
+    padding: 0;
+    margin: 0;
+}
+
+.date-col-margin {
+    padding: 0 3px 0 2px;
+    margin: 0;
+}
+
+.btn-action {
+    width: 100%;
+    font-size: 12px;
+    padding: 3px;
+}
+
+.date-entry {
+    border-radius: 0;
+    padding: 3px 0 0 0;
+}

@@ -1,0 +1,4 @@
+<p (click)="onClick()" *ngIf="!debit() && !isEditing() && !isBlank()">{{display() | currency : 'GBP' : true: '1.2-2'}}</p>
+<p (click)="onClick()" *ngIf="debit() && !isEditing() && !isBlank()" class="debit">{{display() | currency : 'GBP' : true: '1.2-2'}}</p>
+<p (click)="onClick()" *ngIf="isBlank() && !isEditing()">&nbsp;</p>
+<input *ngIf="isEditing()" (keydown)="onKeydown($event)" style="width:100%" #input type="text"/>

@@ -1,0 +1,11 @@
+<p (click)="openModal(templateStatement)">{{display() | date : 'yyyy-MMM'}}</p>
+
+<ng-template #templateStatement>
+    <jbr-popup [title]="'Statement'"
+               [subTitle]="getDateDisplay()"
+               [imageUrl]="_moneyService.getAccountImage(transaction.account.id)"
+               [content]="content" [inputs]="inputs"
+               [ok]="true"
+               (okEvent)="close()">
+    </jbr-popup>
+</ng-template>

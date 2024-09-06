@@ -1,0 +1,10 @@
+.select-button {
+    background: white;
+    padding: 2px;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.row-margin {
+    margin: 0 6px 0 6px;
+}

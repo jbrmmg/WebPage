@@ -1,0 +1,12 @@
+<p (click)="openModal(templateStatementDate)">{{header}}</p>
+
+<ng-template #templateStatementDate>
+    <jbr-popup [title]="'Select Statement Date'"
+               [imageUrl]="'../../../../assets/images/money/default-popup.svg'"
+               [content]="content" [inputs]="inputs"
+               [exit]="true"
+               [clear]="true"
+               (exitEvent)="onExit()"
+               (clearEvent)="onClear()">
+    </jbr-popup>
+</ng-template>

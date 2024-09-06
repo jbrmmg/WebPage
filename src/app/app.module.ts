@@ -14,9 +14,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { MoneyAddCalcComponent } from './money/calculator/money-add-calc.component';
 import { MoneyCategoryPickerComponent } from './money/category/money-cat-picker.component';
 import { MoneyCategoryFilterComponent } from './money/category/money-cat-filter.component';
-import { MoneyListComponent } from './money/money-list.component';
-import { MoneyListModeComponent } from "./money/mode/money-list-mode.component";
-import { MoneyListModesComponent } from "./money/mode/money-list-modes.component";
+import { MoneyComponent } from './money/money.component';
 import { HouseComponent } from './house/house.component';
 import { WeightComponent } from './weight/weight.component';
 import { BackupListComponent } from './backup/backup-list.component';
@@ -33,69 +31,61 @@ import { BackupPrintsComponent } from "./backup/prints/backup-prints.component";
 import { BackupDisplayBackupsComponent } from "./backup/display/backups/backups-list.components";
 import { BackupDisplayInfoComponent } from "./backup/display/info/backup-display-info.component";
 import { BackupDisplayLabelComponent } from "./backup/display/label/backup-display-label.component";
-import { MoneyRowDisplay } from "./money/exp/money-row-display";
-import { MoneyRowDispDate } from "./money/exp/money-row-disp-date";
 import { BackupPrintSizeSelectComponent } from "./backup/prints/backup-print-size-select.component";
 import { BackupPrintImageComponent } from "./backup/prints/backup-print-image.component";
 import { WifiComponent } from "./wifi/wifi.component";
-import { MoneyFile } from "./money/files/money-file";
-import { MoneyFiles } from "./money/files/money-files";
+import { GridTransaction } from "./money/grid/grid-transaction";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    WelcomeComponent,
-    MoneyAddCalcComponent,
-    MoneyCategoryPickerComponent,
-    MoneyCategoryFilterComponent,
-    MoneyRowDisplay,
-    MoneyRowDispDate,
-    MoneyListComponent,
-    MoneyListModeComponent,
-    MoneyListModesComponent,
-    HouseComponent,
-    WeightComponent,
-    BackupListComponent,
-    BackupSummaryComponent,
-    BackupSummarySourceComponent,
-    BackupDisplayInfoComponent,
-    BackupDisplayLabelComponent,
-    BackupDisplayBackupsComponent,
-    BackupDisplayComponent,
-    BackupActionComponent,
-    BackupImportComponent,
-    BackupLogComponent,
-    BackupPhotoComponent,
-    BackupPrintSizeSelectComponent,
-    BackupPrintsComponent,
-    BackupPrintImageComponent,
-    WifiComponent,
-    MoneyFile,
-    MoneyFiles
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    HttpClientModule,
-    CollapseModule,
-    BsDatepickerModule.forRoot(),
-    ButtonsModule.forRoot(),
-    TooltipModule.forRoot(),
-    ModalModule.forRoot(),
-    BsDropdownModule.forRoot(),
-    RouterModule.forRoot([
-      {path: 'welcome', component: WelcomeComponent},
-      {path: 'money', component: MoneyListComponent},
-      {path: 'house', component: HouseComponent},
-      {path: 'bup', component: BackupListComponent},
-      {path: 'weight', component: WeightComponent},
-      {path: 'wifi', component: WifiComponent},
-      {path: '', redirectTo: 'welcome', pathMatch: 'full'},
-      {path: '**', redirectTo: 'welcome', pathMatch: 'full'}
-    ])
-  ],
-  providers: [DatePipe],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        WelcomeComponent,
+        MoneyAddCalcComponent,
+        MoneyCategoryPickerComponent,
+        MoneyCategoryFilterComponent,
+        MoneyComponent,
+        HouseComponent,
+        WeightComponent,
+        BackupListComponent,
+        BackupSummaryComponent,
+        BackupSummarySourceComponent,
+        BackupDisplayInfoComponent,
+        BackupDisplayLabelComponent,
+        BackupDisplayBackupsComponent,
+        BackupDisplayComponent,
+        BackupActionComponent,
+        BackupImportComponent,
+        BackupLogComponent,
+        BackupPhotoComponent,
+        BackupPrintSizeSelectComponent,
+        BackupPrintsComponent,
+        BackupPrintImageComponent,
+        WifiComponent
+    ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        HttpClientModule,
+        CollapseModule,
+        BsDatepickerModule.forRoot(),
+        ButtonsModule.forRoot(),
+        TooltipModule.forRoot(),
+        ModalModule.forRoot(),
+        BsDropdownModule.forRoot(),
+        RouterModule.forRoot([
+            {path: 'welcome', component: WelcomeComponent},
+            {path: 'money', component: MoneyComponent},
+            {path: 'house', component: HouseComponent},
+            {path: 'bup', component: BackupListComponent},
+            {path: 'weight', component: WeightComponent},
+            {path: 'wifi', component: WifiComponent},
+            {path: '', redirectTo: 'welcome', pathMatch: 'full'},
+            {path: '**', redirectTo: 'welcome', pathMatch: 'full'}
+        ]),
+        GridTransaction
+    ],
+    providers: [DatePipe],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

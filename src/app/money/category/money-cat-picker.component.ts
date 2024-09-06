@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Category, ICategory} from './category';
 import {MoneyService} from '../money.service';
-import {JbAccount} from '../account/jbaccount';
+import {JbAccount} from '../account/jbAccount';
 
 export class MoneyCategoryPickerSelectableOption {
     category: ICategory;
@@ -21,7 +21,6 @@ export class MoneyCategoryPickerComponent implements OnInit {
     selectableOption: MoneyCategoryPickerSelectableOption[];
     categories: ICategory[];
     accounts: JbAccount[];
-    errorMessage: string;
     categoryRadio: string;
     transferCategory: ICategory;
     coordinates: number[][];
@@ -50,12 +49,14 @@ export class MoneyCategoryPickerComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this._moneyService.getCategories().subscribe(
-            categories => {
-                this.categories = categories;
+        this._moneyService.getCategories().subscribe({
+            next: (val) => {
+                this.categories = val;
             },
-            error => this.errorMessage = <any>error,
-            () => {
+            error: (response) => {
+                console.log("Failed to get the categories " + response);
+            },
+            complete: () => {
                 for (const nextCategory of this.categories) {
                     if (nextCategory.id === 'TRF') {
                         this.transferCategory = nextCategory;
@@ -64,16 +65,18 @@ export class MoneyCategoryPickerComponent implements OnInit {
 
                 this.calculateColumnRow();
             }
-        );
-        this._moneyService.getAccounts().subscribe(
-            accounts => {
-                this.accounts = accounts;
+        });
+        this._moneyService.getAccounts().subscribe({
+            next: (val) => {
+                this.accounts = val;
             },
-            error => this.errorMessage = <any>error,
-            () => {
+            error: (response) => {
+                console.log("Failed to get accounts" + response);
+            },
+            complete: () => {
                 this.calculateColumnRow();
             }
-        );
+        });
     }
 
     calculateColumnRow(): void {

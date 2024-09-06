@@ -1,0 +1,13 @@
+<div class="row row-no-margin">
+    <div class="row row-no-margin" *ngFor="let row of flags">
+        <div class="col-4 btn-no-margin" *ngFor="let col of row">
+            <div class="btn-padding">
+                <label [ngClass]="col.selected ? 'btn btn-success btn-flag' : 'btn btn-outline-primary btn-flag'"
+                       tabindex="0"
+                       (click)="clickFlag(col)">
+                    {{col.display}}
+                </label>
+            </div>
+        </div>
+    </div>
+</div>

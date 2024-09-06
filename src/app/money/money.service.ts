@@ -1,33 +1,25 @@
-import {EventEmitter, Injectable, Output} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
-import {Category, ICategory} from './category/category';
-import {JbAccount,IAccount} from './account/jbaccount';
-import {ITransactionType, TransactionType} from './transaction/type';
+import {Category} from './category/category';
+import {JbAccount} from './account/jbAccount';
 import {IStatement, Statement} from './statement/statement';
-import {IMatch} from './reconciliation/match';
-import {IRegular} from './transaction/regular';
 import {IFile} from './files/file';
-import {ITransaction, Transaction} from "./transaction/transaction";
-import {LockRequest} from "./statement/lockrequest";
-import {UpdateTransactionRequest} from "./transaction/updatetransactionrequest";
-import {ReconcileUpdate} from "./reconciliation/reconcileupdate";
-import {ReconcileTransaction} from "./reconciliation/reconciletransaction";
-import {LoadFileRequest} from "./files/loadfilerequest";
+import {DeleteTransaction, ITransaction, Transaction} from "./transaction/transaction";
+import {LockRequest} from "./statement/lockRequest";
+import {ReconcileTransaction} from "./reconciliation/reconcileTransaction";
+import {LoadFileRequest} from "./files/loadFileRequest";
+import {TransactionFilter} from "./transaction/transactionFilter";
+import {ITransactionReport, TransactionReport} from "./transaction/transactionReport";
+import {ReconcileStatus} from "./reconciliation/reconcileStatus";
 
 @Injectable({
     providedIn: 'root'
 })
 export class MoneyService {
-    private reconcileAccount: IAccount;
-
-    @Output() updateTransactions: EventEmitter<any> = new EventEmitter();
-    @Output() updateStatements: EventEmitter<any> = new EventEmitter();
-
     constructor(private http: HttpClient) {
-        this.reconcileAccount = null;
     }
 
     public static dateToString(value: Date): string {
@@ -70,6 +62,138 @@ export class MoneyService {
         return environment.moneyAccountImage.replace("##id##", id)
     }
 
+    public static getDateString(date: Date) : string {
+        return date.toISOString().split('T')[0];
+    }
+
+    public static getValidDateForMonth(text: string, month: number, year: number): number {
+        let number = Number(text);
+        if(!isNaN(number)) {
+            switch(month) {
+                case 1:
+                case 3:
+                case 5:
+                case 7:
+                case 8:
+                case 10:
+                case 12: {
+                    if(number >= 1 && number <= 31) {
+                        return number;
+                    }
+                    break;
+                }
+
+                case 4:
+                case 6:
+                case 9:
+                case 11: {
+                    if(number >= 1 && number <= 30) {
+                        return number;
+                    }
+                    break;
+                }
+
+                case 2: {
+                    if(number >= 1) {
+                        if (number <= 28) {
+                            return number;
+                        }
+
+                        if(number <= 29) {
+                            let divBy4: boolean = (year % 4) == 0;
+                            let divBy100: boolean = (year % 100) == 0;
+                            let divBy400: boolean = (year % 400) == 0;
+
+                            if(divBy4 && !divBy100 && divBy400) {
+                                return number;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    public static isStringADate(text: string): string {
+        let dateParts: string[] = text.split("-");
+
+        if(dateParts.length != 3) {
+            return null;
+        }
+
+        let year = Number(dateParts[0]);
+        if(isNaN(year)) {
+            return null;
+        }
+
+        let month = Number(dateParts[1]);
+        if(isNaN(month)) {
+            return null;
+        }
+
+        if(year < 100) {
+            year = year + 2000;
+        }
+
+        if(year > 2070 || year < 2010) {
+            return null;
+        }
+
+        if(month < 1 || month > 12) {
+            return null;
+        }
+
+        let day = this.getValidDateForMonth(dateParts[2],month,year);
+        if(day == 0) {
+            return null;
+        }
+
+        let thisDate = new Date(year,month - 1,day);
+
+        return this.dateToString(thisDate);
+    }
+
+    public static getDate(text: string) : string {
+        // Setup today
+        let today = new Date();
+
+        // If the text is blank, empty or a T then set the date to today.
+        if(text == null || text.toLowerCase() == "t" || text == "") {
+            return this.getDateString(today);
+        }
+
+        // Is the value a number that can be interpreted as the day of the current month.
+        let day = this.getValidDateForMonth(text, today.getMonth() + 1, today.getFullYear());
+        if(day > 0) {
+            today.setDate(day);
+            return MoneyService.getDateString(today);
+        }
+
+        // Try to interpret the string as a date.
+        let dateString = this.isStringADate(text);
+        if(dateString != null) {
+            return dateString;
+        }
+
+        return MoneyService.getDateString(today);
+    }
+
+    public static getFinanceValue(text: string): number {
+        // Remove £ and , for the evaluation.
+        text = text.replace("£","").replace(",","");
+
+        // Is the value a number?
+        let number = Number(text);
+
+        if(isNaN(number)) {
+            return 0;
+        }
+
+        return number;
+    }
+
     public static getDisabledAccountImage(id: string): string {
         return environment.moneyAccountDisabledImage.replace("##id##", id)
     }
@@ -93,12 +217,36 @@ export class MoneyService {
         return Math.sqrt(red * red * .241 + green * green * .691 + blue * blue * .068);
     }
 
-    public getReconcileAccount() : IAccount {
-        return this.reconcileAccount;
+    static getTransactionDescription(transaction: ITransactionReport): string {
+        if(transaction.type == TransactionReport.TRANSACTION) {
+            if(transaction.description == null || transaction.description.length == 0) {
+                return "&nbsp;";
+            } else {
+                return transaction.description;
+            }
+        }
+
+        if(transaction.type == TransactionReport.OPEN_BALANCE) {
+            return "Opening Balance"
+        }
+
+        if(transaction.type == TransactionReport.TODAY_BALANCE) {
+            return "Balance Today"
+        }
+
+        if(transaction.type == TransactionReport.FUTURE_BALANCE) {
+            return "Future Balance"
+        }
+
+        return "&nbsp;";
     }
 
-    public setReconcileAccount(account: IAccount): void {
-        this.reconcileAccount = account;
+    static getTextColor(colour: string) {
+        if(MoneyService.getBrightness(colour) > 130) {
+            return '000000';
+        }
+
+        return 'FFFFFF';
     }
 
     getFiles(): Observable<IFile[]> {
@@ -122,13 +270,6 @@ export class MoneyService {
         );
     }
 
-    getTransactionTypes(): Observable<TransactionType[]> {
-        return this.http.get<TransactionType[]>(environment.moneyTypeUrl).pipe(
-            tap(data => console.log('All: ' + JSON.stringify(data))),
-            catchError(err => MoneyService.handleError(err))
-        );
-    }
-
     getStatements(): Observable<Statement[]> {
         return this.http.get<Statement[]>(environment.moneyStatementUrl).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
@@ -136,240 +277,64 @@ export class MoneyService {
         );
     }
 
-    getRegularPayments(): Observable<IRegular[]> {
-        return this.http.get<IRegular[]>(environment.moneyGetRegularUrl).pipe(
+    getTransactions(filter: TransactionFilter) : Observable<ITransactionReport[]>  {
+        console.log(JSON.stringify(filter));
+
+        return this.http.post<ITransactionReport[]>(environment.moneyTransactionList,filter).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
     }
 
-    private getTransactionsUrl(type: ITransactionType,
-                               from: Date,
-                               to: Date,
-                               accounts: JbAccount[],
-                               categories: Category[]): string {
-
-        let fromClause: string = null;
-        let toClause: string = null;
-        let categoryClause: string = null;
-        let accountClause: string = null;
-        let typeId: string = 'XX';
-        let result: string = environment.moneyTransactionUrlFormat;
-
-        // Calculate the clauses
-        if (type != null) {
-            typeId = type.id;
-
-            if (from != null) {
-                if (type.id === 'RC' || type.id === 'AL') {
-                    fromClause = '&from=' + MoneyService.dateToString(from);
-                }
-            }
-
-            if (to != null) {
-                if (type.id === 'AL') {
-                    toClause = '&to=' + MoneyService.dateToString(to);
-                }
-            }
-        }
-
-        if (accounts != null) {
-            let allAccount = true;
-
-            accounts.forEach(value => {
-                if (!value.selected) {
-                    allAccount = false;
-                }
-            });
-
-            if (!allAccount) {
-                let addComma = false;
-                accountClause = '&account=';
-
-                accounts.forEach(value => {
-                    if (value.selected) {
-                        if (addComma) {
-                            accountClause += ',';
-                        }
-                        accountClause += value.id;
-                        addComma = true;
-                    }
-                });
-            }
-        }
-
-        if (categories != null) {
-            let allCategories = true;
-
-            categories.forEach(value => {
-                if (!value.selected) {
-                    allCategories = false;
-                }
-            });
-
-            if (!allCategories) {
-                let addComma = false;
-                categoryClause = '&category=';
-
-                categories.forEach(value => {
-                    if (value.selected) {
-                        if (addComma) {
-                            categoryClause += ',';
-                        }
-                        categoryClause += value.id;
-                        addComma = true;
-                    }
-                });
-            }
-        }
-
-        console.log('Criteria -  ' + fromClause + ' ' + toClause + ' ' + accountClause + ' ' + categoryClause);
-
-        // Apply the clauses.
-        result = result.replace('##type##', typeId);
-        result = result.replace('[from]', (fromClause == null ? '' : fromClause));
-        result = result.replace('[to]', (toClause == null ? '' : toClause));
-        result = result.replace('[account]', (accountClause == null ? '' : accountClause));
-        result = result.replace('[category]', (categoryClause == null ? '' : categoryClause));
-
-        console.log(result);
-
-        return result;
+    addTransaction(transactions: Transaction[]): Observable<Transaction> {
+        return this.http.post<Transaction>(environment.moneyAddUrl, transactions);
     }
 
-    getTransactions(type: ITransactionType,
-                    from: Date,
-                    to: Date,
-                    accounts: JbAccount[],
-                    categories: Category[]): Observable<ITransaction[]> {
-
-        return this.http.get<ITransaction[]>(this.getTransactionsUrl(type, from, to, accounts, categories)).pipe(
-            tap(data => console.log('All: ' + JSON.stringify(data))),
-            catchError(err => MoneyService.handleError(err))
-        );
-    }
-
-    addTransaction(transactions: Transaction[]) {
-        this.http.post<Transaction>(environment.moneyAddUrl, transactions).subscribe({
-            next: (val) => { console.log('POST (add transaction) call successful value returned in body', val); },
-            error: (response) => { console.log('POST (add transaction) call in error', response); },
-            complete: () => {
-                console.log('The POST (add transaction) observable is now complete');
-                this.updateTransactions.emit(null);
-            }
-        });
-    }
-
-    loadFileRequest(file: IFile) {
-        this.setReconcileAccount(file.account);
-
+    loadFileRequest(file: IFile): Observable<LoadFileRequest> {
         const request: LoadFileRequest = new LoadFileRequest();
         request.filename = file.filename;
 
-        this.http.post<LoadFileRequest>(environment.moneyLoadFileUrl, request).subscribe({
-            next: (val)=> { console.log('POST (load file) call successful value returned in body', val); },
-            error: (response) => {
-                console.log('POST (load file) call in error', response);
-                if (!environment.production) {
-                    console.log('Testing - process as complete.', response);
-                    this.updateTransactions.emit(null);
-                }
-            },
-            complete: () => {
-                console.log('The POST observable is now complete (load)');
-                this.updateTransactions.emit(null);
-            }
-        });
+        return this.http.post<LoadFileRequest>(environment.moneyLoadFileUrl, request);
     }
 
-    updateTransaction(transaction: ITransaction) {
-        // Update the amount of the transaction.
-        // TransactionId & Amount
-
-        const url = environment.moneyUpdateTransactionUrl;
-
-        const updateRequest = new UpdateTransactionRequest();
-        updateRequest.id = transaction.id;
-        updateRequest.amount = transaction.amount;
-        updateRequest.description = transaction.description;
-        updateRequest.categoryId = transaction.categoryId;
-
-        this.http.put<void>(url, updateRequest).subscribe({
-            next:() => {
-                console.log(url);
-            },
-            error: (response) => {
-                console.log('PUT call in error', response);
-                if (!environment.production) {
-                    console.log('Testing - process as complete.', response);
-                    this.updateTransactions.emit(null);
-                }
-            },
-            complete: () => {
-                this.updateTransactions.emit(null);
-            }
-        });
+    updateTransaction(transaction: ITransactionReport[]): Observable<ITransaction> {
+        // Update the transaction provided.
+        return this.http.put<ITransaction>(environment.moneyUpdateTransactionUrl, transaction);
     }
 
-    confirmTransaction(transaction: ITransaction,
-                       reconcile: boolean ) {
+    reconcile(transactions: ITransactionReport[], reconcile: boolean): Observable<ReconcileStatus> {
         // Set transaction to confirmed/unconfirmed
         // TransactionId & Flag
         const url = environment.moneyReconcileTransactionUrl;
 
         const reconcileRequest: ReconcileTransaction = new ReconcileTransaction();
-        reconcileRequest.transactionId = transaction.id;
+        reconcileRequest.transactions = [];
+        transactions.forEach(value => {
+            reconcileRequest.transactions.push(value.transactionId);
+        })
         reconcileRequest.reconcile = reconcile;
 
-        this.http.put<void>(url, reconcileRequest).subscribe({
-            next: () => {
-                console.log(url);
-            },
-            error: (response) => {
-                console.log('PUT call in error', response);
-                if (!environment.production) {
-                    console.log('Testing - process as complete.', response);
-                    this.updateTransactions.emit(null);
-                }
-            },
-            complete: () => {
-                console.log('The PUT observable is now complete (confirm)');
-                this.updateTransactions.emit(null);
-            }
+        return this.http.put<ReconcileStatus>(url, reconcileRequest);
+    }
+
+    deleteTransaction(transactions: ITransactionReport[]): Observable<Transaction> {
+        // Create the request.
+        let request: DeleteTransaction[] = [];
+
+        transactions.forEach(value => {
+            let nextRequest: DeleteTransaction = new DeleteTransaction();
+            nextRequest.id = value.transactionId;
+
+            request.push(nextRequest);
+        })
+
+        // Delete the transactions.
+        return this.http.delete<Transaction>(environment.moneyDeleteTransactionUrl, {
+            body: request
         });
     }
 
-    getTransactionChangeEmitter() {
-        return this.updateTransactions;
-    }
-
-    getStatementChangeEmitter() {
-        return this.updateStatements;
-    }
-
-    deleteTransaction(transaction: ITransaction ) {
-        // Delete the transaction.
-        this.http.delete<Transaction>(environment.moneyDeleteTransactionUrl, {
-            body: transaction
-        }).subscribe({
-            next: () => {
-                console.log(environment.moneyDeleteTransactionUrl);
-            },
-            error: (response) => {
-                console.log('DELETE call in error', response);
-                if (!environment.production) {
-                    console.log('Testing - process as complete.', response);
-                    this.updateTransactions.emit(null);
-                }
-            },
-            complete: () => {
-                console.log('The POST observable is now complete (delete)');
-                this.updateTransactions.emit(null);
-            }
-        });
-    }
-
-    lockStatement(statement: IStatement) {
+    lockStatement(statement: IStatement): Observable<void> {
         // Lock the statement.
         // Account, Month & Year
 
@@ -383,90 +348,19 @@ export class MoneyService {
         lockRequest.year = statement.year;
         lockRequest.month = statement.month;
 
-        this.http.post<void>(url, lockRequest).subscribe({
-            next:() => {
-                console.log(url);
-            },
-            error: (response) => {
-                console.log('POST call in error', response);
-                if (!environment.production) {
-                    console.log('Testing - process as complete.', response);
-                    this.updateStatements.emit(null);
-                    this.updateTransactions.emit(null);
-                }
-            },
-            complete: () => {
-                console.log('The POST observable is now complete (lock)');
-                this.updateStatements.emit(null);
-                this.updateTransactions.emit(null);
-            }
-        });
+        return this.http.post<void>(url, lockRequest);
     }
 
-    getMatches(): Observable<IMatch[]> {
-        return this.http.get<IMatch[]>(environment.moneyMatchUrl).pipe(
-            tap(data => console.log('All: ' + JSON.stringify(data))),
-            catchError(err => MoneyService.handleError(err))
-        );
-    }
-
-    clearRecData() {
+    clearRecData(): Observable<void> {
         // Clear the rec data.
-        this.http.delete<void>(environment.moneyClearDataUrl).subscribe({
-            next:() => {
-                console.log(environment.moneyClearDataUrl);
-            },
-            error: (response) => {
-                console.log('Clear POST call in error', response);
-            },
-            complete: () => {
-                console.log('Clear The POST observable is now complete (delete)');
-            }
-        });
-    }
-
-    autoAccept() {
-        // Auto accept the data.
-        this.http.put<void>(environment.moneyAutoAcceptUrl, '').subscribe({
-            next:() => {
-                console.log(environment.moneyAutoAcceptUrl);
-            },
-            error: (response) => {
-                console.log('Auto Accept PUT call in error', response);
-            },
-            complete: () => {
-                console.log('Auto Accept The PUT observable is now complete (delete)');
-
-                // Update transactions
-                this.updateTransactions.emit(null);
-            }
-        });
-    }
-
-    setCategory(matchRow: IMatch, category: ICategory) {
-        // Set the category
-        const url = environment.moneySetCategoryUrl;
-
-        const request: ReconcileUpdate = new ReconcileUpdate();
-
-        request.id = matchRow.id;
-        request.categoryId = category.id;
-        request.type = 'rec';
-
-        this.http.put<void>(url, request).subscribe({
-            next:() => {
-                console.log(url);
-            },
-            error: (response) => {
-                console.log('Set Cat PUT call in error', response);
-            },
-            complete: () => {
-                console.log('Set Cat PUT observable is now complete (delete)');
-            }
-        });
+        return this.http.delete<void>(environment.moneyClearDataUrl);
     }
 
     fileUpdateSource() : EventSource {
-        return new EventSource('money/reconciliation/file-updates');
+        return new EventSource(environment.moneyFileUpdates);
+    }
+
+    getAccountImage(id: string): string {
+        return MoneyService.getAccountImage(id);
     }
 }
