@@ -23,3 +23,11 @@
     display: flex;
     align-items: center;
 }
+
+.no-pad {
+    margin: 4px;
+}
+
+.btn-action {
+    width: 100%;
+}

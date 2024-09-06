@@ -1,0 +1,11 @@
+p {
+    margin: 0;
+    font-family: "Courier New", serif;
+    font-size: 10px;
+    text-align: right;
+    padding-right: 2px;
+}
+
+.negative {
+    color: red;
+}

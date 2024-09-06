@@ -1,16 +1,28 @@
-import {Component, Input} from "@angular/core";
+import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {MoneyService} from "../money.service";
 import {IFile} from "./file";
+import {ButtonsModule} from "ngx-bootstrap/buttons";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {FormsModule} from "@angular/forms";
 
 @Component({
     selector: 'jbr-money-file',
     templateUrl: './money-file.html',
-    styleUrls: ['./money-files.css']
+    styleUrls: ['./money-files.css'],
+    imports: [
+        ButtonsModule,
+        NgForOf,
+        NgIf,
+        FormsModule,
+        NgClass
+    ],
+    standalone: true
 })
 export class MoneyFile {
     @Input() file: IFile;
+    @Output() selectEmitter: EventEmitter<IFile> = new EventEmitter();
 
-    constructor(private _moneyService: MoneyService) {
+    constructor() {
     }
 
     getAccountImage(id: string): string {
@@ -18,7 +30,6 @@ export class MoneyFile {
     }
 
     loadFile(file: IFile): void {
-        this._moneyService.loadFileRequest(file);
-        console.log(`Load file {}`, file.filename);
+        this.selectEmitter.emit(file);
     }
 }

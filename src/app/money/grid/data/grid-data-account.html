@@ -1,0 +1,10 @@
+<img src="{{getAccountImage()}}" alt="Selected Account" *ngIf="hasAccount()" (click)="openModal(templateAccountSelect)">
+
+<ng-template #templateAccountSelect>
+    <jbr-popup [title]="'Select an Account'"
+               [imageUrl]="'../../../../assets/images/money/default-popup.svg'"
+               [content]="content" [inputs]="inputs"
+               [exit]="true"
+               (exitEvent)="onExit()">
+    </jbr-popup>
+</ng-template>

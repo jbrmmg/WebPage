@@ -1,0 +1,3 @@
+<p *ngIf="!isEditing() && !blank()" (click)="onClick()" [style.background]="'#' + getCategoryColour()" [style.color]="'#' + getTextColour()">{{getDescription()}}</p>
+<p *ngIf="!isEditing() && blank()" (click)="onClick()" style="height: 100%">&nbsp;</p>
+<input *ngIf="isEditing()" (keydown)="onKeydown($event)" style="width:100%" #input type="text"/>

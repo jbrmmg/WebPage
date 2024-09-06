@@ -2,6 +2,7 @@ export const environment = {
   production: true,
 
   // Money URLs
+  moneyTransactionList: "money/transaction/list",
   moneyTransactionUrlFormat: "money/transaction?sortAscending=false&type=##type##[from][to][account][category]",
   moneyCategoryUrl: "money/categories",
   moneyAccountUrl: "money/accounts",
@@ -20,5 +21,6 @@ export const environment = {
   moneyGetFilesUrl: "money/reconciliation/files",
   moneyLoadFileUrl: "money/reconciliation/load",
   moneyAccountImage: "money/account/logo?disabled=false&id=##id##",
-  moneyAccountDisabledImage: "money/account/logo?disabled=true&id=##id##"
+  moneyAccountDisabledImage: "money/account/logo?disabled=true&id=##id##",
+  moneyFileUpdates: "money/reconciliation/file-updates"
 };

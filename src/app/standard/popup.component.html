@@ -1,0 +1,33 @@
+<div class="modal-header header-no-pad">
+    <h4 class="modal-title full-width">
+        <div class="row row-no-margin-or-pad">
+            <div class="col-2 col-no-pad">
+                <img ngSrc="{{imageUrl}}" alt="This is some text" width="200px" height="200px">
+            </div>
+            <div class="col-10 col-no-pad">
+                <div class="row row-no-margin-or-pad title">{{title}}</div>
+                <div class="row row-no-margin-or-pad sub-title">{{subTitle}}</div>
+            </div>
+        </div>
+    </h4>
+</div>
+<div class="body">
+    <div class="row popup-body-row">
+        <ng-container *ngComponentOutlet="content;inputs:inputs"></ng-container>
+        <div class="row row-no-margin">
+            <div class="col-2 col-left">
+                <label *ngIf="!exit">&nbsp;</label>
+                <label *ngIf="exit" class="btn btn-primary btn-bar" (click)="onExit()">Exit</label>
+            </div>
+            <div class="col-2 col-right">
+                <label *ngIf="!clear">&nbsp;</label>
+                <label *ngIf="clear" class="btn btn-primary btn-bar" (click)="onClear()">Clear</label>
+            </div>
+            <div class="col-6"></div>
+            <div class="col-2 col-far-right">
+                <label *ngIf="!ok">&nbsp;</label>
+                <label *ngIf="ok" class="btn btn-primary btn-bar" (click)="onOK()">OK</label>
+            </div>
+        </div>
+    </div>
+</div>

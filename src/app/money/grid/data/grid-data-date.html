@@ -1,0 +1,2 @@
+<p (click)="onClick()" *ngIf="!isEditing()">{{transaction.date | date : 'yyyy-MMM-dd'}}</p>
+<input *ngIf="isEditing()" (keydown)="onKeydown($event)" style="width:100%" #input type="text"/>

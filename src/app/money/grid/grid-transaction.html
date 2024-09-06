@@ -1,0 +1,90 @@
+<div class="row transaction-table">
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    <jbr-grid-header-select class="header" [header]="' '" (selectionChange)="selectionChange($event)"></jbr-grid-header-select>
+                </th>
+                <th [class]="headerFiltered(HeaderType.Date) ? 'filtered' : ''">
+                    <jbr-grid-header-date [header]="'Date'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-date>
+                </th>
+                <th [class]="headerFiltered(HeaderType.Account) ? 'filtered' : ''">
+                    <jbr-grid-header-account [header]="'Acc.'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-account>
+                </th>
+                <th [class]="headerFiltered(HeaderType.StatementDate) ? 'filtered' : ''">
+                    <jbr-grid-header-statement-date [header]="'Statement Date'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-statement-date>
+                </th>
+                <th [class]="headerFiltered(HeaderType.Locked) ? 'filtered' : ''">
+                    <jbr-grid-header-flag [header]="'Lck.'" [flagType]="FlagType.Locked" [filter]="filter" (filterChanged)="filterChange($event)"></jbr-grid-header-flag>
+                </th>
+                <th [class]="headerFiltered(HeaderType.Predicted) ? 'filtered' : ''">
+                    <jbr-grid-header-flag [header]="'Prd.'" [flagType]="FlagType.Predicted" [filter]="filter" (filterChanged)="filterChange($event)"></jbr-grid-header-flag>
+                </th>
+                <th [class]="headerFiltered(HeaderType.Reconciliation) ? 'filtered' : ''">
+                    <jbr-grid-header-flag [header]="'Rec.'" [flagType]="FlagType.Reconciled" [filter]="filter" (filterChanged)="filterChange($event)"></jbr-grid-header-flag>
+                </th>
+                <th [class]="headerFiltered(HeaderType.Category) ? 'filtered' : ''">
+                    <jbr-grid-header-category [header]="'Category'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-category>
+                </th>
+                <th [class]="headerFiltered(HeaderType.Description) ? 'filtered' : ''">
+                    <jbr-grid-header-text [header]="'Description'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-text>
+                </th>
+                <th [class]="headerFiltered(HeaderType.Credit) ? 'filtered' : ''">
+                    <jbr-grid-header-amount [header]="'Credits'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-amount>
+                </th>
+                <th [class]="headerFiltered(HeaderType.Debit) ? 'filtered' : ''">
+                    <jbr-grid-header-amount [header]="'Debits'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-amount>
+                </th>
+                <th>
+                    <jbr-grid-header-amount [header]="'Balance'"></jbr-grid-header-amount>
+                </th>
+                <th>
+                    <jbr-grid-header-actions [header]="'Actions'"></jbr-grid-header-actions>
+                </th>
+            </tr>
+        </thead>
+        <tbody *ngIf="data && data && data.length">
+            <tr *ngFor="let transaction of data">
+                <td>
+                    <jbr-grid-data-select [transaction]="transaction"></jbr-grid-data-select>
+                </td>
+                <td>
+                    <jbr-grid-data-date [transaction]="transaction" (valueChanged)="valueChanged($event)"></jbr-grid-data-date>
+                </td>
+                <td class="account">
+                    <jbr-grid-data-account [transaction]="transaction" (valueChanged)="valueChanged($event)"></jbr-grid-data-account>
+                </td>
+                <td>
+                    <jbr-grid-data-statement-date [transaction]="transaction" (statementLock)="lockStatement($event)"></jbr-grid-data-statement-date>
+                </td>
+                <td class="flag">
+                    <jbr-grid-data-statement [transaction]="transaction"></jbr-grid-data-statement>
+                </td>
+                <td class="flag">
+                    <jbr-grid-data-predicted [transaction]="transaction"></jbr-grid-data-predicted>
+                </td>
+                <td class="flag">
+                    <jbr-grid-data-from-reconciliation [transaction]="transaction" (clearFileEmitter)="clearRecData()" (selectFileEmitter)="selectRecData($event)"></jbr-grid-data-from-reconciliation>
+                </td>
+                <td>
+                    <jbr-grid-data-category [transaction]="transaction" (valueChanged)="valueChanged($event)"></jbr-grid-data-category>
+                </td>
+                <td>
+                    <jbr-grid-data-description (edit)="onEdit()" [transaction]="transaction" (valueChanged)="valueChanged($event)"></jbr-grid-data-description>
+                </td>
+                <td>
+                    <jbr-grid-data-amount [transaction]="transaction" [type]="'CR'" (valueChanged)="valueChanged($event)"></jbr-grid-data-amount>
+                </td>
+                <td>
+                    <jbr-grid-data-amount [transaction]="transaction" [type]="'DB'" (valueChanged)="valueChanged($event)"></jbr-grid-data-amount>
+                </td>
+                <td>
+                    <jbr-grid-data-balance [transaction]="transaction"></jbr-grid-data-balance>
+                </td>
+                <td>
+                    <jbr-grid-data-actions [transaction]="transaction" [gridDataChangeHandler]="gridDataChangeHandler" (performAction)="performAction($event)"></jbr-grid-data-actions>
+                </td>
+            </tr>
+    </table>
+    <p class="status">{{status}}</p>
+</div>

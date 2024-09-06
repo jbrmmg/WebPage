@@ -1,12 +1,26 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, EventEmitter, Input, OnInit} from "@angular/core";
 import {MoneyService} from "../money.service";
-import {FileUpdate} from "./fileupdate";
+import {FileUpdate} from "./fileUpdate";
 import {IFile} from "./file";
+import {ButtonsModule} from "ngx-bootstrap/buttons";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {FormsModule} from "@angular/forms";
+import { MoneyFile } from "./money-file";
 
 @Component({
     selector: 'jbr-money-files',
     templateUrl: './money-files.html',
-    styleUrls: ['./money-files.css']
+    styleUrls: ['./money-files.css'],
+    imports: [
+        ButtonsModule,
+        NgForOf,
+        NgIf,
+        FormsModule,
+        NgClass,
+        MoneyFile
+    ],
+    host: {'style': 'padding: 0;'},
+    standalone: true
 })
 export class MoneyFiles implements OnInit {
     updateText: string;
@@ -14,6 +28,7 @@ export class MoneyFiles implements OnInit {
     fileUpdateTime: Date;
     files: IFile[];
     errorMessage: string;
+    @Input() selectFileEmitter: EventEmitter<IFile>;
 
     constructor(private _moneyService: MoneyService) {
         this.fileUpdateTime = null;
@@ -36,7 +51,7 @@ export class MoneyFiles implements OnInit {
     handleBeforeUnload(event: BeforeUnloadEvent) : void {
         this.fileUpdateSource.removeEventListener('message', this.fileUpdate.bind(this));
         this.fileUpdateSource.close();
-        console.log("Cleanup before unload.");
+        console.log("Cleanup before unload." + event);
     }
 
     updateFileData() {
@@ -57,5 +72,9 @@ export class MoneyFiles implements OnInit {
             this.fileUpdateTime = update.updateTime;
             this.updateFileData();
         }
+    }
+
+    onSelectFile(file: IFile) {
+        this.selectFileEmitter.emit(file);
     }
 }
