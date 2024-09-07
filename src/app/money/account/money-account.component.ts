@@ -4,11 +4,13 @@ import {NgClass, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {MoneyService} from "../money.service";
 import {JbAccount} from "./jbAccount";
+import {TransactionFilter} from "../transaction/transactionFilter";
 
 class AccountOption {
     id: string;
     display: string;
     account: JbAccount;
+    selected: boolean;
 }
 
 @Component({
@@ -33,7 +35,7 @@ export class MoneyAccount implements OnInit {
 
     @Input() filterMode: boolean;
     @Input() allowClosed: boolean;
-    @Input() selectedAccounts: JbAccount[];
+    @Input() filter: TransactionFilter;
     @Input() allSelected: boolean;
 
     @Input() selectEvent: EventEmitter<JbAccount>;
@@ -60,6 +62,7 @@ export class MoneyAccount implements OnInit {
                     }
                     next.id = value.id;
                     next.account = value;
+                    next.selected = this.isAccountSelected(next);
 
                     if(row.length == this.columns) {
                         row = [];
@@ -85,7 +88,7 @@ export class MoneyAccount implements OnInit {
 
         let result: boolean = false;
 
-        this.selectedAccounts.forEach(account => {
+        this.filter.accounts.forEach(account => {
             if(account.id == item.id) {
                 result = true;
                 return;
@@ -102,17 +105,19 @@ export class MoneyAccount implements OnInit {
         }
 
         if(this.isAccountSelected(item)) {
-            const index = this.selectedAccounts.indexOf(item.account,0);
+            item.selected = false;
+            const index = this.filter.accounts.indexOf(item.account,0);
 
             if(index > -1) {
-                this.selectedAccounts.splice(index,1);
+                this.filter.accounts.splice(index,1);
             }
         } else {
-            this.selectedAccounts.push(item.account);
+            item.selected = true;
+            this.filter.accounts.push(item.account);
         }
 
         // Set the all selected flag if we have selected all accounts.
-        this.allSelected = (this.selectedAccounts.length == this.accounts.length);
+        this.allSelected = (this.filter.accounts.length == this.accounts.length);
     }
 
     getAccountImage(item: AccountOption): string {
@@ -120,12 +125,13 @@ export class MoneyAccount implements OnInit {
     }
 
     selectAll() {
-        this.selectedAccounts = [];
+        this.filter.accounts = [];
 
         // Add all to the selection.
         this.accounts.forEach(row => {
             row.forEach(col => {
-                this.selectedAccounts.push(col.account);
+                col.selected = true;
+                this.filter.accounts.push(col.account);
             });
         });
         this.allSelected = true;
