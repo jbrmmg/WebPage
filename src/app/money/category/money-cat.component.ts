@@ -139,7 +139,8 @@ export class MoneyCategory implements OnInit {
         }
 
         if(this.isCategorySelected(item)) {
-            const index = this.filter.categories.indexOf(item,0);
+            const index = this.filter.categories.findIndex(a => {return a.id == item.id});
+
 
             if(index > -1) {
                 this.filter.categories.splice(index,1);
