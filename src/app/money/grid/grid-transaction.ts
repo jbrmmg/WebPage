@@ -136,7 +136,9 @@ export class GridTransaction implements OnInit {
 
     selectionChange(event: SelectChange) {
         this.data.forEach(value => {
-            value.selected = event.selection;
+            if(value.type == TransactionReport.TRANSACTION) {
+                value.selected = event.selection;
+            }
         })
     }
 
