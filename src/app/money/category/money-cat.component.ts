@@ -4,6 +4,7 @@ import {ButtonsModule} from "ngx-bootstrap/buttons";
 import {MoneyService} from "../money.service";
 import {Category} from "./category";
 import {JbAccount} from "../account/jbAccount";
+import {TransactionFilter} from "../transaction/transactionFilter";
 
 class AccountOption {
     id: string;
@@ -32,7 +33,7 @@ export class MoneyCategory implements OnInit {
 
     @Input() filterMode: boolean;
     @Input() allowTransfer: boolean;
-    @Input() selectedCategories : Category[];
+    @Input() filter : TransactionFilter;
     @Input() allSelected: boolean;
 
     @Input() selectCategoryEvent: EventEmitter<Category>;
@@ -113,7 +114,7 @@ export class MoneyCategory implements OnInit {
 
         let result: boolean = false;
 
-        this.selectedCategories.forEach(category => {
+        this.filter.categories.forEach(category => {
             if(item.id == category.id) {
                 result = true;
                 return;
@@ -138,13 +139,13 @@ export class MoneyCategory implements OnInit {
         }
 
         if(this.isCategorySelected(item)) {
-            const index = this.selectedCategories.indexOf(item,0);
+            const index = this.filter.categories.indexOf(item,0);
 
             if(index > -1) {
-                this.selectedCategories.splice(index,1);
+                this.filter.categories.splice(index,1);
             }
         } else {
-            this.selectedCategories.push(item);
+            this.filter.categories.push(item);
         }
     }
 
@@ -185,12 +186,12 @@ export class MoneyCategory implements OnInit {
     }
 
     onSelectAll() {
-        this.selectedCategories = [];
+        this.filter.categories = [];
 
         // Add all to the selection.
         this.categories.forEach(row => {
             row.forEach(col => {
-                this.selectedCategories.push(col);
+                this.filter.categories.push(col);
             })
         });
     }

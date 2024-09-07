@@ -39,7 +39,7 @@ export class GridHeaderCategory extends GridHeader implements OnInit {
         this.content = MoneyCategory;
         this.inputs = { filterMode: true,
             allowTransfer: false,
-            selectedCategories: this.filter.categories,
+            filter: this.filter,
             allSelected: this.allSelected };
     }
 

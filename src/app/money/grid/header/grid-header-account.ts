@@ -45,7 +45,7 @@ export class GridHeaderAccount extends GridHeader implements OnInit {
         this.content = MoneyAccount;
         this.inputs = { filterMode: true,
             allowClosed: true,
-            selectedAccounts: this.filter.accounts,
+            filter: this.filter,
             allSelected: this.allSelected };
     }
 
