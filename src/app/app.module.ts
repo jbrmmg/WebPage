@@ -12,8 +12,6 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { MoneyAddCalcComponent } from './money/calculator/money-add-calc.component';
-import { MoneyCategoryPickerComponent } from './money/category/money-cat-picker.component';
-import { MoneyCategoryFilterComponent } from './money/category/money-cat-filter.component';
 import { MoneyComponent } from './money/money.component';
 import { HouseComponent } from './house/house.component';
 import { WeightComponent } from './weight/weight.component';
@@ -41,8 +39,6 @@ import { GridTransaction } from "./money/grid/grid-transaction";
         AppComponent,
         WelcomeComponent,
         MoneyAddCalcComponent,
-        MoneyCategoryPickerComponent,
-        MoneyCategoryFilterComponent,
         MoneyComponent,
         HouseComponent,
         WeightComponent,

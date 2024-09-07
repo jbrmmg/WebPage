@@ -106,7 +106,7 @@ export class MoneyAccount implements OnInit {
 
         if(this.isAccountSelected(item)) {
             item.selected = false;
-            const index = this.filter.accounts.indexOf(item.account,0);
+            const index = this.filter.accounts.findIndex(a => {return a.id == item.id});
 
             if(index > -1) {
                 this.filter.accounts.splice(index,1);
