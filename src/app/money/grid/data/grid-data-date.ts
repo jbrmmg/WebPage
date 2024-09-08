@@ -70,12 +70,17 @@ export class GridDataDate extends GridDataInlineEdit implements OnInit {
     }
 
     interpretInput(text: string): void {
-        this.transaction.date = MoneyService.getDate(text);
+        let newDate: string = MoneyService.getDate(text);
 
-        let event: GridDataEvent = new GridDataEvent();
-        event.transaction = this.transaction;
-        event.source = HeaderType.Date;
-        this.valueChanged.emit(event);
+        if (this.transaction.date != newDate) {
+            this.transaction.date = newDate;
+            this.transaction.modified = true;
+
+            let event: GridDataEvent = new GridDataEvent();
+            event.transaction = this.transaction;
+            event.source = HeaderType.Date;
+            this.valueChanged.emit(event);
+        }
     }
 
     getValueForEdit(): string {
@@ -103,13 +108,19 @@ export class GridDataDate extends GridDataInlineEdit implements OnInit {
         // Set the date.
         this.modalRef.hide();
 
-        // Set the transaction from the date.
-        this.transaction.date = this.datePipe.transform(newValue,"yyyy-MM-dd");
-        console.log(this.transaction.date);
+        // Has the value changed?
+        let newDate: string = this.datePipe.transform(newValue,"yyyy-MM-dd");
 
-        let event: GridDataEvent = new GridDataEvent();
-        event.transaction = this.transaction;
-        event.source = HeaderType.Date;
-        this.valueChanged.emit(event);
+        if(this.transaction.date != newDate) {
+            // Set the transaction from the date.
+            this.transaction.date = newDate;
+            this.transaction.modified = true;
+            console.log(this.transaction.date);
+
+            let event: GridDataEvent = new GridDataEvent();
+            event.transaction = this.transaction;
+            event.source = HeaderType.Date;
+            this.valueChanged.emit(event);
+        }
     }
 }
