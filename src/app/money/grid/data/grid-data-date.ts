@@ -5,6 +5,7 @@ import {TransactionEditType} from "../../transaction/transactionEditType";
 import {GridDataInlineEdit} from "./grid-data-inline-edit";
 import {GridDataEvent} from "./grid-data-event";
 import {HeaderType} from "../header/grid-header-type";
+import {TransactionReport} from "../../transaction/transactionReport";
 
 @Component({
     selector: 'jbr-grid-data-date',
@@ -33,6 +34,10 @@ export class GridDataDate extends GridDataInlineEdit {
         }
     }
 
+    onPopupDate() {
+        console.log("Popup Date")
+    }
+
     interpretInput(text: string): void {
         this.transaction.date = MoneyService.getDate(text);
 
@@ -43,10 +48,14 @@ export class GridDataDate extends GridDataInlineEdit {
     }
 
     getValueForEdit(): string {
-        return "";
+        return this.transaction.date;
     }
 
     canEdit(): boolean {
+        if(this.transaction.type != TransactionReport.TRANSACTION) {
+            return false;
+        }
+
         // Date can only be edited if the transaction is new or not reconciled.
         return this.transaction.new || this.transaction.statement == null;
     }

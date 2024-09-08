@@ -1,2 +1,15 @@
-<p (click)="onClick()" *ngIf="!isEditing()">{{transaction.date | date : 'yyyy-MMM-dd'}}</p>
+<div class="row row-no-margin-or-pad" *ngIf="!isEditing()">
+    <div class="col-3 col-no-pad">
+        <p (click)="onClick()" *ngIf="!isEditing()">{{transaction.date | date : 'dd'}}</p>
+    </div>
+    <div class="col-4 col-no-pad">
+        <p (click)="onClick()" *ngIf="!isEditing()">{{transaction.date | date : 'MMM'}}</p>
+    </div>
+    <div class="col-3 col-no-pad">
+        <p (click)="onClick()" *ngIf="!isEditing()">{{transaction.date | date : 'yy'}}</p>
+    </div>
+    <div class="col-2 col-no-pad" *ngIf="canEdit()">
+        <em class="fa fa-calendar" *ngIf="!isEditing()" (click)="onPopupDate()"></em>
+    </div>
+</div>
 <input *ngIf="isEditing()" (keydown)="onKeydown($event)" style="width:100%" #input type="text"/>
