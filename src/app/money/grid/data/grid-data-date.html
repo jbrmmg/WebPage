@@ -9,7 +9,18 @@
         <p (click)="onClick()" *ngIf="!isEditing()">{{transaction.date | date : 'yy'}}</p>
     </div>
     <div class="col-2 col-no-pad" *ngIf="canEdit()">
-        <em class="fa fa-calendar" *ngIf="!isEditing()" (click)="onPopupDate()"></em>
+        <em class="fa fa-calendar" *ngIf="!isEditing()" (click)="onPopupDate(templateEnterDate)"></em>
     </div>
 </div>
 <input *ngIf="isEditing()" (keydown)="onKeydown($event)" style="width:100%" #input type="text"/>
+
+<ng-template #templateEnterDate>
+    <jbr-popup [title]="'Select a date'"
+               [imageUrl]="'../../../../assets/images/money/default-popup.svg'"
+               [content]="content" [inputs]="inputs"
+               [exit]="true"
+               [header]="false"
+               (exitEvent)="onExit()"
+               (okEvent)="onOK()">
+    </jbr-popup>
+</ng-template>
