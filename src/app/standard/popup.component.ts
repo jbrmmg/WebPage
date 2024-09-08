@@ -24,6 +24,7 @@ export class PopupComponent {
     @Input() clear: boolean = false;
     @Input() content: Type<any>;
     @Input() inputs: Record<string,unknown>;
+    @Input() header: boolean;
 
     onExit() {
         this.exitEvent.emit();
@@ -35,5 +36,14 @@ export class PopupComponent {
 
     onOK() {
         this.okEvent.emit();
+    }
+
+    displayHeader(): boolean {
+        // Default is on
+        if(this.header == null) {
+            return true;
+        }
+
+        return this.header;
     }
 }
