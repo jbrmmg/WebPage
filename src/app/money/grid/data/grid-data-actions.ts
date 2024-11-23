@@ -4,6 +4,7 @@ import {GridDataActionType} from "./grid-data-action-type";
 import {NgClass, NgForOf} from "@angular/common";
 import {GridDataEvent} from "./grid-data-event";
 import {HeaderType} from "../header/grid-header-type";
+import {JbAccount} from "../../account/jbAccount";
 
 class ActionOption {
     text: string;
@@ -137,8 +138,9 @@ export class GridDataActions extends GridData implements OnInit {
     handleNewTransactionChange() {
         // Is the transaction now able to be added?
         if(this.transaction != null) {
-            if ( this.transaction.date != null &&
+            if (this.transaction.date != null &&
                     this.transaction.account != null &&
+                    this.transaction.account.id != JbAccount.unknownAccountId &&
                     this.transaction.category != null &&
                     this.transaction.description != null &&
                     this.transaction.description.length > 0 &&

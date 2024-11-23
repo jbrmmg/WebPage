@@ -24,7 +24,7 @@ import {GridHeaderSelect, SelectChange} from "./header/grid-header-select";
 import {GridHeaderActions} from "./header/grid-header-actions";
 import {GridDataSelect} from "./data/grid-data-select";
 import {GridDataActions} from "./data/grid-data-actions";
-import {FilterEvent, GridHeader} from "./header/grid-header";
+import {FilterEvent} from "./header/grid-header";
 import {HeaderType} from "./header/grid-header-type";
 import {ITransactionReport, TransactionReport} from "../transaction/transactionReport";
 import {JbAccount} from "../account/jbAccount";
@@ -44,7 +44,6 @@ import {environment} from "../../../environments/environment.prod";
     imports: [
         NgForOf,
         NgIf,
-        GridHeader,
         GridHeaderDate,
         GridHeaderAccount,
         GridHeaderAmount,
@@ -142,17 +141,31 @@ export class GridTransaction implements OnInit {
         })
     }
 
-    clearTransaction(transaction: ITransactionReport) {
+    static clearTransaction(transaction: ITransactionReport, filter : TransactionFilter) {
         transaction.new = true;
         transaction.type = TransactionReport.TRANSACTION;
-        transaction.date = MoneyService.getDateString(new Date());
+        if(transaction.date == null) {
+            transaction.date = MoneyService.getDateString(new Date());
+        }
         transaction.description = "";
-        transaction.account = new JbAccount("UNKN", "Unknown", "", "FFFFFF", false);
+        transaction.account = JbAccount.unknownAccount();
         transaction.fromReconciliation = false;
         transaction.predicted = false;
         transaction.amount = new FinancialAmount(0,"CR");
         transaction.balance = new FinancialAmount(0,"CR");
         transaction.selectable = false;
+
+        // If the filter is a single account then use that.
+        if(filter.accounts.length == 1) {
+            transaction.account = filter.accounts[0];
+        }
+
+        // If the filter is a single category, then use that.
+        if(filter.categories.length == 1) {
+            transaction.category = filter.categories[0];
+        } else {
+            transaction.category = null;
+        }
     }
 
     update() {
@@ -163,7 +176,7 @@ export class GridTransaction implements OnInit {
                 this.data = val;
 
                 // Create a placeholder for the new transaction.
-                this.clearTransaction(this.newTransaction);
+                GridTransaction.clearTransaction(this.newTransaction,this.filter);
                 this.data.unshift(this.newTransaction)
             },
             error: (response) => {
@@ -304,7 +317,7 @@ export class GridTransaction implements OnInit {
     }
 
     performActionClearAdd(transaction: ITransactionReport) {
-        this.clearTransaction(transaction);
+        GridTransaction.clearTransaction(transaction,this.filter);
 
         // Indicate that the transaction changed.
         let event: GridDataEvent = new GridDataEvent();
