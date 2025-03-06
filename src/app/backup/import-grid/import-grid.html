@@ -1,0 +1,25 @@
+<div class="row transaction-table">
+    <label class="btn btn-primary btn-mode col-1"
+           tabindex="1"
+           aria-controls="list"
+           (click)="refresh()">
+        <em class="fa fa-bars"></em>
+    </label>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    <jbr-import-grid-header-name></jbr-import-grid-header-name>
+                </th>
+            </tr>
+        </thead>
+        <tbody *ngIf="data && data && data.length">
+            <tr *ngFor="let file of data">
+                <td>
+                    <jbr-import-grid-data-name [file]="file"></jbr-import-grid-data-name>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p class="status">{{status}}</p>
+</div>

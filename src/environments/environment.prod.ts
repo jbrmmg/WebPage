@@ -22,5 +22,8 @@ export const environment = {
   moneyLoadFileUrl: "money/reconciliation/load",
   moneyAccountImage: "money/account/logo?disabled=false&id=##id##",
   moneyAccountDisabledImage: "money/account/logo?disabled=true&id=##id##",
-  moneyFileUpdates: "money/reconciliation/file-updates"
+  moneyFileUpdates: "money/reconciliation/file-updates",
+
+  // Backup URLs
+  backupGetPreImportFiles: "backup/preimportfiles"
 };
