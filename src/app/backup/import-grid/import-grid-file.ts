@@ -5,10 +5,10 @@
     private String md5;
  */
 
-export interface IImportGridFile {
-    filename: string;
-}
+import {IImportGridFileBase} from "./import-grid-file-base";
 
-export class ImportGridFile implements IImportGridFile {
+export class ImportGridFile implements IImportGridFileBase {
     filename: string;
+    md5: string;
+    similarFiles: IImportGridFileBase[];
 }

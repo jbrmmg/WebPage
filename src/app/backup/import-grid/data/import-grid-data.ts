@@ -1,5 +1,5 @@
 import {Component, Input} from "@angular/core";
-import {IImportGridFile} from "../import-grid-file";
+import {ImportGridFile} from "../import-grid-file";
 
 @Component({
     selector: '',
@@ -7,6 +7,8 @@ import {IImportGridFile} from "../import-grid-file";
     standalone: true,
     styles: []
 })
-export class ImportGridData {
-    @Input() file: IImportGridFile;
+export abstract class ImportGridData {
+    @Input() file: ImportGridFile;
+
+    abstract getText(): string;
 }

@@ -1,7 +1,7 @@
 import {Observable, throwError} from "rxjs";
 import {environment} from "../../../environments/environment";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {IImportGridFile} from "./import-grid-file";
+import {ImportGridFile} from "./import-grid-file";
 import {catchError, tap} from "rxjs/operators";
 import {Injectable} from "@angular/core";
 
@@ -23,8 +23,8 @@ export class ImportGridService {
         return throwError(() => new Error(errorMessage));
     }
 
-    getFiles(): Observable<IImportGridFile[]> {
-        return this.http.get<IImportGridFile[]>(environment.backupGetPreImportFiles).pipe(
+    getFiles(): Observable<ImportGridFile[]> {
+        return this.http.get<ImportGridFile[]>(environment.backupGetPreImportFiles).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError(err => ImportGridService.handleError(err))
         );
