@@ -1,7 +1,13 @@
 import {NgForOf, NgIf} from "@angular/common";
 import {Component, OnInit} from "@angular/core";
 import {ImportGridHeaderName} from "./header/import-grid-header-name";
+import {ImportGridHeaderMd5} from "./header/import-grid-header-md5";
+import {ImportGridHeaderSize} from "./header/import-grid-header-size";
+import {ImportGridHeaderDate} from "./header/import-grid-header-date";
 import {ImportGridDataName} from "./data/import-grid-data-name";
+import {ImportGridDataMd5} from "./data/import-grid-data-md5";
+import {ImportGridDataSize} from "./data/import-grid-data-size";
+import {ImportGridDataDate} from "./data/import-grid-data-date";
 import {ImportGridService} from "./import-grid.service";
 import {ImportGridFile} from "./import-grid-file";
 
@@ -13,7 +19,13 @@ import {ImportGridFile} from "./import-grid-file";
         NgIf,
         ImportGridHeaderName,
         ImportGridDataName,
-        NgForOf
+        NgForOf,
+        ImportGridHeaderMd5,
+        ImportGridDataMd5,
+        ImportGridHeaderSize,
+        ImportGridHeaderDate,
+        ImportGridDataSize,
+        ImportGridDataDate
     ],
     standalone: true
 })
@@ -25,7 +37,7 @@ export class ImportGrid implements OnInit {
     }
 
     ngOnInit(): void {
-        this.status = "testing";
+        this.status = "";
         this.data = [];
     }
 

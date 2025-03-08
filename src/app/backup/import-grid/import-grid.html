@@ -11,12 +11,30 @@
                 <th>
                     <jbr-import-grid-header-name></jbr-import-grid-header-name>
                 </th>
+                <th>
+                    <jbr-import-grid-header-md5></jbr-import-grid-header-md5>
+                </th>
+                <th>
+                    <jbr-import-grid-header-size></jbr-import-grid-header-size>
+                </th>
+                <th>
+                    <jbr-import-grid-header-date></jbr-import-grid-header-date>
+                </th>
             </tr>
         </thead>
-        <tbody *ngIf="data && data && data.length">
+        <tbody *ngIf="data && data.length">
             <tr *ngFor="let file of data">
                 <td>
-                    <jbr-import-grid-data-name [file]="file"></jbr-import-grid-data-name>
+                    <jbr-import-grid-data-name [file]=file></jbr-import-grid-data-name>
+                </td>
+                <td>
+                    <jbr-import-grid-data-md5 [file]=file></jbr-import-grid-data-md5>
+                </td>
+                <td>
+                    <jbr-import-grid-data-size [file]=file></jbr-import-grid-data-size>
+                </td>
+                <td>
+                    <jbr-import-grid-data-date [file]=file></jbr-import-grid-data-date>
                 </td>
             </tr>
         </tbody>
