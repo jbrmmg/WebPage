@@ -15,7 +15,7 @@ export class ImportGridDataName extends ImportGridData {
 
     getText(): string {
         if(this.file && this.file.similarFiles && this.file.similarFiles.length > 0) {
-            return this.file.filename + " yes";
+            return this.file.filename + " (" + this.file.similarFiles.length + ")";
         }
 
         if(this.file) {
