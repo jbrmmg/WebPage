@@ -10,6 +10,9 @@ import {ImportGridDataSize} from "./data/import-grid-data-size";
 import {ImportGridDataDate} from "./data/import-grid-data-date";
 import {ImportGridService} from "./import-grid.service";
 import {ImportGridFile} from "./import-grid-file";
+import {ImportGridHeaderExpand} from "./header/import-grid-header-expand";
+import {ImportGridDataExpand} from "./data/import-grid-data-expand";
+import {ImportGridFileDisplay} from "./import-grid-file-display";
 
 @Component({
     selector: 'jbr-import-grid',
@@ -25,13 +28,15 @@ import {ImportGridFile} from "./import-grid-file";
         ImportGridHeaderSize,
         ImportGridHeaderDate,
         ImportGridDataSize,
-        ImportGridDataDate
+        ImportGridDataDate,
+        ImportGridHeaderExpand,
+        ImportGridDataExpand
     ],
     standalone: true
 })
 export class ImportGrid implements OnInit {
     public status: string;
-    public data: ImportGridFile[];
+    public data: ImportGridFileDisplay[];
 
     constructor(private readonly _importGridService: ImportGridService) {
     }
@@ -44,11 +49,20 @@ export class ImportGrid implements OnInit {
     refresh() {
         this.status = "loading";
         this.data = [];
+        let id: number = 0;
 
         // Get the data.
         this._importGridService.getFiles().subscribe({
             next: val => {
-                this.data = val;
+                val.forEach((e) => {
+                    this.data.push(new ImportGridFileDisplay(id++,e,null));
+
+                    if(e.similarFiles) {
+                        e.similarFiles.forEach((s) => {
+                            this.data.push(new ImportGridFileDisplay(id++,e,s))
+                        })
+                    }
+                })
             },
             error: err => {
                 // Error.

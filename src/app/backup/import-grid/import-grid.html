@@ -9,6 +9,9 @@
         <thead>
             <tr>
                 <th>
+                    <jbr-import-grid-header-expand></jbr-import-grid-header-expand>
+                </th>
+                <th>
                     <jbr-import-grid-header-name></jbr-import-grid-header-name>
                 </th>
                 <th>
@@ -24,6 +27,9 @@
         </thead>
         <tbody *ngIf="data && data.length">
             <tr *ngFor="let file of data">
+                <td>
+                    <jbr-import-grid-data-expand [file]=file></jbr-import-grid-data-expand>
+                </td>
                 <td>
                     <jbr-import-grid-data-name [file]=file></jbr-import-grid-data-name>
                 </td>
