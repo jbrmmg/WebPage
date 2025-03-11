@@ -1,0 +1,19 @@
+<ng-container *ngIf="displayStatus()">
+    <div class="row light-row">
+        <div class="col indicator">
+            <div [class]="ignoreStatus()" title="Ignore Status"></div>
+        </div>
+        <div class="col indicator">
+            <div [class]="immediateImportStatus()" title="Immediate Import Status"></div>
+        </div>
+        <div class="col indicator">
+            <div [class]="importStatus()" title="Import Status"></div>
+        </div>
+        <div class="col indicator">
+            <div [class]="duplicateStatus()" title="Duplicate Status"></div>
+        </div>
+        <div class="col status">
+            <div>{{statusText()}}</div>
+        </div>
+    </div>
+</ng-container>

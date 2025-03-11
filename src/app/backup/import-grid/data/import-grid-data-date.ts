@@ -14,8 +14,8 @@ import {ImportGridData} from "./import-grid-data";
 export class ImportGridDataDate extends ImportGridData {
 
     getText(): string {
-        if(this.file && this.file.date) {
-            return this.file.date;
+        if(this.file && this.file.source && this.file.source.date) {
+            return this.file.source.date.replace("T"," ");
         }
 
         return "";

@@ -14,8 +14,8 @@ import {ImportGridData} from "./import-grid-data";
 export class ImportGridDataMd5 extends ImportGridData {
 
     getText(): string {
-        if(this.file != null && this.file.md5 != null) {
-            return this.file.md5;
+        if(this.file != null && this.file.source && this.file.source.md5 != null) {
+            return this.file.source.md5;
         }
 
         return "";

@@ -14,14 +14,22 @@ import {ImportGridData} from "./import-grid-data";
 export class ImportGridDataName extends ImportGridData {
 
     getText(): string {
-        if(this.file && this.file.similarFiles && this.file.similarFiles.length > 0) {
-            return this.file.filename + " (" + this.file.similarFiles.length + ")";
+        if(this.file && this.file.similar) {
+            return this.file.similar.filename;
         }
 
-        if(this.file) {
-            return this.file.filename;
+        if(this.file && this.file.source) {
+            return this.file.source.filename;
         }
 
         return "";
+    }
+
+    getClassName() {
+        if(this.file && this.file.similar == null) {
+            return "name";
+        }
+
+        return "similar-name";
     }
 }

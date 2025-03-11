@@ -1,5 +1,6 @@
 import {NgIf} from "@angular/common";
 import {Component} from "@angular/core";
+import {ImportGridHeader} from "./import-grid-header";
 
 @Component({
     selector: 'jbr-import-grid-header-date',
@@ -10,5 +11,9 @@ import {Component} from "@angular/core";
     ],
     standalone: true
 })
-export class ImportGridHeaderDate {
+
+export class ImportGridHeaderDate extends ImportGridHeader {
+    getText(): string {
+        return "Date";
+    }
 }

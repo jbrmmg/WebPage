@@ -6,4 +6,10 @@ export class ImportGridFile implements IImportGridFileBase {
     size: number;
     md5: string;
     similarFiles: IImportGridFileBase[];
+    ignored: string;
+    imported: string;
+    immediateImported: string;
+    duplicated: string;
+    id: number;
+    status: string;
 }

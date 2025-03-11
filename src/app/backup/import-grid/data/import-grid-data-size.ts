@@ -14,8 +14,8 @@ import {ImportGridData} from "./import-grid-data";
 export class ImportGridDataSize extends ImportGridData {
 
     getText(): string {
-        if(this.file) {
-            return this.file.size + "";
+        if(this.file && this.file.source) {
+            return this.file.source.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
 
         return "";

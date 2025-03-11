@@ -6,12 +6,14 @@ export class ImportGridFileDisplay {
     source: ImportGridFile;
     similar: IImportGridFileBase;
     visible: boolean;
+    expanded: boolean;
 
     constructor(id: number, source: ImportGridFile, similar: IImportGridFileBase) {
         this.id = id;
         this.source = source;
         this.similar = similar;
         this.visible = !similar;
+        this.expanded = false;
     }
 
     display() {

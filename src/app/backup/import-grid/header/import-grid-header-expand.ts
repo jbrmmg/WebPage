@@ -1,5 +1,6 @@
 import {NgIf} from "@angular/common";
 import {Component} from "@angular/core";
+import {ImportGridHeader} from "./import-grid-header";
 
 @Component({
     selector: 'jbr-import-grid-header-expand',
@@ -10,5 +11,8 @@ import {Component} from "@angular/core";
     ],
     standalone: true
 })
-export class ImportGridHeaderExpand {
+export class ImportGridHeaderExpand extends ImportGridHeader {
+    getText(): string {
+        return "";
+    }
 }

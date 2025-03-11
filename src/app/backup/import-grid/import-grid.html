@@ -1,10 +1,15 @@
 <div class="row file-table">
-    <label class="btn btn-primary btn-mode col-1"
-           tabindex="1"
-           aria-controls="list"
-           (click)="refresh()">
-        <em class="fa fa-bars"></em>
-    </label>
+    <div class="row file-table header-row">
+        <div class="no-pad col refresh">
+            <label class="btn btn-primary btn-mode"
+                   tabindex="1"
+                   aria-controls="list"
+                   (click)="refresh()">
+                <em class="fa fa-refresh"></em>
+            </label>
+        </div>
+        <div class="no-pad col status">{{status}}</div>
+    </div>
     <table>
         <thead>
             <tr>
@@ -12,38 +17,45 @@
                     <jbr-import-grid-header-expand></jbr-import-grid-header-expand>
                 </th>
                 <th>
-                    <jbr-import-grid-header-name></jbr-import-grid-header-name>
+                    <jbr-import-grid-header-name (fireSource)="sortData($event)"></jbr-import-grid-header-name>
                 </th>
                 <th>
-                    <jbr-import-grid-header-md5></jbr-import-grid-header-md5>
+                    <jbr-import-grid-header-md5 (fireSource)="sortData($event)"></jbr-import-grid-header-md5>
                 </th>
                 <th>
-                    <jbr-import-grid-header-size></jbr-import-grid-header-size>
+                    <jbr-import-grid-header-size (fireSource)="sortData($event)"></jbr-import-grid-header-size>
                 </th>
                 <th>
-                    <jbr-import-grid-header-date></jbr-import-grid-header-date>
+                    <jbr-import-grid-header-date (fireSource)="sortData($event)"></jbr-import-grid-header-date>
+                </th>
+                <th>
+                    <jbr-import-grid-header-status (fireSource)="sortData($event)"></jbr-import-grid-header-status>
                 </th>
             </tr>
         </thead>
         <tbody *ngIf="data && data.length">
             <tr *ngFor="let file of data">
-                <td>
-                    <jbr-import-grid-data-expand [file]=file></jbr-import-grid-data-expand>
-                </td>
-                <td>
-                    <jbr-import-grid-data-name [file]=file></jbr-import-grid-data-name>
-                </td>
-                <td>
-                    <jbr-import-grid-data-md5 [file]=file></jbr-import-grid-data-md5>
-                </td>
-                <td>
-                    <jbr-import-grid-data-size [file]=file></jbr-import-grid-data-size>
-                </td>
-                <td>
-                    <jbr-import-grid-data-date [file]=file></jbr-import-grid-data-date>
-                </td>
+                <ng-container *ngIf="file.visible">
+                    <td>
+                        <jbr-import-grid-data-expand [file]=file (fireExpand)="expandRequest($event)"></jbr-import-grid-data-expand>
+                    </td>
+                    <td>
+                        <jbr-import-grid-data-name [file]=file></jbr-import-grid-data-name>
+                    </td>
+                    <td>
+                        <jbr-import-grid-data-md5 [file]=file></jbr-import-grid-data-md5>
+                    </td>
+                    <td>
+                        <jbr-import-grid-data-size [file]=file></jbr-import-grid-data-size>
+                    </td>
+                    <td>
+                        <jbr-import-grid-data-date [file]=file></jbr-import-grid-data-date>
+                    </td>
+                    <td>
+                        <jbr-import-grid-data-status [file]=file></jbr-import-grid-data-status>
+                    </td>
+                </ng-container>
             </tr>
         </tbody>
     </table>
-    <p class="status">{{status}}</p>
 </div>
