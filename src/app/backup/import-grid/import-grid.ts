@@ -208,7 +208,9 @@ export class ImportGrid implements OnInit {
 
     md5Sorter(file: ImportGridFile): string {
         if(file) {
-            return file.md5.toUpperCase();
+            if (file.md5) {
+                return file.md5.toUpperCase();
+            }
         }
 
         return "";
