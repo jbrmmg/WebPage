@@ -33,6 +33,7 @@ import { BackupPrintSizeSelectComponent } from "./backup/prints/backup-print-siz
 import { BackupPrintImageComponent } from "./backup/prints/backup-print-image.component";
 import { WifiComponent } from "./wifi/wifi.component";
 import { GridTransaction } from "./money/grid/grid-transaction";
+import { ImportGrid } from "./backup/import-grid/import-grid";
 
 @NgModule({
     declarations: [
@@ -79,7 +80,8 @@ import { GridTransaction } from "./money/grid/grid-transaction";
             {path: '', redirectTo: 'welcome', pathMatch: 'full'},
             {path: '**', redirectTo: 'welcome', pathMatch: 'full'}
         ]),
-        GridTransaction
+        GridTransaction,
+        ImportGrid
     ],
     providers: [DatePipe],
     bootstrap: [AppComponent]

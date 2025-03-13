@@ -1,0 +1,41 @@
+.light-row {
+    margin: 0;
+}
+
+.light {
+    width: 10px;
+    height: 10px;
+    border: 1px solid black;
+    border-radius: 50%;
+    display: flex;
+    padding: 0;
+}
+
+.redlight {
+    background: red;
+}
+
+.amberlight {
+    background: gold;
+}
+
+.greenlight {
+    background: green;
+}
+
+.unknown {
+    background: grey;
+}
+
+.indicator {
+    padding-top: 2px;
+    flex: 0 1 0;
+}
+
+.status {
+    flex: 1 0 0;
+}
+
+.delete {
+    flex: 1 0 0;
+}

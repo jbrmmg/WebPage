@@ -1,0 +1,29 @@
+.expand-row {
+    margin: 0;
+    align-content: center;
+}
+
+.expand {
+
+}
+
+.selected {
+    width: 10px;
+    height: 10px;
+    border: 1px solid black;
+    border-radius: 50%;
+    display: flex;
+    background: #0d6efd;
+    padding: 0;
+}
+
+.not-selected {
+    width: 10px;
+    height: 10px;
+    border: 1px solid black;
+    border-radius: 50%;
+    display: flex;
+    flex-shrink: 1;
+    background: white;
+    padding: 0;
+}
