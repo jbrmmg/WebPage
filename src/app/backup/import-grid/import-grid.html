@@ -52,7 +52,7 @@
                         <jbr-import-grid-data-date [file]=file></jbr-import-grid-data-date>
                     </td>
                     <td>
-                        <jbr-import-grid-data-status [file]=file></jbr-import-grid-data-status>
+                        <jbr-import-grid-data-status [file]=file (delete)="deleteFile($event)"></jbr-import-grid-data-status>
                     </td>
                 </ng-container>
             </tr>

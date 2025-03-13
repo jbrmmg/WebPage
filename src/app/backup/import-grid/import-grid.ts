@@ -41,6 +41,7 @@ import {ImportGridDataStatus} from "./data/import-grid-data-status";
 export class ImportGrid implements OnInit {
     public status: string;
     public data: ImportGridFileDisplay[];
+    public sortColumn: string;
 
     constructor(private readonly _importGridService: ImportGridService) {
     }
@@ -48,6 +49,7 @@ export class ImportGrid implements OnInit {
     ngOnInit(): void {
         this.status = "Press refresh to display.";
         this.data = [];
+        this.sortColumn = "Name";
     }
 
     refresh() {
@@ -69,6 +71,7 @@ export class ImportGrid implements OnInit {
                         })
                     }
                 })
+                this.sortData(this.sortColumn);
             },
             error: err => {
                 // Error.
@@ -251,5 +254,25 @@ export class ImportGrid implements OnInit {
                 this.sortDate();
         }
         this.status = oldStatus;
+        this.sortColumn = column;
+    }
+
+    deleteFile(filename: string) {
+        // Delete the file named.
+        this.data = []
+        this._importGridService.deletePreImportFile(filename).subscribe({
+                next: (result) => {
+                    console.log(result);
+                },
+                error: err => {
+                    // Error.
+                    console.log('There is an error?' + err.message)
+                },
+                complete: () => {
+                    this.refresh();
+                    console.log('Delete complete');
+                }
+            }
+        );
     }
 }

@@ -25,5 +25,6 @@ export const environment = {
   moneyFileUpdates: "money/reconciliation/file-updates",
 
   // Backup URLs
-  backupGetPreImportFiles: "backup/preimportfiles"
+  backupGetPreImportFiles: "backup/preimportfiles",
+  backupDeletePreImportFile: "backup/preimportfile"
 };

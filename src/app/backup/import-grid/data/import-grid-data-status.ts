@@ -1,5 +1,5 @@
 import {NgIf} from "@angular/common";
-import {Component} from "@angular/core";
+import {Component, EventEmitter, Output} from "@angular/core";
 import {ImportGridData} from "./import-grid-data";
 
 @Component({
@@ -12,6 +12,7 @@ import {ImportGridData} from "./import-grid-data";
     standalone: true
 })
 export class ImportGridDataStatus extends ImportGridData {
+    @Output() delete: EventEmitter<String> = new EventEmitter();
 
     getText(): string {
         if(this.file && this.file.source) {
@@ -74,5 +75,11 @@ export class ImportGridDataStatus extends ImportGridData {
 
     displayStatus() {
         return this.file && this.file.similar == null
+    }
+
+    deleteFile() {
+        if(this.file && this.file.source && this.file.source.filename) {
+            this.delete.emit(this.file.source.filename)
+        }
     }
 }

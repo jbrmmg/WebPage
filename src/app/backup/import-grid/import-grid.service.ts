@@ -29,4 +29,10 @@ export class ImportGridService {
             catchError(err => ImportGridService.handleError(err))
         );
     }
+
+    deletePreImportFile(filename: string): Observable<any> {
+        console.log("Delete file " + filename);
+        console.log("Delete file " + environment.backupDeletePreImportFile);
+        return this.http.delete(environment.backupDeletePreImportFile, {body: filename, responseType: 'text'});
+    }
 }

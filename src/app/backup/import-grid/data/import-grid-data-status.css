@@ -35,3 +35,7 @@
 .status {
     flex: 1 0 0;
 }
+
+.delete {
+    flex: 1 0 0;
+}
