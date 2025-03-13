@@ -42,6 +42,7 @@ export class ImportGrid implements OnInit {
     public status: string;
     public data: ImportGridFileDisplay[];
     public sortColumn: string;
+    public sortUp: boolean;
 
     constructor(private readonly _importGridService: ImportGridService) {
     }
@@ -71,7 +72,7 @@ export class ImportGrid implements OnInit {
                         })
                     }
                 })
-                this.sortData(this.sortColumn);
+                this.sortData(this.sortColumn,false);
             },
             error: err => {
                 // Error.
@@ -176,11 +177,11 @@ export class ImportGrid implements OnInit {
     sortStatus() {
         this.data = this.data.sort((f1,f2) => {
             if(this.statusSorter(f1.source) > this.statusSorter(f2.source)) {
-                return 1;
+                return this.sortUp ? 1 : -1;
             }
 
             if(this.statusSorter(f1.source) < this.statusSorter(f2.source)) {
-                return -1;
+                return this.sortUp ? -1 : 1;
             }
 
             return 0;
@@ -198,11 +199,11 @@ export class ImportGrid implements OnInit {
     sortDate() {
         this.data = this.data.sort((f1,f2) => {
             if(this.dateSorter(f1.source) > this.dateSorter(f2.source)) {
-                return 1;
+                return this.sortUp ? 1 : -1;
             }
 
             if(this.dateSorter(f1.source) < this.dateSorter(f2.source)) {
-                return -1;
+                return this.sortUp ? -1 : 1;
             }
 
             return 0;
@@ -222,19 +223,23 @@ export class ImportGrid implements OnInit {
     sortMD5() {
         this.data = this.data.sort((f1,f2) => {
             if(this.md5Sorter(f1.source) > this.md5Sorter(f2.source)) {
-                return 1;
+                return this.sortUp ? 1 : -1;
             }
 
             if(this.md5Sorter(f1.source) < this.md5Sorter(f2.source)) {
-                return -1;
+                return this.sortUp ? -1 : 1;
             }
 
             return 0;
         })
     }
 
-    sortData(column: string) {
+    sortData(column: string, flipOrder: boolean) {
         let oldStatus: string = this.status
+
+        if(flipOrder && column == this.sortColumn) {
+            this.sortUp = !this.sortUp;
+        }
 
         this.status = "Sorting";
         switch (column) {
