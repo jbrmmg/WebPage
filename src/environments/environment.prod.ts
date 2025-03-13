@@ -26,5 +26,6 @@ export const environment = {
 
   // Backup URLs
   backupGetPreImportFiles: "backup/preimportfiles",
-  backupDeletePreImportFile: "backup/preimportfile"
+  backupDeletePreImportFile: "backup/preimportfile",
+  backupFileUpdates: "backup/file-updates"
 };

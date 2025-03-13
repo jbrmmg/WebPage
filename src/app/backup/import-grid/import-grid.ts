@@ -15,6 +15,7 @@ import {ImportGridDataExpand} from "./data/import-grid-data-expand";
 import {ImportGridFileDisplay} from "./import-grid-file-display";
 import {ImportGridHeaderStatus} from "./header/import-grid-header-status";
 import {ImportGridDataStatus} from "./data/import-grid-data-status";
+import {FileUpdate} from "../../money/files/fileUpdate";
 
 @Component({
     selector: 'jbr-import-grid',
@@ -43,14 +44,40 @@ export class ImportGrid implements OnInit {
     public data: ImportGridFileDisplay[];
     public sortColumn: string;
     public sortUp: boolean;
+    public fileUpdateSource: EventSource;
 
     constructor(private readonly _importGridService: ImportGridService) {
+        this.fileUpdateSource = _importGridService.fileUpdateSource();
+        this.fileUpdateSource.addEventListener('message', this.fileUpdate.bind(this))
+        window.addEventListener('beforeunload', this.handleBeforeUnload.bind(this));
     }
 
     ngOnInit(): void {
         this.status = "Press refresh to display.";
         this.data = [];
         this.sortColumn = "Name";
+    }
+
+    handleBeforeUnload(event: BeforeUnloadEvent) : void {
+        this.fileUpdateSource.removeEventListener('message', this.fileUpdate.bind(this));
+        this.fileUpdateSource.close();
+        console.log("Cleanup before unload." + event);
+    }
+
+    fileUpdate(event : MessageEvent) : void {
+        let update: ImportGridFile[] = JSON.parse(event.data);
+
+        console.log("Update " + update.length)
+        if(update.length > 0) {
+            if(update[0].filename) {
+                console.log(update[0].filename);
+            } else {
+                console.log("null")
+            }
+        }
+//        update.forEach(x => {
+//            console.log("Update for " + x.filename);
+//        })
     }
 
     refresh() {
@@ -73,6 +100,11 @@ export class ImportGrid implements OnInit {
                     }
                 })
                 this.sortData(this.sortColumn,false);
+                this._importGridService.restart().subscribe({
+                    complete: () => {
+                        console.log("Restarted.")
+                    }
+                });
             },
             error: err => {
                 // Error.
