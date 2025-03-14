@@ -15,7 +15,6 @@ import {ImportGridDataExpand} from "./data/import-grid-data-expand";
 import {ImportGridFileDisplay} from "./import-grid-file-display";
 import {ImportGridHeaderStatus} from "./header/import-grid-header-status";
 import {ImportGridDataStatus} from "./data/import-grid-data-status";
-import {FileUpdate} from "../../money/files/fileUpdate";
 
 @Component({
     selector: 'jbr-import-grid',
@@ -64,20 +63,41 @@ export class ImportGrid implements OnInit {
         console.log("Cleanup before unload." + event);
     }
 
+    updateFileData(data: ImportGridFile, update: ImportGridFile) {
+        // Have the details changed?
+        if(data.md5 != update.md5) {
+            data.md5 = update.md5;
+        }
+        if(data.size != update.size) {
+            data.size = update.size;
+        }
+        if(data.date != update.date) {
+            data.date = update.date;
+        }
+        if(data.immediateImported != update.immediateImported) {
+            data.immediateImported = update.immediateImported;
+        }
+        if(data.imported != update.imported) {
+            data.imported = update.imported;
+        }
+        if(data.ignored != update.ignored) {
+            data.ignored = update.ignored;
+        }
+        if(data.duplicated != update.duplicated) {
+            data.duplicated = update.duplicated;
+        }
+    }
+
     fileUpdate(event : MessageEvent) : void {
         let update: ImportGridFile[] = JSON.parse(event.data);
 
-        console.log("Update " + update.length)
-        if(update.length > 0) {
-            if(update[0].filename) {
-                console.log(update[0].filename);
-            } else {
-                console.log("null")
-            }
-        }
-//        update.forEach(x => {
-//            console.log("Update for " + x.filename);
-//        })
+        update.forEach(f => {
+            this.data.forEach(d => {
+                if(d.source && f.filename == d.source.filename) {
+                    this.updateFileData(d.source,f);
+                }
+            });
+        });
     }
 
     refresh() {

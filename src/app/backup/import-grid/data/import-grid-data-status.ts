@@ -25,12 +25,14 @@ export class ImportGridDataStatus extends ImportGridData {
     getClassFromStatus(status: string) : string {
         switch(status) {
             case "TL_RED":
-                return "light redlight";
+                return "light red-light";
             case "TL_AMBER":
-                return "light amberlight";
+                return "light amber-light";
+            case "TL_GREEN":
+                return "light green-light";
         }
 
-        return "light greenlight";
+        return "light unknown-light";
     }
 
     duplicateStatus(): string {

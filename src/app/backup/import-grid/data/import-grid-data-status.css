@@ -11,16 +11,20 @@
     padding: 0;
 }
 
-.redlight {
+.red-light {
     background: red;
 }
 
-.amberlight {
+.amber-light {
     background: gold;
 }
 
-.greenlight {
+.green-light {
     background: green;
+}
+
+.unknown-light {
+    background: grey;
 }
 
 .unknown {
