@@ -19,6 +19,7 @@ import {IImportGridFileBase, ImportGridFileBase} from "./import-grid-file-base";
 import {ImportGridHeaderTraffic} from "./header/import-grid-header-traffic";
 import {ImportGridDataTraffic} from "./data/import-grid-data-traffic";
 import {ImportGridTrafficLightFilter, TrafficLightType} from "./traffic/import-grid-traffic-light";
+import {ImportGridMap} from "./import-grid-map";
 
 @Component({
     selector: 'jbr-import-grid',
@@ -40,7 +41,8 @@ import {ImportGridTrafficLightFilter, TrafficLightType} from "./traffic/import-g
         ImportGridHeaderStatus,
         ImportGridDataStatus,
         ImportGridHeaderTraffic,
-        ImportGridDataTraffic
+        ImportGridDataTraffic,
+        ImportGridMap
     ],
     standalone: true
 })
