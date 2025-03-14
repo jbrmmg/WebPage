@@ -23,23 +23,15 @@
     background: green;
 }
 
+.off-light {
+    background: white;
+}
+
 .unknown-light {
     background: grey;
 }
 
-.unknown {
-    background: grey;
-}
-
 .indicator {
-    padding-top: 2px;
+    padding: 2px 4px 0 4px;
     flex: 0 1 0;
-}
-
-.status {
-    flex: 1 0 0;
-}
-
-.delete {
-    flex: 1 0 0;
 }

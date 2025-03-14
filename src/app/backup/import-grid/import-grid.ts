@@ -15,6 +15,10 @@ import {ImportGridDataExpand} from "./data/import-grid-data-expand";
 import {ImportGridFileDisplay} from "./import-grid-file-display";
 import {ImportGridHeaderStatus} from "./header/import-grid-header-status";
 import {ImportGridDataStatus} from "./data/import-grid-data-status";
+import {IImportGridFileBase, ImportGridFileBase} from "./import-grid-file-base";
+import {ImportGridHeaderTraffic} from "./header/import-grid-header-traffic";
+import {ImportGridDataTraffic} from "./data/import-grid-data-traffic";
+import {ImportGridTrafficLightFilter, TrafficLightType} from "./traffic/import-grid-traffic-light";
 
 @Component({
     selector: 'jbr-import-grid',
@@ -22,9 +26,9 @@ import {ImportGridDataStatus} from "./data/import-grid-data-status";
     styleUrls: ['./import-grid.css'],
     imports: [
         NgIf,
+        NgForOf,
         ImportGridHeaderName,
         ImportGridDataName,
-        NgForOf,
         ImportGridHeaderMd5,
         ImportGridDataMd5,
         ImportGridHeaderSize,
@@ -34,7 +38,9 @@ import {ImportGridDataStatus} from "./data/import-grid-data-status";
         ImportGridHeaderExpand,
         ImportGridDataExpand,
         ImportGridHeaderStatus,
-        ImportGridDataStatus
+        ImportGridDataStatus,
+        ImportGridHeaderTraffic,
+        ImportGridDataTraffic
     ],
     standalone: true
 })
@@ -43,14 +49,95 @@ export class ImportGrid implements OnInit {
     public data: ImportGridFileDisplay[];
     public sortColumn: string;
     public sortUp: boolean;
+    public fileUpdateSource: EventSource;
+    protected readonly TrafficLightType = TrafficLightType;
+
 
     constructor(private readonly _importGridService: ImportGridService) {
+        this.fileUpdateSource = _importGridService.fileUpdateSource();
+        this.fileUpdateSource.addEventListener('message', this.fileUpdate.bind(this))
+        window.addEventListener('beforeunload', this.handleBeforeUnload.bind(this));
     }
 
     ngOnInit(): void {
         this.status = "Press refresh to display.";
         this.data = [];
         this.sortColumn = "Name";
+    }
+
+    handleBeforeUnload(event: BeforeUnloadEvent) : void {
+        this.fileUpdateSource.removeEventListener('message', this.fileUpdate.bind(this));
+        this.fileUpdateSource.close();
+        console.log("Cleanup before unload." + event);
+    }
+
+    updateFileDataBase(data: IImportGridFileBase, update: ImportGridFileBase) {
+        if(data.md5 != update.md5) {
+            data.md5 = update.md5;
+        }
+        if(data.size != update.size) {
+            data.size = update.size;
+        }
+        if(data.date != update.date) {
+            data.date = update.date;
+        }
+    }
+
+    updateFileData(data: ImportGridFile, update: ImportGridFile) {
+        // Have the details changed?
+        this.updateFileDataBase(data,update);
+
+        if(data.immediateImported != update.immediateImported) {
+            data.immediateImported = update.immediateImported;
+        }
+        if(data.imported != update.imported) {
+            data.imported = update.imported;
+        }
+        if(data.ignored != update.ignored) {
+            data.ignored = update.ignored;
+        }
+        if(data.duplicated != update.duplicated) {
+            data.duplicated = update.duplicated;
+        }
+    }
+
+    fileUpdate(event : MessageEvent) : void {
+        let update: ImportGridFile[] = JSON.parse(event.data);
+
+        update.forEach(f => {
+            let index = 0;
+            this.data.forEach(d => {
+                index++;
+                if(!d.source) {
+                    return;
+                }
+
+                if(f.filename != d.source.filename) {
+                    return;
+                }
+
+                this.updateFileData(d.source,f);
+
+                // Check similar files.
+                if(d.similar && f.similarFiles) {
+                    f.similarFiles.forEach(sf => {
+                        if(d.similar.filename == sf.filename) {
+                            this.updateFileDataBase(d.similar,sf);
+                        }
+                    })
+                }
+
+                // Add similar files if they are new.
+                if(f.similarFiles && f.similarFiles.length > 0 && !d.selectable && !d.similar) {
+                    d.source.similarFiles = Object.assign([],f.similarFiles);
+                    d.selectable = true;
+
+                    d.source.similarFiles.forEach(ns => {
+                        this.data.splice(index,0,new ImportGridFileDisplay(0,d.source,ns))
+                    })
+                }
+            });
+        });
     }
 
     refresh() {
@@ -73,6 +160,11 @@ export class ImportGrid implements OnInit {
                     }
                 })
                 this.sortData(this.sortColumn,false);
+                this._importGridService.restart().subscribe({
+                    complete: () => {
+                        console.log("Restarted.")
+                    }
+                });
             },
             error: err => {
                 // Error.
@@ -108,7 +200,7 @@ export class ImportGrid implements OnInit {
         // Set the similar files to this to be visible.
         data.expanded = true;
         this.data.forEach((f) => {
-            if(f.source == data.source && f.similar) {
+            if(f.source.filename == data.source.filename && f.similar) {
                 f.visible = true;
             }
         })
@@ -125,11 +217,11 @@ export class ImportGrid implements OnInit {
     sortName() {
         this.data = this.data.sort((f1,f2) => {
             if(this.nameSorter(f1.source) > this.nameSorter(f2.source)) {
-                return 1;
+                return this.sortUp ? 1 : -1;
             }
 
             if(this.nameSorter(f1.source) < this.nameSorter(f2.source)) {
-                return -1;
+                return this.sortUp ? -1 : 1;
             }
 
             return 0;
@@ -147,11 +239,11 @@ export class ImportGrid implements OnInit {
     sortSize() {
         this.data = this.data.sort((f1,f2) => {
             if(this.sizeSorter(f1.source) > this.sizeSorter(f2.source)) {
-                return 1;
+                return this.sortUp ? 1 : -1;
             }
 
             if(this.sizeSorter(f1.source) < this.sizeSorter(f2.source)) {
-                return -1;
+                return this.sortUp ? -1 : 1;
             }
 
             return 0;
@@ -162,10 +254,6 @@ export class ImportGrid implements OnInit {
         if(file) {
             let result: string = "";
 
-            result += file.ignored;
-            result += file.immediateImported;
-            result += file.imported;
-            result += file.duplicated;
             result += file.status;
 
             return result;
@@ -234,6 +322,37 @@ export class ImportGrid implements OnInit {
         })
     }
 
+    statusFlagSorter(file: ImportGridFile, type: TrafficLightType): string {
+        if(file) {
+            switch(type) {
+                case TrafficLightType.ImmediateImportStatus:
+                    return file.immediateImported;
+                case TrafficLightType.IgnoreStatus:
+                    return file.ignored;
+                case TrafficLightType.ImportStatus:
+                    return file.imported;
+                case TrafficLightType.DuplicateStatus:
+                    return file.duplicated;
+            }
+        }
+
+        return "";
+    }
+
+    sortFlagStatus(type: TrafficLightType) {
+        this.data = this.data.sort((f1,f2) => {
+            if(this.statusFlagSorter(f1.source,type) > this.statusFlagSorter(f2.source,type)) {
+                return this.sortUp ? 1 : -1;
+            }
+
+            if(this.statusFlagSorter(f1.source,type) < this.statusFlagSorter(f2.source,type)) {
+                return this.sortUp ? -1 : 1;
+            }
+
+            return 0;
+        })
+    }
+
     sortData(column: string, flipOrder: boolean) {
         let oldStatus: string = this.status
 
@@ -252,6 +371,18 @@ export class ImportGrid implements OnInit {
             case "MD5":
                 this.sortMD5();
                 break;
+            case "Immediate":
+                this.sortFlagStatus(TrafficLightType.ImmediateImportStatus);
+                break;
+            case "Ignore":
+                this.sortFlagStatus(TrafficLightType.IgnoreStatus);
+                break;
+            case "Import":
+                this.sortFlagStatus(TrafficLightType.ImportStatus);
+                break;
+            case "Duplicate":
+                this.sortFlagStatus(TrafficLightType.DuplicateStatus);
+                break;
             case "Status":
                 this.sortStatus();
                 break;
@@ -260,6 +391,46 @@ export class ImportGrid implements OnInit {
         }
         this.status = oldStatus;
         this.sortColumn = column;
+    }
+
+    getVisible(statusName: string, filter: ImportGridTrafficLightFilter) {
+        switch(statusName) {
+            case "TL_RED":
+                return filter.red;
+            case "TL_AMBER":
+                return filter.amber;
+            case "TL_GREEN":
+                return filter.green;
+        }
+
+        return filter.unknown;
+    }
+
+    filterStatus(filter: ImportGridTrafficLightFilter) {
+        // Hide those rows that do not match the filter.
+        this.data.forEach(d => {
+            if(d.similar) {
+                d.visible = false;
+                return;
+            }
+
+            d.expanded = false;
+
+            switch(filter.type) {
+                case TrafficLightType.ImmediateImportStatus:
+                    d.visible = this.getVisible(d.source.immediateImported,filter);
+                    break;
+                case TrafficLightType.IgnoreStatus:
+                    d.visible = this.getVisible(d.source.ignored,filter);
+                    break;
+                case TrafficLightType.ImportStatus:
+                    d.visible = this.getVisible(d.source.imported,filter);
+                    break;
+                case TrafficLightType.DuplicateStatus:
+                    d.visible = this.getVisible(d.source.duplicated,filter);
+                    break;
+            }
+        });
     }
 
     deleteFile(filename: string) {

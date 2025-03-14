@@ -94,7 +94,6 @@ export class BackupSummarySourceComponent {
         let result: string;
 
         this.summary.sources.forEach(nextSource => {
-            console.log(nextSource.id + ":" + this.source.destinationId);
             if(this.source.destinationId === nextSource.id) {
                 result = nextSource.path + " (" + nextSource.location.name + ")";
             }

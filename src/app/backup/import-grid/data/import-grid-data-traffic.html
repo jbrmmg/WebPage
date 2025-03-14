@@ -1,0 +1,7 @@
+<ng-container *ngIf="displayStatus()">
+    <div class="row light-row">
+        <div class="col indicator">
+            <div [class]="statusClass()" [title]="getTitle()"></div>
+        </div>
+    </div>
+</ng-container>

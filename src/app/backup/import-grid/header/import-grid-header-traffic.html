@@ -1,0 +1,15 @@
+<div (click)="fireSort()" [title]="getTitle()">{{getText()}}</div>
+<div class="row light-row">
+    <div class="col indicator" (click)="filter(TrafficLightStatus.Red)">
+        <div [class]="filterStatus(TrafficLightStatus.Red)"></div>
+    </div>
+    <div class="col indicator" (click)="filter(TrafficLightStatus.Amber)">
+        <div [class]="filterStatus(TrafficLightStatus.Amber)"></div>
+    </div>
+    <div class="col indicator" (click)="filter(TrafficLightStatus.Green)">
+        <div [class]="filterStatus(TrafficLightStatus.Green)"></div>
+    </div>
+    <div class="col indicator" (click)="filter(TrafficLightStatus.Unknown)">
+        <div [class]="filterStatus(TrafficLightStatus.Unknown)"></div>
+    </div>
+</div>

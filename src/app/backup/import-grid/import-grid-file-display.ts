@@ -7,6 +7,7 @@ export class ImportGridFileDisplay {
     similar: IImportGridFileBase;
     visible: boolean;
     expanded: boolean;
+    selectable: boolean;
 
     constructor(id: number, source: ImportGridFile, similar: IImportGridFileBase) {
         this.id = id;
@@ -14,6 +15,7 @@ export class ImportGridFileDisplay {
         this.similar = similar;
         this.visible = !similar;
         this.expanded = false;
+        this.selectable = this.source && !this.similar && this.source.similarFiles && this.source.similarFiles.length > 0;
     }
 
     display() {

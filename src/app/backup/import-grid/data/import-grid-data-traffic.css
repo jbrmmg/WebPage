@@ -27,19 +27,7 @@
     background: grey;
 }
 
-.unknown {
-    background: grey;
-}
-
 .indicator {
     padding-top: 2px;
     flex: 0 1 0;
-}
-
-.status {
-    flex: 1 0 0;
-}
-
-.delete {
-    flex: 1 0 0;
 }
