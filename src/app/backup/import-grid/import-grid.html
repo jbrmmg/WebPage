@@ -29,16 +29,16 @@
                     <jbr-import-grid-header-date (fireSource)="sortData($event,true)"></jbr-import-grid-header-date>
                 </th>
                 <th>
-                    <jbr-import-grid-header-traffic (fireSource)="sortData($event,true)" [type]="TrafficLightType.ImmediateImportStatus"></jbr-import-grid-header-traffic>
+                    <jbr-import-grid-header-traffic (fireSource)="sortData($event,true)" (filterChange)="filterStatus($event)" [type]="TrafficLightType.ImmediateImportStatus"></jbr-import-grid-header-traffic>
                 </th>
                 <th>
-                    <jbr-import-grid-header-traffic (fireSource)="sortData($event,true)" [type]="TrafficLightType.IgnoreStatus"></jbr-import-grid-header-traffic>
+                    <jbr-import-grid-header-traffic (fireSource)="sortData($event,true)" (filterChange)="filterStatus($event)" [type]="TrafficLightType.IgnoreStatus"></jbr-import-grid-header-traffic>
                 </th>
                 <th>
-                    <jbr-import-grid-header-traffic (fireSource)="sortData($event,true)" [type]="TrafficLightType.ImportStatus"></jbr-import-grid-header-traffic>
+                    <jbr-import-grid-header-traffic (fireSource)="sortData($event,true)" (filterChange)="filterStatus($event)" [type]="TrafficLightType.ImportStatus"></jbr-import-grid-header-traffic>
                 </th>
                 <th>
-                    <jbr-import-grid-header-traffic (fireSource)="sortData($event,true)" [type]="TrafficLightType.DuplicateStatus"></jbr-import-grid-header-traffic>
+                    <jbr-import-grid-header-traffic (fireSource)="sortData($event,true)" (filterChange)="filterStatus($event)" [type]="TrafficLightType.DuplicateStatus"></jbr-import-grid-header-traffic>
                 </th>
                 <th>
                     <jbr-import-grid-header-status (fireSource)="sortData($event,true)"></jbr-import-grid-header-status>

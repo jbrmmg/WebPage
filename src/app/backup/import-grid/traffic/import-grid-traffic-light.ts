@@ -71,3 +71,18 @@ export class ImportGridTrafficLight {
         }
     }
 }
+
+export class ImportGridTrafficLightFilter {
+    type: TrafficLightType;
+    red: boolean;
+    amber: boolean;
+    green: boolean;
+    unknown: boolean;
+
+    constructor() {
+        this.red = true;
+        this.amber = true;
+        this.green = true;
+        this.unknown = true;
+    }
+}

@@ -18,7 +18,7 @@ import {ImportGridDataStatus} from "./data/import-grid-data-status";
 import {IImportGridFileBase, ImportGridFileBase} from "./import-grid-file-base";
 import {ImportGridHeaderTraffic} from "./header/import-grid-header-traffic";
 import {ImportGridDataTraffic} from "./data/import-grid-data-traffic";
-import {TrafficLightType} from "./traffic/import-grid-traffic-light";
+import {ImportGridTrafficLightFilter, TrafficLightType} from "./traffic/import-grid-traffic-light";
 
 @Component({
     selector: 'jbr-import-grid',
@@ -133,7 +133,6 @@ export class ImportGrid implements OnInit {
                     d.selectable = true;
 
                     d.source.similarFiles.forEach(ns => {
-//                        this.data.push(new ImportGridFileDisplay(0,d.source,ns))
                         this.data.splice(index,0,new ImportGridFileDisplay(0,d.source,ns))
                     })
                 }
@@ -255,10 +254,6 @@ export class ImportGrid implements OnInit {
         if(file) {
             let result: string = "";
 
-            result += file.ignored;
-            result += file.immediateImported;
-            result += file.imported;
-            result += file.duplicated;
             result += file.status;
 
             return result;
@@ -327,6 +322,37 @@ export class ImportGrid implements OnInit {
         })
     }
 
+    statusFlagSorter(file: ImportGridFile, type: TrafficLightType): string {
+        if(file) {
+            switch(type) {
+                case TrafficLightType.ImmediateImportStatus:
+                    return file.immediateImported;
+                case TrafficLightType.IgnoreStatus:
+                    return file.ignored;
+                case TrafficLightType.ImportStatus:
+                    return file.imported;
+                case TrafficLightType.DuplicateStatus:
+                    return file.duplicated;
+            }
+        }
+
+        return "";
+    }
+
+    sortFlagStatus(type: TrafficLightType) {
+        this.data = this.data.sort((f1,f2) => {
+            if(this.statusFlagSorter(f1.source,type) > this.statusFlagSorter(f2.source,type)) {
+                return this.sortUp ? 1 : -1;
+            }
+
+            if(this.statusFlagSorter(f1.source,type) < this.statusFlagSorter(f2.source,type)) {
+                return this.sortUp ? -1 : 1;
+            }
+
+            return 0;
+        })
+    }
+
     sortData(column: string, flipOrder: boolean) {
         let oldStatus: string = this.status
 
@@ -345,6 +371,18 @@ export class ImportGrid implements OnInit {
             case "MD5":
                 this.sortMD5();
                 break;
+            case "Immediate":
+                this.sortFlagStatus(TrafficLightType.ImmediateImportStatus);
+                break;
+            case "Ignore":
+                this.sortFlagStatus(TrafficLightType.IgnoreStatus);
+                break;
+            case "Import":
+                this.sortFlagStatus(TrafficLightType.ImportStatus);
+                break;
+            case "Duplicate":
+                this.sortFlagStatus(TrafficLightType.DuplicateStatus);
+                break;
             case "Status":
                 this.sortStatus();
                 break;
@@ -353,6 +391,46 @@ export class ImportGrid implements OnInit {
         }
         this.status = oldStatus;
         this.sortColumn = column;
+    }
+
+    getVisible(statusName: string, filter: ImportGridTrafficLightFilter) {
+        switch(statusName) {
+            case "TL_RED":
+                return filter.red;
+            case "TL_AMBER":
+                return filter.amber;
+            case "TL_GREEN":
+                return filter.green;
+        }
+
+        return filter.unknown;
+    }
+
+    filterStatus(filter: ImportGridTrafficLightFilter) {
+        // Hide those rows that do not match the filter.
+        this.data.forEach(d => {
+            if(d.similar) {
+                d.visible = false;
+                return;
+            }
+
+            d.expanded = false;
+
+            switch(filter.type) {
+                case TrafficLightType.ImmediateImportStatus:
+                    d.visible = this.getVisible(d.source.immediateImported,filter);
+                    break;
+                case TrafficLightType.IgnoreStatus:
+                    d.visible = this.getVisible(d.source.ignored,filter);
+                    break;
+                case TrafficLightType.ImportStatus:
+                    d.visible = this.getVisible(d.source.imported,filter);
+                    break;
+                case TrafficLightType.DuplicateStatus:
+                    d.visible = this.getVisible(d.source.duplicated,filter);
+                    break;
+            }
+        });
     }
 
     deleteFile(filename: string) {
