@@ -15,6 +15,10 @@ import {ImportGridDataExpand} from "./data/import-grid-data-expand";
 import {ImportGridFileDisplay} from "./import-grid-file-display";
 import {ImportGridHeaderStatus} from "./header/import-grid-header-status";
 import {ImportGridDataStatus} from "./data/import-grid-data-status";
+import {IImportGridFileBase, ImportGridFileBase} from "./import-grid-file-base";
+import {ImportGridHeaderTraffic} from "./header/import-grid-header-traffic";
+import {ImportGridDataTraffic} from "./data/import-grid-data-traffic";
+import {TrafficLightType} from "./traffic/import-grid-traffic-light";
 
 @Component({
     selector: 'jbr-import-grid',
@@ -22,9 +26,9 @@ import {ImportGridDataStatus} from "./data/import-grid-data-status";
     styleUrls: ['./import-grid.css'],
     imports: [
         NgIf,
+        NgForOf,
         ImportGridHeaderName,
         ImportGridDataName,
-        NgForOf,
         ImportGridHeaderMd5,
         ImportGridDataMd5,
         ImportGridHeaderSize,
@@ -34,7 +38,9 @@ import {ImportGridDataStatus} from "./data/import-grid-data-status";
         ImportGridHeaderExpand,
         ImportGridDataExpand,
         ImportGridHeaderStatus,
-        ImportGridDataStatus
+        ImportGridDataStatus,
+        ImportGridHeaderTraffic,
+        ImportGridDataTraffic
     ],
     standalone: true
 })
@@ -44,6 +50,8 @@ export class ImportGrid implements OnInit {
     public sortColumn: string;
     public sortUp: boolean;
     public fileUpdateSource: EventSource;
+    protected readonly TrafficLightType = TrafficLightType;
+
 
     constructor(private readonly _importGridService: ImportGridService) {
         this.fileUpdateSource = _importGridService.fileUpdateSource();
@@ -63,8 +71,7 @@ export class ImportGrid implements OnInit {
         console.log("Cleanup before unload." + event);
     }
 
-    updateFileData(data: ImportGridFile, update: ImportGridFile) {
-        // Have the details changed?
+    updateFileDataBase(data: IImportGridFileBase, update: ImportGridFileBase) {
         if(data.md5 != update.md5) {
             data.md5 = update.md5;
         }
@@ -74,6 +81,12 @@ export class ImportGrid implements OnInit {
         if(data.date != update.date) {
             data.date = update.date;
         }
+    }
+
+    updateFileData(data: ImportGridFile, update: ImportGridFile) {
+        // Have the details changed?
+        this.updateFileDataBase(data,update);
+
         if(data.immediateImported != update.immediateImported) {
             data.immediateImported = update.immediateImported;
         }
@@ -92,9 +105,37 @@ export class ImportGrid implements OnInit {
         let update: ImportGridFile[] = JSON.parse(event.data);
 
         update.forEach(f => {
+            let index = 0;
             this.data.forEach(d => {
-                if(d.source && f.filename == d.source.filename) {
-                    this.updateFileData(d.source,f);
+                index++;
+                if(!d.source) {
+                    return;
+                }
+
+                if(f.filename != d.source.filename) {
+                    return;
+                }
+
+                this.updateFileData(d.source,f);
+
+                // Check similar files.
+                if(d.similar && f.similarFiles) {
+                    f.similarFiles.forEach(sf => {
+                        if(d.similar.filename == sf.filename) {
+                            this.updateFileDataBase(d.similar,sf);
+                        }
+                    })
+                }
+
+                // Add similar files if they are new.
+                if(f.similarFiles && f.similarFiles.length > 0 && !d.selectable && !d.similar) {
+                    d.source.similarFiles = Object.assign([],f.similarFiles);
+                    d.selectable = true;
+
+                    d.source.similarFiles.forEach(ns => {
+//                        this.data.push(new ImportGridFileDisplay(0,d.source,ns))
+                        this.data.splice(index,0,new ImportGridFileDisplay(0,d.source,ns))
+                    })
                 }
             });
         });
@@ -160,7 +201,7 @@ export class ImportGrid implements OnInit {
         // Set the similar files to this to be visible.
         data.expanded = true;
         this.data.forEach((f) => {
-            if(f.source == data.source && f.similar) {
+            if(f.source.filename == data.source.filename && f.similar) {
                 f.visible = true;
             }
         })
@@ -177,11 +218,11 @@ export class ImportGrid implements OnInit {
     sortName() {
         this.data = this.data.sort((f1,f2) => {
             if(this.nameSorter(f1.source) > this.nameSorter(f2.source)) {
-                return 1;
+                return this.sortUp ? 1 : -1;
             }
 
             if(this.nameSorter(f1.source) < this.nameSorter(f2.source)) {
-                return -1;
+                return this.sortUp ? -1 : 1;
             }
 
             return 0;
@@ -199,11 +240,11 @@ export class ImportGrid implements OnInit {
     sortSize() {
         this.data = this.data.sort((f1,f2) => {
             if(this.sizeSorter(f1.source) > this.sizeSorter(f2.source)) {
-                return 1;
+                return this.sortUp ? 1 : -1;
             }
 
             if(this.sizeSorter(f1.source) < this.sizeSorter(f2.source)) {
-                return -1;
+                return this.sortUp ? -1 : 1;
             }
 
             return 0;

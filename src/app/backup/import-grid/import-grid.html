@@ -29,6 +29,18 @@
                     <jbr-import-grid-header-date (fireSource)="sortData($event,true)"></jbr-import-grid-header-date>
                 </th>
                 <th>
+                    <jbr-import-grid-header-traffic (fireSource)="sortData($event,true)" [type]="TrafficLightType.ImmediateImportStatus"></jbr-import-grid-header-traffic>
+                </th>
+                <th>
+                    <jbr-import-grid-header-traffic (fireSource)="sortData($event,true)" [type]="TrafficLightType.IgnoreStatus"></jbr-import-grid-header-traffic>
+                </th>
+                <th>
+                    <jbr-import-grid-header-traffic (fireSource)="sortData($event,true)" [type]="TrafficLightType.ImportStatus"></jbr-import-grid-header-traffic>
+                </th>
+                <th>
+                    <jbr-import-grid-header-traffic (fireSource)="sortData($event,true)" [type]="TrafficLightType.DuplicateStatus"></jbr-import-grid-header-traffic>
+                </th>
+                <th>
                     <jbr-import-grid-header-status (fireSource)="sortData($event,true)"></jbr-import-grid-header-status>
                 </th>
             </tr>
@@ -50,6 +62,18 @@
                     </td>
                     <td>
                         <jbr-import-grid-data-date [file]=file></jbr-import-grid-data-date>
+                    </td>
+                    <td>
+                        <jbr-import-grid-data-traffic [file]=file [type]="TrafficLightType.ImmediateImportStatus"></jbr-import-grid-data-traffic>
+                    </td>
+                    <td>
+                        <jbr-import-grid-data-traffic [file]=file [type]="TrafficLightType.IgnoreStatus"></jbr-import-grid-data-traffic>
+                    </td>
+                    <td>
+                        <jbr-import-grid-data-traffic [file]=file [type]="TrafficLightType.ImportStatus"></jbr-import-grid-data-traffic>
+                    </td>
+                    <td>
+                        <jbr-import-grid-data-traffic [file]=file [type]="TrafficLightType.DuplicateStatus"></jbr-import-grid-data-traffic>
                     </td>
                     <td>
                         <jbr-import-grid-data-status [file]=file (delete)="deleteFile($event)"></jbr-import-grid-data-status>

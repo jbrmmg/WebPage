@@ -30,8 +30,4 @@ export class ImportGridDataExpand extends ImportGridData {
 
         return "not-selected"
     }
-
-    selectable(): boolean {
-        return this.file && this.file.similar == null && this.file.source && this.file.source.similarFiles && this.file.source.similarFiles.length > 0;
-    }
 }

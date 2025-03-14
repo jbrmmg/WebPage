@@ -37,6 +37,19 @@ td {
     border: 1px solid dimgrey;
 }
 
+/*
+ * first     -  2    Selector
+ * nth  2    - 18    Name
+ * nth  3    - 14    MD5
+ * nth  4    -  6    Size
+ * nth  5    -  8    Date
+ * nth  6    -  5    Immediate Status
+ * nth  7    -  5    Ignore Status
+ * nth  8    -  5    Import Status
+ * nth  9    -  5    Duplicate Status
+ * nth 10    - 32    Status
+ */
+
 table td:first-child {
     width: 2%;
 }
@@ -46,17 +59,33 @@ table td:nth-child(2) {
 }
 
 table td:nth-child(3) {
-    width: 20%;
+    width: 14%;
 }
 
 table td:nth-child(4) {
-    width: 20%;
+    width: 6%;
 }
 
 table td:nth-child(5) {
-    width: 20%;
+    width: 8%;
 }
 
 table td:nth-child(6) {
-    width: 20%;
+    width: 5%;
+}
+
+table td:nth-child(7) {
+    width: 5%;
+}
+
+table td:nth-child(8) {
+    width: 5%;
+}
+
+table td:nth-child(9) {
+    width: 5%;
+}
+
+table td:nth-child(10) {
+    width: 32%;
 }
