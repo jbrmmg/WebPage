@@ -1,5 +1,5 @@
 import {NgIf} from "@angular/common";
-import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {Component, Input} from "@angular/core";
 import {ImportGridData} from "./import-grid-data";
 import {ImportGridTrafficLight, TrafficLightStatus, TrafficLightType} from "../traffic/import-grid-traffic-light";
 
@@ -45,6 +45,6 @@ export class ImportGridDataTraffic extends ImportGridData {
     }
 
     getTitle(): string {
-        return "TODO";
+        return ImportGridTrafficLight.getHeaderTitle(this.type);
     }
 }
