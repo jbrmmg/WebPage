@@ -22,6 +22,8 @@ export class ImportGridMap implements AfterViewInit {
         });
 
         tiles.addTo(this.map);
+
+        this.map.panTo({lat: 51.60146388888889, lng: -0.37789999999999996});
     }
 
     ngAfterViewInit(): void {
