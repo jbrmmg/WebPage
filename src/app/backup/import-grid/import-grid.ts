@@ -1,5 +1,5 @@
 import {NgForOf, NgIf} from "@angular/common";
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit, ViewChild} from "@angular/core";
 import {ImportGridHeaderName} from "./header/import-grid-header-name";
 import {ImportGridHeaderMd5} from "./header/import-grid-header-md5";
 import {ImportGridHeaderSize} from "./header/import-grid-header-size";
@@ -19,7 +19,7 @@ import {IImportGridFileBase, ImportGridFileBase} from "./import-grid-file-base";
 import {ImportGridHeaderTraffic} from "./header/import-grid-header-traffic";
 import {ImportGridDataTraffic} from "./data/import-grid-data-traffic";
 import {ImportGridTrafficLightFilter, TrafficLightType} from "./traffic/import-grid-traffic-light";
-import {ImportGridMap} from "./import-grid-map";
+import {ImportSelected} from "./selected/import-selected";
 
 @Component({
     selector: 'jbr-import-grid',
@@ -42,18 +42,20 @@ import {ImportGridMap} from "./import-grid-map";
         ImportGridDataStatus,
         ImportGridHeaderTraffic,
         ImportGridDataTraffic,
-        ImportGridMap
+        ImportSelected
     ],
     standalone: true
 })
 export class ImportGrid implements OnInit {
+    @ViewChild('selected') selected: ImportSelected;
+
     public status: string;
     public data: ImportGridFileDisplay[];
     public sortColumn: string;
     public sortUp: boolean;
     public fileUpdateSource: EventSource;
+    public selectedFile: ImportGridFileDisplay;
     protected readonly TrafficLightType = TrafficLightType;
-
 
     constructor(private readonly _importGridService: ImportGridService) {
         this.fileUpdateSource = _importGridService.fileUpdateSource();
@@ -65,6 +67,7 @@ export class ImportGrid implements OnInit {
         this.status = "Press refresh to display.";
         this.data = [];
         this.sortColumn = "Name";
+        this.selectedFile = null;
     }
 
     handleBeforeUnload(event: BeforeUnloadEvent) : void {
@@ -135,12 +138,6 @@ export class ImportGrid implements OnInit {
                 val.forEach((e) => {
                     this.data.push(new ImportGridFileDisplay(id++,e));
                     count++;
-
-                    if(e.similarFiles) {
-                        e.similarFiles.forEach((s) => {
-                            this.data.push(new ImportGridFileDisplay(id++,e))
-                        })
-                    }
                 })
                 this.sortData(this.sortColumn,false);
                 this._importGridService.restart().subscribe({
@@ -150,7 +147,8 @@ export class ImportGrid implements OnInit {
                 });
             },
             error: err => {
-                // Error.
+                // Error
+                console.log(err);
             },
             complete: () => {
                 // Completed
@@ -173,6 +171,8 @@ export class ImportGrid implements OnInit {
         });
 
         data.selected = true;
+        this.selectedFile = data;
+        this.selected.selectionChange(data);
     }
 
     nameSorter(name: ImportGridFile): string {

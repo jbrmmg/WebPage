@@ -1,0 +1,18 @@
+<table>
+    <thead>
+        <tr>
+            <th>Filename</th>
+            <th>Date</th>
+            <th>Size</th>
+            <th>MD5</th>
+        </tr>
+    </thead>
+    <tbody *ngIf="similar && similar.length">
+        <tr *ngFor="let file of similar">
+            <td>{{file.filename}}</td>
+            <td>{{file.date.replace("T"," ")}}</td>
+            <td>{{getSizeString(file)}}</td>
+            <td>{{file.md5}}</td>
+        </tr>
+    </tbody>
+</table>

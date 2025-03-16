@@ -1,0 +1,14 @@
+th {
+    font-family: Helvetica, serif;
+    font-size: 10px;
+    font-weight: bold;
+    border: 1px solid dimgrey;
+    background: #ccf5ff;
+    text-align: center;
+}
+
+td {
+    font-family: Helvetica, serif;
+    font-size: 10px;
+    border: 1px solid dimgrey;
+}

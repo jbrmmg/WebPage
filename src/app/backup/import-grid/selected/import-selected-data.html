@@ -1,0 +1,37 @@
+<div>
+    <div class="row">
+        <div class="col-2 title">Filename</div>
+        <div class="col-10 data">{{getText()}}</div>
+    </div>
+    <div class="row">
+        <div class="col-2 title">Latitude</div>
+        <div class="col-10 data">{{getLat()}}</div>
+    </div>
+    <div class="row">
+        <div class="col-2 title">Longitude</div>
+        <div class="col-10 data">{{getLong()}}</div>
+    </div>
+    <div class="row">
+        <div class="col-2 title">Image Width</div>
+        <div class="col-10 data">{{getImageWidth()}}</div>
+    </div>
+    <div class="row">
+        <div class="col-2 title">Image Height</div>
+        <div class="col-10 data">{{getImageHeight()}}</div>
+    </div>
+    <div class="row">
+        <div class="col-2 title">File Date</div>
+        <div class="col-10 data">{{getFileDate()}}</div>
+    </div>
+    <div class="row">
+        <div class="col-2 title">File Size</div>
+        <div class="col-10 data">{{getFileSize()}}</div>
+    </div>
+    <div class="row">
+        <div class="col-2 title">MD5</div>
+        <div class="col-10 data">{{getMD5()}}</div>
+    </div>
+    <div class="row">
+        <import-selected-data-similar [similar]="similar"></import-selected-data-similar>
+    </div>
+</div>

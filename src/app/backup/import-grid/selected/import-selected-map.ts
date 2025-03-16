@@ -1,15 +1,14 @@
 import {AfterViewInit, Component} from '@angular/core';
 import * as L from 'leaflet';
+import {LatLong} from "../import-grid-latlong";
 
 @Component({
-    selector: 'import-grid-map',
-    templateUrl: './import-grid-map.html',
+    selector: 'import-selected-map',
+    templateUrl: './import-selected-map.html',
     standalone: true,
-    styleUrls: ['./import-grid-map.css']
+    styleUrls: ['./import-selected-map.css']
 })
-export class ImportGridMap implements AfterViewInit {
-    constructor() { }
-
+export class ImportSelectedMap implements AfterViewInit {
     private map;
 
     private initMap(): void {
@@ -28,5 +27,13 @@ export class ImportGridMap implements AfterViewInit {
 
     ngAfterViewInit(): void {
         this.initMap();
+    }
+
+    move(location: LatLong) {
+        if(this.map) {
+            console.log("move " + location.lat + " " + location.long);
+            this.map.panTo({lat: location.lat, lng: location.long});
+            this.map.zoom = 16;
+        }
     }
 }

@@ -1,4 +1,6 @@
 import {IImportGridFileBase} from "./import-grid-file-base";
+import {LatLong} from "./import-grid-latlong";
+import {ImageSize} from "./import-grid-imagesize";
 
 export class ImportGridFile implements IImportGridFileBase {
     filename: string;
@@ -12,4 +14,6 @@ export class ImportGridFile implements IImportGridFileBase {
     duplicated: string;
     id: number;
     status: string;
+    location: LatLong;
+    imageSize: ImageSize;
 }

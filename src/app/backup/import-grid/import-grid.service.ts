@@ -15,9 +15,9 @@ export class ImportGridService {
     private static handleError(err: HttpErrorResponse) {
         let errorMessage: string;
         if (err.error instanceof ErrorEvent) {
-            errorMessage = 'An error occurred: ';
+            errorMessage = 'An error occurred (Import Grid Service): ';
         } else {
-            errorMessage = 'Server returned code ' + err.status + ', error message is: ' + err.message;
+            errorMessage = 'Server returned code(Import Grid Service) ' + err.status + ', error message is: ' + err.message;
         }
         console.error(errorMessage);
         return throwError(() => new Error(errorMessage));
@@ -35,8 +35,6 @@ export class ImportGridService {
     }
 
     deletePreImportFile(filename: string): Observable<any> {
-        console.log("Delete file " + filename);
-        console.log("Delete file " + environment.backupDeletePreImportFile);
         return this.http.delete(environment.backupDeletePreImportFile, {body: filename, responseType: 'text'});
     }
 

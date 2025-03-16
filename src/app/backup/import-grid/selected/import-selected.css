@@ -1,0 +1,9 @@
+.selected-col {
+    padding-right: 5px;
+    flex: 0 1 0;
+}
+
+.selected-col-end {
+    padding-right: 5px;
+    flex: 1 0 0;
+}
