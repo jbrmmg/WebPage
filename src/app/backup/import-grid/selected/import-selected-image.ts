@@ -11,7 +11,7 @@ export class ImportSelectedImage {
     imagePath: string;
 
     constructor() {
-        this.imagePath = "backup/fileImage?id=1028811";
+        this.imagePath = "api/backup/NoEntry.jpg";
     }
 
     getImagePath(): string {
@@ -20,10 +20,16 @@ export class ImportSelectedImage {
 
     display(file: ImportGridFileDisplay) {
         console.log("image update");
-        // TODO - update the image path
+
+        if(file.source && file.source.imageSize) {
+            this.imagePath = "backup/import-image?name=" + file.source.filename;
+            return;
+        }
+
+        this.clear()
     }
 
     clear() {
-        // TODO - update the image path
+        this.imagePath = "api/backup/NoEntry.jpg";
     }
 }

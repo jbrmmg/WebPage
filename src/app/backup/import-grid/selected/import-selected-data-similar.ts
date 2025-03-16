@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {IImportGridFileBase} from "../import-grid-file-base";
 import {NgForOf, NgIf} from "@angular/common";
-import {ImportGridFileDisplay} from "../import-grid-file-display";
 
 @Component({
     selector: 'import-selected-data-similar',

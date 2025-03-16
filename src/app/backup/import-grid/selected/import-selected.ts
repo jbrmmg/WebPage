@@ -1,9 +1,10 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
 import {ImportSelectedMap} from "./import-selected-map";
 import {ImportGridFileDisplay} from "../import-grid-file-display";
 import {LatLong} from "../import-grid-latlong";
 import {ImportSelectedImage} from "./import-selected-image";
 import {ImportSelectedData} from "./import-selected-data";
+import {ImportSelectedAction} from "./import-selected-action";
 
 @Component({
     selector: 'import-selected',
@@ -21,6 +22,8 @@ export class ImportSelected {
     @ViewChild('image') image: ImportSelectedImage;
     @ViewChild('data') data: ImportSelectedData;
 
+    @Output() actionEvent : EventEmitter<ImportSelectedAction> = new EventEmitter();
+
     selectionChangeMap(file: ImportGridFileDisplay) {
         if(file && file.source && file.source.location) {
             this.map.move(file.source.location);
@@ -36,7 +39,7 @@ export class ImportSelected {
     }
 
     selectionChangeImage(file: ImportGridFileDisplay) {
-        if(file && file.source && file.source.location) {
+        if(file && file.source) {
             this.image.display(file);
             return;
         }
@@ -46,7 +49,7 @@ export class ImportSelected {
     }
 
     selectionChangeData(file: ImportGridFileDisplay) {
-        if(file && file.source && file.source) {
+        if(file && file.source) {
             this.data.display(file);
             return;
         }
@@ -59,5 +62,17 @@ export class ImportSelected {
         this.selectionChangeMap(file);
         this.selectionChangeImage(file);
         this.selectionChangeData(file);
+    }
+
+    previous(file: string) {
+        this.actionEvent.emit(new ImportSelectedAction(file,"previous"));
+    }
+
+    next(file: string) {
+        this.actionEvent.emit(new ImportSelectedAction(file,"next"));
+    }
+
+    delete(file: string) {
+        this.actionEvent.emit(new ImportSelectedAction(file,"delete"));
     }
 }

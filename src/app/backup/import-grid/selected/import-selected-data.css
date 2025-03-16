@@ -8,3 +8,8 @@
     font-family: Helvetica, serif;
     font-size: 10px;
 }
+
+.action-btn {
+    padding: 0 0 2px 5px;
+    flex: 0 1 0;
+}

@@ -32,6 +32,29 @@
         <div class="col-10 data">{{getMD5()}}</div>
     </div>
     <div class="row">
+        <div class="col action-btn">
+            <label class="btn btn-primary"
+                   aria-controls="list"
+                   (click)="previous()">
+                <em class="fa fa-arrow-left"></em>
+            </label>
+        </div>
+        <div class="col action-btn">
+            <label class="btn btn-primary"
+                   aria-controls="list"
+                   (click)="next()">
+                <em class="fa fa-arrow-right"></em>
+            </label>
+        </div>
+        <div class="col action-btn">
+            <label class="btn btn-danger"
+                   aria-controls="list"
+                   (click)="delete()">
+                <em class="fa fa-trash"></em>
+            </label>
+        </div>
+    </div>
+    <div class="row">
         <import-selected-data-similar [date]="date" [size]="size" [md5]="md5" [similar]="similar"></import-selected-data-similar>
     </div>
 </div>

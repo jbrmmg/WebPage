@@ -20,6 +20,7 @@ import {ImportGridHeaderTraffic} from "./header/import-grid-header-traffic";
 import {ImportGridDataTraffic} from "./data/import-grid-data-traffic";
 import {ImportGridTrafficLightFilter, TrafficLightType} from "./traffic/import-grid-traffic-light";
 import {ImportSelected} from "./selected/import-selected";
+import {ImportSelectedAction} from "./selected/import-selected-action";
 
 @Component({
     selector: 'jbr-import-grid',
@@ -152,6 +153,9 @@ export class ImportGrid implements OnInit {
             },
             complete: () => {
                 // Completed
+                if(this.data && this.data.length > 0) {
+                    this.selectRequest(this.data[0]);
+                }
                 this.status = count + " files loaded";
             }
         });
@@ -396,6 +400,18 @@ export class ImportGrid implements OnInit {
     }
 
     deleteFile(filename: string) {
+        // Find the name of the next file (this will be selected next)
+        let nextFile: string;
+        let next: boolean = false;
+        this.data.forEach(f => {
+           if(f.source.filename == filename) {
+               next = true;
+           } else if (next) {
+               nextFile = f.source.filename;
+               next = false;
+           }
+        });
+
         // Delete the file named.
         this.data = []
         this._importGridService.deletePreImportFile(filename).subscribe({
@@ -408,9 +424,70 @@ export class ImportGrid implements OnInit {
                 },
                 complete: () => {
                     this.refresh();
+
+                    // Select the file.
+                    this.data.forEach(f => {
+                       if(f.source.filename == nextFile) {
+                           this.selectRequest(f);
+                       }
+                    });
+
                     console.log('Delete complete');
                 }
             }
         );
+    }
+
+    previousAction(file: string) {
+        // Select the file before
+        let previous: ImportGridFileDisplay = null;
+        this.data.forEach(f => {
+            if(f.source.filename == file){
+                if(previous) {
+                    return this.selectRequest(previous);
+                } else {
+                    // No previous, return the last entry.
+                    this.selectRequest(this.data[this.data.length-1]);
+                }
+            }
+
+            previous = f;
+        });
+    }
+
+    nextAction(file: string) {
+        // Select the file after
+        let next: boolean = false;
+        let selected: boolean = false;
+        this.data.forEach(f => {
+           if(next) {
+               next = false;
+               selected = true;
+               return this.selectRequest(f);
+           }
+
+           if(f.source.filename == file) {
+               next = true;
+           }
+        });
+
+        // If nothing selected, select the first item.
+        if(!selected) {
+            if(this.data && this.data.length > 0) {
+                this.selectRequest(this.data[0]);
+            }
+        }
+    }
+
+    action(action: ImportSelectedAction) {
+        // Process the action.
+        switch(action.action) {
+            case "previous":
+                return this.previousAction(action.filename);
+            case "next":
+                return this.nextAction(action.filename);
+            case "delete":
+                return this.deleteFile(action.filename);
+        }
     }
 }

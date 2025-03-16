@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {ImportGridFileDisplay} from "../import-grid-file-display";
 import {LatLong} from "../import-grid-latlong";
 import {ImageSize} from "../import-grid-imagesize";
@@ -15,6 +15,10 @@ import {ImportSelectedDataSimilar} from "./import-selected-data-similar";
     styleUrls: ['./import-selected-data.css']
 })
 export class ImportSelectedData {
+    @Output() previousEvent: EventEmitter<String> = new EventEmitter();
+    @Output() nextEvent: EventEmitter<String> = new EventEmitter();
+    @Output() deleteEvent: EventEmitter<String> = new EventEmitter();
+
     filename: string;
     location: LatLong;
     imageSize: ImageSize;
@@ -90,8 +94,14 @@ export class ImportSelectedData {
             this.imageSize = file.source.imageSize;
             this.location = file.source.location;
             this.similar = file.source.similarFiles;
-            this.date = file.source.date.replace("T"," ");
-            this.size = file.source.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            this.date = "";
+            if(file.source.date) {
+                this.date = file.source.date.replace("T", " ");
+            }
+            this.size = "";
+            if(file.source.size) {
+                this.size = file.source.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
             this.md5 = file.source.md5;
             return;
         }
@@ -107,5 +117,17 @@ export class ImportSelectedData {
         this.date = "";
         this.size = "";
         this.md5 = "";
+    }
+
+    previous() {
+        this.previousEvent.emit(this.filename);
+    }
+
+    next() {
+        this.nextEvent.emit(this.filename);
+    }
+
+    delete() {
+        this.deleteEvent.emit(this.filename);
     }
 }
