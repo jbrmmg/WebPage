@@ -30,10 +30,6 @@ export class ImportGridDataStatus extends ImportGridData {
         return "";
     }
 
-    displayStatus() {
-        return this.file && this.file.similar == null
-    }
-
     deleteFile() {
         if(this.file && this.file.source && this.file.source.filename) {
             this.delete.emit(this.file.source.filename)

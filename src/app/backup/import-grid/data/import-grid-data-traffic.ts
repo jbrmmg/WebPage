@@ -20,10 +20,6 @@ export class ImportGridDataTraffic extends ImportGridData {
     }
 
     displayStatus(): boolean {
-        if(this.file && this.file.similar) {
-            return false;
-        }
-
         if(this.file) {
             return this.file.visible;
         }

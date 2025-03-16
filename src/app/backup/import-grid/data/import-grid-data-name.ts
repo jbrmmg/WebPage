@@ -12,24 +12,11 @@ import {ImportGridData} from "./import-grid-data";
     standalone: true
 })
 export class ImportGridDataName extends ImportGridData {
-
     getText(): string {
-        if(this.file && this.file.similar) {
-            return this.file.similar.filename;
-        }
-
         if(this.file && this.file.source) {
             return this.file.source.filename;
         }
 
         return "";
-    }
-
-    getClassName() {
-        if(this.file && this.file.similar == null) {
-            return "name";
-        }
-
-        return "similar-name";
     }
 }

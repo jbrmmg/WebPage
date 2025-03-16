@@ -4,27 +4,27 @@ import {ImportGridData} from "./import-grid-data";
 import {ImportGridFileDisplay} from "../import-grid-file-display";
 
 @Component({
-    selector: 'jbr-import-grid-data-expand',
-    templateUrl: './import-grid-data-expand.html',
-    styleUrls: ['./import-grid-data-expand.css'],
+    selector: 'jbr-import-grid-data-select',
+    templateUrl: './import-grid-data-select.html',
+    styleUrls: ['./import-grid-data-select.css'],
     imports: [
         NgIf
     ],
     standalone: true
 })
-export class ImportGridDataExpand extends ImportGridData {
-    @Output() fireExpand: EventEmitter<ImportGridFileDisplay> = new EventEmitter();
+export class ImportGridDataSelect extends ImportGridData {
+    @Output() select: EventEmitter<ImportGridFileDisplay> = new EventEmitter();
 
-    expand() {
-        this.fireExpand.emit(this.file)
+    selectFile() {
+        this.select.emit(this.file)
     }
 
     getText(): string {
         return "";
     }
 
-    expandStatus(): string {
-        if(this.file && this.file.expanded) {
+    selectStatus(): string {
+        if(this.file && this.file.selected) {
             return "selected"
         }
 

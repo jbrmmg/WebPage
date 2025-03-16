@@ -11,7 +11,7 @@ import {ImportGridDataDate} from "./data/import-grid-data-date";
 import {ImportGridService} from "./import-grid.service";
 import {ImportGridFile} from "./import-grid-file";
 import {ImportGridHeaderExpand} from "./header/import-grid-header-expand";
-import {ImportGridDataExpand} from "./data/import-grid-data-expand";
+import {ImportGridDataSelect} from "./data/import-grid-data-select";
 import {ImportGridFileDisplay} from "./import-grid-file-display";
 import {ImportGridHeaderStatus} from "./header/import-grid-header-status";
 import {ImportGridDataStatus} from "./data/import-grid-data-status";
@@ -37,7 +37,7 @@ import {ImportGridMap} from "./import-grid-map";
         ImportGridDataSize,
         ImportGridDataDate,
         ImportGridHeaderExpand,
-        ImportGridDataExpand,
+        ImportGridDataSelect,
         ImportGridHeaderStatus,
         ImportGridDataStatus,
         ImportGridHeaderTraffic,
@@ -119,25 +119,6 @@ export class ImportGrid implements OnInit {
                 }
 
                 this.updateFileData(d.source,f);
-
-                // Check similar files.
-                if(d.similar && f.similarFiles) {
-                    f.similarFiles.forEach(sf => {
-                        if(d.similar.filename == sf.filename) {
-                            this.updateFileDataBase(d.similar,sf);
-                        }
-                    })
-                }
-
-                // Add similar files if they are new.
-                if(f.similarFiles && f.similarFiles.length > 0 && !d.selectable && !d.similar) {
-                    d.source.similarFiles = Object.assign([],f.similarFiles);
-                    d.selectable = true;
-
-                    d.source.similarFiles.forEach(ns => {
-                        this.data.splice(index,0,new ImportGridFileDisplay(0,d.source,ns))
-                    })
-                }
             });
         });
     }
@@ -152,12 +133,12 @@ export class ImportGrid implements OnInit {
         this._importGridService.getFiles().subscribe({
             next: val => {
                 val.forEach((e) => {
-                    this.data.push(new ImportGridFileDisplay(id++,e,null));
+                    this.data.push(new ImportGridFileDisplay(id++,e));
                     count++;
 
                     if(e.similarFiles) {
                         e.similarFiles.forEach((s) => {
-                            this.data.push(new ImportGridFileDisplay(id++,e,s))
+                            this.data.push(new ImportGridFileDisplay(id++,e))
                         })
                     }
                 })
@@ -178,34 +159,20 @@ export class ImportGrid implements OnInit {
         });
     }
 
-    expandRequest(data: ImportGridFileDisplay){
-        // Make all the similar files invisible.
-        this.data.forEach((f) => {
-            if(f.similar) {
-                f.visible = false;
-            }
-        })
-
-        // Is the current data expanded?
-        if(data.expanded) {
-            data.expanded = false;
+    selectRequest(data: ImportGridFileDisplay){
+        // If this is already selected, then nothing to do.
+        if(data.selected) {
             return;
-        } else {
-            // If not, the collapse all the others.
-            this.data.forEach((f) => {
-                if(f.similar == null) {
-                    f.expanded = false;
-                }
-            })
         }
 
-        // Set the similar files to this to be visible.
-        data.expanded = true;
-        this.data.forEach((f) => {
-            if(f.source.filename == data.source.filename && f.similar) {
-                f.visible = true;
+        // Make the current selected un selected.
+        this.data.forEach(f => {
+            if(f.selected) {
+                f.selected = false;
             }
-        })
+        });
+
+        data.selected = true;
     }
 
     nameSorter(name: ImportGridFile): string {
@@ -411,13 +378,6 @@ export class ImportGrid implements OnInit {
     filterStatus(filter: ImportGridTrafficLightFilter) {
         // Hide those rows that do not match the filter.
         this.data.forEach(d => {
-            if(d.similar) {
-                d.visible = false;
-                return;
-            }
-
-            d.expanded = false;
-
             switch(filter.type) {
                 case TrafficLightType.ImmediateImportStatus:
                     d.visible = this.getVisible(d.source.immediateImported,filter);

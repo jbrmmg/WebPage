@@ -1,15 +1,13 @@
-<ng-container *ngIf="displayStatus()">
-    <div class="row light-row">
-        <div class="col status">
-            <div>{{statusText()}}</div>
-        </div>
-        <div class="col delete">
-            <label class="btn-sm btn-danger delete"
-                   tabindex="1"
-                   aria-controls="list"
-                   (click)="deleteFile()">
-                <em class="fa fa-trash"></em>
-            </label>
-        </div>
+<div class="row light-row">
+    <div class="col status">
+        <div>{{statusText()}}</div>
     </div>
-</ng-container>
+    <div class="col delete">
+        <label class="btn-sm btn-danger delete"
+               tabindex="1"
+               aria-controls="list"
+               (click)="deleteFile()">
+            <em class="fa fa-trash"></em>
+        </label>
+    </div>
+</div>
