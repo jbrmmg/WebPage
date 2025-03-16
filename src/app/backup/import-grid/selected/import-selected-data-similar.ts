@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {IImportGridFileBase} from "../import-grid-file-base";
 import {NgForOf, NgIf} from "@angular/common";
+import {ImportGridFileDisplay} from "../import-grid-file-display";
 
 @Component({
     selector: 'import-selected-data-similar',
@@ -14,10 +15,23 @@ import {NgForOf, NgIf} from "@angular/common";
 })
 export class ImportSelectedDataSimilar {
     @Input() similar: IImportGridFileBase[];
+    @Input() date: string;
+    @Input() size: string;
+    @Input() md5: string;
 
     getSizeString(file: IImportGridFileBase) {
-        let sizeString = "" + file.size;
+        return file.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 
-        return sizeString.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    getDateClass(file: IImportGridFileBase): string {
+        return file.date.replace("T","") == this.date ? "" : "mismatch";
+    }
+
+    getSizeClass(file: IImportGridFileBase): string {
+        return file.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") == this.size ? "" : "mismatch";
+    }
+
+    getMd5Class(file: IImportGridFileBase): string {
+        return file.md5 == this.md5 ? "" : "mismatch";
     }
 }
