@@ -31,6 +31,9 @@ export class ImportSelectedMap implements AfterViewInit {
 
     move(location: LatLong) {
         if(this.map) {
+            this.map.invalidateSize();
+            this.map._resetView(this.map.getCenter(), this.map.getZoom(), true);
+
             console.log("move " + location.lat + " " + location.long);
             this.map.panTo({lat: location.lat, lng: location.long});
             this.map.zoom = 16;

@@ -8,22 +8,6 @@
     margin-bottom: 4px;
 }
 
-.no-pad {
-    padding: 0;
-}
-
-.refresh {
-    padding-right: 5px;
-    flex: 0 1 0;
-}
-
-.status {
-    padding-top: 5px;
-    flex: 1 0 0;
-    font-family: Helvetica, serif;
-    font-size: 10px;
-}
-
 th {
     font-family: Helvetica, serif;
     font-size: 10px;

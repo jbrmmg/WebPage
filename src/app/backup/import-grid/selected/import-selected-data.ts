@@ -27,6 +27,9 @@ export class ImportSelectedData {
     md5: string;
     similar: IImportGridFileBase[];
 
+    constructor() {
+    }
+
     getText(): string {
         if(this.filename) {
             return this.filename;

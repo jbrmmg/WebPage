@@ -9,6 +9,11 @@
     font-size: 10px;
 }
 
+.action-btn-first {
+    padding: 0 0 2px 12px;
+    flex: 0 1 0;
+}
+
 .action-btn {
     padding: 0 0 2px 5px;
     flex: 0 1 0;

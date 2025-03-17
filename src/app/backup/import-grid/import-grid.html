@@ -1,16 +1,6 @@
-<import-selected #selected (actionEvent)="action($event)"></import-selected>
+<import-selected #selected (actionEvent)="action($event,confirmTemplate)"></import-selected>
+<jbr-import-grid-status [status]="status" (refreshEvent)="refresh()" [limit]="limit" (limitChangeEvent)="changeLimit($event)"></jbr-import-grid-status>
 <div class="row file-table">
-    <div class="row file-table header-row">
-        <div class="no-pad col refresh">
-            <label class="btn btn-primary btn-mode"
-                   tabindex="1"
-                   aria-controls="list"
-                   (click)="refresh()">
-                <em class="fa fa-refresh"></em>
-            </label>
-        </div>
-        <div class="no-pad col status">{{status}}</div>
-    </div>
     <table>
         <thead>
             <tr>
@@ -40,9 +30,6 @@
                 </th>
                 <th>
                     <jbr-import-grid-header-traffic (fireSource)="sortData($event,true)" (filterChange)="filterStatus($event)" [type]="TrafficLightType.DuplicateStatus"></jbr-import-grid-header-traffic>
-                </th>
-                <th>
-                    <jbr-import-grid-header-status (fireSource)="sortData($event,true)"></jbr-import-grid-header-status>
                 </th>
             </tr>
         </thead>
@@ -76,11 +63,16 @@
                     <td>
                         <jbr-import-grid-data-traffic [file]=file [type]="TrafficLightType.DuplicateStatus"></jbr-import-grid-data-traffic>
                     </td>
-                    <td>
-                        <jbr-import-grid-data-status [file]=file (delete)="deleteFile($event)"></jbr-import-grid-data-status>
-                    </td>
                 </ng-container>
             </tr>
         </tbody>
     </table>
 </div>
+
+<ng-template #confirmTemplate>
+    <div class="modal-body text-center">
+        <p>Are you sure you want to delete?</p>
+        <button type="button" class="btn btn-default" (click)="deleteConfirmed()" >Yes</button>
+        <button type="button" class="btn btn-primary" (click)="deleteRejected()" >No</button>
+    </div>
+</ng-template>

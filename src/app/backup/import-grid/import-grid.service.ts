@@ -23,15 +23,11 @@ export class ImportGridService {
         return throwError(() => new Error(errorMessage));
     }
 
-    getFiles(): Observable<ImportGridFile[]> {
-        return this.http.get<ImportGridFile[]>(environment.backupGetPreImportFiles).pipe(
+    getFiles(limit: number): Observable<ImportGridFile[]> {
+        return this.http.get<ImportGridFile[]>(environment.backupGetPreImportFiles + "?limit=" + limit).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError(err => ImportGridService.handleError(err))
         );
-    }
-
-    restart(): Observable<void> {
-        return this.http.post<void>("backup/importgather","");
     }
 
     deletePreImportFile(filename: string): Observable<any> {

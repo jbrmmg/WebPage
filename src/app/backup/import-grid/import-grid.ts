@@ -1,5 +1,5 @@
 import {NgForOf, NgIf} from "@angular/common";
-import {Component, OnInit, ViewChild} from "@angular/core";
+import {Component, OnInit, TemplateRef, ViewChild} from "@angular/core";
 import {ImportGridHeaderName} from "./header/import-grid-header-name";
 import {ImportGridHeaderMd5} from "./header/import-grid-header-md5";
 import {ImportGridHeaderSize} from "./header/import-grid-header-size";
@@ -13,14 +13,14 @@ import {ImportGridFile} from "./import-grid-file";
 import {ImportGridHeaderExpand} from "./header/import-grid-header-expand";
 import {ImportGridDataSelect} from "./data/import-grid-data-select";
 import {ImportGridFileDisplay} from "./import-grid-file-display";
-import {ImportGridHeaderStatus} from "./header/import-grid-header-status";
-import {ImportGridDataStatus} from "./data/import-grid-data-status";
 import {IImportGridFileBase, ImportGridFileBase} from "./import-grid-file-base";
 import {ImportGridHeaderTraffic} from "./header/import-grid-header-traffic";
 import {ImportGridDataTraffic} from "./data/import-grid-data-traffic";
 import {ImportGridTrafficLightFilter, TrafficLightType} from "./traffic/import-grid-traffic-light";
 import {ImportSelected} from "./selected/import-selected";
 import {ImportSelectedAction} from "./selected/import-selected-action";
+import {ImportGridStatus} from "./status/import-grid-status";
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 
 @Component({
     selector: 'jbr-import-grid',
@@ -39,11 +39,10 @@ import {ImportSelectedAction} from "./selected/import-selected-action";
         ImportGridDataDate,
         ImportGridHeaderExpand,
         ImportGridDataSelect,
-        ImportGridHeaderStatus,
-        ImportGridDataStatus,
         ImportGridHeaderTraffic,
         ImportGridDataTraffic,
-        ImportSelected
+        ImportSelected,
+        ImportGridStatus
     ],
     standalone: true
 })
@@ -57,9 +56,13 @@ export class ImportGrid implements OnInit {
     public fileUpdateSource: EventSource;
     public selectedFile: ImportGridFileDisplay;
     public afterRefresh: string;
+    public limit: number;
+    public fileForDelete: string;
     protected readonly TrafficLightType = TrafficLightType;
+    modalRef: BsModalRef;
 
-    constructor(private readonly _importGridService: ImportGridService) {
+    constructor(private readonly _importGridService: ImportGridService,
+                private modalService: BsModalService) {
         this.fileUpdateSource = _importGridService.fileUpdateSource();
         this.fileUpdateSource.addEventListener('message', this.fileUpdate.bind(this))
         window.addEventListener('beforeunload', this.handleBeforeUnload.bind(this));
@@ -70,12 +73,17 @@ export class ImportGrid implements OnInit {
         this.data = [];
         this.sortColumn = "Name";
         this.selectedFile = null;
+        this.limit = 20;
     }
 
     handleBeforeUnload(event: BeforeUnloadEvent) : void {
         this.fileUpdateSource.removeEventListener('message', this.fileUpdate.bind(this));
         this.fileUpdateSource.close();
         console.log("Cleanup before unload." + event);
+    }
+
+    changeLimit(limitChange: number) {
+        this.limit += limitChange;
     }
 
     updateFileDataBase(data: IImportGridFileBase, update: ImportGridFileBase) {
@@ -87,6 +95,11 @@ export class ImportGrid implements OnInit {
         }
         if(data.date != update.date) {
             data.date = update.date;
+        }
+
+        // Is this the selected file?
+        if(this.selectedFile && this.selectedFile.source && this.selectedFile.source.filename == data.filename) {
+            this.selectRequestByName(data.filename);
         }
     }
 
@@ -128,6 +141,16 @@ export class ImportGrid implements OnInit {
         });
     }
 
+    selectRequestByName(filename: string) {
+        this.data.forEach(f => {
+           if(f.source.filename == filename) {
+               // Force the update
+               f.selected = false;
+               this.selectRequest(f);
+           }
+        });
+    }
+
     refresh() {
         this.status = "loading";
         this.data = [];
@@ -135,19 +158,13 @@ export class ImportGrid implements OnInit {
         let count: number = 0;
 
         // Get the data.
-        this._importGridService.getFiles().subscribe({
+        this._importGridService.getFiles(this.limit).subscribe({
             next: val => {
                 val.forEach((e) => {
                     this.data.push(new ImportGridFileDisplay(id++,e));
                     count++;
                 })
                 this.sortData(this.sortColumn,false);
-                this.selectRequestByName(this.afterRefresh);
-                this._importGridService.restart().subscribe({
-                    complete: () => {
-                        console.log("Restarted.")
-                    }
-                });
             },
             error: err => {
                 // Error
@@ -155,19 +172,19 @@ export class ImportGrid implements OnInit {
             },
             complete: () => {
                 // Completed
-                if(this.data && this.data.length > 0) {
-                    this.selectRequest(this.data[0]);
+                if (this.afterRefresh && this.afterRefresh.length > 0) {
+                    // If specified, then select this file.
+                    this.selectRequestByName(this.afterRefresh);
+                    this.afterRefresh = "";
+                } else {
+                    // Just select the first.
+                    if (this.data && this.data.length > 0) {
+                        this.selectRequest(this.data[0]);
+                    }
                 }
+
                 this.status = count + " files loaded";
             }
-        });
-    }
-
-    selectRequestByName(filename: string) {
-        this.data.forEach(f => {
-           if(f.source.filename == filename) {
-               this.selectRequest(f);
-           }
         });
     }
 
@@ -409,21 +426,28 @@ export class ImportGrid implements OnInit {
         });
     }
 
-    deleteFile(filename: string) {
+    deleteConfirmed() {
+        if(this.modalRef) {
+            this.modalRef.hide();
+        }
+
+        if(!this.fileForDelete)
+            return;
+
         // Find the name of the next file (this will be selected next)
         let next: boolean = false;
         this.data.forEach(f => {
-           if(f.source.filename == filename) {
-               next = true;
-           } else if (next) {
-               this.afterRefresh = f.source.filename;
-               next = false;
-           }
+            if(f.source.filename == this.fileForDelete) {
+                next = true;
+            } else if (next) {
+                this.afterRefresh = f.source.filename;
+                next = false;
+            }
         });
 
         // Delete the file named.
         this.data = []
-        this._importGridService.deletePreImportFile(filename).subscribe({
+        this._importGridService.deletePreImportFile(this.fileForDelete).subscribe({
                 next: (result) => {
                     console.log(result);
                 },
@@ -437,6 +461,46 @@ export class ImportGrid implements OnInit {
                 }
             }
         );
+    }
+
+    deleteRejected() {
+        if(this.modalRef) {
+            this.modalRef.hide();
+        }
+    }
+
+    deleteFile(filename: string, template: TemplateRef<any>) {
+        // Get confirm before continuing.
+        this.fileForDelete = filename;
+        let confirmRequired: boolean = true;
+
+        this.data.forEach(f => {
+            if(f.source && f.source.filename == filename) {
+                if(f.source.ignored == "TL_RED") {
+                    confirmRequired = false;
+                } else {
+                    if(f.source && f.source.similarFiles && f.source.similarFiles.length > 0) {
+                        f.source.similarFiles.forEach(sf => {
+                            if(sf.md5 == f.source.md5 &&
+                                sf.size == f.source.size &&
+                                sf.filename.toLowerCase().includes(f.source.filename.toLowerCase())) {
+                                if (!sf.filename.toLowerCase().includes("[impo]") &&
+                                    !sf.filename.toLowerCase().includes("[igno]")) {
+                                    confirmRequired = false;
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        })
+
+        // If the file is definitely ignored or already imported then it's ok to delete.
+        if(confirmRequired) {
+            this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+        } else {
+            this.deleteConfirmed()
+        }
     }
 
     previousAction(file: string) {
@@ -480,7 +544,7 @@ export class ImportGrid implements OnInit {
         }
     }
 
-    action(action: ImportSelectedAction) {
+    action(action: ImportSelectedAction, template: TemplateRef<any>) {
         // Process the action.
         switch(action.action) {
             case "previous":
@@ -488,7 +552,7 @@ export class ImportGrid implements OnInit {
             case "next":
                 return this.nextAction(action.filename);
             case "delete":
-                return this.deleteFile(action.filename);
+                return this.deleteFile(action.filename, template);
         }
     }
 }

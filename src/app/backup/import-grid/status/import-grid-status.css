@@ -1,0 +1,47 @@
+.status-table {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    margin-bottom: 4px;
+}
+
+.limit-left {
+    padding: 0 1px 0 0;
+    flex: 0 1 0;
+}
+
+.limit-value {
+    padding: 0 1px 0 0;
+    flex: 0 1 0;
+}
+
+.limit-right {
+    padding: 0 5px 0 0;
+    flex: 0 1 0;
+}
+
+.refresh {
+    padding: 0 5px 0 15px;
+    flex: 0 1 0;
+}
+
+.status {
+    padding: 10px 0 0 3px;
+    flex: 1 0 0;
+    font-family: Helvetica, serif;
+    font-size: 10px;
+}
+
+.btn-arrow {
+    width: 20px;
+    padding: 6px 0 6px 0;
+}
+
+.btn-limit {
+    width: 40px;
+    padding: 6px 0 6px 0;
+}
+
+.btn-icon {
+    box-sizing: content-box;
+}
