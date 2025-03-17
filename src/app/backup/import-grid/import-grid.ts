@@ -56,6 +56,7 @@ export class ImportGrid implements OnInit {
     public sortUp: boolean;
     public fileUpdateSource: EventSource;
     public selectedFile: ImportGridFileDisplay;
+    public afterRefresh: string;
     protected readonly TrafficLightType = TrafficLightType;
 
     constructor(private readonly _importGridService: ImportGridService) {
@@ -141,6 +142,7 @@ export class ImportGrid implements OnInit {
                     count++;
                 })
                 this.sortData(this.sortColumn,false);
+                this.selectRequestByName(this.afterRefresh);
                 this._importGridService.restart().subscribe({
                     complete: () => {
                         console.log("Restarted.")
@@ -158,6 +160,14 @@ export class ImportGrid implements OnInit {
                 }
                 this.status = count + " files loaded";
             }
+        });
+    }
+
+    selectRequestByName(filename: string) {
+        this.data.forEach(f => {
+           if(f.source.filename == filename) {
+               this.selectRequest(f);
+           }
         });
     }
 
@@ -401,13 +411,12 @@ export class ImportGrid implements OnInit {
 
     deleteFile(filename: string) {
         // Find the name of the next file (this will be selected next)
-        let nextFile: string;
         let next: boolean = false;
         this.data.forEach(f => {
            if(f.source.filename == filename) {
                next = true;
            } else if (next) {
-               nextFile = f.source.filename;
+               this.afterRefresh = f.source.filename;
                next = false;
            }
         });
@@ -424,14 +433,6 @@ export class ImportGrid implements OnInit {
                 },
                 complete: () => {
                     this.refresh();
-
-                    // Select the file.
-                    this.data.forEach(f => {
-                       if(f.source.filename == nextFile) {
-                           this.selectRequest(f);
-                       }
-                    });
-
                     console.log('Delete complete');
                 }
             }
