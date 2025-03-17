@@ -133,4 +133,16 @@ export class ImportSelectedData {
     delete() {
         this.deleteEvent.emit(this.filename);
     }
+
+    ignore() {
+
+    }
+
+    recipe() {
+
+    }
+
+    import() {
+
+    }
 }

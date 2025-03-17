@@ -18,12 +18,12 @@ export class ImportGridStatus {
         this.refreshEvent.emit();
     }
 
-    increase() {
-        this.limitChangeEvent.emit(1);
+    increase(amount: number) {
+        this.limitChangeEvent.emit(amount);
     }
 
-    decrease() {
-        this.limitChangeEvent.emit(-1);
+    decrease(amount: number) {
+        this.limitChangeEvent.emit(-1 * amount);
     }
 
     getLimit() {

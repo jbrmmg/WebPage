@@ -23,7 +23,7 @@ export class ImportSelectedDataSimilar {
     }
 
     getDateClass(file: IImportGridFileBase): string {
-        return file.date.replace("T","") == this.date ? "" : "mismatch";
+        return file.date.replace("T"," ") == this.date.replace("T"," ") ? "" : "mismatch";
     }
 
     getSizeClass(file: IImportGridFileBase): string {

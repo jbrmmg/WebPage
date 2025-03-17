@@ -18,3 +18,15 @@
     padding: 0 0 2px 5px;
     flex: 0 1 0;
 }
+
+.directory-frame {
+    border-radius: 5px;
+    border: solid 1px #198754;
+    margin: 0 25px 2px 5px;
+    padding: 0;
+}
+
+.directory {
+    color: #198754;
+    margin: 3px 2px 3px 5px;
+}

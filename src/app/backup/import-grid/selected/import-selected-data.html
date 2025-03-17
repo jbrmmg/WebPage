@@ -41,17 +41,41 @@
         </div>
         <div class="col action-btn">
             <label class="btn btn-primary"
-                   aria-controls="list"
+                   title="Move to the next photo"
                    (click)="next()">
                 <em class="fa fa-arrow-right"></em>
             </label>
         </div>
         <div class="col action-btn">
             <label class="btn btn-danger"
-                   aria-controls="list"
+                   title="Move to the previous photo"
                    (click)="delete()">
                 <em class="fa fa-trash"></em>
             </label>
+        </div>
+        <div class="col action-btn">
+            <label class="btn btn-outline-danger"
+                   title="Mark this photo to be ignored."
+                   (click)="ignore()">
+                <em class="fa fa-minus-circle"></em>
+            </label>
+        </div>
+        <div class="col action-btn">
+            <label class="btn btn-outline-success"
+                   title="Import this photo as a recipe"
+                   (click)="recipe()">
+                <em class="fa fa-cutlery"></em>
+            </label>
+        </div>
+        <div class="col action-btn">
+            <label class="btn btn-outline-success"
+                   title="Import this file into the photo directory, you must provide name of sub-directory."
+                   (click)="import()">
+                <em class="fa fa-arrow-right"></em>
+            </label>
+        </div>
+        <div class="col directory-frame">
+            <input class="directory" type="text">
         </div>
     </div>
     <div class="row">

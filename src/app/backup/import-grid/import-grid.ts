@@ -21,6 +21,8 @@ import {ImportSelected} from "./selected/import-selected";
 import {ImportSelectedAction} from "./selected/import-selected-action";
 import {ImportGridStatus} from "./status/import-grid-status";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
+import {ImportGridHeaderDestination} from "./header/import-grid-header-destination";
+import {ImportGridDataDestination} from "./data/import-grid-data-destination";
 
 @Component({
     selector: 'jbr-import-grid',
@@ -42,7 +44,9 @@ import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
         ImportGridHeaderTraffic,
         ImportGridDataTraffic,
         ImportSelected,
-        ImportGridStatus
+        ImportGridStatus,
+        ImportGridHeaderDestination,
+        ImportGridDataDestination
     ],
     standalone: true
 })
@@ -503,6 +507,21 @@ export class ImportGrid implements OnInit {
         }
     }
 
+    reimportFile(file: string) {
+        this._importGridService.reimportFile(file).subscribe({
+            next: (result) => {
+                console.log(result);
+            },
+            error: err => {
+                // Error.
+                console.log('There is an error?' + err.message)
+            },
+            complete: () => {
+                console.log('Reimport complete');
+            }
+        });
+    }
+
     previousAction(file: string) {
         // Select the file before
         let previous: ImportGridFileDisplay = null;
@@ -553,6 +572,8 @@ export class ImportGrid implements OnInit {
                 return this.nextAction(action.filename);
             case "delete":
                 return this.deleteFile(action.filename, template);
+            case "reimport":
+                return this.reimportFile(action.filename);
         }
     }
 }

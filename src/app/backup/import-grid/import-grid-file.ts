@@ -16,4 +16,6 @@ export class ImportGridFile implements IImportGridFileBase {
     status: string;
     location: LatLong;
     imageSize: ImageSize;
+    image: boolean;
+    video: boolean;
 }

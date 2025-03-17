@@ -34,6 +34,10 @@ export class ImportGridService {
         return this.http.delete(environment.backupDeletePreImportFile, {body: filename, responseType: 'text'});
     }
 
+    reimportFile(filename: string): Observable<any> {
+        return this.http.post(environment.backupReimportFile, filename, {responseType: 'text'})
+    }
+
     fileUpdateSource() : EventSource {
         return new EventSource(environment.backupFileUpdates);
     }

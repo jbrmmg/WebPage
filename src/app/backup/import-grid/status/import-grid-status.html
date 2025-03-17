@@ -1,15 +1,25 @@
 <div class="row status-table">
     <div class="no-pad col limit-left">
-        <label class="btn btn-info btn-arrow" (click)="decrease()">
-            <em class="fa fa-arrow-left btn-icon"></em>
+        <label class="btn btn-info btn-arrow" (click)="decrease(10)">
+            <em class="fa fa-long-arrow-down btn-icon"></em>
+        </label>
+    </div>
+    <div class="no-pad col limit-left">
+        <label class="btn btn-info btn-arrow" (click)="decrease(1)">
+            <em class="fa fa-arrow-down btn-icon"></em>
         </label>
     </div>
     <div class="no-pad col limit-value" title="Limit the number of import photo's, zero means no limit">
         <label class="btn btn-info btn-limit">{{getLimit()}}</label>
     </div>
+    <div class="no-pad col limit-left">
+        <label class="btn btn-info btn-arrow" (click)="increase(1)">
+            <em class="fa fa-arrow-up btn-icon"></em>
+        </label>
+    </div>
     <div class="no-pad col limit-right">
-        <label class="btn btn-info btn-arrow" (click)="increase()">
-            <em class="fa fa-arrow-right btn-icon"></em>
+        <label class="btn btn-info btn-arrow" (click)="increase(10)">
+            <em class="fa fa-long-arrow-up btn-icon"></em>
         </label>
     </div>
     <div class="no-pad col refresh">

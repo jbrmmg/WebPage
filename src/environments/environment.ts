@@ -30,5 +30,6 @@ export const environment = {
 
   backupGetPreImportFiles: "api/backup/preimportfiles",
   backupDeletePreImportFile: "api/backup/preimportfile",
-  backupFileUpdates: "api/backup/file-updates"
+  backupFileUpdates: "api/backup/file-updates",
+  backupReimportFile: "api/backup/reimportfile"
 };

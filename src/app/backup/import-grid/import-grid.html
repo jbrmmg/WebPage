@@ -31,6 +31,9 @@
                 <th>
                     <jbr-import-grid-header-traffic (fireSource)="sortData($event,true)" (filterChange)="filterStatus($event)" [type]="TrafficLightType.DuplicateStatus"></jbr-import-grid-header-traffic>
                 </th>
+                <th>
+                    <jbr-import-grid-header-destination></jbr-import-grid-header-destination>
+                </th>
             </tr>
         </thead>
         <tbody *ngIf="data && data.length">
@@ -62,6 +65,9 @@
                     </td>
                     <td>
                         <jbr-import-grid-data-traffic [file]=file [type]="TrafficLightType.DuplicateStatus"></jbr-import-grid-data-traffic>
+                    </td>
+                    <td>
+                        <jbr-import-grid-data-destination [file]="file"></jbr-import-grid-data-destination>
                     </td>
                 </ng-container>
             </tr>
