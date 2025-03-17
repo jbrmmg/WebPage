@@ -22,9 +22,33 @@
             <em class="fa fa-long-arrow-up btn-icon"></em>
         </label>
     </div>
-    <div class="no-pad col refresh">
-        <label class="btn btn-primary"
+    <div class="no-pad col global-action" title="Remove any files that are already marked as ignore.">
+        <label class="btn btn-outline-warning"
                aria-controls="list"
+               (click)="removeIgnored()">
+            <em class="fa fa-minus-circle"></em>
+        </label>
+    </div>
+    <div class="no-pad col global-action" title="Import the files">
+        <label class="btn btn-outline-warning"
+               (click)="importFiles()">
+            <em class="fa fa-arrow-right"></em>
+        </label>
+    </div>
+    <div class="no-pad col global-action" title="Remove any files that are definitely already present.">
+        <label class="btn btn-outline-warning"
+               (click)="removeDuplicates()">
+            <em class="fa fa-trash"></em>
+        </label>
+    </div>
+    <div class="no-pad col process-action" title="Process the files listed below and remove the files">
+        <label class="btn btn-outline-success"
+               (click)="process()">
+            <em class="fa fa-arrow-right"></em>
+        </label>
+    </div>
+    <div class="no-pad col refresh" title="Refresh the list of files displayed here.">
+        <label class="btn btn-primary"
                (click)="refresh()">
             <em class="fa fa-refresh"></em>
         </label>

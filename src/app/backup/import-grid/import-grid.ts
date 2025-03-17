@@ -73,7 +73,7 @@ export class ImportGrid implements OnInit {
     }
 
     ngOnInit(): void {
-        this.status = "Press refresh to display.";
+        this.status = "Press refresh to display, or remove ignored, covert or remove duplicates.";
         this.data = [];
         this.sortColumn = "Name";
         this.selectedFile = null;
@@ -507,19 +507,46 @@ export class ImportGrid implements OnInit {
         }
     }
 
-    reimportFile(file: string) {
-        this._importGridService.reimportFile(file).subscribe({
-            next: (result) => {
-                console.log(result);
-            },
-            error: err => {
-                // Error.
-                console.log('There is an error?' + err.message)
-            },
-            complete: () => {
-                console.log('Reimport complete');
+    ignoreFile(file: string) {
+        // Ignore the file.
+        this.status = "Ignoring the file."
+        this._importGridService.ignore(file).subscribe({
+                next: (result) => {
+                    console.log(result);
+                },
+                error: err => {
+                    // Error.
+                    this.status = "Ignore file failed - check log."
+                    console.log('There is an error?' + err.message)
+                },
+                complete: () => {
+                    this.status = "File ignored."
+                    this.refresh();
+                    console.log('Ignore complete');
+                }
             }
-        });
+        );
+    }
+
+    recipeFile(file: string) {
+        // Mark the file as a recipe
+        this.status = "Marking the file as a recipe."
+        this._importGridService.recipe(file).subscribe({
+                next: (result) => {
+                    console.log(result);
+                },
+                error: err => {
+                    // Error.
+                    this.status = "Failed to mark file as a recipe - check log."
+                    console.log('There is an error?' + err.message)
+                },
+                complete: () => {
+                    this.status = "File marked as recipe."
+                    this.refresh();
+                    console.log('Mark as recipe complete complete');
+                }
+            }
+        );
     }
 
     previousAction(file: string) {
@@ -572,8 +599,83 @@ export class ImportGrid implements OnInit {
                 return this.nextAction(action.filename);
             case "delete":
                 return this.deleteFile(action.filename, template);
-            case "reimport":
-                return this.reimportFile(action.filename);
+            case "ignore":
+                return this.ignoreFile(action.filename);
+            case "recipe":
+                return this.recipeFile(action.filename);
         }
+    }
+
+    removeIgnored() {
+        this.status = "Removing Ignored files from the import directory";
+        this._importGridService.removeIgnored().subscribe({
+            next: (result) => {
+                console.log(result);
+            },
+            error: err => {
+                // Error.
+                this.status = "Remove ignored failed - check log";
+                console.log('There is an error?' + err.message)
+            },
+            complete: () => {
+                console.log('Remove ignored complete');
+                this.status = "Remove ignored complete";
+                this.refresh();
+            }
+        });
+    }
+
+    importFiles() {
+        this.status = "Importing the files, converting and importing details into database.";
+        this._importGridService.importFiles().subscribe({
+            next: (result) => {
+                console.log(result);
+            },
+            error: err => {
+                this.status = "Importing files failed - check log";
+                console.log('There is an error?' + err.message)
+            },
+            complete: () => {
+                console.log('Import files complete');
+                this.status = "Import files complete";
+                this.refresh();
+            }
+        });
+    }
+
+    removeDuplicates() {
+        this.status = "Removing duplicate files from the import directory.";
+        this._importGridService.removeDuplicates().subscribe({
+            next: (result) => {
+                console.log(result);
+            },
+            error: err => {
+                this.status = "Remove duplicates failed - check log";
+                console.log('There is an error?' + err.message)
+            },
+            complete: () => {
+                console.log('Remove duplicates complete');
+                this.status = "Remove duplicates complete";
+                this.refresh();
+            }
+        });
+    }
+
+    process() {
+        this.status = "Processing the files listed below.";
+        this._importGridService.process().subscribe({
+            next: (result) => {
+                console.log(result);
+            },
+            error: err => {
+                this.status = "Process files failed - check log";
+                console.log('There is an error?' + err.message)
+            },
+            complete: () => {
+                console.log('Process files complete');
+                this.status = "Process files complete";
+                this.refresh();
+            }
+        });
     }
 }

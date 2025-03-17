@@ -18,6 +18,8 @@ export class ImportSelectedData {
     @Output() previousEvent: EventEmitter<String> = new EventEmitter();
     @Output() nextEvent: EventEmitter<String> = new EventEmitter();
     @Output() deleteEvent: EventEmitter<String> = new EventEmitter();
+    @Output() recipeEvent: EventEmitter<String> = new EventEmitter();
+    @Output() ignoreEvent: EventEmitter<String> = new EventEmitter();
 
     filename: string;
     location: LatLong;
@@ -135,11 +137,11 @@ export class ImportSelectedData {
     }
 
     ignore() {
-
+        this.ignoreEvent.emit(this.filename);
     }
 
     recipe() {
-
+        this.recipeEvent.emit(this.filename);
     }
 
     import() {

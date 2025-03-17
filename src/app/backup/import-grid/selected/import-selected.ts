@@ -76,7 +76,11 @@ export class ImportSelected {
         this.actionEvent.emit(new ImportSelectedAction(file,"delete"));
     }
 
-    reimport(file: string) {
-        this.actionEvent.emit(new ImportSelectedAction(file,"reimport"));
+    recipe(file: string) {
+        this.actionEvent.emit(new ImportSelectedAction(file,"recipe"));
+    }
+
+    ignore(file: string){
+        this.actionEvent.emit(new ImportSelectedAction(file,"ignore"));
     }
 }

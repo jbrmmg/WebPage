@@ -12,7 +12,10 @@ export class ImportGridStatus {
     @Input() limit: number;
     @Output() refreshEvent: EventEmitter<void> = new EventEmitter();
     @Output() limitChangeEvent: EventEmitter<number> = new EventEmitter();
-
+    @Output() removeIgnoredEvent: EventEmitter<void> = new EventEmitter();
+    @Output() importFilesEvent: EventEmitter<void> = new EventEmitter();
+    @Output() removeDuplicateEvent: EventEmitter<void> = new EventEmitter();
+    @Output() processEvent: EventEmitter<void> = new EventEmitter();
 
     refresh() {
         this.refreshEvent.emit();
@@ -28,5 +31,21 @@ export class ImportGridStatus {
 
     getLimit() {
         return this.limit;
+    }
+
+    removeIgnored() {
+        this.removeIgnoredEvent.emit();
+    }
+
+    importFiles() {
+        this.importFilesEvent.emit();
+    }
+
+    removeDuplicates() {
+        this.removeDuplicateEvent.emit();
+    }
+
+    process() {
+        this.processEvent.emit();
     }
 }

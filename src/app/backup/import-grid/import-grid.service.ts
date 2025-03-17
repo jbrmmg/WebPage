@@ -41,4 +41,28 @@ export class ImportGridService {
     fileUpdateSource() : EventSource {
         return new EventSource(environment.backupFileUpdates);
     }
+
+    removeIgnored(): Observable<any> {
+        return this.http.post(environment.backupRemoveIgnored, "", {responseType: 'text'})
+    }
+
+    importFiles(): Observable<any> {
+        return this.http.post(environment.backupImportFiles, "", {responseType: 'text'})
+    }
+
+    removeDuplicates(): Observable<any> {
+        return this.http.post(environment.backupRemoveDuplicates, "", {responseType: 'text'})
+    }
+
+    process(): Observable<any> {
+        return this.http.post(environment.backupProcessFiles, "", {responseType: 'text'})
+    }
+
+    ignore(file: string): Observable<any> {
+        return this.http.post(environment.backupIgnoreFile, file, {responseType: 'text'});
+    }
+
+    recipe(file: string): Observable<any> {
+        return this.http.post(environment.backupRecipeFile, file, {responseType: 'text'});
+    }
 }

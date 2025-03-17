@@ -25,6 +25,16 @@
     flex: 0 1 0;
 }
 
+.global-action {
+    padding: 0 5px 0 2px;
+    flex: 0 1 0;
+}
+
+.process-action {
+    padding: 0 5px 0 15px;
+    flex: 0 1 0;
+}
+
 .status {
     padding: 10px 0 0 3px;
     flex: 1 0 0;
