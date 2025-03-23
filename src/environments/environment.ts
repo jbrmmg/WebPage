@@ -28,7 +28,7 @@ export const environment = {
   moneyAccountDisabledImage: "assets/images/account/##id##x.svg",
   moneyFileUpdates: "money/reconciliation/file-updates",
 
-  backupGetPreImportFiles: "api/backup/preimportfiles",
+  backupGetPreImportFiles: "api/backup/import-files",
   backupDeletePreImportFile: "api/backup/preimportfile",
   backupFileUpdates: "api/backup/file-updates",
   backupReimportFile: "api/backup/reimportfile",
