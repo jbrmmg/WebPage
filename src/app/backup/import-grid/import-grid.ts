@@ -107,22 +107,222 @@ export class ImportGrid implements OnInit {
         }
     }
 
+    updateLatLong(data: ImportGridFile, update: ImportGridFile) {
+        // If no lat/long then just retur.
+        if(!update.location && !data.location) {
+            return;
+        }
+
+        // location has been removed.
+        if(!update.location && data.location) {
+            data.location = null;
+            return;
+        }
+
+        // Location has been added.
+        if(update.location && !data.location) {
+            data.location = update.location;
+            return;
+        }
+
+        // Update location.
+        if(update.location.lat != data.location.lat) {
+            data.location.lat = update.location.lat;
+        }
+        if(update.location.long != data.location.long) {
+            data.location.long = update.location.long;
+        }
+    }
+
+    updateImageSize(data: ImportGridFile, update: ImportGridFile) {
+        // If no image size then just return.
+        if(!update.imageSize && !data.imageSize) {
+            return;
+        }
+
+        // image size has been removed.
+        if(!update.imageSize && data.imageSize) {
+            data.imageSize = null;
+            return;
+        }
+
+        // image size has been added.
+        if(update.imageSize && !data.imageSize) {
+            data.imageSize = update.imageSize;
+            return;
+        }
+
+        // Image size changed.
+        if(update.imageSize.height != data.imageSize.height) {
+            data.imageSize.height = update.imageSize.height;
+        }
+        if(update.imageSize.width != data.imageSize.width) {
+            data.imageSize.width = update.imageSize.width;
+        }
+    }
+
+    updateStatus(data: ImportGridFile, update: ImportGridFile) {
+        // Update the status flags.
+        if(data.stepStatus.readPreImportFile != update.stepStatus.readPreImportFile) {
+            data.stepStatus.readPreImportFile = update.stepStatus.readPreImportFile;
+        }
+        if(data.stepStatus.gatherMetaData != update.stepStatus.gatherMetaData) {
+            data.stepStatus.gatherMetaData = update.stepStatus.gatherMetaData;
+        }
+        if(data.stepStatus.copyFileToImport != update.stepStatus.copyFileToImport) {
+            data.stepStatus.copyFileToImport = update.stepStatus.copyFileToImport;
+        }
+        if(data.stepStatus.checkFileIgnored != update.stepStatus.checkFileIgnored) {
+            data.stepStatus.checkFileIgnored = update.stepStatus.checkFileIgnored;
+        }
+        if(data.stepStatus.checkActivePhotoFile != update.stepStatus.checkActivePhotoFile) {
+            data.stepStatus.checkActivePhotoFile = update.stepStatus.checkActivePhotoFile;
+        }
+        if(data.stepStatus.checkDuplicateFile != update.stepStatus.checkDuplicateFile) {
+            data.stepStatus.checkDuplicateFile = update.stepStatus.checkDuplicateFile;
+        }
+        if(data.stepStatus.checkFileConfirmedImported != update.stepStatus.checkFileConfirmedImported) {
+            data.stepStatus.checkFileConfirmedImported = update.stepStatus.checkFileConfirmedImported;
+        }
+        if(data.stepStatus.competed != update.stepStatus.competed) {
+            data.stepStatus.competed = update.stepStatus.competed;
+        }
+    }
+
+    updateSimilar(data: ImportGridFile, update: ImportGridFile) {
+        // if no similar files just return.
+        if(!data.similarFiles && !update.similarFiles) {
+            return;
+        }
+
+        // similar files have been removed has been removed.
+        if(!update.similarFiles && data.similarFiles) {
+            data.similarFiles = null;
+            return;
+        }
+
+        // image size has been added.
+        if(update.similarFiles && !data.similarFiles) {
+            data.similarFiles = update.similarFiles;
+            return;
+        }
+
+        // Have the number of similar files changed?
+        if(update.similarFiles.length != data.similarFiles.length) {
+            data.similarFiles = update.similarFiles;
+            return;
+        }
+
+        // Have any similar files been added or removed?
+        let added: boolean = false;
+        update.similarFiles.forEach(uf => {
+            let found: boolean = false;
+            data.similarFiles.forEach(f => {
+                  if(uf.filename == f.filename) {
+                      found = true;
+                      return;
+                  }
+            });
+
+            if(!found) {
+                added = true;
+                return;
+            }
+        });
+        if(added) {
+            data.similarFiles = update.similarFiles;
+            return;
+        }
+
+        let removed: boolean = false;
+        data.similarFiles.forEach(f => {
+            let found: boolean = false;
+            update.similarFiles.forEach(uf => {
+                if(f.filename == uf.filename) {
+                    found = true;
+                    return;
+                }
+            })
+
+            if(!found) {
+                removed = true;
+                return;
+            }
+        });
+        if(removed) {
+            data.similarFiles = update.similarFiles;
+            return;
+        }
+
+        // Update the individual files.
+        data.similarFiles.forEach(f => {
+           update.similarFiles.forEach( uf => {
+               if(f.filename == uf.filename) {
+                   if(f.md5 != uf.md5) {
+                       f.md5 = uf.md5;
+                   }
+                   if(f.date != uf.date) {
+                       f.date = uf.date;
+                   }
+                   if(f.size != uf.size) {
+                       f.size = uf.size;
+                   }
+               }
+           })
+        });
+    }
+
     updateFileData(data: ImportGridFile, update: ImportGridFile) {
         // Have the details changed?
         this.updateFileDataBase(data,update);
 
-        if(data.immediateImported != update.immediateImported) {
-            data.immediateImported = update.immediateImported;
+        if(data.destination != update.destination) {
+            data.destination = update.destination;
         }
-        if(data.imported != update.imported) {
-            data.imported = update.imported;
+        if(data.importName != update.importName) {
+            data.importName = update.importName;
         }
-        if(data.ignored != update.ignored) {
-            data.ignored = update.ignored;
+        if(data.duration != update.duration) {
+            data.duration = update.duration;
         }
-        if(data.duplicated != update.duplicated) {
-            data.duplicated = update.duplicated;
+        if(data.importDate != update.importDate) {
+            data.importDate = update.importDate;
         }
+        if(data.importSize != update.importSize) {
+            data.importSize = update.importSize;
+        }
+        if(data.importMd5 != update.importMd5) {
+            data.importMd5 = update.importMd5;
+        }
+        if(data.errorInPostImport != update.errorInPostImport) {
+            data.errorInPostImport = update.errorInPostImport;
+        }
+        if(data.errorInImport != update.errorInImport) {
+            data.errorInImport = update.errorInImport;
+        }
+        if(data.processed != update.processed) {
+            data.processed = update.processed;
+        }
+        if(data.inDatabase != update.inDatabase) {
+            data.inDatabase = update.inDatabase;
+        }
+        if(data.inImport != update.inImport) {
+            data.inImport = update.inImport;
+        }
+        if(data.inPostImport != update.inPostImport) {
+            data.inPostImport = update.inPostImport;
+        }
+        if(data.image != update.image) {
+            data.image = update.image;
+        }
+        if(data.video != update.video) {
+            data.video = update.video;
+        }
+
+        this.updateLatLong(data,update);
+        this.updateImageSize(data,update);
+        this.updateStatus(data,update);
+        this.updateSimilar(data,update);
     }
 
     fileUpdate(event : MessageEvent) : void {
@@ -258,7 +458,7 @@ export class ImportGrid implements OnInit {
         if(file) {
             let result: string = "";
 
-            result += file.status;
+            result += file.stepStatus.readPreImportFile;
 
             return result;
         }
@@ -330,13 +530,13 @@ export class ImportGrid implements OnInit {
         if(file) {
             switch(type) {
                 case TrafficLightType.ImmediateImportStatus:
-                    return file.immediateImported;
+                    return file.stepStatus.readPreImportFile;
                 case TrafficLightType.IgnoreStatus:
-                    return file.ignored;
+                    return file.stepStatus.checkFileIgnored;
                 case TrafficLightType.ImportStatus:
-                    return file.imported;
+                    return file.stepStatus.checkFileConfirmedImported;
                 case TrafficLightType.DuplicateStatus:
-                    return file.duplicated;
+                    return file.stepStatus.checkDuplicateFile;
             }
         }
 
@@ -410,100 +610,9 @@ export class ImportGrid implements OnInit {
         return filter.unknown;
     }
 
-    filterStatus(filter: ImportGridTrafficLightFilter) {
-        // Hide those rows that do not match the filter.
-        this.data.forEach(d => {
-            switch(filter.type) {
-                case TrafficLightType.ImmediateImportStatus:
-                    d.visible = this.getVisible(d.source.immediateImported,filter);
-                    break;
-                case TrafficLightType.IgnoreStatus:
-                    d.visible = this.getVisible(d.source.ignored,filter);
-                    break;
-                case TrafficLightType.ImportStatus:
-                    d.visible = this.getVisible(d.source.imported,filter);
-                    break;
-                case TrafficLightType.DuplicateStatus:
-                    d.visible = this.getVisible(d.source.duplicated,filter);
-                    break;
-            }
-        });
-    }
-
-    deleteConfirmed() {
-        if(this.modalRef) {
-            this.modalRef.hide();
-        }
-
-        if(!this.fileForDelete)
-            return;
-
-        // Find the name of the next file (this will be selected next)
-        let next: boolean = false;
-        this.data.forEach(f => {
-            if(f.source.filename == this.fileForDelete) {
-                next = true;
-            } else if (next) {
-                this.afterRefresh = f.source.filename;
-                next = false;
-            }
-        });
-
-        // Delete the file named.
-        this.data = []
-        this._importGridService.deletePreImportFile(this.fileForDelete).subscribe({
-                next: (result) => {
-                    console.log(result);
-                },
-                error: err => {
-                    // Error.
-                    console.log('There is an error?' + err.message)
-                },
-                complete: () => {
-                    this.refresh();
-                    console.log('Delete complete');
-                }
-            }
-        );
-    }
-
     deleteRejected() {
         if(this.modalRef) {
             this.modalRef.hide();
-        }
-    }
-
-    deleteFile(filename: string, template: TemplateRef<any>) {
-        // Get confirm before continuing.
-        this.fileForDelete = filename;
-        let confirmRequired: boolean = true;
-
-        this.data.forEach(f => {
-            if(f.source && f.source.filename == filename) {
-                if(f.source.ignored == "TL_RED") {
-                    confirmRequired = false;
-                } else {
-                    if(f.source && f.source.similarFiles && f.source.similarFiles.length > 0) {
-                        f.source.similarFiles.forEach(sf => {
-                            if(sf.md5 == f.source.md5 &&
-                                sf.size == f.source.size &&
-                                sf.filename.toLowerCase().includes(f.source.filename.toLowerCase())) {
-                                if (!sf.filename.toLowerCase().includes("[impo]") &&
-                                    !sf.filename.toLowerCase().includes("[igno]")) {
-                                    confirmRequired = false;
-                                }
-                            }
-                        });
-                    }
-                }
-            }
-        })
-
-        // If the file is definitely ignored or already imported then it's ok to delete.
-        if(confirmRequired) {
-            this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
-        } else {
-            this.deleteConfirmed()
         }
     }
 
@@ -597,8 +706,6 @@ export class ImportGrid implements OnInit {
                 return this.previousAction(action.filename);
             case "next":
                 return this.nextAction(action.filename);
-            case "delete":
-                return this.deleteFile(action.filename, template);
             case "ignore":
                 return this.ignoreFile(action.filename);
             case "recipe":

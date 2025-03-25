@@ -21,16 +21,16 @@ export class ImportGridTrafficLight {
         // Get the type.
         switch (type) {
             case TrafficLightType.ImmediateImportStatus:
-                status = file.immediateImported;
+//                status = file.immediateImported;
                 break;
             case TrafficLightType.IgnoreStatus:
-                status = file.ignored;
+//                status = file.ignored;
                 break;
             case TrafficLightType.ImportStatus:
-                status = file.imported;
+//                status = file.imported;
                 break;
             case TrafficLightType.DuplicateStatus:
-                status = file.duplicated;
+//                status = file.duplicated;
                 break;
         }
 

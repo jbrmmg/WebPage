@@ -29,7 +29,6 @@ export const environment = {
   moneyFileUpdates: "money/reconciliation/file-updates",
 
   backupGetPreImportFiles: "api/backup/import-files",
-  backupDeletePreImportFile: "api/backup/preimportfile",
   backupFileUpdates: "api/backup/file-updates",
   backupReimportFile: "api/backup/reimportfile",
   backupRemoveIgnored: "api/backup/removeignored",
