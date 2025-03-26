@@ -4,6 +4,7 @@ export class ImportGridSummaryCount {
     PreImport: number;
     Import: number;
     PostImport: number;
+    Queued: number;
     copyFileToImport: ImportGridSummaryStepCount;
     processImport: ImportGridSummaryStepCount;
     readPreImportFile: ImportGridSummaryStepCount;

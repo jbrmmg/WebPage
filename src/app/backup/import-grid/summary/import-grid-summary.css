@@ -48,6 +48,7 @@ td.header {
  * nth 11    - 7
  * nth 12    - 7
  * nth 13    - 7
+ * nth 14    - 7
  */
 
 table td:first-child {
@@ -99,6 +100,10 @@ table td:nth-child(12) {
 }
 
 table td:nth-child(13) {
+    width: 7%;
+}
+
+table td:nth-child(14) {
     width: 7%;
 }
 

@@ -16,6 +16,8 @@ import {NgIf} from "@angular/common";
 export class ImportGridSummary {
     @Input() summary: ImportGridSummaryCount;
 
+    status: string = "to do";
+
     getPreImportTotal(): string {
         if(this.summary && this.summary.PreImport) {
             return "" + this.summary.PreImport;
@@ -93,6 +95,14 @@ export class ImportGridSummary {
         return count;
     }
 
+    getQueued(): string {
+        if(this.summary != null) {
+            return "" + this.summary.Queued;
+        }
+
+        return " ";
+    }
+
     getClass(type: TrafficLightType, status: TrafficLightStatus) {
         let count: ImportGridSummaryStepCount = this.getCountForType(type);
 
@@ -122,25 +132,6 @@ export class ImportGridSummary {
         }
 
         return "ok";
-    }
-
-    displayGreen(): boolean {
-        if(this.summary == null) {
-            return false;
-        }
-
-        // Are there any green counts?
-        return this.summary.copyFileToImport.GREEN > 0 ||
-            this.summary.processImport.GREEN > 0 ||
-            this.summary.readPreImportFile.GREEN > 0 ||
-            this.summary.completed.GREEN > 0 ||
-            this.summary.checkFileConfirmedImported.GREEN > 0 ||
-            this.summary.gatherMetaData.GREEN > 0 ||
-            this.summary.checkFileIgnored.GREEN > 0 ||
-            this.summary.checkActivePhotoFile.GREEN > 0 ||
-            this.summary.checkDuplicateFile.GREEN > 0 ||
-            this.summary.copyFileToImport.GREEN > 0 ||
-            this.summary.copyFileToImport.GREEN > 0;
     }
 
     displayAmber(): boolean {
@@ -198,6 +189,10 @@ export class ImportGridSummary {
             this.summary.checkDuplicateFile.UNKNOWN > 0 ||
             this.summary.copyFileToImport.UNKNOWN > 0 ||
             this.summary.copyFileToImport.UNKNOWN > 0;
+    }
+
+    refresh() {
+
     }
 
     getTotal(type: TrafficLightType, status: TrafficLightStatus) {
