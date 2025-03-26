@@ -1,0 +1,81 @@
+<table>
+    <thead>
+        <tr>
+            <th>&nbsp;</th>
+            <th>Read</th>
+            <th>Meta</th>
+            <th>Copy</th>
+            <th>Ignore</th>
+            <th>Active</th>
+            <th>Duplicate</th>
+            <th>Imported</th>
+            <th>Process</th>
+            <th>Complete</th>
+            <th>Pre Import</th>
+            <th>Import</th>
+            <th>Post Import</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngIf="displayGreen()">
+            <td class="header">Green</td>
+            <td [class]="getClass(TrafficLightType.readPreImportFile,TrafficLightStatus.Green)">{{getTotal(TrafficLightType.readPreImportFile,TrafficLightStatus.Green)}}</td>
+            <td [class]="getClass(TrafficLightType.gatherMetaData,TrafficLightStatus.Green)">{{getTotal(TrafficLightType.gatherMetaData,TrafficLightStatus.Green)}}</td>
+            <td [class]="getClass(TrafficLightType.copyFileToImport,TrafficLightStatus.Green)">{{getTotal(TrafficLightType.copyFileToImport,TrafficLightStatus.Green)}}</td>
+            <td [class]="getClass(TrafficLightType.checkFileIgnored,TrafficLightStatus.Green)">{{getTotal(TrafficLightType.checkFileIgnored,TrafficLightStatus.Green)}}</td>
+            <td [class]="getClass(TrafficLightType.checkActivePhotoFile,TrafficLightStatus.Green)">{{getTotal(TrafficLightType.checkActivePhotoFile,TrafficLightStatus.Green)}}</td>
+            <td [class]="getClass(TrafficLightType.checkDuplicateFile,TrafficLightStatus.Green)">{{getTotal(TrafficLightType.checkDuplicateFile,TrafficLightStatus.Green)}}</td>
+            <td [class]="getClass(TrafficLightType.checkFileConfirmedImported,TrafficLightStatus.Green)">{{getTotal(TrafficLightType.checkFileConfirmedImported,TrafficLightStatus.Green)}}</td>
+            <td [class]="getClass(TrafficLightType.processImport,TrafficLightStatus.Green)">{{getTotal(TrafficLightType.processImport,TrafficLightStatus.Green)}}</td>
+            <td [class]="getClass(TrafficLightType.completed,TrafficLightStatus.Green)">{{getTotal(TrafficLightType.completed,TrafficLightStatus.Green)}}</td>
+            <td>{{getPreImportTotal()}}</td>
+            <td>{{getImportTotal()}}</td>
+            <td>{{getPostImportTotal()}}</td>
+        </tr>
+        <tr *ngIf="displayAmber()">
+            <td class="header">Amber</td>
+            <td [class]="getClass(TrafficLightType.readPreImportFile,TrafficLightStatus.Amber)">{{getTotal(TrafficLightType.readPreImportFile,TrafficLightStatus.Amber)}}</td>
+            <td [class]="getClass(TrafficLightType.gatherMetaData,TrafficLightStatus.Amber)">{{getTotal(TrafficLightType.gatherMetaData,TrafficLightStatus.Amber)}}</td>
+            <td [class]="getClass(TrafficLightType.copyFileToImport,TrafficLightStatus.Amber)">{{getTotal(TrafficLightType.copyFileToImport,TrafficLightStatus.Amber)}}</td>
+            <td [class]="getClass(TrafficLightType.checkFileIgnored,TrafficLightStatus.Amber)">{{getTotal(TrafficLightType.checkFileIgnored,TrafficLightStatus.Amber)}}</td>
+            <td [class]="getClass(TrafficLightType.checkActivePhotoFile,TrafficLightStatus.Amber)">{{getTotal(TrafficLightType.checkActivePhotoFile,TrafficLightStatus.Amber)}}</td>
+            <td [class]="getClass(TrafficLightType.checkDuplicateFile,TrafficLightStatus.Amber)">{{getTotal(TrafficLightType.checkDuplicateFile,TrafficLightStatus.Amber)}}</td>
+            <td [class]="getClass(TrafficLightType.checkFileConfirmedImported,TrafficLightStatus.Amber)">{{getTotal(TrafficLightType.checkFileConfirmedImported,TrafficLightStatus.Amber)}}</td>
+            <td [class]="getClass(TrafficLightType.processImport,TrafficLightStatus.Amber)">{{getTotal(TrafficLightType.processImport,TrafficLightStatus.Amber)}}</td>
+            <td [class]="getClass(TrafficLightType.completed,TrafficLightStatus.Amber)">{{getTotal(TrafficLightType.completed,TrafficLightStatus.Amber)}}</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr *ngIf="displayRed()">
+            <td class="header">Red</td>
+            <td [class]="getClass(TrafficLightType.readPreImportFile,TrafficLightStatus.Red)">{{getTotal(TrafficLightType.readPreImportFile,TrafficLightStatus.Red)}}</td>
+            <td [class]="getClass(TrafficLightType.gatherMetaData,TrafficLightStatus.Red)">{{getTotal(TrafficLightType.gatherMetaData,TrafficLightStatus.Red)}}</td>
+            <td [class]="getClass(TrafficLightType.copyFileToImport,TrafficLightStatus.Red)">{{getTotal(TrafficLightType.copyFileToImport,TrafficLightStatus.Red)}}</td>
+            <td [class]="getClass(TrafficLightType.checkFileIgnored,TrafficLightStatus.Red)">{{getTotal(TrafficLightType.checkFileIgnored,TrafficLightStatus.Red)}}</td>
+            <td [class]="getClass(TrafficLightType.checkActivePhotoFile,TrafficLightStatus.Red)">{{getTotal(TrafficLightType.checkActivePhotoFile,TrafficLightStatus.Red)}}</td>
+            <td [class]="getClass(TrafficLightType.checkDuplicateFile,TrafficLightStatus.Red)">{{getTotal(TrafficLightType.checkDuplicateFile,TrafficLightStatus.Red)}}</td>
+            <td [class]="getClass(TrafficLightType.checkFileConfirmedImported,TrafficLightStatus.Red)">{{getTotal(TrafficLightType.checkFileConfirmedImported,TrafficLightStatus.Red)}}</td>
+            <td [class]="getClass(TrafficLightType.processImport,TrafficLightStatus.Red)">{{getTotal(TrafficLightType.processImport,TrafficLightStatus.Red)}}</td>
+            <td [class]="getClass(TrafficLightType.completed,TrafficLightStatus.Red)">{{getTotal(TrafficLightType.completed,TrafficLightStatus.Red)}}</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr *ngIf="displayUnknown()">
+            <td class="header">Unknown</td>
+            <td [class]="getClass(TrafficLightType.readPreImportFile,TrafficLightStatus.Unknown)">{{getTotal(TrafficLightType.readPreImportFile,TrafficLightStatus.Unknown)}}</td>
+            <td [class]="getClass(TrafficLightType.gatherMetaData,TrafficLightStatus.Unknown)">{{getTotal(TrafficLightType.gatherMetaData,TrafficLightStatus.Unknown)}}</td>
+            <td [class]="getClass(TrafficLightType.copyFileToImport,TrafficLightStatus.Unknown)">{{getTotal(TrafficLightType.copyFileToImport,TrafficLightStatus.Unknown)}}</td>
+            <td [class]="getClass(TrafficLightType.checkFileIgnored,TrafficLightStatus.Unknown)">{{getTotal(TrafficLightType.checkFileIgnored,TrafficLightStatus.Unknown)}}</td>
+            <td [class]="getClass(TrafficLightType.checkActivePhotoFile,TrafficLightStatus.Unknown)">{{getTotal(TrafficLightType.checkActivePhotoFile,TrafficLightStatus.Unknown)}}</td>
+            <td [class]="getClass(TrafficLightType.checkDuplicateFile,TrafficLightStatus.Unknown)">{{getTotal(TrafficLightType.checkDuplicateFile,TrafficLightStatus.Unknown)}}</td>
+            <td [class]="getClass(TrafficLightType.checkFileConfirmedImported,TrafficLightStatus.Unknown)">{{getTotal(TrafficLightType.checkFileConfirmedImported,TrafficLightStatus.Unknown)}}</td>
+            <td [class]="getClass(TrafficLightType.processImport,TrafficLightStatus.Unknown)">{{getTotal(TrafficLightType.processImport,TrafficLightStatus.Unknown)}}</td>
+            <td [class]="getClass(TrafficLightType.completed,TrafficLightStatus.Unknown)">{{getTotal(TrafficLightType.completed,TrafficLightStatus.Unknown)}}</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+    </tbody>
+</table>

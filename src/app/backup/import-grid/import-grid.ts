@@ -23,6 +23,8 @@ import {ImportGridStatus} from "./status/import-grid-status";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {ImportGridHeaderDestination} from "./header/import-grid-header-destination";
 import {ImportGridDataDestination} from "./data/import-grid-data-destination";
+import {ImportGridSummary} from "./summary/import-grid-summary";
+import {ImportGridSummaryCount} from "./summary/import-grid-summary-count";
 
 @Component({
     selector: 'jbr-import-grid',
@@ -46,7 +48,8 @@ import {ImportGridDataDestination} from "./data/import-grid-data-destination";
         ImportSelected,
         ImportGridStatus,
         ImportGridHeaderDestination,
-        ImportGridDataDestination
+        ImportGridDataDestination,
+        ImportGridSummary
     ],
     standalone: true
 })
@@ -55,9 +58,11 @@ export class ImportGrid implements OnInit {
 
     public status: string;
     public data: ImportGridFileDisplay[];
+    public summary: ImportGridSummaryCount;
     public sortColumn: string;
     public sortUp: boolean;
     public fileUpdateSource: EventSource;
+    public summaryUpdateSource: EventSource;
     public selectedFile: ImportGridFileDisplay;
     public afterRefresh: string;
     public limit: number;
@@ -68,7 +73,11 @@ export class ImportGrid implements OnInit {
     constructor(private readonly _importGridService: ImportGridService,
                 private modalService: BsModalService) {
         this.fileUpdateSource = _importGridService.fileUpdateSource();
-        this.fileUpdateSource.addEventListener('message', this.fileUpdate.bind(this))
+        this.fileUpdateSource.addEventListener('message', this.fileUpdate.bind(this));
+
+        this.summaryUpdateSource = _importGridService.summaryUpdateSource();
+        this.summaryUpdateSource.addEventListener('message', this.summaryUpdate.bind(this));
+
         window.addEventListener('beforeunload', this.handleBeforeUnload.bind(this));
     }
 
@@ -83,6 +92,8 @@ export class ImportGrid implements OnInit {
     handleBeforeUnload(event: BeforeUnloadEvent) : void {
         this.fileUpdateSource.removeEventListener('message', this.fileUpdate.bind(this));
         this.fileUpdateSource.close();
+        this.summaryUpdateSource.removeEventListener('message', this.summaryUpdate.bind(this));
+        this.summaryUpdateSource.close();
         console.log("Cleanup before unload." + event);
     }
 
@@ -326,6 +337,13 @@ export class ImportGrid implements OnInit {
         this.updateImageSize(data,update);
         this.updateStatus(data,update);
         this.updateSimilar(data,update);
+    }
+
+    summaryUpdate(event: MessageEvent) {
+        let update: ImportGridSummaryCount = JSON.parse(event.data);
+
+        this.summary = update;
+        console.log("summary " + update.PreImport);
     }
 
     fileUpdate(event : MessageEvent) : void {

@@ -38,6 +38,10 @@ export class ImportGridService {
         return new EventSource(environment.backupFileUpdates);
     }
 
+    summaryUpdateSource() : EventSource {
+        return new EventSource(environment.backupFileSummaryUpdates)
+    }
+
     removeIgnored(): Observable<any> {
         return this.http.post(environment.backupRemoveIgnored, "", {responseType: 'text'})
     }
