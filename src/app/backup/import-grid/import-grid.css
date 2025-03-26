@@ -29,16 +29,16 @@ td.mis-match {
 
 /*
  * first     -  2    Selector
- * nth  2    - 14    Name
- * nth  3    - 13    MD5
+ * nth  2    - 12    Name
+ * nth  3    - 12    MD5
  * nth  4    -  4    Size
  * nth  5    -  7    Date
- * nth  6    - 14    Import Name
- * nth  7    - 13    Import MD5
+ * nth  6    - 12    Import Name
+ * nth  7    - 12    Import MD5
  * nth  8    -  4    Import Size
  * nth  9    -  7    Import Date
- * nth 10    - 10    Status
- * nth 11    - 12    Destination
+ * nth 10    -  7    Status
+ * nth 11    - 21    Destination
  */
 
 table td:first-child {
@@ -78,9 +78,9 @@ table td:nth-child(9) {
 }
 
 table td:nth-child(10) {
-    width: 10%;
+    width: 7%;
 }
 
 table td:nth-child(11) {
-    width: 18%;
+    width: 21%;
 }

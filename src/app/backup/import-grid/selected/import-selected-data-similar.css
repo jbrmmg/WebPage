@@ -1,3 +1,7 @@
+table {
+    width: 70%;
+}
+
 th {
     font-family: Helvetica, serif;
     font-size: 10px;
@@ -15,4 +19,43 @@ td {
 
 .mismatch {
     background: rosybrown;
+}
+
+.date-parent {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+.date-child {
+    float: right;
+    padding: 0;
+}
+
+.md5 {
+    font-family: courier new, serif;
+}
+
+/*
+ * first     - 25    Filename
+ * nth  2    - 25    Date
+ * nth  3    - 25    Size
+ * nth  4    - 25    MD5
+ *
+ */
+
+table td:first-child {
+    width: 46%;
+}
+
+table td:nth-child(2) {
+    width: 16%;
+}
+
+table td:nth-child(3) {
+    width: 8%;
+}
+
+table td:nth-child(4) {
+    width: 30%;
 }

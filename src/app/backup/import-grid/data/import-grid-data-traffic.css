@@ -11,6 +11,10 @@
     padding: 0;
 }
 
+.left {
+    margin-left: 3px;
+}
+
 .red-light {
     background: red;
 }
@@ -28,6 +32,6 @@
 }
 
 .indicator {
-    padding-top: 2px;
+    padding: 2px 1px 0 0;
     flex: 0 1 0;
 }

@@ -17,20 +17,48 @@ export class ImportSelectedDataSimilar {
     @Input() date: string;
     @Input() size: string;
     @Input() md5: string;
+    @Input() importDate: string;
+    @Input() importSize: string;
+    @Input() importMd5: string;
 
     getSizeString(file: IImportGridFileBase) {
         return file.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
     getDateClass(file: IImportGridFileBase): string {
-        return file.date.replace("T"," ") == this.date.replace("T"," ") ? "" : "mismatch";
+        if(file.date && this.date && this.importDate) {
+            if(file.date.replace("T"," ") != this.date && file.date.replace("T"," ")  != this.importDate) {
+                return "mismatch";
+            }
+        }
+
+        return "";
     }
 
     getSizeClass(file: IImportGridFileBase): string {
-        return file.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") == this.size ? "" : "mismatch";
+        let fileSize: string = file.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        if(fileSize != this.size && fileSize != this.importSize) {
+            return "mismatch";
+        }
+
+        return "";
     }
 
     getMd5Class(file: IImportGridFileBase): string {
-        return file.md5 == this.md5 ? "" : "mismatch";
+        if(file.md5) {
+            if(file.md5 != this.md5 && file.md5 != this.importMd5) {
+                return "md5 mismatch";
+            }
+        }
+
+        return "md5";
+    }
+
+    getDate(file: IImportGridFileBase) {
+        return file.date.substring(0,10);
+    }
+
+    getTime(file: IImportGridFileBase) {
+        return file.date.substring(11);
     }
 }

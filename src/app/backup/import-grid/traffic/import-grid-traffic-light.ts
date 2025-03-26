@@ -68,11 +68,11 @@ export class ImportGridTrafficLight {
 
         // Convert the string value to a status.
         switch (status) {
-            case "TL_RED":
+            case "RED":
                 return TrafficLightStatus.Red;
-            case "TL_AMBER":
+            case "AMBER":
                 return TrafficLightStatus.Amber;
-            case "TL_GREEN":
+            case "GREEN":
                 return TrafficLightStatus.Green;
         }
     }

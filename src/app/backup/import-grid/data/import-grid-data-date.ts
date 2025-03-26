@@ -18,11 +18,27 @@ export class ImportGridDataDate extends ImportGridData {
         if(this.file && this.file.source) {
             if(this.importValue) {
                 if(this.file.source.importDate) {
-                    return this.file.source.importDate.replace("T"," ");
+                    return this.file.source.importDate.substring(0,10);
                 }
             } else {
                 if(this.file.source.date) {
-                    return this.file.source.date.replace("T"," ");
+                    return this.file.source.date.substring(0,10);
+                }
+            }
+        }
+
+        return "";
+    }
+
+    getText2(): string {
+        if(this.file && this.file.source) {
+            if(this.importValue) {
+                if(this.file.source.importDate) {
+                    return this.file.source.importDate.substring(11);
+                }
+            } else {
+                if(this.file.source.date) {
+                    return this.file.source.date.substring(11);
                 }
             }
         }

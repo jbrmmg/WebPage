@@ -1,7 +1,7 @@
 <ng-container *ngIf="displayStatus()">
     <div class="row light-row">
-        <div class="col indicator">
-            <div [class]="statusClass(TrafficLightType.checkFileConfirmedImported)" [title]="getTitle(TrafficLightType.checkFileConfirmedImported)"></div>
+        <div class="col indicator" *ngFor="let type of getStatusTypes()">
+            <div [class]="statusClass(type)" [title]="getTitle(type)"></div>
         </div>
     </div>
 </ng-container>

@@ -9,6 +9,11 @@
     font-size: 10px;
 }
 
+.md5 {
+    font-family: courier new, serif;
+}
+
+
 .action-btn-first {
     padding: 0 0 2px 12px;
     flex: 0 1 0;

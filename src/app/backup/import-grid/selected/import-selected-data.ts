@@ -22,11 +22,15 @@ export class ImportSelectedData {
     @Output() ignoreEvent: EventEmitter<String> = new EventEmitter();
 
     filename: string;
+    importFilename: string;
     location: LatLong;
     imageSize: ImageSize;
     date: string;
     size: string;
     md5: string;
+    importDate: string;
+    importSize: string;
+    importMd5: string;
     similar: IImportGridFileBase[];
 
     constructor() {
@@ -40,33 +44,25 @@ export class ImportSelectedData {
         return "";
     }
 
-    getLat(): string {
+    getImportName() {
+        if(this.importFilename) {
+            return this.importFilename;
+        }
+
+        return "";
+    }
+
+    getLatLong(): string {
         if(this.location) {
-            return "" + this.location.lat;
+            return "" + this.location.lat + " " + this.location.long;
         }
 
         return "";
     }
 
-    getLong(): string {
-        if(this.location) {
-            return "" + this.location.long;
-        }
-
-        return "";
-    }
-
-    getImageWidth(): string {
+    getImageSize(): string {
         if(this.imageSize) {
-            return "" + this.imageSize.width;
-        }
-
-        return "";
-    }
-
-    getImageHeight(): string {
-        if(this.imageSize) {
-            return "" + this.imageSize.height;
+            return "" + this.imageSize.width + " x " + this.imageSize.height;
         }
 
         return "";
@@ -74,6 +70,14 @@ export class ImportSelectedData {
 
     getFileSize() {
         return this.size;
+    }
+
+    getImportSize() {
+        if(this.importSize) {
+            return this.importSize;
+        }
+
+        return "";
     }
 
     getFileDate() {
@@ -84,9 +88,25 @@ export class ImportSelectedData {
         return "";
     }
 
+    getImportDate() {
+        if(this.importDate) {
+            return this.importDate;
+        }
+
+        return "";
+    }
+
     getMD5() {
         if(this.md5) {
             return this.md5;
+        }
+
+        return "";
+    }
+
+    getImportMd5() {
+        if(this.importMd5) {
+            return this.importMd5;
         }
 
         return "";
@@ -108,6 +128,27 @@ export class ImportSelectedData {
                 this.size = file.source.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             }
             this.md5 = file.source.md5;
+
+            this.importFilename = "";
+            if(file.source.importName && file.source.importName != this.filename) {
+                this.importFilename = file.source.importName;
+            }
+
+            this.importSize = "";
+            if(file.source.importSize && file.source.importSize != file.source.size) {
+                this.importSize = file.source.importSize.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+
+            this.importDate = "";
+            if(file.source.importDate && file.source.importDate != file.source.date) {
+                this.importDate = file.source.importDate.replace("T", " ");
+            }
+
+            this.importMd5 = "";
+            if(file.source.importMd5 && file.source.importMd5 != file.source.md5) {
+                this.importMd5 = file.source.importMd5;
+            }
+
             return;
         }
 

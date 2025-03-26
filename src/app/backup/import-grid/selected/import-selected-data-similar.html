@@ -10,7 +10,12 @@
     <tbody *ngIf="similar && similar.length">
         <tr *ngFor="let file of similar">
             <td>{{file.filename}}</td>
-            <td [class]="getDateClass(file)">{{file.date.replace("T"," ")}}</td>
+            <td [class]="getDateClass(file)">
+                <div class="row date-parent">
+                    <div class="col-6 date-child">{{getDate(file)}}</div>
+                    <div class="col-6 date-child">{{getTime(file)}}</div>
+                </div>
+            </td>
             <td [class]="getSizeClass(file)">{{getSizeString(file)}}</td>
             <td [class]="getMd5Class(file)">{{file.md5}}</td>
         </tr>
