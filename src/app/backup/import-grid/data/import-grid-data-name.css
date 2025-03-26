@@ -1,3 +1,7 @@
 .name {
     font-weight: bold;
 }
+
+.import-name {
+    font-weight: normal;
+}

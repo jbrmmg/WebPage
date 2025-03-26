@@ -15,7 +15,6 @@ import {
     standalone: true
 })
 export class ImportGridHeaderTraffic extends ImportGridHeader implements OnInit {
-    @Input() type: TrafficLightType;
     @Output() filterChange: EventEmitter<ImportGridTrafficLightFilter> = new EventEmitter();
 
     filterValue: ImportGridTrafficLightFilter;
@@ -27,24 +26,7 @@ export class ImportGridHeaderTraffic extends ImportGridHeader implements OnInit 
     }
 
     getText(): string {
-        return ImportGridTrafficLight.getShortHeaderTitle(this.type);
-    }
-
-    getTitle(): string {
-        return ImportGridTrafficLight.getHeaderTitle(this.type);
-    }
-
-    filterStatus(type: TrafficLightStatus) {
-        switch (type) {
-            case TrafficLightStatus.Red:
-                return this.filterValue.red ? "light red-light" : "light off-light";
-            case TrafficLightStatus.Amber:
-                return this.filterValue.amber ? "light amber-light" : "light off-light";
-            case TrafficLightStatus.Green:
-                return this.filterValue.green ? "light green-light" : "light off-light";
-        }
-
-        return this.filterValue.unknown ? "light unknown-light" : "light off-light";
+        return "Status";
     }
 
     filter(type: TrafficLightStatus): void {
@@ -64,7 +46,6 @@ export class ImportGridHeaderTraffic extends ImportGridHeader implements OnInit 
         }
 
         // Fire the event.
-        this.filterValue.type = this.type;
         this.filterChange.emit(this.filterValue);
     }
 }

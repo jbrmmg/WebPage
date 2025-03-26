@@ -1,10 +1,27 @@
 import {ImportGridFile} from "../import-grid-file";
 
+export class StepStatusType {
+    readPreImportFile: string;
+    gatherMetaData: string;
+    copyFileToImport: string;
+    checkFileIgnored: string;
+    checkActivePhotoFile: string;
+    checkDuplicateFile: string;
+    checkFileConfirmedImported: string;
+    processImport: string;
+    completed: string;
+}
+
 export enum TrafficLightType {
-    ImmediateImportStatus,
-    IgnoreStatus,
-    ImportStatus,
-    DuplicateStatus
+    readPreImportFile,
+    gatherMetaData,
+    copyFileToImport,
+    checkFileIgnored,
+    checkActivePhotoFile,
+    checkDuplicateFile,
+    checkFileConfirmedImported,
+    processImport,
+    completed
 }
 
 export enum TrafficLightStatus {
@@ -16,21 +33,36 @@ export enum TrafficLightStatus {
 
 export class ImportGridTrafficLight {
     static getTrafficLightStatus(file: ImportGridFile, type: TrafficLightType): TrafficLightStatus {
-        let status: string = "TL_UNKNOWN";
+        let status: string = "UNKNOWN";
 
         // Get the type.
         switch (type) {
-            case TrafficLightType.ImmediateImportStatus:
-//                status = file.immediateImported;
+            case TrafficLightType.readPreImportFile:
+                status = file.stepStatus.readPreImportFile;
                 break;
-            case TrafficLightType.IgnoreStatus:
-//                status = file.ignored;
+            case TrafficLightType.gatherMetaData:
+                status = file.stepStatus.gatherMetaData;
                 break;
-            case TrafficLightType.ImportStatus:
-//                status = file.imported;
+            case TrafficLightType.copyFileToImport:
+                status = file.stepStatus.copyFileToImport;
                 break;
-            case TrafficLightType.DuplicateStatus:
-//                status = file.duplicated;
+            case TrafficLightType.checkFileIgnored:
+                status = file.stepStatus.checkFileIgnored;
+                break;
+            case TrafficLightType.checkActivePhotoFile:
+                status = file.stepStatus.checkActivePhotoFile;
+                break;
+            case TrafficLightType.checkDuplicateFile:
+                status = file.stepStatus.checkDuplicateFile;
+                break;
+            case TrafficLightType.checkFileConfirmedImported:
+                status = file.stepStatus.checkFileConfirmedImported;
+                break;
+            case TrafficLightType.processImport:
+                status = file.stepStatus.processImport;
+                break;
+            case TrafficLightType.completed:
+                status = file.stepStatus.completed;
                 break;
         }
 
@@ -45,29 +77,26 @@ export class ImportGridTrafficLight {
         }
     }
 
-    static getShortHeaderTitle(type: TrafficLightType): string {
-        switch (type) {
-            case TrafficLightType.ImmediateImportStatus:
-                return "Immediate";
-            case TrafficLightType.IgnoreStatus:
-                return "Ignore";
-            case TrafficLightType.ImportStatus:
-                return "Import";
-            case TrafficLightType.DuplicateStatus:
-                return "Duplicate";
-        }
-    }
-
     static getHeaderTitle(type: TrafficLightType): string {
         switch (type) {
-            case TrafficLightType.ImmediateImportStatus:
-                return "Immediate Import Status";
-            case TrafficLightType.IgnoreStatus:
-                return "Ignore Status";
-            case TrafficLightType.ImportStatus:
-                return "Import Status";
-            case TrafficLightType.DuplicateStatus:
-                return "Duplicate Status";
+            case TrafficLightType.readPreImportFile:
+                return "Read pre-import file.";
+            case TrafficLightType.gatherMetaData:
+                return "Gather meta data.";
+            case TrafficLightType.copyFileToImport:
+                return "Copy file to import.";
+            case TrafficLightType.checkFileIgnored:
+                return "Check file is ignored.";
+            case TrafficLightType.checkActivePhotoFile:
+                return "Check if this is an active photo.";
+            case TrafficLightType.checkDuplicateFile:
+                return "Check for duplicate.";
+            case TrafficLightType.checkFileConfirmedImported:
+                return "Check file is confirmed as imported.";
+            case TrafficLightType.processImport:
+                return "Import has been processed.";
+            case TrafficLightType.completed:
+                return "All processing complete.";
         }
     }
 }

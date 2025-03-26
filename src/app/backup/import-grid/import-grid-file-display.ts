@@ -26,4 +26,20 @@ export class ImportGridFileDisplay {
             this.visible = false;
         }
     }
+
+    sizeDiff() {
+        return this.source && this.source.size && this.source.importSize && this.source.size != this.source.importSize;
+    }
+
+    nameDiff() {
+        return this.source && this.source.filename && this.source.importName && this.source.filename != this.source.importName;
+    }
+
+    dateDiff() {
+        return this.source && this.source.date && this.source.importDate && this.source.date != this.source.importDate;
+    }
+
+    md5Diff() {
+        return this.source && this.source.md5 && this.source.importMd5 && this.source.md5 != this.source.importMd5;
+    }
 }

@@ -1,7 +1,7 @@
 import {IImportGridFileBase} from "./import-grid-file-base";
 import {LatLong} from "./import-grid-latlong";
 import {ImageSize} from "./import-grid-imagesize";
-import {StepStatusType} from "./import-grid-step-status";
+import {StepStatusType} from "./traffic/import-grid-traffic-light";
 
 export class ImportGridFile implements IImportGridFileBase {
     filename: string;

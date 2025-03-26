@@ -184,8 +184,11 @@ export class ImportGrid implements OnInit {
         if(data.stepStatus.checkFileConfirmedImported != update.stepStatus.checkFileConfirmedImported) {
             data.stepStatus.checkFileConfirmedImported = update.stepStatus.checkFileConfirmedImported;
         }
-        if(data.stepStatus.competed != update.stepStatus.competed) {
-            data.stepStatus.competed = update.stepStatus.competed;
+        if(data.stepStatus.processImport != update.stepStatus.processImport) {
+            data.stepStatus.processImport = update.stepStatus.processImport;
+        }
+        if(data.stepStatus.completed != update.stepStatus.completed) {
+            data.stepStatus.completed = update.stepStatus.completed;
         }
     }
 
@@ -526,37 +529,6 @@ export class ImportGrid implements OnInit {
         })
     }
 
-    statusFlagSorter(file: ImportGridFile, type: TrafficLightType): string {
-        if(file) {
-            switch(type) {
-                case TrafficLightType.ImmediateImportStatus:
-                    return file.stepStatus.readPreImportFile;
-                case TrafficLightType.IgnoreStatus:
-                    return file.stepStatus.checkFileIgnored;
-                case TrafficLightType.ImportStatus:
-                    return file.stepStatus.checkFileConfirmedImported;
-                case TrafficLightType.DuplicateStatus:
-                    return file.stepStatus.checkDuplicateFile;
-            }
-        }
-
-        return "";
-    }
-
-    sortFlagStatus(type: TrafficLightType) {
-        this.data = this.data.sort((f1,f2) => {
-            if(this.statusFlagSorter(f1.source,type) > this.statusFlagSorter(f2.source,type)) {
-                return this.sortUp ? 1 : -1;
-            }
-
-            if(this.statusFlagSorter(f1.source,type) < this.statusFlagSorter(f2.source,type)) {
-                return this.sortUp ? -1 : 1;
-            }
-
-            return 0;
-        })
-    }
-
     sortData(column: string, flipOrder: boolean) {
         let oldStatus: string = this.status
 
@@ -574,18 +546,6 @@ export class ImportGrid implements OnInit {
                 break;
             case "MD5":
                 this.sortMD5();
-                break;
-            case "Immediate":
-                this.sortFlagStatus(TrafficLightType.ImmediateImportStatus);
-                break;
-            case "Ignore":
-                this.sortFlagStatus(TrafficLightType.IgnoreStatus);
-                break;
-            case "Import":
-                this.sortFlagStatus(TrafficLightType.ImportStatus);
-                break;
-            case "Duplicate":
-                this.sortFlagStatus(TrafficLightType.DuplicateStatus);
                 break;
             case "Status":
                 this.sortStatus();

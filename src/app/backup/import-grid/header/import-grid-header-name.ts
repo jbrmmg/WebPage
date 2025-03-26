@@ -1,5 +1,5 @@
 import {NgIf} from "@angular/common";
-import {Component} from "@angular/core";
+import {Component, Input} from "@angular/core";
 import {ImportGridHeader} from "./import-grid-header";
 
 @Component({
@@ -12,7 +12,9 @@ import {ImportGridHeader} from "./import-grid-header";
     standalone: true
 })
 export class ImportGridHeaderName extends ImportGridHeader {
+    @Input() importValue: boolean = false;
+
     getText(): string {
-        return "Name";
+        return this.importValue ? "Import Name" : "Name";
     }
 }

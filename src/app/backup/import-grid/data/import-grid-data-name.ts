@@ -1,5 +1,5 @@
 import {NgIf} from "@angular/common";
-import {Component} from "@angular/core";
+import {Component, Input} from "@angular/core";
 import {ImportGridData} from "./import-grid-data";
 
 @Component({
@@ -12,11 +12,25 @@ import {ImportGridData} from "./import-grid-data";
     standalone: true
 })
 export class ImportGridDataName extends ImportGridData {
+    @Input() importValue: boolean = false;
+
     getText(): string {
         if(this.file && this.file.source) {
-            return this.file.source.filename;
+            if(this.importValue) {
+                if(this.file.source.importName) {
+                    return this.file.source.importName;
+                }
+            } else {
+                if(this.file.source.filename) {
+                    return this.file.source.filename;
+                }
+            }
         }
 
         return "";
+    }
+
+    getClass() {
+        return this.importValue ? "import-name" : "name";
     }
 }

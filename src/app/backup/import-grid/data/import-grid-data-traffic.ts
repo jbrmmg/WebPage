@@ -13,8 +13,6 @@ import {ImportGridTrafficLight, TrafficLightStatus, TrafficLightType} from "../t
     standalone: true
 })
 export class ImportGridDataTraffic extends ImportGridData {
-    @Input() type: TrafficLightType;
-
     getText(): string {
         return "";
     }
@@ -27,8 +25,8 @@ export class ImportGridDataTraffic extends ImportGridData {
         return false;
     }
 
-    statusClass(): string {
-        switch (ImportGridTrafficLight.getTrafficLightStatus(this.file.source,this.type)) {
+    statusClass(type: TrafficLightType): string {
+        switch (ImportGridTrafficLight.getTrafficLightStatus(this.file.source,type)) {
             case TrafficLightStatus.Red:
                 return "light red-light";
             case TrafficLightStatus.Amber:
@@ -40,7 +38,9 @@ export class ImportGridDataTraffic extends ImportGridData {
         return "light unknown-light";
     }
 
-    getTitle(): string {
-        return ImportGridTrafficLight.getHeaderTitle(this.type);
+    getTitle(type: TrafficLightType): string {
+        return ImportGridTrafficLight.getHeaderTitle(type);
     }
+
+    protected readonly TrafficLightType = TrafficLightType;
 }

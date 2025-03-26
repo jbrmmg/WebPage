@@ -27,16 +27,19 @@
                     <jbr-import-grid-header-date (fireSource)="sortData($event,true)"></jbr-import-grid-header-date>
                 </th>
                 <th>
-                    <jbr-import-grid-header-traffic (fireSource)="sortData($event,true)" [type]="TrafficLightType.ImmediateImportStatus"></jbr-import-grid-header-traffic>
+                    <jbr-import-grid-header-name (fireSource)="sortData($event,true)" [importValue]="true"></jbr-import-grid-header-name>
                 </th>
                 <th>
-                    <jbr-import-grid-header-traffic (fireSource)="sortData($event,true)" [type]="TrafficLightType.IgnoreStatus"></jbr-import-grid-header-traffic>
+                    <jbr-import-grid-header-md5 (fireSource)="sortData($event,true)" [importValue]="true"></jbr-import-grid-header-md5>
                 </th>
                 <th>
-                    <jbr-import-grid-header-traffic (fireSource)="sortData($event,true)" [type]="TrafficLightType.ImportStatus"></jbr-import-grid-header-traffic>
+                    <jbr-import-grid-header-size (fireSource)="sortData($event,true)" [importValue]="true"></jbr-import-grid-header-size>
                 </th>
                 <th>
-                    <jbr-import-grid-header-traffic (fireSource)="sortData($event,true)" [type]="TrafficLightType.DuplicateStatus"></jbr-import-grid-header-traffic>
+                    <jbr-import-grid-header-date (fireSource)="sortData($event,true)" [importValue]="true"></jbr-import-grid-header-date>
+                </th>
+                <th>
+                    <jbr-import-grid-header-traffic (fireSource)="sortData($event,true)"></jbr-import-grid-header-traffic>
                 </th>
                 <th>
                     <jbr-import-grid-header-destination></jbr-import-grid-header-destination>
@@ -61,17 +64,20 @@
                     <td>
                         <jbr-import-grid-data-date [file]=file></jbr-import-grid-data-date>
                     </td>
-                    <td>
-                        <jbr-import-grid-data-traffic [file]=file [type]="TrafficLightType.ImmediateImportStatus"></jbr-import-grid-data-traffic>
+                    <td [class]="file.nameDiff() ? 'mis-match' : ''">
+                        <jbr-import-grid-data-name [file]=file [importValue]="true"></jbr-import-grid-data-name>
+                    </td>
+                    <td [class]="file.md5Diff() ? 'mis-match' : ''">
+                        <jbr-import-grid-data-md5 [file]=file [importValue]="true"></jbr-import-grid-data-md5>
+                    </td>
+                    <td [class]="file.sizeDiff() ? 'mis-match' : ''">
+                        <jbr-import-grid-data-size [file]=file [importValue]="true"></jbr-import-grid-data-size>
+                    </td>
+                    <td [class]="file.dateDiff() ? 'mis-match' : ''">
+                        <jbr-import-grid-data-date [file]=file [importValue]="true"></jbr-import-grid-data-date>
                     </td>
                     <td>
-                        <jbr-import-grid-data-traffic [file]=file [type]="TrafficLightType.IgnoreStatus"></jbr-import-grid-data-traffic>
-                    </td>
-                    <td>
-                        <jbr-import-grid-data-traffic [file]=file [type]="TrafficLightType.ImportStatus"></jbr-import-grid-data-traffic>
-                    </td>
-                    <td>
-                        <jbr-import-grid-data-traffic [file]=file [type]="TrafficLightType.DuplicateStatus"></jbr-import-grid-data-traffic>
+                        <jbr-import-grid-data-traffic [file]=file></jbr-import-grid-data-traffic>
                     </td>
                     <td>
                         <jbr-import-grid-data-destination [file]="file"></jbr-import-grid-data-destination>

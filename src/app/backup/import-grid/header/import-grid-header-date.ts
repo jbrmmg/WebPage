@@ -1,5 +1,5 @@
 import {NgIf} from "@angular/common";
-import {Component} from "@angular/core";
+import {Component, Input} from "@angular/core";
 import {ImportGridHeader} from "./import-grid-header";
 
 @Component({
@@ -13,7 +13,9 @@ import {ImportGridHeader} from "./import-grid-header";
 })
 
 export class ImportGridHeaderDate extends ImportGridHeader {
+    @Input() importValue: boolean = false;
+
     getText(): string {
-        return "Date";
+        return this.importValue ? "Import Date" : "Date";
     }
 }
