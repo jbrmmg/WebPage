@@ -19,7 +19,6 @@ import {ImportGridDataTraffic} from "./data/import-grid-data-traffic";
 import {ImportGridTrafficLightFilter, TrafficLightType} from "./traffic/import-grid-traffic-light";
 import {ImportSelected} from "./selected/import-selected";
 import {ImportSelectedAction} from "./selected/import-selected-action";
-import {ImportGridStatus} from "./status/import-grid-status";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {ImportGridHeaderDestination} from "./header/import-grid-header-destination";
 import {ImportGridDataDestination} from "./data/import-grid-data-destination";
@@ -46,7 +45,6 @@ import {ImportGridSummaryCount} from "./summary/import-grid-summary-count";
         ImportGridHeaderTraffic,
         ImportGridDataTraffic,
         ImportSelected,
-        ImportGridStatus,
         ImportGridHeaderDestination,
         ImportGridDataDestination,
         ImportGridSummary
@@ -95,10 +93,6 @@ export class ImportGrid implements OnInit {
         this.summaryUpdateSource.removeEventListener('message', this.summaryUpdate.bind(this));
         this.summaryUpdateSource.close();
         console.log("Cleanup before unload." + event);
-    }
-
-    changeLimit(limitChange: number) {
-        this.limit += limitChange;
     }
 
     updateFileDataBase(data: IImportGridFileBase, update: ImportGridFileBase) {
@@ -376,11 +370,15 @@ export class ImportGrid implements OnInit {
         });
     }
 
-    refresh() {
+    refresh(newLimit: number) {
         this.status = "loading";
         this.data = [];
         let id: number = 0;
         let count: number = 0;
+
+        if(newLimit != -1) {
+            this.limit = newLimit;
+        }
 
         // Get the data.
         this._importGridService.getFiles(this.limit).subscribe({
@@ -608,7 +606,7 @@ export class ImportGrid implements OnInit {
                 },
                 complete: () => {
                     this.status = "File ignored."
-                    this.refresh();
+                    this.refresh(-1);
                     console.log('Ignore complete');
                 }
             }
@@ -629,7 +627,7 @@ export class ImportGrid implements OnInit {
                 },
                 complete: () => {
                     this.status = "File marked as recipe."
-                    this.refresh();
+                    this.refresh(-1);
                     console.log('Mark as recipe complete complete');
                 }
             }
@@ -705,7 +703,7 @@ export class ImportGrid implements OnInit {
             complete: () => {
                 console.log('Remove ignored complete');
                 this.status = "Remove ignored complete";
-                this.refresh();
+                this.refresh(-1);
             }
         });
     }
@@ -723,7 +721,7 @@ export class ImportGrid implements OnInit {
             complete: () => {
                 console.log('Import files complete');
                 this.status = "Import files complete";
-                this.refresh();
+                this.refresh(-1);
             }
         });
     }
@@ -741,7 +739,7 @@ export class ImportGrid implements OnInit {
             complete: () => {
                 console.log('Remove duplicates complete');
                 this.status = "Remove duplicates complete";
-                this.refresh();
+                this.refresh(-1);
             }
         });
     }
@@ -759,7 +757,7 @@ export class ImportGrid implements OnInit {
             complete: () => {
                 console.log('Process files complete');
                 this.status = "Process files complete";
-                this.refresh();
+                this.refresh(-1);
             }
         });
     }

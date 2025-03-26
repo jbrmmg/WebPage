@@ -1,4 +1,4 @@
-import {Component, Input} from "@angular/core";
+import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {ImportGridSummaryCount} from "./import-grid-summary-count";
 import {TrafficLightStatus, TrafficLightType} from "../traffic/import-grid-traffic-light";
 import {ImportGridSummaryStepCount} from "./import-grid-summary-step-count";
@@ -15,8 +15,8 @@ import {NgIf} from "@angular/common";
 })
 export class ImportGridSummary {
     @Input() summary: ImportGridSummaryCount;
-
-    status: string = "to do";
+    @Input() status: string;
+    @Output() refreshEvent: EventEmitter<number> = new EventEmitter();
 
     getPreImportTotal(): string {
         if(this.summary && this.summary.PreImport) {
@@ -192,7 +192,23 @@ export class ImportGridSummary {
     }
 
     refresh() {
+        this.refreshEvent.emit(-1);
+    }
 
+    removeIgnored() {
+
+    }
+
+    removeConfirmedImports() {
+
+    }
+
+    importFiles() {
+
+    }
+
+    setPageSize(size: number) {
+        this.refreshEvent.emit(size);
     }
 
     getTotal(type: TrafficLightType, status: TrafficLightStatus) {

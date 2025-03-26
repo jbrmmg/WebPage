@@ -1,13 +1,7 @@
-<jbr-import-grid-summary [summary]="summary"></jbr-import-grid-summary>
+<jbr-import-grid-summary [summary]="summary"
+    [status]="status"
+    (refreshEvent)="refresh($event)"></jbr-import-grid-summary>
 <import-selected #selected (actionEvent)="action($event,confirmTemplate)"></import-selected>
-<jbr-import-grid-status [status]="status"
-    [limit]="limit"
-    (refreshEvent)="refresh()"
-    (limitChangeEvent)="changeLimit($event)"
-    (removeIgnoredEvent)="removeIgnored()"
-    (importFilesEvent)="importFiles()"
-    (removeDuplicateEvent)="removeDuplicates()"
-    (processEvent)="process()"></jbr-import-grid-status>
 <div class="row file-table">
     <table>
         <thead>

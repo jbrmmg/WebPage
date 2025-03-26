@@ -29,6 +29,33 @@ td.green {
     background: green;
 }
 
+.refresh {
+    padding: 0 5px 0 15px;
+    flex: 0 1 0;
+}
+
+.status {
+    padding: 10px 0 0 3px;
+    flex: 1 0 0;
+    font-family: Helvetica, serif;
+    font-size: 10px;
+}
+
+.first-page {
+    padding: 0 5px 0 22px;
+    flex: 0 1 0;
+}
+
+.global-action {
+    padding: 0 5px 0 2px;
+    flex: 0 1 0;
+}
+
+.second-row {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
 td.header {
     font-weight: bold;
     text-align: left;

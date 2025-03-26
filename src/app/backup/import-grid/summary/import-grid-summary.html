@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-6">
         <div class="row">
-            <div class="no-pad col refresh" title="Refresh the list of files displayed here.">
+            <div class="col refresh" title="Refresh the list of files displayed here.">
                 <label class="btn btn-primary"
                        (click)="refresh()">
                     <em class="fa fa-refresh"></em>
@@ -9,7 +9,57 @@
             </div>
             <div class="col status">{{status}}</div>
         </div>
-        <div class="row"></div>
+        <div class="row second-row">
+            <div class="col refresh" title="Remove any files that are already marked as ignore.">
+                <label class="btn btn-outline-warning"
+                       aria-controls="list"
+                       (click)="removeIgnored()">
+                    <em class="fa fa-minus-circle"></em>
+                </label>
+            </div>
+            <div class="col global-action" title="Remove any files that are definitely already present.">
+                <label class="btn btn-outline-warning"
+                       (click)="removeConfirmedImports()">
+                    <em class="fa fa-trash"></em>
+                </label>
+            </div>
+            <div class="no-pad col global-action" title="Import the files">
+                <label class="btn btn-outline-warning"
+                       (click)="importFiles()">
+                    <em class="fa fa-arrow-right"></em>
+                </label>
+            </div>
+            <div class="no-pad col first-page" title="Set the display limit to 10 files.">
+                <label class="btn btn-outline-primary"
+                       (click)="setPageSize(10)">
+                    10
+                </label>
+            </div>
+            <div class="no-pad col global-action" title="Set the display limit to 20 files.">
+                <label class="btn btn-outline-primary"
+                       (click)="setPageSize(20)">
+                    20
+                </label>
+            </div>
+            <div class="no-pad col global-action" title="Set the display limit to 50 files.">
+                <label class="btn btn-outline-primary"
+                       (click)="setPageSize(50)">
+                    50
+                </label>
+            </div>
+            <div class="no-pad col global-action" title="Set the display limit to 100 files.">
+                <label class="btn btn-outline-primary"
+                       (click)="setPageSize(100)">
+                    100
+                </label>
+            </div>
+            <div class="no-pad col global-action" title="Set the display limit to All files.">
+                <label class="btn btn-outline-primary"
+                       (click)="setPageSize(0)">
+                    All
+                </label>
+            </div>
+        </div>
     </div>
     <div class="col-6">
         <table>
