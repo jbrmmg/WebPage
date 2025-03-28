@@ -17,6 +17,8 @@ export class ImportGridSummary {
     @Input() summary: ImportGridSummaryCount;
     @Input() status: string;
     @Output() refreshEvent: EventEmitter<number> = new EventEmitter();
+    @Output() removeConfirmedImportsEvent: EventEmitter<void> = new EventEmitter();
+    @Output() removeIgnoredEvent: EventEmitter<void> = new EventEmitter();
 
     getPreImportTotal(): string {
         if(this.summary && this.summary.PreImport) {
@@ -196,11 +198,11 @@ export class ImportGridSummary {
     }
 
     removeIgnored() {
-
+        this.removeIgnoredEvent.emit();
     }
 
     removeConfirmedImports() {
-
+        this.removeConfirmedImportsEvent.emit();
     }
 
     importFiles() {

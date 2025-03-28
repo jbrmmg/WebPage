@@ -31,7 +31,7 @@ export class ImportGridService {
     }
 
     reimportFile(filename: string): Observable<any> {
-        return this.http.post(environment.backupReimportFile, filename, {responseType: 'text'})
+        return this.http.post(environment.backupReimportFile, filename, {responseType: 'text'});
     }
 
     fileUpdateSource() : EventSource {
@@ -39,23 +39,23 @@ export class ImportGridService {
     }
 
     summaryUpdateSource() : EventSource {
-        return new EventSource(environment.backupFileSummaryUpdates)
+        return new EventSource(environment.backupFileSummaryUpdates);
     }
 
     removeIgnored(): Observable<any> {
-        return this.http.post(environment.backupRemoveIgnored, "", {responseType: 'text'})
+        return this.http.delete(environment.backupRemoveIgnored);
     }
 
     importFiles(): Observable<any> {
-        return this.http.post(environment.backupImportFiles, "", {responseType: 'text'})
+        return this.http.post(environment.backupImportFiles, "", {responseType: 'text'});
     }
 
-    removeDuplicates(): Observable<any> {
-        return this.http.post(environment.backupRemoveDuplicates, "", {responseType: 'text'})
+    removeConfirmedImports(): Observable<any> {
+        return this.http.delete(environment.backupDeleteConfirmedImports);
     }
 
     process(): Observable<any> {
-        return this.http.post(environment.backupProcessFiles, "", {responseType: 'text'})
+        return this.http.post(environment.backupProcessFiles, "", {responseType: 'text'});
     }
 
     ignore(file: string): Observable<any> {

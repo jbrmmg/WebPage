@@ -8,6 +8,7 @@ export class ImportGridFile implements IImportGridFileBase {
     date: string;
     size: number;
     md5: string;
+    status: string;
     duration: number;
     destination: string;
     importName: string;

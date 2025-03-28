@@ -16,15 +16,11 @@ export class ImportGridFileDisplay {
     }
 
     display() {
-        if(!this.visible) {
-            this.visible = true;
-        }
+        this.visible = true;
     }
 
     hide() {
-        if(!this.visible) {
-            this.visible = false;
-        }
+        this.visible = false;
     }
 
     sizeDiff() {

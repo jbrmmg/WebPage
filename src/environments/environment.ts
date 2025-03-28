@@ -32,9 +32,9 @@ export const environment = {
   backupFileUpdates: "api/backup/file-updates",
   backupFileSummaryUpdates: "api/backup/summary-updates",
   backupReimportFile: "api/backup/reimportfile",
-  backupRemoveIgnored: "api/backup/removeignored",
+  backupRemoveIgnored: "api/backup/delete-ignored",
   backupImportFiles: "api/backup/importfiles",
-  backupRemoveDuplicates: "api/backup/removeduplicates",
+  backupDeleteConfirmedImports: "api/backup/delete-confirmed-imports",
   backupProcessFiles: "api/backup/importprocess",
   backupIgnoreFile: "api/backup/ignorefile",
   backupRecipeFile: "api/backup/recipefile"

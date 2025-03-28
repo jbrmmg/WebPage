@@ -355,7 +355,12 @@ export class ImportGrid implements OnInit {
                     return;
                 }
 
-                this.updateFileData(d.source,f);
+                // If the file has been removed, hide it.
+                if(f.status && f.status == "REMOVED") {
+                    d.hide();
+                } else {
+                    this.updateFileData(d.source, f);
+                }
             });
         });
     }
@@ -726,9 +731,9 @@ export class ImportGrid implements OnInit {
         });
     }
 
-    removeDuplicates() {
-        this.status = "Removing duplicate files from the import directory.";
-        this._importGridService.removeDuplicates().subscribe({
+    removeConfirmedImports() {
+        this.status = "Removing files that are confirmed imports.";
+        this._importGridService.removeConfirmedImports().subscribe({
             next: (result) => {
                 console.log(result);
             },

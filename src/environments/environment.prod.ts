@@ -29,9 +29,9 @@ export const environment = {
   backupFileUpdates: "backup/file-updates",
   backupFileSummaryUpdates: "backup/summary-updates",
   backupReimportFile: "backup/reimportfile",
-  backupRemoveIgnored: "backup/removeignored",
+  backupRemoveIgnored: "backup/delete-ignored",
   backupImportFiles: "backup/importfiles",
-  backupRemoveDuplicates: "backup/removeduplicates",
+  backupDeleteConfirmedImports: "backup/delete-confirmed-imports",
   backupProcessFiles: "backup/importprocess",
   backupIgnoreFile: "backup/ignore-file",
   backupRecipeFile: "backup/recipe-file"

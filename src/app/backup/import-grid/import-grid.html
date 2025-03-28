@@ -1,6 +1,8 @@
 <jbr-import-grid-summary [summary]="summary"
     [status]="status"
-    (refreshEvent)="refresh($event)"></jbr-import-grid-summary>
+    (refreshEvent)="refresh($event)"
+    (removeConfirmedImportsEvent)="removeConfirmedImports()"
+    (removeIgnoredEvent)="removeIgnored()"></jbr-import-grid-summary>
 <import-selected #selected (actionEvent)="action($event,confirmTemplate)"></import-selected>
 <div class="row file-table">
     <table>
