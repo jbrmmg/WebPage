@@ -33,6 +33,7 @@ export const environment = {
   backupFileSummaryUpdates: "api/backup/summary-updates",
   backupReimportFile: "api/backup/reimportfile",
   backupRemoveIgnored: "api/backup/delete-ignored",
+  backupRemoveActive: "api/backup/delete-active-photos",
   backupImportFiles: "api/backup/importfiles",
   backupDeleteConfirmedImports: "api/backup/delete-confirmed-imports",
   backupProcessFiles: "api/backup/importprocess",

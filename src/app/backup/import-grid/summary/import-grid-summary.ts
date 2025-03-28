@@ -23,6 +23,7 @@ export class ImportGridSummary {
     @Output() removeConfirmedImportsEvent: EventEmitter<void> = new EventEmitter();
     @Output() removeIgnoredEvent: EventEmitter<void> = new EventEmitter();
     @Output() filterChangeEvent: EventEmitter<ListFilterType> = new EventEmitter();
+    @Output() removeActivePhotosEvent: EventEmitter<void> = new EventEmitter();
 
     getHeaderText(status: TrafficLightStatus): string {
         switch (status) {
@@ -242,6 +243,10 @@ export class ImportGridSummary {
 
     removeConfirmedImports() {
         this.removeConfirmedImportsEvent.emit();
+    }
+
+    removeActivePhotos() {
+        this.removeActivePhotosEvent.emit();
     }
 
     importFiles() {

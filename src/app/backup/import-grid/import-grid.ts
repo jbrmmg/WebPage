@@ -749,6 +749,25 @@ export class ImportGrid implements OnInit {
         });
     }
 
+    removeActivePhoto() {
+        this.status = "Removing active photos";
+        this._importGridService.removeActive().subscribe({
+            next: (result) => {
+                console.log(result);
+            },
+            error: err => {
+                // Error.
+                this.status = "Remove active photos failed - check log";
+                console.log('There is an error?' + err.message)
+            },
+            complete: () => {
+                console.log('Remove ignored complete');
+                this.status = "Remove active photos complete";
+                this.refresh(-1);
+            }
+        });
+    }
+
     importFiles() {
         this.status = "Importing the files, converting and importing details into database.";
         this._importGridService.importFiles().subscribe({
