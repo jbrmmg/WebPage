@@ -24,6 +24,7 @@ import {ImportGridHeaderDestination} from "./header/import-grid-header-destinati
 import {ImportGridDataDestination} from "./data/import-grid-data-destination";
 import {ImportGridSummary} from "./summary/import-grid-summary";
 import {ImportGridSummaryCount} from "./summary/import-grid-summary-count";
+import {ListFilterType} from "./import-grid-filter";
 
 @Component({
     selector: 'jbr-import-grid',
@@ -64,6 +65,7 @@ export class ImportGrid implements OnInit {
     public selectedFile: ImportGridFileDisplay;
     public afterRefresh: string;
     public limit: number;
+    public filter: ListFilterType;
     public fileForDelete: string;
     protected readonly TrafficLightType = TrafficLightType;
     modalRef: BsModalRef;
@@ -85,6 +87,7 @@ export class ImportGrid implements OnInit {
         this.sortColumn = "Name";
         this.selectedFile = null;
         this.limit = 20;
+        this.filter = null;
     }
 
     handleBeforeUnload(event: BeforeUnloadEvent) : void {
@@ -386,7 +389,7 @@ export class ImportGrid implements OnInit {
         }
 
         // Get the data.
-        this._importGridService.getFiles(this.limit).subscribe({
+        this._importGridService.getFiles(this.limit, this.filter).subscribe({
             next: val => {
                 val.forEach((e) => {
                     this.data.push(new ImportGridFileDisplay(id++,e));
@@ -765,5 +768,13 @@ export class ImportGrid implements OnInit {
                 this.refresh(-1);
             }
         });
+    }
+
+    filterChange(filter: ListFilterType) {
+        // Update the filter.
+        this.filter = filter;
+
+        // Perform a refresh with the new filter.
+        this.refresh(-1);
     }
 }

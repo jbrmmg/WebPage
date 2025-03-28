@@ -4,6 +4,8 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ImportGridFile} from "./import-grid-file";
 import {catchError, tap} from "rxjs/operators";
 import {Injectable} from "@angular/core";
+import {ListFilterType} from "./import-grid-filter";
+import {TrafficLightStatus, TrafficLightType} from "./traffic/import-grid-traffic-light";
 
 @Injectable({
     providedIn: 'root'
@@ -23,8 +25,13 @@ export class ImportGridService {
         return throwError(() => new Error(errorMessage));
     }
 
-    getFiles(limit: number): Observable<ImportGridFile[]> {
-        return this.http.get<ImportGridFile[]>(environment.backupGetPreImportFiles + "?limit=" + limit).pipe(
+    getFiles(limit: number, filter: ListFilterType): Observable<ImportGridFile[]> {
+        let url = environment.backupGetPreImportFiles + "?limit=" + limit;
+        if(filter != null) {
+            url = url + "&stepType=" + TrafficLightType[filter.type] + "&status=" + TrafficLightStatus[filter.status];
+        }
+
+        return this.http.get<ImportGridFile[]>(url).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError(err => ImportGridService.handleError(err))
         );
