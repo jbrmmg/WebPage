@@ -437,21 +437,27 @@ export class ImportGrid implements OnInit {
         this.selected.selectionChange(data);
     }
 
-    nameSorter(name: ImportGridFile): string {
-        if(name && name.filename) {
-            return name.filename.toLowerCase();
+    nameSorter(name: ImportGridFile, importType: boolean): string {
+        if(importType) {
+            if (name && name.importName) {
+                return name.importName.toLowerCase();
+            }
+        } else {
+            if (name && name.filename) {
+                return name.filename.toLowerCase();
+            }
         }
 
         return "";
     }
 
-    sortName() {
+    sortName(importType: boolean) {
         this.data = this.data.sort((f1,f2) => {
-            if(this.nameSorter(f1.source) > this.nameSorter(f2.source)) {
+            if(this.nameSorter(f1.source, importType) > this.nameSorter(f2.source, importType)) {
                 return this.sortUp ? 1 : -1;
             }
 
-            if(this.nameSorter(f1.source) < this.nameSorter(f2.source)) {
+            if(this.nameSorter(f1.source, importType) < this.nameSorter(f2.source, importType)) {
                 return this.sortUp ? -1 : 1;
             }
 
@@ -459,21 +465,25 @@ export class ImportGrid implements OnInit {
         })
     }
 
-    sizeSorter(file: ImportGridFile): number {
+    sizeSorter(file: ImportGridFile, importType: boolean): number {
         if(file) {
-            return file.size;
+            if(importType) {
+                return file.importSize;
+            } else {
+                return file.size;
+            }
         }
 
         return 0;
     }
 
-    sortSize() {
+    sortSize(importType: boolean) {
         this.data = this.data.sort((f1,f2) => {
-            if(this.sizeSorter(f1.source) > this.sizeSorter(f2.source)) {
+            if(this.sizeSorter(f1.source,importType) > this.sizeSorter(f2.source,importType)) {
                 return this.sortUp ? 1 : -1;
             }
 
-            if(this.sizeSorter(f1.source) < this.sizeSorter(f2.source)) {
+            if(this.sizeSorter(f1.source,importType) < this.sizeSorter(f2.source,importType)) {
                 return this.sortUp ? -1 : 1;
             }
 
@@ -507,21 +517,25 @@ export class ImportGrid implements OnInit {
         })
     }
 
-    dateSorter(file: ImportGridFile): string{
+    dateSorter(file: ImportGridFile,importType: boolean): string{
         if(file) {
-            return file.date;
+            if(importType) {
+                return file.importDate;
+            } else {
+                return file.date;
+            }
         }
 
         return "";
     }
 
-    sortDate() {
+    sortDate(importType: boolean) {
         this.data = this.data.sort((f1,f2) => {
-            if(this.dateSorter(f1.source) > this.dateSorter(f2.source)) {
+            if(this.dateSorter(f1.source,importType) > this.dateSorter(f2.source,importType)) {
                 return this.sortUp ? 1 : -1;
             }
 
-            if(this.dateSorter(f1.source) < this.dateSorter(f2.source)) {
+            if(this.dateSorter(f1.source,importType) < this.dateSorter(f2.source,importType)) {
                 return this.sortUp ? -1 : 1;
             }
 
@@ -529,23 +543,29 @@ export class ImportGrid implements OnInit {
         })
     }
 
-    md5Sorter(file: ImportGridFile): string {
+    md5Sorter(file: ImportGridFile, importType: boolean): string {
         if(file) {
-            if (file.md5) {
-                return file.md5.toUpperCase();
+            if(importType) {
+                if (file.importMd5) {
+                    return file.importMd5.toUpperCase();
+                }
+            } else {
+                if (file.md5) {
+                    return file.md5.toUpperCase();
+                }
             }
         }
 
         return "";
     }
 
-    sortMD5() {
+    sortMD5(importType: boolean) {
         this.data = this.data.sort((f1,f2) => {
-            if(this.md5Sorter(f1.source) > this.md5Sorter(f2.source)) {
+            if(this.md5Sorter(f1.source,importType) > this.md5Sorter(f2.source,importType)) {
                 return this.sortUp ? 1 : -1;
             }
 
-            if(this.md5Sorter(f1.source) < this.md5Sorter(f2.source)) {
+            if(this.md5Sorter(f1.source,importType) < this.md5Sorter(f2.source,importType)) {
                 return this.sortUp ? -1 : 1;
             }
 
@@ -563,19 +583,32 @@ export class ImportGrid implements OnInit {
         this.status = "Sorting";
         switch (column) {
             case "Name":
-                this.sortName();
+                this.sortName(false);
                 break;
             case "Size":
-                this.sortSize();
+                this.sortSize(false);
                 break;
             case "MD5":
-                this.sortMD5();
+                this.sortMD5(false);
+                break;
+            case "Date":
+                this.sortDate(false);
+                break;
+            case "Import Name":
+                this.sortName(true);
+                break;
+            case "Import Size":
+                this.sortSize(true);
+                break;
+            case "Import MD5":
+                this.sortMD5(true);
+                break;
+            case "Import Date":
+                this.sortDate(true);
                 break;
             case "Status":
                 this.sortStatus();
                 break;
-            case "Date":
-                this.sortDate();
         }
         this.status = oldStatus;
         this.sortColumn = column;
