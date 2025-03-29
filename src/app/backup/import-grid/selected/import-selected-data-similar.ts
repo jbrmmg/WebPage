@@ -14,15 +14,33 @@ import {NgForOf, NgIf} from "@angular/common";
 })
 export class ImportSelectedDataSimilar {
     @Input() similar: IImportGridFileBase[];
+    @Input() name: string;
     @Input() date: string;
     @Input() size: string;
     @Input() md5: string;
+    @Input() importName: string;
     @Input() importDate: string;
     @Input() importSize: string;
     @Input() importMd5: string;
 
     getSizeString(file: IImportGridFileBase) {
         return file.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    getNameClass(file: IImportGridFileBase): string {
+        if(file.filename && this.name) {
+            if(file.filename.toLowerCase().includes(this.name.toLowerCase())) {
+                return "";
+            }
+
+            if(this.importName) {
+                if(file.filename.toLowerCase().includes(this.importName.toLowerCase())) {
+                    return "";
+                }
+            }
+        }
+
+        return "mismatch";
     }
 
     getDateClass(file: IImportGridFileBase): string {

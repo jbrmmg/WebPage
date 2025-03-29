@@ -9,7 +9,7 @@
     </thead>
     <tbody *ngIf="similar && similar.length">
         <tr *ngFor="let file of similar">
-            <td>{{file.filename}}</td>
+            <td [class]="getNameClass(file)">{{file.filename}}</td>
             <td [class]="getDateClass(file)">
                 <div class="row date-parent">
                     <div class="col-6 date-child">{{getDate(file)}}</div>

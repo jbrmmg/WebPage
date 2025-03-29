@@ -30,21 +30,21 @@
     <div class="row">
         <div class="col action-btn-first">
             <label class="btn btn-primary"
-                   aria-controls="list"
+                   title="Move to the previous file in the list."
                    (click)="previous()">
                 <em class="fa fa-arrow-left"></em>
             </label>
         </div>
         <div class="col action-btn">
             <label class="btn btn-primary"
-                   title="Move to the next photo"
+                   title="Move to the next file in the list."
                    (click)="next()">
                 <em class="fa fa-arrow-right"></em>
             </label>
         </div>
         <div class="col action-btn">
             <label class="btn btn-danger"
-                   title="Move to the previous photo"
+                   title="Remove this file from the import."
                    (click)="delete()">
                 <em class="fa fa-trash"></em>
             </label>
@@ -76,9 +76,11 @@
     </div>
     <div class="row">
         <import-selected-data-similar
+                [name]="filename"
                 [date]="date"
                 [size]="size"
                 [md5]="md5"
+                [importName]="importFilename"
                 [importDate]="importDate"
                 [importSize]="importSize"
                 [importMd5]="importMd5"
