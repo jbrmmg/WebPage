@@ -6,6 +6,7 @@ import {catchError, tap} from "rxjs/operators";
 import {Injectable} from "@angular/core";
 import {ListFilterType} from "./import-grid-filter";
 import {TrafficLightStatus, TrafficLightType} from "./traffic/import-grid-traffic-light";
+import {FileDestinationUpdate} from "./import-grid-update-destination";
 
 @Injectable({
     providedIn: 'root'
@@ -83,5 +84,9 @@ export class ImportGridService {
 
     recipe(file: string): Observable<any> {
         return this.http.post(environment.backupRecipeFile, file, {responseType: 'text'});
+    }
+
+    updateDestination(update: FileDestinationUpdate): Observable<any> {
+        return this.http.post(environment.backupUpdateDestination, update, {responseType: 'text'});
     }
 }

@@ -277,7 +277,7 @@ export class ImportGridSummary {
     }
 
     previousPageClass(): string {
-        if(this.summary.page > 0 && this.listFilter == null) {
+        if(this.summary && this.summary.page > 0 && this.listFilter == null) {
             return "btn btn-outline-primary";
         }
 
@@ -285,7 +285,7 @@ export class ImportGridSummary {
     }
 
     previousPage() {
-        if(this.summary.page > 0) {
+        if(this.summary && this.summary.page > 0) {
             this.summary.page = this.summary.page - 1;
             this.refreshEvent.emit(-1);
         }

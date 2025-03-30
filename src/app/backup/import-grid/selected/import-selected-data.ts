@@ -5,7 +5,9 @@ import {ImageSize} from "../import-grid-imagesize";
 import {IImportGridFileBase} from "../import-grid-file-base";
 import {ImportSelectedDataSimilar} from "./import-selected-data-similar";
 import {NgForOf} from "@angular/common";
-import {StepStatusType, TrafficLightStatus, TrafficLightType} from "../traffic/import-grid-traffic-light";
+import {StepStatusType, TrafficLightType} from "../traffic/import-grid-traffic-light";
+import {FormsModule} from "@angular/forms";
+import {FileDestinationUpdate} from "../import-grid-update-destination";
 
 @Component({
     selector: 'import-selected-data',
@@ -13,7 +15,8 @@ import {StepStatusType, TrafficLightStatus, TrafficLightType} from "../traffic/i
     standalone: true,
     imports: [
         ImportSelectedDataSimilar,
-        NgForOf
+        NgForOf,
+        FormsModule
     ],
     styleUrls: ['./import-selected-data.css']
 })
@@ -24,7 +27,9 @@ export class ImportSelectedData {
     @Output() recipeEvent: EventEmitter<String> = new EventEmitter();
     @Output() ignoreEvent: EventEmitter<String> = new EventEmitter();
     @Output() unIgnoreEvent: EventEmitter<String> = new EventEmitter();
+    @Output() destinationUpdateEvent: EventEmitter<FileDestinationUpdate> = new EventEmitter();
 
+    destination: string;
     filename: string;
     importFilename: string;
     location: LatLong;
@@ -196,10 +201,6 @@ export class ImportSelectedData {
         this.recipeEvent.emit(this.filename);
     }
 
-    import() {
-
-    }
-
     getSteps(): number[] {
         let result: number[] = [];
 
@@ -318,5 +319,9 @@ export class ImportSelectedData {
         }
 
         return "Mark this photo to be ignored.";
+    }
+
+    enterDestination() {
+        this.destinationUpdateEvent.emit(new FileDestinationUpdate(this.filename,this.destination));
     }
 }

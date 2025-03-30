@@ -11,6 +11,10 @@ import {ImportGridData} from "./import-grid-data";
 })
 export class ImportGridDataDestination extends ImportGridData {
     getText(): string {
-        return "?";
+        if(this.file && this.file.source && this.file.source.destination) {
+            return this.file.source.destination;
+        }
+
+        return "";
     }
 }

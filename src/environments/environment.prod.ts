@@ -37,5 +37,6 @@ export const environment = {
   backupIgnoreFile: "backup/ignore-file",
   backupUnignoreFile: "backup/un-ignore-file",
   backupDeleteImportFile: "backup/delete-import-file",
+  backupUpdateDestination: "backup/update-destination",
   backupRecipeFile: "backup/recipe-file"
 };

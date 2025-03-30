@@ -5,6 +5,7 @@ import {LatLong} from "../import-grid-latlong";
 import {ImportSelectedImage} from "./import-selected-image";
 import {ImportSelectedData} from "./import-selected-data";
 import {ImportSelectedAction} from "./import-selected-action";
+import {FileDestinationUpdate} from "../import-grid-update-destination";
 
 @Component({
     selector: 'import-selected',
@@ -65,26 +66,30 @@ export class ImportSelected {
     }
 
     previous(file: string) {
-        this.actionEvent.emit(new ImportSelectedAction(file,"previous"));
+        this.actionEvent.emit(new ImportSelectedAction(file,"previous",null));
     }
 
     next(file: string) {
-        this.actionEvent.emit(new ImportSelectedAction(file,"next"));
+        this.actionEvent.emit(new ImportSelectedAction(file,"next",null));
     }
 
     deleteFile(file: string) {
-        this.actionEvent.emit(new ImportSelectedAction(file,"delete"));
+        this.actionEvent.emit(new ImportSelectedAction(file,"delete",null));
     }
 
     recipe(file: string) {
-        this.actionEvent.emit(new ImportSelectedAction(file,"recipe"));
+        this.actionEvent.emit(new ImportSelectedAction(file,"recipe",null));
     }
 
     ignore(file: string){
-        this.actionEvent.emit(new ImportSelectedAction(file,"ignore"));
+        this.actionEvent.emit(new ImportSelectedAction(file,"ignore",null));
     }
 
-    unignore(file: string) {
-        this.actionEvent.emit(new ImportSelectedAction(file,"unignore"));
+    unIgnore(file: string) {
+        this.actionEvent.emit(new ImportSelectedAction(file,"un-ignore",null));
+    }
+
+    updateDestination(update: FileDestinationUpdate) {
+        this.actionEvent.emit(new ImportSelectedAction(update.filename,"update-destination",update.destination));
     }
 }

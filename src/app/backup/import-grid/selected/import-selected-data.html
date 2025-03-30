@@ -77,16 +77,7 @@
                 <em class="fa fa-cutlery"></em>
             </label>
         </div>
-        <div class="col action-btn">
-            <label class="btn btn-outline-success"
-                   title="Import this file into the photo directory, you must provide name of sub-directory."
-                   (click)="import()">
-                <em class="fa fa-arrow-right"></em>
-            </label>
-        </div>
-        <div class="col directory-frame">
-            <input class="directory" type="text" size="40">
-        </div>
+        <input class="col directory" type="text" size="40" [(ngModel)]="destination" (keydown.enter)="enterDestination()">
     </div>
     <div class="row">
         <import-selected-data-similar

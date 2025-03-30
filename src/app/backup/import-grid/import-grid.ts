@@ -25,6 +25,7 @@ import {ImportGridDataDestination} from "./data/import-grid-data-destination";
 import {ImportGridSummary} from "./summary/import-grid-summary";
 import {ImportGridSummaryCount} from "./summary/import-grid-summary-count";
 import {ListFilterType} from "./import-grid-filter";
+import {FileDestinationUpdate} from "./import-grid-update-destination";
 
 @Component({
     selector: 'jbr-import-grid',
@@ -762,6 +763,27 @@ export class ImportGrid implements OnInit {
         );
     }
 
+    updateDestination(update: FileDestinationUpdate) {
+        // Mark the file as a recipe
+        this.status = "Update the destination of " + update.filename;
+        this._importGridService.updateDestination(update).subscribe({
+                next: (result) => {
+                    console.log(result);
+                },
+                error: err => {
+                    // Error.
+                    this.status = "Failed to update the destination - check log."
+                    console.log('There is an error?' + err.message)
+                },
+                complete: () => {
+                    this.status = "Destination updated."
+                    this.refresh(-1);
+                    console.log('Destination updated');
+                }
+            }
+        );
+    }
+
     previousAction(file: string) {
         // Select the file before
         let previous: ImportGridFileDisplay = null;
@@ -814,10 +836,12 @@ export class ImportGrid implements OnInit {
                 return this.deleteAction(action.filename, template);
             case "ignore":
                 return this.ignoreFile(action.filename);
-            case "unignore":
+            case "un-ignore":
                 return this.unIgnoreFile(action.filename);
             case "recipe":
                 return this.recipeFile(action.filename);
+            case "update-destination":
+                return this.updateDestination(new FileDestinationUpdate(action.filename, action.parameter));
         }
     }
 

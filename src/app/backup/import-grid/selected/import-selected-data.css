@@ -52,14 +52,17 @@ td.green {
 
 .directory-frame {
     border-radius: 5px;
-    border: solid 1px #198754;
     margin: 0 25px 2px 5px;
     padding: 0;
 }
 
 .directory {
     color: #198754;
-    margin: 3px 2px 3px 5px;
+    margin: 0 25px 2px 5px;
+    padding: 2px 2px 4px 4px;
+    width: 60%;
+    border-radius: 5px;
+    border: 1px solid #198754;
 }
 
 table td:first-child {
