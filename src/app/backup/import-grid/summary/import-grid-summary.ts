@@ -257,6 +257,40 @@ export class ImportGridSummary {
         this.refreshEvent.emit(size);
     }
 
+    nextPageClass(): string {
+        if(this.summary && this.listFilter == null && this.summary.limit > 0 && this.summary.limit < this.summary.PreImport) {
+            if((this.summary.page + 1) * this.summary.limit < this.summary.PreImport) {
+                return "btn btn-outline-primary";
+            }
+        }
+
+        return "btn btn-outline-secondary";
+    }
+
+    nextPage() {
+        if(this.summary) {
+            if((this.summary.page + 1) * this.summary.limit < this.summary.PreImport) {
+                this.summary.page = this.summary.page + 1;
+                this.refreshEvent.emit(-1);
+            }
+        }
+    }
+
+    previousPageClass(): string {
+        if(this.summary.page > 0 && this.listFilter == null) {
+            return "btn btn-outline-primary";
+        }
+
+        return "btn btn-outline-secondary";
+    }
+
+    previousPage() {
+        if(this.summary.page > 0) {
+            this.summary.page = this.summary.page - 1;
+            this.refreshEvent.emit(-1);
+        }
+    }
+
     getTotal(type: TrafficLightType, status: TrafficLightStatus) {
         let count: ImportGridSummaryStepCount = this.getCountForType(type);
 
@@ -361,7 +395,4 @@ export class ImportGridSummary {
 
         return result;
     }
-
-    protected readonly TrafficLightType = TrafficLightType;
-    protected readonly TrafficLightStatus = TrafficLightStatus;
 }

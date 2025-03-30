@@ -65,6 +65,20 @@
                     All
                 </label>
             </div>
+            <div class="no-pad col global-action">
+                <label [class]="previousPageClass()"
+                       title="Move to the previous page."
+                       (click)="previousPage()">
+                    <em class="fa fa-arrow-left"></em>
+                </label>
+            </div>
+            <div class="no-pad col global-action">
+                <label [class]="nextPageClass()"
+                       title="Move to the next page."
+                       (click)="nextPage()">
+                    <em class="fa fa-arrow-right"></em>
+                </label>
+            </div>
         </div>
     </div>
     <div class="col-6">

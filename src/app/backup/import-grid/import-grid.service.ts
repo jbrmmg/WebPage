@@ -25,8 +25,8 @@ export class ImportGridService {
         return throwError(() => new Error(errorMessage));
     }
 
-    getFiles(limit: number, filter: ListFilterType): Observable<ImportGridFile[]> {
-        let url = environment.backupGetPreImportFiles + "?limit=" + limit;
+    getFiles(limit: number, page: number, filter: ListFilterType): Observable<ImportGridFile[]> {
+        let url = environment.backupGetPreImportFiles + "?limit=" + limit + "&page=" + page;
         if(filter != null) {
             url = url + "&stepType=" + TrafficLightType[filter.type] + "&status=" + TrafficLightStatus[filter.status];
         }

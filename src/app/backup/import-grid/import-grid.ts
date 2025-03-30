@@ -64,7 +64,6 @@ export class ImportGrid implements OnInit {
     public summaryUpdateSource: EventSource;
     public selectedFile: ImportGridFileDisplay;
     public afterRefresh: string;
-    public limit: number;
     public filter: ListFilterType;
     public fileForDelete: string;
     protected readonly TrafficLightType = TrafficLightType;
@@ -86,7 +85,6 @@ export class ImportGrid implements OnInit {
         this.data = [];
         this.sortColumn = "Name";
         this.selectedFile = null;
-        this.limit = 20;
         this.filter = null;
     }
 
@@ -338,8 +336,21 @@ export class ImportGrid implements OnInit {
 
     summaryUpdate(event: MessageEvent) {
         let update: ImportGridSummaryCount = JSON.parse(event.data);
+        let limit: number = 20;
+        let page: number = 0;
+
+        if(this.summary) {
+            limit = this.summary.limit;
+            page = this.summary.page;
+        }
 
         this.summary = update;
+
+        if(this.summary) {
+            this.summary.limit = limit;
+            this.summary.page = page;
+        }
+
         console.log("summary " + update.PreImport);
     }
 
@@ -383,13 +394,23 @@ export class ImportGrid implements OnInit {
         this.data = [];
         let id: number = 0;
         let count: number = 0;
+        let page: number = 0;
+        let limit: number = 20;
 
         if(newLimit != -1) {
-            this.limit = newLimit;
+            if(this.summary) {
+                this.summary.limit = newLimit;
+                this.summary.page = 0;
+            }
+        }
+
+        if(this.summary) {
+            page = this.summary.page;
+            limit = this.summary.limit;
         }
 
         // Get the data.
-        this._importGridService.getFiles(this.limit, this.filter).subscribe({
+        this._importGridService.getFiles(limit, page, this.filter).subscribe({
             next: val => {
                 val.forEach((e) => {
                     this.data.push(new ImportGridFileDisplay(id++,e));
