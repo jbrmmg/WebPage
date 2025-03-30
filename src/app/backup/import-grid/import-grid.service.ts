@@ -73,6 +73,10 @@ export class ImportGridService {
         return this.http.post(environment.backupIgnoreFile, file, {responseType: 'text'});
     }
 
+    unignore(file: string): Observable<any> {
+        return this.http.post(environment.backupUnignoreFile, file, {responseType: 'text'});
+    }
+
     recipe(file: string): Observable<any> {
         return this.http.post(environment.backupRecipeFile, file, {responseType: 'text'});
     }

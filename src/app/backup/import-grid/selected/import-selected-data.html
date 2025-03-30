@@ -28,6 +28,20 @@
         <div class="col-4 data md5">{{getImportMd5()}}</div>
     </div>
     <div class="row">
+        <div class="col-2 title">Status</div>
+        <div class="col-8 data">
+            <table>
+                <tbody>
+                    <tr>
+                        <ng-container *ngFor="let step of getSteps()">
+                            <td [class]="getStatusClass(step)">{{getStatusText(step)}}</td>
+                        </ng-container>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row btn-row">
         <div class="col action-btn-first">
             <label class="btn btn-primary"
                    title="Move to the previous file in the list."
@@ -50,10 +64,10 @@
             </label>
         </div>
         <div class="col action-btn">
-            <label class="btn btn-outline-danger"
-                   title="Mark this photo to be ignored."
+            <label [class]="getIgnoreButtonLabelClass()"
+                   [title]="getIgnoreButtonTitle()"
                    (click)="ignore()">
-                <em class="fa fa-minus-circle"></em>
+                <em [class]="getIgnoreButtonClass()"></em>
             </label>
         </div>
         <div class="col action-btn">

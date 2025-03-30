@@ -4,13 +4,16 @@ import {LatLong} from "../import-grid-latlong";
 import {ImageSize} from "../import-grid-imagesize";
 import {IImportGridFileBase} from "../import-grid-file-base";
 import {ImportSelectedDataSimilar} from "./import-selected-data-similar";
+import {NgForOf} from "@angular/common";
+import {StepStatusType, TrafficLightStatus, TrafficLightType} from "../traffic/import-grid-traffic-light";
 
 @Component({
     selector: 'import-selected-data',
     templateUrl: './import-selected-data.html',
     standalone: true,
     imports: [
-        ImportSelectedDataSimilar
+        ImportSelectedDataSimilar,
+        NgForOf
     ],
     styleUrls: ['./import-selected-data.css']
 })
@@ -20,6 +23,7 @@ export class ImportSelectedData {
     @Output() deleteEvent: EventEmitter<String> = new EventEmitter();
     @Output() recipeEvent: EventEmitter<String> = new EventEmitter();
     @Output() ignoreEvent: EventEmitter<String> = new EventEmitter();
+    @Output() unIgnoreEvent: EventEmitter<String> = new EventEmitter();
 
     filename: string;
     importFilename: string;
@@ -32,6 +36,7 @@ export class ImportSelectedData {
     importSize: string;
     importMd5: string;
     similar: IImportGridFileBase[];
+    stepStatus: StepStatusType;
 
     constructor() {
     }
@@ -149,6 +154,8 @@ export class ImportSelectedData {
                 this.importMd5 = file.source.importMd5;
             }
 
+            this.stepStatus = file.source.stepStatus;
+
             return;
         }
 
@@ -178,6 +185,10 @@ export class ImportSelectedData {
     }
 
     ignore() {
+        if(this.stepStatus && this.stepStatus.checkFileIgnored && this.stepStatus.checkFileIgnored == "RED") {
+            return this.unIgnoreEvent.emit(this.filename);
+        }
+
         this.ignoreEvent.emit(this.filename);
     }
 
@@ -187,5 +198,125 @@ export class ImportSelectedData {
 
     import() {
 
+    }
+
+    getSteps(): number[] {
+        let result: number[] = [];
+
+        for(let step in TrafficLightType) {
+            if(!isNaN(Number(step))) {
+                result.push(Number(step));
+            }
+        }
+
+        return result;
+    }
+
+    getStatusText(step: TrafficLightType): string {
+        switch(step) {
+            case TrafficLightType.readPreImportFile:
+                return "Read";
+            case TrafficLightType.gatherMetaData:
+                return "Meta";
+            case TrafficLightType.copyFileToImport:
+                return "Copy";
+            case TrafficLightType.checkFileIgnored:
+                return "Ignore";
+            case TrafficLightType.checkActivePhotoFile:
+                return "Active";
+            case TrafficLightType.checkDuplicateFile:
+                return "Duplicate";
+            case TrafficLightType.checkFileConfirmedImported:
+                return "Imported";
+            case TrafficLightType.processImport:
+                return "Process";
+            case TrafficLightType.completed:
+                return "Complete";
+        }
+    }
+
+    getStepStatusClass(status: string): string {
+        switch(status) {
+            case "RED":
+                return "red";
+            case "AMBER":
+                return "amber";
+            case "GREEN":
+                return "green";
+        }
+        return "unknown";
+    }
+
+    getStatusClass(step: TrafficLightType) {
+        switch(step) {
+            case TrafficLightType.readPreImportFile:
+                if(this.stepStatus && this.stepStatus.readPreImportFile) {
+                    return this.getStepStatusClass(this.stepStatus.readPreImportFile);
+                }
+                return "unknown";
+            case TrafficLightType.gatherMetaData:
+                if(this.stepStatus && this.stepStatus.gatherMetaData) {
+                    return this.getStepStatusClass(this.stepStatus.gatherMetaData);
+                }
+                return "unknown";
+            case TrafficLightType.copyFileToImport:
+                if(this.stepStatus && this.stepStatus.copyFileToImport) {
+                    return this.getStepStatusClass(this.stepStatus.copyFileToImport);
+                }
+                return "unknown";
+            case TrafficLightType.checkFileIgnored:
+                if(this.stepStatus && this.stepStatus.checkFileIgnored) {
+                    return this.getStepStatusClass(this.stepStatus.checkFileIgnored);
+                }
+                return "unknown";
+            case TrafficLightType.checkActivePhotoFile:
+                if(this.stepStatus && this.stepStatus.checkActivePhotoFile) {
+                    return this.getStepStatusClass(this.stepStatus.checkActivePhotoFile);
+                }
+                return "unknown";
+            case TrafficLightType.checkDuplicateFile:
+                if(this.stepStatus && this.stepStatus.checkDuplicateFile) {
+                    return this.getStepStatusClass(this.stepStatus.checkDuplicateFile);
+                }
+                return "unknown";
+            case TrafficLightType.checkFileConfirmedImported:
+                if(this.stepStatus && this.stepStatus.checkFileConfirmedImported) {
+                    return this.getStepStatusClass(this.stepStatus.checkFileConfirmedImported);
+                }
+                return "unknown";
+            case TrafficLightType.processImport:
+                if(this.stepStatus && this.stepStatus.processImport) {
+                    return this.getStepStatusClass(this.stepStatus.processImport);
+                }
+                return "unknown";
+            case TrafficLightType.completed:
+                if(this.stepStatus && this.stepStatus.completed) {
+                    return this.getStepStatusClass(this.stepStatus.completed);
+                }
+                return "unknown";
+        }
+    }
+
+    getIgnoreButtonLabelClass(): string {
+        if(this.stepStatus && this.stepStatus.checkFileIgnored && this.stepStatus.checkFileIgnored == "RED") {
+            return "btn btn-outline-success";
+        }
+        return "btn btn-outline-danger";
+    }
+
+    getIgnoreButtonClass(): string {
+        if(this.stepStatus && this.stepStatus.checkFileIgnored && this.stepStatus.checkFileIgnored == "RED") {
+            return "fa fa-plus-circle";
+        }
+
+        return "fa fa-minus-circle";
+    }
+
+    getIgnoreButtonTitle(): string {
+        if(this.stepStatus && this.stepStatus.checkFileIgnored && this.stepStatus.checkFileIgnored == "RED") {
+            return "Remove the ignore flag on this file.";
+        }
+
+        return "Mark this photo to be ignored.";
     }
 }

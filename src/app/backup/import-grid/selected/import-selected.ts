@@ -83,4 +83,8 @@ export class ImportSelected {
     ignore(file: string){
         this.actionEvent.emit(new ImportSelectedAction(file,"ignore"));
     }
+
+    unignore(file: string) {
+        this.actionEvent.emit(new ImportSelectedAction(file,"unignore"));
+    }
 }

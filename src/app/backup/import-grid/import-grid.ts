@@ -631,6 +631,51 @@ export class ImportGrid implements OnInit {
         if(this.modalRef) {
             this.modalRef.hide();
         }
+        this.fileForDelete = null;
+    }
+
+    deleteConfirmed() {
+        if(this.modalRef) {
+            this.modalRef.hide();
+        }
+
+        if(this.fileForDelete) {
+
+        }
+
+        this.fileForDelete = null;
+    }
+
+    deleteAction(filename: string, template: TemplateRef<any>) {
+        if(filename == null || filename == "") {
+            this.fileForDelete = null;
+            return;
+        }
+
+        this.fileForDelete = filename;
+
+        this.modalRef = this.modalService.show(template, {class: 'modal-md'});
+    }
+
+    unIgnoreFile(file: string) {
+        // Ignore the file.
+        this.status = "Removing the ignore flag from the file."
+        this._importGridService.unignore(file).subscribe({
+                next: (result) => {
+                    console.log(result);
+                },
+                error: err => {
+                    // Error.
+                    this.status = "Un-Ignore file failed - check log."
+                    console.log('There is an error?' + err.message)
+                },
+                complete: () => {
+                    this.status = "File un-ignored."
+                    this.refresh(-1);
+                    console.log('Unignore complete');
+                }
+            }
+        );
     }
 
     ignoreFile(file: string) {
@@ -723,8 +768,12 @@ export class ImportGrid implements OnInit {
                 return this.previousAction(action.filename);
             case "next":
                 return this.nextAction(action.filename);
+            case "delete":
+                return this.deleteAction(action.filename, template);
             case "ignore":
                 return this.ignoreFile(action.filename);
+            case "unignore":
+                return this.unIgnoreFile(action.filename);
             case "recipe":
                 return this.recipeFile(action.filename);
         }
