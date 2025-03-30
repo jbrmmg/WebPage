@@ -73,6 +73,10 @@ export class ImportGridService {
         return this.http.post(environment.backupIgnoreFile, file, {responseType: 'text'});
     }
 
+    delete(file: string): Observable<any> {
+        return this.http.delete(environment.backupDeleteImportFile, {body: file});
+    }
+
     unignore(file: string): Observable<any> {
         return this.http.post(environment.backupUnignoreFile, file, {responseType: 'text'});
     }

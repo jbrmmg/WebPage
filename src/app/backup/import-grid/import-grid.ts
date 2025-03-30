@@ -640,10 +640,31 @@ export class ImportGrid implements OnInit {
         }
 
         if(this.fileForDelete) {
-
+            this._importGridService.delete(this.fileForDelete).subscribe({
+                next: (result) => {
+                    console.log(result);
+                },
+                error: err => {
+                    this.status = "Delete failed - check log";
+                    console.log('There is an error?' + err.message)
+                },
+                complete: () => {
+                    console.log('Deleted file');
+                    this.status = "Delete complete.";
+                    this.refresh(-1);
+                }
+            });
         }
 
         this.fileForDelete = null;
+    }
+
+    getDeleteFilename(): string {
+        if(this.fileForDelete) {
+            return this.fileForDelete;
+        }
+
+        return "?"
     }
 
     deleteAction(filename: string, template: TemplateRef<any>) {

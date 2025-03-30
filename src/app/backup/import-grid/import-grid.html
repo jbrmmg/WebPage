@@ -89,8 +89,8 @@
 
 <ng-template #confirmTemplate>
     <div class="modal-body text-center">
-        <p>Are you sure you want to delete?</p>
-        <button type="button" class="btn btn-default"  >Yes</button>
-        <button type="button" class="btn btn-primary" (click)="deleteRejected()" >No</button>
+        <p>Are you sure you want to delete? {{getDeleteFilename()}}</p>
+        <button type="button" class="btn btn-default" (click)="deleteConfirmed()">Yes</button>
+        <button type="button" class="btn btn-primary" (click)="deleteRejected()">No</button>
     </div>
 </ng-template>
