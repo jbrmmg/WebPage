@@ -24,6 +24,7 @@ export class ImportGridSummary {
     @Output() removeIgnoredEvent: EventEmitter<void> = new EventEmitter();
     @Output() filterChangeEvent: EventEmitter<ListFilterType> = new EventEmitter();
     @Output() removeActivePhotosEvent: EventEmitter<void> = new EventEmitter();
+    @Output() importPhotosEvent: EventEmitter<void> = new EventEmitter();
 
     getHeaderText(status: TrafficLightStatus): string {
         switch (status) {
@@ -250,7 +251,7 @@ export class ImportGridSummary {
     }
 
     importFiles() {
-
+        this.importPhotosEvent.emit();
     }
 
     setPageSize(size: number) {

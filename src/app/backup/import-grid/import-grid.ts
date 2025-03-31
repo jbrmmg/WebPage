@@ -864,6 +864,25 @@ export class ImportGrid implements OnInit {
         });
     }
 
+    importPhotos() {
+        this.status = "Importing the photos that have a destination.";
+        this._importGridService.importPhotos().subscribe({
+            next: (result) => {
+                console.log(result);
+            },
+            error: err => {
+                // Error.
+                this.status = "Import Photos failed - check log";
+                console.log('There is an error?' + err.message)
+            },
+            complete: () => {
+                console.log('Import photos completed');
+                this.status = "Import photos completed";
+                this.refresh(-1);
+            }
+        });
+    }
+
     removeActivePhoto() {
         this.status = "Removing active photos";
         this._importGridService.removeActive().subscribe({
@@ -878,24 +897,6 @@ export class ImportGrid implements OnInit {
             complete: () => {
                 console.log('Remove ignored complete');
                 this.status = "Remove active photos complete";
-                this.refresh(-1);
-            }
-        });
-    }
-
-    importFiles() {
-        this.status = "Importing the files, converting and importing details into database.";
-        this._importGridService.importFiles().subscribe({
-            next: (result) => {
-                console.log(result);
-            },
-            error: err => {
-                this.status = "Importing files failed - check log";
-                console.log('There is an error?' + err.message)
-            },
-            complete: () => {
-                console.log('Import files complete');
-                this.status = "Import files complete";
                 this.refresh(-1);
             }
         });

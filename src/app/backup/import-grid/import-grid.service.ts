@@ -58,8 +58,12 @@ export class ImportGridService {
         return this.http.delete(environment.backupRemoveActive);
     }
 
-    importFiles(): Observable<any> {
-        return this.http.post(environment.backupImportFiles, "", {responseType: 'text'});
+//    importFiles(): Observable<any> {
+//        return this.http.post(environment.backupImportFiles, "", {responseType: 'text'});
+//    }
+
+    importPhotos(): Observable<any> {
+        return this.http.post(environment.backupImportPhotos, "", {responseType: 'text'});
     }
 
     removeConfirmedImports(): Observable<any> {

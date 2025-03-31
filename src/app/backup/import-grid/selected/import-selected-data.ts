@@ -129,6 +129,10 @@ export class ImportSelectedData {
             this.imageSize = file.source.imageSize;
             this.location = file.source.location;
             this.similar = file.source.similarFiles;
+            this.destination = "";
+            if(file.source.destination) {
+                this.destination = file.source.destination;
+            }
             this.date = "";
             if(file.source.date) {
                 this.date = file.source.date.replace("T", " ");

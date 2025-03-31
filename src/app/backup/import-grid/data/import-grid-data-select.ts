@@ -1,4 +1,3 @@
-import {NgIf} from "@angular/common";
 import {Component, EventEmitter, Output} from "@angular/core";
 import {ImportGridData} from "./import-grid-data";
 import {ImportGridFileDisplay} from "../import-grid-file-display";
@@ -7,9 +6,6 @@ import {ImportGridFileDisplay} from "../import-grid-file-display";
     selector: 'jbr-import-grid-data-select',
     templateUrl: './import-grid-data-select.html',
     styleUrls: ['./import-grid-data-select.css'],
-    imports: [
-        NgIf
-    ],
     standalone: true
 })
 export class ImportGridDataSelect extends ImportGridData {
