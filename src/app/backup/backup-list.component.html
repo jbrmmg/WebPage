@@ -43,13 +43,6 @@
                    [attr.aria-expanded]="isPrintsMode">
                 <em class="fa fa-print"></em>
             </label>
-            <label class="btn btn-primary btn-mode col-1"
-                   tabindex="1"
-                   aria-controls="grid"
-                   (click)="selectImportGridMode()"
-                   [attr.aria-expanded]="isImportGridMode">
-                <em class="fa fa-question"></em>
-            </label>
         </div>
     </div>
 </div>
@@ -65,7 +58,7 @@
             <jbr-backup-action></jbr-backup-action>
         </div>
         <div id="import" [collapse]="!isImportMode">
-            <jbr-backup-import></jbr-backup-import>
+            <jbr-import-grid></jbr-import-grid>
         </div>
         <div id="logs" [collapse]="!isLogMode">
             <jbr-backup-log></jbr-backup-log>
@@ -75,9 +68,6 @@
         </div>
         <div id="prints" [collapse]="!isPrintsMode">
             <jbr-backup-prints></jbr-backup-prints>
-        </div>
-        <div id="import-grid" [collapse]="!isImportGridMode">
-            <jbr-import-grid></jbr-import-grid>
         </div>
     </div>
 </div>

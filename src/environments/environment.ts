@@ -27,6 +27,19 @@ export const environment = {
   moneyAccountImage: "assets/images/account/##id##.svg",
   moneyAccountDisabledImage: "assets/images/account/##id##x.svg",
   moneyFileUpdates: "money/reconciliation/file-updates",
-  backupGetPreImportFiles: "api/backup/preimportfiles",
-  backupDeletePreImportFile: "api/backup/preimportfile"
+
+  backupGetPreImportFiles: "api/backup/import-files",
+  backupFileUpdates: "api/backup/file-updates",
+  backupFileSummaryUpdates: "api/backup/summary-updates",
+  backupReimportFile: "api/backup/reimportfile",
+  backupRemoveIgnored: "api/backup/delete-ignored",
+  backupRemoveActive: "api/backup/delete-active-photos",
+  backupImportPhotos: "api/backup/import-photos",
+  backupDeleteConfirmedImports: "api/backup/delete-confirmed-imports",
+  backupProcessFiles: "api/backup/importprocess",
+  backupIgnoreFile: "api/backup/ignorefile",
+  backupUnignoreFile: "api/backup/unignorefile",
+  backupDeleteImportFile: "api/backup/delete-import-file",
+  backupUpdateDestination: "api/backup/update-destination",
+  backupRecipeFile: "api/backup/recipefile"
 };

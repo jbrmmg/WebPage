@@ -8,20 +8,6 @@
     margin-bottom: 4px;
 }
 
-.no-pad {
-    padding: 0;
-}
-
-.refresh {
-    padding-right: 5px;
-    flex: 0 1 0;
-}
-
-.status {
-    padding-top: 5px;
-    flex: 1 0 0;
-}
-
 th {
     font-family: Helvetica, serif;
     font-size: 10px;
@@ -37,26 +23,64 @@ td {
     border: 1px solid dimgrey;
 }
 
+td.mis-match {
+    background: rosybrown;
+}
+
+/*
+ * first     -  2    Selector
+ * nth  2    - 12    Name
+ * nth  3    - 12    MD5
+ * nth  4    -  4    Size
+ * nth  5    -  7    Date
+ * nth  6    - 12    Import Name
+ * nth  7    - 12    Import MD5
+ * nth  8    -  4    Import Size
+ * nth  9    -  7    Import Date
+ * nth 10    -  7    Status
+ * nth 11    - 21    Destination
+ */
+
 table td:first-child {
     width: 2%;
 }
 
 table td:nth-child(2) {
-    width: 18%;
+    width: 12%;
 }
 
 table td:nth-child(3) {
-    width: 20%;
+    width: 12%;
 }
 
 table td:nth-child(4) {
-    width: 20%;
+    width: 4%;
 }
 
 table td:nth-child(5) {
-    width: 20%;
+    width: 7%;
 }
 
 table td:nth-child(6) {
-    width: 20%;
+    width: 12%;
+}
+
+table td:nth-child(7) {
+    width: 12%;
+}
+
+table td:nth-child(8) {
+    width: 4%;
+}
+
+table td:nth-child(9) {
+    width: 7%;
+}
+
+table td:nth-child(10) {
+    width: 7%;
+}
+
+table td:nth-child(11) {
+    width: 21%;
 }

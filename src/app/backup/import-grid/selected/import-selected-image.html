@@ -1,0 +1,10 @@
+<div class="image-container">
+    <div class="image-frame">
+        <ng-container *ngIf="showImage()">
+            <img src="{{getImagePath()}}" alt="{{getText()}}" title="{{getText()}}">
+        </ng-container>
+        <ng-container *ngIf="showVideo()">
+            <video src="{{getVideoPath()}}" title="{{getText()}}" width="316" height="237" controls></video>
+        </ng-container>
+    </div>
+</div>

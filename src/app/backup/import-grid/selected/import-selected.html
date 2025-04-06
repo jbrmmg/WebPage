@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col selected-col">
+        <import-selected-image #image></import-selected-image>
+    </div>
+    <div class="col selected-col">
+        <import-selected-map #map></import-selected-map>
+    </div>
+    <div class="col selected-col-end">
+        <import-selected-data #data
+            (previousEvent)="previous($event)"
+            (nextEvent)="next($event)"
+            (deleteEvent)="deleteFile($event)"
+            (recipeEvent)="recipe($event)"
+            (ignoreEvent)="ignore($event)"
+            (unIgnoreEvent)="unIgnore($event)"
+            (destinationUpdateEvent)="updateDestination($event)">
+        </import-selected-data>
+    </div>
+</div>
+

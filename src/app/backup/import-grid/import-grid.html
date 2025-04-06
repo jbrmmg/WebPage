@@ -1,15 +1,14 @@
+<jbr-import-grid-summary
+    [summary]="summary"
+    [status]="status"
+    (refreshEvent)="refresh($event)"
+    (removeConfirmedImportsEvent)="removeConfirmedImports()"
+    (removeIgnoredEvent)="removeIgnored()"
+    (removeActivePhotosEvent)="removeActivePhoto()"
+    (filterChangeEvent)="filterChange($event)"
+    (importPhotosEvent)="importPhotos()"></jbr-import-grid-summary>
+<import-selected #selected (actionEvent)="action($event,confirmTemplate)"></import-selected>
 <div class="row file-table">
-    <div class="row file-table header-row">
-        <div class="no-pad col refresh">
-            <label class="btn btn-primary btn-mode"
-                   tabindex="1"
-                   aria-controls="list"
-                   (click)="refresh()">
-                <em class="fa fa-refresh"></em>
-            </label>
-        </div>
-        <div class="no-pad col status">{{status}}</div>
-    </div>
     <table>
         <thead>
             <tr>
@@ -29,7 +28,22 @@
                     <jbr-import-grid-header-date (fireSource)="sortData($event,true)"></jbr-import-grid-header-date>
                 </th>
                 <th>
-                    <jbr-import-grid-header-status (fireSource)="sortData($event,true)"></jbr-import-grid-header-status>
+                    <jbr-import-grid-header-name (fireSource)="sortData($event,true)" [importValue]="true"></jbr-import-grid-header-name>
+                </th>
+                <th>
+                    <jbr-import-grid-header-md5 (fireSource)="sortData($event,true)" [importValue]="true"></jbr-import-grid-header-md5>
+                </th>
+                <th>
+                    <jbr-import-grid-header-size (fireSource)="sortData($event,true)" [importValue]="true"></jbr-import-grid-header-size>
+                </th>
+                <th>
+                    <jbr-import-grid-header-date (fireSource)="sortData($event,true)" [importValue]="true"></jbr-import-grid-header-date>
+                </th>
+                <th>
+                    <jbr-import-grid-header-traffic (fireSource)="sortData($event,true)"></jbr-import-grid-header-traffic>
+                </th>
+                <th>
+                    <jbr-import-grid-header-destination></jbr-import-grid-header-destination>
                 </th>
             </tr>
         </thead>
@@ -37,7 +51,7 @@
             <tr *ngFor="let file of data">
                 <ng-container *ngIf="file.visible">
                     <td>
-                        <jbr-import-grid-data-expand [file]=file (fireExpand)="expandRequest($event)"></jbr-import-grid-data-expand>
+                        <jbr-import-grid-data-select [file]=file (select)="selectRequest($event)"></jbr-import-grid-data-select>
                     </td>
                     <td>
                         <jbr-import-grid-data-name [file]=file></jbr-import-grid-data-name>
@@ -51,11 +65,34 @@
                     <td>
                         <jbr-import-grid-data-date [file]=file></jbr-import-grid-data-date>
                     </td>
+                    <td [class]="file.nameDiff() ? 'mis-match' : ''">
+                        <jbr-import-grid-data-name [file]=file [importValue]="true"></jbr-import-grid-data-name>
+                    </td>
+                    <td [class]="file.md5Diff() ? 'mis-match' : ''">
+                        <jbr-import-grid-data-md5 [file]=file [importValue]="true"></jbr-import-grid-data-md5>
+                    </td>
+                    <td [class]="file.sizeDiff() ? 'mis-match' : ''">
+                        <jbr-import-grid-data-size [file]=file [importValue]="true"></jbr-import-grid-data-size>
+                    </td>
+                    <td [class]="file.dateDiff() ? 'mis-match' : ''">
+                        <jbr-import-grid-data-date [file]=file [importValue]="true"></jbr-import-grid-data-date>
+                    </td>
                     <td>
-                        <jbr-import-grid-data-status [file]=file (delete)="deleteFile($event)"></jbr-import-grid-data-status>
+                        <jbr-import-grid-data-traffic [file]=file></jbr-import-grid-data-traffic>
+                    </td>
+                    <td>
+                        <jbr-import-grid-data-destination [file]="file"></jbr-import-grid-data-destination>
                     </td>
                 </ng-container>
             </tr>
         </tbody>
     </table>
 </div>
+
+<ng-template #confirmTemplate>
+    <div class="modal-body text-center">
+        <p>Are you sure you want to delete? {{getDeleteFilename()}}</p>
+        <button type="button" class="btn btn-default" (click)="deleteConfirmed()">Yes</button>
+        <button type="button" class="btn btn-primary" (click)="deleteRejected()">No</button>
+    </div>
+</ng-template>
