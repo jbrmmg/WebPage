@@ -25,7 +25,18 @@ export const environment = {
   moneyFileUpdates: "money/reconciliation/file-updates",
 
   // Backup URLs
-  backupGetPreImportFiles: "backup/preimportfiles",
-  backupDeletePreImportFile: "backup/preimportfile",
-  backupFileUpdates: "backup/file-updates"
+  backupGetPreImportFiles: "backup/import-files",
+  backupFileUpdates: "backup/file-updates",
+  backupFileSummaryUpdates: "backup/summary-updates",
+  backupReimportFile: "backup/reimportfile",
+  backupRemoveIgnored: "backup/delete-ignored",
+  backupRemoveActive: "backup/delete-active-photos",
+  backupImportPhotos: "backup/import-photos",
+  backupDeleteConfirmedImports: "backup/delete-confirmed-imports",
+  backupProcessFiles: "backup/importprocess",
+  backupIgnoreFile: "backup/ignore-file",
+  backupUnignoreFile: "backup/un-ignore-file",
+  backupDeleteImportFile: "backup/delete-import-file",
+  backupUpdateDestination: "backup/update-destination",
+  backupRecipeFile: "backup/recipe-file"
 };

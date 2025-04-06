@@ -22,7 +22,6 @@ import { BackupSummaryComponent } from "./backup/summary/backup-summary.componen
 import { BackupSummarySourceComponent } from "./backup/summary/source/backup-summary-source.component";
 import { BackupDisplayComponent } from "./backup/display/backup-display.component";
 import { BackupActionComponent } from "./backup/action/backup-action.component";
-import { BackupImportComponent } from "./backup/import/backup-import.component";
 import { BackupLogComponent } from "./backup/log/backup-log.component";
 import { BackupPhotoComponent } from "./backup/photo/backup-photo.component";
 import { BackupPrintsComponent } from "./backup/prints/backup-prints.component";
@@ -51,7 +50,6 @@ import { ImportGrid } from "./backup/import-grid/import-grid";
         BackupDisplayBackupsComponent,
         BackupDisplayComponent,
         BackupActionComponent,
-        BackupImportComponent,
         BackupLogComponent,
         BackupPhotoComponent,
         BackupPrintSizeSelectComponent,

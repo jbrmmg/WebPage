@@ -1,5 +1,5 @@
-import {NgIf} from "@angular/common";
-import {Component, Input} from "@angular/core";
+import {NgForOf, NgIf} from "@angular/common";
+import {Component} from "@angular/core";
 import {ImportGridData} from "./import-grid-data";
 import {ImportGridTrafficLight, TrafficLightStatus, TrafficLightType} from "../traffic/import-grid-traffic-light";
 
@@ -8,22 +8,17 @@ import {ImportGridTrafficLight, TrafficLightStatus, TrafficLightType} from "../t
     templateUrl: './import-grid-data-traffic.html',
     styleUrls: ['./import-grid-data-traffic.css'],
     imports: [
-        NgIf
+        NgIf,
+        NgForOf
     ],
     standalone: true
 })
 export class ImportGridDataTraffic extends ImportGridData {
-    @Input() type: TrafficLightType;
-
     getText(): string {
         return "";
     }
 
     displayStatus(): boolean {
-        if(this.file && this.file.similar) {
-            return false;
-        }
-
         if(this.file) {
             return this.file.visible;
         }
@@ -31,20 +26,39 @@ export class ImportGridDataTraffic extends ImportGridData {
         return false;
     }
 
-    statusClass(): string {
-        switch (ImportGridTrafficLight.getTrafficLightStatus(this.file.source,this.type)) {
-            case TrafficLightStatus.Red:
-                return "light red-light";
-            case TrafficLightStatus.Amber:
-                return "light amber-light";
-            case TrafficLightStatus.Green:
-                return "light green-light";
+    statusClass(type: TrafficLightType): string {
+        let leftClass: string = "";
+        if(type == TrafficLightType.readPreImportFile) {
+            leftClass = "left ";
         }
 
-        return "light unknown-light";
+        switch (ImportGridTrafficLight.getTrafficLightStatus(this.file.source,type)) {
+            case TrafficLightStatus.Red:
+                return leftClass + "light red-light";
+            case TrafficLightStatus.Amber:
+                return leftClass + "light amber-light";
+            case TrafficLightStatus.Green:
+                return leftClass + "light green-light";
+        }
+
+        return leftClass + "light unknown-light";
     }
 
-    getTitle(): string {
-        return ImportGridTrafficLight.getHeaderTitle(this.type);
+    getTitle(type: TrafficLightType): string {
+        return ImportGridTrafficLight.getHeaderTitle(type);
     }
+
+    getStatusTypes(): TrafficLightType[] {
+        let result: TrafficLightType[] = [];
+
+        Object.values(TrafficLightType).forEach(value => {
+            if(!isNaN(Number(value))) {
+                result.push(Number(value));
+            }
+        });
+
+        return result;
+    }
+
+    protected readonly TrafficLightType = TrafficLightType;
 }

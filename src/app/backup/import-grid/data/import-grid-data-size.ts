@@ -1,5 +1,5 @@
 import {NgIf} from "@angular/common";
-import {Component} from "@angular/core";
+import {Component, Input} from "@angular/core";
 import {ImportGridData} from "./import-grid-data";
 
 @Component({
@@ -12,25 +12,19 @@ import {ImportGridData} from "./import-grid-data";
     standalone: true
 })
 export class ImportGridDataSize extends ImportGridData {
-    getClass(parent: boolean): string {
-        if(this.file && this.file.similar && this.file.source && this.file.source.size && this.file.similar.size && this.file.source.size != this.file.similar.size) {
-            return parent ? "parent mis-match" : "child mis-match";
-        }
-
-        return parent ? "parent" : "child";
-    }
+    @Input() importValue: boolean = false;
 
     getText(): string {
-        if(this.file && this.file.similar) {
-            if(this.file.similar.size) {
-                return this.file.similar.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        if(this.file && this.file.source && this.file.source.size) {
+            if(this.importValue) {
+                if(this.file.source.importSize) {
+                    return this.file.source.importSize.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                }
+            } else {
+                if(this.file.source.size) {
+                    return this.file.source.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                }
             }
-
-            return "";
-        }
-
-        if(this.file && this.file.source) {
-            return this.file.source.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         }
 
         return "";

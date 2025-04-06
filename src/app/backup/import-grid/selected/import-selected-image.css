@@ -1,0 +1,15 @@
+.image-container {
+    height: 237px;
+    width: 316px;
+    margin: 2px;
+}
+
+.image-frame {
+    border: 2px solid black;
+    height: 100%;
+}
+
+img {
+    height: 100%;
+    width: 100%;
+}
