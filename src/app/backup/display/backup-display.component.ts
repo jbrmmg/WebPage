@@ -85,6 +85,10 @@ export class BackupDisplayComponent implements OnInit  {
         this._backupService.deleteFile(this.selectedFile.id);
     }
 
+    refreshData() {
+        this._backupService.refreshFile(this.selectedFile.id);
+    }
+
     selectPhotoMode() {
         this._backupService.setSelectedPhoto(this.selectedFile.id,this.selectedFile.name);
         this.selectPhoto.emit();

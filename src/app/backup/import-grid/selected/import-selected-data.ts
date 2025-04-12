@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {ImportGridFileDisplay} from "../import-grid-file-display";
-import {LatLong} from "../import-grid-latlong";
+import {LatLong} from "../../map/map-latlong";
 import {ImageSize} from "../import-grid-imagesize";
 import {IImportGridFileBase} from "../import-grid-file-base";
 import {ImportSelectedDataSimilar} from "./import-selected-data-similar";

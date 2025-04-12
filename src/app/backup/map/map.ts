@@ -1,14 +1,14 @@
 import {AfterViewInit, Component} from '@angular/core';
 import * as L from 'leaflet';
-import {LatLong} from "../import-grid-latlong";
+import {LatLong} from "./map-latlong";
 
 @Component({
-    selector: 'import-selected-map',
-    templateUrl: './import-selected-map.html',
+    selector: 'jbr-map',
+    templateUrl: './map.html',
     standalone: true,
-    styleUrls: ['./import-selected-map.css']
+    styleUrls: ['./map.css']
 })
-export class ImportSelectedMap implements AfterViewInit {
+export class Map implements AfterViewInit {
     private map;
 
     private initMap(): void {

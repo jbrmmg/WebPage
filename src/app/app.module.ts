@@ -26,13 +26,14 @@ import { BackupLogComponent } from "./backup/log/backup-log.component";
 import { BackupPhotoComponent } from "./backup/photo/backup-photo.component";
 import { BackupPrintsComponent } from "./backup/prints/backup-prints.component";
 import { BackupDisplayBackupsComponent } from "./backup/display/backups/backups-list.components";
-import { BackupDisplayInfoComponent } from "./backup/display/info/backup-display-info.component";
 import { BackupDisplayLabelComponent } from "./backup/display/label/backup-display-label.component";
 import { BackupPrintSizeSelectComponent } from "./backup/prints/backup-print-size-select.component";
 import { BackupPrintImageComponent } from "./backup/prints/backup-print-image.component";
 import { WifiComponent } from "./wifi/wifi.component";
 import { GridTransaction } from "./money/grid/grid-transaction";
 import { ImportGrid } from "./backup/import-grid/import-grid";
+import {Map} from "./backup/map/map";
+import {BackupDisplayInfoComponent} from "./backup/display/info/backup-display-info.component";
 
 @NgModule({
     declarations: [
@@ -45,7 +46,6 @@ import { ImportGrid } from "./backup/import-grid/import-grid";
         BackupListComponent,
         BackupSummaryComponent,
         BackupSummarySourceComponent,
-        BackupDisplayInfoComponent,
         BackupDisplayLabelComponent,
         BackupDisplayBackupsComponent,
         BackupDisplayComponent,
@@ -79,7 +79,9 @@ import { ImportGrid } from "./backup/import-grid/import-grid";
             {path: '**', redirectTo: 'welcome', pathMatch: 'full'}
         ]),
         GridTransaction,
-        ImportGrid
+        ImportGrid,
+        Map,
+        BackupDisplayInfoComponent
     ],
     providers: [DatePipe],
     bootstrap: [AppComponent]
