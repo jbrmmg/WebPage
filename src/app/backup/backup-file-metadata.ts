@@ -6,4 +6,5 @@ export class MetaData {
     longitude: number;
     video: boolean;
     duration: number;
+    date: Date;
 }

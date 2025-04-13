@@ -13,6 +13,7 @@
         <div class="row detail-location-row"><p class="detail-location">{{metaLocation}}</p></div>
         <div class="row detail-size-row"><p class="detail-size">{{metaSize}}</p></div>
         <div class="row detail-duration-row"><p class="detail-duration">{{metaDuration}}</p></div>
+        <div class="row detail-date-row"><p class="detail-date">{{formattedMetaDate}}</p></div>
         <div class="row detail-expiry-row">
             <em class="fa fa-calendar detail-calendar-icon" title="Modify expiry date" (click)="editDate()"></em>
             <em class="fa fa-times detail-expiry-clear-icon" (click)="clearExpiry()" *ngIf="selectedFile.expiry != null && editDateEnable == false"></em>

@@ -113,6 +113,18 @@ export class BackupDisplayInfoComponent implements OnInit {
         return this.datePipe.transform(this.selectedFile.date,'dd MMM yyyy HH:mm:ss');
     }
 
+    get formattedMetaDate(): string {
+        if(this.metaData == null) {
+            return "";
+        }
+
+        if(this.metaData.date == null) {
+            return "";
+        }
+
+        return this.datePipe.transform(this.metaData.date,'dd MMM yyyy HH:mm:ss');
+    }
+
     get metaLocation(): string {
         if(!this.metaData || !this.metaData.latitude || !this.metaData.longitude) {
             return "";
