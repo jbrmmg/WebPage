@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
-import {ImportSelectedMap} from "./import-selected-map";
+import {Map} from "../../map/map";
 import {ImportGridFileDisplay} from "../import-grid-file-display";
-import {LatLong} from "../import-grid-latlong";
+import {LatLong} from "../../map/map-latlong";
 import {ImportSelectedImage} from "./import-selected-image";
 import {ImportSelectedData} from "./import-selected-data";
 import {ImportSelectedAction} from "./import-selected-action";
@@ -12,14 +12,14 @@ import {FileDestinationUpdate} from "../import-grid-update-destination";
     templateUrl: './import-selected.html',
     standalone: true,
     imports: [
-        ImportSelectedMap,
+        Map,
         ImportSelectedImage,
         ImportSelectedData
     ],
     styleUrls: ['./import-selected.css']
 })
 export class ImportSelected {
-    @ViewChild('map') map: ImportSelectedMap;
+    @ViewChild('map') map: Map;
     @ViewChild('image') image: ImportSelectedImage;
     @ViewChild('data') data: ImportSelectedData;
 

@@ -142,6 +142,24 @@ export class BackupService {
         });
     }
 
+    refreshFile(id: number) {
+        this.http.post<FileInfoExtra>(environment.production === true ? `backup/refresh-file-data?id=${id}` : `api/backup/file${id}.json`,"").pipe(
+            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+            catchError( err => BackupService.handleError(err))
+        ).subscribe({
+            next:(nextFile: FileInfoExtra) => {
+                this.fileLoaded.emit(nextFile);
+                this.selectedFile = nextFile;
+            },
+            error: (response) => {
+                console.error('Failed to get file information.', response)
+            },
+            complete: () => {
+                console.log('File loaded ' + id);
+            }
+        });
+    }
+
     setFileLabel(id: number, labelId: number): void {
         let fileLabel : FileLabel;
         fileLabel = new FileLabel();

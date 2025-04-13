@@ -43,7 +43,34 @@
     margin: 0;
 }
 
+.detail-location-row {
+    margin: 0;
+}
+
+.detail-duration-row {
+    margin: 0;
+}
+
+.detail-size-row {
+    margin: 0;
+}
+
 .detail-md5 {
+    margin: 0;
+    font-size: 12px;
+}
+
+.detail-duration {
+    margin: 0;
+    font-size: 12px;
+}
+
+.detail-size {
+    margin: 0;
+    font-size: 12px;
+}
+
+.detail-location {
     margin: 0;
     font-size: 12px;
 }
