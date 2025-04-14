@@ -34,6 +34,7 @@ import { GridTransaction } from "./money/grid/grid-transaction";
 import { ImportGrid } from "./backup/import-grid/import-grid";
 import {Map} from "./backup/map/map";
 import {BackupDisplayInfoComponent} from "./backup/display/info/backup-display-info.component";
+import {BackupSummaryGrid} from "./backup/summary/source/backup-summary-grid";
 
 @NgModule({
     declarations: [
@@ -81,7 +82,8 @@ import {BackupDisplayInfoComponent} from "./backup/display/info/backup-display-i
         GridTransaction,
         ImportGrid,
         Map,
-        BackupDisplayInfoComponent
+        BackupDisplayInfoComponent,
+        BackupSummaryGrid
     ],
     providers: [DatePipe],
     bootstrap: [AppComponent]

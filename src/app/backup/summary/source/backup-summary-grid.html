@@ -1,0 +1,54 @@
+<div class="row summary-table">
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    <jbr-summary-grid-head-status></jbr-summary-grid-head-status>
+                </th>
+                <th>
+                    <jbr-summary-grid-head-path></jbr-summary-grid-head-path>
+                </th>
+                <th>
+                    <jbr-summary-grid-head-location></jbr-summary-grid-head-location>
+                </th>
+                <th>
+                    <jbr-summary-grid-head-files></jbr-summary-grid-head-files>
+                </th>
+                <th>
+                    <jbr-summary-grid-head-directories></jbr-summary-grid-head-directories>
+                </th>
+                <th>
+                    <jbr-summary-grid-head-largest></jbr-summary-grid-head-largest>
+                </th>
+                <th>
+                    <jbr-summary-grid-head-destination></jbr-summary-grid-head-destination>
+                </th>
+            </tr>
+        </thead>
+        <tbody *ngIf="summary && summary.sources.length">
+            <tr *ngFor="let source of summary.sources">
+                <td>
+                    <jbr-summary-grid-data-status [source]="source"></jbr-summary-grid-data-status>
+                </td>
+                <td>
+                    <jbr-summary-grid-data-path [source]="source"></jbr-summary-grid-data-path>
+                </td>
+                <td>
+                    <jbr-summary-grid-data-location [source]="source"></jbr-summary-grid-data-location>
+                </td>
+                <td>
+                    <jbr-summary-grid-data-files [source]="source"></jbr-summary-grid-data-files>
+                </td>
+                <td>
+                    <jbr-summary-grid-data-directories [source]="source"></jbr-summary-grid-data-directories>
+                </td>
+                <td>
+                    <jbr-summary-grid-data-largest [source]="source"></jbr-summary-grid-data-largest>
+                </td>
+                <td>
+                    <jbr-summary-grid-data-destination [source]="source"></jbr-summary-grid-data-destination>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
