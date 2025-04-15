@@ -4,7 +4,7 @@ import {SummaryGridHeader} from "./summary-grid-header";
 @Component({
     selector: 'jbr-summary-grid-head-path',
     templateUrl: './summary-grid-header-path.html',
-    styleUrls: ['./summary-grid-header-path.css'],
+    styleUrls: ['./summary-grid-header.css'],
     imports: [
     ],
     standalone: true

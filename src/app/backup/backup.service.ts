@@ -2,7 +2,6 @@ import {EventEmitter, Injectable, Output} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
-import {Action} from './backup-action';
 import {Log} from './backup-log'
 import {ConfirmRequest} from './backup-confirmrequest';
 import {HierarchyResponse} from './backup-hierarchyresponse';
@@ -64,24 +63,10 @@ export class BackupService {
     constructor(private readonly http: HttpClient) {
     }
 
-    getActions(): Observable<Action[]> {
-        return this.http.get<Action[]>(environment.production === true ? this.BACKUP_URL_ACTIONS : this.TEST_BACKUP_URL_ACTIONS ).pipe(
-            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
-            catchError( err => BackupService.handleError(err))
-        );
-    }
-
     getLogs(): Observable<Log[]> {
         return this.http.get<Log[]>(environment.production === true ? this.BACKUP_URL_LOGS : this.TEST_BACKUP_URL_LOGS).pipe(
             tap(data => console.log(`All: ${JSON.stringify(data)}`)),
             catchError(err => BackupService.handleError(err))
-        );
-    }
-
-    getConfirmedActions(): Observable<Action[]> {
-        return this.http.get<Action[]>(environment.production === true ? this.BACKUP_URL_CONF_ACTIONS : this.TEST_BACKUP_URL_CONF_ACTIONS ).pipe(
-            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
-            catchError( err => BackupService.handleError(err))
         );
     }
 
@@ -257,23 +242,6 @@ export class BackupService {
             },
             () => {
                 console.log('The DELETE observable is now complete (delete file)');
-            });
-    }
-
-    confirmRequest(id: number) {
-        const confirmReq = new ConfirmRequest();
-
-        confirmReq.id = id;
-        confirmReq.confirm = true;
-
-        this.http.post<void>(this.BACKUP_URL_ACTIONS, confirmReq).subscribe(() => {
-                console.log('Confirm Request');
-            },
-            (response) => {
-                console.log('POST call in error (confirm)', response);
-            },
-            () => {
-                console.log('The POST observable is now complete (confirm)');
             });
     }
 

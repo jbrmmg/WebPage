@@ -1,19 +1,29 @@
 import {Component, OnInit} from "@angular/core";
-import {BackupService} from "../backup.service";
-import {Action} from "../backup-action";
+import {Action} from "./backup-action";
 import {FileInfo} from "../backup-fileinfo";
+import {BackupActionService} from "./backup-action-service";
+import {NgForOf, NgIf} from "@angular/common";
+import {ActionGridDataName} from "./data/action-grid-data-name";
+import {ActionGridHeaderName} from "./header/action-grid-header-name";
 
 @Component({
     selector: 'jbr-backup-action',
     templateUrl: './backup-action.component.html',
-    styleUrls: ['./backup-action.component.css']
+    styleUrls: ['./backup-action.component.css'],
+    imports: [
+        NgIf,
+        NgForOf,
+        ActionGridDataName,
+        ActionGridHeaderName
+    ],
+    standalone: true
 })
 export class BackupActionComponent implements OnInit  {
     actions: Action[];
     selectedIndex: number;
     selectedFile: FileInfo;
 
-    constructor(private readonly _backupService: BackupService) {
+    constructor(private readonly _backupActionService: BackupActionService) {
     }
 
     ngOnInit(): void {
@@ -23,7 +33,7 @@ export class BackupActionComponent implements OnInit  {
 
         this.selectedFile = null;
 
-        this._backupService.getActions().subscribe(
+        this._backupActionService.getActions().subscribe(
             actions => {
                 this.actions = [];
 
@@ -77,7 +87,7 @@ export class BackupActionComponent implements OnInit  {
     }
 
     confirm() {
-        this._backupService.confirmRequest(this.actions[this.selectedIndex].id);
+        this._backupActionService.confirmRequest(this.actions[this.selectedIndex].id);
 
         this.moveNext();
     }

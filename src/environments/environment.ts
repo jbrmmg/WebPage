@@ -42,5 +42,6 @@ export const environment = {
   backupDeleteImportFile: "api/backup/delete-import-file",
   backupUpdateDestination: "api/backup/update-destination",
   backupRecipeFile: "api/backup/recipefile",
-  backupSummary: "api/backup/summary"
+  backupSummary: "api/backup/summary",
+  backupActions: "api/backup/actions"
 };

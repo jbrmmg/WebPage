@@ -54,3 +54,21 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    <jbr-action-header-name></jbr-action-header-name>
+                </th>
+            </tr>
+        </thead>
+        <tbody *ngIf="actions && actions.length">
+            <tr *ngFor="let action of actions">
+                <td>
+                    <jbr-action-data-name [action]="action"></jbr-action-data-name>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
