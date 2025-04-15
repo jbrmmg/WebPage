@@ -10,7 +10,7 @@
 
 th {
     font-family: Helvetica, serif;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: bold;
     border: 1px solid dimgrey;
     background: #0d6efd;
@@ -19,7 +19,7 @@ th {
 
 td {
     font-family: Helvetica, serif;
-    font-size: 10px;
+    font-size: 12px;
     border: 1px solid dimgrey;
 }
 

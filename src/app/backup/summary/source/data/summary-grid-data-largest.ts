@@ -1,11 +1,13 @@
 import {Component} from "@angular/core";
 import {SummaryGridData} from "./summary-grid-data";
+import {NgIf} from "@angular/common";
 
 @Component({
     selector: 'jbr-summary-grid-data-largest',
     templateUrl: './summary-grid-data-largest.html',
-    styleUrls: ['./summary-grid-data-largest.css'],
+    styleUrls: ['./summary-grid-data.css'],
     imports: [
+        NgIf
     ],
     standalone: true
 })
@@ -34,6 +36,10 @@ export class SummaryGridDataLargest extends SummaryGridData {
 
         // Just display the size.
         return this.source.largestFile.toString();
+    }
+
+    hasValue(): boolean {
+        return this.source && this.source.largestFile > 0;
     }
 
     getText(): string {

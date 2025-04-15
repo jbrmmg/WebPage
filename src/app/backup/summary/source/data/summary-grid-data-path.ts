@@ -4,7 +4,7 @@ import {SummaryGridData} from "./summary-grid-data";
 @Component({
     selector: 'jbr-summary-grid-data-path',
     templateUrl: './summary-grid-data-path.html',
-    styleUrls: ['./summary-grid-data-path.css'],
+    styleUrls: ['./summary-grid-data.css'],
     imports: [
     ],
     standalone: true

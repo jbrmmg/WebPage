@@ -13,4 +13,12 @@ export abstract class SummaryGridData {
     @Input() summary: BackupSummary;
 
     abstract getText(): string;
+
+    statusClass() {
+        if(this.source && this.source.status && this.source.status == "OK") {
+            return "ok";
+        }
+
+        return "ok";
+    }
 }

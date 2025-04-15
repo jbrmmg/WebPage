@@ -5,7 +5,7 @@ import {DecimalPipe, NgIf} from "@angular/common";
 @Component({
     selector: 'jbr-summary-grid-data-directories',
     templateUrl: './summary-grid-data-directories.html',
-    styleUrls: ['./summary-grid-data-directories.css'],
+    styleUrls: ['./summary-grid-data.css'],
     imports: [
         DecimalPipe,
         NgIf

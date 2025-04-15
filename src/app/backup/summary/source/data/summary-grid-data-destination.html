@@ -1,1 +1,2 @@
-<a>{{getText()}}</a>
+<div class="destination {{statusClass()}}" *ngIf="hasValue()">{{getText()}}</div>
+<div class="destination {{statusClass()}}" *ngIf="!hasValue()">&nbsp;</div>
