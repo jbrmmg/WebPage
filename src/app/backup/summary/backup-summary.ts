@@ -1,4 +1,4 @@
-import {BackupSource} from "./backup-sources";
+import {BackupSource} from "./backup-source";
 
 export class BackupSummary {
     public valid: boolean;

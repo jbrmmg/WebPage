@@ -1,0 +1,44 @@
+.destination {
+    padding-left: 2px;
+}
+
+.directory-count {
+    font-family: "Courier New", serif;
+    font-size: 12px;
+    text-align: right;
+    padding-right: 2px;
+}
+
+.file-count {
+    font-family: "Courier New", serif;
+    font-size: 12px;
+    text-align: right;
+    padding-right: 2px;
+}
+
+.largest {
+    font-family: "Courier New", serif;
+    font-size: 12px;
+    text-align: right;
+    padding-right: 2px;
+}
+
+.location {
+    padding-left: 2px;
+}
+
+.path {
+    padding-left: 2px;
+}
+
+.status {
+    text-align: center;
+}
+
+.ok {
+    background: darkseagreen;
+}
+
+.bad {
+    background: indianred;
+}

@@ -19,7 +19,6 @@ import { BackupListComponent } from './backup/backup-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe } from '@angular/common';
 import { BackupSummaryComponent } from "./backup/summary/backup-summary.component";
-import { BackupSummarySourceComponent } from "./backup/summary/source/backup-summary-source.component";
 import { BackupDisplayComponent } from "./backup/display/backup-display.component";
 import { BackupActionComponent } from "./backup/action/backup-action.component";
 import { BackupLogComponent } from "./backup/log/backup-log.component";
@@ -34,6 +33,7 @@ import { GridTransaction } from "./money/grid/grid-transaction";
 import { ImportGrid } from "./backup/import-grid/import-grid";
 import {Map} from "./backup/map/map";
 import {BackupDisplayInfoComponent} from "./backup/display/info/backup-display-info.component";
+import {BackupSummaryGrid} from "./backup/summary/source/backup-summary-grid";
 
 @NgModule({
     declarations: [
@@ -45,7 +45,6 @@ import {BackupDisplayInfoComponent} from "./backup/display/info/backup-display-i
         WeightComponent,
         BackupListComponent,
         BackupSummaryComponent,
-        BackupSummarySourceComponent,
         BackupDisplayLabelComponent,
         BackupDisplayBackupsComponent,
         BackupDisplayComponent,
@@ -81,7 +80,8 @@ import {BackupDisplayInfoComponent} from "./backup/display/info/backup-display-i
         GridTransaction,
         ImportGrid,
         Map,
-        BackupDisplayInfoComponent
+        BackupDisplayInfoComponent,
+        BackupSummaryGrid
     ],
     providers: [DatePipe],
     bootstrap: [AppComponent]

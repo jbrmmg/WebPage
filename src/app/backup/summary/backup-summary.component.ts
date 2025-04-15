@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {BackupSummary} from "./backup-summary";
-import {BackupService} from "../backup.service";
 import {DatePipe} from "@angular/common";
+import {BackupSummaryService} from "./backup-summary-service";
 
 @Component({
     selector: 'jbr-backup-summary',
@@ -11,7 +11,7 @@ import {DatePipe} from "@angular/common";
 export class BackupSummaryComponent implements OnInit  {
     public summary: BackupSummary;
 
-    constructor(private readonly _backupService: BackupService,
+    constructor(private readonly _backupSummaryService: BackupSummaryService,
                 private datePipe: DatePipe) {
         // Set up a blank summary before its initialised from the server.
         this.summary = new BackupSummary();
@@ -20,13 +20,18 @@ export class BackupSummaryComponent implements OnInit  {
     }
 
     ngOnInit(): void {
-        this._backupService.getSummary().subscribe(
-            summary => {
-                this.summary = summary;
+        this._backupSummaryService.getSummary().subscribe({
+            next: val => {
+                this.summary = val;
             },
-            () => console.log('Failed to get the Summary.'),
-            () => console.log('Get Summary is complete.')
-        );
+            error: err => {
+                // Error
+                console.log(err);
+            },
+            complete: () => {
+                // Finished
+            }
+        });
     }
 
     get formattedDate() : string {
