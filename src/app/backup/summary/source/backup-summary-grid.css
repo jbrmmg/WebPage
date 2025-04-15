@@ -24,59 +24,39 @@ td {
 }
 
 /*
- * first     -  2    Selector
- * nth  2    - 12    Name
- * nth  3    - 12    MD5
- * nth  4    -  4    Size
- * nth  5    -  7    Date
- * nth  6    - 12    Import Name
- * nth  7    - 12    Import MD5
- * nth  8    -  4    Import Size
- * nth  9    -  7    Import Date
- * nth 10    -  7    Status
- * nth 11    - 21    Destination
+ * first     -  5    Status
+ * nth  2    - 30    Path
+ * nth  3    - 11    Location
+ * nth  4    -  8    Files
+ * nth  5    -  8    Directories
+ * nth  6    -  8    Largest
+ * nth  7    - 30    Destination
  */
 
 table td:first-child {
-    width: 2%;
+    width: 5%;
 }
 
 table td:nth-child(2) {
-    width: 12%;
+    width: 30%;
 }
 
 table td:nth-child(3) {
-    width: 12%;
+    width: 11%;
 }
 
 table td:nth-child(4) {
-    width: 4%;
+    width: 8%;
 }
 
 table td:nth-child(5) {
-    width: 7%;
+    width: 8%;
 }
 
 table td:nth-child(6) {
-    width: 12%;
+    width: 8%;
 }
 
 table td:nth-child(7) {
-    width: 12%;
-}
-
-table td:nth-child(8) {
-    width: 4%;
-}
-
-table td:nth-child(9) {
-    width: 7%;
-}
-
-table td:nth-child(10) {
-    width: 7%;
-}
-
-table td:nth-child(11) {
-    width: 21%;
+    width: 30%;
 }

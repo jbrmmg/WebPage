@@ -1,5 +1,6 @@
 import {Component, Input} from "@angular/core";
-import {BackupSource} from "../../backup-sources";
+import {BackupSource} from "../../backup-source";
+import {BackupSummary} from "../../backup-summary";
 
 @Component({
     selector: '',
@@ -9,6 +10,7 @@ import {BackupSource} from "../../backup-sources";
 })
 export abstract class SummaryGridData {
     @Input() source: BackupSource;
+    @Input() summary: BackupSummary;
 
     abstract getText(): string;
 }

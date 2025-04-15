@@ -29,17 +29,13 @@ import {SummaryGridDataDestination} from "./data/summary-grid-data-destination";
         SummaryGridHeaderDirectories,
         SummaryGridHeaderLargest,
         SummaryGridHeaderDestination,
-        SummaryGridDataPath,
         SummaryGridDataStatus,
         SummaryGridDataFiles,
         SummaryGridDataPath,
         SummaryGridDataLocation,
-        SummaryGridDataPath,
-        SummaryGridDataPath,
         SummaryGridDataDirectories,
         SummaryGridDataDestination,
         SummaryGridDataLargest,
-        SummaryGridDataPath,
         NgIf,
         NgForOf
     ],
@@ -61,7 +57,34 @@ export class BackupSummaryGrid implements OnInit {
                 console.log(err);
             },
             complete: () => {
-                // Completed
+                // Sort the list.
+                this.summary.sources = this.summary.sources.sort(function (a, b): number {
+                    if(a.fileCount != b.fileCount) {
+                        if(a.fileCount < b.fileCount) {
+                            return 1;
+                        }
+
+                        return -1;
+                    }
+
+                    if(a.location.name != b.location.name) {
+                        if(a.location.name > b.location.name) {
+                            return 1;
+                        }
+
+                        return -1;
+                    }
+
+                    if(a.path > b.path) {
+                        return 1;
+                    }
+
+                    if(a.path < b.path){
+                        return -1;
+                    }
+
+                    return -1;
+                });
             }
         });
     }

@@ -20,7 +20,7 @@ export class BackupSummaryService {
     }
 
     private static handleError(err: HttpErrorResponse) {
-        let errorMessage;
+        let errorMessage: string;
 
         if (err.error instanceof ErrorEvent) {
             errorMessage = 'An error occurred: ';

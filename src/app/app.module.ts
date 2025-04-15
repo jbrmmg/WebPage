@@ -19,7 +19,6 @@ import { BackupListComponent } from './backup/backup-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe } from '@angular/common';
 import { BackupSummaryComponent } from "./backup/summary/backup-summary.component";
-import { BackupSummarySourceComponent } from "./backup/summary/source/backup-summary-source.component";
 import { BackupDisplayComponent } from "./backup/display/backup-display.component";
 import { BackupActionComponent } from "./backup/action/backup-action.component";
 import { BackupLogComponent } from "./backup/log/backup-log.component";
@@ -46,7 +45,6 @@ import {BackupSummaryGrid} from "./backup/summary/source/backup-summary-grid";
         WeightComponent,
         BackupListComponent,
         BackupSummaryComponent,
-        BackupSummarySourceComponent,
         BackupDisplayLabelComponent,
         BackupDisplayBackupsComponent,
         BackupDisplayComponent,
