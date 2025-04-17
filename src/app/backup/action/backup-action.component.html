@@ -54,12 +54,33 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row action-table">
     <table>
         <thead>
             <tr>
                 <th>
                     <jbr-action-header-name></jbr-action-header-name>
+                </th>
+                <th>
+                    <jbr-action-header-action></jbr-action-header-action>
+                </th>
+                <th>
+                    <jbr-action-header-image></jbr-action-header-image>
+                </th>
+                <th>
+                    <jbr-action-header-video></jbr-action-header-video>
+                </th>
+                <th>
+                    <jbr-action-header-date></jbr-action-header-date>
+                </th>
+                <th>
+                    <jbr-action-header-size></jbr-action-header-size>
+                </th>
+                <th>
+                    <jbr-action-header-confirmed></jbr-action-header-confirmed>
+                </th>
+                <th>
+                    <jbr-action-header-buttons></jbr-action-header-buttons>
                 </th>
             </tr>
         </thead>
@@ -67,6 +88,27 @@
             <tr *ngFor="let action of actions">
                 <td>
                     <jbr-action-data-name [action]="action"></jbr-action-data-name>
+                </td>
+                <td>
+                    <jbr-action-data-action [action]="action"></jbr-action-data-action>
+                </td>
+                <td>
+                    <jbr-action-data-image [action]="action"></jbr-action-data-image>
+                </td>
+                <td>
+                    <jbr-action-data-video [action]="action"></jbr-action-data-video>
+                </td>
+                <td>
+                    <jbr-action-data-date [action]="action"></jbr-action-data-date>
+                </td>
+                <td>
+                    <jbr-action-data-size [action]="action"></jbr-action-data-size>
+                </td>
+                <td>
+                    <jbr-action-data-confirmed [action]="action"></jbr-action-data-confirmed>
+                </td>
+                <td>
+                    <jbr-action-data-buttons [action]="action"></jbr-action-data-buttons>
                 </td>
             </tr>
         </tbody>

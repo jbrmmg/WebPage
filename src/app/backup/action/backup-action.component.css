@@ -41,3 +41,65 @@
 .backup {
     font-size: 12px;
 }
+.action-table {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.header-row {
+    margin-bottom: 4px;
+}
+
+th {
+    font-family: Helvetica, serif;
+    font-size: 12px;
+    font-weight: bold;
+    border: 1px solid dimgrey;
+    background: #0d6efd;
+    text-align: center;
+}
+
+td {
+    font-family: Helvetica, serif;
+    font-size: 12px;
+    border: 1px solid dimgrey;
+}
+
+/*
+ * first     -  5    Status
+ * nth  2    - 30    Path
+ * nth  3    - 11    Location
+ * nth  4    -  8    Files
+ * nth  5    -  8    Directories
+ * nth  6    -  8    Largest
+ * nth  7    - 30    Destination
+ */
+
+table td:first-child {
+    width: 5%;
+}
+
+table td:nth-child(2) {
+    width: 30%;
+}
+
+table td:nth-child(3) {
+    width: 11%;
+}
+
+table td:nth-child(4) {
+    width: 8%;
+}
+
+table td:nth-child(5) {
+    width: 8%;
+}
+
+table td:nth-child(6) {
+    width: 8%;
+}
+
+table td:nth-child(7) {
+    width: 30%;
+}
