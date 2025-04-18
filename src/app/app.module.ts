@@ -20,7 +20,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe } from '@angular/common';
 import { BackupSummaryComponent } from "./backup/summary/backup-summary.component";
 import { BackupDisplayComponent } from "./backup/display/backup-display.component";
-import { BackupActionComponent } from "./backup/action/backup-action.component";
 import { BackupLogComponent } from "./backup/log/backup-log.component";
 import { BackupPhotoComponent } from "./backup/photo/backup-photo.component";
 import { BackupPrintsComponent } from "./backup/prints/backup-prints.component";
@@ -34,6 +33,10 @@ import { ImportGrid } from "./backup/import-grid/import-grid";
 import {Map} from "./backup/map/map";
 import {BackupDisplayInfoComponent} from "./backup/display/info/backup-display-info.component";
 import {BackupSummaryGrid} from "./backup/summary/source/backup-summary-grid";
+import {ImportGridHeaderExpand} from "./backup/import-grid/header/import-grid-header-expand";
+import {ActionGridHeaderName} from "./backup/action/header/action-grid-header-name";
+import {ActionGridDataName} from "./backup/action/data/action-grid-data-name";
+import {BackupActionComponent} from "./backup/action/backup-action.component";
 
 @NgModule({
     declarations: [
@@ -48,7 +51,6 @@ import {BackupSummaryGrid} from "./backup/summary/source/backup-summary-grid";
         BackupDisplayLabelComponent,
         BackupDisplayBackupsComponent,
         BackupDisplayComponent,
-        BackupActionComponent,
         BackupLogComponent,
         BackupPhotoComponent,
         BackupPrintSizeSelectComponent,
@@ -81,7 +83,11 @@ import {BackupSummaryGrid} from "./backup/summary/source/backup-summary-grid";
         ImportGrid,
         Map,
         BackupDisplayInfoComponent,
-        BackupSummaryGrid
+        BackupSummaryGrid,
+        ImportGridHeaderExpand,
+        ActionGridHeaderName,
+        ActionGridDataName,
+        BackupActionComponent
     ],
     providers: [DatePipe],
     bootstrap: [AppComponent]

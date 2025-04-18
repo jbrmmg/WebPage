@@ -1,84 +1,111 @@
 import {Component, OnInit} from "@angular/core";
-import {BackupService} from "../backup.service";
-import {Action} from "../backup-action";
-import {FileInfo} from "../backup-fileinfo";
+import {Action} from "./backup-action";
+import {BackupActionService} from "./backup-action-service";
+import {NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
+import {ActionGridDataName} from "./data/action-grid-data-name";
+import {ActionGridHeaderName} from "./header/action-grid-header-name";
+import {ActionGridHeaderConfirm} from "./header/action-grid-header-confirm";
+import {ActionGridDataConfirm} from "./data/action-grid-data-confirm";
+import {ActionGridHeaderMedia} from "./header/action-grid-header-media";
+import {ActionGridDataMedia} from "./data/action-grid-data-media";
 
 @Component({
     selector: 'jbr-backup-action',
     templateUrl: './backup-action.component.html',
-    styleUrls: ['./backup-action.component.css']
+    styleUrls: ['./backup-action.component.css'],
+    imports: [
+        NgIf,
+        NgForOf,
+        ActionGridDataName,
+        ActionGridHeaderName,
+        ActionGridHeaderConfirm,
+        ActionGridDataConfirm,
+        ActionGridHeaderMedia,
+        ActionGridDataMedia,
+        ActionGridHeaderName,
+        NgOptimizedImage
+    ],
+    standalone: true
 })
 export class BackupActionComponent implements OnInit  {
     actions: Action[];
-    selectedIndex: number;
-    selectedFile: FileInfo;
+    selected: Action;
 
-    constructor(private readonly _backupService: BackupService) {
+    constructor(private readonly _backupActionService: BackupActionService) {
     }
 
     ngOnInit(): void {
         console.log('Get Actions.');
         this.actions = [];
-        this.selectedIndex = -1;
 
-        this.selectedFile = null;
+        this.refreshActions();
+    }
 
-        this._backupService.getActions().subscribe(
-            actions => {
+    refreshActions() {
+        this.selected = null;
+        this._backupActionService.getActions().subscribe({
+            next: actions => {
                 this.actions = [];
 
                 actions.forEach(nextAction => {
                     if(nextAction.action !== "IMPORT") {
                         this.actions.push(nextAction);
                     }
-                })
-
-                if (actions.length > 0) {
-                    this.selectedIndex = 0;
-                } else {
-                    this.selectedIndex = -1;
-                }
+                });
             },
-            () => console.log('Failed to get actions.'),
-            () => console.log('Load Actions Complete')
-        );
+            error: err => {
+                console.log('Failed to get actions.' + err);
+            },
+            complete: () => {
+                console.log('Load Actions Complete');
+            }
+        });
     }
 
-    get isItemSelected(): boolean {
-        return this.actions.length > 0 && this.selectedIndex !== -1;
+    confirm(action: Action) {
+        this._backupActionService.confirmRequest(action.id);
+        this.actions = [];
+        this.refreshActions();
     }
 
-    get detailLine(): string {
-        return `${this.actions.length} items, selected number: ${this.selectedIndex + 1}`;
+    selectMedia(id: number) {
+        this.selected = null;
+        this.actions.forEach(a => {
+            if(a.fileId === id) {
+                this.selected = a;
+            }
+        });
     }
 
-    moveNext(): void {
-        if (this.actions.length <= 0) {
-            return;
+    isMediaSelected(): boolean {
+        return this.selected !== null;
+    }
+
+    backToActions() {
+        this.selected = null;
+    }
+
+    isImageSelected() {
+        if(this.selected) {
+            return this.selected.isImage;
         }
 
-        this.selectedIndex++;
-
-        if (this.selectedIndex >= this.actions.length) {
-            this.selectedIndex = 0;
-        }
+        return false;
     }
 
-    movePrev(): void {
-        if (this.actions.length <= 0) {
-            return;
+    isVideoSelected() {
+        if(this.selected) {
+            return this.selected.isVideo;
         }
 
-        this.selectedIndex--;
-
-        if (this.selectedIndex < 0) {
-            this.selectedIndex = this.actions.length - 1;
-        }
+        return false;
     }
 
-    confirm() {
-        this._backupService.confirmRequest(this.actions[this.selectedIndex].id);
+    getSelectedFileId() {
+        if(this.selected) {
+            return this.selected.fileId;
+        }
 
-        this.moveNext();
+        return 0;
     }
 }

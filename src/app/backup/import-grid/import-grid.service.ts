@@ -38,10 +38,6 @@ export class ImportGridService {
         );
     }
 
-    reimportFile(filename: string): Observable<any> {
-        return this.http.post(environment.backupReimportFile, filename, {responseType: 'text'});
-    }
-
     fileUpdateSource() : EventSource {
         return new EventSource(environment.backupFileUpdates);
     }

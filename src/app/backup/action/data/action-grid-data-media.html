@@ -1,0 +1,14 @@
+<div class="row" (click)="selectMedia()">
+    <div class="col-4" (click)="selectMedia()">
+        <div *ngIf="isImage()" (click)="selectMedia()">
+            <img ngSrc="backup/fileImage?id={{getFileId()}}" height="60" width="120" alt="backup file"/>
+        </div>
+        <div *ngIf="isVideo()" (click)="selectMedia()">
+            <video src="backup/fileVideo?id={{getFileId()}}" height="60" width="120" controls></video>
+        </div>
+    </div>
+    <div class="col-8">
+        <div class="date">{{getDateText()}}</div>
+        <div class="size" *ngIf="displaySize()">{{getSize() | number}}</div>
+    </div>
+</div>
