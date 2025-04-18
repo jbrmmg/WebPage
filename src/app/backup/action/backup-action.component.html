@@ -1,30 +1,46 @@
-<div class="row action-table">
-    <table>
-        <thead>
-            <tr>
-                <th>
-                    <jbr-action-header-name></jbr-action-header-name>
-                </th>
-                <th>
-                    <jbr-action-header-media></jbr-action-header-media>
-                </th>
-                <th>
-                    <jbr-action-header-confirm></jbr-action-header-confirm>
-                </th>
-            </tr>
-        </thead>
-        <tbody *ngIf="actions && actions.length">
-            <tr *ngFor="let action of actions">
-                <td>
-                    <jbr-action-data-name [action]="action"></jbr-action-data-name>
-                </td>
-                <td>
-                    <jbr-action-data-media [action]="action"></jbr-action-data-media>
-                </td>
-                <td>
-                    <jbr-action-data-confirm [action]="action" (confirm)="confirm($event)"></jbr-action-data-confirm>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<ng-container *ngIf="!isMediaSelected()">
+    <div class="row action-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        <jbr-action-header-name></jbr-action-header-name>
+                    </th>
+                    <th>
+                        <jbr-action-header-media></jbr-action-header-media>
+                    </th>
+                    <th>
+                        <jbr-action-header-confirm></jbr-action-header-confirm>
+                    </th>
+                </tr>
+            </thead>
+            <tbody *ngIf="actions && actions.length">
+                <tr *ngFor="let action of actions">
+                    <td>
+                        <jbr-action-data-name [action]="action" (select)="selectMedia($event)"></jbr-action-data-name>
+                    </td>
+                    <td>
+                        <jbr-action-data-media [action]="action" (select)="selectMedia($event)"></jbr-action-data-media>
+                    </td>
+                    <td>
+                        <jbr-action-data-confirm [action]="action" (confirm)="confirm($event)"></jbr-action-data-confirm>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-container>
+<ng-container *ngIf="isMediaSelected()">
+    <label class="btn btn-primary btn-directory"
+           (click)="backToActions()">
+        <em class="fa fa-chevron-circle-left"></em>
+    </label>
+    <div class="media-view">
+        <div *ngIf="isImageSelected()">
+            <img ngSrc="backup/fileImage?id={{getSelectedFileId()}}" alt="backup file"/>
+        </div>
+        <div *ngIf="isVideoSelected()">
+            <video src="backup/fileVideo?id={{getSelectedFileId()}}" controls></video>
+        </div>
+    </div>
+</ng-container>

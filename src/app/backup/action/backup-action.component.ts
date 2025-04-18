@@ -1,8 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {Action} from "./backup-action";
-import {FileInfo} from "../backup-fileinfo";
 import {BackupActionService} from "./backup-action-service";
-import {NgForOf, NgIf} from "@angular/common";
+import {NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {ActionGridDataName} from "./data/action-grid-data-name";
 import {ActionGridHeaderName} from "./header/action-grid-header-name";
 import {ActionGridHeaderConfirm} from "./header/action-grid-header-confirm";
@@ -23,14 +22,14 @@ import {ActionGridDataMedia} from "./data/action-grid-data-media";
         ActionGridDataConfirm,
         ActionGridHeaderMedia,
         ActionGridDataMedia,
-        ActionGridHeaderName
+        ActionGridHeaderName,
+        NgOptimizedImage
     ],
     standalone: true
 })
 export class BackupActionComponent implements OnInit  {
     actions: Action[];
-    selectedIndex: number;
-    selectedFile: FileInfo;
+    selected: Action;
 
     constructor(private readonly _backupActionService: BackupActionService) {
     }
@@ -38,32 +37,75 @@ export class BackupActionComponent implements OnInit  {
     ngOnInit(): void {
         console.log('Get Actions.');
         this.actions = [];
-        this.selectedIndex = -1;
 
-        this.selectedFile = null;
+        this.refreshActions();
+    }
 
-        this._backupActionService.getActions().subscribe(
-            actions => {
+    refreshActions() {
+        this.selected = null;
+        this._backupActionService.getActions().subscribe({
+            next: actions => {
                 this.actions = [];
 
                 actions.forEach(nextAction => {
                     if(nextAction.action !== "IMPORT") {
                         this.actions.push(nextAction);
                     }
-                })
-
-                if (actions.length > 0) {
-                    this.selectedIndex = 0;
-                } else {
-                    this.selectedIndex = -1;
-                }
+                });
             },
-            () => console.log('Failed to get actions.'),
-            () => console.log('Load Actions Complete')
-        );
+            error: err => {
+                console.log('Failed to get actions.' + err);
+            },
+            complete: () => {
+                console.log('Load Actions Complete');
+            }
+        });
     }
 
     confirm(action: Action) {
         this._backupActionService.confirmRequest(action.id);
+        this.actions = [];
+        this.refreshActions();
+    }
+
+    selectMedia(id: number) {
+        this.selected = null;
+        this.actions.forEach(a => {
+            if(a.fileId === id) {
+                this.selected = a;
+            }
+        });
+    }
+
+    isMediaSelected(): boolean {
+        return this.selected !== null;
+    }
+
+    backToActions() {
+        this.selected = null;
+    }
+
+    isImageSelected() {
+        if(this.selected) {
+            return this.selected.isImage;
+        }
+
+        return false;
+    }
+
+    isVideoSelected() {
+        if(this.selected) {
+            return this.selected.isVideo;
+        }
+
+        return false;
+    }
+
+    getSelectedFileId() {
+        if(this.selected) {
+            return this.selected.fileId;
+        }
+
+        return 0;
     }
 }

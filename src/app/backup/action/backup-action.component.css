@@ -1,46 +1,8 @@
 
-.btn-mode {
-    margin: 0 3px;
-}
-
-.btn-action {
-    margin: 0 3px;
-    height: 40px;
-}
-
-.btn-left {
-    width: 45%;
-}
-
-.btn-right {
-    width: 45%;
-}
-
-.btn-accept {
-    width: 80%;
-}
-
-.page-row {
-    margin: 30px 0 0 0;
-}
-
-.info-row {
-    margin: 10px 0 0 0;
-}
-
-.info-row-2 {
-    margin: 2px 0 0 0;
-    font-size: 10px;
-}
-
-.action-txt {
-    margin-right: 2px;
-    font-weight: bolder;
-}
-
 .backup {
     font-size: 12px;
 }
+
 .action-table {
     margin: 0;
     padding: 0;
@@ -49,6 +11,12 @@
 
 .header-row {
     margin-bottom: 4px;
+}
+
+.media-view {
+    padding-top: 10px;
+    width: 100%;
+    height: 100%;
 }
 
 th {

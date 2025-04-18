@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, EventEmitter, Output} from "@angular/core";
 import {ActionGridData} from "./action-grid-data";
 import {DecimalPipe, NgIf, NgOptimizedImage} from "@angular/common";
 
@@ -14,6 +14,8 @@ import {DecimalPipe, NgIf, NgOptimizedImage} from "@angular/common";
     standalone: true
 })
 export class ActionGridDataMedia extends ActionGridData {
+    @Output() select: EventEmitter<number> = new EventEmitter<number>();
+
     getDateText() {
         let dateString: string = "" + this.action.fileDate;
 
@@ -64,5 +66,10 @@ export class ActionGridDataMedia extends ActionGridData {
         }
 
         return "";
+    }
+
+    selectMedia() {
+        console.log("Select Media")
+        this.select.emit(this.action.fileId);
     }
 }

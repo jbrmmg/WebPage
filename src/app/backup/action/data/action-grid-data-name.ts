@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, EventEmitter, Output} from "@angular/core";
 import {ActionGridData} from "./action-grid-data";
 
 @Component({
@@ -10,6 +10,8 @@ import {ActionGridData} from "./action-grid-data";
     standalone: true
 })
 export class ActionGridDataName extends ActionGridData {
+    @Output() select: EventEmitter<number> = new EventEmitter<number>();
+
     getText(): string {
         if(this.action && this.action.fileName) {
             return this.action.fileName;
@@ -24,5 +26,10 @@ export class ActionGridDataName extends ActionGridData {
         }
 
         return "";
+    }
+
+    selectMedia() {
+        console.log("Select Media")
+        this.select.emit(this.action.fileId);
     }
 }
