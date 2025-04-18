@@ -2,15 +2,15 @@ import {Component} from "@angular/core";
 import {ActionGridHeader} from "./action-grid-header";
 
 @Component({
-    selector: 'jbr-action-header-confirmed',
-    templateUrl: './action-grid-header-confirmed.html',
+    selector: 'jbr-action-header-media',
+    templateUrl: './action-grid-header-media.html',
     styleUrls: ['./action-grid-header.css'],
     imports: [
     ],
     standalone: true
 })
-export class ActionGridHeaderConfirmed extends ActionGridHeader {
+export class ActionGridHeaderMedia extends ActionGridHeader {
     getText(): string {
-        return "Confirmed";
+        return "Details";
     }
 }

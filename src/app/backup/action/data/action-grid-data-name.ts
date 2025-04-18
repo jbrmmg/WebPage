@@ -17,4 +17,12 @@ export class ActionGridDataName extends ActionGridData {
 
         return "";
     }
+
+    getActionName(): string {
+        if(this.action && this.action.action) {
+            return this.action.action;
+        }
+
+        return "";
+    }
 }

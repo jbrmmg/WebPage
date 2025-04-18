@@ -67,39 +67,19 @@ td {
 }
 
 /*
- * first     -  5    Status
- * nth  2    - 30    Path
- * nth  3    - 11    Location
- * nth  4    -  8    Files
- * nth  5    -  8    Directories
- * nth  6    -  8    Largest
- * nth  7    - 30    Destination
+ * first     - 35    Name / Action
+ * nth  2    - 35    Details
+ * nth  3    - 30    Confirm
  */
 
 table td:first-child {
-    width: 5%;
+    width: 45%;
 }
 
 table td:nth-child(2) {
-    width: 30%;
+    width: 40%;
 }
 
 table td:nth-child(3) {
-    width: 11%;
-}
-
-table td:nth-child(4) {
-    width: 8%;
-}
-
-table td:nth-child(5) {
-    width: 8%;
-}
-
-table td:nth-child(6) {
-    width: 8%;
-}
-
-table td:nth-child(7) {
-    width: 30%;
+    width: 15%;
 }

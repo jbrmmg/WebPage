@@ -1,0 +1,26 @@
+.name {
+    font-weight: bold;
+    font-size: 18px;
+    padding-left: 10px;
+}
+
+.action {
+    color: rosybrown;
+    padding-left: 10px;
+}
+
+.date {
+    padding-left: 4px;
+}
+
+.size {
+    padding-left: 4px;
+}
+
+.no-margin-row {
+    margin: 0;
+}
+
+.no-padding-col {
+    padding: 0;
+}

@@ -1,59 +1,3 @@
-<div class="row page-row">
-    <div class="col-2">
-    </div>
-    <div class="col-4">
-        <label class="btn btn-primary btn-action btn-left"
-               tabindex="1"
-               (click)="movePrev()">
-            <em class="fa fa-arrow-circle-left"></em>
-        </label>
-        <label class="btn btn-primary btn-action btn-right"
-               tabindex="3"
-               (click)="moveNext()">
-            <em class="fa fa-arrow-circle-right"></em>
-        </label>
-    </div>
-    <div class="col-2">
-    </div>
-    <div class="col-2">
-        <div class="row">
-            <label class="btn btn-primary float-right btn-action btn-accept"
-                   tabindex="1"
-                   (click)="confirm()">
-                <em class="fa fa-check-circle"></em>
-            </label>
-        </div>
-    </div>
-</div>
-<div class="row info-row" *ngIf="isItemSelected">
-    <div class="col-2">
-        <p class="action-txt">{{actions[selectedIndex].action}}</p>
-    </div>
-    <div class="col-10">
-        <p>{{actions[selectedIndex].fileName}}</p>
-    </div>
-</div>
-<div class="row info-row-2" *ngIf="isItemSelected">
-    <div class="col-2">
-    </div>
-    <div class="col-10">
-        <p>{{detailLine}}</p>
-    </div>
-</div>
-<div class="row info-row-2">
-    <div class="col-12">
-        <div *ngIf="isItemSelected">
-            <div *ngIf="actions[selectedIndex].fileName != null">
-                <div *ngIf="actions[selectedIndex].isImage">
-                    <img src="backup/fileImage?id={{actions[selectedIndex].fileId}}" width="420" alt="backup file"/>
-                </div>
-                <div *ngIf="actions[selectedIndex].isVideo">
-                    <video src="backup/fileVideo?id={{actions[selectedIndex].fileId}}" width="420" controls></video>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="row action-table">
     <table>
         <thead>
@@ -62,25 +6,10 @@
                     <jbr-action-header-name></jbr-action-header-name>
                 </th>
                 <th>
-                    <jbr-action-header-action></jbr-action-header-action>
+                    <jbr-action-header-media></jbr-action-header-media>
                 </th>
                 <th>
-                    <jbr-action-header-image></jbr-action-header-image>
-                </th>
-                <th>
-                    <jbr-action-header-video></jbr-action-header-video>
-                </th>
-                <th>
-                    <jbr-action-header-date></jbr-action-header-date>
-                </th>
-                <th>
-                    <jbr-action-header-size></jbr-action-header-size>
-                </th>
-                <th>
-                    <jbr-action-header-confirmed></jbr-action-header-confirmed>
-                </th>
-                <th>
-                    <jbr-action-header-buttons></jbr-action-header-buttons>
+                    <jbr-action-header-confirm></jbr-action-header-confirm>
                 </th>
             </tr>
         </thead>
@@ -90,25 +19,10 @@
                     <jbr-action-data-name [action]="action"></jbr-action-data-name>
                 </td>
                 <td>
-                    <jbr-action-data-action [action]="action"></jbr-action-data-action>
+                    <jbr-action-data-media [action]="action"></jbr-action-data-media>
                 </td>
                 <td>
-                    <jbr-action-data-image [action]="action"></jbr-action-data-image>
-                </td>
-                <td>
-                    <jbr-action-data-video [action]="action"></jbr-action-data-video>
-                </td>
-                <td>
-                    <jbr-action-data-date [action]="action"></jbr-action-data-date>
-                </td>
-                <td>
-                    <jbr-action-data-size [action]="action"></jbr-action-data-size>
-                </td>
-                <td>
-                    <jbr-action-data-confirmed [action]="action"></jbr-action-data-confirmed>
-                </td>
-                <td>
-                    <jbr-action-data-buttons [action]="action"></jbr-action-data-buttons>
+                    <jbr-action-data-confirm [action]="action" (confirm)="confirm($event)"></jbr-action-data-confirm>
                 </td>
             </tr>
         </tbody>
