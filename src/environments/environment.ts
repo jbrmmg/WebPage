@@ -47,5 +47,6 @@ export const environment = {
   backupHierarchy: "api/backup/hierarchy",
   backupPrintSize: "api/backup/print-size",
   backupPrint: "api/backup/print",
-  backupPrints: "api/backup/prints"
+  backupPrints: "api/backup/prints",
+  backupRefreshFile: "api/backup/refresh-file-data"
 };

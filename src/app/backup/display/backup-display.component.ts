@@ -161,11 +161,11 @@ export class BackupDisplayComponent implements OnInit  {
     }
 
     deleteFile() {
-//        this._backupService.deleteFile(this.selectedFile.id);
+        this._backupDisplayService.deleteFile(this.selectedFile.file.id);
     }
 
     refreshData() {
-//        this._backupService.refreshFile(this.selectedFile.id);
+        this._backupDisplayService.refreshFile(this.selectedFile.file.id);
     }
 
     selectPhotoMode() {

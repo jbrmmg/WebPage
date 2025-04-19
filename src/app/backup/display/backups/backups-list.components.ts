@@ -1,7 +1,6 @@
-import {Component, Input, OnInit} from "@angular/core";
+import {Component, Input} from "@angular/core";
 import {FileInfo} from "../../backup-fileinfo";
 import {FileInfoExtra} from "../../backup-fileinfoextra";
-import {BackupService} from "../../backup.service";
 import {DatePipe, NgForOf, NgIf} from "@angular/common";
 
 @Component({
@@ -14,17 +13,13 @@ import {DatePipe, NgForOf, NgIf} from "@angular/common";
         NgIf
     ]
 })
-export class BackupDisplayBackupsComponent implements OnInit {
+export class BackupDisplayBackupsComponent {
     readonly BACKUP_WARNING : string = 'fa-exclamation-triangle status-warn';
     readonly BACKUP_OK: string = 'fa-check-circle-o status-green';
 
     @Input() selectedFile: FileInfoExtra;
 
-    constructor(private readonly _backupService: BackupService,
-                private datePipe: DatePipe) {
-    }
-
-    ngOnInit(): void {
+    constructor(private datePipe: DatePipe) {
     }
 
     backupStatus(backup: FileInfo): string {

@@ -96,42 +96,6 @@ export class BackupDisplayInfoComponent implements OnInit {
         return this.datePipe.transform(this.selectedFile.file.date,'dd MMM yyyy HH:mm:ss');
     }
 
-    get formattedMetaDate(): string {
-        if(this.metaData == null) {
-            return "";
-        }
-
-        if(this.metaData.date == null) {
-            return "";
-        }
-
-        return this.datePipe.transform(this.metaData.date,'dd MMM yyyy HH:mm:ss');
-    }
-
-    get metaLocation(): string {
-        if(!this.metaData || !this.metaData.latitude || !this.metaData.longitude) {
-            return "";
-        }
-
-        return this.metaData.latitude + " " + this.metaData.longitude;
-    }
-
-    get metaSize(): string {
-        if(!this.metaData || !this.metaData.imageHeight || !this.metaData.imageWidth) {
-            return "";
-        }
-
-        return this.metaData.imageHeight + " x " + this.metaData.imageWidth;
-    }
-
-    get metaDuration(): string {
-        if(!this.metaData || !this.metaData.duration) {
-            return "";
-        }
-
-        return "" + this.metaData.duration;
-    }
-
     onChangeExpiry(newDate: Date): void {
         if (newDate > this.minimumDate) {
             this.initializeDate();

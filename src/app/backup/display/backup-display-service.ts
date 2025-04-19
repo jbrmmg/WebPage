@@ -69,4 +69,36 @@ export class BackupDisplayService {
             }
         });
     }
+
+    deleteFile(id: number) {
+        this.http.delete<void>(`backup/file?id=${id}`).subscribe({
+            next:() => {
+                console.log('Delete File');
+            },
+            error: (response) => {
+                console.log('DELETE call in error', response);
+            },
+            complete: () => {
+                console.log('The DELETE observable is now complete (delete file)');
+            }
+        });
+    }
+
+    refreshFile(id: number) {
+        this.http.post<FileInfoExtra>(environment.backupRefreshFile.replace("##id##","" + id),"").pipe(
+            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+            catchError( err => BackupDisplayService.handleError(err))
+        ).subscribe({
+            next:(nextFile: FileInfoExtra) => {
+                this.fileLoaded.emit(nextFile);
+                this.selectedFile = nextFile;
+            },
+            error: (response) => {
+                console.error('Failed to get file information.', response)
+            },
+            complete: () => {
+                console.log('File loaded ' + id);
+            }
+        });
+    }
 }
