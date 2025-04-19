@@ -10,6 +10,7 @@ import {BackupDisplayTitle} from "./title/backup-display-title";
 import {BackupDisplayMedia} from "./media/backup-display-media";
 import {BackupDisplayMetadata} from "./meta/backup-display-metadata";
 import {BackupDisplayService} from "./backup-display-service";
+import {BackupDisplayFiles} from "./files/backup-display-files";
 
 @Component({
     selector: 'jbr-backup-display',
@@ -24,7 +25,8 @@ import {BackupDisplayService} from "./backup-display-service";
         NgForOf,
         BackupDisplayTitle,
         BackupDisplayMedia,
-        BackupDisplayMetadata
+        BackupDisplayMetadata,
+        BackupDisplayFiles
     ]
 })
 export class BackupDisplayComponent implements OnInit  {

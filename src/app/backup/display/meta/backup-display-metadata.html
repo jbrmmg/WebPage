@@ -1,4 +1,4 @@
-<div class="row metadata-row">
+<div class="row metadata-row" *ngIf="hasMetaData()">
     <div class="col-6">
         <div class="row" *ngIf="hasLocation()">
             <div class="col-3 title">Location</div>
@@ -18,6 +18,6 @@
         </div>
     </div>
     <div class="col-6" *ngIf="hasLocation()">
-        <jbr-map [height]="250" [fullWidth]="true" #map></jbr-map>
+        <jbr-map [latLong]="getLatLong()" [height]="250" [fullWidth]="true" #map></jbr-map>
     </div>
 </div>

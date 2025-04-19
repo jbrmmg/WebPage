@@ -22,6 +22,7 @@ export class Map implements AfterViewInit {
     @Input() bottomMargin: number = 2;
     @Input() leftMargin: number = 2;
     @Input() rightMargin: number = 2;
+    @Input() latLong: LatLong;
 
     private initMap(): void {
         this.map = L.map('map', { center: [34.65054, 32.720322], zoom: 16 });
@@ -34,7 +35,11 @@ export class Map implements AfterViewInit {
 
         tiles.addTo(this.map);
 
-        this.map.panTo({lat: 51.60146388888889, lng: -0.37789999999999996});
+        if(this.latLong) {
+            this.map.panTo({lat: this.latLong.lat, lng: this.latLong.long});
+        } else {
+            this.map.panTo({lat: 51.60146388888889, lng: -0.37789999999999996});
+        }
     }
 
     getMapHeight() : string {

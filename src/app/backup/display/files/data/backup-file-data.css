@@ -1,0 +1,17 @@
+.md5 {
+    font-family: courier new, serif;
+    margin-left: 2px;
+}
+
+.size {
+    text-align: right;
+    margin-right: 2px;
+}
+
+.name {
+    margin-left: 2px;
+}
+
+.date {
+    margin-left: 2px;
+}

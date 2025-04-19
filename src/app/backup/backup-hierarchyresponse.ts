@@ -6,4 +6,7 @@ export class HierarchyResponse {
     directory: boolean;
     backup: boolean;
     underlyingId: number;
+    dateTime: Date;
+    md5: string;
+    size: number;
 }

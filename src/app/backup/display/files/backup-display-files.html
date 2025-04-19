@@ -1,0 +1,42 @@
+<div class="row files-table">
+    <table *ngIf="displayFiles()">
+        <thead>
+            <tr>
+                <th>
+                    <jbr-backup-file-header-select></jbr-backup-file-header-select>
+                </th>
+                <th>
+                    <jbr-backup-file-header-name></jbr-backup-file-header-name>
+                </th>
+                <th>
+                    <jbr-backup-file-header-date></jbr-backup-file-header-date>
+                </th>
+                <th>
+                    <jbr-backup-file-header-md5></jbr-backup-file-header-md5>
+                </th>
+                <th>
+                    <jbr-backup-file-header-size></jbr-backup-file-header-size>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let nextHierarchy of getFileList()">
+                <td>
+                    <jbr-backup-file-data-select [file]="nextHierarchy"></jbr-backup-file-data-select>
+                </td>
+                <td>
+                    <jbr-backup-file-data-name [file]="nextHierarchy"></jbr-backup-file-data-name>
+                </td>
+                <td>
+                    <jbr-backup-file-data-date [file]="nextHierarchy"></jbr-backup-file-data-date>
+                </td>
+                <td>
+                    <jbr-backup-file-data-md5 [file]="nextHierarchy"></jbr-backup-file-data-md5>
+                </td>
+                <td>
+                    <jbr-backup-file-data-size [file]="nextHierarchy"></jbr-backup-file-data-size>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
