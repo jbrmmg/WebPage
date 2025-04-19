@@ -15,19 +15,13 @@
                             {{nextHierarchy.displayName}}
                         </label>
                     </div>
-                    <div *ngIf="!nextHierarchy.directory && !nextHierarchy.backup">
-                        <label class="btn btn-outline-primary btn-directory"
-                               (click)="displayFile(nextHierarchy)">
-                            {{nextHierarchy.displayName}}
-                        </label>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-10 detail-col">
         <div *ngIf="selectedFile != null">
-            <jbr-backup-display-title [selectedFile]="selectedFile"></jbr-backup-display-title>
+            <jbr-backup-display-title [selectedFile]="selectedFile" (previousFile)="displayPrevious()" (nextFile)="displayNext()"></jbr-backup-display-title>
             <jbr-backup-display-media [selectedFile]="selectedFile"></jbr-backup-display-media>
             <jbr-backup-display-metadata [selectedFile]="selectedFile"></jbr-backup-display-metadata>
             <jbr-backup-display-info [selectedFile]="selectedFile"></jbr-backup-display-info>
@@ -37,5 +31,5 @@
     </div>
 </div>
 <div>
-    <jbr-backup-display-files [hierarchy]="hierarchy"></jbr-backup-display-files>
+    <jbr-backup-display-files [selectedFile]="selectedFile" [fileList]="fileList" (selectEvent)="displayFile($event)"></jbr-backup-display-files>
 </div>

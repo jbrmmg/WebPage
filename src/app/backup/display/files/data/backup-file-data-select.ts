@@ -1,5 +1,6 @@
 import {Component, Input} from "@angular/core";
-import {HierarchyResponse} from "../../../backup-hierarchyresponse";
+import {FileInfoExtra} from "../../../backup-fileinfoextra";
+import {BackupFileData} from "./backup-file-data";
 
 @Component({
     selector: 'jbr-backup-file-data-select',
@@ -8,6 +9,14 @@ import {HierarchyResponse} from "../../../backup-hierarchyresponse";
     standalone: true,
     imports: []
 })
-export class BackupFileDataSelect {
-    @Input() file: HierarchyResponse;
+export class BackupFileDataSelect extends BackupFileData {
+    @Input() selectedFile: FileInfoExtra;
+
+    isSelected(): boolean {
+        return this.file && this.selectedFile && this.file.id === this.selectedFile.file.id;
+    }
+
+    getSelected(): string {
+        return this.isSelected() ? 'selected' : 'not-selected';
+    }
 }

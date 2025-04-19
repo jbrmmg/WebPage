@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from "@angular/core";
+import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {NgForOf, NgIf} from "@angular/common";
 import {BackupFileHeaderName} from "./header/backup-file-header-name";
 import {BackupFileDataName} from "./data/backup-file-data-name";
@@ -11,6 +11,7 @@ import {BackupFileDataSelect} from "./data/backup-file-data-select";
 import {BackupFileDataDate} from "./data/backup-file-data-date";
 import {BackupFileDataSize} from "./data/backup-file-data-size";
 import {BackupFileDataMd5} from "./data/backup-file-data-md5";
+import {FileInfoExtra} from "../../backup-fileinfoextra";
 
 @Component({
     selector: 'jbr-backup-display-files',
@@ -32,40 +33,17 @@ import {BackupFileDataMd5} from "./data/backup-file-data-md5";
         BackupFileDataMd5,
     ]
 })
-export class BackupDisplayFiles implements OnInit {
-    @Input() hierarchy: HierarchyResponse[];
+export class BackupDisplayFiles {
+    @Input() fileList: HierarchyResponse[];
+    @Input() selectedFile: FileInfoExtra;
 
-    ngOnInit(): void {
-    }
+    @Output() selectEvent: EventEmitter<HierarchyResponse> = new EventEmitter<HierarchyResponse>();
 
     displayFiles(): boolean {
-        if(this.hierarchy && this.hierarchy.length) {
-            let result: boolean = false;
-
-            this.hierarchy.forEach(h => {
-                if(!h.directory && !h.backup) {
-                    result = true;
-                    return;
-                }
-            });
-
-            return result;
-        }
-
-        return false;
+        return !!(this.fileList && this.fileList.length);
     }
 
-    getFileList(): HierarchyResponse[] {
-        let result: HierarchyResponse[] = [];
-
-        if(this.hierarchy && this.hierarchy.length) {
-            this.hierarchy.forEach(h => {
-                if(!h.directory && !h.backup) {
-                    result.push(h);
-                }
-            });
-        }
-
-        return result;
+    selectFile(file: HierarchyResponse): void {
+        this.selectEvent.emit(file);
     }
 }

@@ -1,5 +1,5 @@
-import {Component, Input} from "@angular/core";
-import {HierarchyResponse} from "../../../backup-hierarchyresponse";
+import {Component} from "@angular/core";
+import {BackupFileData} from "./backup-file-data";
 
 @Component({
     selector: 'jbr-backup-file-data-date',
@@ -8,9 +8,7 @@ import {HierarchyResponse} from "../../../backup-hierarchyresponse";
     standalone: true,
     imports: []
 })
-export class BackupFileDataDate {
-    @Input() file: HierarchyResponse;
-
+export class BackupFileDataDate extends BackupFileData {
     getFileDateTime(): string {
         if(this.file && this.file.dateTime) {
             return this.file.dateTime.toString().replace("T", " ");

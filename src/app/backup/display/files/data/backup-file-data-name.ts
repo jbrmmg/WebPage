@@ -1,5 +1,5 @@
-import {Component, Input} from "@angular/core";
-import {HierarchyResponse} from "../../../backup-hierarchyresponse";
+import {Component} from "@angular/core";
+import {BackupFileData} from "./backup-file-data";
 
 @Component({
     selector: 'jbr-backup-file-data-name',
@@ -8,6 +8,5 @@ import {HierarchyResponse} from "../../../backup-hierarchyresponse";
     standalone: true,
     imports: []
 })
-export class BackupFileDataName {
-    @Input() file: HierarchyResponse;
+export class BackupFileDataName extends BackupFileData {
 }

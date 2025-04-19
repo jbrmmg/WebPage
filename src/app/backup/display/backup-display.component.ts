@@ -31,6 +31,7 @@ import {BackupDisplayFiles} from "./files/backup-display-files";
 })
 export class BackupDisplayComponent implements OnInit  {
     hierarchy: HierarchyResponse[];
+    fileList: HierarchyResponse[];
     initialHierarchy: HierarchyResponse;
     atTopLevel: boolean;
     selectedFile: FileInfoExtra;
@@ -62,6 +63,7 @@ export class BackupDisplayComponent implements OnInit  {
 
     changeHierarchy(parent: HierarchyResponse): void {
         this.hierarchy = [];
+        this.fileList = [];
 
         this.atTopLevel = parent.id === -1;
 
@@ -77,6 +79,27 @@ export class BackupDisplayComponent implements OnInit  {
                 console.log('Failed to get hierarchy' + err);
             },
             complete: () => {
+                // Set the file list.
+                if(this.hierarchy && this.hierarchy.length) {
+                    this.hierarchy.forEach(h => {
+                        if(!h.directory && !h.backup) {
+                            this.fileList.push(h);
+                        }
+                    });
+
+                    // Sort by date.
+                    this.fileList.sort((h1, h2): number => {
+                        const dateH1 = h1 && h1.dateTime ? new Date(h1.dateTime).getTime() : Infinity;
+                        const dateH2 = h2 && h2.dateTime ? new Date(h2.dateTime).getTime() : Infinity;
+                        return dateH1 - dateH2;
+                    });
+                }
+
+                // If there are no files, then set the selected file to null.
+                if(!this.fileList || !this.fileList.length) {
+                    this.selectedFile = null;
+                }
+
                 console.log('Load hierarchy complete')
             }
         });
@@ -91,6 +114,48 @@ export class BackupDisplayComponent implements OnInit  {
 
         // Select a file.
         this._backupDisplayService.getFile(file.underlyingId);
+    }
+
+    displayPrevious() {
+        // Display the previous file in the list by iterating through the list in reverse order.
+        let displayNext = false;
+        let selected = false;
+        this.fileList.slice().reverse().forEach(nextFile => {
+            if(nextFile.underlyingId == this.selectedFile.file.id) {
+                displayNext = true;
+            } else if(displayNext) {
+                this.displayFile(nextFile);
+                displayNext = false;
+                selected = true;
+                return;
+            }
+        });
+
+        // If nothing selected then select the last file.
+        if(!selected) {
+            this.displayFile(this.fileList[this.fileList.length - 1]);
+        }
+    }
+
+    displayNext() {
+        // Display the next file in the list.
+        let displayNext = false;
+        let selected = false;
+        this.fileList.forEach(nextFile => {
+            if(nextFile.underlyingId == this.selectedFile.file.id) {
+                displayNext = true;
+            } else if(displayNext) {
+                this.displayFile(nextFile);
+                displayNext = false;
+                selected = true;
+                return;
+            }
+        });
+
+        // If nothing selected then select the first file.
+        if(!selected) {
+            this.displayFile(this.fileList[0]);
+        }
     }
 
     deleteFile() {

@@ -1,6 +1,6 @@
-import {Component, Input} from "@angular/core";
-import {HierarchyResponse} from "../../../backup-hierarchyresponse";
+import {Component} from "@angular/core";
 import {DecimalPipe} from "@angular/common";
+import {BackupFileData} from "./backup-file-data";
 
 @Component({
     selector: 'jbr-backup-file-data-size',
@@ -11,6 +11,5 @@ import {DecimalPipe} from "@angular/common";
         DecimalPipe
     ]
 })
-export class BackupFileDataSize {
-    @Input() file: HierarchyResponse;
+export class BackupFileDataSize extends BackupFileData {
 }

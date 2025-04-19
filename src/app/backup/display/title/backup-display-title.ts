@@ -14,8 +14,8 @@ import {FileInfoExtra} from "../../backup-fileinfoextra";
 export class BackupDisplayTitle implements OnInit {
     @Input() selectedFile: FileInfoExtra;
 
-    @Output() previousFile: EventEmitter<FileInfoExtra> = new EventEmitter<FileInfoExtra>();
-    @Output() nextFile: EventEmitter<FileInfoExtra> = new EventEmitter<FileInfoExtra>();
+    @Output() previousFile: EventEmitter<void> = new EventEmitter<void>();
+    @Output() nextFile: EventEmitter<void> = new EventEmitter<void>();
     @Output() refresh: EventEmitter<FileInfoExtra> = new EventEmitter<FileInfoExtra>();
     @Output() deleteFile: EventEmitter<FileInfoExtra> = new EventEmitter<FileInfoExtra>();
     @Output() printFile: EventEmitter<FileInfoExtra> = new EventEmitter<FileInfoExtra>();
@@ -24,11 +24,11 @@ export class BackupDisplayTitle implements OnInit {
     }
 
     previous() {
-        this.previousFile.emit(this.selectedFile);
+        this.previousFile.emit();
     }
 
     next() {
-        this.nextFile.emit(this.selectedFile);
+        this.nextFile.emit();
     }
 
     refreshData() {
