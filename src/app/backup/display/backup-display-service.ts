@@ -5,6 +5,8 @@ import {HierarchyResponse} from "../backup-hierarchyresponse";
 import {Observable, throwError} from "rxjs";
 import {catchError, tap} from "rxjs/operators";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {FileLabel, Label} from "../backup-label";
+import {FileExpiry} from "../backup-expiry";
 
 @Injectable({
     providedIn: 'root'
@@ -98,6 +100,83 @@ export class BackupDisplayService {
             },
             complete: () => {
                 console.log('File loaded ' + id);
+            }
+        });
+    }
+
+    getLabels() : Observable<Label[]> {
+        return this.http.get<Label[]>(environment.backupLabels).pipe(
+            tap(data=> console.log(`All: ${JSON.stringify(data)}`)),
+            catchError(err => BackupDisplayService.handleError(err))
+        );
+    }
+
+    setFileLabel(id: number, labelId: number): void {
+        let fileLabel : FileLabel;
+        fileLabel = new FileLabel();
+        fileLabel.fileId = id;
+        fileLabel.labels = [];
+        fileLabel.labels.push(labelId);
+
+        this.http.post<FileInfoExtra>(environment.backupLabel, fileLabel).pipe(
+            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+            catchError(err => BackupDisplayService.handleError(err))
+        ).subscribe({
+            next:(nextFile: FileInfoExtra) => {
+                this.fileLoaded.emit(nextFile);
+                this.selectedFile = nextFile;
+            },
+            error: (response) => {
+                console.error('Failed to update file label', response)
+            },
+            complete: () => {
+                console.log('Label updated ' + id);
+            }
+        });
+    }
+
+    removeFileLabel(id: number, labelId: number): void {
+        let fileLabel : FileLabel;
+        fileLabel = new FileLabel();
+        fileLabel.fileId = id;
+        fileLabel.labels = [];
+        fileLabel.labels.push(labelId);
+
+        this.http.delete<FileInfoExtra>(environment.backupLabel, {body: fileLabel}).pipe(
+            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+            catchError(err => BackupDisplayService.handleError(err))
+        ).subscribe({
+            next:(nextFile: FileInfoExtra) => {
+                this.fileLoaded.emit(nextFile);
+                this.selectedFile = nextFile;
+            },
+            error: (response) => {
+                console.error('Failed to update file label', response)
+            },
+            complete: () => {
+                console.log('Label updated ' + id);
+            }
+        });
+    }
+
+    setFileExpiry(id: number, expiry: Date) {
+        let fileExpiry: FileExpiry = new FileExpiry();
+        fileExpiry.id = id;
+        fileExpiry.expiry = expiry;
+
+        this.http.put<FileInfoExtra>(environment.backupExpire, fileExpiry).pipe(
+            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+            catchError( err => BackupDisplayService.handleError(err))
+        ).subscribe({
+            next:(nextFile: FileInfoExtra) => {
+                this.fileLoaded.emit(nextFile);
+                this.selectedFile = nextFile;
+            },
+            error: (response) => {
+                console.error('Failed to expire file.', response)
+            },
+            complete: () => {
+                console.log('File loaded (expire)' + id);
             }
         });
     }

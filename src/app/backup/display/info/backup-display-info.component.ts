@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from "@angular/core";
-import {BackupService} from "../../backup.service";
 import {FileInfoExtra} from "../../backup-fileinfoextra";
 import {DatePipe, DecimalPipe, NgIf} from "@angular/common";
 import {MetaData} from "../../backup-file-metadata";
 import {LatLong} from "../../map/map-latlong";
 import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
+import {BackupDisplayService} from "../backup-display-service";
 
 @Component({
     selector: 'jbr-backup-display-info',
@@ -25,7 +25,7 @@ export class BackupDisplayInfoComponent implements OnInit {
     internalDate: Date;
     minimumDate: Date;
 
-    constructor(private readonly _backupService: BackupService,
+    constructor(private readonly _backupDisplayService: BackupDisplayService,
                 private datePipe: DatePipe) {
         this.initializeDate();
 
@@ -54,7 +54,7 @@ export class BackupDisplayInfoComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        if(this._backupService.fileHasBeenSelected()) {
+        if(this.selectedFile != null) {
             this.moveMap();
         }
     }
@@ -65,7 +65,7 @@ export class BackupDisplayInfoComponent implements OnInit {
 
     clearExpiry(): void {
         this.initializeDate();
-        this._backupService.setFileExpiry(this.selectedFile.file.id,null);
+        this._backupDisplayService.setFileExpiry(this.selectedFile.file.id,null);
     }
 
     get internalExpiryDate(): Date {
@@ -99,7 +99,7 @@ export class BackupDisplayInfoComponent implements OnInit {
     onChangeExpiry(newDate: Date): void {
         if (newDate > this.minimumDate) {
             this.initializeDate();
-            this._backupService.setFileExpiry(this.selectedFile.file.id, newDate);
+            this._backupDisplayService.setFileExpiry(this.selectedFile.file.id, newDate);
         }
     }
 }

@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import {EventEmitter, Injectable, Output} from "@angular/core";
 import {PrintSize, SelectedPrint} from "./backup-selectedprint";
 import {environment} from "../../environments/environment";
 import {catchError, tap} from "rxjs/operators";
@@ -11,6 +11,8 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 export class BackupPrintService {
     private selectedPhoto : SelectedPrint;
     private selectedPhotos: SelectedPrint[];
+
+    @Output() printsUpdated = new EventEmitter();
 
     constructor(private readonly http: HttpClient) {
     }
@@ -75,10 +77,64 @@ export class BackupPrintService {
                 console.log('Selecting for print err', response);
             },
             complete: () => {
-                //TODO - do this
-//                this.printsUpdated.emit();
+                this.printsUpdated.emit();
                 console.log('loaded');
             }
         });
+    }
+
+    getSelectedPhotos():SelectedPrint[] {
+        return this.selectedPhotos;
+    }
+
+    unselectForPrint(id: number) {
+        this.http.post<void>(environment.backupUnprint,id).subscribe({
+            next: () => {
+                console.log('Select for print');
+            },
+            error: (response) => {
+                console.log('POST select for print', response);
+            },
+            complete: () => {
+                this.updatePrints();
+                console.log('POST unselect for print completed');
+            }
+        });
+    }
+
+    updatedPrint(print: SelectedPrint) {
+        this.http.put<void>(environment.backupPrint,print).subscribe(
+            {
+                error: (response) => {
+                    console.error('Failed to update file print size', response)
+                },
+                complete: () => {
+                    this.updatePrints();
+                }
+            }
+        )
+    }
+
+    clearPrints() {
+        this.http.delete<void>(environment.backupPrints).subscribe({
+            next: () => {
+                console.log('Delete prints');
+            },
+            error: (response) => {
+                console.log('DELETE prints', response);
+            },
+            complete: () => {
+                this.updatePrints();
+                console.log('The DELETE observable is now complete (delete prints)');
+            }
+        });
+    }
+
+    imageUrl(id: number): string {
+        if (environment.production) {
+            return `backup/fileImage?id=${id}`;
+        } else {
+            return 'api/backup/test.image.jpg';
+        }
     }
 }

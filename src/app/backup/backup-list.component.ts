@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {BackupService} from './backup.service';
 
 export enum ListMode { Files, Actions, Summary, Import, Logs, Photo, Prints }
 
@@ -9,9 +8,6 @@ export enum ListMode { Files, Actions, Summary, Import, Logs, Photo, Prints }
 })
 export class BackupListComponent implements OnInit {
     listMode: ListMode;
-
-    constructor(private readonly _backupService: BackupService) {
-    }
 
     ngOnInit(): void {
         this.listMode = ListMode.Files;

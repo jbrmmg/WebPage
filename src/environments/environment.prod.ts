@@ -45,5 +45,10 @@ export const environment = {
   backupPrintSize: "backup/print-size",
   backupPrint: "backup/print",
   backupPrints: "backup/prints",
-  backupRefreshFile: "backup/refresh-file-data?id=##id##"
+  backupRefreshFile: "backup/refresh-file-data?id=##id##",
+  backupLabels: "backup/labels",
+  backupLabel: "backup/label",
+  backupExpire: "backup/expire",
+  backupUnprint: "backup/unprint",
+  backupLog: "backup/log"
 };

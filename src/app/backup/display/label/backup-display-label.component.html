@@ -1,5 +1,5 @@
 <div class="row label-row">
-    <p class="label-format" *ngFor="let nextLabel of labels">{{nextLabel}}</p>
+    <p class="label-format" *ngFor="let nextLabel of selectedFile.labels">{{nextLabel}}</p>
     <em class="fa fa-plus plus" (click)="showListSelector(labelPicker)" title="Add or remove labels"></em>
 </div>
 
