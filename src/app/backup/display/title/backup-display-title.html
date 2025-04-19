@@ -1,0 +1,33 @@
+<ng-container *ngIf="selectedFile != null">
+    <div class="row name-row">
+        <em class="fa {{selectedFile.file.icon}} detail-name-icon"></em>
+        <p id="selected-file-id" class="detail-name">{{selectedFile.file.name}}</p>
+    </div>
+    <div class="row">
+        <div class="btn-row-left btn-previous">
+            <label class="btn btn-sm btn-primary" (click)="previous()" title="Goto the previous file.">
+                <em class="fa fa-chevron-circle-left"></em>
+            </label>
+        </div>
+        <div class="btn-row-left btn-next">
+            <label class="btn btn-sm btn-primary" (click)="next()" title="Goto the next file.">
+                <em class="fa fa-chevron-circle-right"></em>
+            </label>
+        </div>
+        <div class="btn-row-left btn-print">
+            <label class="btn btn-sm btn-primary" (click)="print()" title="Select the image for printing.">
+                <em class="fa fa-print"></em>
+            </label>
+        </div>
+        <div class="btn-row-left btn-refresh">
+            <label class="btn btn-sm btn-primary" (click)="refreshData()" title="Refresh the details stored for the file.">
+                <em class="fa fa-recycle"></em>
+            </label>
+        </div>
+        <div class="btn-row-right">
+            <label class="btn btn-sm btn-danger align-right" (click)="delete()" title="Delete the file.">
+                <em class="fa fa-trash"></em>
+            </label>
+        </div>
+    </div>
+</ng-container>

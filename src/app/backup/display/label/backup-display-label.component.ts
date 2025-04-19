@@ -1,15 +1,23 @@
-import {Component, OnInit, TemplateRef} from "@angular/core";
+import {Component, Input, OnInit, TemplateRef} from "@angular/core";
 import {BackupService} from "../../backup.service";
 import {FileInfoExtra} from "../../backup-fileinfoextra";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {Label} from "../../backup-label";
+import {NgClass, NgForOf} from "@angular/common";
 
 @Component({
     selector: 'jbr-backup-display-labels',
     templateUrl: './backup-display-label.component.html',
-    styleUrls: ['./backup-display-label.component.css']
+    styleUrls: ['./backup-display-label.component.css'],
+    standalone: true,
+    imports: [
+        NgClass,
+        NgForOf
+    ]
 })
 export class BackupDisplayLabelComponent implements OnInit {
+    @Input() selectedFile: FileInfoExtra;
+
     labels: string[];
     labelListModal: BsModalRef;
     allLabels: Label[];

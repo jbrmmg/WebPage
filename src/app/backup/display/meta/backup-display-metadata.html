@@ -1,0 +1,23 @@
+<div class="row metadata-row">
+    <div class="col-6">
+        <div class="row" *ngIf="hasLocation()">
+            <div class="col-3 title">Location</div>
+            <div class="col-9">{{getLocation()}}</div>
+        </div>
+        <div class="row" *ngIf="hasSize()">
+            <div class="col-3 title">Size</div>
+            <div class="col-9">{{getSize()}}</div>
+        </div>
+        <div class="row" *ngIf="hasDuration()">
+            <div class="col-3 title">Duration</div>
+            <div class="col-9">{{getDuration()}}</div>
+        </div>
+        <div class="row" *ngIf="hasDate()">
+            <div class="col-3 title">Date</div>
+            <div class="col-9">{{getDate()}}</div>
+        </div>
+    </div>
+    <div class="col-6" *ngIf="hasLocation()">
+        <jbr-map [height]="250" [fullWidth]="true" #map></jbr-map>
+    </div>
+</div>

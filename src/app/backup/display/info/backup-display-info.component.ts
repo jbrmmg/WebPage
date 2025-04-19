@@ -1,10 +1,8 @@
-import {Component, OnInit, ViewChild} from "@angular/core";
-import {FileInfo} from "../../backup-fileinfo";
+import {Component, Input, OnInit} from "@angular/core";
 import {BackupService} from "../../backup.service";
 import {FileInfoExtra} from "../../backup-fileinfoextra";
-import {DatePipe, NgIf} from "@angular/common";
+import {DatePipe, DecimalPipe, NgIf} from "@angular/common";
 import {MetaData} from "../../backup-file-metadata";
-import {Map} from "../../map/map";
 import {LatLong} from "../../map/map-latlong";
 import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
 
@@ -12,28 +10,23 @@ import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
     selector: 'jbr-backup-display-info',
     templateUrl: './backup-display-info.component.html',
     imports: [
-        Map,
         BsDatepickerModule,
-        NgIf
+        NgIf,
+        DecimalPipe
     ],
     standalone: true,
     styleUrls: ['./backup-display-info.component.css']
 })
 export class BackupDisplayInfoComponent implements OnInit {
-    selectedFile: FileInfo;
+    @Input() selectedFile: FileInfoExtra;
+
     metaData: MetaData;
     editDateEnable: boolean;
     internalDate: Date;
     minimumDate: Date;
 
-    @ViewChild('map') map: Map;
-
     constructor(private readonly _backupService: BackupService,
                 private datePipe: DatePipe) {
-        if(_backupService.fileHasBeenSelected()) {
-            this.selectedFile = _backupService.getSelectedFile().file;
-            this.metaData = _backupService.getSelectedFile().metaData;
-        }
         this.initializeDate();
 
         this.minimumDate = new Date();
@@ -51,8 +44,6 @@ export class BackupDisplayInfoComponent implements OnInit {
             latLong.lat = this.metaData.latitude;
             latLong.long = this.metaData.longitude;
         }
-
-        this.map.move(latLong)
     }
 
     initializeDate() {
@@ -63,17 +54,9 @@ export class BackupDisplayInfoComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this._backupService.fileLoaded.subscribe((nextFile: FileInfoExtra) => this.fileLoaded(nextFile));
-
         if(this._backupService.fileHasBeenSelected()) {
             this.moveMap();
         }
-    }
-
-    fileLoaded(file: FileInfoExtra): void {
-        this.selectedFile = file.file;
-        this.metaData = file.metaData;
-        this.moveMap();
     }
 
     editDate(): void {
@@ -82,7 +65,7 @@ export class BackupDisplayInfoComponent implements OnInit {
 
     clearExpiry(): void {
         this.initializeDate();
-        this._backupService.setFileExpiry(this.selectedFile.id,null);
+        this._backupService.setFileExpiry(this.selectedFile.file.id,null);
     }
 
     get internalExpiryDate(): Date {
@@ -94,11 +77,11 @@ export class BackupDisplayInfoComponent implements OnInit {
             return "";
         }
 
-        if(this.selectedFile.expiry == null) {
+        if(this.selectedFile.file.expiry == null) {
             return "";
         }
 
-        return this.datePipe.transform(this.selectedFile.expiry,'dd MMMM yyyy');
+        return this.datePipe.transform(this.selectedFile.file.expiry,'dd MMMM yyyy');
     }
 
     get formattedFileDate(): string {
@@ -106,11 +89,11 @@ export class BackupDisplayInfoComponent implements OnInit {
             return "";
         }
 
-        if(this.selectedFile.date == null) {
+        if(this.selectedFile.file.date == null) {
             return "";
         }
 
-        return this.datePipe.transform(this.selectedFile.date,'dd MMM yyyy HH:mm:ss');
+        return this.datePipe.transform(this.selectedFile.file.date,'dd MMM yyyy HH:mm:ss');
     }
 
     get formattedMetaDate(): string {
@@ -152,7 +135,7 @@ export class BackupDisplayInfoComponent implements OnInit {
     onChangeExpiry(newDate: Date): void {
         if (newDate > this.minimumDate) {
             this.initializeDate();
-            this._backupService.setFileExpiry(this.selectedFile.id, newDate);
+            this._backupService.setFileExpiry(this.selectedFile.file.id, newDate);
         }
     }
 }

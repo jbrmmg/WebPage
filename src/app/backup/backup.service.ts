@@ -4,7 +4,6 @@ import {Observable, throwError} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {Log} from './backup-log'
 import {ConfirmRequest} from './backup-confirmrequest';
-import {HierarchyResponse} from './backup-hierarchyresponse';
 import {FileInfoExtra} from './backup-fileinfoextra';
 import {environment} from '../../environments/environment';
 import {BackupSummary} from "./summary/backup-summary";
@@ -75,20 +74,6 @@ export class BackupService {
             tap(data =>  console.log(`All: ${JSON.stringify(data)}`)),
             catchError(err => BackupService.handleError(err))
         );
-    }
-
-    getHierarchy(parent: HierarchyResponse): Observable<HierarchyResponse[]> {
-        if (environment.production) {
-            return this.http.post<HierarchyResponse[]>(this.BACKUP_URL_HIERARCHY, parent).pipe(
-                tap(data => console.log(`All: ${JSON.stringify(data)}`)),
-                catchError(err => BackupService.handleError(err))
-            );
-        } else {
-            return this.http.get<HierarchyResponse[]>(this.TEST_BACKUP_URL_HIERARCHY).pipe(
-                tap(data => console.log(`All: ${JSON.stringify(data)}`)),
-                catchError(err => BackupService.handleError(err))
-            );
-        }
     }
 
     getLabels() : Observable<Label[]> {

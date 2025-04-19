@@ -40,5 +40,6 @@ export const environment = {
   backupUpdateDestination: "backup/update-destination",
   backupRecipeFile: "backup/recipe-file",
   backupSummary: "backup/summary",
-  backupActions: "backup/actions"
+  backupActions: "backup/actions",
+  backupHierarchy: "backup/hierarchy"
 };

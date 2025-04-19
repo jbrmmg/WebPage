@@ -2,23 +2,14 @@
     padding-left: 30px;
 }
 
-.detail-name-icon {
-    font-size: 48px;
-}
-
-.detail-name {
-    padding-left: 10px;
-    font-size: 32px;
-    font-weight: bolder;
-}
-
 .detail-full-name-row {
     margin: 0;
 }
 
 .detail-full-name {
-    margin: 0;
-    font-size: 12px;
+    margin: 4px 0 0 0;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .detail-size-row {
@@ -30,8 +21,20 @@
     font-size: 12px;
 }
 
+.detail-size-label {
+    margin: 0;
+    font-size: 12px;
+    font-weight: bold;
+}
+
 .detail-date-row {
     margin: 0;
+}
+
+.detail-date-label {
+    margin: 0;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 .detail-date {
@@ -53,6 +56,12 @@
 
 .detail-size-row {
     margin: 0;
+}
+
+.detail-md5-label {
+    margin: 0;
+    font-size: 12px;
+    font-weight: bold;
 }
 
 .detail-md5 {
@@ -85,7 +94,7 @@
 }
 
 .detail-expiry-row {
-    margin: 0;
+    margin: 4px 0 0 0;
     flex-wrap: nowrap;
 }
 
@@ -100,4 +109,8 @@
     margin-bottom: 2px;
     margin-left: 10px;
     width: 30%;
+}
+
+.no-padding-col {
+    padding: 0;
 }
