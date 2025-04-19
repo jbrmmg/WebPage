@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Output} from "@angular/core";
-import {ImportGridFileDisplay} from "../import-grid-file-display";
 
 @Component({
     selector: '',

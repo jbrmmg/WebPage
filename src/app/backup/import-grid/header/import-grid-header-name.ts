@@ -1,4 +1,3 @@
-import {NgIf} from "@angular/common";
 import {Component, Input} from "@angular/core";
 import {ImportGridHeader} from "./import-grid-header";
 
@@ -6,9 +5,7 @@ import {ImportGridHeader} from "./import-grid-header";
     selector: 'jbr-import-grid-header-name',
     templateUrl: './import-grid-header-name.html',
     styleUrls: ['./import-grid-header-name.css'],
-    imports: [
-        NgIf
-    ],
+    imports: [],
     standalone: true
 })
 export class ImportGridHeaderName extends ImportGridHeader {

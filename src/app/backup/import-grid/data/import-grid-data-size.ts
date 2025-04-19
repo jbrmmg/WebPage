@@ -1,4 +1,3 @@
-import {NgIf} from "@angular/common";
 import {Component, Input} from "@angular/core";
 import {ImportGridData} from "./import-grid-data";
 
@@ -6,9 +5,7 @@ import {ImportGridData} from "./import-grid-data";
     selector: 'jbr-import-grid-data-size',
     templateUrl: './import-grid-data-size.html',
     styleUrls: ['./import-grid-data-size.css'],
-    imports: [
-        NgIf
-    ],
+    imports: [],
     standalone: true
 })
 export class ImportGridDataSize extends ImportGridData {

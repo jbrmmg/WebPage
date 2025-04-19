@@ -1,4 +1,3 @@
-import {NgIf} from "@angular/common";
 import {Component, Input} from "@angular/core";
 import {ImportGridData} from "./import-grid-data";
 
@@ -6,9 +5,7 @@ import {ImportGridData} from "./import-grid-data";
     selector: 'jbr-import-grid-data-date',
     templateUrl: './import-grid-data-date.html',
     styleUrls: ['./import-grid-data-date.css'],
-    imports: [
-        NgIf
-    ],
+    imports: [],
     standalone: true
 })
 export class ImportGridDataDate extends ImportGridData {

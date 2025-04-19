@@ -102,6 +102,11 @@ export class BackupDisplayComponent implements OnInit  {
                     this.selectedFile = null;
                 }
 
+                // If there is more than one file, then select the first.
+                if(this.fileList.length >= 1) {
+                    this.displayFile(this.fileList[0]);
+                }
+
                 console.log('Load hierarchy complete')
             }
         });
