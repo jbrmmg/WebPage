@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from "@angular/core";
+import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {NgIf} from "@angular/common";
 import {BackupDisplayService} from "../backup-display-service";
 import {FileInfoExtra} from "../../backup-fileinfoextra";
@@ -12,17 +12,16 @@ import {FileInfoExtra} from "../../backup-fileinfoextra";
         NgIf
     ]
 })
-export class BackupDisplayMedia implements OnInit {
+export class BackupDisplayMedia {
     @Input() selectedFile: FileInfoExtra;
+
+    @Output() selectPhotoModeEvent: EventEmitter<void> = new EventEmitter<void>();
 
     constructor(private readonly _backupDisplayService: BackupDisplayService) {
     }
 
-    ngOnInit(): void {
-    }
-
     selectPhotoMode() {
-
+        this.selectPhotoModeEvent.emit();
     }
 
     imageUrl(id: number): string {

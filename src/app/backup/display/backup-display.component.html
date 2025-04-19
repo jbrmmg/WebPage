@@ -21,8 +21,15 @@
     </div>
     <div class="col-10 detail-col">
         <div *ngIf="selectedFile != null">
-            <jbr-backup-display-title [selectedFile]="selectedFile" (previousFile)="displayPrevious()" (nextFile)="displayNext()"></jbr-backup-display-title>
-            <jbr-backup-display-media [selectedFile]="selectedFile"></jbr-backup-display-media>
+            <jbr-backup-display-title
+                    [selectedFile]="selectedFile"
+                    (previousFile)="displayPrevious()"
+                    (nextFile)="displayNext()"
+                    (deleteFile)="deleteFile()"
+                    (printFile)="selectPhotoMode()"
+                    (refresh)="refreshFile()">
+            </jbr-backup-display-title>
+            <jbr-backup-display-media [selectedFile]="selectedFile" (selectPhotoModeEvent)="selectPhotoMode()"></jbr-backup-display-media>
             <jbr-backup-display-metadata [selectedFile]="selectedFile"></jbr-backup-display-metadata>
             <jbr-backup-display-info [selectedFile]="selectedFile"></jbr-backup-display-info>
             <jbr-backup-display-labels [selectedFile]="selectedFile"></jbr-backup-display-labels>

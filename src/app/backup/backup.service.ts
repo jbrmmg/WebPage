@@ -9,7 +9,7 @@ import {environment} from '../../environments/environment';
 import {BackupSummary} from "./summary/backup-summary";
 import {FileExpiry} from "./backup-expiry";
 import {FileLabel, Label} from "./backup-label";
-import {PrintSize, SelectedPrint} from "./backup-selectedprint";
+import {SelectedPrint} from "./backup-selectedprint";
 
 @Injectable({
     providedIn: 'root'
@@ -39,8 +39,6 @@ export class BackupService {
     readonly TEST_BACKUP_URL_PRINTS = 'api/backup/prints.json';
     readonly TEST_BACKUP_URL_LABELS = 'api/backup/labels.json';
     readonly TEST_BACKUP_URL_PRINT_SIZES = 'api/backup/print-size.json'
-
-    private selectedPhoto : SelectedPrint;
 
     private selectedPhotos: SelectedPrint[];
     private selectedFile: FileInfoExtra;
@@ -79,13 +77,6 @@ export class BackupService {
     getLabels() : Observable<Label[]> {
         return this.http.get<Label[]>(environment.production === true ? this.BACKUP_URL_LABELS : this.TEST_BACKUP_URL_LABELS).pipe(
             tap(data=> console.log(`All: ${JSON.stringify(data)}`)),
-            catchError(err => BackupService.handleError(err))
-        );
-    }
-
-    getPrintSizes() : Observable<PrintSize[]> {
-        return this.http.get<PrintSize[]>(environment.production === true ? this.BACKUP_URL_PRINT_SIZES : this.TEST_BACKUP_URL_PRINT_SIZES).pipe(
-            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
             catchError(err => BackupService.handleError(err))
         );
     }
@@ -180,10 +171,6 @@ export class BackupService {
 
     fileHasBeenSelected(): boolean {
         return this.selectedFile != null;
-    }
-
-    getSelectedFile(): FileInfoExtra {
-        return this.selectedFile;
     }
 
     /*
@@ -348,22 +335,6 @@ export class BackupService {
         }
     }
 
-    setSelectedPhoto(selected: number, name: string) {
-        this.selectedPhoto = new SelectedPrint();
-        this.selectedPhoto.fileId = selected;
-        this.selectedPhoto.fileName = name;
-        this.selectedPhoto.border = false;
-        this.selectedPhoto.blackWhite = false;
-    }
-
-    getSelectedPhoto(): SelectedPrint {
-        if(this.selectedPhoto == null) {
-            return null;
-        }
-
-        return this.selectedPhoto;
-    }
-
     getSelectedPhotos():SelectedPrint[] {
         return this.selectedPhotos;
     }
@@ -382,19 +353,6 @@ export class BackupService {
                 console.log('loaded');
             }
         );
-    }
-
-    selectForPrint() {
-        this.http.post<void>(this.BACKUP_URL_PRINT,this.selectedPhoto).subscribe(() => {
-                console.log('Select for print');
-            },
-            (response) => {
-                console.log('POST select for print', response);
-            },
-            () => {
-                this.updatePrints();
-                console.log('POST select for print completed');
-            });
     }
 
     unselectForPrint(id: number) {

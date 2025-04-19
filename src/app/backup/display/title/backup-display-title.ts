@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, Output, EventEmitter} from "@angular/core";
+import {Component, Input, Output, EventEmitter} from "@angular/core";
 import {NgIf} from "@angular/common";
 import {FileInfoExtra} from "../../backup-fileinfoextra";
 
@@ -11,7 +11,7 @@ import {FileInfoExtra} from "../../backup-fileinfoextra";
         NgIf
     ]
 })
-export class BackupDisplayTitle implements OnInit {
+export class BackupDisplayTitle {
     @Input() selectedFile: FileInfoExtra;
 
     @Output() previousFile: EventEmitter<void> = new EventEmitter<void>();
@@ -19,9 +19,6 @@ export class BackupDisplayTitle implements OnInit {
     @Output() refresh: EventEmitter<FileInfoExtra> = new EventEmitter<FileInfoExtra>();
     @Output() deleteFile: EventEmitter<FileInfoExtra> = new EventEmitter<FileInfoExtra>();
     @Output() printFile: EventEmitter<FileInfoExtra> = new EventEmitter<FileInfoExtra>();
-
-    ngOnInit(): void {
-    }
 
     previous() {
         this.previousFile.emit();

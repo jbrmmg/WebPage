@@ -44,5 +44,8 @@ export const environment = {
   backupRecipeFile: "api/backup/recipefile",
   backupSummary: "api/backup/summary",
   backupActions: "api/backup/actions",
-  backupHierarchy: "api/backup/hierarchy"
+  backupHierarchy: "api/backup/hierarchy",
+  backupPrintSize: "api/backup/print-size",
+  backupPrint: "api/backup/print",
+  backupPrints: "api/backup/prints"
 };

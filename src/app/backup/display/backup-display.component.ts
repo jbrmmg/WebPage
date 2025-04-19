@@ -11,6 +11,7 @@ import {BackupDisplayMedia} from "./media/backup-display-media";
 import {BackupDisplayMetadata} from "./meta/backup-display-metadata";
 import {BackupDisplayService} from "./backup-display-service";
 import {BackupDisplayFiles} from "./files/backup-display-files";
+import {BackupPrintService} from "../backup-print-service";
 
 @Component({
     selector: 'jbr-backup-display',
@@ -38,7 +39,8 @@ export class BackupDisplayComponent implements OnInit  {
 
     @Output() selectPhoto = new EventEmitter();
 
-    constructor(private readonly _backupDisplayService: BackupDisplayService) {
+    constructor(private readonly _backupDisplayService: BackupDisplayService,
+                private readonly _backupPrintService: BackupPrintService) {
     }
 
     ngOnInit(): void {
@@ -167,15 +169,7 @@ export class BackupDisplayComponent implements OnInit  {
     }
 
     selectPhotoMode() {
-//        this._backupService.setSelectedPhoto(this.selectedFile.id,this.selectedFile.name);
+        this._backupPrintService.setSelectedPhoto(this.selectedFile.file.id,this.selectedFile.file.name);
         this.selectPhoto.emit();
-    }
-
-    getHeight(): number {
-        return 420;
-    }
-
-    getWidth(): number {
-        return 640;
     }
 }

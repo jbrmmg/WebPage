@@ -20,7 +20,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {DatePipe, NgOptimizedImage} from '@angular/common';
 import { BackupSummaryComponent } from "./backup/summary/backup-summary.component";
 import { BackupLogComponent } from "./backup/log/backup-log.component";
-import { BackupPhotoComponent } from "./backup/photo/backup-photo.component";
 import { BackupPrintsComponent } from "./backup/prints/backup-prints.component";
 import { BackupPrintSizeSelectComponent } from "./backup/prints/backup-print-size-select.component";
 import { BackupPrintImageComponent } from "./backup/prints/backup-print-image.component";
@@ -35,6 +34,7 @@ import {ActionGridHeaderName} from "./backup/action/header/action-grid-header-na
 import {ActionGridDataName} from "./backup/action/data/action-grid-data-name";
 import {BackupActionComponent} from "./backup/action/backup-action.component";
 import {BackupDisplayComponent} from "./backup/display/backup-display.component";
+import {BackupPhotoComponent} from "./backup/display/photo/backup-photo.component";
 
 @NgModule({
     declarations: [
@@ -47,7 +47,6 @@ import {BackupDisplayComponent} from "./backup/display/backup-display.component"
         BackupListComponent,
         BackupSummaryComponent,
         BackupLogComponent,
-        BackupPhotoComponent,
         BackupPrintSizeSelectComponent,
         BackupPrintsComponent,
         BackupPrintImageComponent,
@@ -84,7 +83,8 @@ import {BackupDisplayComponent} from "./backup/display/backup-display.component"
         ActionGridDataName,
         BackupActionComponent,
         NgOptimizedImage,
-        BackupDisplayComponent
+        BackupDisplayComponent,
+        BackupPhotoComponent
     ],
     providers: [DatePipe],
     bootstrap: [AppComponent]

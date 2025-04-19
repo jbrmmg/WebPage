@@ -25,10 +25,6 @@ export class BackupDisplayLabelComponent implements OnInit {
 
     constructor(private readonly _backupService: BackupService,
                 private modalService: BsModalService) {
-        if(_backupService.fileHasBeenSelected()) {
-            this.labels = _backupService.getSelectedFile().labels;
-            this.selectedFileId = _backupService.getSelectedFile().file.id;
-        }
     }
 
     ngOnInit(): void {
