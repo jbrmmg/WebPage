@@ -16,7 +16,6 @@ import {ImportGridFileDisplay} from "./import-grid-file-display";
 import {IImportGridFileBase, ImportGridFileBase} from "./import-grid-file-base";
 import {ImportGridHeaderTraffic} from "./header/import-grid-header-traffic";
 import {ImportGridDataTraffic} from "./data/import-grid-data-traffic";
-import {ImportGridTrafficLightFilter, TrafficLightType} from "./traffic/import-grid-traffic-light";
 import {ImportSelected} from "./selected/import-selected";
 import {ImportSelectedAction} from "./selected/import-selected-action";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
@@ -67,7 +66,6 @@ export class ImportGrid implements OnInit {
     public afterRefresh: string;
     public filter: ListFilterType;
     public fileForDelete: string;
-    protected readonly TrafficLightType = TrafficLightType;
     modalRef: BsModalRef;
 
     constructor(private readonly _importGridService: ImportGridService,
@@ -115,7 +113,7 @@ export class ImportGrid implements OnInit {
     }
 
     updateLatLong(data: ImportGridFile, update: ImportGridFile) {
-        // If no lat/long then just retur.
+        // If no lat/ long, then just return.
         if(!update.location && !data.location) {
             return;
         }
@@ -142,7 +140,7 @@ export class ImportGrid implements OnInit {
     }
 
     updateImageSize(data: ImportGridFile, update: ImportGridFile) {
-        // If no image size then just return.
+        // If no image size, then just return.
         if(!update.imageSize && !data.imageSize) {
             return;
         }
@@ -217,7 +215,7 @@ export class ImportGrid implements OnInit {
             return;
         }
 
-        // Have the number of similar files changed?
+        // Has the number of similar files changed?
         if(update.similarFiles.length != data.similarFiles.length) {
             data.similarFiles = update.similarFiles;
             return;
@@ -430,7 +428,7 @@ export class ImportGrid implements OnInit {
                     this.selectRequestByName(this.afterRefresh);
                     this.afterRefresh = "";
                 } else {
-                    // Just select the first.
+                    // Select the first.
                     if (this.data && this.data.length > 0) {
                         this.selectRequest(this.data[0]);
                     }
@@ -447,7 +445,7 @@ export class ImportGrid implements OnInit {
             return;
         }
 
-        // Make the current selected un selected.
+        // Make the current selected unselected.
         this.data.forEach(f => {
             if(f.selected) {
                 f.selected = false;
@@ -634,19 +632,6 @@ export class ImportGrid implements OnInit {
         }
         this.status = oldStatus;
         this.sortColumn = column;
-    }
-
-    getVisible(statusName: string, filter: ImportGridTrafficLightFilter) {
-        switch(statusName) {
-            case "TL_RED":
-                return filter.red;
-            case "TL_AMBER":
-                return filter.amber;
-            case "TL_GREEN":
-                return filter.green;
-        }
-
-        return filter.unknown;
     }
 
     deleteRejected() {
@@ -915,24 +900,6 @@ export class ImportGrid implements OnInit {
             complete: () => {
                 console.log('Remove duplicates complete');
                 this.status = "Remove duplicates complete";
-                this.refresh(-1);
-            }
-        });
-    }
-
-    process() {
-        this.status = "Processing the files listed below.";
-        this._importGridService.process().subscribe({
-            next: (result) => {
-                console.log(result);
-            },
-            error: err => {
-                this.status = "Process files failed - check log";
-                console.log('There is an error?' + err.message)
-            },
-            complete: () => {
-                console.log('Process files complete');
-                this.status = "Process files complete";
                 this.refresh(-1);
             }
         });
