@@ -21,7 +21,7 @@ export class BackupDisplayMetadata implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         if(changes.selectedFile) {
-            if(this.selectedFile && this.selectedFile.metaData && (this.selectedFile.metaData.longitude || this.selectedFile.metaData.latitude)) {
+            if(this.map && this.selectedFile && this.selectedFile.metaData && (this.selectedFile.metaData.longitude || this.selectedFile.metaData.latitude)) {
                 let latLong: LatLong = new LatLong();
                 latLong.lat = this.selectedFile.metaData.latitude;
                 latLong.long = this.selectedFile.metaData.longitude;
