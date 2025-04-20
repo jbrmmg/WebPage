@@ -155,7 +155,7 @@ export class GridTransaction implements OnInit {
         transaction.balance = new FinancialAmount(0,"CR");
         transaction.selectable = false;
 
-        // If the filter is a single account then use that.
+        // If the filter is a single account, then use that.
         if(filter.accounts.length == 1) {
             transaction.account = filter.accounts[0];
         }
@@ -216,7 +216,7 @@ export class GridTransaction implements OnInit {
     }
 
     valueChanged(event: GridDataEvent) {
-        // If this is a category change from a selected row then apply to the other selected rows.
+        // If this is a category change from a selected row, then apply to the other selected rows.
         if(event.source == HeaderType.Category && event.transaction.selected && !event.transaction.category.systemUse) {
             this.data.forEach(next => {
                 if(next.selected &&  next.id != event.transaction.id) {

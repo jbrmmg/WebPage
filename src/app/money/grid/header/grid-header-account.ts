@@ -64,7 +64,7 @@ export class GridHeaderAccount extends GridHeader implements OnInit {
     onOK() {
         this.modalRef.hide();
 
-        // If all are selected then clear the filter as it's the same as no filter.
+        // If all are selected, then clear the filter as it's the same as no filter.
         if(this.allSelected) {
             this.filter.accounts = [];
         }
