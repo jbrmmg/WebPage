@@ -20,49 +20,9 @@ p {
     width: 23px;
 }
 
-.col-account {
-    padding-left: 3px;
-    padding-right: 0;
-}
-
-.account-row {
-    margin: 0;
-    vertical-align: middle;
-}
-
-.col-centre {
-    text-align: center;
-}
-
 .name {
     padding-top: 6px;
     padding-left: 10px;
-}
-
-.remove-margin {
-    margin: 0;
-}
-
-.remove-padding {
-    padding: 0;
-}
-
-.btn-exit-div {
-    padding: 5px 0 4px 2px;
-}
-
-.btn-exit {
-    padding: 0;
-    width: 100%;
-}
-
-.btn-ok-div {
-    padding: 5px 2px 4px 2px;
-}
-
-.btn-ok {
-    padding: 0;
-    width: 100%;
 }
 
 .btn-account {

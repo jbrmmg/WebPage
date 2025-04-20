@@ -3,14 +3,6 @@
     margin-top: 3px;
 }
 
-.btn-delete {
-    background-color: red;
-}
-
-.delete-row {
-    margin-top: 20px;
-}
-
 .list-container {
     overflow: auto;
     height: 100%;

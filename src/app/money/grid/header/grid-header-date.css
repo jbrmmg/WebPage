@@ -11,11 +11,6 @@ p {
     margin: 0;
 }
 
-.date-col-margin {
-    padding: 0 3px 0 2px;
-    margin: 0;
-}
-
 .btn-padding {
     padding: 3px;
 }
@@ -24,9 +19,4 @@ p {
     width: 100%;
     font-size: 12px;
     padding: 3px;
-}
-
-.date-entry {
-    border-radius: 0;
-    padding: 3px 0 0 0;
 }
