@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, OnInit} from "@angular/core";
-import {DatePipe, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {TransactionFilter} from "../../transaction/transactionFilter";
 import {ValueRange} from "../../range/valueRange";
@@ -57,8 +56,6 @@ class Amount {
     templateUrl: './grid-filter-amount.html',
     styleUrls: ['./grid-filter-amount.css'],
     imports: [
-        DatePipe,
-        NgIf,
         FormsModule
     ],
     host: {'style': 'padding: 0;'},

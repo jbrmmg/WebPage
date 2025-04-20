@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit} from "@angular/core";
-import {DatePipe, NgIf} from "@angular/common";
+import {DatePipe} from "@angular/common";
 import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
 import {TransactionFilter} from "../../transaction/transactionFilter";
 import {DateRange} from "../../range/dateRange";
@@ -10,7 +10,6 @@ import {DateRange} from "../../range/dateRange";
     styleUrls: ['./grid-filter-date.css'],
     imports: [
         DatePipe,
-        NgIf,
         BsDatepickerModule
     ],
     host: {'style': 'padding: 0;'},

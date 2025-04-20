@@ -1,7 +1,6 @@
 import {Component, EventEmitter, OnInit, Output, TemplateRef, Type} from "@angular/core";
-import {DatePipe, NgIf} from "@angular/common";
+import {DatePipe} from "@angular/common";
 import {GridData} from "./grid-data";
-import {MoneyAccount} from "../../account/money-account.component";
 import {MoneyStatement} from "../../statement/money-statement.component";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {MoneyService} from "../../money.service";
@@ -14,9 +13,6 @@ import {PopupComponent} from "../../../standard/popup.component";
     styleUrls: ['./grid-data-statement-date.css'],
     imports: [
         DatePipe,
-        MoneyAccount,
-        NgIf,
-        MoneyStatement,
         PopupComponent
     ],
     standalone: true

@@ -3,9 +3,9 @@ import {MoneyService} from "../money.service";
 import {FileUpdate} from "./fileUpdate";
 import {IFile} from "./file";
 import {ButtonsModule} from "ngx-bootstrap/buttons";
-import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {NgForOf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
-import { MoneyFile } from "./money-file";
+import {MoneyFile} from "./money-file";
 
 @Component({
     selector: 'jbr-money-files',
@@ -14,9 +14,7 @@ import { MoneyFile } from "./money-file";
     imports: [
         ButtonsModule,
         NgForOf,
-        NgIf,
         FormsModule,
-        NgClass,
         MoneyFile
     ],
     host: {'style': 'padding: 0;'},

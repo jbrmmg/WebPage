@@ -1,12 +1,10 @@
 import {Component, OnInit, TemplateRef, Type} from "@angular/core";
 import {ButtonsModule} from "ngx-bootstrap/buttons";
-import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {FormsModule} from "@angular/forms";
 import {FilterEvent, GridHeader} from "./grid-header";
 import {HeaderType} from "./grid-header-type";
 import {MoneyAccount} from "../../account/money-account.component";
-import {MoneyCategory} from "../../category/money-cat.component";
 import {PopupComponent} from "../../../standard/popup.component";
 
 @Component({
@@ -15,12 +13,7 @@ import {PopupComponent} from "../../../standard/popup.component";
     styleUrls: ['./grid-header-account.css'],
     imports: [
         ButtonsModule,
-        NgForOf,
-        NgIf,
         FormsModule,
-        NgClass,
-        MoneyAccount,
-        MoneyCategory,
         PopupComponent
     ],
     standalone: true

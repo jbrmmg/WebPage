@@ -2,7 +2,6 @@ import {Component, EventEmitter, OnInit, TemplateRef, Type} from "@angular/core"
 import {MoneyService} from "../../money.service";
 import {NgIf} from "@angular/common";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import {MoneyCategory} from "../../category/money-cat.component";
 import {MoneyAccount} from "../../account/money-account.component";
 import {JbAccount} from "../../account/jbAccount";
 import {GridData} from "./grid-data";
@@ -17,8 +16,6 @@ import {PopupComponent} from "../../../standard/popup.component";
     styleUrls: ['./grid-data-account.css'],
     imports: [
         NgIf,
-        MoneyCategory,
-        MoneyAccount,
         PopupComponent
     ],
     standalone: true

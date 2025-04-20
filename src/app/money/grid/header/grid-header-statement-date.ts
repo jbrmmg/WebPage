@@ -1,7 +1,6 @@
 import {Component, EventEmitter, OnInit, TemplateRef, Type} from "@angular/core";
 import {FilterEvent, GridHeader} from "./grid-header";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
 import {StatementDate} from "../../statement/statementDate"
 import {HeaderType} from "./grid-header-type";
@@ -13,10 +12,7 @@ import {GridFilterStatementDate} from "../filters/grid-filter-statement-date";
     templateUrl: './grid-header-statement-date.html',
     styleUrls: ['./grid-header-statement-date.css'],
     imports: [
-        NgForOf,
-        NgIf,
         BsDatepickerModule,
-        NgClass,
         PopupComponent
     ],
     standalone: true
