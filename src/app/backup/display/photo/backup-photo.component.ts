@@ -1,14 +1,21 @@
 import {Component, EventEmitter, OnInit, Output} from "@angular/core";
-import {BackupService} from "../backup.service";
-import {PrintSize, SelectedPrint} from "../backup-selectedprint";
+import {PrintSize, SelectedPrint} from "../../backup-selectedprint";
+import {BackupPrintService} from "../../backup-print-service";
+import {BackupDisplayService} from "../backup-display-service";
+import {NgForOf} from "@angular/common";
 
 @Component({
     selector: 'jbr-backup-photo',
     templateUrl: './backup-photo.component.html',
-    styleUrls: ['./backup-photo.component.css']
+    styleUrls: ['./backup-photo.component.css'],
+    imports: [
+        NgForOf
+    ],
+    standalone: true
 })
 export class BackupPhotoComponent implements OnInit {
-    constructor(private readonly _backupService: BackupService) {
+    constructor(private readonly _backupPrintService: BackupPrintService,
+                private readonly _backupDisplayService: BackupDisplayService) {
     }
 
     sizePhoto: SelectedPrint;
@@ -22,7 +29,7 @@ export class BackupPhotoComponent implements OnInit {
         this.sizePhoto.blackWhite = false;
 
         // Populate the combo values.
-        this._backupService.getPrintSizes().subscribe(sizes => {
+        this._backupPrintService.getPrintSizes().subscribe(sizes => {
             this.sizes = [];
 
             sizes.forEach(nextSize => {
@@ -63,11 +70,11 @@ export class BackupPhotoComponent implements OnInit {
     }
 
     imageUrl(): string {
-        if(this._backupService.getSelectedPhoto() == null) {
+        if(this._backupPrintService.getSelectedPhoto() == null) {
             return null;
         }
 
-        return this._backupService.imageUrl(this._backupService.getSelectedPhoto().fileId);
+        return this._backupDisplayService.imageUrl(this._backupPrintService.getSelectedPhoto().fileId);
     }
 
     imageALT(): string {
@@ -79,11 +86,11 @@ export class BackupPhotoComponent implements OnInit {
     }
 
     selectForPrint(size: PrintSize) {
-        this._backupService.getSelectedPhoto().sizeId = size.id;
-        this._backupService.getSelectedPhoto().sizeName = size.name;
-        this._backupService.getSelectedPhoto().blackWhite = this.sizePhoto.blackWhite;
-        this._backupService.getSelectedPhoto().border = this.sizePhoto.border;
-        this._backupService.selectForPrint();
+        this._backupPrintService.getSelectedPhoto().sizeId = size.id;
+        this._backupPrintService.getSelectedPhoto().sizeName = size.name;
+        this._backupPrintService.getSelectedPhoto().blackWhite = this.sizePhoto.blackWhite;
+        this._backupPrintService.getSelectedPhoto().border = this.sizePhoto.border;
+        this._backupPrintService.selectForPrint();
 
         this.exit.emit();
     }

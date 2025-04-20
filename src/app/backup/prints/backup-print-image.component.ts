@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {SelectedPrint} from "../backup-selectedprint";
-import {BackupService} from "../backup.service";
+import {BackupPrintService} from "../backup-print-service";
 
 @Component({
     selector: 'jbr-backup-print-image',
@@ -13,7 +13,7 @@ export class BackupPrintImageComponent {
     @Output() unselect: EventEmitter<SelectedPrint> = new EventEmitter<SelectedPrint>();
     @Output() updateSize: EventEmitter<SelectedPrint> = new EventEmitter<SelectedPrint>();
 
-    constructor(private readonly _backupService: BackupService) {
+    constructor(private readonly _backupPrintService: BackupPrintService) {
     }
 
     unselectPrint():void {
@@ -27,7 +27,7 @@ export class BackupPrintImageComponent {
     imageUrl(): string {
         // Get the URL for this image.
         if (this.selectedPrint != null) {
-            return this._backupService.imageUrl(this.selectedPrint.fileId);
+            return this._backupPrintService.imageUrl(this.selectedPrint.fileId);
         }
 
         return "";

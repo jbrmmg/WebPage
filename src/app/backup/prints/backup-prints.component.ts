@@ -1,7 +1,7 @@
 import {Component, OnInit, TemplateRef} from "@angular/core";
-import {BackupService} from "../backup.service";
 import {SelectedPrint} from "../backup-selectedprint";
 import {BsModalService} from "ngx-bootstrap/modal";
+import {BackupPrintService} from "../backup-print-service";
 
 @Component({
     selector: 'jbr-backup-prints',
@@ -14,7 +14,7 @@ export class BackupPrintsComponent implements OnInit {
     rows: number[];
     cols: number[];
 
-    constructor(private readonly _backupService: BackupService,
+    constructor(private readonly _backupPrintService: BackupPrintService,
                 private readonly _modalService: BsModalService) {
         this.cols = [0,1,2];
         this.selectedPhotos = [];
@@ -22,12 +22,12 @@ export class BackupPrintsComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this._backupService.printsUpdated.subscribe(() => this.updatePrints());
-        this._backupService.updatePrints();
+        this._backupPrintService.printsUpdated.subscribe(() => this.updatePrints());
+        this._backupPrintService.updatePrints();
     }
 
     updatePrints() {
-        this.selectedPhotos = this._backupService.getSelectedPhotos();
+        this.selectedPhotos = this._backupPrintService.getSelectedPhotos();
 
         let rowCount: number = this.selectedPhotos.length/this.columns() + 1;
         this.rows = [rowCount];
@@ -38,7 +38,7 @@ export class BackupPrintsComponent implements OnInit {
     }
 
     unselectPrint(print: SelectedPrint) {
-        this._backupService.unselectForPrint(print.fileId);
+        this._backupPrintService.unselectForPrint(print.fileId);
     }
 
     updatePrintSize(print: SelectedPrint, template: TemplateRef<any>) {
@@ -72,14 +72,14 @@ export class BackupPrintsComponent implements OnInit {
 
     clearPrints() {
         console.log('Clear')
-        this._backupService.clearPrints();
+        this._backupPrintService.clearPrints();
     }
 
     onSizeChange(selection: SelectedPrint) {
         this._modalService.hide();
 
         if(selection != null) {
-            this._backupService.updatedPrint(selection);
+            this._backupPrintService.updatedPrint(selection);
         }
     }
 }

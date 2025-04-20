@@ -1,4 +1,4 @@
-<div class="map-container">
+<div [ngStyle]="{'height': [getMapHeight()], 'width': [getMapWidth()], 'margin': [getMapMargin()]}">
     <div class="map-frame">
         <div id="map"></div>
     </div>

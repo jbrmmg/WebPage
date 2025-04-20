@@ -17,14 +17,10 @@ import { HouseComponent } from './house/house.component';
 import { WeightComponent } from './weight/weight.component';
 import { BackupListComponent } from './backup/backup-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DatePipe } from '@angular/common';
+import {DatePipe, NgOptimizedImage} from '@angular/common';
 import { BackupSummaryComponent } from "./backup/summary/backup-summary.component";
-import { BackupDisplayComponent } from "./backup/display/backup-display.component";
 import { BackupLogComponent } from "./backup/log/backup-log.component";
-import { BackupPhotoComponent } from "./backup/photo/backup-photo.component";
 import { BackupPrintsComponent } from "./backup/prints/backup-prints.component";
-import { BackupDisplayBackupsComponent } from "./backup/display/backups/backups-list.components";
-import { BackupDisplayLabelComponent } from "./backup/display/label/backup-display-label.component";
 import { BackupPrintSizeSelectComponent } from "./backup/prints/backup-print-size-select.component";
 import { BackupPrintImageComponent } from "./backup/prints/backup-print-image.component";
 import { WifiComponent } from "./wifi/wifi.component";
@@ -37,6 +33,8 @@ import {ImportGridHeaderExpand} from "./backup/import-grid/header/import-grid-he
 import {ActionGridHeaderName} from "./backup/action/header/action-grid-header-name";
 import {ActionGridDataName} from "./backup/action/data/action-grid-data-name";
 import {BackupActionComponent} from "./backup/action/backup-action.component";
+import {BackupDisplayComponent} from "./backup/display/backup-display.component";
+import {BackupPhotoComponent} from "./backup/display/photo/backup-photo.component";
 
 @NgModule({
     declarations: [
@@ -48,11 +46,7 @@ import {BackupActionComponent} from "./backup/action/backup-action.component";
         WeightComponent,
         BackupListComponent,
         BackupSummaryComponent,
-        BackupDisplayLabelComponent,
-        BackupDisplayBackupsComponent,
-        BackupDisplayComponent,
         BackupLogComponent,
-        BackupPhotoComponent,
         BackupPrintSizeSelectComponent,
         BackupPrintsComponent,
         BackupPrintImageComponent,
@@ -87,7 +81,10 @@ import {BackupActionComponent} from "./backup/action/backup-action.component";
         ImportGridHeaderExpand,
         ActionGridHeaderName,
         ActionGridDataName,
-        BackupActionComponent
+        BackupActionComponent,
+        NgOptimizedImage,
+        BackupDisplayComponent,
+        BackupPhotoComponent
     ],
     providers: [DatePipe],
     bootstrap: [AppComponent]

@@ -59,6 +59,4 @@ export class ImportGridDataTraffic extends ImportGridData {
 
         return result;
     }
-
-    protected readonly TrafficLightType = TrafficLightType;
 }

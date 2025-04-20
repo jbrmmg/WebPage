@@ -47,27 +47,19 @@ export class ImportGridService {
     }
 
     removeIgnored(): Observable<any> {
-        return this.http.delete(environment.backupRemoveIgnored);
+        return this.http.delete(environment.backupRemoveIgnored, { responseType: 'text' });
     }
 
     removeActive(): Observable<any> {
-        return this.http.delete(environment.backupRemoveActive);
+        return this.http.delete(environment.backupRemoveActive, { responseType: 'text' });
     }
-
-//    importFiles(): Observable<any> {
-//        return this.http.post(environment.backupImportFiles, "", {responseType: 'text'});
-//    }
 
     importPhotos(): Observable<any> {
         return this.http.post(environment.backupImportPhotos, "", {responseType: 'text'});
     }
 
     removeConfirmedImports(): Observable<any> {
-        return this.http.delete(environment.backupDeleteConfirmedImports);
-    }
-
-    process(): Observable<any> {
-        return this.http.post(environment.backupProcessFiles, "", {responseType: 'text'});
+        return this.http.delete(environment.backupDeleteConfirmedImports, {responseType: 'text'});
     }
 
     ignore(file: string): Observable<any> {

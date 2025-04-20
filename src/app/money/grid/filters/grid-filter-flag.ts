@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit} from "@angular/core";
-import {DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
+import {NgClass, NgForOf} from "@angular/common";
 import {FlagType} from "../header/grid-header-flag-type";
 import {TransactionFilter} from "../../transaction/transactionFilter";
 
@@ -26,8 +26,6 @@ class FlagFilterOption {
     templateUrl: './grid-filter-flag.html',
     styleUrls: ['./grid-filter-flag.css'],
     imports: [
-        DatePipe,
-        NgIf,
         NgClass,
         NgForOf
     ],

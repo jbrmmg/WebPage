@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from "@angular/core";
 import {MoneyService} from "../money.service";
 import {IFile} from "./file";
 import {ButtonsModule} from "ngx-bootstrap/buttons";
-import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 
 @Component({
@@ -11,10 +11,8 @@ import {FormsModule} from "@angular/forms";
     styleUrls: ['./money-files.css'],
     imports: [
         ButtonsModule,
-        NgForOf,
         NgIf,
-        FormsModule,
-        NgClass
+        FormsModule
     ],
     standalone: true
 })

@@ -1,7 +1,7 @@
 import {Component, OnInit} from "@angular/core";
-import {BackupService} from "../backup.service";
 import {Log} from "../backup-log";
 import {DatePipe} from "@angular/common";
+import {BackupLogService} from "./backup-log-service";
 
 @Component({
     selector: 'jbr-backup-log',
@@ -11,7 +11,7 @@ import {DatePipe} from "@angular/common";
 export class BackupLogComponent implements OnInit {
     logs: Log[];
 
-    constructor(private readonly _backupService: BackupService,
+    constructor(private readonly _backupLogService: BackupLogService,
                 private datePipe: DatePipe) {
     }
 
@@ -19,7 +19,7 @@ export class BackupLogComponent implements OnInit {
         console.log('Get Log.');
         this.logs = [];
 
-        this._backupService.getLogs().subscribe({
+        this._backupLogService.getLogs().subscribe({
             next: logs => {
                 logs.forEach(nextLog => {
                     this.logs.push(nextLog);

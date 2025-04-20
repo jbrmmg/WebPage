@@ -1,19 +1,14 @@
 import {Component, EventEmitter, Input} from "@angular/core";
-import {DatePipe, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
-import {PopupComponent} from "../../../../standard/popup.component";
 
 @Component({
     selector: 'jbr-entry-date',
     templateUrl: './grid-entry-date.html',
     styleUrls: ['./grid-entry-date.css'],
     imports: [
-        DatePipe,
-        NgIf,
         FormsModule,
-        BsDatepickerModule,
-        PopupComponent
+        BsDatepickerModule
     ],
     host: {'style': 'padding: 0;'},
     standalone: true

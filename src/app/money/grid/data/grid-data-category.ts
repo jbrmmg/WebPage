@@ -16,7 +16,6 @@ import {JbAccount} from "../../account/jbAccount";
     templateUrl: './grid-data-category.html',
     styleUrls: ['./grid-data-category.css'],
     imports: [
-        MoneyCategory,
         PopupComponent
     ],
     standalone: true

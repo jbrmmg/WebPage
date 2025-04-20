@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {ImportGridFileDisplay} from "../import-grid-file-display";
-import {NgIf, NgOptimizedImage} from "@angular/common";
+import {NgIf} from "@angular/common";
 
 @Component({
     selector: 'import-selected-image',

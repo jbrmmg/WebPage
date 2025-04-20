@@ -1,0 +1,8 @@
+<div class="media" *ngIf="selectedFile.file.image || selectedFile.file.video">
+    <div *ngIf="selectedFile.file.image">
+        <img src="{{imageUrl(selectedFile.file.id)}}" alt="{{imageALT()}}" title="{{imageALT()}} - click to request print" width="100%" (click)="selectPhotoMode()"/>
+    </div>
+    <div *ngIf="selectedFile.file.video">
+        <video src="{{videoUrl(selectedFile.file.id)}}" title="{{imageALT()}}" width="100%" controls></video>
+    </div>
+</div>

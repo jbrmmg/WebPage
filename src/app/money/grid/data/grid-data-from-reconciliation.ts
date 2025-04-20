@@ -12,7 +12,6 @@ import {PopupComponent} from "../../../standard/popup.component";
     styleUrls: ['./grid-data-from-reconciliation.css'],
     imports: [
         NgIf,
-        MoneyFiles,
         PopupComponent
     ],
     standalone: true

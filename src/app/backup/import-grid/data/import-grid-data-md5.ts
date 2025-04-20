@@ -1,4 +1,3 @@
-import {NgIf} from "@angular/common";
 import {Component, Input} from "@angular/core";
 import {ImportGridData} from "./import-grid-data";
 
@@ -6,9 +5,7 @@ import {ImportGridData} from "./import-grid-data";
     selector: 'jbr-import-grid-data-md5',
     templateUrl: './import-grid-data-md5.html',
     styleUrls: ['./import-grid-data-md5.css'],
-    imports: [
-        NgIf
-    ],
+    imports: [],
     standalone: true
 })
 export class ImportGridDataMd5 extends ImportGridData {

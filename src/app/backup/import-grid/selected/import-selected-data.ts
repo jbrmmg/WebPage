@@ -21,12 +21,12 @@ import {FileDestinationUpdate} from "../import-grid-update-destination";
     styleUrls: ['./import-selected-data.css']
 })
 export class ImportSelectedData {
-    @Output() previousEvent: EventEmitter<String> = new EventEmitter();
-    @Output() nextEvent: EventEmitter<String> = new EventEmitter();
-    @Output() deleteEvent: EventEmitter<String> = new EventEmitter();
-    @Output() recipeEvent: EventEmitter<String> = new EventEmitter();
-    @Output() ignoreEvent: EventEmitter<String> = new EventEmitter();
-    @Output() unIgnoreEvent: EventEmitter<String> = new EventEmitter();
+    @Output() previousEvent: EventEmitter<string> = new EventEmitter();
+    @Output() nextEvent: EventEmitter<string> = new EventEmitter();
+    @Output() deleteEvent: EventEmitter<string> = new EventEmitter();
+    @Output() recipeEvent: EventEmitter<string> = new EventEmitter();
+    @Output() ignoreEvent: EventEmitter<string> = new EventEmitter();
+    @Output() unIgnoreEvent: EventEmitter<string> = new EventEmitter();
     @Output() destinationUpdateEvent: EventEmitter<FileDestinationUpdate> = new EventEmitter();
 
     destination: string;

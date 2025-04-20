@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, TemplateRef, Type} from "@angular/core";
 import {FlagType} from "./grid-header-flag-type";
-import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {FilterEvent, GridHeader} from "./grid-header";
 import {HeaderType} from "./grid-header-type";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
@@ -12,9 +11,6 @@ import {GridFilterFlag} from "../filters/grid-filter-flag";
     templateUrl: './grid-header-flag.html',
     styleUrls: ['./grid-header-flag.css'],
     imports: [
-        NgIf,
-        NgForOf,
-        NgClass,
         PopupComponent
     ],
     standalone: true

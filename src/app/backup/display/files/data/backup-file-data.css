@@ -1,0 +1,40 @@
+.md5 {
+    font-family: courier new, serif;
+    margin-left: 2px;
+}
+
+.size {
+    text-align: right;
+    margin-right: 2px;
+}
+
+.name {
+    margin-left: 2px;
+}
+
+.date {
+    margin-left: 2px;
+}
+
+.selected {
+    width: 10px;
+    height: 10px;
+    border: 1px solid black;
+    border-radius: 50%;
+    display: flex;
+    background: #0d6efd;
+    padding: 0;
+    margin-left: 5px;
+}
+
+.not-selected {
+    width: 10px;
+    height: 10px;
+    border: 1px solid black;
+    border-radius: 50%;
+    display: flex;
+    flex-shrink: 1;
+    background: white;
+    padding: 0;
+    margin-left: 5px;
+}

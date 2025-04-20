@@ -1,0 +1,45 @@
+.name-row {
+}
+
+.detail-name-icon {
+    font-size: 48px;
+    flex: 0 1 0;
+}
+
+.detail-name {
+    padding-left: 10px;
+    font-size: 32px;
+    font-weight: bolder;
+    flex: 1 0 0;
+    margin-bottom: 6px;
+}
+
+.btn-row-left {
+    flex: 0 1 0;
+}
+
+.btn-row-right {
+    flex: 1 0 0;
+}
+
+.align-right {
+    float: right;
+}
+
+.btn-previous {
+    padding-right: 2px;
+}
+
+.btn-next {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.btn-print {
+    padding-left: 6px;
+    padding-right: 2px;
+}
+
+.btn-refresh {
+    padding-left: 6px;
+}

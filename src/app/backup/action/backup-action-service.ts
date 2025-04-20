@@ -36,7 +36,7 @@ export class BackupActionService {
         confirmReq.id = id;
         confirmReq.confirm = true;
 
-        // Send the confirm request to the server.
+        // Send the confirmation request to the server.
         this.http.post<void>(environment.backupActions, confirmReq).subscribe({
             error: err => {
                 console.log("Failed to confirm the request " + err);

@@ -40,5 +40,15 @@ export const environment = {
   backupUpdateDestination: "backup/update-destination",
   backupRecipeFile: "backup/recipe-file",
   backupSummary: "backup/summary",
-  backupActions: "backup/actions"
+  backupActions: "backup/actions",
+  backupHierarchy: "backup/hierarchy",
+  backupPrintSize: "backup/print-size",
+  backupPrint: "backup/print",
+  backupPrints: "backup/prints",
+  backupRefreshFile: "backup/refresh-file-data?id=##id##",
+  backupLabels: "backup/labels",
+  backupLabel: "backup/label",
+  backupExpire: "backup/expire",
+  backupUnprint: "backup/unprint",
+  backupLog: "backup/log"
 };

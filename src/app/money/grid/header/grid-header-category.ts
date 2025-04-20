@@ -1,7 +1,6 @@
 import {Component, OnInit, TemplateRef, Type} from "@angular/core";
 import {FilterEvent, GridHeader} from "./grid-header";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import {NgForOf, NgIf} from "@angular/common";
 import {ButtonsModule} from "ngx-bootstrap/buttons";
 import {MoneyCategory} from "../../category/money-cat.component";
 import {HeaderType} from "./grid-header-type";
@@ -12,10 +11,7 @@ import {PopupComponent} from "../../../standard/popup.component";
     templateUrl: './grid-header-category.html',
     styleUrls: ['./grid-header-category.css'],
     imports: [
-        NgForOf,
         ButtonsModule,
-        NgIf,
-        MoneyCategory,
         PopupComponent
     ],
     standalone: true

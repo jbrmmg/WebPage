@@ -1,24 +1,25 @@
 <div class="row">
-    <div class="col-4">
-        <div class="row">
-            <em class="fa {{selectedFile.icon}} detail-name-icon"></em>
-            <p id="selected-file-id" class="detail-name">{{selectedFile.name}}</p>
-        </div>
+    <div class="col-12 no-padding-col">
         <div class="row detail-full-name-row">
-            <p class="detail-full-name">{{selectedFile.fullFilename}}</p>
+            <p class="detail-full-name">{{selectedFile.file.fullFilename}}</p>
         </div>
-        <div class="row detail-size-row"><p class="detail-size">{{selectedFile.size}}</p></div>
-        <div class="row detail-date-row"><p class="detail-date">{{formattedFileDate}}</p></div>
-        <div class="row detail-md5-row"><p class="detail-md5">[{{selectedFile.md5}}]</p></div>
-        <div class="row detail-location-row"><p class="detail-location">{{metaLocation}}</p></div>
-        <div class="row detail-size-row"><p class="detail-size">{{metaSize}}</p></div>
-        <div class="row detail-duration-row"><p class="detail-duration">{{metaDuration}}</p></div>
-        <div class="row detail-date-row"><p class="detail-date">{{formattedMetaDate}}</p></div>
+        <div class="row detail-size-row">
+            <p class="detail-size-label col-2">Size</p>
+            <p class="detail-size col-10">{{selectedFile.file.size | number}}</p>
+        </div>
+        <div class="row detail-date-row">
+            <p class="detail-date-label col-2">File date</p>
+            <p class="detail-date col-10">{{formattedFileDate}}</p>
+        </div>
+        <div class="row detail-md5-row">
+            <p class="detail-md5-label col-2">MD5</p>
+            <p class="detail-md5 col-10">[{{selectedFile.file.md5}}]</p>
+        </div>
         <div class="row detail-expiry-row">
             <em class="fa fa-calendar detail-calendar-icon" title="Modify expiry date" (click)="editDate()"></em>
-            <em class="fa fa-times detail-expiry-clear-icon" (click)="clearExpiry()" *ngIf="selectedFile.expiry != null && editDateEnable == false"></em>
-            <p class="detail-expiry" *ngIf="selectedFile.expiry != null && editDateEnable == false">Expiry: {{formattedExpiryDate}}</p>
-            <p class="detail-expiry" *ngIf="selectedFile.expiry == null && editDateEnable == false">File does not expire</p>
+            <em class="fa fa-times detail-expiry-clear-icon" (click)="clearExpiry()" *ngIf="selectedFile.file.expiry != null && editDateEnable == false"></em>
+            <p class="detail-expiry" *ngIf="selectedFile.file.expiry != null && editDateEnable == false">Expiry: {{formattedExpiryDate}}</p>
+            <p class="detail-expiry" *ngIf="selectedFile.file.expiry == null && editDateEnable == false">File does not expire</p>
             <input *ngIf="editDateEnable == true"
                    id="expiry-date"
                    type="text"
@@ -31,8 +32,5 @@
                         containerClass: 'theme-dark-blue',
                         selectFromOtherMonth: true }"/>
         </div>
-    </div>
-    <div class="col-4">
-        <jbr-map #map></jbr-map>
     </div>
 </div>

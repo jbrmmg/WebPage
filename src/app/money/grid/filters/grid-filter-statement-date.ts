@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit} from "@angular/core";
-import {DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
+import {NgClass, NgForOf} from "@angular/common";
 import {StatementDate} from "../../statement/statementDate";
 import {MoneyService} from "../../money.service";
 
@@ -32,8 +32,6 @@ class YearOption {
     templateUrl: './grid-filter-statement-date.html',
     styleUrls: ['./grid-filter-statement-date.css'],
     imports: [
-        DatePipe,
-        NgIf,
         NgClass,
         NgForOf
     ],

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
 import {PrintSize, SelectedPrint} from "../backup-selectedprint";
-import {BackupService} from "../backup.service";
+import {BackupPrintService} from "../backup-print-service";
 
 @Component({
     selector: 'jbr-backup-print-size-selector',
@@ -18,7 +18,7 @@ export class BackupPrintSizeSelectComponent implements OnInit {
     border: boolean;
     blackAndWhite: boolean;
 
-    constructor(private readonly _backupService: BackupService) {
+    constructor(private readonly _backupPrintService: BackupPrintService) {
     }
 
     isSelected(sizeName: string): string {
@@ -38,7 +38,7 @@ export class BackupPrintSizeSelectComponent implements OnInit {
         this.selectedSizeId = this.selectedPrint.sizeId;
 
         // Populate the combo values.
-        this._backupService.getPrintSizes().subscribe(sizes => {
+        this._backupPrintService.getPrintSizes().subscribe(sizes => {
             this.sizes = [];
 
             sizes.forEach(nextSize => {

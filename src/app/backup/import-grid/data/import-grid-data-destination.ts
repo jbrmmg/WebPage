@@ -1,4 +1,3 @@
-import {NgIf} from "@angular/common";
 import {Component} from "@angular/core";
 import {ImportGridData} from "./import-grid-data";
 

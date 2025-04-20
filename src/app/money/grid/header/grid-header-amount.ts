@@ -2,7 +2,6 @@ import {Component, EventEmitter, OnInit, TemplateRef, Type} from "@angular/core"
 import {FilterEvent, GridHeader} from "./grid-header";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
-import {DatePipe} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {HeaderType} from "./grid-header-type";
 import {PopupComponent} from "../../../standard/popup.component";
@@ -14,7 +13,6 @@ import {GridFilterAmount} from "../filters/grid-filter-amount";
     styleUrls: ['./grid-header-amount.css'],
     imports: [
         BsDatepickerModule,
-        DatePipe,
         FormsModule,
         PopupComponent
     ],
