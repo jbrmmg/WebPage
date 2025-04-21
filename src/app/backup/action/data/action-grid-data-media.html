@@ -4,7 +4,7 @@
             <img ngSrc="backup/fileImage?id={{getFileId()}}" height="60" width="120" alt="backup file"/>
         </div>
         <div *ngIf="isVideo()" (click)="selectMedia()">
-            <video src="backup/fileVideo?id={{getFileId()}}" height="60" width="120" controls></video>
+            <img ngSrc="backup/file-video-image?id={{getFileId()}}" height="60" width="120" alt="backup video image file"/>
         </div>
     </div>
     <div class="col-8">
