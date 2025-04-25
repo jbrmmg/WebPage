@@ -762,7 +762,16 @@ export class ImportGrid implements OnInit {
                 },
                 complete: () => {
                     this.status = "Destination updated."
-                    this.refresh(-1);
+
+                    // Update the destination on the screen.
+                    this.data.forEach(f => {
+                        if(f.source.filename == update.filename) {
+                            f.source.destination = update.destination;
+                            return;
+                        }
+                    })
+
+                    this.nextAction(update.filename);
                     console.log('Destination updated');
                 }
             }

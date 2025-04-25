@@ -64,8 +64,9 @@ export class BackupActionComponent implements OnInit  {
 
     confirm(action: Action) {
         this._backupActionService.confirmRequest(action.id);
-        this.actions = [];
-        this.refreshActions();
+
+        // Remove the action from the list
+        this.actions.splice(this.actions.indexOf(action), 1);
     }
 
     selectMedia(id: number) {
