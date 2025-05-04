@@ -17,9 +17,9 @@ export class ActionGridDataMedia extends ActionGridData {
     @Output() select: EventEmitter<number> = new EventEmitter<number>();
 
     getDateText() {
-        let dateString: string = "" + this.action.fileDate;
+        let dateString: string = "" + this.action.date;
 
-        if(this.action && this.action.fileDate) {
+        if(this.action && this.action.date) {
             return "" + dateString.replace("T"," ");
         }
 
@@ -27,12 +27,12 @@ export class ActionGridDataMedia extends ActionGridData {
     }
 
     displaySize(): boolean {
-        return !!(this.action && this.action.fileSize);
+        return !!(this.action && this.action.size);
     }
 
     getSize() {
-        if(this.action && this.action.fileSize) {
-            return this.action.fileSize;
+        if(this.action && this.action.size) {
+            return this.action.size;
         }
     }
 
