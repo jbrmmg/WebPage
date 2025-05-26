@@ -19,5 +19,6 @@ export class TransactionFilter {
     public fromReconciled?: boolean;
     public description?: string;
     public maxPageSize?: number;
+    public statementAge?: number;
     public pageNumber?: number;
 }
