@@ -86,7 +86,7 @@ export class GridTransaction implements OnInit {
     ngOnInit(): void {
         this.filter.predicted = false;
         this.filter.locked = false;
-        this.filter.maxPageSize = 200;
+        this.filter.maxPageSize = 300;
         this.update();
     }
 
