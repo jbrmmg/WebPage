@@ -127,6 +127,13 @@
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
   </properties>
 
+  <scm>
+      <connection>scm:git:git@github.com:jbrmmg/WebPage.git</connection>
+      <developerConnection>scm:git:git@github.com:jbrmmg/WebPage.git</developerConnection>
+      <url>https://github.com/jbrmmg/WebPage</url>
+      <tag>HEAD</tag>
+  </scm>
+
   <distributionManagement>
     <repository>
       <id>Releases</id>
