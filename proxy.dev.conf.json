@@ -1,10 +1,10 @@
 {
   "/backup": {
-    "target": "http://tinybroom.jbrmmg.me.uk:10013/jbr/int",
+    "target": "http://localhost:10013/jbr/int",
     "secure": false
   },
   "/money": {
-    "target": "http://tinybroom.jbrmmg.me.uk:10017/jbr/int",
+    "target": "http://localhost:10017/jbr/int",
     "secure": false
   }
 }
