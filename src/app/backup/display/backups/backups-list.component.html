@@ -4,6 +4,7 @@
         <th scope="col" class="backups">Path</th>
         <th scope="col" class="backups">Date</th>
         <th scope="col" class="backups">MD5</th>
+        <th scope="col" class="backups">Size</th>
     </tr>
     <tr *ngFor="let nextBackup of selectedFile.backups">
         <td>
@@ -12,5 +13,6 @@
         <td class="backups">{{nextBackup.locationName}}</td>
         <td class="backups">{{backupFileDate(nextBackup)}}</td>
         <td class="backups">[{{nextBackup.md5}}]</td>
+        <td class="backups">{{nextBackup.size | number}}</td>
     </tr>
 </table>
