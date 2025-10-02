@@ -9,6 +9,13 @@
 
   <build>
     <defaultGoal>install</defaultGoal>
+
+    <resources>
+        <resource>
+            <directory>src/assets</directory>
+            <filtering>true</filtering>
+        </resource>
+    </resources>
     <plugins>
       <plugin>
         <groupId>com.github.eirslett</groupId>
@@ -106,6 +113,14 @@
         <groupId>org.sonarsource.scanner.maven</groupId>
         <artifactId>sonar-maven-plugin</artifactId>
         <version>3.7.0.1746</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.3.1</version>
+          <configuration>
+              <encoding>UTF-8</encoding>
+          </configuration>
       </plugin>
     </plugins>
   </build>

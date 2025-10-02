@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 export class ReminderRequest {
     what: string;
@@ -26,5 +27,9 @@ export class WelcomeService {
                 console.log('POST call in error', response);
             }
         );
+    }
+
+    getVersion(): Observable<{version: string}> {
+        return this.http.get<{version: string}>('/assets/version.json');
     }
 }
