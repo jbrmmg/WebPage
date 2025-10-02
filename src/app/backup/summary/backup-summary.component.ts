@@ -1,7 +1,7 @@
-import {Component, OnInit} from "@angular/core";
-import {BackupSummary} from "./backup-summary";
-import {DatePipe} from "@angular/common";
-import {BackupSummaryService} from "./backup-summary-service";
+import {Component, OnInit} from '@angular/core';
+import {BackupSummary} from './backup-summary';
+import {DatePipe} from '@angular/common';
+import {BackupSummaryService} from './backup-summary-service';
 
 @Component({
     selector: 'jbr-backup-summary',
@@ -34,9 +34,9 @@ export class BackupSummaryComponent implements OnInit  {
         });
     }
 
-    get formattedDate() : string {
-        if(this.summary.valid) {
-            return this.datePipe.transform(this.summary.validAt,'dd MMMM yyyy HH:mm:ss');
+    get formattedDate(): string {
+        if (this.summary.valid) {
+            return this.datePipe.transform(this.summary.validAt, 'dd MMMM yyyy HH:mm:ss') + ' (' + this.summary.version + ')';
         }
 
         return '';

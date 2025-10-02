@@ -1,7 +1,8 @@
-import {BackupSource} from "./backup-source";
+import {BackupSource} from './backup-source';
 
 export class BackupSummary {
     public valid: boolean;
     public validAt: Date;
     public sources: BackupSource[];
+    public version: string;
 }
