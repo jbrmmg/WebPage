@@ -43,3 +43,6 @@ testem.log
 .DS_Store
 Thumbs.db
 /phantomjsdriver.log
+
+# System generated file
+src/api/util/version.json

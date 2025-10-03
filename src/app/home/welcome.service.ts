@@ -30,6 +30,6 @@ export class WelcomeService {
     }
 
     getVersion(): Observable<{version: string}> {
-        return this.http.get<{version: string}>('/assets/version.json');
+        return this.http.get<{version: string}>('/api/util/version.json');
     }
 }
