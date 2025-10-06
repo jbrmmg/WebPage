@@ -122,9 +122,9 @@
                         <configuration>
                             <target>
                                 <echo file="src/api/util/version.json">
-                                    {
-                                        "version": "${project.version}"
-                                    }
+{
+    "version": "${project.version}"
+}
                                 </echo>
                             </target>
                         </configuration>
