@@ -14,6 +14,7 @@ import {LoadFileRequest} from "./files/loadFileRequest";
 import {TransactionFilter} from "./transaction/transactionFilter";
 import {ITransactionReport, TransactionReport} from "./transaction/transactionReport";
 import {ReconcileStatus} from "./reconciliation/reconcileStatus";
+import {IVersion, Version} from './money-version';
 
 @Injectable({
     providedIn: 'root'
@@ -282,6 +283,13 @@ export class MoneyService {
 
         return this.http.post<ITransactionReport[]>(environment.moneyTransactionList,filter).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
+            catchError(err => MoneyService.handleError(err))
+        );
+    }
+
+    getVersion(): Observable<IVersion> {
+        return this.http.get<IVersion>(environment.moneyVersion).pipe(
+            tap(data => console.log('Version ' + JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
     }

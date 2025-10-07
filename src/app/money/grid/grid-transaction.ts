@@ -75,18 +75,29 @@ export class GridTransaction implements OnInit {
     filter : TransactionFilter;
     newTransaction: TransactionReport = new TransactionReport();
     status: string;
+    version: string;
     @Output() gridDataChangeHandler: EventEmitter<any> = new EventEmitter();
 
     constructor(private _moneyService: MoneyService) {
         this.data = null;
         this.filter = new TransactionFilter();
         this.status = "ready";
+        this.version = '';
     }
 
     ngOnInit(): void {
         this.filter.predicted = false;
         this.filter.locked = false;
         this.filter.maxPageSize = 300;
+
+        this._moneyService.getVersion().subscribe({
+            next: value => this.version = '(v' + value.version + ')',
+            error: (response) => {
+                console.error('getVersion Failed ' + response);
+            },
+            complete: () => console.log('Got Version'),
+        });
+
         this.update();
     }
 
