@@ -4,7 +4,7 @@
 
     <groupId>com.jbr</groupId>
     <artifactId>MySite.Angular.js</artifactId>
-    <version>25.10.5-SNAPSHOT</version>
+    <version>25.10.6-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <build>
