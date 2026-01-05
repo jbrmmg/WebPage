@@ -4,7 +4,7 @@
 
     <groupId>com.jbr</groupId>
     <artifactId>MySite.Angular.js</artifactId>
-    <version>26.1.0</version>
+    <version>26.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <build>
@@ -152,7 +152,7 @@
         <connection>scm:git:git@github.com:jbrmmg/WebPage.git</connection>
         <developerConnection>scm:git:git@github.com:jbrmmg/WebPage.git</developerConnection>
         <url>https://github.com/jbrmmg/WebPage</url>
-        <tag>v26.1.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
