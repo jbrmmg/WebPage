@@ -1,7 +1,7 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core";
-import {NgIf} from "@angular/common";
-import {BackupDisplayService} from "../backup-display-service";
-import {FileInfoExtra} from "../../backup-fileinfoextra";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {NgIf} from '@angular/common';
+import {BackupDisplayService} from '../backup-display-service';
+import {FileInfoExtra} from '../../backup-fileinfoextra';
 
 @Component({
     selector: 'jbr-backup-display-media',
@@ -14,6 +14,7 @@ import {FileInfoExtra} from "../../backup-fileinfoextra";
 })
 export class BackupDisplayMedia {
     @Input() selectedFile: FileInfoExtra;
+    @Input() mediaWidth: number;
 
     @Output() selectPhotoModeEvent: EventEmitter<void> = new EventEmitter<void>();
 

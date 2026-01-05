@@ -1,6 +1,6 @@
-import {Component, Input, Output, EventEmitter} from "@angular/core";
-import {NgIf} from "@angular/common";
-import {FileInfoExtra} from "../../backup-fileinfoextra";
+import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {NgIf} from '@angular/common';
+import {FileInfoExtra} from '../../backup-fileinfoextra';
 
 @Component({
     selector: 'jbr-backup-display-title',
@@ -19,6 +19,7 @@ export class BackupDisplayTitle {
     @Output() refresh: EventEmitter<FileInfoExtra> = new EventEmitter<FileInfoExtra>();
     @Output() deleteFile: EventEmitter<FileInfoExtra> = new EventEmitter<FileInfoExtra>();
     @Output() printFile: EventEmitter<FileInfoExtra> = new EventEmitter<FileInfoExtra>();
+    @Output() zoom: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     previous() {
         this.previousFile.emit();
@@ -38,5 +39,17 @@ export class BackupDisplayTitle {
 
     print() {
         this.printFile.emit(this.selectedFile);
+    }
+
+    displayZoom(): boolean {
+        return this.selectedFile.file.image || this.selectedFile.file.video;
+    }
+
+    zoomIn() {
+        this.zoom.emit(true);
+    }
+
+    zoomOut() {
+        this.zoom.emit(false);
     }
 }

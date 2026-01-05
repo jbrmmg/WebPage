@@ -43,3 +43,12 @@
 .btn-refresh {
     padding-left: 6px;
 }
+
+.btn-zoom-out {
+    padding-left: 6px;
+    padding-right: 2px;
+}
+
+.btn-zoom-in {
+    padding-left: 2px;
+}

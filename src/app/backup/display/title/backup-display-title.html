@@ -24,6 +24,16 @@
                 <em class="fa fa-recycle"></em>
             </label>
         </div>
+        <div class="btn-row-left btn-zoom-out" *ngIf="displayZoom()">
+            <label class="btn btn-sm btn-primary" (click)="zoomOut()" title="Zoom out">
+                <em class="fa fa-minus"></em>
+            </label>
+        </div>
+        <div class="btn-row-left btn-zoom-in" *ngIf="displayZoom()">
+            <label class="btn btn-sm btn-primary" (click)="zoomIn()" title="Zoom in">
+                <em class="fa fa-plus"></em>
+            </label>
+        </div>
         <div class="btn-row-right">
             <label class="btn btn-sm btn-danger align-right" (click)="delete()" title="Delete the file.">
                 <em class="fa fa-trash"></em>
