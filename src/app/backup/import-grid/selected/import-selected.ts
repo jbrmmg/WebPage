@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
-import {Map} from "../../map/map";
-import {ImportGridFileDisplay} from "../import-grid-file-display";
-import {LatLong} from "../../map/map-latlong";
-import {ImportSelectedImage} from "./import-selected-image";
-import {ImportSelectedData} from "./import-selected-data";
-import {ImportSelectedAction} from "./import-selected-action";
-import {FileDestinationUpdate} from "../import-grid-update-destination";
+import {Map} from '../../map/map';
+import {ImportGridFileDisplay} from '../import-grid-file-display';
+import {LatLong} from '../../map/map-latlong';
+import {ImportSelectedImage} from './import-selected-image';
+import {ImportSelectedData} from './import-selected-data';
+import {ImportSelectedAction} from './import-selected-action';
+import {FileDestinationUpdate} from '../import-grid-update-destination';
 
 @Component({
     selector: 'import-selected',
@@ -23,16 +23,16 @@ export class ImportSelected {
     @ViewChild('image') image: ImportSelectedImage;
     @ViewChild('data') data: ImportSelectedData;
 
-    @Output() actionEvent : EventEmitter<ImportSelectedAction> = new EventEmitter();
+    @Output() actionEvent: EventEmitter<ImportSelectedAction> = new EventEmitter();
 
     selectionChangeMap(file: ImportGridFileDisplay) {
-        if(file && file.source && file.source.location) {
+        if (file && file.source && file.source.location) {
             this.map.move(file.source.location);
             return;
         }
 
         // Move to a default
-        let defaultLocation: LatLong = new LatLong();
+        const defaultLocation: LatLong = new LatLong();
         defaultLocation.lat = 51.60146388888889;
         defaultLocation.long = -0.37789999999999996;
 
@@ -40,7 +40,7 @@ export class ImportSelected {
     }
 
     selectionChangeImage(file: ImportGridFileDisplay) {
-        if(file && file.source) {
+        if (file && file.source) {
             this.image.display(file);
             return;
         }
@@ -50,7 +50,7 @@ export class ImportSelected {
     }
 
     selectionChangeData(file: ImportGridFileDisplay) {
-        if(file && file.source) {
+        if (file && file.source) {
             this.data.display(file);
             return;
         }
@@ -66,30 +66,34 @@ export class ImportSelected {
     }
 
     previous(file: string) {
-        this.actionEvent.emit(new ImportSelectedAction(file,"previous",null));
+        this.actionEvent.emit(new ImportSelectedAction(file, 'previous', null));
     }
 
     next(file: string) {
-        this.actionEvent.emit(new ImportSelectedAction(file,"next",null));
+        this.actionEvent.emit(new ImportSelectedAction(file, 'next', null));
     }
 
     deleteFile(file: string) {
-        this.actionEvent.emit(new ImportSelectedAction(file,"delete",null));
+        this.actionEvent.emit(new ImportSelectedAction(file, 'delete', null));
     }
 
     recipe(file: string) {
-        this.actionEvent.emit(new ImportSelectedAction(file,"recipe",null));
+        this.actionEvent.emit(new ImportSelectedAction(file, 'recipe', null));
     }
 
-    ignore(file: string){
-        this.actionEvent.emit(new ImportSelectedAction(file,"ignore",null));
+    basicBackup(file: string) {
+        this.actionEvent.emit(new ImportSelectedAction(file, 'backup', null));
+    }
+
+    ignore(file: string) {
+        this.actionEvent.emit(new ImportSelectedAction(file, 'ignore', null));
     }
 
     unIgnore(file: string) {
-        this.actionEvent.emit(new ImportSelectedAction(file,"un-ignore",null));
+        this.actionEvent.emit(new ImportSelectedAction(file, 'un-ignore', null));
     }
 
     updateDestination(update: FileDestinationUpdate) {
-        this.actionEvent.emit(new ImportSelectedAction(update.filename,"update-destination",update.destination));
+        this.actionEvent.emit(new ImportSelectedAction(update.filename, 'update-destination', update.destination));
     }
 }
