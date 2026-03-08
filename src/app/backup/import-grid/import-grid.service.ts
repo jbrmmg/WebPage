@@ -27,9 +27,9 @@ export class ImportGridService {
     }
 
     getFiles(limit: number, page: number, filter: ListFilterType): Observable<ImportGridFile[]> {
-        let url = environment.backupGetPreImportFiles + "?limit=" + limit + "&page=" + page;
-        if(filter != null) {
-            url = url + "&stepType=" + TrafficLightType[filter.type] + "&status=" + TrafficLightStatus[filter.status];
+        let url = environment.backupGetPreImportFiles + '?limit=' + limit + '&page=' + page;
+        if (filter != null) {
+            url = url + '&stepType=' + TrafficLightType[filter.type] + '&status=' + TrafficLightStatus[filter.status];
         }
 
         return this.http.get<ImportGridFile[]>(url).pipe(
@@ -38,11 +38,11 @@ export class ImportGridService {
         );
     }
 
-    fileUpdateSource() : EventSource {
+    fileUpdateSource(): EventSource {
         return new EventSource(environment.backupFileUpdates);
     }
 
-    summaryUpdateSource() : EventSource {
+    summaryUpdateSource(): EventSource {
         return new EventSource(environment.backupFileSummaryUpdates);
     }
 
@@ -55,7 +55,7 @@ export class ImportGridService {
     }
 
     importPhotos(): Observable<any> {
-        return this.http.post(environment.backupImportPhotos, "", {responseType: 'text'});
+        return this.http.post(environment.backupImportPhotos, '', {responseType: 'text'});
     }
 
     removeConfirmedImports(): Observable<any> {
@@ -76,6 +76,10 @@ export class ImportGridService {
 
     recipe(file: string): Observable<any> {
         return this.http.post(environment.backupRecipeFile, file, {responseType: 'text'});
+    }
+
+    backup(file: string): Observable<any> {
+        return this.http.post(environment.basicBackupFile, file, {responseType: 'text'});
     }
 
     updateDestination(update: FileDestinationUpdate): Observable<any> {

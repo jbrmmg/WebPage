@@ -1,13 +1,13 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {ImportGridFileDisplay} from "../import-grid-file-display";
-import {LatLong} from "../../map/map-latlong";
-import {ImageSize} from "../import-grid-imagesize";
-import {IImportGridFileBase} from "../import-grid-file-base";
-import {ImportSelectedDataSimilar} from "./import-selected-data-similar";
-import {NgForOf} from "@angular/common";
-import {StepStatusType, TrafficLightType} from "../traffic/import-grid-traffic-light";
-import {FormsModule} from "@angular/forms";
-import {FileDestinationUpdate} from "../import-grid-update-destination";
+import {ImportGridFileDisplay} from '../import-grid-file-display';
+import {LatLong} from '../../map/map-latlong';
+import {ImageSize} from '../import-grid-imagesize';
+import {IImportGridFileBase} from '../import-grid-file-base';
+import {ImportSelectedDataSimilar} from './import-selected-data-similar';
+import {NgForOf} from '@angular/common';
+import {StepStatusType, TrafficLightType} from '../traffic/import-grid-traffic-light';
+import {FormsModule} from '@angular/forms';
+import {FileDestinationUpdate} from '../import-grid-update-destination';
 
 @Component({
     selector: 'import-selected-data',
@@ -27,6 +27,7 @@ export class ImportSelectedData {
     @Output() recipeEvent: EventEmitter<string> = new EventEmitter();
     @Output() ignoreEvent: EventEmitter<string> = new EventEmitter();
     @Output() unIgnoreEvent: EventEmitter<string> = new EventEmitter();
+    @Output() backupEvent: EventEmitter<string> = new EventEmitter();
     @Output() destinationUpdateEvent: EventEmitter<FileDestinationUpdate> = new EventEmitter();
 
     destination: string;
@@ -47,35 +48,35 @@ export class ImportSelectedData {
     }
 
     getText(): string {
-        if(this.filename) {
+        if (this.filename) {
             return this.filename;
         }
 
-        return "";
+        return '';
     }
 
     getImportName() {
-        if(this.importFilename) {
+        if (this.importFilename) {
             return this.importFilename;
         }
 
-        return "";
+        return '';
     }
 
     getLatLong(): string {
-        if(this.location) {
-            return "" + this.location.lat + " " + this.location.long;
+        if (this.location) {
+            return '' + this.location.lat + ' ' + this.location.long;
         }
 
-        return "";
+        return '';
     }
 
     getImageSize(): string {
-        if(this.imageSize) {
-            return "" + this.imageSize.width + " x " + this.imageSize.height;
+        if (this.imageSize) {
+            return '' + this.imageSize.width + ' x ' + this.imageSize.height;
         }
 
-        return "";
+        return '';
     }
 
     getFileSize() {
@@ -83,83 +84,83 @@ export class ImportSelectedData {
     }
 
     getImportSize() {
-        if(this.importSize) {
+        if (this.importSize) {
             return this.importSize;
         }
 
-        return "";
+        return '';
     }
 
     getFileDate() {
-        if(this.date) {
+        if (this.date) {
             return this.date;
         }
 
-        return "";
+        return '';
     }
 
     getImportDate() {
-        if(this.importDate) {
+        if (this.importDate) {
             return this.importDate;
         }
 
-        return "";
+        return '';
     }
 
     getMD5() {
-        if(this.md5) {
+        if (this.md5) {
             return this.md5;
         }
 
-        return "";
+        return '';
     }
 
     getImportMd5() {
-        if(this.importMd5) {
+        if (this.importMd5) {
             return this.importMd5;
         }
 
-        return "";
+        return '';
     }
 
     display(file: ImportGridFileDisplay) {
-        console.log("data update");
-        if(file && file.source) {
+        console.log('data update');
+        if (file && file.source) {
             this.filename = file.source.filename;
             this.imageSize = file.source.imageSize;
             this.location = file.source.location;
             this.similar = file.source.similarFiles;
-            this.destination = "";
-            if(file.source.destination) {
+            this.destination = '';
+            if (file.source.destination) {
                 this.destination = file.source.destination;
             }
-            this.date = "";
-            if(file.source.date) {
-                this.date = file.source.date.replace("T", " ");
+            this.date = '';
+            if (file.source.date) {
+                this.date = file.source.date.replace('T', ' ');
             }
-            this.size = "";
-            if(file.source.size) {
-                this.size = file.source.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            this.size = '';
+            if (file.source.size) {
+                this.size = file.source.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
             }
             this.md5 = file.source.md5;
 
-            this.importFilename = "";
-            if(file.source.importName && file.source.importName != this.filename) {
+            this.importFilename = '';
+            if (file.source.importName && file.source.importName !== this.filename) {
                 this.importFilename = file.source.importName;
             }
 
-            this.importSize = "";
-            if(file.source.importSize && file.source.importSize != file.source.size) {
-                this.importSize = file.source.importSize.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            this.importSize = '';
+            if (file.source.importSize && file.source.importSize !== file.source.size) {
+                this.importSize = file.source.importSize.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
             }
 
-            this.importDate = "";
-            if(file.source.importDate && file.source.importDate != file.source.date) {
-                this.importDate = file.source.importDate.replace("T", " ");
+            this.importDate = '';
+            if (file.source.importDate && file.source.importDate !== file.source.date) {
+                this.importDate = file.source.importDate.replace('T', ' ');
             }
 
-            this.importMd5 = "";
-            if(file.source.importMd5 && file.source.importMd5 != file.source.md5) {
+            this.importMd5 = '';
+            if (file.source.importMd5 && file.source.importMd5 !== file.source.md5) {
                 this.importMd5 = file.source.importMd5;
             }
 
@@ -172,13 +173,13 @@ export class ImportSelectedData {
     }
 
     clear() {
-        this.filename = "";
+        this.filename = '';
         this.imageSize = null;
         this.location = null;
         this.similar = [];
-        this.date = "";
-        this.size = "";
-        this.md5 = "";
+        this.date = '';
+        this.size = '';
+        this.md5 = '';
     }
 
     previous() {
@@ -194,7 +195,7 @@ export class ImportSelectedData {
     }
 
     ignore() {
-        if(this.stepStatus && this.stepStatus.checkFileIgnored && this.stepStatus.checkFileIgnored == "RED") {
+        if (this.stepStatus && this.stepStatus.checkFileIgnored && this.stepStatus.checkFileIgnored === 'RED') {
             return this.unIgnoreEvent.emit(this.filename);
         }
 
@@ -205,11 +206,15 @@ export class ImportSelectedData {
         this.recipeEvent.emit(this.filename);
     }
 
-    getSteps(): number[] {
-        let result: number[] = [];
+    backup() {
+        this.backupEvent.emit(this.filename);
+    }
 
-        for(let step in TrafficLightType) {
-            if(!isNaN(Number(step))) {
+    getSteps(): number[] {
+        const result: number[] = [];
+
+        for (const step in TrafficLightType) {
+            if (!isNaN(Number(step))) {
                 result.push(Number(step));
             }
         }
@@ -218,114 +223,114 @@ export class ImportSelectedData {
     }
 
     getStatusText(step: TrafficLightType): string {
-        switch(step) {
+        switch (step) {
             case TrafficLightType.readPreImportFile:
-                return "Read";
+                return 'Read';
             case TrafficLightType.gatherMetaData:
-                return "Meta";
+                return 'Meta';
             case TrafficLightType.copyFileToImport:
-                return "Copy";
+                return 'Copy';
             case TrafficLightType.checkFileIgnored:
-                return "Ignore";
+                return 'Ignore';
             case TrafficLightType.checkActivePhotoFile:
-                return "Active";
+                return 'Active';
             case TrafficLightType.checkDuplicateFile:
-                return "Duplicate";
+                return 'Duplicate';
             case TrafficLightType.checkFileConfirmedImported:
-                return "Imported";
+                return 'Imported';
             case TrafficLightType.processImport:
-                return "Process";
+                return 'Process';
             case TrafficLightType.completed:
-                return "Complete";
+                return 'Complete';
         }
     }
 
     getStepStatusClass(status: string): string {
-        switch(status) {
-            case "RED":
-                return "red";
-            case "AMBER":
-                return "amber";
-            case "GREEN":
-                return "green";
+        switch (status) {
+            case 'RED':
+                return 'red';
+            case 'AMBER':
+                return 'amber';
+            case 'GREEN':
+                return 'green';
         }
-        return "unknown";
+        return 'unknown';
     }
 
     getStatusClass(step: TrafficLightType) {
-        switch(step) {
+        switch (step) {
             case TrafficLightType.readPreImportFile:
-                if(this.stepStatus && this.stepStatus.readPreImportFile) {
+                if (this.stepStatus && this.stepStatus.readPreImportFile) {
                     return this.getStepStatusClass(this.stepStatus.readPreImportFile);
                 }
-                return "unknown";
+                return 'unknown';
             case TrafficLightType.gatherMetaData:
-                if(this.stepStatus && this.stepStatus.gatherMetaData) {
+                if (this.stepStatus && this.stepStatus.gatherMetaData) {
                     return this.getStepStatusClass(this.stepStatus.gatherMetaData);
                 }
-                return "unknown";
+                return 'unknown';
             case TrafficLightType.copyFileToImport:
-                if(this.stepStatus && this.stepStatus.copyFileToImport) {
+                if (this.stepStatus && this.stepStatus.copyFileToImport) {
                     return this.getStepStatusClass(this.stepStatus.copyFileToImport);
                 }
-                return "unknown";
+                return 'unknown';
             case TrafficLightType.checkFileIgnored:
-                if(this.stepStatus && this.stepStatus.checkFileIgnored) {
+                if (this.stepStatus && this.stepStatus.checkFileIgnored) {
                     return this.getStepStatusClass(this.stepStatus.checkFileIgnored);
                 }
-                return "unknown";
+                return 'unknown';
             case TrafficLightType.checkActivePhotoFile:
-                if(this.stepStatus && this.stepStatus.checkActivePhotoFile) {
+                if (this.stepStatus && this.stepStatus.checkActivePhotoFile) {
                     return this.getStepStatusClass(this.stepStatus.checkActivePhotoFile);
                 }
-                return "unknown";
+                return 'unknown';
             case TrafficLightType.checkDuplicateFile:
-                if(this.stepStatus && this.stepStatus.checkDuplicateFile) {
+                if (this.stepStatus && this.stepStatus.checkDuplicateFile) {
                     return this.getStepStatusClass(this.stepStatus.checkDuplicateFile);
                 }
-                return "unknown";
+                return 'unknown';
             case TrafficLightType.checkFileConfirmedImported:
-                if(this.stepStatus && this.stepStatus.checkFileConfirmedImported) {
+                if (this.stepStatus && this.stepStatus.checkFileConfirmedImported) {
                     return this.getStepStatusClass(this.stepStatus.checkFileConfirmedImported);
                 }
-                return "unknown";
+                return 'unknown';
             case TrafficLightType.processImport:
-                if(this.stepStatus && this.stepStatus.processImport) {
+                if (this.stepStatus && this.stepStatus.processImport) {
                     return this.getStepStatusClass(this.stepStatus.processImport);
                 }
-                return "unknown";
+                return 'unknown';
             case TrafficLightType.completed:
-                if(this.stepStatus && this.stepStatus.completed) {
+                if (this.stepStatus && this.stepStatus.completed) {
                     return this.getStepStatusClass(this.stepStatus.completed);
                 }
-                return "unknown";
+                return 'unknown';
         }
     }
 
     getIgnoreButtonLabelClass(): string {
-        if(this.stepStatus && this.stepStatus.checkFileIgnored && this.stepStatus.checkFileIgnored == "RED") {
-            return "btn btn-outline-success";
+        if (this.stepStatus && this.stepStatus.checkFileIgnored && this.stepStatus.checkFileIgnored === 'RED') {
+            return 'btn btn-outline-success';
         }
-        return "btn btn-outline-danger";
+        return 'btn btn-outline-danger';
     }
 
     getIgnoreButtonClass(): string {
-        if(this.stepStatus && this.stepStatus.checkFileIgnored && this.stepStatus.checkFileIgnored == "RED") {
-            return "fa fa-plus-circle";
+        if (this.stepStatus && this.stepStatus.checkFileIgnored && this.stepStatus.checkFileIgnored === 'RED') {
+            return 'fa fa-plus-circle';
         }
 
-        return "fa fa-minus-circle";
+        return 'fa fa-minus-circle';
     }
 
     getIgnoreButtonTitle(): string {
-        if(this.stepStatus && this.stepStatus.checkFileIgnored && this.stepStatus.checkFileIgnored == "RED") {
-            return "Remove the ignore flag on this file.";
+        if (this.stepStatus && this.stepStatus.checkFileIgnored && this.stepStatus.checkFileIgnored === 'RED') {
+            return 'Remove the ignore flag on this file.';
         }
 
-        return "Mark this photo to be ignored.";
+        return 'Mark this photo to be ignored.';
     }
 
     enterDestination() {
-        this.destinationUpdateEvent.emit(new FileDestinationUpdate(this.filename,this.destination));
+        this.destinationUpdateEvent.emit(new FileDestinationUpdate(this.filename, this.destination));
     }
 }

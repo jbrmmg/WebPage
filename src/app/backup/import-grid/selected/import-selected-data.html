@@ -77,6 +77,13 @@
                 <em class="fa fa-cutlery"></em>
             </label>
         </div>
+        <div class="col action-btn">
+            <label class="btn btn-outline-primary"
+                   title="Import this photo as a basic backup"
+                   (click)="backup()">
+                <em class="fa fa-recycle"></em>
+            </label>
+        </div>
         <input class="col directory" type="text" size="40" [(ngModel)]="destination" (keydown.enter)="enterDestination()">
     </div>
     <div class="row">

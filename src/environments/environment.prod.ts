@@ -40,6 +40,7 @@ export const environment = {
   backupDeleteImportFile: "backup/delete-import-file",
   backupUpdateDestination: "backup/update-destination",
   backupRecipeFile: "backup/recipe-file",
+  basicBackupFile: "backup/backup-file",
   backupSummary: "backup/summary",
   backupActions: "backup/actions",
   backupHierarchy: "backup/hierarchy",
