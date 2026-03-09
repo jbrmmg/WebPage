@@ -1,8 +1,4 @@
 
 describe('HouseService', () => {
-    beforeEach(async () => {
-    });
-
-    afterEach(() => {
-    });
+    it('should be tested', pending);
 });

@@ -34,6 +34,8 @@ describe('WelcomeService', () => {
     });
 
     afterEach(() => {
+        const versionReq = httpMock.match('/api/util/version.json');
+        versionReq.forEach(r => r.flush({ version: '1.0.0' }));
         httpMock.verify();
     });
 

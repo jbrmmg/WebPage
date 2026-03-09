@@ -1,7 +1,3 @@
 describe('WifiService', () => {
-    beforeEach(async () => {
-    });
-
-    afterEach(() => {
-    });
+    it('should be tested', pending);
 });
