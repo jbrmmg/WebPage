@@ -43,18 +43,16 @@
                         </configuration>
                         <phase>generate-resources</phase>
                     </execution>
-                <!-- fix this later.
                 <execution>
-                <id>test</id>
-                <goals>
-                  <goal>npm</goal>
-                </goals>
-                <configuration>
-                  <arguments>run-script test-headless</arguments>
-                </configuration>
-                <phase>test</phase>
+                    <id>test</id>
+                    <goals>
+                        <goal>npm</goal>
+                    </goals>
+                    <configuration>
+                        <arguments>run-script test-headless</arguments>
+                    </configuration>
+                    <phase>test</phase>
                 </execution>
-                -->
                 </executions>
             </plugin>
             <plugin>

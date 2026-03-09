@@ -1,8 +1,4 @@
 
 describe('WeightService', () => {
-    beforeEach(async () => {
-    });
-
-    afterEach(() => {
-    });
+    it('should be tested', pending);
 });
