@@ -1,6 +1,6 @@
-import {Component, Input} from "@angular/core";
-import {BackupSource} from "../../backup-source";
-import {BackupSummary} from "../../backup-summary";
+import {Component, Input} from '@angular/core';
+import {BackupSource} from '../../backup-source';
+import {BackupSummary} from '../../backup-summary';
 
 @Component({
     selector: '',
@@ -15,10 +15,10 @@ export abstract class SummaryGridData {
     abstract getText(): string;
 
     statusClass() {
-        if(this.source && this.source.status && this.source.status == "OK") {
-            return "ok";
+        if (this.source && this.source.status && this.source.status === 'OK') {
+            return 'ok';
         }
 
-        return "ok";
+        return 'bad';
     }
 }

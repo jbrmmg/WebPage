@@ -17,10 +17,10 @@
             <tbody *ngIf="actions && actions.length">
                 <tr *ngFor="let action of actions">
                     <td>
-                        <jbr-action-data-name [action]="action" (select)="selectMedia($event)"></jbr-action-data-name>
+                        <jbr-action-data-name [action]="action" (fileSelected)="selectMedia($event)"></jbr-action-data-name>
                     </td>
                     <td>
-                        <jbr-action-data-media [action]="action" (select)="selectMedia($event)"></jbr-action-data-media>
+                        <jbr-action-data-media [action]="action" (fileSelected)="selectMedia($event)"></jbr-action-data-media>
                     </td>
                     <td>
                         <jbr-action-data-confirm [action]="action" (confirm)="confirm($event)"></jbr-action-data-confirm>

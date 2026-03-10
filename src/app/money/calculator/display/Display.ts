@@ -1,4 +1,4 @@
-import {CalculatorService} from "../calculator-service";
+import {CalculatorService} from '../calculator-service';
 
 export class Display {
     constructor(private _service: CalculatorService) {
@@ -6,6 +6,7 @@ export class Display {
     }
 
     handleChange() {
+        // intentionally empty - override in subclasses
     }
 
     get Text(): string {

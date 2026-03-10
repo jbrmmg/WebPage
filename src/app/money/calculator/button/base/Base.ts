@@ -1,5 +1,5 @@
-import {IBase} from "./IBase";
-import {CalculatorService} from "../../calculator-service";
+import {IBase} from './IBase';
+import {CalculatorService} from '../../calculator-service';
 
 export class Base implements IBase {
     className: string;
@@ -14,9 +14,11 @@ export class Base implements IBase {
     }
 
     buttonClicked() {
+        // intentionally empty - override in subclasses
     }
 
     handleChange() {
+        // intentionally empty - override in subclasses
     }
 
     isLinkedKeyPress(keyText: string): boolean {

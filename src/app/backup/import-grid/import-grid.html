@@ -51,7 +51,7 @@
             <tr *ngFor="let file of data">
                 <ng-container *ngIf="file.visible">
                     <td>
-                        <jbr-import-grid-data-select [file]=file (select)="selectRequest($event)"></jbr-import-grid-data-select>
+                        <jbr-import-grid-data-select [file]=file (fileSelected)="selectRequest($event)"></jbr-import-grid-data-select>
                     </td>
                     <td>
                         <jbr-import-grid-data-name [file]=file></jbr-import-grid-data-name>
