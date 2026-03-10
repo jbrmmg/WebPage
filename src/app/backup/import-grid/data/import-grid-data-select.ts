@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Output} from "@angular/core";
-import {ImportGridData} from "./import-grid-data";
-import {ImportGridFileDisplay} from "../import-grid-file-display";
+import {Component, EventEmitter, Output} from '@angular/core';
+import {ImportGridData} from './import-grid-data';
+import {ImportGridFileDisplay} from '../import-grid-file-display';
 
 @Component({
     selector: 'jbr-import-grid-data-select',
@@ -9,21 +9,21 @@ import {ImportGridFileDisplay} from "../import-grid-file-display";
     standalone: true
 })
 export class ImportGridDataSelect extends ImportGridData {
-    @Output() select: EventEmitter<ImportGridFileDisplay> = new EventEmitter();
+    @Output() fileSelected: EventEmitter<ImportGridFileDisplay> = new EventEmitter();
 
     selectFile() {
-        this.select.emit(this.file)
+        this.fileSelected.emit(this.file);
     }
 
     getText(): string {
-        return "";
+        return '';
     }
 
     selectStatus(): string {
-        if(this.file && this.file.selected) {
-            return "selected"
+        if (this.file && this.file.selected) {
+            return 'selected';
         }
 
-        return "not-selected"
+        return 'not-selected';
     }
 }

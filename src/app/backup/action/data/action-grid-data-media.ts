@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Output} from "@angular/core";
-import {ActionGridData} from "./action-grid-data";
-import {DecimalPipe, NgIf, NgOptimizedImage} from "@angular/common";
+import {Component, EventEmitter, Output} from '@angular/core';
+import {ActionGridData} from './action-grid-data';
+import {DecimalPipe, NgIf, NgOptimizedImage} from '@angular/common';
 
 @Component({
     selector: 'jbr-action-data-media',
@@ -14,16 +14,16 @@ import {DecimalPipe, NgIf, NgOptimizedImage} from "@angular/common";
     standalone: true
 })
 export class ActionGridDataMedia extends ActionGridData {
-    @Output() select: EventEmitter<number> = new EventEmitter<number>();
+    @Output() fileSelected: EventEmitter<number> = new EventEmitter<number>();
 
     getDateText() {
-        let dateString: string = "" + this.action.date;
+        const dateString: string = '' + this.action.date;
 
-        if(this.action && this.action.date) {
-            return "" + dateString.replace("T"," ");
+        if (this.action && this.action.date) {
+            return '' + dateString.replace('T', ' ');
         }
 
-        return "";
+        return '';
     }
 
     displaySize(): boolean {
@@ -31,13 +31,13 @@ export class ActionGridDataMedia extends ActionGridData {
     }
 
     getSize() {
-        if(this.action && this.action.size) {
+        if (this.action && this.action.size) {
             return this.action.size;
         }
     }
 
     getFileId(): number {
-        if(this.action && this.action.fileId) {
+        if (this.action && this.action.fileId) {
             return this.action.fileId;
         }
 
@@ -45,7 +45,7 @@ export class ActionGridDataMedia extends ActionGridData {
     }
 
     isImage(): boolean {
-        if(this.action && this.action.isImage) {
+        if (this.action && this.action.isImage) {
             return this.action.isImage;
         }
 
@@ -53,7 +53,7 @@ export class ActionGridDataMedia extends ActionGridData {
     }
 
     isVideo(): boolean {
-        if(this.action && this.action.isVideo) {
+        if (this.action && this.action.isVideo) {
             return this.action.isVideo;
         }
 
@@ -61,15 +61,15 @@ export class ActionGridDataMedia extends ActionGridData {
     }
 
     getText(): string {
-        if(this.action && this.action.isImage) {
-            return "" + this.action.isImage;
+        if (this.action && this.action.isImage) {
+            return '' + this.action.isImage;
         }
 
-        return "";
+        return '';
     }
 
     selectMedia() {
-        console.log("Select Media")
-        this.select.emit(this.action.fileId);
+        console.log('Select Media');
+        this.fileSelected.emit(this.action.fileId);
     }
 }
