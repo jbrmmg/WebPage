@@ -24,7 +24,7 @@ export class ImportSelectedDataSimilar {
     @Input() importMd5: string;
 
     getSizeString(file: IImportGridFileBase) {
-        return file.size.toString().replaceAll(/\B(?=(\d{3})+(?!\d))/g, ',');
+        return file.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
 
     getNameClass(file: IImportGridFileBase): string {
@@ -54,7 +54,7 @@ export class ImportSelectedDataSimilar {
     }
 
     getSizeClass(file: IImportGridFileBase): string {
-        const fileSize: string = file.size.toString().replaceAll(/\B(?=(\d{3})+(?!\d))/g, ',');
+        const fileSize: string = file.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         if (fileSize !== this.size && fileSize !== this.importSize) {
             return 'mismatch';
         }

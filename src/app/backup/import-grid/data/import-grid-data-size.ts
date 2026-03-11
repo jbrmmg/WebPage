@@ -15,10 +15,10 @@ export class ImportGridDataSize extends ImportGridData {
         if (this.file?.source?.size) {
             if (this.importValue) {
                 if (this.file.source.importSize) {
-                    return this.file.source.importSize.toString().replaceAll(/\B(?=(\d{3})+(?!\d))/g, ',');
+                    return this.file.source.importSize.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
                 }
             } else {
-                return this.file.source.size.toString().replaceAll(/\B(?=(\d{3})+(?!\d))/g, ',');
+                return this.file.source.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
             }
         }
 

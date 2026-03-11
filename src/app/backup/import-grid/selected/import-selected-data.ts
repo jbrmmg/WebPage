@@ -140,7 +140,7 @@ export class ImportSelectedData {
             }
             this.size = '';
             if (file.source.size) {
-                this.size = file.source.size.toString().replaceAll(/\B(?=(\d{3})+(?!\d))/g, ',');
+                this.size = file.source.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
             }
             this.md5 = file.source.md5;
 
@@ -151,7 +151,7 @@ export class ImportSelectedData {
 
             this.importSize = '';
             if (file.source.importSize && file.source.importSize !== file.source.size) {
-                this.importSize = file.source.importSize.toString().replaceAll(/\B(?=(\d{3})+(?!\d))/g, ',');
+                this.importSize = file.source.importSize.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
             }
 
             this.importDate = '';
