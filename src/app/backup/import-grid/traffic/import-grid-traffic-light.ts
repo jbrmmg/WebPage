@@ -1,4 +1,4 @@
-import {ImportGridFile} from "../import-grid-file";
+import {ImportGridFile} from '../import-grid-file';
 
 export class StepStatusType {
     readPreImportFile: string;
@@ -33,7 +33,7 @@ export enum TrafficLightStatus {
 
 export class ImportGridTrafficLight {
     static getTrafficLightStatus(file: ImportGridFile, type: TrafficLightType): TrafficLightStatus {
-        let status: string = "UNKNOWN";
+        let status = 'UNKNOWN';
 
         // Get the type.
         switch (type) {
@@ -68,11 +68,11 @@ export class ImportGridTrafficLight {
 
         // Convert the string value to a status.
         switch (status) {
-            case "RED":
+            case 'RED':
                 return TrafficLightStatus.Red;
-            case "AMBER":
+            case 'AMBER':
                 return TrafficLightStatus.Amber;
-            case "GREEN":
+            case 'GREEN':
                 return TrafficLightStatus.Green;
         }
     }
@@ -80,33 +80,33 @@ export class ImportGridTrafficLight {
     static getHeaderTitle(type: TrafficLightType): string {
         switch (type) {
             case TrafficLightType.readPreImportFile:
-                return "Read pre-import file.";
+                return 'Read pre-import file.';
             case TrafficLightType.gatherMetaData:
-                return "Gather meta data.";
+                return 'Gather meta data.';
             case TrafficLightType.copyFileToImport:
-                return "Copy file to import.";
+                return 'Copy file to import.';
             case TrafficLightType.checkFileIgnored:
-                return "Check file is ignored.";
+                return 'Check file is ignored.';
             case TrafficLightType.checkActivePhotoFile:
-                return "Check if this is an active photo.";
+                return 'Check if this is an active photo.';
             case TrafficLightType.checkDuplicateFile:
-                return "Check for duplicate.";
+                return 'Check for duplicate.';
             case TrafficLightType.checkFileConfirmedImported:
-                return "Check file is confirmed as imported.";
+                return 'Check file is confirmed as imported.';
             case TrafficLightType.processImport:
-                return "Import has been processed.";
+                return 'Import has been processed.';
             case TrafficLightType.completed:
-                return "All processing complete.";
+                return 'All processing complete.';
         }
     }
 }
 
 export class ImportGridTrafficLightFilter {
     type: TrafficLightType;
-    red: boolean = true;
-    amber: boolean = true;
-    green: boolean = true;
-    unknown: boolean = true;
+    red = true;
+    amber = true;
+    green = true;
+    unknown = true;
 
     constructor() {
     }

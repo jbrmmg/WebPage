@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {SummaryGridData} from "./summary-grid-data";
+import {Component} from '@angular/core';
+import {SummaryGridData} from './summary-grid-data';
 
 @Component({
     selector: 'jbr-summary-grid-data-location',
@@ -11,10 +11,10 @@ import {SummaryGridData} from "./summary-grid-data";
 })
 export class SummaryGridDataLocation extends SummaryGridData {
     getText(): string {
-        if(this.source) {
+        if (this.source) {
             return this.source.location.name;
         }
 
-        return "unknown";
+        return 'unknown';
     }
 }

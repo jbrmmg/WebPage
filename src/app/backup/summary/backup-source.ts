@@ -1,4 +1,4 @@
-import {BackupLocation} from "./backup-location";
+import {BackupLocation} from './backup-location';
 
 export class BackupSource {
     id: number;

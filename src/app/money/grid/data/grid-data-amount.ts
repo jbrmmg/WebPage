@@ -1,10 +1,10 @@
-import {Component, HostListener, Input} from "@angular/core";
-import {CurrencyPipe, NgIf} from "@angular/common";
-import {MoneyService} from "../../money.service";
-import {GridDataInlineEdit} from "./grid-data-inline-edit";
-import {TransactionEditType} from "../../transaction/transactionEditType";
-import {GridDataEvent} from "./grid-data-event";
-import {HeaderType} from "../header/grid-header-type";
+import {Component, HostListener, Input} from '@angular/core';
+import {CurrencyPipe, NgIf} from '@angular/common';
+import {MoneyService} from '../../money.service';
+import {GridDataInlineEdit} from './grid-data-inline-edit';
+import {TransactionEditType} from '../../transaction/transactionEditType';
+import {GridDataEvent} from './grid-data-event';
+import {HeaderType} from '../header/grid-header-type';
 
 @Component({
     selector: 'jbr-grid-data-amount',
@@ -25,10 +25,10 @@ export class GridDataAmount extends GridDataInlineEdit {
 
     @HostListener('document:click', ['$event'])
     clickOut(event) {
-        if(this.inputElement != null) {
+        if (this.inputElement != null) {
             if (!this.inputElement.nativeElement.contains(event.target)) {
-                let value: string = this.inputElement.nativeElement.value;
-                if(this.isEditing() && value.length > 0) {
+                const value: string = this.inputElement.nativeElement.value;
+                if (this.isEditing() && value.length > 0) {
                     this.completeEdit();
                 }
             }
@@ -36,15 +36,15 @@ export class GridDataAmount extends GridDataInlineEdit {
     }
 
     debit(): boolean {
-        return this.type == "DB";
+        return this.type === 'DB';
     }
 
-    display() : string {
-        if(this.transaction == null || this.transaction.amount == null || this.transaction.amount.type != this.type) {
-            return "";
+    display(): string {
+        if (this.transaction == null || this.transaction.amount == null || this.transaction.amount.type !== this.type) {
+            return '';
         }
 
-        if(this.type == "DB") {
+        if (this.type === 'DB') {
             return String(this.transaction.amount.value * -1);
         }
 
@@ -52,34 +52,34 @@ export class GridDataAmount extends GridDataInlineEdit {
     }
 
     isBlank(): boolean {
-        return this.transaction == null || this.transaction.amount == null || this.transaction.amount.type != this.type;
+        return this.transaction == null || this.transaction.amount == null || this.transaction.amount.type !== this.type;
     }
 
     interpretInput(text: string): void {
-        let number = MoneyService.getFinanceValue(text);
+        const number = MoneyService.getFinanceValue(text);
 
-        let event: GridDataEvent = new GridDataEvent();
+        const event: GridDataEvent = new GridDataEvent();
         event.transaction = this.transaction;
         this.transaction.modified = true;
 
-        if(this.type == "DB") {
-            if(number < 0) {
+        if (this.type === 'DB') {
+            if (number < 0) {
                 this.transaction.amount.value = number * -1;
-                this.transaction.amount.type = "CR";
+                this.transaction.amount.type = 'CR';
                 event.source = HeaderType.Credit;
             } else {
                 this.transaction.amount.value = number * -1;
-                this.transaction.amount.type = "DB";
+                this.transaction.amount.type = 'DB';
                 event.source = HeaderType.Debit;
             }
         } else {
-            if(number < 0) {
+            if (number < 0) {
                 this.transaction.amount.value = number;
-                this.transaction.amount.type = "DB";
+                this.transaction.amount.type = 'DB';
                 event.source = HeaderType.Debit;
             } else {
                 this.transaction.amount.value = number;
-                this.transaction.amount.type = "CR";
+                this.transaction.amount.type = 'CR';
                 event.source = HeaderType.Credit;
             }
         }
@@ -90,10 +90,10 @@ export class GridDataAmount extends GridDataInlineEdit {
     getValueForEdit(): string {
         let text: string;
 
-        text = "";
-        if(this.transaction != null && this.transaction.amount != null && this.transaction.amount.value != 0) {
+        text = '';
+        if (this.transaction != null && this.transaction.amount != null && this.transaction.amount.value !== 0) {
             text = this.transaction.amount.value.toString();
-            text = text.replace("-", "");
+            text = text.replace('-', '');
         }
 
         return text;

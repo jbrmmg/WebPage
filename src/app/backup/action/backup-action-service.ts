@@ -1,10 +1,10 @@
-import {Observable, throwError} from "rxjs";
-import {environment} from "../../../environments/environment";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {catchError, tap} from "rxjs/operators";
-import {Injectable} from "@angular/core";
-import {Action} from "./backup-action";
-import {ConfirmRequest} from "../backup-confirmrequest";
+import {Observable, throwError} from 'rxjs';
+import {environment} from '../../../environments/environment';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {catchError, tap} from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {Action} from './backup-action';
+import {ConfirmRequest} from '../backup-confirmrequest';
 @Injectable({
     providedIn: 'root'
 })
@@ -39,10 +39,10 @@ export class BackupActionService {
         // Send the confirmation request to the server.
         this.http.post<void>(environment.backupActions, confirmReq).subscribe({
             error: err => {
-                console.log("Failed to confirm the request " + err);
+                console.log('Failed to confirm the request ' + err);
             },
             complete: () => {
-                console.log("Request is confirmed");
+                console.log('Request is confirmed');
             }
         });
     }

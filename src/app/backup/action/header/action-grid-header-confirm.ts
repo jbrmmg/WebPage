@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {ActionGridHeader} from "./action-grid-header";
+import {Component} from '@angular/core';
+import {ActionGridHeader} from './action-grid-header';
 
 @Component({
     selector: 'jbr-action-header-confirm',
@@ -11,6 +11,6 @@ import {ActionGridHeader} from "./action-grid-header";
 })
 export class ActionGridHeaderConfirm extends ActionGridHeader {
     getText(): string {
-        return "Confirm";
+        return 'Confirm';
     }
 }

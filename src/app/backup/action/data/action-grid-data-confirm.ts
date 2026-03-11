@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Output} from "@angular/core";
-import {ActionGridData} from "./action-grid-data";
-import {Action} from "../backup-action";
+import {Component, EventEmitter, Output} from '@angular/core';
+import {ActionGridData} from './action-grid-data';
+import {Action} from '../backup-action';
 
 @Component({
     selector: 'jbr-action-data-confirm',
@@ -14,11 +14,11 @@ export class ActionGridDataConfirm extends ActionGridData {
     @Output() confirm: EventEmitter<Action> = new EventEmitter<Action>();
 
     getText(): string {
-        if(this.action?.confirmed) {
-            return "" + this.action.confirmed;
+        if (this.action?.confirmed) {
+            return '' + this.action.confirmed;
         }
 
-        return "";
+        return '';
     }
 
     confirmAction() {

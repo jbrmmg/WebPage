@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnInit} from "@angular/core";
-import {NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
-import {ButtonsModule} from "ngx-bootstrap/buttons";
-import {MoneyService} from "../money.service";
-import {Category} from "./category";
-import {JbAccount} from "../account/jbAccount";
-import {TransactionFilter} from "../transaction/transactionFilter";
+import {Component, EventEmitter, Input, OnInit} from '@angular/core';
+import {NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
+import {ButtonsModule} from 'ngx-bootstrap/buttons';
+import {MoneyService} from '../money.service';
+import {Category} from './category';
+import {JbAccount} from '../account/jbAccount';
+import {TransactionFilter} from '../transaction/transactionFilter';
 
 class AccountOption {
     id: string;
@@ -26,14 +26,14 @@ class AccountOption {
     standalone: true
 })
 export class MoneyCategory implements OnInit {
-    columns: number = 4;
+    columns = 4;
     categories: Category[][] = [];
     accounts: AccountOption[][] = [];
     errorMessage: string;
 
     @Input() filterMode: boolean;
     @Input() allowTransfer: boolean;
-    @Input() filter : TransactionFilter;
+    @Input() filter: TransactionFilter;
     @Input() allSelected: boolean;
 
     @Input() selectCategoryEvent: EventEmitter<Category>;
@@ -49,17 +49,17 @@ export class MoneyCategory implements OnInit {
                 this.categories.push(row);
 
                 categories.forEach(value => {
-                    if(row.length == this.columns) {
+                    if (row.length === this.columns) {
                         row = [];
                         this.categories.push(row);
                     }
 
                     row.push(value);
-                })
+                });
             },
             error: (response) => this.errorMessage = response,
             complete: () => {
-                console.log("Category Options Loaded")
+                console.log('Category Options Loaded');
             }
         });
 
@@ -69,30 +69,30 @@ export class MoneyCategory implements OnInit {
                 this.accounts.push(row);
 
                 accounts.forEach(value => {
-                    if(!value.closed) {
-                        let next: AccountOption = new AccountOption();
+                    if (!value.closed) {
+                        const next: AccountOption = new AccountOption();
                         next.id = value.id;
                         next.name = value.name;
                         next.account = value;
 
-                        if (row.length == this.columns) {
+                        if (row.length === this.columns) {
                             row = [];
                             this.accounts.push(row);
                         }
 
                         row.push(next);
                     }
-                })
+                });
             },
             error: (response) => this.errorMessage = response,
             complete: () => {
-                console.log("Account Options Loaded")
+                console.log('Account Options Loaded');
             }
-        })
+        });
     }
 
     getAccounts(): AccountOption[][] {
-        if(!this.filterMode && this.allowTransfer) {
+        if (!this.filterMode && this.allowTransfer) {
             return this.accounts;
         }
 
@@ -108,28 +108,28 @@ export class MoneyCategory implements OnInit {
     }
 
     isCategorySelected(item: Category): boolean {
-        if(!this.filterMode) {
+        if (!this.filterMode) {
             return true;
         }
 
-        let result: boolean = false;
+        let result = false;
 
         this.filter.categories.forEach(category => {
-            if(item.id == category.id) {
+            if (item.id === category.id) {
                 result = true;
             }
-        })
+        });
 
         return result;
     }
 
     categoryDisplay(item: Category): string {
-        return item.name + " (" + item.id + ")";
+        return item.name + ' (' + item.id + ')';
     }
 
     clickCategory(item: Category) {
-        if(!this.filterMode) {
-            if(item.systemUse) {
+        if (!this.filterMode) {
+            if (item.systemUse) {
                 return;
             }
 
@@ -137,12 +137,12 @@ export class MoneyCategory implements OnInit {
             return;
         }
 
-        if(this.isCategorySelected(item)) {
-            const index = this.filter.categories.findIndex(a => {return a.id == item.id});
+        if (this.isCategorySelected(item)) {
+            const index = this.filter.categories.findIndex(a => a.id === item.id);
 
 
-            if(index > -1) {
-                this.filter.categories.splice(index,1);
+            if (index > -1) {
+                this.filter.categories.splice(index, 1);
             }
         } else {
             this.filter.categories.push(item);
@@ -150,11 +150,11 @@ export class MoneyCategory implements OnInit {
     }
 
     backgroundColour(item: Category) {
-        if(!this.filterMode && item.systemUse) {
+        if (!this.filterMode && item.systemUse) {
             return '#FFFFFF';
         }
 
-        if(this.isCategorySelected(item)) {
+        if (this.isCategorySelected(item)) {
             return '#' + item.colour;
         }
 
@@ -162,11 +162,11 @@ export class MoneyCategory implements OnInit {
     }
 
     textColour(item: Category) {
-        if(!this.filterMode && item.systemUse) {
+        if (!this.filterMode && item.systemUse) {
             return '#D3D3D3';
         }
 
-        if(this.isCategorySelected(item)) {
+        if (this.isCategorySelected(item)) {
             return '#' + MoneyService.getTextColor(this.backgroundColour(item).substring(1));
         }
 
@@ -174,11 +174,11 @@ export class MoneyCategory implements OnInit {
     }
 
     borderColor(item: Category) {
-        if(!this.filterMode && item.systemUse) {
+        if (!this.filterMode && item.systemUse) {
             return '#D3D3D3';
         }
 
-        if(this.isCategorySelected(item)) {
+        if (this.isCategorySelected(item)) {
             return '#000000';
         }
 
@@ -192,7 +192,7 @@ export class MoneyCategory implements OnInit {
         this.categories.forEach(row => {
             row.forEach(col => {
                 this.filter.categories.push(col);
-            })
+            });
         });
     }
 

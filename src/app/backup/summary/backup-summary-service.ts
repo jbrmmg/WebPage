@@ -1,22 +1,15 @@
-import {Injectable} from "@angular/core";
-import {Observable, throwError} from "rxjs";
-import {BackupSummary} from "./backup-summary";
-import {environment} from "../../../environments/environment";
-import {catchError, tap} from "rxjs/operators";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {Injectable} from '@angular/core';
+import {Observable, throwError} from 'rxjs';
+import {BackupSummary} from './backup-summary';
+import {environment} from '../../../environments/environment';
+import {catchError, tap} from 'rxjs/operators';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
 })
 export class BackupSummaryService {
     constructor(private readonly http: HttpClient) {
-    }
-
-    getSummary() : Observable<BackupSummary> {
-        return this.http.get<BackupSummary>(environment.backupSummary).pipe(
-            tap(data =>  console.log(`All: ${JSON.stringify(data)}`)),
-            catchError(err => BackupSummaryService.handleError(err))
-        );
     }
 
     private static handleError(err: HttpErrorResponse) {
@@ -29,5 +22,12 @@ export class BackupSummaryService {
         }
         console.error(errorMessage);
         return throwError(() => errorMessage);
+    }
+
+    getSummary(): Observable<BackupSummary> {
+        return this.http.get<BackupSummary>(environment.backupSummary).pipe(
+            tap(data =>  console.log(`All: ${JSON.stringify(data)}`)),
+            catchError(err => BackupSummaryService.handleError(err))
+        );
     }
 }

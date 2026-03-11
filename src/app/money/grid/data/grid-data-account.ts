@@ -1,14 +1,14 @@
-import {Component, EventEmitter, OnInit, TemplateRef, Type} from "@angular/core";
-import {MoneyService} from "../../money.service";
-import {NgIf} from "@angular/common";
-import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import {MoneyAccount} from "../../account/money-account.component";
-import {JbAccount} from "../../account/jbAccount";
-import {GridData} from "./grid-data";
-import {TransactionEditType} from "../../transaction/transactionEditType";
-import {GridDataEvent} from "./grid-data-event";
-import {HeaderType} from "../header/grid-header-type";
-import {PopupComponent} from "../../../standard/popup.component";
+import {Component, EventEmitter, OnInit, TemplateRef, Type} from '@angular/core';
+import {MoneyService} from '../../money.service';
+import {NgIf} from '@angular/common';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import {MoneyAccount} from '../../account/money-account.component';
+import {JbAccount} from '../../account/jbAccount';
+import {GridData} from './grid-data';
+import {TransactionEditType} from '../../transaction/transactionEditType';
+import {GridDataEvent} from './grid-data-event';
+import {HeaderType} from '../header/grid-header-type';
+import {PopupComponent} from '../../../standard/popup.component';
 
 @Component({
     selector: 'jbr-grid-data-account',
@@ -24,7 +24,7 @@ export class GridDataAccount extends GridData implements OnInit {
     modalRef: BsModalRef;
 
     content: Type<any>;
-    inputs: Record<string,unknown>;
+    inputs: Record<string, unknown>;
 
     selectEvent: EventEmitter<JbAccount>;
 
@@ -44,26 +44,26 @@ export class GridDataAccount extends GridData implements OnInit {
             selectEvent: this.selectEvent };
     }
 
-    hasAccount() : boolean {
+    hasAccount(): boolean {
         return this.transaction != null && this.transaction.account != null;
     }
 
-    getAccountImage() : string {
+    getAccountImage(): string {
         return MoneyService.getAccountImage(this.transaction.account.id);
     }
 
     openModal(template: TemplateRef<any>) {
-        if(this.transaction != null && this.transaction.new) {
+        if (this.transaction != null && this.transaction.new) {
             this.transaction.editing = TransactionEditType.None;
             this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
         }
     }
 
     onSelect(account: JbAccount) {
-        if(this.transaction !=null) {
+        if (this.transaction != null) {
             this.transaction.account = account;
 
-            let event: GridDataEvent = new GridDataEvent();
+            const event: GridDataEvent = new GridDataEvent();
             event.transaction = this.transaction;
             event.source = HeaderType.Account;
             this.valueChanged.emit(event);

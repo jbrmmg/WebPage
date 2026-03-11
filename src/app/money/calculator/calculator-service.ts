@@ -1,11 +1,11 @@
-import {OperatorType} from "./enum/OperatorType";
-import {EventEmitter, Injectable, Output} from "@angular/core";
+import {OperatorType} from './enum/OperatorType';
+import {EventEmitter, Injectable, Output} from '@angular/core';
 
 @Injectable({
     providedIn: null
 })
 export class CalculatorService {
-    private debitValue: boolean = true;
+    private debitValue = true;
     private value: number;
     private memory: number;
     private currentOperator: OperatorType;
@@ -18,13 +18,13 @@ export class CalculatorService {
     @Output() statusChange: EventEmitter<any> = new EventEmitter();
 
     private get valueInProgress(): number {
-        let sequence: string = "";
+        let sequence = '';
 
         this.keySequence.forEach( (k) => {
             sequence = sequence + k;
-        })
+        });
 
-        if(sequence === "." || sequence === "") {
+        if (sequence === '.' || sequence === '') {
             return 0;
         }
 
@@ -32,34 +32,34 @@ export class CalculatorService {
     }
 
     private get maxFractionReached(): boolean {
-        let hasDecimal: boolean = false;
-        let fractionDigitCount: number = 0;
+        let hasDecimal = false;
+        let fractionDigitCount = 0;
 
         this.keySequence.forEach((k) => {
-            if (k === ".") {
+            if (k === '.') {
                 hasDecimal = true;
             } else {
                 if (hasDecimal) {
                     fractionDigitCount++;
                 }
             }
-        })
+        });
 
         return fractionDigitCount >= 2;
     }
 
     private get containsDecimal(): boolean {
         this.keySequence.forEach((k) => {
-            if (k === ".") {
+            if (k === '.') {
                 return true;
             }
-        })
+        });
 
         return false;
     }
 
     private processOperator() {
-        if(this.currentOperator != OperatorType.NONE) {
+        if (this.currentOperator !== OperatorType.NONE) {
             switch (this.currentOperator) {
                 case OperatorType.ADD:
                     this.value += this.memory;
@@ -75,7 +75,7 @@ export class CalculatorService {
                     break;
             }
 
-            if(this.value < 0) {
+            if (this.value < 0) {
                 this.value *= -1;
                 this.debitValue = !this.debitValue;
             }
@@ -110,7 +110,7 @@ export class CalculatorService {
     }
 
     digit(value: number) {
-        if(this.maxFractionReached) {
+        if (this.maxFractionReached) {
             return;
         }
 
@@ -119,11 +119,11 @@ export class CalculatorService {
     }
 
     decimal() {
-        if(this.containsDecimal) {
+        if (this.containsDecimal) {
             return;
         }
 
-        this.keySequence.push(".");
+        this.keySequence.push('.');
         this.statusChange.emit(null);
     }
 
@@ -133,7 +133,7 @@ export class CalculatorService {
     }
 
     delete() {
-        if(this.keySequence.length > 0) {
+        if (this.keySequence.length > 0) {
             this.keySequence.pop();
             this.statusChange.emit(null);
         }
@@ -152,7 +152,7 @@ export class CalculatorService {
     }
 
     initialise(initialValue: number) {
-        if(initialValue === 0) {
+        if (initialValue === 0) {
             return;
         }
 
@@ -163,7 +163,7 @@ export class CalculatorService {
     }
 
     get getValue(): number {
-        if(this.keySequence.length > 0) {
+        if (this.keySequence.length > 0) {
             return this.valueInProgress;
         }
 

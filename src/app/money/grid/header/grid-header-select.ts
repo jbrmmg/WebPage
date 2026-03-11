@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 export class SelectChange {
     selection: boolean;
@@ -15,13 +15,13 @@ export class GridHeaderSelect {
     @Output() selectionChange: EventEmitter<SelectChange> = new EventEmitter();
 
     selectAll() {
-        let event: SelectChange = new SelectChange();
+        const event: SelectChange = new SelectChange();
         event.selection = true;
         this.selectionChange.emit(event);
     }
 
     selectNone() {
-        let event: SelectChange = new SelectChange();
+        const event: SelectChange = new SelectChange();
         event.selection = false;
         this.selectionChange.emit(event);
     }

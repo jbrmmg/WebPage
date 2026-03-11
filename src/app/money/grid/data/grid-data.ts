@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core";
-import {ITransactionReport} from "../../transaction/transactionReport";
-import {GridDataEvent} from "./grid-data-event";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ITransactionReport} from '../../transaction/transactionReport';
+import {GridDataEvent} from './grid-data-event';
 
 @Component({
     selector: '',

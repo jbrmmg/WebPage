@@ -26,7 +26,7 @@ describe('AppComponent', () => {
     expect(app.pageTitle).toEqual('JbrMmg');
   }));
 
-  it('should render title in a "a" tag', waitForAsync(() => {
+  it('should render title in an \'a\' tag', waitForAsync(() => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;

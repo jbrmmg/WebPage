@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {ImportGridData} from "./import-grid-data";
+import {Component} from '@angular/core';
+import {ImportGridData} from './import-grid-data';
 
 @Component({
     selector: 'jbr-import-grid-data-destination',
@@ -10,10 +10,10 @@ import {ImportGridData} from "./import-grid-data";
 })
 export class ImportGridDataDestination extends ImportGridData {
     getText(): string {
-        if(this.file?.source?.destination) {
+        if (this.file?.source?.destination) {
             return this.file.source.destination;
         }
 
-        return "";
+        return '';
     }
 }

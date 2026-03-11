@@ -1,5 +1,5 @@
-import {Component, Input} from "@angular/core";
-import {Action} from "../backup-action";
+import {Component, Input} from '@angular/core';
+import {Action} from '../backup-action';
 
 @Component({
     selector: '',

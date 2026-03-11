@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core";
-import {MoneyService} from "../money.service";
-import {IFile} from "./file";
-import {ButtonsModule} from "ngx-bootstrap/buttons";
-import {NgIf} from "@angular/common";
-import {FormsModule} from "@angular/forms";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {MoneyService} from '../money.service';
+import {IFile} from './file';
+import {ButtonsModule} from 'ngx-bootstrap/buttons';
+import {NgIf} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
 @Component({
     selector: 'jbr-money-file',

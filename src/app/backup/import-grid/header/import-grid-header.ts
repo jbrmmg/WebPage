@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from "@angular/core";
+import {Component, EventEmitter, Output} from '@angular/core';
 
 @Component({
     selector: '',
@@ -12,6 +12,6 @@ export abstract class ImportGridHeader {
     abstract getText(): string;
 
     fireSort() {
-        this.fireSource.emit(this.getText())
+        this.fireSource.emit(this.getText());
     }
 }

@@ -1,12 +1,12 @@
-import {EventEmitter, Injectable, Output} from "@angular/core";
-import {environment} from "../../../environments/environment";
-import {FileInfoExtra} from "../backup-fileinfoextra";
-import {HierarchyResponse} from "../backup-hierarchyresponse";
-import {Observable, throwError} from "rxjs";
-import {catchError, tap} from "rxjs/operators";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {FileLabel, Label} from "../backup-label";
-import {FileExpiry} from "../backup-expiry";
+import {EventEmitter, Injectable, Output} from '@angular/core';
+import {environment} from '../../../environments/environment';
+import {FileInfoExtra} from '../backup-fileinfoextra';
+import {HierarchyResponse} from '../backup-hierarchyresponse';
+import {Observable, throwError} from 'rxjs';
+import {catchError, tap} from 'rxjs/operators';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {FileLabel, Label} from '../backup-label';
+import {FileExpiry} from '../backup-expiry';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +14,7 @@ import {FileExpiry} from "../backup-expiry";
 export class BackupDisplayService {
     private selectedFile: FileInfoExtra;
 
-    @Output() fileLoaded : EventEmitter<FileInfoExtra> = new EventEmitter<FileInfoExtra>();
+    @Output() fileLoaded: EventEmitter<FileInfoExtra> = new EventEmitter<FileInfoExtra>();
 
     constructor(private readonly http: HttpClient) {
     }
@@ -59,12 +59,12 @@ export class BackupDisplayService {
             tap(data => console.log(`All: ${JSON.stringify(data)}`)),
             catchError( err => BackupDisplayService.handleError(err))
         ).subscribe({
-            next:(nextFile: FileInfoExtra) => {
+            next: (nextFile: FileInfoExtra) => {
                 this.fileLoaded.emit(nextFile);
                 this.selectedFile = nextFile;
             },
             error: (response) => {
-                console.error('Failed to get file information.', response)
+                console.error('Failed to get file information.', response);
             },
             complete: () => {
                 console.log('File loaded ' + id);
@@ -74,7 +74,7 @@ export class BackupDisplayService {
 
     deleteFile(id: number) {
         this.http.delete<void>(`backup/file?id=${id}`).subscribe({
-            next:() => {
+            next: () => {
                 console.log('Delete File');
             },
             error: (response) => {
@@ -87,16 +87,16 @@ export class BackupDisplayService {
     }
 
     refreshFile(id: number) {
-        this.http.post<FileInfoExtra>(environment.backupRefreshFile.replace("##id##","" + id),"").pipe(
+        this.http.post<FileInfoExtra>(environment.backupRefreshFile.replace('##id##', '' + id), '').pipe(
             tap(data => console.log(`All: ${JSON.stringify(data)}`)),
             catchError( err => BackupDisplayService.handleError(err))
         ).subscribe({
-            next:(nextFile: FileInfoExtra) => {
+            next: (nextFile: FileInfoExtra) => {
                 this.fileLoaded.emit(nextFile);
                 this.selectedFile = nextFile;
             },
             error: (response) => {
-                console.error('Failed to get file information.', response)
+                console.error('Failed to get file information.', response);
             },
             complete: () => {
                 console.log('File loaded ' + id);
@@ -104,15 +104,15 @@ export class BackupDisplayService {
         });
     }
 
-    getLabels() : Observable<Label[]> {
+    getLabels(): Observable<Label[]> {
         return this.http.get<Label[]>(environment.backupLabels).pipe(
-            tap(data=> console.log(`All: ${JSON.stringify(data)}`)),
+            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
             catchError(err => BackupDisplayService.handleError(err))
         );
     }
 
     setFileLabel(id: number, labelId: number): void {
-        let fileLabel : FileLabel;
+        let fileLabel: FileLabel;
         fileLabel = new FileLabel();
         fileLabel.fileId = id;
         fileLabel.labels = [];
@@ -122,12 +122,12 @@ export class BackupDisplayService {
             tap(data => console.log(`All: ${JSON.stringify(data)}`)),
             catchError(err => BackupDisplayService.handleError(err))
         ).subscribe({
-            next:(nextFile: FileInfoExtra) => {
+            next: (nextFile: FileInfoExtra) => {
                 this.fileLoaded.emit(nextFile);
                 this.selectedFile = nextFile;
             },
             error: (response) => {
-                console.error('Failed to update file label', response)
+                console.error('Failed to update file label', response);
             },
             complete: () => {
                 console.log('Label updated ' + id);
@@ -136,7 +136,7 @@ export class BackupDisplayService {
     }
 
     removeFileLabel(id: number, labelId: number): void {
-        let fileLabel : FileLabel;
+        let fileLabel: FileLabel;
         fileLabel = new FileLabel();
         fileLabel.fileId = id;
         fileLabel.labels = [];
@@ -146,12 +146,12 @@ export class BackupDisplayService {
             tap(data => console.log(`All: ${JSON.stringify(data)}`)),
             catchError(err => BackupDisplayService.handleError(err))
         ).subscribe({
-            next:(nextFile: FileInfoExtra) => {
+            next: (nextFile: FileInfoExtra) => {
                 this.fileLoaded.emit(nextFile);
                 this.selectedFile = nextFile;
             },
             error: (response) => {
-                console.error('Failed to update file label', response)
+                console.error('Failed to update file label', response);
             },
             complete: () => {
                 console.log('Label updated ' + id);
@@ -160,7 +160,7 @@ export class BackupDisplayService {
     }
 
     setFileExpiry(id: number, expiry: Date) {
-        let fileExpiry: FileExpiry = new FileExpiry();
+        const fileExpiry: FileExpiry = new FileExpiry();
         fileExpiry.id = id;
         fileExpiry.expiry = expiry;
 
@@ -168,12 +168,12 @@ export class BackupDisplayService {
             tap(data => console.log(`All: ${JSON.stringify(data)}`)),
             catchError( err => BackupDisplayService.handleError(err))
         ).subscribe({
-            next:(nextFile: FileInfoExtra) => {
+            next: (nextFile: FileInfoExtra) => {
                 this.fileLoaded.emit(nextFile);
                 this.selectedFile = nextFile;
             },
             error: (response) => {
-                console.error('Failed to expire file.', response)
+                console.error('Failed to expire file.', response);
             },
             complete: () => {
                 console.log('File loaded (expire)' + id);

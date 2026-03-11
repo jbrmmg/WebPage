@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {SummaryGridHeader} from "./summary-grid-header";
+import {Component} from '@angular/core';
+import {SummaryGridHeader} from './summary-grid-header';
 
 @Component({
     selector: 'jbr-summary-grid-head-files',
@@ -9,8 +9,8 @@ import {SummaryGridHeader} from "./summary-grid-header";
     ],
     standalone: true
 })
-export class SummaryGridHeaderFiles extends SummaryGridHeader{
+export class SummaryGridHeaderFiles extends SummaryGridHeader {
     getText(): string {
-        return "Files";
+        return 'Files';
     }
 }

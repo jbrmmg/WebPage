@@ -1,6 +1,6 @@
-import {Component} from "@angular/core";
-import {CurrencyPipe, NgIf} from "@angular/common";
-import {GridData} from "./grid-data";
+import {Component} from '@angular/core';
+import {CurrencyPipe, NgIf} from '@angular/common';
+import {GridData} from './grid-data';
 
 @Component({
     selector: 'jbr-grid-data-balance',
@@ -13,12 +13,12 @@ import {GridData} from "./grid-data";
     standalone: true
 })
 export class GridDataBalance extends GridData {
-    display() : string {
-        if(this.transaction.balance == null) {
-            return "";
+    display(): string {
+        if (this.transaction.balance == null) {
+            return '';
         }
 
-        if(this.transaction.balance.value < 0) {
+        if (this.transaction.balance.value < 0) {
             return String(this.transaction.balance.value * -1);
         }
 
@@ -26,7 +26,7 @@ export class GridDataBalance extends GridData {
     }
 
     negative(): boolean {
-        if(this.transaction.balance == null) {
+        if (this.transaction.balance == null) {
             return false;
         }
 

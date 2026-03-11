@@ -1,6 +1,6 @@
-import {Component} from "@angular/core";
-import {DecimalPipe} from "@angular/common";
-import {BackupFileData} from "./backup-file-data";
+import {Component} from '@angular/core';
+import {DecimalPipe} from '@angular/common';
+import {BackupFileData} from './backup-file-data';
 
 @Component({
     selector: 'jbr-backup-file-data-size',

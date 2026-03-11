@@ -1,15 +1,15 @@
-import {EventEmitter, Injectable, Output} from "@angular/core";
-import {PrintSize, SelectedPrint} from "./backup-selectedprint";
-import {environment} from "../../environments/environment";
-import {catchError, tap} from "rxjs/operators";
-import {Observable, throwError} from "rxjs";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {EventEmitter, Injectable, Output} from '@angular/core';
+import {PrintSize, SelectedPrint} from './backup-selectedprint';
+import {environment} from '../../environments/environment';
+import {catchError, tap} from 'rxjs/operators';
+import {Observable, throwError} from 'rxjs';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
 })
 export class BackupPrintService {
-    private selectedPhoto : SelectedPrint;
+    private selectedPhoto: SelectedPrint;
     private selectedPhotos: SelectedPrint[];
 
     @Output() printsUpdated = new EventEmitter();
@@ -29,7 +29,7 @@ export class BackupPrintService {
         return throwError(() => new Error(errorMessage));
     }
 
-    getPrintSizes() : Observable<PrintSize[]> {
+    getPrintSizes(): Observable<PrintSize[]> {
         return this.http.get<PrintSize[]>(environment.backupPrintSize).pipe(
             tap(data => console.log(`All: ${JSON.stringify(data)}`)),
             catchError(err => BackupPrintService.handleError(err))
@@ -45,7 +45,7 @@ export class BackupPrintService {
     }
 
     getSelectedPhoto(): SelectedPrint {
-        if(this.selectedPhoto == null) {
+        if (this.selectedPhoto == null) {
             return null;
         }
 
@@ -53,7 +53,7 @@ export class BackupPrintService {
     }
 
     selectForPrint() {
-        this.http.post<void>(environment.backupPrint,this.selectedPhoto).subscribe({
+        this.http.post<void>(environment.backupPrint, this.selectedPhoto).subscribe({
             next: () => {
                 console.log('Select for print');
             },
@@ -83,12 +83,12 @@ export class BackupPrintService {
         });
     }
 
-    getSelectedPhotos():SelectedPrint[] {
+    getSelectedPhotos(): SelectedPrint[] {
         return this.selectedPhotos;
     }
 
     unselectForPrint(id: number) {
-        this.http.post<void>(environment.backupUnprint,id).subscribe({
+        this.http.post<void>(environment.backupUnprint, id).subscribe({
             next: () => {
                 console.log('Select for print');
             },
@@ -103,16 +103,16 @@ export class BackupPrintService {
     }
 
     updatedPrint(print: SelectedPrint) {
-        this.http.put<void>(environment.backupPrint,print).subscribe(
+        this.http.put<void>(environment.backupPrint, print).subscribe(
             {
                 error: (response) => {
-                    console.error('Failed to update file print size', response)
+                    console.error('Failed to update file print size', response);
                 },
                 complete: () => {
                     this.updatePrints();
                 }
             }
-        )
+        );
     }
 
     clearPrints() {

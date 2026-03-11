@@ -1,5 +1,5 @@
-import {Component, Input} from "@angular/core";
-import {ImportGridData} from "./import-grid-data";
+import {Component, Input} from '@angular/core';
+import {ImportGridData} from './import-grid-data';
 
 @Component({
     selector: 'jbr-import-grid-data-date',
@@ -9,33 +9,33 @@ import {ImportGridData} from "./import-grid-data";
     standalone: true
 })
 export class ImportGridDataDate extends ImportGridData {
-    @Input() importValue: boolean = false;
+    @Input() importValue = false;
 
     getText(): string {
-        if(this.file?.source) {
-            if(this.importValue) {
-                if(this.file.source.importDate) {
-                    return this.file.source.importDate.substring(0,10);
+        if (this.file?.source) {
+            if (this.importValue) {
+                if (this.file.source.importDate) {
+                    return this.file.source.importDate.substring(0, 10);
                 }
-            } else if(this.file.source.date) {
-                return this.file.source.date.substring(0,10);
+            } else if (this.file.source.date) {
+                return this.file.source.date.substring(0, 10);
             }
         }
 
-        return "";
+        return '';
     }
 
     getText2(): string {
-        if(this.file?.source) {
-            if(this.importValue) {
-                if(this.file.source.importDate) {
+        if (this.file?.source) {
+            if (this.importValue) {
+                if (this.file.source.importDate) {
                     return this.file.source.importDate.substring(11);
                 }
-            } else if(this.file.source.date) {
+            } else if (this.file.source.date) {
                 return this.file.source.date.substring(11);
             }
         }
 
-        return "";
+        return '';
     }
 }

@@ -1,5 +1,5 @@
 import {FileInfo} from './backup-fileinfo';
-import {MetaData} from "./backup-file-metadata";
+import {MetaData} from './backup-file-metadata';
 
 export class FileInfoExtra {
     file: FileInfo;

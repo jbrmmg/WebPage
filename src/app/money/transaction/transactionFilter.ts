@@ -2,11 +2,11 @@
 * Equivalent of TransactionFilterDTO
 */
 
-import {ValueRange} from "../range/valueRange";
-import {DateRange} from "../range/dateRange";
-import {StatementDate} from "../statement/statementDate";
-import {JbAccount} from "../account/jbAccount";
-import {Category} from "../category/category";
+import {ValueRange} from '../range/valueRange';
+import {DateRange} from '../range/dateRange';
+import {StatementDate} from '../statement/statementDate';
+import {JbAccount} from '../account/jbAccount';
+import {Category} from '../category/category';
 
 export class TransactionFilter {
     public valueRange?: ValueRange;

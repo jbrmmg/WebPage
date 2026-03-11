@@ -1,8 +1,8 @@
-import {Component, Input, OnChanges, SimpleChanges, ViewChild} from "@angular/core";
-import {Map} from "../../map/map";
-import {FileInfoExtra} from "../../backup-fileinfoextra";
-import {NgIf} from "@angular/common";
-import {LatLong} from "../../map/map-latlong";
+import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {Map} from '../../map/map';
+import {FileInfoExtra} from '../../backup-fileinfoextra';
+import {NgIf} from '@angular/common';
+import {LatLong} from '../../map/map-latlong';
 
 @Component({
     selector: 'jbr-backup-display-metadata',
@@ -20,9 +20,9 @@ export class BackupDisplayMetadata implements OnChanges {
     @ViewChild('map') map: Map;
 
     ngOnChanges(changes: SimpleChanges): void {
-        if(changes.selectedFile) {
-            if(this.map && this.selectedFile?.metaData && (this.selectedFile.metaData.longitude || this.selectedFile.metaData.latitude)) {
-                let latLong: LatLong = new LatLong();
+        if (changes.selectedFile) {
+            if (this.map && this.selectedFile?.metaData && (this.selectedFile.metaData.longitude || this.selectedFile.metaData.latitude)) {
+                const latLong: LatLong = new LatLong();
                 latLong.lat = this.selectedFile.metaData.latitude;
                 latLong.long = this.selectedFile.metaData.longitude;
 
@@ -40,12 +40,12 @@ export class BackupDisplayMetadata implements OnChanges {
     }
 
     getLocation(): string {
-        return "" + this.selectedFile.metaData.latitude + " " + this.selectedFile.metaData.longitude;
+        return '' + this.selectedFile.metaData.latitude + ' ' + this.selectedFile.metaData.longitude;
     }
 
     getLatLong(): LatLong {
-        if(this.selectedFile.metaData?.latitude && this.selectedFile.metaData.longitude) {
-            let result: LatLong = new LatLong();
+        if (this.selectedFile.metaData?.latitude && this.selectedFile.metaData.longitude) {
+            const result: LatLong = new LatLong();
             result.lat = this.selectedFile.metaData.latitude;
             result.long = this.selectedFile.metaData.longitude;
             return result;
@@ -59,7 +59,7 @@ export class BackupDisplayMetadata implements OnChanges {
     }
 
     getSize(): string {
-        return "" + this.selectedFile.metaData.imageWidth + " x " + this.selectedFile.metaData.imageHeight;
+        return '' + this.selectedFile.metaData.imageWidth + ' x ' + this.selectedFile.metaData.imageHeight;
     }
 
     hasDuration(): boolean {
@@ -67,7 +67,7 @@ export class BackupDisplayMetadata implements OnChanges {
     }
 
     getDuration(): string {
-        return "" + this.selectedFile.metaData.duration + " seconds";
+        return '' + this.selectedFile.metaData.duration + ' seconds';
     }
 
     hasDate(): boolean {
@@ -75,6 +75,6 @@ export class BackupDisplayMetadata implements OnChanges {
     }
 
     getDate(): string {
-        return "" + this.selectedFile.metaData.date.toString().replace("T", " ");
+        return '' + this.selectedFile.metaData.date.toString().replace('T', ' ');
     }
 }

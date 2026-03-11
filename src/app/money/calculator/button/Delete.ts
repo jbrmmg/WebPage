@@ -1,6 +1,6 @@
-import {Base} from "./base/Base";
-import {IBase} from "./base/IBase";
-import {CalculatorService} from "../calculator-service";
+import {Base} from './base/Base';
+import {IBase} from './base/IBase';
+import {CalculatorService} from '../calculator-service';
 
 export class Delete extends Base implements IBase {
     constructor(service: CalculatorService) {
@@ -13,7 +13,7 @@ export class Delete extends Base implements IBase {
     }
 
     isLinkedKeyPress(keyText: string): boolean {
-        if(keyText === "Delete") {
+        if (keyText === 'Delete') {
             return true;
         }
 

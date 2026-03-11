@@ -1,6 +1,6 @@
-import {Component} from "@angular/core";
-import {SummaryGridData} from "./summary-grid-data";
-import {DecimalPipe, NgIf} from "@angular/common";
+import {Component} from '@angular/core';
+import {SummaryGridData} from './summary-grid-data';
+import {DecimalPipe, NgIf} from '@angular/common';
 
 @Component({
     selector: 'jbr-summary-grid-data-files',
@@ -14,7 +14,7 @@ import {DecimalPipe, NgIf} from "@angular/common";
 })
 export class SummaryGridDataFiles extends SummaryGridData {
     getText(): string {
-        return "";
+        return '';
     }
 
     hasValue(): boolean {
@@ -22,7 +22,7 @@ export class SummaryGridDataFiles extends SummaryGridData {
     }
 
     getFiles(): number {
-        if(this.source && this.source.fileCount > 0) {
+        if (this.source && this.source.fileCount > 0) {
             return this.source.fileCount;
         }
 

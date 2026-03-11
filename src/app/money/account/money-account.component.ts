@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnInit} from "@angular/core";
-import {ButtonsModule} from "ngx-bootstrap/buttons";
-import {NgClass, NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
-import {FormsModule} from "@angular/forms";
-import {MoneyService} from "../money.service";
-import {JbAccount} from "./jbAccount";
-import {TransactionFilter} from "../transaction/transactionFilter";
+import {Component, EventEmitter, Input, OnInit} from '@angular/core';
+import {ButtonsModule} from 'ngx-bootstrap/buttons';
+import {NgClass, NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {MoneyService} from '../money.service';
+import {JbAccount} from './jbAccount';
+import {TransactionFilter} from '../transaction/transactionFilter';
 
 class AccountOption {
     id: string;
@@ -29,7 +29,7 @@ class AccountOption {
     standalone: true
 })
 export class MoneyAccount implements OnInit {
-    columns: number = 4;
+    columns = 4;
     accounts: AccountOption[][] = [];
     errorMessage: string;
 
@@ -50,13 +50,13 @@ export class MoneyAccount implements OnInit {
                 this.accounts.push(row);
 
                 accounts.forEach(value => {
-                    let next: AccountOption = new AccountOption();
-                    let allowed: boolean = true;
+                    const next: AccountOption = new AccountOption();
+                    let allowed = true;
                     next.display = value.name;
-                    if(value.closed) {
-                        next.display += " (closed)";
+                    if (value.closed) {
+                        next.display += ' (closed)';
 
-                        if(!this.allowClosed) {
+                        if (!this.allowClosed) {
                             allowed = false;
                         }
                     }
@@ -64,32 +64,32 @@ export class MoneyAccount implements OnInit {
                     next.account = value;
                     next.selected = this.isAccountSelected(next);
 
-                    if(row.length == this.columns) {
+                    if (row.length === this.columns) {
                         row = [];
                         this.accounts.push(row);
                     }
 
-                    if(allowed) {
+                    if (allowed) {
                         row.push(next);
                     }
-                })
+                });
             },
             error: (response) => this.errorMessage = response,
             complete: () => {
-                console.log("Account Options Loaded")
+                console.log('Account Options Loaded');
             }
         });
     }
 
     isAccountSelected(item: AccountOption): boolean {
-        if(!this.filterMode) {
+        if (!this.filterMode) {
             return false;
         }
 
-        let result: boolean = false;
+        let result = false;
 
         this.filter.accounts.forEach(account => {
-            if(account.id == item.id) {
+            if (account.id === item.id) {
                 result = true;
             }
         });
@@ -98,17 +98,17 @@ export class MoneyAccount implements OnInit {
     }
 
     clickAccount(item: AccountOption) {
-        if(!this.filterMode) {
+        if (!this.filterMode) {
             this.selectEvent.emit(item.account);
             return;
         }
 
-        if(this.isAccountSelected(item)) {
+        if (this.isAccountSelected(item)) {
             item.selected = false;
-            const index = this.filter.accounts.findIndex(a => {return a.id == item.id});
+            const index = this.filter.accounts.findIndex(a => a.id === item.id);
 
-            if(index > -1) {
-                this.filter.accounts.splice(index,1);
+            if (index > -1) {
+                this.filter.accounts.splice(index, 1);
             }
         } else {
             item.selected = true;
@@ -116,7 +116,7 @@ export class MoneyAccount implements OnInit {
         }
 
         // Set the all selected flag if we have selected all accounts.
-        this.allSelected = (this.filter.accounts.length == this.accounts.length);
+        this.allSelected = (this.filter.accounts.length === this.accounts.length);
     }
 
     getAccountImage(item: AccountOption): string {

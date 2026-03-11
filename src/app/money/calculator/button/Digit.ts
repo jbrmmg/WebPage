@@ -1,5 +1,5 @@
-import {Base} from "./base/Base";
-import {CalculatorService} from "../calculator-service";
+import {Base} from './base/Base';
+import {CalculatorService} from '../calculator-service';
 
 export class Digit extends Base {
     private readonly value: number;

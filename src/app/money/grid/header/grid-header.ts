@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core";
-import {TransactionFilter} from "../../transaction/transactionFilter";
-import {HeaderType} from "./grid-header-type";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {TransactionFilter} from '../../transaction/transactionFilter';
+import {HeaderType} from './grid-header-type';
 
 export class FilterEvent {
     source: HeaderType;
@@ -14,7 +14,7 @@ export class FilterEvent {
 })
 export class GridHeader {
     @Input() header: string;
-    @Input() filter : TransactionFilter;
+    @Input() filter: TransactionFilter;
 
     @Output() filterChanged: EventEmitter<FilterEvent> = new EventEmitter();
 }

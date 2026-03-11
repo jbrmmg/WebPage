@@ -1,7 +1,7 @@
-import {Component} from "@angular/core";
-import {NgIf} from "@angular/common";
-import {FormsModule} from "@angular/forms";
-import {GridData} from "./grid-data";
+import {Component} from '@angular/core';
+import {NgIf} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {GridData} from './grid-data';
 
 @Component({
     selector: 'jbr-grid-data-select',

@@ -1,11 +1,11 @@
-import {Component, EventEmitter, OnInit, TemplateRef, Type} from "@angular/core";
-import {FilterEvent, GridHeader} from "./grid-header";
-import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
-import {StatementDate} from "../../statement/statementDate"
-import {HeaderType} from "./grid-header-type";
-import {PopupComponent} from "../../../standard/popup.component";
-import {GridFilterStatementDate} from "../filters/grid-filter-statement-date";
+import {Component, EventEmitter, OnInit, TemplateRef, Type} from '@angular/core';
+import {FilterEvent, GridHeader} from './grid-header';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import {StatementDate} from '../../statement/statementDate';
+import {HeaderType} from './grid-header-type';
+import {PopupComponent} from '../../../standard/popup.component';
+import {GridFilterStatementDate} from '../filters/grid-filter-statement-date';
 
 @Component({
     selector: 'jbr-grid-header-statement-date',
@@ -20,7 +20,7 @@ import {GridFilterStatementDate} from "../filters/grid-filter-statement-date";
 export class GridHeaderStatementDate extends GridHeader implements OnInit {
     modalRef: BsModalRef;
     content: Type<any>;
-    inputs: Record<string,unknown>;
+    inputs: Record<string, unknown>;
     okEvent: EventEmitter<StatementDate> = new EventEmitter();
 
     constructor(private modalService: BsModalService) {
@@ -39,11 +39,11 @@ export class GridHeaderStatementDate extends GridHeader implements OnInit {
     onClear() {
         this.modalRef.hide();
 
-        if(this.filter != null) {
+        if (this.filter != null) {
             this.filter.statementDate = null;
         }
 
-        let event: FilterEvent = new FilterEvent();
+        const event: FilterEvent = new FilterEvent();
         event.source = HeaderType.StatementDate;
         this.filterChanged.emit(event);
     }
@@ -53,14 +53,14 @@ export class GridHeaderStatementDate extends GridHeader implements OnInit {
     }
 
     onOK(statementDate: StatementDate) {
-        this.modalRef.hide()
+        this.modalRef.hide();
 
         // Set the filter and then exit.
-        if(this.filter != null) {
+        if (this.filter != null) {
             this.filter.statementDate = statementDate;
         }
 
-        let event: FilterEvent = new FilterEvent();
+        const event: FilterEvent = new FilterEvent();
         event.source = HeaderType.StatementDate;
         this.filterChanged.emit(event);
     }

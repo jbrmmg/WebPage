@@ -2,7 +2,7 @@
  * Equivalent of StatementIdDTO
  */
 
-import {IFinancialAmount, FinancialAmount} from "../transaction/financialAmount";
+import {IFinancialAmount, FinancialAmount} from '../transaction/financialAmount';
 
 /*
  * Equivalent of StatementDTO

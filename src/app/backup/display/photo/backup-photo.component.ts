@@ -1,8 +1,8 @@
-import {Component, EventEmitter, OnInit, Output} from "@angular/core";
-import {PrintSize, SelectedPrint} from "../../backup-selectedprint";
-import {BackupPrintService} from "../../backup-print-service";
-import {BackupDisplayService} from "../backup-display-service";
-import {NgForOf} from "@angular/common";
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {PrintSize, SelectedPrint} from '../../backup-selectedprint';
+import {BackupPrintService} from '../../backup-print-service';
+import {BackupDisplayService} from '../backup-display-service';
+import {NgForOf} from '@angular/common';
 
 @Component({
     selector: 'jbr-backup-photo',
@@ -39,18 +39,18 @@ export class BackupPhotoComponent implements OnInit {
     }
 
     displayText(name: string): string {
-        if(!name.includes(' ')) {
+        if (!name.includes(' ')) {
             return name;
         }
-        return name.substring(0,name.indexOf(' '));
+        return name.substring(0, name.indexOf(' '));
     }
 
     getBorderClass(opt: boolean): string {
-        if(this.sizePhoto.border == opt) {
-            return "btn btn-primary col-4 photo-btn-2";
+        if (this.sizePhoto.border === opt) {
+            return 'btn btn-primary col-4 photo-btn-2';
         }
 
-        return "btn btn-outline-primary col-4 photo-btn-2";
+        return 'btn btn-outline-primary col-4 photo-btn-2';
     }
 
     toggleBorder() {
@@ -58,11 +58,11 @@ export class BackupPhotoComponent implements OnInit {
     }
 
     getBlackAndWhiteClass(opt: boolean): string {
-        if(this.sizePhoto.blackWhite == opt) {
-            return "btn btn-primary col-4 photo-btn-2";
+        if (this.sizePhoto.blackWhite === opt) {
+            return 'btn btn-primary col-4 photo-btn-2';
         }
 
-        return "btn btn-outline-primary col-4 photo-btn-2";
+        return 'btn btn-outline-primary col-4 photo-btn-2';
     }
 
     toggleBlackAndWhite() {
@@ -70,7 +70,7 @@ export class BackupPhotoComponent implements OnInit {
     }
 
     imageUrl(): string {
-        if(this._backupPrintService.getSelectedPhoto() == null) {
+        if (this._backupPrintService.getSelectedPhoto() == null) {
             return null;
         }
 

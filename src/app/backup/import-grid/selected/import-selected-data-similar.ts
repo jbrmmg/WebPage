@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {IImportGridFileBase} from "../import-grid-file-base";
-import {NgForOf, NgIf} from "@angular/common";
+import {IImportGridFileBase} from '../import-grid-file-base';
+import {NgForOf, NgIf} from '@angular/common';
 
 @Component({
     selector: 'import-selected-data-similar',
@@ -24,56 +24,56 @@ export class ImportSelectedDataSimilar {
     @Input() importMd5: string;
 
     getSizeString(file: IImportGridFileBase) {
-        return file.size.toString().replaceAll(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return file.size.toString().replaceAll(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
 
     getNameClass(file: IImportGridFileBase): string {
-        if(file.filename && this.name) {
-            if(file.filename.toLowerCase().includes(this.name.toLowerCase())) {
-                return "";
+        if (file.filename && this.name) {
+            if (file.filename.toLowerCase().includes(this.name.toLowerCase())) {
+                return '';
             }
 
-            if(this.importName) {
-                if(file.filename.toLowerCase().includes(this.importName.toLowerCase())) {
-                    return "";
+            if (this.importName) {
+                if (file.filename.toLowerCase().includes(this.importName.toLowerCase())) {
+                    return '';
                 }
             }
         }
 
-        return "mismatch";
+        return 'mismatch';
     }
 
     getDateClass(file: IImportGridFileBase): string {
-        if(file.date && this.date && this.importDate) {
-            if(file.date.replaceAll("T"," ") != this.date && file.date.replaceAll("T"," ")  != this.importDate) {
-                return "mismatch";
+        if (file.date && this.date && this.importDate) {
+            if (file.date.replaceAll('T', ' ') !== this.date && file.date.replaceAll('T', ' ')  !== this.importDate) {
+                return 'mismatch';
             }
         }
 
-        return "";
+        return '';
     }
 
     getSizeClass(file: IImportGridFileBase): string {
-        let fileSize: string = file.size.toString().replaceAll(/\B(?=(\d{3})+(?!\d))/g, ",");
-        if(fileSize != this.size && fileSize != this.importSize) {
-            return "mismatch";
+        const fileSize: string = file.size.toString().replaceAll(/\B(?=(\d{3})+(?!\d))/g, ',');
+        if (fileSize !== this.size && fileSize !== this.importSize) {
+            return 'mismatch';
         }
 
-        return "";
+        return '';
     }
 
     getMd5Class(file: IImportGridFileBase): string {
-        if(file.md5) {
-            if(file.md5 != this.md5 && file.md5 != this.importMd5) {
-                return "md5 mismatch";
+        if (file.md5) {
+            if (file.md5 !== this.md5 && file.md5 !== this.importMd5) {
+                return 'md5 mismatch';
             }
         }
 
-        return "md5";
+        return 'md5';
     }
 
     getDate(file: IImportGridFileBase) {
-        return file.date.substring(0,10);
+        return file.date.substring(0, 10);
     }
 
     getTime(file: IImportGridFileBase) {

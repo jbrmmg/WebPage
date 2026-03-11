@@ -1,5 +1,5 @@
-import {Component, Input} from "@angular/core";
-import {ImportGridHeader} from "./import-grid-header";
+import {Component, Input} from '@angular/core';
+import {ImportGridHeader} from './import-grid-header';
 
 @Component({
     selector: 'jbr-import-grid-header-date',
@@ -10,9 +10,9 @@ import {ImportGridHeader} from "./import-grid-header";
 })
 
 export class ImportGridHeaderDate extends ImportGridHeader {
-    @Input() importValue: boolean = false;
+    @Input() importValue = false;
 
     getText(): string {
-        return this.importValue ? "Import Date" : "Date";
+        return this.importValue ? 'Import Date' : 'Date';
     }
 }

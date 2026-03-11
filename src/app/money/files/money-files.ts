@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnInit} from "@angular/core";
-import {MoneyService} from "../money.service";
-import {FileUpdate} from "./fileUpdate";
-import {IFile} from "./file";
-import {ButtonsModule} from "ngx-bootstrap/buttons";
-import {NgForOf} from "@angular/common";
-import {FormsModule} from "@angular/forms";
-import {MoneyFile} from "./money-file";
+import {Component, EventEmitter, Input, OnInit} from '@angular/core';
+import {MoneyService} from '../money.service';
+import {FileUpdate} from './fileUpdate';
+import {IFile} from './file';
+import {ButtonsModule} from 'ngx-bootstrap/buttons';
+import {NgForOf} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {MoneyFile} from './money-file';
 
 @Component({
     selector: 'jbr-money-files',
@@ -35,7 +35,7 @@ export class MoneyFiles implements OnInit {
     }
 
     ngOnInit(): void {
-        this.updateText = "not-update"
+        this.updateText = 'not-update';
 
         this._moneyService.getFiles().subscribe({
             next: (files) => {
@@ -45,10 +45,10 @@ export class MoneyFiles implements OnInit {
         });
     }
 
-    handleBeforeUnload(_event: BeforeUnloadEvent) : void {
+    handleBeforeUnload(_event: BeforeUnloadEvent): void {
         this.fileUpdateSource.removeEventListener('message', this.fileUpdate.bind(this));
         this.fileUpdateSource.close();
-        console.log("Cleanup before unload.");
+        console.log('Cleanup before unload.');
     }
 
     updateFileData() {
@@ -62,10 +62,10 @@ export class MoneyFiles implements OnInit {
         });
     }
 
-    fileUpdate(event : MessageEvent) : void {
-        let update: FileUpdate = JSON.parse(event.data);
+    fileUpdate(event: MessageEvent): void {
+        const update: FileUpdate = JSON.parse(event.data);
 
-        if(this.fileUpdateTime == null || this.fileUpdateTime < update.updateTime) {
+        if (this.fileUpdateTime == null || this.fileUpdateTime < update.updateTime) {
             this.fileUpdateTime = update.updateTime;
             this.updateFileData();
         }

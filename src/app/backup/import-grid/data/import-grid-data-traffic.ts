@@ -1,7 +1,7 @@
-import {NgForOf, NgIf} from "@angular/common";
-import {Component} from "@angular/core";
-import {ImportGridData} from "./import-grid-data";
-import {ImportGridTrafficLight, TrafficLightStatus, TrafficLightType} from "../traffic/import-grid-traffic-light";
+import {NgForOf, NgIf} from '@angular/common';
+import {Component} from '@angular/core';
+import {ImportGridData} from './import-grid-data';
+import {ImportGridTrafficLight, TrafficLightStatus, TrafficLightType} from '../traffic/import-grid-traffic-light';
 
 @Component({
     selector: 'jbr-import-grid-data-traffic',
@@ -15,11 +15,11 @@ import {ImportGridTrafficLight, TrafficLightStatus, TrafficLightType} from "../t
 })
 export class ImportGridDataTraffic extends ImportGridData {
     getText(): string {
-        return "";
+        return '';
     }
 
     displayStatus(): boolean {
-        if(this.file) {
+        if (this.file) {
             return this.file.visible;
         }
 
@@ -27,21 +27,21 @@ export class ImportGridDataTraffic extends ImportGridData {
     }
 
     statusClass(type: TrafficLightType): string {
-        let leftClass: string = "";
-        if(type == TrafficLightType.readPreImportFile) {
-            leftClass = "left ";
+        let leftClass = '';
+        if (type === TrafficLightType.readPreImportFile) {
+            leftClass = 'left ';
         }
 
-        switch (ImportGridTrafficLight.getTrafficLightStatus(this.file.source,type)) {
+        switch (ImportGridTrafficLight.getTrafficLightStatus(this.file.source, type)) {
             case TrafficLightStatus.Red:
-                return leftClass + "light red-light";
+                return leftClass + 'light red-light';
             case TrafficLightStatus.Amber:
-                return leftClass + "light amber-light";
+                return leftClass + 'light amber-light';
             case TrafficLightStatus.Green:
-                return leftClass + "light green-light";
+                return leftClass + 'light green-light';
         }
 
-        return leftClass + "light unknown-light";
+        return leftClass + 'light unknown-light';
     }
 
     getTitle(type: TrafficLightType): string {
@@ -49,10 +49,10 @@ export class ImportGridDataTraffic extends ImportGridData {
     }
 
     getStatusTypes(): TrafficLightType[] {
-        let result: TrafficLightType[] = [];
+        const result: TrafficLightType[] = [];
 
         Object.values(TrafficLightType).forEach(value => {
-            if(!Number.isNaN(Number(value))) {
+            if (!Number.isNaN(Number(value))) {
                 result.push(Number(value));
             }
         });

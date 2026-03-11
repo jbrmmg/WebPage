@@ -1,4 +1,4 @@
-import {ImportGridSummaryStepCount} from "./import-grid-summary-step-count";
+import {ImportGridSummaryStepCount} from './import-grid-summary-step-count';
 
 export class ImportGridSummaryCount {
     PreImport: number;
