@@ -44,7 +44,7 @@ export class GridFilterStatementDate implements OnInit {
     months: MonthOption[][] = [];
     @Input() okEvent: EventEmitter<StatementDate>;
 
-    constructor(private _moneyService: MoneyService) {
+    constructor(private readonly _moneyService: MoneyService) {
         let nextMonths: MonthOption[] = [];
         this.months.push(nextMonths);
         nextMonths.push(

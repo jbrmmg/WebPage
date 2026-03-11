@@ -23,7 +23,7 @@ export class GridHeaderDate extends GridHeader implements OnInit {
     clearEvent: EventEmitter<void> = new EventEmitter();
     okEvent: EventEmitter<void> = new EventEmitter();
 
-    constructor(private modalService: BsModalService ) {
+    constructor(private readonly modalService: BsModalService ) {
         super();
     }
 

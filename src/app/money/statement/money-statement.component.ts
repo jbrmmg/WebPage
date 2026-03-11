@@ -31,7 +31,7 @@ export class MoneyStatement implements OnInit {
     transactions: ITransactionReport[];
     balances: ITransactionReport[];
 
-    constructor(private _moneyService: MoneyService) {
+    constructor(private readonly _moneyService: MoneyService) {
     }
 
     ngOnInit(): void {
@@ -75,15 +75,15 @@ export class MoneyStatement implements OnInit {
     }
 
     isBlank(transaction: ITransactionReport, credit: boolean): boolean {
-        if (transaction.amount != null && transaction.amount.type === FinancialAmount.CREDIT && credit) {
+        if (transaction.amount?.type === FinancialAmount.CREDIT && credit) {
             return false;
         }
 
-        return !(transaction.amount != null && transaction.amount.type === FinancialAmount.DEBIT && !credit);
+        return !(transaction.amount?.type === FinancialAmount.DEBIT && !credit);
     }
 
     getCredit(transaction: ITransactionReport): number {
-        if (transaction.amount != null && transaction.amount.type === FinancialAmount.CREDIT) {
+        if (transaction.amount?.type === FinancialAmount.CREDIT) {
             return transaction.amount.value;
         }
 
@@ -91,7 +91,7 @@ export class MoneyStatement implements OnInit {
     }
 
     getDebit(transaction: ITransactionReport): number {
-        if (transaction.amount != null && transaction.amount.type === FinancialAmount.DEBIT) {
+        if (transaction.amount?.type === FinancialAmount.DEBIT) {
             return transaction.amount.value;
         }
 
@@ -149,7 +149,7 @@ export class MoneyStatement implements OnInit {
         let result = 0;
         if (this.transactions != null) {
             this.transactions.forEach(next => {
-                if (next.amount != null && next.amount.type === FinancialAmount.CREDIT) {
+                if (next.amount?.type === FinancialAmount.CREDIT) {
                     result = result + next.amount.value;
                 }
             });
@@ -163,7 +163,7 @@ export class MoneyStatement implements OnInit {
         let result = 0;
         if (this.transactions != null) {
             this.transactions.forEach(next => {
-                if (next.amount != null && next.amount.type === FinancialAmount.DEBIT) {
+                if (next.amount?.type === FinancialAmount.DEBIT) {
                     result = result + next.amount.value;
                 }
             });
@@ -175,13 +175,10 @@ export class MoneyStatement implements OnInit {
     getCloseBalance(): number {
         // Find the closing balance (use future balance if available, else today balance.).
         let result = 0;
-        const resultSet = false;
 
         if (this.balances != null) {
             this.balances.forEach(next => {
-                if (next.type === TransactionReport.FUTURE_BALANCE) {
-                    result = next.balance.value;
-                } else if (next.type === TransactionReport.TODAY_BALANCE && !resultSet) {
+                if (next.type === TransactionReport.FUTURE_BALANCE || next.type === TransactionReport.TODAY_BALANCE) {
                     result = next.balance.value;
                 }
             });

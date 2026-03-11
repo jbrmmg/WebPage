@@ -77,7 +77,7 @@ export class GridFilterAmount implements OnInit {
         }
 
         // Set up the range.
-        if (this.filter != null && this.filter.valueRange != null) {
+        if (this.filter?.valueRange != null) {
             this.fromAmount.valueUpdate(this.filter.valueRange.minimum);
             this.toAmount.valueUpdate(this.filter.valueRange.maximum);
         } else {

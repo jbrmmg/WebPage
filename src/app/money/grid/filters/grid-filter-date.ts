@@ -31,7 +31,7 @@ export class GridFilterDate implements OnInit {
         }
 
         // Set up the range.
-        if (this.filter != null && this.filter.valueRange != null) {
+        if (this.filter?.valueRange != null) {
             this.toValue = new Date(this.filter.dateRange.to + 'T00:00:00');
             this.fromValue = new Date(this.filter.dateRange.from + 'T00:00:00');
         }

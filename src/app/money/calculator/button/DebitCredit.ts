@@ -27,10 +27,8 @@ export class DebitCredit extends Base implements IBase {
             if (keyText === 'c' || keyText === 'C') {
                 return true;
             }
-        } else {
-            if (keyText === 'd' || keyText === 'D') {
-                return true;
-            }
+        } else if (keyText === 'd' || keyText === 'D') {
+            return true;
         }
 
         return super.isLinkedKeyPress(keyText);

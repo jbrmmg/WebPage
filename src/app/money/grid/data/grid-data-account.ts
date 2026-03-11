@@ -28,7 +28,7 @@ export class GridDataAccount extends GridData implements OnInit {
 
     selectEvent: EventEmitter<JbAccount>;
 
-    constructor(private modalService: BsModalService) {
+    constructor(private readonly modalService: BsModalService) {
         super();
     }
 
@@ -45,7 +45,7 @@ export class GridDataAccount extends GridData implements OnInit {
     }
 
     hasAccount(): boolean {
-        return this.transaction != null && this.transaction.account != null;
+        return this.transaction?.account != null;
     }
 
     getAccountImage(): string {
@@ -53,7 +53,7 @@ export class GridDataAccount extends GridData implements OnInit {
     }
 
     openModal(template: TemplateRef<any>) {
-        if (this.transaction != null && this.transaction.new) {
+        if (this.transaction?.new) {
             this.transaction.editing = TransactionEditType.None;
             this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
         }

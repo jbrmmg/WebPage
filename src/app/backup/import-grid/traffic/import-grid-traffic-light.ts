@@ -108,6 +108,4 @@ export class ImportGridTrafficLightFilter {
     green = true;
     unknown = true;
 
-    constructor() {
-    }
 }

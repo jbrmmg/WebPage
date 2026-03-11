@@ -29,7 +29,7 @@ export class GridDataCategory extends GridData implements OnInit {
     selectCategoryEvent: EventEmitter<Category>;
     selectTransferEvent: EventEmitter<JbAccount>;
 
-    constructor(private modalService: BsModalService) {
+    constructor(private readonly modalService: BsModalService) {
         super();
     }
 
@@ -60,7 +60,7 @@ export class GridDataCategory extends GridData implements OnInit {
             return '';
         }
 
-        if (this.transaction.category == null || this.transaction.category.name == null) {
+        if (this.transaction.category?.name == null) {
             return '(none)';
         }
 
@@ -68,7 +68,7 @@ export class GridDataCategory extends GridData implements OnInit {
     }
 
     getCategoryColour(): string {
-        if (this.transaction == null || this.transaction.category == null || this.transaction.category.colour == null) {
+        if (this.transaction == null || this.transaction.category?.colour == null) {
             return 'FFFFFF';
         }
 
@@ -81,7 +81,7 @@ export class GridDataCategory extends GridData implements OnInit {
 
     openModal(template: TemplateRef<any>) {
         // If the category is a system category, do not allow amendment.
-        if (this.transaction != null && this.transaction.category != null && this.transaction.category.systemUse) {
+        if (this.transaction?.category?.systemUse) {
             return;
         }
 

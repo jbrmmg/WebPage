@@ -40,7 +40,7 @@ export class GridDataAmount extends GridDataInlineEdit {
     }
 
     display(): string {
-        if (this.transaction == null || this.transaction.amount == null || this.transaction.amount.type !== this.type) {
+        if (this.transaction?.amount?.type !== this.type) {
             return '';
         }
 
@@ -52,7 +52,7 @@ export class GridDataAmount extends GridDataInlineEdit {
     }
 
     isBlank(): boolean {
-        return this.transaction == null || this.transaction.amount == null || this.transaction.amount.type !== this.type;
+        return this.transaction?.amount?.type !== this.type;
     }
 
     interpretInput(text: string): void {
@@ -72,16 +72,14 @@ export class GridDataAmount extends GridDataInlineEdit {
                 this.transaction.amount.type = 'DB';
                 event.source = HeaderType.Debit;
             }
+        } else if (number < 0) {
+            this.transaction.amount.value = number;
+            this.transaction.amount.type = 'DB';
+            event.source = HeaderType.Debit;
         } else {
-            if (number < 0) {
-                this.transaction.amount.value = number;
-                this.transaction.amount.type = 'DB';
-                event.source = HeaderType.Debit;
-            } else {
-                this.transaction.amount.value = number;
-                this.transaction.amount.type = 'CR';
-                event.source = HeaderType.Credit;
-            }
+            this.transaction.amount.value = number;
+            this.transaction.amount.type = 'CR';
+            event.source = HeaderType.Credit;
         }
 
         this.valueChanged.emit(event);
@@ -91,7 +89,7 @@ export class GridDataAmount extends GridDataInlineEdit {
         let text: string;
 
         text = '';
-        if (this.transaction != null && this.transaction.amount != null && this.transaction.amount.value !== 0) {
+        if (this.transaction?.amount != null && this.transaction.amount.value !== 0) {
             text = this.transaction.amount.value.toString();
             text = text.replace('-', '');
         }

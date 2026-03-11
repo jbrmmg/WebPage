@@ -100,11 +100,7 @@ export class GridFilterFlag implements OnInit {
                     }
 
                     row.forEach(col => {
-                        col.selected = false;
-
-                        if ((flagValue == null && col.flagValue == null) || flagValue === col.flagValue) {
-                            col.selected = true;
-                        }
+                        col.selected = (flagValue == null && col.flagValue == null) || flagValue === col.flagValue;
                     });
                 }
             });
@@ -122,12 +118,9 @@ export class GridFilterFlag implements OnInit {
         row.push(new FlagFilterOption(type, display + ' True', true));
         row.push(new FlagFilterOption(type, display + ' False', false));
         row.push(new FlagFilterOption(type, display + ' Unset', null));
-        row[0].otherRow.push(row[1]);
-        row[0].otherRow.push(row[2]);
-        row[1].otherRow.push(row[0]);
-        row[1].otherRow.push(row[2]);
-        row[2].otherRow.push(row[0]);
-        row[2].otherRow.push(row[1]);
+        row[0].otherRow.push(row[1], row[2]);
+        row[1].otherRow.push(row[0], row[2]);
+        row[2].otherRow.push(row[0], row[1]);
         this.flags.push(row);
     }
 

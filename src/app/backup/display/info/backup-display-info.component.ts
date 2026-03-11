@@ -26,7 +26,7 @@ export class BackupDisplayInfoComponent implements OnInit {
     minimumDate: Date;
 
     constructor(private readonly _backupDisplayService: BackupDisplayService,
-                private datePipe: DatePipe) {
+                private readonly datePipe: DatePipe) {
         this.initializeDate();
 
         this.minimumDate = new Date();

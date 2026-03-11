@@ -34,6 +34,6 @@ export class GridDataBalance extends GridData {
     }
 
     blank(): boolean {
-        return this.transaction != null && this.transaction.new;
+        return this.transaction?.new;
     }
 }

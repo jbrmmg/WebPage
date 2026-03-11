@@ -12,7 +12,7 @@ export class BackupLogComponent implements OnInit {
     logs: Log[];
 
     constructor(private readonly _backupLogService: BackupLogService,
-                private datePipe: DatePipe) {
+                private readonly datePipe: DatePipe) {
     }
 
     ngOnInit(): void {

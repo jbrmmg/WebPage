@@ -25,9 +25,9 @@ export class GridDataStatementDate extends GridData implements OnInit {
     inputs: Record<string, unknown>;
     lockEmitter: EventEmitter<void>;
 
-    constructor(protected _moneyService: MoneyService,
-                private modalService: BsModalService,
-                private datePipe: DatePipe) {
+    constructor(protected readonly _moneyService: MoneyService,
+                private readonly modalService: BsModalService,
+                private readonly datePipe: DatePipe) {
         super();
     }
 
@@ -52,7 +52,7 @@ export class GridDataStatementDate extends GridData implements OnInit {
     }
 
     openModal(template: TemplateRef<any>) {
-        if (this.transaction != null && this.transaction.statement != null) {
+        if (this.transaction?.statement != null) {
             this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
         }
     }

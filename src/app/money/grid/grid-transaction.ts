@@ -70,7 +70,7 @@ import {environment} from '../../../environments/environment.prod';
 })
 export class GridTransaction implements OnInit {
 
-    constructor(private _moneyService: MoneyService) {
+    constructor(private readonly _moneyService: MoneyService) {
     }
     protected readonly FlagType = FlagType;
     protected readonly HeaderType = HeaderType;
@@ -347,10 +347,8 @@ export class GridTransaction implements OnInit {
                     if (next.selected && next.modified) {
                         transactions.push(next);
                     }
-                } else {
-                    if (next.selected) {
-                        transactions.push(next);
-                    }
+                } else if (next.selected) {
+                    transactions.push(next);
                 }
             });
         } else {

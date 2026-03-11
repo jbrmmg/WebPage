@@ -136,7 +136,7 @@ export class ImportSelectedData {
             }
             this.date = '';
             if (file.source.date) {
-                this.date = file.source.date.replace('T', ' ');
+                this.date = file.source.date.replaceAll('T', ' ');
             }
             this.size = '';
             if (file.source.size) {
@@ -156,7 +156,7 @@ export class ImportSelectedData {
 
             this.importDate = '';
             if (file.source.importDate && file.source.importDate !== file.source.date) {
-                this.importDate = file.source.importDate.replace('T', ' ');
+                this.importDate = file.source.importDate.replaceAll('T', ' ');
             }
 
             this.importMd5 = '';

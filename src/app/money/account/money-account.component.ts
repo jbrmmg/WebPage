@@ -40,7 +40,7 @@ export class MoneyAccount implements OnInit {
 
     @Input() selectEvent: EventEmitter<JbAccount>;
 
-    constructor(private _moneyService: MoneyService) {
+    constructor(private readonly _moneyService: MoneyService) {
     }
 
     ngOnInit(): void {

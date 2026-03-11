@@ -38,10 +38,8 @@ export class CalculatorService {
         this.keySequence.forEach((k) => {
             if (k === '.') {
                 hasDecimal = true;
-            } else {
-                if (hasDecimal) {
-                    fractionDigitCount++;
-                }
+            } else if (hasDecimal) {
+                fractionDigitCount++;
             }
         });
 

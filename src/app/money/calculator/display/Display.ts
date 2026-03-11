@@ -1,7 +1,7 @@
 import {CalculatorService} from '../calculator-service';
 
 export class Display {
-    constructor(private _service: CalculatorService) {
+    constructor(private readonly _service: CalculatorService) {
         this._service.statusChange.subscribe(() => this.handleChange());
     }
 

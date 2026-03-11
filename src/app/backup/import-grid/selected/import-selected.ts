@@ -26,7 +26,7 @@ export class ImportSelected {
     @Output() actionEvent: EventEmitter<ImportSelectedAction> = new EventEmitter();
 
     selectionChangeMap(file: ImportGridFileDisplay) {
-        if (file && file.source && file.source.location) {
+        if (file?.source?.location) {
             this.map.move(file.source.location);
             return;
         }
@@ -40,7 +40,7 @@ export class ImportSelected {
     }
 
     selectionChangeImage(file: ImportGridFileDisplay) {
-        if (file && file.source) {
+        if (file?.source) {
             this.image.display(file);
             return;
         }
@@ -50,7 +50,7 @@ export class ImportSelected {
     }
 
     selectionChangeData(file: ImportGridFileDisplay) {
-        if (file && file.source) {
+        if (file?.source) {
             this.data.display(file);
             return;
         }

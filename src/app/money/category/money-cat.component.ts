@@ -39,7 +39,7 @@ export class MoneyCategory implements OnInit {
     @Input() selectCategoryEvent: EventEmitter<Category>;
     @Input() selectTransferEvent: EventEmitter<JbAccount>;
 
-    constructor(private _moneyService: MoneyService) {
+    constructor(private readonly _moneyService: MoneyService) {
     }
 
     ngOnInit(): void {

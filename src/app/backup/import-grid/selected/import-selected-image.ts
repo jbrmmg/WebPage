@@ -32,13 +32,13 @@ export class ImportSelectedImage {
     display(file: ImportGridFileDisplay) {
         console.log('image update');
 
-        if (file.source && file.source.imageSize && file.source.image) {
+        if (file.source?.imageSize && file.source.image) {
             this.imagePath = 'backup/import-image?name=' + file.source.filename;
             this.text = file.source.filename;
             this.image = true;
             this.video = false;
             return;
-        } else if (file.source && file.source.video) {
+        } else if (file.source?.video) {
             this.videoPath = 'backup/import-video?name=' + file.source.filename;
             this.text = file.source.filename;
             this.video = true;

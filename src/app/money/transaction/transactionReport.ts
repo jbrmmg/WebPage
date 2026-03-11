@@ -59,9 +59,6 @@ export class TransactionReport implements ITransactionReport {
     actionUnreconcile: boolean;
     actionDelete: boolean;
 
-    constructor() {
-    }
-
     public static get TRANSACTION(): string {return 'TRANSACTION'; }
     public static get OPEN_BALANCE(): string {return 'OPEN_BALANCE'; }
     public static get TODAY_BALANCE(): string {return 'TODAY_BALANCE'; }

@@ -25,7 +25,7 @@ export abstract class GridDataInlineEdit extends GridData {
     abstract canEdit(): boolean;
 
     isEditing(): boolean {
-        return this.transaction != null && this.transaction.editing === this.editType;
+        return this.transaction?.editing === this.editType;
     }
 
     onClick() {

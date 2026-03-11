@@ -69,7 +69,7 @@ export class ImportGrid implements OnInit {
     modalRef: BsModalRef;
 
     constructor(private readonly _importGridService: ImportGridService,
-                private modalService: BsModalService) {
+                private readonly modalService: BsModalService) {
         this.fileUpdateSource = _importGridService.fileUpdateSource();
         this.fileUpdateSource.addEventListener('message', this.fileUpdate.bind(this));
 
@@ -423,11 +423,9 @@ export class ImportGrid implements OnInit {
                     // If specified, then select this file.
                     this.selectRequestByName(this.afterRefresh);
                     this.afterRefresh = '';
-                } else {
+                } else if (this.data && this.data.length > 0) {
                     // Select the first.
-                    if (this.data && this.data.length > 0) {
-                        this.selectRequest(this.data[0]);
-                    }
+                    this.selectRequest(this.data[0]);
                 }
 
                 this.status = count + ' files loaded';
@@ -466,7 +464,7 @@ export class ImportGrid implements OnInit {
     }
 
     sortName(importType: boolean) {
-        this.data = this.data.sort((f1, f2) => {
+        this.data.sort((f1, f2) => {
             if (this.nameSorter(f1.source, importType) > this.nameSorter(f2.source, importType)) {
                 return this.sortUp ? 1 : -1;
             }
@@ -492,7 +490,7 @@ export class ImportGrid implements OnInit {
     }
 
     sortSize(importType: boolean) {
-        this.data = this.data.sort((f1, f2) => {
+        this.data.sort((f1, f2) => {
             if (this.sizeSorter(f1.source, importType) > this.sizeSorter(f2.source, importType)) {
                 return this.sortUp ? 1 : -1;
             }
@@ -518,7 +516,7 @@ export class ImportGrid implements OnInit {
     }
 
     sortStatus() {
-        this.data = this.data.sort((f1, f2) => {
+        this.data.sort((f1, f2) => {
             if (this.statusSorter(f1.source) > this.statusSorter(f2.source)) {
                 return this.sortUp ? 1 : -1;
             }
@@ -544,7 +542,7 @@ export class ImportGrid implements OnInit {
     }
 
     sortDate(importType: boolean) {
-        this.data = this.data.sort((f1, f2) => {
+        this.data.sort((f1, f2) => {
             if (this.dateSorter(f1.source, importType) > this.dateSorter(f2.source, importType)) {
                 return this.sortUp ? 1 : -1;
             }
@@ -572,7 +570,7 @@ export class ImportGrid implements OnInit {
     }
 
     sortMD5(importType: boolean) {
-        this.data = this.data.sort((f1, f2) => {
+        this.data.sort((f1, f2) => {
             if (this.md5Sorter(f1.source, importType) > this.md5Sorter(f2.source, importType)) {
                 return this.sortUp ? 1 : -1;
             }

@@ -174,7 +174,7 @@ export class GridDataActions extends GridData implements OnInit {
         console.log('Change: ' + event.transaction.description + ' ' + event.transaction.new + ' ' + event.source);
 
         // Is this a new transaction?
-        if (this.transaction != null && this.transaction.new) {
+        if (this.transaction?.new) {
             this.handleNewTransactionChange();
         } else {
             this.handleStandardTransactionChange();

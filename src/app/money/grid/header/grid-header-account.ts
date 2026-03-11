@@ -25,7 +25,7 @@ export class GridHeaderAccount extends GridHeader implements OnInit {
     content: Type<any>;
     inputs: Record<string, unknown>;
 
-    constructor(private modalService: BsModalService) {
+    constructor(private readonly modalService: BsModalService) {
         super();
     }
 

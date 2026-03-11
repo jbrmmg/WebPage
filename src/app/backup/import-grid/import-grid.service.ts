@@ -12,7 +12,7 @@ import {FileDestinationUpdate} from './import-grid-update-destination';
     providedIn: 'root'
 })
 export class ImportGridService {
-    constructor(private http: HttpClient) {
+    constructor(private readonly http: HttpClient) {
     }
 
     private static handleError(err: HttpErrorResponse) {

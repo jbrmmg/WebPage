@@ -21,7 +21,7 @@ export class BackupDisplayLabelComponent implements OnInit {
     allLabels: Label[];
 
     constructor(private readonly _backupDisplayService: BackupDisplayService,
-                private modalService: BsModalService) {
+                private readonly modalService: BsModalService) {
     }
 
     ngOnInit(): void {

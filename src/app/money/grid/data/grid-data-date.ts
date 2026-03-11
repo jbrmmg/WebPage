@@ -31,8 +31,8 @@ export class GridDataDate extends GridDataInlineEdit implements OnInit {
 
     dateValue: Date = new Date;
 
-    constructor(private modalService: BsModalService,
-                private datePipe: DatePipe) {
+    constructor(private readonly modalService: BsModalService,
+                private readonly datePipe: DatePipe) {
         super(TransactionEditType.Date);
     }
 

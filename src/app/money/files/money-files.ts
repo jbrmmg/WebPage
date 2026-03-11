@@ -28,7 +28,7 @@ export class MoneyFiles implements OnInit {
     errorMessage: string;
     @Input() selectFileEmitter: EventEmitter<IFile>;
 
-    constructor(private _moneyService: MoneyService) {
+    constructor(private readonly _moneyService: MoneyService) {
         this.fileUpdateSource = _moneyService.fileUpdateSource();
         this.fileUpdateSource.addEventListener('message', this.fileUpdate.bind(this));
         window.addEventListener('beforeunload', this.handleBeforeUnload.bind(this));
