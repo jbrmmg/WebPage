@@ -35,10 +35,10 @@ export interface ITransactionReport {
 }
 
 export class TransactionReport implements ITransactionReport {
-    new: boolean;
-    editing: TransactionEditType;
-    modified: boolean;
-    transferAccountId: string;
+    new: boolean = false;
+    editing: TransactionEditType = TransactionEditType.None;
+    modified: boolean = false;
+    transferAccountId: string = "";
     account: IAccount;
     amount: IFinancialAmount;
     balance: IFinancialAmount;
@@ -52,20 +52,14 @@ export class TransactionReport implements ITransactionReport {
     predicted: boolean;
     statement: IStatement;
     type: string;
-    selected: boolean;
-    selectable: boolean;
+    selected: boolean = false;
+    selectable: boolean = false;
     actionUpdate: boolean;
     actionReconcile: boolean;
     actionUnreconcile: boolean;
     actionDelete: boolean;
 
     constructor() {
-        this.new = false;
-        this.selected = false;
-        this.selectable = false;
-        this.editing = TransactionEditType.None;
-        this.modified = false;
-        this.transferAccountId = "";
     }
 
     public static get TRANSACTION():string {return "TRANSACTION"};

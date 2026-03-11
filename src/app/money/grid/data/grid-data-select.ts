@@ -27,9 +27,7 @@ export class GridDataSelect extends GridData {
     }
 
     select() {
-        if(this.transaction.selected == null) {
-            this.transaction.selected = false;
-        }
+        this.transaction.selected ??= false;
 
         this.transaction.selected = !this.transaction.selected;
     }

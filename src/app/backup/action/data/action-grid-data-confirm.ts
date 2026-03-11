@@ -14,7 +14,7 @@ export class ActionGridDataConfirm extends ActionGridData {
     @Output() confirm: EventEmitter<Action> = new EventEmitter<Action>();
 
     getText(): string {
-        if(this.action && this.action.confirmed) {
+        if(this.action?.confirmed) {
             return "" + this.action.confirmed;
         }
 

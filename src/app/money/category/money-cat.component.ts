@@ -57,7 +57,7 @@ export class MoneyCategory implements OnInit {
                     row.push(value);
                 })
             },
-            error: (response) => this.errorMessage = <any> response,
+            error: (response) => this.errorMessage = response,
             complete: () => {
                 console.log("Category Options Loaded")
             }
@@ -84,7 +84,7 @@ export class MoneyCategory implements OnInit {
                     }
                 })
             },
-            error: (response) => this.errorMessage = <any> response,
+            error: (response) => this.errorMessage = response,
             complete: () => {
                 console.log("Account Options Loaded")
             }
@@ -117,7 +117,6 @@ export class MoneyCategory implements OnInit {
         this.filter.categories.forEach(category => {
             if(item.id == category.id) {
                 result = true;
-                return;
             }
         })
 

@@ -14,7 +14,7 @@ import {LoadFileRequest} from "./files/loadFileRequest";
 import {TransactionFilter} from "./transaction/transactionFilter";
 import {ITransactionReport, TransactionReport} from "./transaction/transactionReport";
 import {ReconcileStatus} from "./reconciliation/reconcileStatus";
-import {IVersion, Version} from './money-version';
+import {IVersion} from './money-version';
 
 @Injectable({
     providedIn: 'root'
@@ -44,9 +44,9 @@ export class MoneyService {
     public static stringToDate(value: string): Date {
         let result : Date = new Date();
 
-        result.setFullYear(parseInt(value.substring(0,4)));
-        result.setMonth(parseInt(value.substring(5,7)));
-        result.setDate(parseInt(value.substring(8)));
+        result.setFullYear(Number.parseInt(value.substring(0,4)));
+        result.setMonth(Number.parseInt(value.substring(5,7)));
+        result.setDate(Number.parseInt(value.substring(8)));
         result.setHours(0);
         result.setMinutes(0);
         result.setSeconds(0);
@@ -69,7 +69,7 @@ export class MoneyService {
 
     public static getValidDateForMonth(text: string, month: number, year: number): number {
         let number = Number(text);
-        if(!isNaN(number)) {
+        if(!Number.isNaN(number)) {
             switch(month) {
                 case 1:
                 case 3:
@@ -125,12 +125,12 @@ export class MoneyService {
         }
 
         let year = Number(dateParts[0]);
-        if(isNaN(year)) {
+        if(Number.isNaN(year)) {
             return null;
         }
 
         let month = Number(dateParts[1]);
-        if(isNaN(month)) {
+        if(Number.isNaN(month)) {
             return null;
         }
 
@@ -188,7 +188,7 @@ export class MoneyService {
         // Is the value a number?
         let number = Number(text);
 
-        if(isNaN(number)) {
+        if(Number.isNaN(number)) {
             return 0;
         }
 
@@ -211,9 +211,9 @@ export class MoneyService {
     }
 
     static getBrightness(colour: string): number {
-        const red: number = parseInt(colour.substring(0, 2), 16);
-        const green: number = parseInt(colour.substring(2, 4), 16);
-        const blue: number = parseInt(colour.substring(4, 6), 16);
+        const red: number = Number.parseInt(colour.substring(0, 2), 16);
+        const green: number = Number.parseInt(colour.substring(2, 4), 16);
+        const blue: number = Number.parseInt(colour.substring(4, 6), 16);
 
         return Math.sqrt(red * red * .241 + green * green * .691 + blue * blue * .068);
     }

@@ -86,7 +86,7 @@ export class MoneyAddCalcComponent implements OnInit {
         button.buttonClicked();
 
         if(button.isExitButton()) {
-            this.valueEntered.emit(this.service.getValue * (this.service.isDebitValue ? -1.0 : 1.0));
+            this.valueEntered.emit(this.service.getValue * (this.service.isDebitValue ? -1 : 1));
         }
     }
 }

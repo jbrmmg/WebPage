@@ -67,7 +67,7 @@ export class GridHeaderFlag extends GridHeader implements OnInit {
             return false;
         }
 
-        return flag == true;
+        return flag;
     }
 
     setFilter(value: boolean) {
@@ -100,7 +100,7 @@ export class GridHeaderFlag extends GridHeader implements OnInit {
         // Change the value.
         if(this.unset()) {
             this.setFilter(true);
-        } else if(this.flagFilter() == true) {
+        } else if(this.flagFilter()) {
             this.setFilter(false);
         } else {
             this.setFilter(null);

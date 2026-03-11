@@ -40,7 +40,7 @@ export class BackupDisplayFiles {
     @Output() selectEvent: EventEmitter<HierarchyResponse> = new EventEmitter<HierarchyResponse>();
 
     displayFiles(): boolean {
-        return !!(this.fileList && this.fileList.length);
+        return !!(this.fileList?.length);
     }
 
     selectFile(file: HierarchyResponse): void {

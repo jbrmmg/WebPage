@@ -19,14 +19,14 @@ export class WelcomeService {
         request.what = text1;
         request.detail = text2;
 
-        this.http.post<void>('/podcast/reminder', request).subscribe(
-            (val) => {
+        this.http.post<void>('/podcast/reminder', request).subscribe({
+            next: (val) => {
                 console.log('POST call successful value returned in body', val);
             },
-            (response) => {
+            error: (response) => {
                 console.log('POST call in error', response);
             }
-        );
+        });
     }
 
     getVersion(): Observable<{version: string}> {

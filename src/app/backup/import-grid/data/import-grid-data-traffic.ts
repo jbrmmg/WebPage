@@ -52,7 +52,7 @@ export class ImportGridDataTraffic extends ImportGridData {
         let result: TrafficLightType[] = [];
 
         Object.values(TrafficLightType).forEach(value => {
-            if(!isNaN(Number(value))) {
+            if(!Number.isNaN(Number(value))) {
                 result.push(Number(value));
             }
         });

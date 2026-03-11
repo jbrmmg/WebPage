@@ -87,12 +87,12 @@ export class ImportGrid implements OnInit {
         this.filter = null;
     }
 
-    handleBeforeUnload(event: BeforeUnloadEvent): void {
+    handleBeforeUnload(_event: BeforeUnloadEvent): void {
         this.fileUpdateSource.removeEventListener('message', this.fileUpdate.bind(this));
         this.fileUpdateSource.close();
         this.summaryUpdateSource.removeEventListener('message', this.summaryUpdate.bind(this));
         this.summaryUpdateSource.close();
-        console.log('Cleanup before unload.' + event);
+        console.log('Cleanup before unload.');
     }
 
     updateFileDataBase(data: IImportGridFileBase, update: ImportGridFileBase) {
@@ -107,7 +107,7 @@ export class ImportGrid implements OnInit {
         }
 
         // Is this the selected file?
-        if (this.selectedFile && this.selectedFile.source && this.selectedFile.source.filename === data.filename) {
+        if (this.selectedFile?.source?.filename === data.filename) {
             this.selectRequestByName(data.filename);
         }
     }
@@ -228,13 +228,11 @@ export class ImportGrid implements OnInit {
             data.similarFiles.forEach(f => {
                   if (uf.filename === f.filename) {
                       found = true;
-                      return;
                   }
             });
 
             if (!found) {
                 added = true;
-                return;
             }
         });
         if (added) {
@@ -248,13 +246,11 @@ export class ImportGrid implements OnInit {
             update.similarFiles.forEach(uf => {
                 if (f.filename === uf.filename) {
                     found = true;
-                    return;
                 }
             });
 
             if (!found) {
                 removed = true;
-                return;
             }
         });
         if (removed) {
@@ -459,13 +455,11 @@ export class ImportGrid implements OnInit {
 
     nameSorter(name: ImportGridFile, importType: boolean): string {
         if (importType) {
-            if (name && name.importName) {
+            if (name?.importName) {
                 return name.importName.toLowerCase();
             }
-        } else {
-            if (name && name.filename) {
-                return name.filename.toLowerCase();
-            }
+        } else if (name?.filename) {
+            return name.filename.toLowerCase();
         }
 
         return '';
@@ -569,10 +563,8 @@ export class ImportGrid implements OnInit {
                 if (file.importMd5) {
                     return file.importMd5.toUpperCase();
                 }
-            } else {
-                if (file.md5) {
-                    return file.md5.toUpperCase();
-                }
+            } else if (file.md5) {
+                return file.md5.toUpperCase();
             }
         }
 
@@ -788,7 +780,6 @@ export class ImportGrid implements OnInit {
                     this.data.forEach(f => {
                         if (f.source.filename === update.filename) {
                             f.source.destination = update.destination;
-                            return;
                         }
                     });
 
@@ -808,7 +799,7 @@ export class ImportGrid implements OnInit {
                     return this.selectRequest(previous);
                 } else {
                     // No previous, return the last entry.
-                    this.selectRequest(this.data[this.data.length - 1]);
+                    this.selectRequest(this.data.at(-1));
                 }
             }
 

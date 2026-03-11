@@ -5,14 +5,13 @@ import {EventEmitter, Injectable, Output} from "@angular/core";
     providedIn: null
 })
 export class CalculatorService {
-    private debitValue: boolean;
+    private debitValue: boolean = true;
     private value: number;
     private memory: number;
     private currentOperator: OperatorType;
     private keySequence: string[];
 
     constructor() {
-        this.debitValue = true;
         this.clear();
     }
 
@@ -29,7 +28,7 @@ export class CalculatorService {
             return 0;
         }
 
-        return parseFloat(sequence);
+        return Number.parseFloat(sequence);
     }
 
     private get maxFractionReached(): boolean {
@@ -153,12 +152,12 @@ export class CalculatorService {
     }
 
     initialise(initialValue: number) {
-        if(initialValue === 0.0) {
+        if(initialValue === 0) {
             return;
         }
 
-        this.debitValue = initialValue < 0.0;
-        this.value = initialValue * (this.debitValue ? -1.0 : 1.0);
+        this.debitValue = initialValue < 0;
+        this.value = initialValue * (this.debitValue ? -1 : 1);
 
         this.statusChange.emit(null);
     }

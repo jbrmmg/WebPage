@@ -30,9 +30,7 @@ export class GridHeaderAccount extends GridHeader implements OnInit {
     }
 
     ngOnInit(): void {
-        if(this.filter.accounts == null) {
-            this.filter.accounts = [];
-        }
+        this.filter.accounts ??= [];
 
         // Set up the content
         this.content = MoneyAccount;

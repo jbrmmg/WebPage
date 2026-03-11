@@ -1,7 +1,7 @@
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
-module.exports = function (config) {
+module.exports = function karmaConfig(config) {
   config.set({
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
@@ -16,7 +16,7 @@ module.exports = function (config) {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, '../target/coverage'),
+      dir: require('node:path').join(__dirname, '../target/coverage'),
       reporters: [
         { type: 'html', subdir: '.' },
         { type: 'lcovonly', subdir: '.', file: 'lcov.info' }

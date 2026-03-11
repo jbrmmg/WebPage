@@ -28,7 +28,7 @@
                     (deleteFile)="deleteFile()"
                     (printFile)="selectPhotoMode()"
                     (refresh)="refreshData()"
-                    (zoom)="changeZoom($event)">
+                    (zoom)="$event ? zoomIn() : zoomOut()">
             </jbr-backup-display-title>
             <jbr-backup-display-media [selectedFile]="selectedFile" [mediaWidth]="zoom" (selectPhotoModeEvent)="selectPhotoMode()"></jbr-backup-display-media>
             <jbr-backup-display-metadata [selectedFile]="selectedFile"></jbr-backup-display-metadata>

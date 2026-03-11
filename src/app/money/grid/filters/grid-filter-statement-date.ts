@@ -47,20 +47,10 @@ export class GridFilterStatementDate implements OnInit {
     constructor(private _moneyService: MoneyService) {
         let nextMonths: MonthOption[] = [];
         this.months.push(nextMonths);
-        nextMonths.push(new MonthOption("Jan", 1));
-        nextMonths.push(new MonthOption("Feb", 2));
-        nextMonths.push(new MonthOption("Mar", 3));
-        nextMonths.push(new MonthOption("Apr", 4));
-        nextMonths.push(new MonthOption("May", 5));
-        nextMonths.push(new MonthOption("Jun", 6));
+        nextMonths.push(new MonthOption("Jan", 1), new MonthOption("Feb", 2), new MonthOption("Mar", 3), new MonthOption("Apr", 4), new MonthOption("May", 5), new MonthOption("Jun", 6));
         nextMonths = [];
         this.months.push(nextMonths);
-        nextMonths.push(new MonthOption("Jul", 7));
-        nextMonths.push(new MonthOption("Aug", 8));
-        nextMonths.push(new MonthOption("Sep", 9));
-        nextMonths.push(new MonthOption("Oct", 10));
-        nextMonths.push(new MonthOption("Nov", 11));
-        nextMonths.push(new MonthOption("Dec", 12));
+        nextMonths.push(new MonthOption("Jul", 7), new MonthOption("Aug", 8), new MonthOption("Sep", 9), new MonthOption("Oct", 10), new MonthOption("Nov", 11), new MonthOption("Dec", 12));
     }
 
     ngOnInit(): void {
@@ -74,7 +64,6 @@ export class GridFilterStatementDate implements OnInit {
                     this.years.forEach(year => {
                         if(value.year == year.year) {
                             add = false;
-                            return;
                         }
                     })
 
@@ -95,7 +84,7 @@ export class GridFilterStatementDate implements OnInit {
                     return -1;
                 })
             },
-            error: (response) => this.errorMessage = <any> response,
+            error: (response) => this.errorMessage = response,
             complete: () => {
                 console.log("Statement Options Loaded")
             }

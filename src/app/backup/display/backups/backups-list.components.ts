@@ -20,7 +20,7 @@ export class BackupDisplayBackupsComponent {
 
     @Input() selectedFile: FileInfoExtra;
 
-    constructor(private datePipe: DatePipe) {
+    constructor(private readonly datePipe: DatePipe) {
     }
 
     backupStatus(backup: FileInfo): string {

@@ -7,7 +7,7 @@ import {Component, EventEmitter, Output} from "@angular/core";
     styles: []
 })
 export abstract class ImportGridHeader {
-    @Output() fireSource: EventEmitter<String> = new EventEmitter();
+    @Output() fireSource: EventEmitter<string> = new EventEmitter();
 
     abstract getText(): string;
 

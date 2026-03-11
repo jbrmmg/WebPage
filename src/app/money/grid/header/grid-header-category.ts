@@ -27,9 +27,7 @@ export class GridHeaderCategory extends GridHeader implements OnInit {
     }
 
     ngOnInit(): void {
-        if(this.filter.categories == null) {
-            this.filter.categories = [];
-        }
+        this.filter.categories ??= [];
 
         // Set up the content
         this.content = MoneyCategory;

@@ -58,7 +58,7 @@ export class BackupSummaryGrid implements OnInit {
             },
             complete: () => {
                 // Sort the list.
-                this.summary.sources = this.summary.sources.sort(function (a, b): number {
+                this.summary.sources.sort(function (a, b): number {
                     if(a.fileCount != b.fileCount) {
                         if(a.fileCount < b.fileCount) {
                             return 1;

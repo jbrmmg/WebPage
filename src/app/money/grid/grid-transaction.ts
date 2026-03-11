@@ -71,18 +71,14 @@ import {environment} from "../../../environments/environment.prod";
 export class GridTransaction implements OnInit {
     protected readonly FlagType = FlagType;
     protected readonly HeaderType = HeaderType;
-    data : ITransactionReport[];
-    filter : TransactionFilter;
+    data: ITransactionReport[] = null;
+    filter: TransactionFilter = new TransactionFilter();
     newTransaction: TransactionReport = new TransactionReport();
-    status: string;
-    version: string;
+    status: string = 'ready';
+    version: string = '';
     @Output() gridDataChangeHandler: EventEmitter<any> = new EventEmitter();
 
     constructor(private _moneyService: MoneyService) {
-        this.data = null;
-        this.filter = new TransactionFilter();
-        this.status = "ready";
-        this.version = '';
     }
 
     ngOnInit(): void {
@@ -155,9 +151,7 @@ export class GridTransaction implements OnInit {
     static clearTransaction(transaction: ITransactionReport, filter : TransactionFilter) {
         transaction.new = true;
         transaction.type = TransactionReport.TRANSACTION;
-        if(transaction.date == null) {
-            transaction.date = MoneyService.getDateString(new Date());
-        }
+        transaction.date ??= MoneyService.getDateString(new Date());
         transaction.description = "";
         transaction.account = JbAccount.unknownAccount();
         transaction.fromReconciliation = false;
@@ -201,7 +195,7 @@ export class GridTransaction implements OnInit {
                 this.data.forEach(value => {
                     value.modified = false;
                     if(value.type == TransactionReport.TRANSACTION) {
-                        value.selectable = value.new != true;
+                        value.selectable = !value.new;
 
                         if(!value.new) {
                             if(value.amount.type == "DB") {
@@ -346,17 +340,14 @@ export class GridTransaction implements OnInit {
         if(event.transaction.selected) {
             // Pass all selected modified transactions
             this.data.forEach(next => {
-                switch (event.action) {
-                    case GridDataActionType.Update:
-                        if(next.selected && next.modified) {
-                            transactions.push(next);
-                        }
-                        break;
-                    default:
-                        if(next.selected) {
-                            transactions.push(next);
-                        }
-                        break;
+                if(event.action === GridDataActionType.Update) {
+                    if(next.selected && next.modified) {
+                        transactions.push(next);
+                    }
+                } else {
+                    if(next.selected) {
+                        transactions.push(next);
+                    }
                 }
             });
         } else {
@@ -420,11 +411,11 @@ export class GridTransaction implements OnInit {
 
         this._moneyService.loadFileRequest(file).subscribe({
             error: (response) => {
-                if(!environment.production) {
+                if(environment.production) {
+                    console.log("Failed to load file " + response);
+                } else {
                     // Treat as complete.
                     this.update();
-                } else {
-                    console.log("Failed to load file " + response);
                 }
             },
             complete: () => {

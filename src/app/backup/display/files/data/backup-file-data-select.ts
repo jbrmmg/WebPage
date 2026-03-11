@@ -13,7 +13,7 @@ export class BackupFileDataSelect extends BackupFileData {
     @Input() selectedFile: FileInfoExtra;
 
     isSelected(): boolean {
-        return this.file && this.selectedFile && this.file.id === this.selectedFile.file.id;
+        return !!(this.file && this.selectedFile?.file && this.file.id === this.selectedFile.file.id);
     }
 
     getSelected(): string {

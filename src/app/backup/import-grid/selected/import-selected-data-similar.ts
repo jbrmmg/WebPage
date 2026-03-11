@@ -24,7 +24,7 @@ export class ImportSelectedDataSimilar {
     @Input() importMd5: string;
 
     getSizeString(file: IImportGridFileBase) {
-        return file.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return file.size.toString().replaceAll(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
     getNameClass(file: IImportGridFileBase): string {
@@ -45,7 +45,7 @@ export class ImportSelectedDataSimilar {
 
     getDateClass(file: IImportGridFileBase): string {
         if(file.date && this.date && this.importDate) {
-            if(file.date.replace("T"," ") != this.date && file.date.replace("T"," ")  != this.importDate) {
+            if(file.date.replaceAll("T"," ") != this.date && file.date.replaceAll("T"," ")  != this.importDate) {
                 return "mismatch";
             }
         }
@@ -54,7 +54,7 @@ export class ImportSelectedDataSimilar {
     }
 
     getSizeClass(file: IImportGridFileBase): string {
-        let fileSize: string = file.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        let fileSize: string = file.size.toString().replaceAll(/\B(?=(\d{3})+(?!\d))/g, ",");
         if(fileSize != this.size && fileSize != this.importSize) {
             return "mismatch";
         }

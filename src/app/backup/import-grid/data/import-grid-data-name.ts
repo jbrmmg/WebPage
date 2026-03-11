@@ -12,15 +12,13 @@ export class ImportGridDataName extends ImportGridData {
     @Input() importValue: boolean = false;
 
     getText(): string {
-        if(this.file && this.file.source) {
+        if(this.file?.source) {
             if(this.importValue) {
                 if(this.file.source.importName) {
                     return this.file.source.importName;
                 }
-            } else {
-                if(this.file.source.filename) {
-                    return this.file.source.filename;
-                }
+            } else if(this.file.source.filename) {
+                return this.file.source.filename;
             }
         }
 

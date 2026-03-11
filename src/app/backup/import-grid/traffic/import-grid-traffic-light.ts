@@ -103,15 +103,11 @@ export class ImportGridTrafficLight {
 
 export class ImportGridTrafficLightFilter {
     type: TrafficLightType;
-    red: boolean;
-    amber: boolean;
-    green: boolean;
-    unknown: boolean;
+    red: boolean = true;
+    amber: boolean = true;
+    green: boolean = true;
+    unknown: boolean = true;
 
     constructor() {
-        this.red = true;
-        this.amber = true;
-        this.green = true;
-        this.unknown = true;
     }
 }

@@ -12,15 +12,13 @@ export class ImportGridDataSize extends ImportGridData {
     @Input() importValue: boolean = false;
 
     getText(): string {
-        if(this.file && this.file.source && this.file.source.size) {
+        if(this.file?.source?.size) {
             if(this.importValue) {
                 if(this.file.source.importSize) {
-                    return this.file.source.importSize.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    return this.file.source.importSize.toString().replaceAll(/\B(?=(\d{3})+(?!\d))/g, ",");
                 }
             } else {
-                if(this.file.source.size) {
-                    return this.file.source.size.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                }
+                return this.file.source.size.toString().replaceAll(/\B(?=(\d{3})+(?!\d))/g, ",");
             }
         }
 

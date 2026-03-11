@@ -74,7 +74,7 @@ export class MoneyAccount implements OnInit {
                     }
                 })
             },
-            error: (response) => this.errorMessage = <any> response,
+            error: (response) => this.errorMessage = response,
             complete: () => {
                 console.log("Account Options Loaded")
             }
@@ -91,7 +91,6 @@ export class MoneyAccount implements OnInit {
         this.filter.accounts.forEach(account => {
             if(account.id == item.id) {
                 result = true;
-                return;
             }
         });
 

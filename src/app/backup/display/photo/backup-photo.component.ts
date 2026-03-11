@@ -39,7 +39,7 @@ export class BackupPhotoComponent implements OnInit {
     }
 
     displayText(name: string): string {
-        if(name.indexOf(' ') < 0) {
+        if(!name.includes(' ')) {
             return name;
         }
         return name.substring(0,name.indexOf(' '));

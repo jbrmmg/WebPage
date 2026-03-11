@@ -9,7 +9,7 @@ import {ConfirmRequest} from "../backup-confirmrequest";
     providedIn: 'root'
 })
 export class BackupActionService {
-    constructor(private http: HttpClient) {
+    constructor(private readonly http: HttpClient) {
     }
 
     private static handleError(err: HttpErrorResponse) {

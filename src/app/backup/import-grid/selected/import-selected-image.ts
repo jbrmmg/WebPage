@@ -12,16 +12,13 @@ import {NgIf} from "@angular/common";
     styleUrls: ['./import-selected-image.css']
 })
 export class ImportSelectedImage {
-    imagePath: string;
+    imagePath: string = 'api/backup/NoEntry.jpg';
     text: string;
     videoPath: string;
-    image: boolean;
-    video: boolean;
+    image: boolean = true;
+    video: boolean = false;
 
     constructor() {
-        this.imagePath = "api/backup/NoEntry.jpg";
-        this.image = true;
-        this.video = false;
     }
 
     getImagePath(): string {

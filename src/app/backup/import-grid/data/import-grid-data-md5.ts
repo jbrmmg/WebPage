@@ -12,15 +12,13 @@ export class ImportGridDataMd5 extends ImportGridData {
     @Input() importValue: boolean = false;
 
     getText(): string {
-        if(this.file != null && this.file.source) {
+        if(this.file?.source) {
             if(this.importValue) {
                 if(this.file.source.importMd5) {
                     return this.file.source.importMd5;
                 }
-            } else {
-                if(this.file.source.md5) {
-                    return this.file.source.md5;
-                }
+            } else if(this.file.source.md5) {
+                return this.file.source.md5;
             }
         }
 

@@ -39,27 +39,20 @@ export class GridFilterFlag implements OnInit {
     flags: FlagFilterOption[][];
     @Input() filter: TransactionFilter;
     @Input() okEvent: EventEmitter<void>;
-    statementAge: number;
+    statementAge: number = null;
 
     constructor() {
-        this.statementAge = null;
         this.flags = [];
         this.addRow(null, 'All');
         this.addRow(FlagType.Locked, 'Locked');
         this.addRow(FlagType.Predicted, 'Predicted');
         this.addRow(FlagType.Reconciled, 'Reconciled');
 
-        this.flags[0][0].otherColumn.push(this.flags[1][0]);
-        this.flags[0][0].otherColumn.push(this.flags[2][0]);
-        this.flags[0][0].otherColumn.push(this.flags[3][0]);
+        this.flags[0][0].otherColumn.push(this.flags[1][0], this.flags[2][0], this.flags[3][0]);
 
-        this.flags[0][1].otherColumn.push(this.flags[1][1]);
-        this.flags[0][1].otherColumn.push(this.flags[2][1]);
-        this.flags[0][1].otherColumn.push(this.flags[3][1]);
+        this.flags[0][1].otherColumn.push(this.flags[1][1], this.flags[2][1], this.flags[3][1]);
 
-        this.flags[0][2].otherColumn.push(this.flags[1][2]);
-        this.flags[0][2].otherColumn.push(this.flags[2][2]);
-        this.flags[0][2].otherColumn.push(this.flags[3][2]);
+        this.flags[0][2].otherColumn.push(this.flags[1][2], this.flags[2][2], this.flags[3][2]);
     }
 
     isLockedEnabled(): boolean {
@@ -109,9 +102,7 @@ export class GridFilterFlag implements OnInit {
                     row.forEach(col => {
                         col.selected = false;
 
-                        if (flagValue == null && col.flagValue == null) {
-                            col.selected = true;
-                        } else if (flagValue === col.flagValue) {
+                        if ((flagValue == null && col.flagValue == null) || flagValue === col.flagValue) {
                             col.selected = true;
                         }
                     });
@@ -150,10 +141,10 @@ export class GridFilterFlag implements OnInit {
             return;
         }
 
-        if (this.statementAge != null) {
-            this.filter.statementAge = this.statementAge;
-        } else {
+        if (this.statementAge == null) {
             this.filter.statementAge = null;
+        } else {
+            this.filter.statementAge = this.statementAge;
         }
     }
 

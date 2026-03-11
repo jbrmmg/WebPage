@@ -59,7 +59,6 @@ export abstract class GridDataInlineEdit extends GridData {
         if(event.key === "Enter") {
             // Convert the text entered into a date.
             this.completeEdit();
-            return;
         }
     }
 }

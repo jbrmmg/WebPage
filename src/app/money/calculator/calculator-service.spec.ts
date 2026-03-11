@@ -128,7 +128,7 @@ describe('CalculatorService', () => {
 
         it('should do nothing when initialised with 0', () => {
             service.digit(3);
-            service.initialise(0.0);
+            service.initialise(0);
             expect(service.getValue).toBe(3);
         });
     });

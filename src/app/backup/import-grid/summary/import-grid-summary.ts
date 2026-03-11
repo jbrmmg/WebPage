@@ -63,7 +63,7 @@ export class ImportGridSummary {
     }
 
     getPreImportTotal(status: TrafficLightStatus): string {
-        if(this.summary && this.summary.PreImport && status == TrafficLightStatus.Green) {
+        if(this.summary?.PreImport && status == TrafficLightStatus.Green) {
             return "" + this.summary.PreImport;
         }
 
@@ -71,7 +71,7 @@ export class ImportGridSummary {
     }
 
     getImportTotal(status: TrafficLightStatus): string {
-        if(this.summary && this.summary.Import && status == TrafficLightStatus.Green) {
+        if(this.summary?.Import && status == TrafficLightStatus.Green) {
             return "" + this.summary.Import;
         }
 
@@ -79,7 +79,7 @@ export class ImportGridSummary {
     }
 
     getPostImportTotal(status: TrafficLightStatus): string {
-        if(this.summary && this.summary.PostImport && status == TrafficLightStatus.Green) {
+        if(this.summary?.PostImport && status == TrafficLightStatus.Green) {
             return "" + this.summary.PostImport;
         }
 
@@ -99,47 +99,47 @@ export class ImportGridSummary {
 
         switch (type) {
             case TrafficLightType.readPreImportFile:
-                if(this.summary && this.summary.readPreImportFile) {
+                if(this.summary?.readPreImportFile) {
                     count = this.summary.readPreImportFile;
                 }
                 break;
             case TrafficLightType.gatherMetaData:
-                if(this.summary && this.summary.gatherMetaData) {
+                if(this.summary?.gatherMetaData) {
                     count = this.summary.gatherMetaData;
                 }
                 break;
             case TrafficLightType.copyFileToImport:
-                if(this.summary && this.summary.copyFileToImport) {
+                if(this.summary?.copyFileToImport) {
                     count = this.summary.copyFileToImport;
                 }
                 break;
             case TrafficLightType.checkFileIgnored:
-                if(this.summary && this.summary.checkFileIgnored) {
+                if(this.summary?.checkFileIgnored) {
                     count = this.summary.checkFileIgnored;
                 }
                 break;
             case TrafficLightType.checkActivePhotoFile:
-                if(this.summary && this.summary.checkActivePhotoFile) {
+                if(this.summary?.checkActivePhotoFile) {
                     count = this.summary.checkActivePhotoFile;
                 }
                 break;
             case TrafficLightType.checkDuplicateFile:
-                if(this.summary && this.summary.checkDuplicateFile) {
+                if(this.summary?.checkDuplicateFile) {
                     count = this.summary.checkDuplicateFile;
                 }
                 break;
             case TrafficLightType.checkFileConfirmedImported:
-                if(this.summary && this.summary.checkFileConfirmedImported) {
+                if(this.summary?.checkFileConfirmedImported) {
                     count = this.summary.checkFileConfirmedImported;
                 }
                 break;
             case TrafficLightType.processImport:
-                if(this.summary && this.summary.processImport) {
+                if(this.summary?.processImport) {
                     count = this.summary.processImport;
                 }
                 break;
             case TrafficLightType.completed:
-                if(this.summary && this.summary.completed) {
+                if(this.summary?.completed) {
                     count = this.summary.completed;
                 }
         }
@@ -360,9 +360,7 @@ export class ImportGridSummary {
         } else if (oldFilter != null && this.listFilter == null) {
             changed = true;
         } else if (oldFilter != null && this.listFilter != null) {
-            if(oldFilter.type != this.listFilter.type) {
-                changed = true;
-            } else if (oldFilter.status != this.listFilter.status) {
+            if(oldFilter.type != this.listFilter.type || oldFilter.status != this.listFilter.status) {
                 changed = true;
             }
         }
@@ -377,7 +375,7 @@ export class ImportGridSummary {
         let result: number[] = [];
 
         for(let step in TrafficLightType) {
-            if(!isNaN(Number(step))) {
+            if(!Number.isNaN(Number(step))) {
                 result.push(Number(step));
             }
         }
@@ -389,7 +387,7 @@ export class ImportGridSummary {
         let result: number[] = [];
 
         for(let step in TrafficLightStatus) {
-            if(!isNaN(Number(step))) {
+            if(!Number.isNaN(Number(step))) {
                 result.unshift(Number(step));
             }
         }

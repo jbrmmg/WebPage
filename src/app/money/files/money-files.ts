@@ -23,13 +23,12 @@ import {MoneyFile} from "./money-file";
 export class MoneyFiles implements OnInit {
     updateText: string;
     fileUpdateSource: EventSource;
-    fileUpdateTime: Date;
+    fileUpdateTime: Date = null;
     files: IFile[];
     errorMessage: string;
     @Input() selectFileEmitter: EventEmitter<IFile>;
 
     constructor(private _moneyService: MoneyService) {
-        this.fileUpdateTime = null;
         this.fileUpdateSource = _moneyService.fileUpdateSource();
         this.fileUpdateSource.addEventListener('message', this.fileUpdate.bind(this));
         window.addEventListener('beforeunload', this.handleBeforeUnload.bind(this));
@@ -42,14 +41,14 @@ export class MoneyFiles implements OnInit {
             next: (files) => {
                 this.files = files;
             },
-            error: (response) => this.errorMessage = <any> response
+            error: (response) => this.errorMessage = response
         });
     }
 
-    handleBeforeUnload(event: BeforeUnloadEvent) : void {
+    handleBeforeUnload(_event: BeforeUnloadEvent) : void {
         this.fileUpdateSource.removeEventListener('message', this.fileUpdate.bind(this));
         this.fileUpdateSource.close();
-        console.log("Cleanup before unload." + event);
+        console.log("Cleanup before unload.");
     }
 
     updateFileData() {
@@ -59,7 +58,7 @@ export class MoneyFiles implements OnInit {
             next: (files) => {
                 this.files = files;
             },
-            error: (response) => this.errorMessage = <any> response
+            error: (response) => this.errorMessage = response
         });
     }
 

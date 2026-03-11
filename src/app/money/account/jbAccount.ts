@@ -13,7 +13,7 @@ export interface IAccount {
 export class JbAccount implements IAccount {
     selected: boolean;
     private static unknown: JbAccount;
-    public static unknownAccountId: string = "UNKN";
+    public static readonly unknownAccountId: string = "UNKN";
 
     constructor(public id: string,
                 public name: string,
@@ -23,9 +23,7 @@ export class JbAccount implements IAccount {
     }
 
     static unknownAccount(): JbAccount {
-        if(JbAccount.unknown == null) {
-            JbAccount.unknown = new JbAccount(JbAccount.unknownAccountId,"Unknown","","FFFFFF",false);
-        }
+        JbAccount.unknown ??= new JbAccount(JbAccount.unknownAccountId,"Unknown","","FFFFFF",false);
 
         return JbAccount.unknown;
     }

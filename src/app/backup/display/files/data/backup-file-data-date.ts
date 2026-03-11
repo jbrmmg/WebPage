@@ -10,7 +10,7 @@ import {BackupFileData} from "./backup-file-data";
 })
 export class BackupFileDataDate extends BackupFileData {
     getFileDateTime(): string {
-        if(this.file && this.file.dateTime) {
+        if(this.file?.dateTime) {
             return this.file.dateTime.toString().replace("T", " ");
         }
 

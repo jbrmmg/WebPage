@@ -24,7 +24,7 @@ class Amount {
             return;
         }
 
-        let tempValue = parseInt(display);
+        let tempValue = Number.parseInt(display);
 
         this.display = display;
         if(this.display.trim().length <= 0) {
@@ -32,7 +32,7 @@ class Amount {
             return;
         }
 
-        if(isNaN(tempValue)) {
+        if(Number.isNaN(tempValue)) {
             this.isValid = false;
             this.value = null;
             this.isNull = true;

@@ -21,7 +21,7 @@ export class BackupDisplayMetadata implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         if(changes.selectedFile) {
-            if(this.map && this.selectedFile && this.selectedFile.metaData && (this.selectedFile.metaData.longitude || this.selectedFile.metaData.latitude)) {
+            if(this.map && this.selectedFile?.metaData && (this.selectedFile.metaData.longitude || this.selectedFile.metaData.latitude)) {
                 let latLong: LatLong = new LatLong();
                 latLong.lat = this.selectedFile.metaData.latitude;
                 latLong.long = this.selectedFile.metaData.longitude;
@@ -44,7 +44,7 @@ export class BackupDisplayMetadata implements OnChanges {
     }
 
     getLatLong(): LatLong {
-        if(this.selectedFile.metaData && this.selectedFile.metaData.latitude && this.selectedFile.metaData.longitude) {
+        if(this.selectedFile.metaData?.latitude && this.selectedFile.metaData.longitude) {
             let result: LatLong = new LatLong();
             result.lat = this.selectedFile.metaData.latitude;
             result.long = this.selectedFile.metaData.longitude;
@@ -55,7 +55,7 @@ export class BackupDisplayMetadata implements OnChanges {
     }
 
     hasSize(): boolean {
-        return !!(this.selectedFile.metaData && (this.selectedFile.metaData.imageWidth || this.selectedFile.metaData.imageHeight));
+        return !!(this.selectedFile.metaData?.imageWidth || this.selectedFile.metaData?.imageHeight);
     }
 
     getSize(): string {
@@ -63,7 +63,7 @@ export class BackupDisplayMetadata implements OnChanges {
     }
 
     hasDuration(): boolean {
-        return !!(this.selectedFile.metaData && this.selectedFile.metaData.duration);
+        return !!(this.selectedFile.metaData?.duration);
     }
 
     getDuration(): string {
@@ -71,7 +71,7 @@ export class BackupDisplayMetadata implements OnChanges {
     }
 
     hasDate(): boolean {
-        return !!(this.selectedFile.metaData && this.selectedFile.metaData.date);
+        return !!(this.selectedFile.metaData?.date);
     }
 
     getDate(): string {

@@ -37,7 +37,7 @@ export class BackupDisplayInfoComponent implements OnInit {
     moveMap() {
         let latLong: LatLong = new LatLong();
 
-        if(this.metaData == null || this.metaData.latitude == null || this.metaData.longitude == null) {
+        if(this.metaData?.latitude == null || this.metaData.longitude == null) {
             latLong.lat = 51.60146388888889;
             latLong.long = -0.37789999999999996;
         } else {
