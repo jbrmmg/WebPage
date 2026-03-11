@@ -2,11 +2,10 @@
     <div class="row row-no-margin" *ngFor="let row of flags">
         <div class="col-4 btn-no-margin" *ngFor="let col of row">
             <div class="btn-padding">
-                <label [ngClass]="col.selected ? 'btn btn-success btn-flag' : 'btn btn-outline-primary btn-flag'"
-                       tabindex="0"
+                <button [ngClass]="col.selected ? 'btn btn-success btn-flag' : 'btn btn-outline-primary btn-flag'"
                        (click)="clickFlag(col)">
                     {{col.display}}
-                </label>
+                </button>
             </div>
         </div>
     </div>

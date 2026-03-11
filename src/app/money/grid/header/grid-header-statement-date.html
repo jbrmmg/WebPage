@@ -1,4 +1,4 @@
-<p (click)="openModal(templateStatementDate)">{{header}}</p>
+<p (click)="openModal(templateStatementDate)" (keydown.enter)="openModal(templateStatementDate)" tabindex="0">{{header}}</p>
 
 <ng-template #templateStatementDate>
     <jbr-popup [title]="'Select Statement Date'"

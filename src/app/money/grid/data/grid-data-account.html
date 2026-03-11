@@ -1,4 +1,4 @@
-<img src="{{getAccountImage()}}" alt="Selected Account" *ngIf="hasAccount()" (click)="openModal(templateAccountSelect)">
+<img src="{{getAccountImage()}}" alt="Selected Account" *ngIf="hasAccount()" (click)="openModal(templateAccountSelect)" (keydown.enter)="openModal(templateAccountSelect)" tabindex="0">
 
 <ng-template #templateAccountSelect>
     <jbr-popup [title]="'Select an Account'"

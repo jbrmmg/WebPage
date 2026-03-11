@@ -1,22 +1,20 @@
 <div class="row row-no-margin">
     <div class="col-2 btn-no-margin" *ngFor="let col of years">
         <div class="btn-padding">
-            <label [ngClass]="col.selected ? 'btn btn-success btn-action': 'btn btn-outline-primary btn-action'"
-                   tabindex="0"
+            <button [ngClass]="col.selected ? 'btn btn-success btn-action': 'btn btn-outline-primary btn-action'"
                    (click)="clickYear(col)">
                 {{col.display}}
-            </label>
+            </button>
         </div>
     </div>
 </div>
 <div class="row row-no-margin" *ngFor="let row of months">
     <div class="col-2 btn-no-margin" *ngFor="let col of row">
         <div class="btn-padding">
-            <label [ngClass]="col.selected ? 'btn btn-success btn-statement': 'btn btn-outline-primary btn-statement'"
-                   tabindex="0"
+            <button [ngClass]="col.selected ? 'btn btn-success btn-statement': 'btn btn-outline-primary btn-statement'"
                    (click)="clickMonth(col)">
                 {{col.display}}
-            </label>
+            </button>
         </div>
     </div>
 </div>
@@ -25,11 +23,10 @@
     </div>
     <div class="col-2 btn-no-margin">
         <div class="btn-padding">
-            <label class="btn btn-primary btn-statement"
-                   tabindex="0"
+            <button class="btn btn-primary btn-statement"
                    (click)="blank()">
                 No Statement
-            </label>
+            </button>
         </div>
     </div>
 </div>

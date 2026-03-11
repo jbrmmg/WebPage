@@ -1,8 +1,10 @@
 <div class="media" *ngIf="selectedFile.file.image || selectedFile.file.video">
     <div *ngIf="selectedFile.file.image">
-        <img src="{{imageUrl(selectedFile.file.id)}}" alt="{{imageALT()}}" title="{{imageALT()}} - click to request print" [style.width.%]="mediaWidth" (click)="selectPhotoMode()"/>
+        <img src="{{imageUrl(selectedFile.file.id)}}" alt="{{imageALT()}}" title="{{imageALT()}} - click to request print" [style.width.%]="mediaWidth" (click)="selectPhotoMode()" (keydown.enter)="selectPhotoMode()" tabindex="0"/>
     </div>
     <div *ngIf="selectedFile.file.video">
-        <video src="{{videoUrl(selectedFile.file.id)}}" title="{{imageALT()}}" [style.width.%]="mediaWidth" controls></video>
+        <video src="{{videoUrl(selectedFile.file.id)}}" title="{{imageALT()}}" [style.width.%]="mediaWidth" controls>
+            <track kind="captions" src="" label="Captions">
+        </video>
     </div>
 </div>

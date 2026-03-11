@@ -1,12 +1,18 @@
 <div class="row row-no-margin-or-pad">
     <div class="row row-no-margin-or-pad">
         <div class="col-9 col-no-pad">
-            <label [ngClass]="isLocked() ? 'btn btn-primary': 'btn btn-outline-primary'" (click)="lock()" [title]="isLocked() ? 'Locked' : 'Lock Statement'">
+            <button [ngClass]="isLocked() ? 'btn btn-primary': 'btn btn-outline-primary'" (click)="lock()" [title]="isLocked() ? 'Locked' : 'Lock Statement'">
                 <em class="fa fa-lock"></em>
-            </label>
+            </button>
         </div>
         <div class="col-3 col-no-pad">
             <table class="balances">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
                 <tbody>
                     <tr>
                         <td class="description">Opening Balance</td>
