@@ -9,7 +9,7 @@
     </div>
     <div class="body">
         <div class="row outer" *ngFor="let nextLabel of allLabels">
-            <div><p [ngClass]="nextLabel.selected ? 'label-format-option-selected': 'label-format-option'" (click)="select(nextLabel.id)" (keydown.enter)="select(nextLabel.id)" tabindex="0">{{nextLabel.name}}</p></div>
+            <div><p [ngClass]="nextLabel.selected ? 'label-format-option-selected': 'label-format-option'" (click)="select(nextLabel.id)" (keydown.enter)="select(nextLabel.id)">{{nextLabel.name}}</p></div>
         </div>
     </div>
 </ng-template>

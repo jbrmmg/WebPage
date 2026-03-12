@@ -1,9 +1,9 @@
 <div *ngIf="file.error == null || file.error == ''">
     <div class="row">
-        <div class="col-1 col-account-img" *ngIf="file.account != null" (click)="loadFile(file)" (keydown.enter)="loadFile(file)" tabindex="0">
+        <div class="col-1 col-account-img" *ngIf="file.account != null" (click)="loadFile(file)" (keydown.enter)="loadFile(file)">
             <img class="account-img" src="{{getAccountImage(file.account.id)}}" alt="Account"/>
         </div>
-        <div class="col-10 filename" (click)="loadFile(file)" (keydown.enter)="loadFile(file)" tabindex="0">
+        <div class="col-10 filename" (click)="loadFile(file)" (keydown.enter)="loadFile(file)">
             <a>{{file.filename}}</a>
         </div>
     </div>

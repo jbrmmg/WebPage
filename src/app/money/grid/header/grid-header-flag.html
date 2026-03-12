@@ -1,4 +1,4 @@
-<p (click)="openModal(templateFlagFilter)" (keydown.enter)="openModal(templateFlagFilter)" tabindex="0">{{header}}</p>
+<p (click)="openModal(templateFlagFilter)" (keydown.enter)="openModal(templateFlagFilter)">{{header}}</p>
 <input type="checkbox" [indeterminate]="unset()" [checked]="flagFilter()" (change)="changeValue()">
 
 <ng-template #templateFlagFilter>

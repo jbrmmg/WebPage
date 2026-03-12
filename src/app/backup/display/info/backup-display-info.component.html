@@ -16,8 +16,8 @@
             <p class="detail-md5 col-10">[{{selectedFile.file.md5}}]</p>
         </div>
         <div class="row detail-expiry-row">
-            <em class="fa fa-calendar detail-calendar-icon" title="Modify expiry date" (click)="editDate()" (keydown.enter)="editDate()" tabindex="0"></em>
-            <em class="fa fa-times detail-expiry-clear-icon" (click)="clearExpiry()" (keydown.enter)="clearExpiry()" tabindex="0" *ngIf="selectedFile.file.expiry != null && editDateEnable == false"></em>
+            <em class="fa fa-calendar detail-calendar-icon" title="Modify expiry date" (click)="editDate()" (keydown.enter)="editDate()"></em>
+            <em class="fa fa-times detail-expiry-clear-icon" (click)="clearExpiry()" (keydown.enter)="clearExpiry()" *ngIf="selectedFile.file.expiry != null && editDateEnable == false"></em>
             <p class="detail-expiry" *ngIf="selectedFile.file.expiry != null && editDateEnable == false">Expiry: {{formattedExpiryDate}}</p>
             <p class="detail-expiry" *ngIf="selectedFile.file.expiry == null && editDateEnable == false">File does not expire</p>
             <input *ngIf="editDateEnable == true"
