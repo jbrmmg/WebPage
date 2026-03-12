@@ -1,5 +1,5 @@
-<p class="fa fa-check" *ngIf="transaction.fromReconciliation" (click)="selectFile(templateSelectFile)" (keydown.enter)="selectFile(templateSelectFile)" tabindex="0"></p>
-<p class="" *ngIf="!transaction.fromReconciliation" (click)="selectFile(templateSelectFile)" (keydown.enter)="selectFile(templateSelectFile)" tabindex="0">&nbsp;</p>
+<p class="fa fa-check" *ngIf="transaction.fromReconciliation" (click)="selectFile(templateSelectFile)" (keydown.enter)="selectFile(templateSelectFile)"></p>
+<p class="" *ngIf="!transaction.fromReconciliation" (click)="selectFile(templateSelectFile)" (keydown.enter)="selectFile(templateSelectFile)">&nbsp;</p>
 
 <ng-template #templateSelectFile>
     <jbr-popup [title]="'Select a File'"

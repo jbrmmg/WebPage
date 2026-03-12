@@ -14,7 +14,6 @@
         <div class="row calc-row">
             <div class="{{nextColumn.className}}" *ngFor="let nextColumn of nextRow.columns">
                 <label class="{{nextColumn.buttonStyle}}"
-                       tabindex="0"
                        (click)="onClick(nextColumn)">
                     {{nextColumn.text}}
                 </label>

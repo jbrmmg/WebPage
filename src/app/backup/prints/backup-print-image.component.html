@@ -1,7 +1,7 @@
 <div class="outer-image" *ngIf="selectedPrint != null">
     <img class="photo-thumbnail" src="{{imageUrl()}}" alt="{{fileName()}}"/>
     <button class="btn btn-primary btn-unselect">
-        <em class="fa fa-close" (click)="unselectPrint()" (keydown.enter)="unselectPrint()" tabindex="0"></em>
+        <em class="fa fa-close" (click)="unselectPrint()" (keydown.enter)="unselectPrint()"></em>
     </button>
     <button class="size-information" (click)="selectSize()"><a>{{printInfo()}}</a></button>
 </div>
