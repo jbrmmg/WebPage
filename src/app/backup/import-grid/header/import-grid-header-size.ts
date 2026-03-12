@@ -1,5 +1,5 @@
-import {Component, Input} from "@angular/core";
-import {ImportGridHeader} from "./import-grid-header";
+import {Component, Input} from '@angular/core';
+import {ImportGridHeader} from './import-grid-header';
 
 @Component({
     selector: 'jbr-import-grid-header-size',
@@ -9,9 +9,9 @@ import {ImportGridHeader} from "./import-grid-header";
     standalone: true
 })
 export class ImportGridHeaderSize extends ImportGridHeader {
-    @Input() importValue: boolean = false;
+    @Input() importValue = false;
 
     getText(): string {
-        return this.importValue ? "Import Size" : "Size";
+        return this.importValue ? 'Import Size' : 'Size';
     }
 }

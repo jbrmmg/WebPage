@@ -1,11 +1,11 @@
-import {Component, EventEmitter, OnInit, TemplateRef, Type} from "@angular/core";
-import {FilterEvent, GridHeader} from "./grid-header";
-import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
-import {FormsModule} from "@angular/forms";
-import {HeaderType} from "./grid-header-type";
-import {PopupComponent} from "../../../standard/popup.component";
-import {GridFilterAmount} from "../filters/grid-filter-amount";
+import {Component, EventEmitter, OnInit, TemplateRef, Type} from '@angular/core';
+import {FilterEvent, GridHeader} from './grid-header';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import {FormsModule} from '@angular/forms';
+import {HeaderType} from './grid-header-type';
+import {PopupComponent} from '../../../standard/popup.component';
+import {GridFilterAmount} from '../filters/grid-filter-amount';
 
 @Component({
     selector: 'jbr-grid-header-amount',
@@ -21,11 +21,11 @@ import {GridFilterAmount} from "../filters/grid-filter-amount";
 export class GridHeaderAmount extends GridHeader implements OnInit {
     modalRef: BsModalRef;
     content: Type<any>;
-    inputs: Record<string,unknown>;
+    inputs: Record<string, unknown>;
     clearEvent: EventEmitter<void> = new EventEmitter();
     okEvent: EventEmitter<void> = new EventEmitter();
 
-    constructor(private modalService: BsModalService ) {
+    constructor(private readonly modalService: BsModalService ) {
         super();
     }
 
@@ -47,11 +47,11 @@ export class GridHeaderAmount extends GridHeader implements OnInit {
     onClear() {
         this.modalRef.hide();
 
-        if(this.filter != null) {
+        if (this.filter != null) {
             this.filter.valueRange = null;
         }
 
-        let event: FilterEvent = new FilterEvent();
+        const event: FilterEvent = new FilterEvent();
         event.source = HeaderType.Credit;
         this.filterChanged.emit(event);
     }
@@ -61,7 +61,7 @@ export class GridHeaderAmount extends GridHeader implements OnInit {
 
         this.okEvent.emit();
 
-        let event: FilterEvent = new FilterEvent();
+        const event: FilterEvent = new FilterEvent();
         event.source = HeaderType.Credit;
         this.filterChanged.emit(event);
     }

@@ -7,14 +7,14 @@ import {Category} from './category/category';
 import {JbAccount} from './account/jbAccount';
 import {IStatement, Statement} from './statement/statement';
 import {IFile} from './files/file';
-import {DeleteTransaction, ITransaction, Transaction} from "./transaction/transaction";
-import {LockRequest} from "./statement/lockRequest";
-import {ReconcileTransaction} from "./reconciliation/reconcileTransaction";
-import {LoadFileRequest} from "./files/loadFileRequest";
-import {TransactionFilter} from "./transaction/transactionFilter";
-import {ITransactionReport, TransactionReport} from "./transaction/transactionReport";
-import {ReconcileStatus} from "./reconciliation/reconcileStatus";
-import {IVersion, Version} from './money-version';
+import {DeleteTransaction, ITransaction, Transaction} from './transaction/transaction';
+import {LockRequest} from './statement/lockRequest';
+import {ReconcileTransaction} from './reconciliation/reconcileTransaction';
+import {LoadFileRequest} from './files/loadFileRequest';
+import {TransactionFilter} from './transaction/transactionFilter';
+import {ITransactionReport, TransactionReport} from './transaction/transactionReport';
+import {ReconcileStatus} from './reconciliation/reconcileStatus';
+import {IVersion} from './money-version';
 
 @Injectable({
     providedIn: 'root'
@@ -42,11 +42,11 @@ export class MoneyService {
     }
 
     public static stringToDate(value: string): Date {
-        let result : Date = new Date();
+        const result: Date = new Date();
 
-        result.setFullYear(parseInt(value.substring(0,4)));
-        result.setMonth(parseInt(value.substring(5,7)));
-        result.setDate(parseInt(value.substring(8)));
+        result.setFullYear(Number.parseInt(value.substring(0, 4), 10));
+        result.setMonth(Number.parseInt(value.substring(5, 7), 10));
+        result.setDate(Number.parseInt(value.substring(8), 10));
         result.setHours(0);
         result.setMinutes(0);
         result.setSeconds(0);
@@ -56,21 +56,21 @@ export class MoneyService {
     }
 
     public static transferCategory(): string {
-        return "TRF";
+        return 'TRF';
     }
 
     public static getAccountImage(id: string): string {
-        return environment.moneyAccountImage.replace("##id##", id)
+        return environment.moneyAccountImage.replace('##id##', id);
     }
 
-    public static getDateString(date: Date) : string {
+    public static getDateString(date: Date): string {
         return date.toISOString().split('T')[0];
     }
 
     public static getValidDateForMonth(text: string, month: number, year: number): number {
-        let number = Number(text);
-        if(!isNaN(number)) {
-            switch(month) {
+        const number = Number(text);
+        if (!Number.isNaN(number)) {
+            switch (month) {
                 case 1:
                 case 3:
                 case 5:
@@ -78,7 +78,7 @@ export class MoneyService {
                 case 8:
                 case 10:
                 case 12: {
-                    if(number >= 1 && number <= 31) {
+                    if (number >= 1 && number <= 31) {
                         return number;
                     }
                     break;
@@ -88,24 +88,24 @@ export class MoneyService {
                 case 6:
                 case 9:
                 case 11: {
-                    if(number >= 1 && number <= 30) {
+                    if (number >= 1 && number <= 30) {
                         return number;
                     }
                     break;
                 }
 
                 case 2: {
-                    if(number >= 1) {
+                    if (number >= 1) {
                         if (number <= 28) {
                             return number;
                         }
 
-                        if(number <= 29) {
-                            let divBy4: boolean = (year % 4) == 0;
-                            let divBy100: boolean = (year % 100) == 0;
-                            let divBy400: boolean = (year % 400) == 0;
+                        if (number <= 29) {
+                            const divBy4: boolean = (year % 4) === 0;
+                            const divBy100: boolean = (year % 100) === 0;
+                            const divBy400: boolean = (year % 400) === 0;
 
-                            if(divBy4 && !divBy100 && divBy400) {
+                            if (divBy4 && !divBy100 && divBy400) {
                                 return number;
                             }
                         }
@@ -118,63 +118,63 @@ export class MoneyService {
     }
 
     public static isStringADate(text: string): string {
-        let dateParts: string[] = text.split("-");
+        const dateParts: string[] = text.split('-');
 
-        if(dateParts.length != 3) {
+        if (dateParts.length !== 3) {
             return null;
         }
 
         let year = Number(dateParts[0]);
-        if(isNaN(year)) {
+        if (Number.isNaN(year)) {
             return null;
         }
 
-        let month = Number(dateParts[1]);
-        if(isNaN(month)) {
+        const month = Number(dateParts[1]);
+        if (Number.isNaN(month)) {
             return null;
         }
 
-        if(year < 100) {
+        if (year < 100) {
             year = year + 2000;
         }
 
-        if(year > 2070 || year < 2010) {
+        if (year > 2070 || year < 2010) {
             return null;
         }
 
-        if(month < 1 || month > 12) {
+        if (month < 1 || month > 12) {
             return null;
         }
 
-        let day = this.getValidDateForMonth(dateParts[2],month,year);
-        if(day == 0) {
+        const day = this.getValidDateForMonth(dateParts[2], month, year);
+        if (day === 0) {
             return null;
         }
 
-        let thisDate = new Date(year,month - 1,day);
+        const thisDate = new Date(year, month - 1, day);
 
         return this.dateToString(thisDate);
     }
 
-    public static getDate(text: string) : string {
+    public static getDate(text: string): string {
         // Setup today
-        let today = new Date();
+        const today = new Date();
 
         // If the text is blank, empty or a T then set the date to today.
-        if(text == null || text.toLowerCase() == "t" || text == "") {
+        if (text == null || text.toLowerCase() === 't' || text === '') {
             return this.getDateString(today);
         }
 
         // Is the value a number that can be interpreted as the day of the current month.
-        let day = this.getValidDateForMonth(text, today.getMonth() + 1, today.getFullYear());
-        if(day > 0) {
+        const day = this.getValidDateForMonth(text, today.getMonth() + 1, today.getFullYear());
+        if (day > 0) {
             today.setDate(day);
             return MoneyService.getDateString(today);
         }
 
         // Try to interpret the string as a date.
-        let dateString = this.isStringADate(text);
-        if(dateString != null) {
+        const dateString = this.isStringADate(text);
+        if (dateString != null) {
             return dateString;
         }
 
@@ -183,12 +183,12 @@ export class MoneyService {
 
     public static getFinanceValue(text: string): number {
         // Remove £ and , for the evaluation.
-        text = text.replace("£","").replace(",","");
+        text = text.replace('£', '').replace(',', '');
 
         // Is the value a number?
-        let number = Number(text);
+        const number = Number(text);
 
-        if(isNaN(number)) {
+        if (Number.isNaN(number)) {
             return 0;
         }
 
@@ -196,7 +196,7 @@ export class MoneyService {
     }
 
     public static getDisabledAccountImage(id: string): string {
-        return environment.moneyAccountDisabledImage.replace("##id##", id)
+        return environment.moneyAccountDisabledImage.replace('##id##', id);
     }
 
     private static handleError(err: HttpErrorResponse) {
@@ -211,39 +211,39 @@ export class MoneyService {
     }
 
     static getBrightness(colour: string): number {
-        const red: number = parseInt(colour.substring(0, 2), 16);
-        const green: number = parseInt(colour.substring(2, 4), 16);
-        const blue: number = parseInt(colour.substring(4, 6), 16);
+        const red: number = Number.parseInt(colour.substring(0, 2), 16);
+        const green: number = Number.parseInt(colour.substring(2, 4), 16);
+        const blue: number = Number.parseInt(colour.substring(4, 6), 16);
 
         return Math.sqrt(red * red * .241 + green * green * .691 + blue * blue * .068);
     }
 
     static getTransactionDescription(transaction: ITransactionReport): string {
-        if(transaction.type == TransactionReport.TRANSACTION) {
-            if(transaction.description == null || transaction.description.length == 0) {
-                return "&nbsp;";
+        if (transaction.type === TransactionReport.TRANSACTION) {
+            if (transaction.description == null || transaction.description.length === 0) {
+                return '&nbsp;';
             } else {
                 return transaction.description;
             }
         }
 
-        if(transaction.type == TransactionReport.OPEN_BALANCE) {
-            return "Opening Balance"
+        if (transaction.type === TransactionReport.OPEN_BALANCE) {
+            return 'Opening Balance';
         }
 
-        if(transaction.type == TransactionReport.TODAY_BALANCE) {
-            return "Balance Today"
+        if (transaction.type === TransactionReport.TODAY_BALANCE) {
+            return 'Balance Today';
         }
 
-        if(transaction.type == TransactionReport.FUTURE_BALANCE) {
-            return "Future Balance"
+        if (transaction.type === TransactionReport.FUTURE_BALANCE) {
+            return 'Future Balance';
         }
 
-        return "&nbsp;";
+        return '&nbsp;';
     }
 
     static getTextColor(colour: string) {
-        if(MoneyService.getBrightness(colour) > 130) {
+        if (MoneyService.getBrightness(colour) > 130) {
             return '000000';
         }
 
@@ -278,10 +278,10 @@ export class MoneyService {
         );
     }
 
-    getTransactions(filter: TransactionFilter) : Observable<ITransactionReport[]>  {
+    getTransactions(filter: TransactionFilter): Observable<ITransactionReport[]>  {
         console.log(JSON.stringify(filter));
 
-        return this.http.post<ITransactionReport[]>(environment.moneyTransactionList,filter).pipe(
+        return this.http.post<ITransactionReport[]>(environment.moneyTransactionList, filter).pipe(
             tap(data => console.log('All: ' + JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
@@ -319,7 +319,7 @@ export class MoneyService {
         reconcileRequest.transactions = [];
         transactions.forEach(value => {
             reconcileRequest.transactions.push(value.transactionId);
-        })
+        });
         reconcileRequest.reconcile = reconcile;
 
         return this.http.put<ReconcileStatus>(url, reconcileRequest);
@@ -327,14 +327,14 @@ export class MoneyService {
 
     deleteTransaction(transactions: ITransactionReport[]): Observable<Transaction> {
         // Create the request.
-        let request: DeleteTransaction[] = [];
+        const request: DeleteTransaction[] = [];
 
         transactions.forEach(value => {
-            let nextRequest: DeleteTransaction = new DeleteTransaction();
+            const nextRequest: DeleteTransaction = new DeleteTransaction();
             nextRequest.id = value.transactionId;
 
             request.push(nextRequest);
-        })
+        });
 
         // Delete the transactions.
         return this.http.delete<Transaction>(environment.moneyDeleteTransactionUrl, {
@@ -364,7 +364,7 @@ export class MoneyService {
         return this.http.delete<void>(environment.moneyClearDataUrl);
     }
 
-    fileUpdateSource() : EventSource {
+    fileUpdateSource(): EventSource {
         return new EventSource(environment.moneyFileUpdates);
     }
 

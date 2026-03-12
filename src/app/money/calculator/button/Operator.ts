@@ -1,7 +1,7 @@
-import {Base} from "./base/Base";
-import {IBase} from "./base/IBase";
-import {OperatorType} from "../enum/OperatorType";
-import {CalculatorService} from "../calculator-service";
+import {Base} from './base/Base';
+import {IBase} from './base/IBase';
+import {OperatorType} from '../enum/OperatorType';
+import {CalculatorService} from '../calculator-service';
 
 
 export class Operator extends Base implements IBase {
@@ -9,7 +9,7 @@ export class Operator extends Base implements IBase {
 
     constructor(operator: OperatorType,
                 service: CalculatorService) {
-        super(service,'col-3');
+        super(service, 'col-3');
         this.operator = operator;
 
         switch (operator) {

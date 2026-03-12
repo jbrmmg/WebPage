@@ -1,4 +1,4 @@
-import {Base} from "./base/Base";
+import {Base} from './base/Base';
 
 export class ButtonRow {
     columns: Array<Base> = [];

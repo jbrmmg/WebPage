@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {BackupFileData} from "./backup-file-data";
+import {Component} from '@angular/core';
+import {BackupFileData} from './backup-file-data';
 
 @Component({
     selector: 'jbr-backup-file-data-name',

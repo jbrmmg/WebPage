@@ -1,6 +1,6 @@
-import {Component, ElementRef, ViewChild} from "@angular/core";
-import {GridData} from "./grid-data";
-import {TransactionEditType} from "../../transaction/transactionEditType";
+import {Component, ElementRef, ViewChild} from '@angular/core';
+import {GridData} from './grid-data';
+import {TransactionEditType} from '../../transaction/transactionEditType';
 
 @Component({
     selector: '',
@@ -25,22 +25,22 @@ export abstract class GridDataInlineEdit extends GridData {
     abstract canEdit(): boolean;
 
     isEditing(): boolean {
-        return this.transaction != null && this.transaction.editing == this.editType;
+        return this.transaction?.editing === this.editType;
     }
 
     onClick() {
-        if(this.transaction != null && this.canEdit()) {
-            if(this.transaction.editing != this.editType) {
+        if (this.transaction != null && this.canEdit()) {
+            if (this.transaction.editing !== this.editType) {
                 this.transaction.editing = this.editType;
-                setTimeout(()=> {
+                setTimeout(() => {
                     this.inputElement.nativeElement.value = this.getValueForEdit();
                     this.inputElement.nativeElement.focus();
-                },0);
+                }, 0);
             }
             return;
         }
 
-        if(this.transaction != null) {
+        if (this.transaction != null) {
             this.transaction.editing = TransactionEditType.None;
         }
     }
@@ -51,15 +51,14 @@ export abstract class GridDataInlineEdit extends GridData {
     }
 
     onKeydown(event: any) {
-        if(event.key === "Escape") {
+        if (event.key === 'Escape') {
             this.transaction.editing = TransactionEditType.None;
             return;
         }
 
-        if(event.key === "Enter") {
+        if (event.key === 'Enter') {
             // Convert the text entered into a date.
             this.completeEdit();
-            return;
         }
     }
 }

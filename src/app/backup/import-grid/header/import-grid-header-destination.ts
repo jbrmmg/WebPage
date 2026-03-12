@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {ImportGridHeader} from "./import-grid-header";
+import {Component} from '@angular/core';
+import {ImportGridHeader} from './import-grid-header';
 
 @Component({
     selector: 'jbr-import-grid-header-destination',
@@ -10,6 +10,6 @@ import {ImportGridHeader} from "./import-grid-header";
 })
 export class ImportGridHeaderDestination extends ImportGridHeader {
     getText(): string {
-        return "Destination";
+        return 'Destination';
     }
 }

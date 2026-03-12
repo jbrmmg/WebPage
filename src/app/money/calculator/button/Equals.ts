@@ -1,6 +1,6 @@
-import {Base} from "./base/Base";
-import {IBase} from "./base/IBase";
-import {CalculatorService} from "../calculator-service";
+import {Base} from './base/Base';
+import {IBase} from './base/IBase';
+import {CalculatorService} from '../calculator-service';
 
 
 export class Equals extends Base implements IBase {
@@ -14,7 +14,7 @@ export class Equals extends Base implements IBase {
     }
 
     isLinkedKeyPress(keyText: string): boolean {
-        if(keyText === "Enter") {
+        if (keyText === 'Enter') {
             return true;
         }
 

@@ -19,7 +19,7 @@ export class ActionGridDataMedia extends ActionGridData {
     getDateText() {
         const dateString: string = '' + this.action.date;
 
-        if (this.action && this.action.date) {
+        if (this.action?.date) {
             return '' + dateString.replace('T', ' ');
         }
 
@@ -27,17 +27,17 @@ export class ActionGridDataMedia extends ActionGridData {
     }
 
     displaySize(): boolean {
-        return !!(this.action && this.action.size);
+        return !!(this.action?.size);
     }
 
     getSize() {
-        if (this.action && this.action.size) {
+        if (this.action?.size) {
             return this.action.size;
         }
     }
 
     getFileId(): number {
-        if (this.action && this.action.fileId) {
+        if (this.action?.fileId) {
             return this.action.fileId;
         }
 
@@ -45,7 +45,7 @@ export class ActionGridDataMedia extends ActionGridData {
     }
 
     isImage(): boolean {
-        if (this.action && this.action.isImage) {
+        if (this.action?.isImage) {
             return this.action.isImage;
         }
 
@@ -53,7 +53,7 @@ export class ActionGridDataMedia extends ActionGridData {
     }
 
     isVideo(): boolean {
-        if (this.action && this.action.isVideo) {
+        if (this.action?.isVideo) {
             return this.action.isVideo;
         }
 
@@ -61,7 +61,7 @@ export class ActionGridDataMedia extends ActionGridData {
     }
 
     getText(): string {
-        if (this.action && this.action.isImage) {
+        if (this.action?.isImage) {
             return '' + this.action.isImage;
         }
 

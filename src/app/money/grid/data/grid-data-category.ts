@@ -1,15 +1,15 @@
-import {Component, EventEmitter, OnInit, TemplateRef, Type} from "@angular/core";
-import {TransactionReport} from "../../transaction/transactionReport";
-import {MoneyService} from "../../money.service";
-import {MoneyCategory} from "../../category/money-cat.component";
-import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import {Category} from "../../category/category";
-import {GridData} from "./grid-data";
-import {TransactionEditType} from "../../transaction/transactionEditType";
-import {GridDataEvent} from "./grid-data-event";
-import {HeaderType} from "../header/grid-header-type";
-import {PopupComponent} from "../../../standard/popup.component";
-import {JbAccount} from "../../account/jbAccount";
+import {Component, EventEmitter, OnInit, TemplateRef, Type} from '@angular/core';
+import {TransactionReport} from '../../transaction/transactionReport';
+import {MoneyService} from '../../money.service';
+import {MoneyCategory} from '../../category/money-cat.component';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import {Category} from '../../category/category';
+import {GridData} from './grid-data';
+import {TransactionEditType} from '../../transaction/transactionEditType';
+import {GridDataEvent} from './grid-data-event';
+import {HeaderType} from '../header/grid-header-type';
+import {PopupComponent} from '../../../standard/popup.component';
+import {JbAccount} from '../../account/jbAccount';
 
 @Component({
     selector: 'jbr-grid-data-category',
@@ -24,12 +24,12 @@ export class GridDataCategory extends GridData implements OnInit {
     modalRef: BsModalRef;
 
     content: Type<any>;
-    inputs: Record<string,unknown>;
+    inputs: Record<string, unknown>;
 
     selectCategoryEvent: EventEmitter<Category>;
-    selectTransferEvent: EventEmitter<JbAccount>
+    selectTransferEvent: EventEmitter<JbAccount>;
 
-    constructor(private modalService: BsModalService) {
+    constructor(private readonly modalService: BsModalService) {
         super();
     }
 
@@ -52,24 +52,24 @@ export class GridDataCategory extends GridData implements OnInit {
     }
 
     getCategoryName(): string {
-        if(this.transaction == null) {
-            return "";
+        if (this.transaction == null) {
+            return '';
         }
 
-        if(this.transaction.type != TransactionReport.TRANSACTION) {
-            return "";
+        if (this.transaction.type !== TransactionReport.TRANSACTION) {
+            return '';
         }
 
-        if(this.transaction.category == null || this.transaction.category.name == null) {
-            return "(none)";
+        if (this.transaction.category?.name == null) {
+            return '(none)';
         }
 
         return this.transaction.category.name;
     }
 
     getCategoryColour(): string {
-        if(this.transaction == null || this.transaction.category == null || this.transaction.category.colour == null) {
-            return "FFFFFF";
+        if (this.transaction == null || this.transaction.category?.colour == null) {
+            return 'FFFFFF';
         }
 
         return this.transaction.category.colour;
@@ -81,12 +81,12 @@ export class GridDataCategory extends GridData implements OnInit {
 
     openModal(template: TemplateRef<any>) {
         // If the category is a system category, do not allow amendment.
-        if(this.transaction != null && this.transaction.category != null && this.transaction.category.systemUse) {
+        if (this.transaction?.category?.systemUse) {
             return;
         }
 
         // Stop the editing of other transactions.
-        if(this.transaction != null && this.transaction.editing != TransactionEditType.None) {
+        if (this.transaction != null && this.transaction.editing !== TransactionEditType.None) {
             this.transaction.editing = TransactionEditType.None;
         }
         this.modalRef = this.modalService.show(template, {class: 'modal-lg'});
@@ -102,7 +102,7 @@ export class GridDataCategory extends GridData implements OnInit {
         this.transaction.category = category;
         this.transaction.modified = true;
 
-        let event: GridDataEvent = new GridDataEvent();
+        const event: GridDataEvent = new GridDataEvent();
         event.transaction = this.transaction;
         event.source = HeaderType.Category;
         this.valueChanged.emit(event);
@@ -112,11 +112,11 @@ export class GridDataCategory extends GridData implements OnInit {
         this.modalRef.hide();
 
         // Account transfer
-        this.transaction.category = new Category("TRF", "Transfer (" + account.id + ")", 0, false, "FFFFFF", account.id, false, false);
+        this.transaction.category = new Category('TRF', 'Transfer (' + account.id + ')', 0, false, 'FFFFFF', account.id, false, false);
         this.transaction.modified = true;
         this.transaction.transferAccountId = account.id;
 
-        let event: GridDataEvent = new GridDataEvent();
+        const event: GridDataEvent = new GridDataEvent();
         event.transaction = this.transaction;
         event.source = HeaderType.Category;
         this.valueChanged.emit(event);

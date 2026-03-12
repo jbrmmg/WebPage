@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from "@angular/core";
-import {PrintSize, SelectedPrint} from "../backup-selectedprint";
-import {BackupPrintService} from "../backup-print-service";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {PrintSize, SelectedPrint} from '../backup-selectedprint';
+import {BackupPrintService} from '../backup-print-service';
 
 @Component({
     selector: 'jbr-backup-print-size-selector',
@@ -22,13 +22,13 @@ export class BackupPrintSizeSelectComponent implements OnInit {
     }
 
     isSelected(sizeName: string): string {
-        if(this.selectedPrint != null) {
-            if(this.selectedPrint.sizeName == sizeName) {
-                return "selected";
+        if (this.selectedPrint != null) {
+            if (this.selectedPrint.sizeName === sizeName) {
+                return 'selected';
             }
         }
 
-        return "";
+        return '';
     }
 
     ngOnInit(): void {
@@ -44,12 +44,12 @@ export class BackupPrintSizeSelectComponent implements OnInit {
             sizes.forEach(nextSize => {
                 this.sizes.push(nextSize);
 
-                // If no size is set then choose the size that starts "6x4".
-                if((this.selectedSizeName == null) && (this.selectedSizeId == null)) {
-                    if(nextSize.name.startsWith("6x4 in")) {
+                // If no size is set then choose the size that starts '6x4'.
+                if ((this.selectedSizeName == null) && (this.selectedSizeId == null)) {
+                    if (nextSize.name.startsWith('6x4 in')) {
                         this.selectedSizeId = nextSize.id;
                         this.selectedSizeName = nextSize.name;
-                        if(this.selectedPrint != null) {
+                        if (this.selectedPrint != null) {
                             this.selectedPrint.sizeName = this.selectedSizeName;
                         }
                     }
@@ -67,16 +67,16 @@ export class BackupPrintSizeSelectComponent implements OnInit {
         this.selectedSizeName = size;
 
         this.sizes.forEach(nextSize => {
-            if(nextSize.name == size) {
+            if (nextSize.name === size) {
                 this.selectedSizeId = nextSize.id;
             }
-        })
+        });
 
-        console.log("Size selected " + this.selectedSizeName + " " + this.selectedSizeId);
+        console.log('Size selected ' + this.selectedSizeName + ' ' + this.selectedSizeId);
     }
 
     selectSizeAndStyle() {
-        let selection: SelectedPrint = new SelectedPrint();
+        const selection: SelectedPrint = new SelectedPrint();
 
         selection.fileId = this.selectedPrint.fileId;
         selection.sizeId = this.selectedSizeId;

@@ -1,4 +1,4 @@
-<p (click)="openModal(templateCategoryFilter)">{{header}}</p>
+<p (click)="openModal(templateCategoryFilter)" (keydown.enter)="openModal(templateCategoryFilter)" tabindex="0">{{header}}</p>
 
 <ng-template #templateCategoryFilter>
     <jbr-popup [title]="'Select Categories'"

@@ -1,6 +1,6 @@
-import {Component} from "@angular/core";
-import {SummaryGridData} from "./summary-grid-data";
-import {NgIf} from "@angular/common";
+import {Component} from '@angular/core';
+import {SummaryGridData} from './summary-grid-data';
+import {NgIf} from '@angular/common';
 
 @Component({
     selector: 'jbr-summary-grid-data-destination',
@@ -13,21 +13,20 @@ import {NgIf} from "@angular/common";
 })
 export class SummaryGridDataDestination extends SummaryGridData {
     getText(): string {
-        if(this.source && this.source.destinationId) {
-            let result: string = "";
+        if (this.source?.destinationId) {
+            let result = '';
             this.summary.sources.forEach(b => {
-                if(b.destinationId == this.source.destinationId) {
+                if (b.destinationId === this.source.destinationId) {
                     result = b.path;
-                    return;
                 }
             });
             return result;
         }
 
-        return "";
+        return '';
     }
 
     hasValue() {
-        return this.source && this.source.destinationId;
+        return this.source?.destinationId;
     }
 }

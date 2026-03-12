@@ -13,7 +13,7 @@ export class ActionGridDataName extends ActionGridData {
     @Output() fileSelected: EventEmitter<number> = new EventEmitter<number>();
 
     getText(): string {
-        if (this.action && this.action.fileName) {
+        if (this.action?.fileName) {
             return this.action.fileName;
         }
 
@@ -21,7 +21,7 @@ export class ActionGridDataName extends ActionGridData {
     }
 
     getActionName(): string {
-        if (this.action && this.action.action) {
+        if (this.action?.action) {
             return this.action.action;
         }
 

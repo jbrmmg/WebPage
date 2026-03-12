@@ -1,5 +1,5 @@
-import {Component, Input} from "@angular/core";
-import {ImportGridFileDisplay} from "../import-grid-file-display";
+import {Component, Input} from '@angular/core';
+import {ImportGridFileDisplay} from '../import-grid-file-display';
 
 @Component({
     selector: '',

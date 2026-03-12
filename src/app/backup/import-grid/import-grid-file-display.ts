@@ -1,4 +1,4 @@
-import {ImportGridFile} from "./import-grid-file";
+import {ImportGridFile} from './import-grid-file';
 
 export class ImportGridFileDisplay {
     id: number;
@@ -24,18 +24,18 @@ export class ImportGridFileDisplay {
     }
 
     sizeDiff() {
-        return this.source && this.source.size && this.source.importSize && this.source.size != this.source.importSize;
+        return this.source?.size && this.source.importSize && this.source.size !== this.source.importSize;
     }
 
     nameDiff() {
-        return this.source && this.source.filename && this.source.importName && this.source.filename != this.source.importName;
+        return this.source?.filename && this.source.importName && this.source.filename !== this.source.importName;
     }
 
     dateDiff() {
-        return this.source && this.source.date && this.source.importDate && this.source.date != this.source.importDate;
+        return this.source?.date && this.source.importDate && this.source.date !== this.source.importDate;
     }
 
     md5Diff() {
-        return this.source && this.source.md5 && this.source.importMd5 && this.source.md5 != this.source.importMd5;
+        return this.source?.md5 && this.source.importMd5 && this.source.md5 !== this.source.importMd5;
     }
 }

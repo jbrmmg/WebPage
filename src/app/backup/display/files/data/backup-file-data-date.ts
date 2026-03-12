@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {BackupFileData} from "./backup-file-data";
+import {Component} from '@angular/core';
+import {BackupFileData} from './backup-file-data';
 
 @Component({
     selector: 'jbr-backup-file-data-date',
@@ -10,8 +10,8 @@ import {BackupFileData} from "./backup-file-data";
 })
 export class BackupFileDataDate extends BackupFileData {
     getFileDateTime(): string {
-        if(this.file && this.file.dateTime) {
-            return this.file.dateTime.toString().replace("T", " ");
+        if (this.file?.dateTime) {
+            return this.file.dateTime.toString().replace('T', ' ');
         }
 
         return null;

@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core";
-import {SelectedPrint} from "../backup-selectedprint";
-import {BackupPrintService} from "../backup-print-service";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {SelectedPrint} from '../backup-selectedprint';
+import {BackupPrintService} from '../backup-print-service';
 
 @Component({
     selector: 'jbr-backup-print-image',
@@ -16,7 +16,7 @@ export class BackupPrintImageComponent {
     constructor(private readonly _backupPrintService: BackupPrintService) {
     }
 
-    unselectPrint():void {
+    unselectPrint(): void {
         this.unselect.emit(this.selectedPrint);
     }
 
@@ -30,37 +30,37 @@ export class BackupPrintImageComponent {
             return this._backupPrintService.imageUrl(this.selectedPrint.fileId);
         }
 
-        return "";
+        return '';
     }
 
     fileName(): string {
-        if(this.selectedPrint != null) {
+        if (this.selectedPrint != null) {
             return this.selectedPrint.fileName;
         }
 
-        return "";
+        return '';
     }
 
     printInfo(): string {
-        if(this.selectedPrint != null) {
+        if (this.selectedPrint != null) {
             let text: string;
 
             // Display the size and style selected.
             text = this.selectedPrint.sizeName;
 
-            if(this.selectedPrint.blackWhite) {
-                text = text + " - Black & White";
+            if (this.selectedPrint.blackWhite) {
+                text = text + ' - Black & White';
             } else {
-                text = text + " - Colour";
+                text = text + ' - Colour';
             }
 
-            if(this.selectedPrint.border) {
-                text = text + " with border";
+            if (this.selectedPrint.border) {
+                text = text + ' with border';
             }
 
             return text;
         }
 
-        return "";
+        return '';
     }
 }

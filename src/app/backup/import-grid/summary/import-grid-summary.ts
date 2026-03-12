@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core";
-import {ImportGridSummaryCount} from "./import-grid-summary-count";
-import {TrafficLightStatus, TrafficLightType} from "../traffic/import-grid-traffic-light";
-import {ImportGridSummaryStepCount} from "./import-grid-summary-step-count";
-import {NgForOf, NgIf} from "@angular/common";
-import {ListFilterType} from "../import-grid-filter";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {ImportGridSummaryCount} from './import-grid-summary-count';
+import {TrafficLightStatus, TrafficLightType} from '../traffic/import-grid-traffic-light';
+import {ImportGridSummaryStepCount} from './import-grid-summary-step-count';
+import {NgForOf, NgIf} from '@angular/common';
+import {ListFilterType} from '../import-grid-filter';
 
 @Component({
     selector: 'jbr-import-grid-summary',
@@ -29,69 +29,69 @@ export class ImportGridSummary {
     getHeaderText(status: TrafficLightStatus): string {
         switch (status) {
             case TrafficLightStatus.Green:
-                return "Green";
+                return 'Green';
             case TrafficLightStatus.Red:
-                return "Red";
+                return 'Red';
             case TrafficLightStatus.Amber:
-                return "Amber";
+                return 'Amber';
         }
 
-        return "Unknown";
+        return 'Unknown';
     }
 
     getColumnHeaderText(step: TrafficLightType): string {
-        switch(step) {
+        switch (step) {
             case TrafficLightType.readPreImportFile:
-                return "Read";
+                return 'Read';
             case TrafficLightType.gatherMetaData:
-                return "Meta";
+                return 'Meta';
             case TrafficLightType.copyFileToImport:
-                return "Copy";
+                return 'Copy';
             case TrafficLightType.checkFileIgnored:
-                return "Ignore";
+                return 'Ignore';
             case TrafficLightType.checkActivePhotoFile:
-                return "Active";
+                return 'Active';
             case TrafficLightType.checkDuplicateFile:
-                return "Duplicate";
+                return 'Duplicate';
             case TrafficLightType.checkFileConfirmedImported:
-                return "Imported";
+                return 'Imported';
             case TrafficLightType.processImport:
-                return "Process";
+                return 'Process';
             case TrafficLightType.completed:
-                return "Complete";
+                return 'Complete';
         }
     }
 
     getPreImportTotal(status: TrafficLightStatus): string {
-        if(this.summary && this.summary.PreImport && status == TrafficLightStatus.Green) {
-            return "" + this.summary.PreImport;
+        if (this.summary?.PreImport && status === TrafficLightStatus.Green) {
+            return '' + this.summary.PreImport;
         }
 
-        return " ";
+        return ' ';
     }
 
     getImportTotal(status: TrafficLightStatus): string {
-        if(this.summary && this.summary.Import && status == TrafficLightStatus.Green) {
-            return "" + this.summary.Import;
+        if (this.summary?.Import && status === TrafficLightStatus.Green) {
+            return '' + this.summary.Import;
         }
 
-        return " ";
+        return ' ';
     }
 
     getPostImportTotal(status: TrafficLightStatus): string {
-        if(this.summary && this.summary.PostImport && status == TrafficLightStatus.Green) {
-            return "" + this.summary.PostImport;
+        if (this.summary?.PostImport && status === TrafficLightStatus.Green) {
+            return '' + this.summary.PostImport;
         }
 
-        return " ";
+        return ' ';
     }
 
     getQueued(status: TrafficLightStatus): string {
-        if(this.summary != null && status == TrafficLightStatus.Green) {
-            return "" + this.summary.Queued;
+        if (this.summary != null && status === TrafficLightStatus.Green) {
+            return '' + this.summary.Queued;
         }
 
-        return " ";
+        return ' ';
     }
 
     getCountForType(type: TrafficLightType): ImportGridSummaryStepCount {
@@ -99,47 +99,47 @@ export class ImportGridSummary {
 
         switch (type) {
             case TrafficLightType.readPreImportFile:
-                if(this.summary && this.summary.readPreImportFile) {
+                if (this.summary?.readPreImportFile) {
                     count = this.summary.readPreImportFile;
                 }
                 break;
             case TrafficLightType.gatherMetaData:
-                if(this.summary && this.summary.gatherMetaData) {
+                if (this.summary?.gatherMetaData) {
                     count = this.summary.gatherMetaData;
                 }
                 break;
             case TrafficLightType.copyFileToImport:
-                if(this.summary && this.summary.copyFileToImport) {
+                if (this.summary?.copyFileToImport) {
                     count = this.summary.copyFileToImport;
                 }
                 break;
             case TrafficLightType.checkFileIgnored:
-                if(this.summary && this.summary.checkFileIgnored) {
+                if (this.summary?.checkFileIgnored) {
                     count = this.summary.checkFileIgnored;
                 }
                 break;
             case TrafficLightType.checkActivePhotoFile:
-                if(this.summary && this.summary.checkActivePhotoFile) {
+                if (this.summary?.checkActivePhotoFile) {
                     count = this.summary.checkActivePhotoFile;
                 }
                 break;
             case TrafficLightType.checkDuplicateFile:
-                if(this.summary && this.summary.checkDuplicateFile) {
+                if (this.summary?.checkDuplicateFile) {
                     count = this.summary.checkDuplicateFile;
                 }
                 break;
             case TrafficLightType.checkFileConfirmedImported:
-                if(this.summary && this.summary.checkFileConfirmedImported) {
+                if (this.summary?.checkFileConfirmedImported) {
                     count = this.summary.checkFileConfirmedImported;
                 }
                 break;
             case TrafficLightType.processImport:
-                if(this.summary && this.summary.processImport) {
+                if (this.summary?.processImport) {
                     count = this.summary.processImport;
                 }
                 break;
             case TrafficLightType.completed:
-                if(this.summary && this.summary.completed) {
+                if (this.summary?.completed) {
                     count = this.summary.completed;
                 }
         }
@@ -148,49 +148,49 @@ export class ImportGridSummary {
     }
 
     getClass(type: TrafficLightType, status: TrafficLightStatus) {
-        let count: ImportGridSummaryStepCount = this.getCountForType(type);
-        let baseClass: string = "";
+        const count: ImportGridSummaryStepCount = this.getCountForType(type);
+        let baseClass = '';
 
-        if(this.listFilter) {
-            if(this.listFilter.type == type && this.listFilter.status == status) {
-                baseClass = " filter";
+        if (this.listFilter) {
+            if (this.listFilter.type === type && this.listFilter.status === status) {
+                baseClass = ' filter';
             }
         }
 
-        if(count != null) {
-            switch(status) {
+        if (count != null) {
+            switch (status) {
                 case TrafficLightStatus.Unknown:
-                    if(count.UNKNOWN > 0) {
-                        return "unknown" + baseClass;
+                    if (count.UNKNOWN > 0) {
+                        return 'unknown' + baseClass;
                     }
                     break;
                 case TrafficLightStatus.Amber:
-                    if(count.AMBER > 0) {
-                        return "amber" + baseClass;
+                    if (count.AMBER > 0) {
+                        return 'amber' + baseClass;
                     }
                     break;
                 case TrafficLightStatus.Red:
-                    if(count.RED > 0) {
-                        return "red" + baseClass;
+                    if (count.RED > 0) {
+                        return 'red' + baseClass;
                     }
                     break;
                 case TrafficLightStatus.Green:
-                    if(count.GREEN > 0) {
-                        return "green" + baseClass;
+                    if (count.GREEN > 0) {
+                        return 'green' + baseClass;
                     }
                     break;
             }
         }
 
-        return "ok";
+        return 'ok';
     }
 
     displayStatus(status: TrafficLightStatus): boolean {
-        if(this.summary == null) {
+        if (this.summary == null) {
             return false;
         }
 
-        switch(status) {
+        switch (status) {
             case TrafficLightStatus.Unknown:
                 return this.summary.copyFileToImport.UNKNOWN > 0 ||
                     this.summary.processImport.UNKNOWN > 0 ||
@@ -259,18 +259,18 @@ export class ImportGridSummary {
     }
 
     nextPageClass(): string {
-        if(this.summary && this.listFilter == null && this.summary.limit > 0 && this.summary.limit < this.summary.PreImport) {
-            if((this.summary.page + 1) * this.summary.limit < this.summary.PreImport) {
-                return "btn btn-outline-primary";
+        if (this.summary && this.listFilter == null && this.summary.limit > 0 && this.summary.limit < this.summary.PreImport) {
+            if ((this.summary.page + 1) * this.summary.limit < this.summary.PreImport) {
+                return 'btn btn-outline-primary';
             }
         }
 
-        return "btn btn-outline-secondary";
+        return 'btn btn-outline-secondary';
     }
 
     nextPage() {
-        if(this.summary) {
-            if((this.summary.page + 1) * this.summary.limit < this.summary.PreImport) {
+        if (this.summary) {
+            if ((this.summary.page + 1) * this.summary.limit < this.summary.PreImport) {
                 this.summary.page = this.summary.page + 1;
                 this.refreshEvent.emit(-1);
             }
@@ -278,60 +278,60 @@ export class ImportGridSummary {
     }
 
     previousPageClass(): string {
-        if(this.summary && this.summary.page > 0 && this.listFilter == null) {
-            return "btn btn-outline-primary";
+        if (this.summary && this.summary.page > 0 && this.listFilter == null) {
+            return 'btn btn-outline-primary';
         }
 
-        return "btn btn-outline-secondary";
+        return 'btn btn-outline-secondary';
     }
 
     previousPage() {
-        if(this.summary && this.summary.page > 0) {
+        if (this.summary && this.summary.page > 0) {
             this.summary.page = this.summary.page - 1;
             this.refreshEvent.emit(-1);
         }
     }
 
     getTotal(type: TrafficLightType, status: TrafficLightStatus) {
-        let count: ImportGridSummaryStepCount = this.getCountForType(type);
+        const count: ImportGridSummaryStepCount = this.getCountForType(type);
 
-        if(count != null) {
-            switch(status) {
+        if (count != null) {
+            switch (status) {
                 case TrafficLightStatus.Unknown:
-                    if(count.UNKNOWN > 0) {
-                        return "" + count.UNKNOWN;
+                    if (count.UNKNOWN > 0) {
+                        return '' + count.UNKNOWN;
                     }
                     break;
                 case TrafficLightStatus.Amber:
-                    if(count.AMBER > 0) {
-                        return "" + count.AMBER;
+                    if (count.AMBER > 0) {
+                        return '' + count.AMBER;
                     }
                     break;
                 case TrafficLightStatus.Red:
-                    if(count.RED > 0) {
-                        return "" + count.RED;
+                    if (count.RED > 0) {
+                        return '' + count.RED;
                     }
                     break;
                 case TrafficLightStatus.Green:
-                    if(count.GREEN > 0) {
-                        return "" + count.GREEN;
+                    if (count.GREEN > 0) {
+                        return '' + count.GREEN;
                     }
                     break;
             }
         }
 
-        return " ";
+        return ' ';
     }
 
     filter(type: TrafficLightType, status: TrafficLightStatus) {
-        let oldFilter: ListFilterType = this.listFilter;
+        const oldFilter: ListFilterType = this.listFilter;
         this.listFilter = null;
 
-        let count: ImportGridSummaryStepCount = this.getCountForType(type);
-        let statusCount: number = 0;
+        const count: ImportGridSummaryStepCount = this.getCountForType(type);
+        let statusCount = 0;
 
-        if(count != null) {
-            switch(status) {
+        if (count != null) {
+            switch (status) {
                 case TrafficLightStatus.Unknown:
                     statusCount = count.UNKNOWN;
                     break;
@@ -347,37 +347,35 @@ export class ImportGridSummary {
             }
         }
 
-        if(statusCount > 0) {
+        if (statusCount > 0) {
             this.listFilter = new ListFilterType();
             this.listFilter.type = type;
             this.listFilter.status = status;
         }
 
         // Has the filter been changed?
-        let changed: boolean = false;
-        if(oldFilter == null && this.listFilter != null) {
+        let changed = false;
+        if (oldFilter == null && this.listFilter != null) {
             changed = true;
         } else if (oldFilter != null && this.listFilter == null) {
             changed = true;
         } else if (oldFilter != null && this.listFilter != null) {
-            if(oldFilter.type != this.listFilter.type) {
-                changed = true;
-            } else if (oldFilter.status != this.listFilter.status) {
+            if (oldFilter.type !== this.listFilter.type || oldFilter.status !== this.listFilter.status) {
                 changed = true;
             }
         }
 
         // If changed, fire the filter change event.
-        if(changed) {
+        if (changed) {
             this.filterChangeEvent.emit(this.listFilter);
         }
     }
 
     getSteps(): number[] {
-        let result: number[] = [];
+        const result: number[] = [];
 
-        for(let step in TrafficLightType) {
-            if(!isNaN(Number(step))) {
+        for (const step in TrafficLightType) {
+            if (!Number.isNaN(Number(step))) {
                 result.push(Number(step));
             }
         }
@@ -386,10 +384,10 @@ export class ImportGridSummary {
     }
 
     getStatus(): number[] {
-        let result: number[] = [];
+        const result: number[] = [];
 
-        for(let step in TrafficLightStatus) {
-            if(!isNaN(Number(step))) {
+        for (const step in TrafficLightStatus) {
+            if (!Number.isNaN(Number(step))) {
                 result.unshift(Number(step));
             }
         }

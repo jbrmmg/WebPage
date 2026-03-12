@@ -1,7 +1,7 @@
-import {Component, OnInit, TemplateRef} from "@angular/core";
-import {SelectedPrint} from "../backup-selectedprint";
-import {BsModalService} from "ngx-bootstrap/modal";
-import {BackupPrintService} from "../backup-print-service";
+import {Component, OnInit, TemplateRef} from '@angular/core';
+import {SelectedPrint} from '../backup-selectedprint';
+import {BsModalService} from 'ngx-bootstrap/modal';
+import {BackupPrintService} from '../backup-print-service';
 
 @Component({
     selector: 'jbr-backup-prints',
@@ -16,7 +16,7 @@ export class BackupPrintsComponent implements OnInit {
 
     constructor(private readonly _backupPrintService: BackupPrintService,
                 private readonly _modalService: BsModalService) {
-        this.cols = [0,1,2];
+        this.cols = [0, 1, 2];
         this.selectedPhotos = [];
         this.sizePhoto = null;
     }
@@ -29,10 +29,10 @@ export class BackupPrintsComponent implements OnInit {
     updatePrints() {
         this.selectedPhotos = this._backupPrintService.getSelectedPhotos();
 
-        let rowCount: number = this.selectedPhotos.length/this.columns() + 1;
+        const rowCount: number = this.selectedPhotos.length / this.columns() + 1;
         this.rows = [rowCount];
 
-        for(let i:number = 0; i < rowCount; i++) {
+        for (let i = 0; i < rowCount; i++) {
             this.rows[i] = i;
         }
     }
@@ -48,13 +48,13 @@ export class BackupPrintsComponent implements OnInit {
     }
 
     getPrintAtRowCol(row: number, col: number): SelectedPrint {
-        if(this.selectedPhotos == null) {
+        if (this.selectedPhotos == null) {
             return null;
         }
 
-        let index: number = this.getIndex(row,col);
+        const index: number = this.getIndex(row, col);
 
-        if(index < this.selectedPhotos.length) {
+        if (index < this.selectedPhotos.length) {
             return this.selectedPhotos[index];
         }
 
@@ -71,14 +71,14 @@ export class BackupPrintsComponent implements OnInit {
     }
 
     clearPrints() {
-        console.log('Clear')
+        console.log('Clear');
         this._backupPrintService.clearPrints();
     }
 
     onSizeChange(selection: SelectedPrint) {
         this._modalService.hide();
 
-        if(selection != null) {
+        if (selection != null) {
             this._backupPrintService.updatedPrint(selection);
         }
     }

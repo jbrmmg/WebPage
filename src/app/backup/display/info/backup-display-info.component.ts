@@ -1,10 +1,10 @@
-import {Component, Input, OnInit} from "@angular/core";
-import {FileInfoExtra} from "../../backup-fileinfoextra";
-import {DatePipe, DecimalPipe, NgIf} from "@angular/common";
-import {MetaData} from "../../backup-file-metadata";
-import {LatLong} from "../../map/map-latlong";
-import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
-import {BackupDisplayService} from "../backup-display-service";
+import {Component, Input, OnInit} from '@angular/core';
+import {FileInfoExtra} from '../../backup-fileinfoextra';
+import {DatePipe, DecimalPipe, NgIf} from '@angular/common';
+import {MetaData} from '../../backup-file-metadata';
+import {LatLong} from '../../map/map-latlong';
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import {BackupDisplayService} from '../backup-display-service';
 
 @Component({
     selector: 'jbr-backup-display-info',
@@ -26,18 +26,18 @@ export class BackupDisplayInfoComponent implements OnInit {
     minimumDate: Date;
 
     constructor(private readonly _backupDisplayService: BackupDisplayService,
-                private datePipe: DatePipe) {
+                private readonly datePipe: DatePipe) {
         this.initializeDate();
 
         this.minimumDate = new Date();
         this.minimumDate.setDate(this.minimumDate.getDate());
-        this.minimumDate.setHours(0,0,0,0);
+        this.minimumDate.setHours(0, 0, 0, 0);
     }
 
     moveMap() {
-        let latLong: LatLong = new LatLong();
+        const latLong: LatLong = new LatLong();
 
-        if(this.metaData == null || this.metaData.latitude == null || this.metaData.longitude == null) {
+        if (this.metaData?.latitude == null || this.metaData.longitude == null) {
             latLong.lat = 51.60146388888889;
             latLong.long = -0.37789999999999996;
         } else {
@@ -50,11 +50,11 @@ export class BackupDisplayInfoComponent implements OnInit {
         this.editDateEnable = false;
         this.internalDate = new Date();
         this.internalDate.setDate(this.internalDate.getDate());
-        this.internalDate.setHours(0,0,0,0);
+        this.internalDate.setHours(0, 0, 0, 0);
     }
 
     ngOnInit(): void {
-        if(this.selectedFile != null) {
+        if (this.selectedFile != null) {
             this.moveMap();
         }
     }
@@ -65,7 +65,7 @@ export class BackupDisplayInfoComponent implements OnInit {
 
     clearExpiry(): void {
         this.initializeDate();
-        this._backupDisplayService.setFileExpiry(this.selectedFile.file.id,null);
+        this._backupDisplayService.setFileExpiry(this.selectedFile.file.id, null);
     }
 
     get internalExpiryDate(): Date {
@@ -73,27 +73,27 @@ export class BackupDisplayInfoComponent implements OnInit {
     }
 
     get formattedExpiryDate(): string {
-        if(this.selectedFile == null) {
-            return "";
+        if (this.selectedFile == null) {
+            return '';
         }
 
-        if(this.selectedFile.file.expiry == null) {
-            return "";
+        if (this.selectedFile.file.expiry == null) {
+            return '';
         }
 
-        return this.datePipe.transform(this.selectedFile.file.expiry,'dd MMMM yyyy');
+        return this.datePipe.transform(this.selectedFile.file.expiry, 'dd MMMM yyyy');
     }
 
     get formattedFileDate(): string {
-        if(this.selectedFile == null) {
-            return "";
+        if (this.selectedFile == null) {
+            return '';
         }
 
-        if(this.selectedFile.file.date == null) {
-            return "";
+        if (this.selectedFile.file.date == null) {
+            return '';
         }
 
-        return this.datePipe.transform(this.selectedFile.file.date,'dd MMM yyyy HH:mm:ss');
+        return this.datePipe.transform(this.selectedFile.file.date, 'dd MMM yyyy HH:mm:ss');
     }
 
     onChangeExpiry(newDate: Date): void {

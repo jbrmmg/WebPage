@@ -1,13 +1,13 @@
-import {Component, OnInit} from "@angular/core";
-import {Action} from "./backup-action";
-import {BackupActionService} from "./backup-action-service";
-import {NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
-import {ActionGridDataName} from "./data/action-grid-data-name";
-import {ActionGridHeaderName} from "./header/action-grid-header-name";
-import {ActionGridHeaderConfirm} from "./header/action-grid-header-confirm";
-import {ActionGridDataConfirm} from "./data/action-grid-data-confirm";
-import {ActionGridHeaderMedia} from "./header/action-grid-header-media";
-import {ActionGridDataMedia} from "./data/action-grid-data-media";
+import {Component, OnInit} from '@angular/core';
+import {Action} from './backup-action';
+import {BackupActionService} from './backup-action-service';
+import {NgForOf, NgIf, NgOptimizedImage} from '@angular/common';
+import {ActionGridDataName} from './data/action-grid-data-name';
+import {ActionGridHeaderName} from './header/action-grid-header-name';
+import {ActionGridHeaderConfirm} from './header/action-grid-header-confirm';
+import {ActionGridDataConfirm} from './data/action-grid-data-confirm';
+import {ActionGridHeaderMedia} from './header/action-grid-header-media';
+import {ActionGridDataMedia} from './data/action-grid-data-media';
 
 @Component({
     selector: 'jbr-backup-action',
@@ -48,7 +48,7 @@ export class BackupActionComponent implements OnInit  {
                 this.actions = [];
 
                 actions.forEach(nextAction => {
-                    if(nextAction.action !== "IMPORT") {
+                    if (nextAction.action !== 'IMPORT') {
                         this.actions.push(nextAction);
                     }
                 });
@@ -72,7 +72,7 @@ export class BackupActionComponent implements OnInit  {
     selectMedia(id: number) {
         this.selected = null;
         this.actions.forEach(a => {
-            if(a.fileId === id) {
+            if (a.fileId === id) {
                 this.selected = a;
             }
         });
@@ -87,7 +87,7 @@ export class BackupActionComponent implements OnInit  {
     }
 
     isImageSelected() {
-        if(this.selected) {
+        if (this.selected) {
             return this.selected.isImage;
         }
 
@@ -95,7 +95,7 @@ export class BackupActionComponent implements OnInit  {
     }
 
     isVideoSelected() {
-        if(this.selected) {
+        if (this.selected) {
             return this.selected.isVideo;
         }
 
@@ -103,7 +103,7 @@ export class BackupActionComponent implements OnInit  {
     }
 
     getSelectedFileId() {
-        if(this.selected) {
+        if (this.selected) {
             return this.selected.fileId;
         }
 

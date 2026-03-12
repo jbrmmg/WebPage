@@ -1,5 +1,5 @@
-import {Component, Input} from "@angular/core";
-import {ImportGridHeader} from "./import-grid-header";
+import {Component, Input} from '@angular/core';
+import {ImportGridHeader} from './import-grid-header';
 
 @Component({
     selector: 'jbr-import-grid-header-md5',
@@ -9,9 +9,9 @@ import {ImportGridHeader} from "./import-grid-header";
     standalone: true
 })
 export class ImportGridHeaderMd5 extends ImportGridHeader {
-    @Input() importValue: boolean = false;
+    @Input() importValue = false;
 
     getText(): string {
-        return this.importValue ? "Import MD5" : "MD5";
+        return this.importValue ? 'Import MD5' : 'MD5';
     }
 }

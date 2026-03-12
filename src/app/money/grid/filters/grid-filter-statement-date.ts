@@ -1,7 +1,7 @@
-import {Component, EventEmitter, Input, OnInit} from "@angular/core";
-import {NgClass, NgForOf} from "@angular/common";
-import {StatementDate} from "../../statement/statementDate";
-import {MoneyService} from "../../money.service";
+import {Component, EventEmitter, Input, OnInit} from '@angular/core';
+import {NgClass, NgForOf} from '@angular/common';
+import {StatementDate} from '../../statement/statementDate';
+import {MoneyService} from '../../money.service';
 
 class MonthOption {
     display: string;
@@ -44,23 +44,25 @@ export class GridFilterStatementDate implements OnInit {
     months: MonthOption[][] = [];
     @Input() okEvent: EventEmitter<StatementDate>;
 
-    constructor(private _moneyService: MoneyService) {
+    constructor(private readonly _moneyService: MoneyService) {
         let nextMonths: MonthOption[] = [];
         this.months.push(nextMonths);
-        nextMonths.push(new MonthOption("Jan", 1));
-        nextMonths.push(new MonthOption("Feb", 2));
-        nextMonths.push(new MonthOption("Mar", 3));
-        nextMonths.push(new MonthOption("Apr", 4));
-        nextMonths.push(new MonthOption("May", 5));
-        nextMonths.push(new MonthOption("Jun", 6));
+        nextMonths.push(
+            new MonthOption('Jan', 1),
+            new MonthOption('Feb', 2),
+            new MonthOption('Mar', 3),
+            new MonthOption('Apr', 4),
+            new MonthOption('May', 5),
+            new MonthOption('Jun', 6));
         nextMonths = [];
         this.months.push(nextMonths);
-        nextMonths.push(new MonthOption("Jul", 7));
-        nextMonths.push(new MonthOption("Aug", 8));
-        nextMonths.push(new MonthOption("Sep", 9));
-        nextMonths.push(new MonthOption("Oct", 10));
-        nextMonths.push(new MonthOption("Nov", 11));
-        nextMonths.push(new MonthOption("Dec", 12));
+        nextMonths.push(
+            new MonthOption('Jul', 7),
+            new MonthOption('Aug', 8),
+            new MonthOption('Sep', 9),
+            new MonthOption('Oct', 10),
+            new MonthOption('Nov', 11),
+            new MonthOption('Dec', 12));
     }
 
     ngOnInit(): void {
@@ -70,59 +72,60 @@ export class GridFilterStatementDate implements OnInit {
 
                 statements.forEach(value => {
                     // Is this already in the list?
-                    let add: boolean = true;
+                    let add = true;
                     this.years.forEach(year => {
-                        if(value.year == year.year) {
+                        if (value.year === year.year) {
                             add = false;
-                            return;
                         }
-                    })
+                    });
 
                     // Add if required.
-                    if(add) {
+                    if (add) {
                         this.years.push(new YearOption(value.year));
                     }}
                 );
 
                 // Sort
                 this.years.sort((lhs, rhs) => {
-                    if(lhs == rhs)
+                    if (lhs === rhs) {
                         return 0;
+                    }
 
-                    if(lhs > rhs)
+                    if (lhs > rhs) {
                         return 1;
+                    }
 
                     return -1;
-                })
+                });
             },
-            error: (response) => this.errorMessage = <any> response,
+            error: (response) => this.errorMessage = response,
             complete: () => {
-                console.log("Statement Options Loaded")
+                console.log('Statement Options Loaded');
             }
         });
     }
 
     clickYear(year: YearOption) {
         this.years.forEach(next => {
-            next.selected = next.year == year.year;
-        })
+            next.selected = next.year === year.year;
+        });
     }
 
     clickMonth(month: MonthOption) {
-        let year: number = 0;
+        let year = 0;
         this.years.forEach(next => {
-            if(next.selected) {
+            if (next.selected) {
                 year = next.year;
             }
-        })
+        });
 
-        if(this.okEvent != null) {
+        if (this.okEvent != null) {
             this.okEvent.emit(new StatementDate(year, month.month));
         }
     }
 
     blank() {
-        if(this.okEvent != null) {
+        if (this.okEvent != null) {
             this.okEvent.emit(new StatementDate(null, null));
         }
     }

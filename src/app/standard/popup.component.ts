@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, Output, Type} from "@angular/core";
-import {NgComponentOutlet, NgIf, NgOptimizedImage} from "@angular/common";
+import {Component, EventEmitter, Input, Output, Type} from '@angular/core';
+import {NgComponentOutlet, NgIf, NgOptimizedImage} from '@angular/common';
 
 @Component({
     selector: 'jbr-popup',
@@ -19,11 +19,11 @@ export class PopupComponent {
     @Input() imageUrl: string;
     @Input() title: string;
     @Input() subTitle: string;
-    @Input() exit: boolean = false;
-    @Input() ok: boolean = false;
-    @Input() clear: boolean = false;
+    @Input() exit = false;
+    @Input() ok = false;
+    @Input() clear = false;
     @Input() content: Type<any>;
-    @Input() inputs: Record<string,unknown>;
+    @Input() inputs: Record<string, unknown>;
     @Input() header: boolean;
 
     onExit() {
@@ -40,7 +40,7 @@ export class PopupComponent {
 
     displayHeader(): boolean {
         // Default is on
-        if(this.header == null) {
+        if (this.header == null) {
             return true;
         }
 

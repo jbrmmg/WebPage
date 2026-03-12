@@ -69,7 +69,7 @@ export class ImportGrid implements OnInit {
     modalRef: BsModalRef;
 
     constructor(private readonly _importGridService: ImportGridService,
-                private modalService: BsModalService) {
+                private readonly modalService: BsModalService) {
         this.fileUpdateSource = _importGridService.fileUpdateSource();
         this.fileUpdateSource.addEventListener('message', this.fileUpdate.bind(this));
 
@@ -87,12 +87,12 @@ export class ImportGrid implements OnInit {
         this.filter = null;
     }
 
-    handleBeforeUnload(event: BeforeUnloadEvent): void {
+    handleBeforeUnload(_event: BeforeUnloadEvent): void {
         this.fileUpdateSource.removeEventListener('message', this.fileUpdate.bind(this));
         this.fileUpdateSource.close();
         this.summaryUpdateSource.removeEventListener('message', this.summaryUpdate.bind(this));
         this.summaryUpdateSource.close();
-        console.log('Cleanup before unload.' + event);
+        console.log('Cleanup before unload.');
     }
 
     updateFileDataBase(data: IImportGridFileBase, update: ImportGridFileBase) {
@@ -107,7 +107,7 @@ export class ImportGrid implements OnInit {
         }
 
         // Is this the selected file?
-        if (this.selectedFile && this.selectedFile.source && this.selectedFile.source.filename === data.filename) {
+        if (this.selectedFile?.source?.filename === data.filename) {
             this.selectRequestByName(data.filename);
         }
     }
@@ -228,13 +228,11 @@ export class ImportGrid implements OnInit {
             data.similarFiles.forEach(f => {
                   if (uf.filename === f.filename) {
                       found = true;
-                      return;
                   }
             });
 
             if (!found) {
                 added = true;
-                return;
             }
         });
         if (added) {
@@ -248,13 +246,11 @@ export class ImportGrid implements OnInit {
             update.similarFiles.forEach(uf => {
                 if (f.filename === uf.filename) {
                     found = true;
-                    return;
                 }
             });
 
             if (!found) {
                 removed = true;
-                return;
             }
         });
         if (removed) {
@@ -427,11 +423,9 @@ export class ImportGrid implements OnInit {
                     // If specified, then select this file.
                     this.selectRequestByName(this.afterRefresh);
                     this.afterRefresh = '';
-                } else {
+                } else if (this.data && this.data.length > 0) {
                     // Select the first.
-                    if (this.data && this.data.length > 0) {
-                        this.selectRequest(this.data[0]);
-                    }
+                    this.selectRequest(this.data[0]);
                 }
 
                 this.status = count + ' files loaded';
@@ -459,20 +453,18 @@ export class ImportGrid implements OnInit {
 
     nameSorter(name: ImportGridFile, importType: boolean): string {
         if (importType) {
-            if (name && name.importName) {
+            if (name?.importName) {
                 return name.importName.toLowerCase();
             }
-        } else {
-            if (name && name.filename) {
-                return name.filename.toLowerCase();
-            }
+        } else if (name?.filename) {
+            return name.filename.toLowerCase();
         }
 
         return '';
     }
 
     sortName(importType: boolean) {
-        this.data = this.data.sort((f1, f2) => {
+        this.data.sort((f1, f2) => {
             if (this.nameSorter(f1.source, importType) > this.nameSorter(f2.source, importType)) {
                 return this.sortUp ? 1 : -1;
             }
@@ -498,7 +490,7 @@ export class ImportGrid implements OnInit {
     }
 
     sortSize(importType: boolean) {
-        this.data = this.data.sort((f1, f2) => {
+        this.data.sort((f1, f2) => {
             if (this.sizeSorter(f1.source, importType) > this.sizeSorter(f2.source, importType)) {
                 return this.sortUp ? 1 : -1;
             }
@@ -524,7 +516,7 @@ export class ImportGrid implements OnInit {
     }
 
     sortStatus() {
-        this.data = this.data.sort((f1, f2) => {
+        this.data.sort((f1, f2) => {
             if (this.statusSorter(f1.source) > this.statusSorter(f2.source)) {
                 return this.sortUp ? 1 : -1;
             }
@@ -550,7 +542,7 @@ export class ImportGrid implements OnInit {
     }
 
     sortDate(importType: boolean) {
-        this.data = this.data.sort((f1, f2) => {
+        this.data.sort((f1, f2) => {
             if (this.dateSorter(f1.source, importType) > this.dateSorter(f2.source, importType)) {
                 return this.sortUp ? 1 : -1;
             }
@@ -569,10 +561,8 @@ export class ImportGrid implements OnInit {
                 if (file.importMd5) {
                     return file.importMd5.toUpperCase();
                 }
-            } else {
-                if (file.md5) {
-                    return file.md5.toUpperCase();
-                }
+            } else if (file.md5) {
+                return file.md5.toUpperCase();
             }
         }
 
@@ -580,7 +570,7 @@ export class ImportGrid implements OnInit {
     }
 
     sortMD5(importType: boolean) {
-        this.data = this.data.sort((f1, f2) => {
+        this.data.sort((f1, f2) => {
             if (this.md5Sorter(f1.source, importType) > this.md5Sorter(f2.source, importType)) {
                 return this.sortUp ? 1 : -1;
             }
@@ -788,7 +778,6 @@ export class ImportGrid implements OnInit {
                     this.data.forEach(f => {
                         if (f.source.filename === update.filename) {
                             f.source.destination = update.destination;
-                            return;
                         }
                     });
 
@@ -808,7 +797,7 @@ export class ImportGrid implements OnInit {
                     return this.selectRequest(previous);
                 } else {
                     // No previous, return the last entry.
-                    this.selectRequest(this.data[this.data.length - 1]);
+                    this.selectRequest(this.data.at(-1));
                 }
             }
 

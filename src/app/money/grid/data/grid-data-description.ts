@@ -1,12 +1,12 @@
-import {Component, EventEmitter, HostListener, Output} from "@angular/core";
-import {TransactionReport} from "../../transaction/transactionReport";
-import {MoneyService} from "../../money.service";
-import {NgIf} from "@angular/common";
-import {FormsModule} from "@angular/forms";
-import {TransactionEditType} from "../../transaction/transactionEditType";
-import {GridDataInlineEdit} from "./grid-data-inline-edit";
-import {GridDataEvent} from "./grid-data-event";
-import {HeaderType} from "../header/grid-header-type";
+import {Component, EventEmitter, HostListener, Output} from '@angular/core';
+import {TransactionReport} from '../../transaction/transactionReport';
+import {MoneyService} from '../../money.service';
+import {NgIf} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {TransactionEditType} from '../../transaction/transactionEditType';
+import {GridDataInlineEdit} from './grid-data-inline-edit';
+import {GridDataEvent} from './grid-data-event';
+import {HeaderType} from '../header/grid-header-type';
 
 @Component({
     selector: 'jbr-grid-data-description',
@@ -27,10 +27,10 @@ export class GridDataDescription extends GridDataInlineEdit {
 
     @HostListener('document:click', ['$event'])
     clickOut(event) {
-        if(this.inputElement != null) {
+        if (this.inputElement != null) {
             if (!this.inputElement.nativeElement.contains(event.target)) {
-                let value: string = this.inputElement.nativeElement.value;
-                if(this.isEditing() && value.length > 0) {
+                const value: string = this.inputElement.nativeElement.value;
+                if (this.isEditing() && value.length > 0) {
                     this.completeEdit();
                 }
             }
@@ -42,18 +42,18 @@ export class GridDataDescription extends GridDataInlineEdit {
     }
 
     blank(): boolean {
-        if(this.transaction.type == TransactionReport.TRANSACTION) {
-            return this.transaction.description == null || this.transaction.description.length == 0;
+        if (this.transaction.type === TransactionReport.TRANSACTION) {
+            return this.transaction.description == null || this.transaction.description.length === 0;
         }
 
-        return !((this.transaction.type == TransactionReport.OPEN_BALANCE) ||
-            (this.transaction.type == TransactionReport.TODAY_BALANCE) ||
-            (this.transaction.type == TransactionReport.FUTURE_BALANCE));
+        return !((this.transaction.type === TransactionReport.OPEN_BALANCE) ||
+            (this.transaction.type === TransactionReport.TODAY_BALANCE) ||
+            (this.transaction.type === TransactionReport.FUTURE_BALANCE));
     }
 
     getCategoryColour(): string {
-        if(this.transaction == null || this.transaction.category == null || this.transaction.category.colour == null) {
-            return "FFFFFF";
+        if (this.transaction == null || this.transaction.category == null || this.transaction.category.colour == null) {
+            return 'FFFFFF';
         }
 
         return this.transaction.category.colour;
@@ -67,7 +67,7 @@ export class GridDataDescription extends GridDataInlineEdit {
         this.transaction.description = text;
         this.transaction.modified = true;
 
-        let event: GridDataEvent = new GridDataEvent();
+        const event: GridDataEvent = new GridDataEvent();
         event.transaction = this.transaction;
         event.source = HeaderType.Description;
         this.valueChanged.emit(event);

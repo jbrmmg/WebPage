@@ -1,9 +1,9 @@
-import {Component, Input, OnInit, TemplateRef} from "@angular/core";
-import {FileInfoExtra} from "../../backup-fileinfoextra";
-import {BsModalService} from "ngx-bootstrap/modal";
-import {Label} from "../../backup-label";
-import {NgClass, NgForOf} from "@angular/common";
-import {BackupDisplayService} from "../backup-display-service";
+import {Component, Input, OnInit, TemplateRef} from '@angular/core';
+import {FileInfoExtra} from '../../backup-fileinfoextra';
+import {BsModalService} from 'ngx-bootstrap/modal';
+import {Label} from '../../backup-label';
+import {NgClass, NgForOf} from '@angular/common';
+import {BackupDisplayService} from '../backup-display-service';
 
 @Component({
     selector: 'jbr-backup-display-labels',
@@ -21,7 +21,7 @@ export class BackupDisplayLabelComponent implements OnInit {
     allLabels: Label[];
 
     constructor(private readonly _backupDisplayService: BackupDisplayService,
-                private modalService: BsModalService) {
+                private readonly modalService: BsModalService) {
     }
 
     ngOnInit(): void {
@@ -34,18 +34,18 @@ export class BackupDisplayLabelComponent implements OnInit {
         });
     }
 
-    showListSelector(template: TemplateRef<any>):void {
-        if(this.selectedFile == null) {
+    showListSelector(template: TemplateRef<any>): void {
+        if (this.selectedFile == null) {
             return;
         }
 
         this.allLabels.forEach(nextLabel => {
             nextLabel.selected = false;
             this.selectedFile.labels.forEach(nextSelected => {
-                if(nextSelected == nextLabel.name) {
+                if (nextSelected === nextLabel.name) {
                     nextLabel.selected = true;
                 }
-            })
+            });
         });
 
         this.modalService.show(template, {});
@@ -54,17 +54,17 @@ export class BackupDisplayLabelComponent implements OnInit {
     select(id: number) {
         // If the label is currently selected, then unselect it, otherwise select it.
         this.allLabels.forEach(nextLabel => {
-            if(nextLabel.id == id) {
-                if(nextLabel.selected) {
-                    this._backupDisplayService.removeFileLabel(this.selectedFile.file.id,id);
-                    console.log('remove')
+            if (nextLabel.id === id) {
+                if (nextLabel.selected) {
+                    this._backupDisplayService.removeFileLabel(this.selectedFile.file.id, id);
+                    console.log('remove');
                 } else {
-                    this._backupDisplayService.setFileLabel(this.selectedFile.file.id,id);
-                    console.log('add')
+                    this._backupDisplayService.setFileLabel(this.selectedFile.file.id, id);
+                    console.log('add');
                 }
             }
-        })
+        });
         this.modalService.hide();
-        console.log(id)
+        console.log(id);
     }
 }

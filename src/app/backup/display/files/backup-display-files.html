@@ -20,7 +20,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let nextHierarchy of fileList" (click)="selectFile(nextHierarchy)">
+            <tr *ngFor="let nextHierarchy of fileList" (click)="selectFile(nextHierarchy)" (keydown.enter)="selectFile(nextHierarchy)" tabindex="0">
                 <td>
                     <jbr-backup-file-data-select [selectedFile]="selectedFile" [file]="nextHierarchy"></jbr-backup-file-data-select>
                 </td>

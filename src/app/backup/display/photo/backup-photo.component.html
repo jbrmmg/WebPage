@@ -1,24 +1,24 @@
 <div class="row page-row">
     <div class="row photo-row">
-        <label class="btn btn-primary btn-mode col-1 photo-btn"
+        <button class="btn btn-primary btn-mode col-1 photo-btn"
                (click)="exitPhoto()"
                title="go back, do not request print">
             <em class="fa fa-arrow-left"></em>
-        </label>
+        </button>
     </div>
     <div class="row">
         <div class="col-6">
             <div class="row">
-                <label class="{{getBorderClass(false)}}" (click)="toggleBorder()" title="no border">No Border</label>
-                <label class="{{getBorderClass(true)}}" (click)="toggleBorder()" title="border">Border</label>
+                <button class="{{getBorderClass(false)}}" (click)="toggleBorder()" title="no border">No Border</button>
+                <button class="{{getBorderClass(true)}}" (click)="toggleBorder()" title="border">Border</button>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-6">
             <div class="row">
-                <label class="{{getBlackAndWhiteClass(false)}}" (click)="toggleBlackAndWhite()" title="colour">Colour</label>
-                <label class="{{getBlackAndWhiteClass(true)}}" (click)="toggleBlackAndWhite()" title="black & white">Black & White</label>
+                <button class="{{getBlackAndWhiteClass(false)}}" (click)="toggleBlackAndWhite()" title="colour">Colour</button>
+                <button class="{{getBlackAndWhiteClass(true)}}" (click)="toggleBlackAndWhite()" title="black & white">Black & White</button>
             </div>
         </div>
     </div>
@@ -26,7 +26,7 @@
         <label>Choose Size to select print (inches):</label>
     </div>
     <div class="row">
-        <label class="btn btn-primary size-btn col-1" *ngFor="let size of sizes" (click)="selectForPrint(size)">{{displayText(size.name)}}</label>
+        <button class="btn btn-primary size-btn col-1" *ngFor="let size of sizes" (click)="selectForPrint(size)">{{displayText(size.name)}}</button>
     </div>
     <div class="row photo-row">
         <img class="photo-img" src="{{imageUrl()}}" alt="{{imageALT()}}" title="{{imageALT()}}" width="100%"/>

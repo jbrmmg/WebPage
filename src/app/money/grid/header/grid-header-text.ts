@@ -1,7 +1,7 @@
-import {Component} from "@angular/core";
-import {FilterEvent, GridHeader} from "./grid-header";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HeaderType} from "./grid-header-type";
+import {Component} from '@angular/core';
+import {FilterEvent, GridHeader} from './grid-header';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HeaderType} from './grid-header-type';
 
 @Component({
     selector: 'jbr-grid-header-text',
@@ -17,10 +17,10 @@ export class GridHeaderText extends GridHeader {
     description: string;
 
     valueUpdated() {
-        if(this.description == null || this.description.length == 0) {
+        if (this.description == null || this.description.length === 0) {
             this.filter.description = null;
 
-            let event: FilterEvent = new FilterEvent();
+            const event: FilterEvent = new FilterEvent();
             event.source = HeaderType.Description;
             this.filterChanged.emit(event);
         }
@@ -31,7 +31,7 @@ export class GridHeaderText extends GridHeader {
 
         this.filter.description = this.description;
 
-        let event: FilterEvent = new FilterEvent();
+        const event: FilterEvent = new FilterEvent();
         event.source = HeaderType.Description;
         this.filterChanged.emit(event);
     }

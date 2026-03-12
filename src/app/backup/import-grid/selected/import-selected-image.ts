@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {ImportGridFileDisplay} from "../import-grid-file-display";
-import {NgIf} from "@angular/common";
+import {ImportGridFileDisplay} from '../import-grid-file-display';
+import {NgIf} from '@angular/common';
 
 @Component({
     selector: 'import-selected-image',
@@ -12,16 +12,13 @@ import {NgIf} from "@angular/common";
     styleUrls: ['./import-selected-image.css']
 })
 export class ImportSelectedImage {
-    imagePath: string;
+    imagePath = 'api/backup/NoEntry.jpg';
     text: string;
     videoPath: string;
-    image: boolean;
-    video: boolean;
+    image = true;
+    video = false;
 
     constructor() {
-        this.imagePath = "api/backup/NoEntry.jpg";
-        this.image = true;
-        this.video = false;
     }
 
     getImagePath(): string {
@@ -33,23 +30,23 @@ export class ImportSelectedImage {
     }
 
     display(file: ImportGridFileDisplay) {
-        console.log("image update");
+        console.log('image update');
 
-        if(file.source && file.source.imageSize && file.source.image) {
-            this.imagePath = "backup/import-image?name=" + file.source.filename;
+        if (file.source?.imageSize && file.source.image) {
+            this.imagePath = 'backup/import-image?name=' + file.source.filename;
             this.text = file.source.filename;
             this.image = true;
             this.video = false;
             return;
-        } else if(file.source && file.source.video) {
-            this.videoPath = "backup/import-video?name=" + file.source.filename;
+        } else if (file.source?.video) {
+            this.videoPath = 'backup/import-video?name=' + file.source.filename;
             this.text = file.source.filename;
             this.video = true;
             return;
         }
 
         this.video = false;
-        this.clear()
+        this.clear();
     }
 
     getText() {
@@ -57,7 +54,7 @@ export class ImportSelectedImage {
     }
 
     clear() {
-        this.imagePath = "api/backup/NoEntry.jpg";
+        this.imagePath = 'api/backup/NoEntry.jpg';
     }
 
     showImage(): boolean {

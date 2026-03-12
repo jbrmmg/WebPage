@@ -1,6 +1,6 @@
-import {Component, EventEmitter, OnInit, Output} from "@angular/core";
-import {ImportGridHeader} from "./import-grid-header";
-import {ImportGridTrafficLightFilter} from "../traffic/import-grid-traffic-light";
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {ImportGridHeader} from './import-grid-header';
+import {ImportGridTrafficLightFilter} from '../traffic/import-grid-traffic-light';
 
 @Component({
     selector: 'jbr-import-grid-header-traffic',
@@ -19,6 +19,6 @@ export class ImportGridHeaderTraffic extends ImportGridHeader implements OnInit 
     }
 
     getText(): string {
-        return "Status";
+        return 'Status';
     }
 }

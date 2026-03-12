@@ -31,16 +31,18 @@
     </div>
 </ng-container>
 <ng-container *ngIf="isMediaSelected()">
-    <label class="btn btn-primary btn-directory"
+    <button class="btn btn-primary btn-directory"
            (click)="backToActions()">
         <em class="fa fa-chevron-circle-left"></em>
-    </label>
+    </button>
     <div class="media-view">
         <div *ngIf="isImageSelected()">
             <img ngSrc="backup/fileImage?id={{getSelectedFileId()}}" alt="backup file"/>
         </div>
         <div *ngIf="isVideoSelected()">
-            <video src="backup/fileVideo?id={{getSelectedFileId()}}" controls></video>
+            <video src="backup/fileVideo?id={{getSelectedFileId()}}" controls>
+                <track kind="captions" src="" label="Captions">
+            </video>
         </div>
     </div>
 </ng-container>

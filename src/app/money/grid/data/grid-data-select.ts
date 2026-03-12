@@ -1,7 +1,7 @@
-import {Component} from "@angular/core";
-import {NgIf} from "@angular/common";
-import {FormsModule} from "@angular/forms";
-import {GridData} from "./grid-data";
+import {Component} from '@angular/core';
+import {NgIf} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {GridData} from './grid-data';
 
 @Component({
     selector: 'jbr-grid-data-select',
@@ -27,9 +27,7 @@ export class GridDataSelect extends GridData {
     }
 
     select() {
-        if(this.transaction.selected == null) {
-            this.transaction.selected = false;
-        }
+        this.transaction.selected ??= false;
 
         this.transaction.selected = !this.transaction.selected;
     }

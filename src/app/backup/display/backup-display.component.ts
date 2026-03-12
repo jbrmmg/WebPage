@@ -84,7 +84,7 @@ export class BackupDisplayComponent implements OnInit  {
             },
             complete: () => {
                 // Set the file list.
-                if (this.hierarchy && this.hierarchy.length) {
+                if (this.hierarchy?.length) {
                     this.hierarchy.forEach(h => {
                         if (!h.directory && !h.backup) {
                             this.fileList.push(h);
@@ -93,14 +93,14 @@ export class BackupDisplayComponent implements OnInit  {
 
                     // Sort by date.
                     this.fileList.sort((h1, h2): number => {
-                        const dateH1 = h1 && h1.dateTime ? new Date(h1.dateTime).getTime() : Infinity;
-                        const dateH2 = h2 && h2.dateTime ? new Date(h2.dateTime).getTime() : Infinity;
+                        const dateH1 = h1?.dateTime ? new Date(h1.dateTime).getTime() : Infinity;
+                        const dateH2 = h2?.dateTime ? new Date(h2.dateTime).getTime() : Infinity;
                         return dateH1 - dateH2;
                     });
                 }
 
                 // If there are no files, then set the selected file to null.
-                if (!this.fileList || !this.fileList.length) {
+                if (!this.fileList?.length) {
                     this.selectedFile = null;
                 }
 
@@ -142,7 +142,7 @@ export class BackupDisplayComponent implements OnInit  {
 
         // If nothing selected then select the last file.
         if (!selected) {
-            this.displayFile(this.fileList[this.fileList.length - 1]);
+            this.displayFile(this.fileList.at(-1));
         }
     }
 
@@ -180,11 +180,11 @@ export class BackupDisplayComponent implements OnInit  {
         this.selectPhoto.emit();
     }
 
-    changeZoom(zoomIn: boolean) {
-        if (zoomIn) {
-            this.zoom = Math.min(this.zoom + 10, 100);
-        } else {
-            this.zoom = Math.max(this.zoom - 10, 10);
-        }
+    zoomIn() {
+        this.zoom = Math.min(this.zoom + 10, 100);
+    }
+
+    zoomOut() {
+        this.zoom = Math.max(this.zoom - 10, 10);
     }
 }

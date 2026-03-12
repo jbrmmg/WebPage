@@ -1,7 +1,7 @@
-import {Component, EventEmitter, Input, OnInit} from "@angular/core";
-import {FormsModule} from "@angular/forms";
-import {TransactionFilter} from "../../transaction/transactionFilter";
-import {ValueRange} from "../../range/valueRange";
+import {Component, EventEmitter, Input, OnInit} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {TransactionFilter} from '../../transaction/transactionFilter';
+import {ValueRange} from '../../range/valueRange';
 
 class Amount {
     display: string;
@@ -10,7 +10,7 @@ class Amount {
     isValid: boolean;
 
     valueUpdate(value: number) {
-        if(value == null) {
+        if (value == null) {
             this.setNull();
         } else {
             this.value = value;
@@ -19,20 +19,20 @@ class Amount {
     }
 
     displayUpdate(display: string) {
-        if(display == null) {
+        if (display == null) {
             this.setNull();
             return;
         }
 
-        let tempValue = parseInt(display);
+        const tempValue = Number.parseInt(display, 10);
 
         this.display = display;
-        if(this.display.trim().length <= 0) {
+        if (this.display.trim().length <= 0) {
             this.setNull();
             return;
         }
 
-        if(isNaN(tempValue)) {
+        if (Number.isNaN(tempValue)) {
             this.isValid = false;
             this.value = null;
             this.isNull = true;
@@ -44,7 +44,7 @@ class Amount {
     }
 
     setNull() {
-        this.display = "";
+        this.display = '';
         this.value = null;
         this.isNull = true;
         this.isValid = true;
@@ -70,14 +70,14 @@ export class GridFilterAmount implements OnInit {
 
     ngOnInit(): void {
         // Set up the event handlers.
-        if(this.okEvent != null) {
+        if (this.okEvent != null) {
             this.okEvent.subscribe(() => {
                 this.onOK();
             });
         }
 
         // Set up the range.
-        if(this.filter != null && this.filter.valueRange != null) {
+        if (this.filter?.valueRange != null) {
             this.fromAmount.valueUpdate(this.filter.valueRange.minimum);
             this.toAmount.valueUpdate(this.filter.valueRange.maximum);
         } else {
@@ -91,7 +91,7 @@ export class GridFilterAmount implements OnInit {
     }
 
     onOK() {
-        if(this.filter != null) {
+        if (this.filter != null) {
             let min: number = this.fromAmount.value;
             let max: number = this.toAmount.value;
 

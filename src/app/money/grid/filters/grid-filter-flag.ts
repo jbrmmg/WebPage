@@ -39,27 +39,20 @@ export class GridFilterFlag implements OnInit {
     flags: FlagFilterOption[][];
     @Input() filter: TransactionFilter;
     @Input() okEvent: EventEmitter<void>;
-    statementAge: number;
+    statementAge: number = null;
 
     constructor() {
-        this.statementAge = null;
         this.flags = [];
         this.addRow(null, 'All');
         this.addRow(FlagType.Locked, 'Locked');
         this.addRow(FlagType.Predicted, 'Predicted');
         this.addRow(FlagType.Reconciled, 'Reconciled');
 
-        this.flags[0][0].otherColumn.push(this.flags[1][0]);
-        this.flags[0][0].otherColumn.push(this.flags[2][0]);
-        this.flags[0][0].otherColumn.push(this.flags[3][0]);
+        this.flags[0][0].otherColumn.push(this.flags[1][0], this.flags[2][0], this.flags[3][0]);
 
-        this.flags[0][1].otherColumn.push(this.flags[1][1]);
-        this.flags[0][1].otherColumn.push(this.flags[2][1]);
-        this.flags[0][1].otherColumn.push(this.flags[3][1]);
+        this.flags[0][1].otherColumn.push(this.flags[1][1], this.flags[2][1], this.flags[3][1]);
 
-        this.flags[0][2].otherColumn.push(this.flags[1][2]);
-        this.flags[0][2].otherColumn.push(this.flags[2][2]);
-        this.flags[0][2].otherColumn.push(this.flags[3][2]);
+        this.flags[0][2].otherColumn.push(this.flags[1][2], this.flags[2][2], this.flags[3][2]);
     }
 
     isLockedEnabled(): boolean {
@@ -107,13 +100,7 @@ export class GridFilterFlag implements OnInit {
                     }
 
                     row.forEach(col => {
-                        col.selected = false;
-
-                        if (flagValue == null && col.flagValue == null) {
-                            col.selected = true;
-                        } else if (flagValue === col.flagValue) {
-                            col.selected = true;
-                        }
+                        col.selected = (flagValue == null && col.flagValue == null) || flagValue === col.flagValue;
                     });
                 }
             });
@@ -131,12 +118,9 @@ export class GridFilterFlag implements OnInit {
         row.push(new FlagFilterOption(type, display + ' True', true));
         row.push(new FlagFilterOption(type, display + ' False', false));
         row.push(new FlagFilterOption(type, display + ' Unset', null));
-        row[0].otherRow.push(row[1]);
-        row[0].otherRow.push(row[2]);
-        row[1].otherRow.push(row[0]);
-        row[1].otherRow.push(row[2]);
-        row[2].otherRow.push(row[0]);
-        row[2].otherRow.push(row[1]);
+        row[0].otherRow.push(row[1], row[2]);
+        row[1].otherRow.push(row[0], row[2]);
+        row[2].otherRow.push(row[0], row[1]);
         this.flags.push(row);
     }
 
@@ -150,10 +134,10 @@ export class GridFilterFlag implements OnInit {
             return;
         }
 
-        if (this.statementAge != null) {
-            this.filter.statementAge = this.statementAge;
-        } else {
+        if (this.statementAge == null) {
             this.filter.statementAge = null;
+        } else {
+            this.filter.statementAge = this.statementAge;
         }
     }
 

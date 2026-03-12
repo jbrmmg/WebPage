@@ -1,7 +1,7 @@
 <div class="row row-gap">
-    <label class="btn btn-primary">
-        <em class="fa fa-close" (click)="clearPrints()"></em>
-    </label>
+    <button class="btn btn-primary">
+        <em class="fa fa-close" (click)="clearPrints()" (keydown.enter)="clearPrints()" tabindex="0"></em>
+    </button>
 </div>
 <div *ngFor="let row of rows" class="row row-gap">
     <div *ngFor="let col of cols" class="col-4">

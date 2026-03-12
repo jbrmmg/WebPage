@@ -1,5 +1,5 @@
-import {Component, Input} from "@angular/core";
-import {HierarchyResponse} from "../../../backup-hierarchyresponse";
+import {Component, Input} from '@angular/core';
+import {HierarchyResponse} from '../../../backup-hierarchyresponse';
 
 @Component({
     selector: 'jbr-backup-file-header-size',

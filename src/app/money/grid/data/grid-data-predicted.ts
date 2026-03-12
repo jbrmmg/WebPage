@@ -1,6 +1,6 @@
-import {Component} from "@angular/core";
-import {NgIf} from "@angular/common";
-import {GridData} from "./grid-data";
+import {Component} from '@angular/core';
+import {NgIf} from '@angular/common';
+import {GridData} from './grid-data';
 
 @Component({
     selector: 'jbr-grid-data-predicted',

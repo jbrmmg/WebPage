@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, TemplateRef, Type} from "@angular/core";
-import {FlagType} from "./grid-header-flag-type";
-import {FilterEvent, GridHeader} from "./grid-header";
-import {HeaderType} from "./grid-header-type";
-import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import {PopupComponent} from "../../../standard/popup.component";
-import {GridFilterFlag} from "../filters/grid-filter-flag";
+import {Component, EventEmitter, Input, OnInit, TemplateRef, Type} from '@angular/core';
+import {FlagType} from './grid-header-flag-type';
+import {FilterEvent, GridHeader} from './grid-header';
+import {HeaderType} from './grid-header-type';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import {PopupComponent} from '../../../standard/popup.component';
+import {GridFilterFlag} from '../filters/grid-filter-flag';
 
 @Component({
     selector: 'jbr-grid-header-flag',
@@ -19,10 +19,10 @@ export class GridHeaderFlag extends GridHeader implements OnInit {
     @Input() flagType: FlagType;
     modalRef: BsModalRef;
     content: Type<any>;
-    inputs: Record<string,unknown>;
+    inputs: Record<string, unknown>;
     okEvent: EventEmitter<void> = new EventEmitter();
 
-    constructor(private modalService: BsModalService) {
+    constructor(private readonly modalService: BsModalService) {
         super();
     }
 
@@ -32,10 +32,10 @@ export class GridHeaderFlag extends GridHeader implements OnInit {
             okEvent: this.okEvent };
     }
 
-    unset() : boolean {
+    unset(): boolean {
         let flag: boolean;
 
-        switch(this.flagType) {
+        switch (this.flagType) {
             case FlagType.Locked:
                 flag = this.filter.locked;
                 break;
@@ -49,10 +49,10 @@ export class GridHeaderFlag extends GridHeader implements OnInit {
         return flag == null;
     }
 
-    flagFilter() : boolean {
+    flagFilter(): boolean {
         let flag: boolean;
 
-        switch(this.flagType) {
+        switch (this.flagType) {
             case FlagType.Locked:
                 flag = this.filter.locked;
                 break;
@@ -63,15 +63,15 @@ export class GridHeaderFlag extends GridHeader implements OnInit {
                 flag = this.filter.predicted;
         }
 
-        if(flag == null) {
+        if (flag == null) {
             return false;
         }
 
-        return flag == true;
+        return flag;
     }
 
     setFilter(value: boolean) {
-        switch(this.flagType) {
+        switch (this.flagType) {
             case FlagType.Locked:
                 this.filter.locked = value;
                 break;
@@ -83,7 +83,7 @@ export class GridHeaderFlag extends GridHeader implements OnInit {
         }
     }
 
-    getSourceFromFlagType() : HeaderType {
+    getSourceFromFlagType(): HeaderType {
         switch (this.flagType) {
             case FlagType.Locked:
                 return HeaderType.Locked;
@@ -98,16 +98,16 @@ export class GridHeaderFlag extends GridHeader implements OnInit {
 
     changeValue() {
         // Change the value.
-        if(this.unset()) {
+        if (this.unset()) {
             this.setFilter(true);
-        } else if(this.flagFilter() == true) {
+        } else if (this.flagFilter()) {
             this.setFilter(false);
         } else {
             this.setFilter(null);
         }
 
         // Generate the event.
-        let event: FilterEvent = new FilterEvent();
+        const event: FilterEvent = new FilterEvent();
         event.source = this.getSourceFromFlagType();
         this.filterChanged.emit(event);
     }
@@ -115,7 +115,7 @@ export class GridHeaderFlag extends GridHeader implements OnInit {
     onClear() {
         this.modalRef.hide();
 
-        if(this.filter != null) {
+        if (this.filter != null) {
             this.filter.fromReconciled = null;
             this.filter.predicted = null;
             this.filter.locked = null;
@@ -132,7 +132,7 @@ export class GridHeaderFlag extends GridHeader implements OnInit {
         this.okEvent.emit();
 
         // Generate the event.
-        let event: FilterEvent = new FilterEvent();
+        const event: FilterEvent = new FilterEvent();
         event.source = this.getSourceFromFlagType();
         this.filterChanged.emit(event);
     }

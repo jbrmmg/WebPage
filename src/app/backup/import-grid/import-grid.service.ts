@@ -1,18 +1,18 @@
-import {Observable, throwError} from "rxjs";
-import {environment} from "../../../environments/environment";
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {ImportGridFile} from "./import-grid-file";
-import {catchError, tap} from "rxjs/operators";
-import {Injectable} from "@angular/core";
-import {ListFilterType} from "./import-grid-filter";
-import {TrafficLightStatus, TrafficLightType} from "./traffic/import-grid-traffic-light";
-import {FileDestinationUpdate} from "./import-grid-update-destination";
+import {Observable, throwError} from 'rxjs';
+import {environment} from '../../../environments/environment';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {ImportGridFile} from './import-grid-file';
+import {catchError, tap} from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {ListFilterType} from './import-grid-filter';
+import {TrafficLightStatus, TrafficLightType} from './traffic/import-grid-traffic-light';
+import {FileDestinationUpdate} from './import-grid-update-destination';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ImportGridService {
-    constructor(private http: HttpClient) {
+    constructor(private readonly http: HttpClient) {
     }
 
     private static handleError(err: HttpErrorResponse) {

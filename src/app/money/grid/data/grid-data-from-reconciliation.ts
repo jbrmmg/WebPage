@@ -1,10 +1,10 @@
-import {Component, EventEmitter, OnInit, Output, TemplateRef, Type} from "@angular/core";
-import {NgIf} from "@angular/common";
-import {GridData} from "./grid-data";
-import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import {MoneyFiles} from "../../files/money-files";
-import {IFile} from "../../files/file";
-import {PopupComponent} from "../../../standard/popup.component";
+import {Component, EventEmitter, OnInit, Output, TemplateRef, Type} from '@angular/core';
+import {NgIf} from '@angular/common';
+import {GridData} from './grid-data';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import {MoneyFiles} from '../../files/money-files';
+import {IFile} from '../../files/file';
+import {PopupComponent} from '../../../standard/popup.component';
 
 @Component({
     selector: 'jbr-grid-data-from-reconciliation',
@@ -20,7 +20,7 @@ export class GridDataFromReconciliation extends GridData implements OnInit {
     modalRef: BsModalRef;
 
     content: Type<any>;
-    inputs: Record<string,unknown>;
+    inputs: Record<string, unknown>;
 
     @Output() clearFileEmitter: EventEmitter<void> = new EventEmitter();
     @Output() selectFileEmitter: EventEmitter<IFile> = new EventEmitter();
@@ -30,7 +30,7 @@ export class GridDataFromReconciliation extends GridData implements OnInit {
     }
 
     ngOnInit(): void {
-        let selectFileEvent: EventEmitter<IFile> = new EventEmitter();
+        const selectFileEvent: EventEmitter<IFile> = new EventEmitter();
         selectFileEvent.subscribe(file => {
             this.onSelectFile(file);
         });

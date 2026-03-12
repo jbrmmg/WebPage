@@ -1,10 +1,10 @@
-import {Component, EventEmitter, OnInit, TemplateRef, Type} from "@angular/core";
-import {FilterEvent, GridHeader} from "./grid-header";
-import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
-import {HeaderType} from "./grid-header-type";
-import {PopupComponent} from "../../../standard/popup.component";
-import {GridFilterDate} from "../filters/grid-filter-date";
+import {Component, EventEmitter, OnInit, TemplateRef, Type} from '@angular/core';
+import {FilterEvent, GridHeader} from './grid-header';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
+import {HeaderType} from './grid-header-type';
+import {PopupComponent} from '../../../standard/popup.component';
+import {GridFilterDate} from '../filters/grid-filter-date';
 
 @Component({
     selector: 'jbr-grid-header-date',
@@ -19,11 +19,11 @@ import {GridFilterDate} from "../filters/grid-filter-date";
 export class GridHeaderDate extends GridHeader implements OnInit {
     modalRef: BsModalRef;
     content: Type<any>;
-    inputs: Record<string,unknown>;
+    inputs: Record<string, unknown>;
     clearEvent: EventEmitter<void> = new EventEmitter();
     okEvent: EventEmitter<void> = new EventEmitter();
 
-    constructor(private modalService: BsModalService ) {
+    constructor(private readonly modalService: BsModalService ) {
         super();
     }
 
@@ -45,11 +45,11 @@ export class GridHeaderDate extends GridHeader implements OnInit {
     onClear() {
         this.modalRef.hide();
 
-        if(this.filter != null) {
+        if (this.filter != null) {
             this.filter.dateRange = null;
         }
 
-        let event: FilterEvent = new FilterEvent();
+        const event: FilterEvent = new FilterEvent();
         event.source = HeaderType.Date;
         this.filterChanged.emit(event);
     }
@@ -59,7 +59,7 @@ export class GridHeaderDate extends GridHeader implements OnInit {
 
         this.okEvent.emit();
 
-        let event: FilterEvent = new FilterEvent();
+        const event: FilterEvent = new FilterEvent();
         event.source = HeaderType.Date;
         this.filterChanged.emit(event);
     }

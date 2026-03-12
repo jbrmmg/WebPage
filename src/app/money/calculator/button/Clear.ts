@@ -1,6 +1,6 @@
-import {Base} from "./base/Base";
-import {IBase} from "./base/IBase";
-import {CalculatorService} from "../calculator-service";
+import {Base} from './base/Base';
+import {IBase} from './base/IBase';
+import {CalculatorService} from '../calculator-service';
 
 
 export class Clear extends Base implements IBase {
@@ -15,7 +15,7 @@ export class Clear extends Base implements IBase {
     }
 
     isLinkedKeyPress(keyText: string): boolean {
-        if(keyText === "#") {
+        if (keyText === '#') {
             return true;
         }
 

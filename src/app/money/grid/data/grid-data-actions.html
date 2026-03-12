@@ -1,7 +1,7 @@
 <div class="row btn-row">
     <div class="col-3 btn-col" *ngFor="let action of actions">
-        <label [ngClass]="getClass(action)" (click)="doAction(action)" [title]="getTitle(action)">
+        <button [ngClass]="getClass(action)" (click)="doAction(action)" [title]="getTitle(action)">
             <em [ngClass]="getIconClass(action)"></em>
-        </label>
+        </button>
     </div>
 </div>

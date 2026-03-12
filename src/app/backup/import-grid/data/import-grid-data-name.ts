@@ -1,5 +1,5 @@
-import {Component, Input} from "@angular/core";
-import {ImportGridData} from "./import-grid-data";
+import {Component, Input} from '@angular/core';
+import {ImportGridData} from './import-grid-data';
 
 @Component({
     selector: 'jbr-import-grid-data-name',
@@ -9,25 +9,23 @@ import {ImportGridData} from "./import-grid-data";
     standalone: true
 })
 export class ImportGridDataName extends ImportGridData {
-    @Input() importValue: boolean = false;
+    @Input() importValue = false;
 
     getText(): string {
-        if(this.file && this.file.source) {
-            if(this.importValue) {
-                if(this.file.source.importName) {
+        if (this.file?.source) {
+            if (this.importValue) {
+                if (this.file.source.importName) {
                     return this.file.source.importName;
                 }
-            } else {
-                if(this.file.source.filename) {
-                    return this.file.source.filename;
-                }
+            } else if (this.file.source.filename) {
+                return this.file.source.filename;
             }
         }
 
-        return "";
+        return '';
     }
 
     getClass() {
-        return this.importValue ? "import-name" : "name";
+        return this.importValue ? 'import-name' : 'name';
     }
 }

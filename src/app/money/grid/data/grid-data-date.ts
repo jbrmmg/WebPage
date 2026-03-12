@@ -1,15 +1,15 @@
-import {Component, EventEmitter, HostListener, OnInit, TemplateRef, Type} from "@angular/core";
-import {DatePipe, NgIf} from "@angular/common";
-import {MoneyService} from "../../money.service";
-import {TransactionEditType} from "../../transaction/transactionEditType";
-import {GridDataInlineEdit} from "./grid-data-inline-edit";
-import {GridDataEvent} from "./grid-data-event";
-import {HeaderType} from "../header/grid-header-type";
-import {TransactionReport} from "../../transaction/transactionReport";
-import {PopupComponent} from "../../../standard/popup.component";
-import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import {GridEntryDate} from "../entry/date/grid-entry-date";
-import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
+import {Component, EventEmitter, HostListener, OnInit, TemplateRef, Type} from '@angular/core';
+import {DatePipe, NgIf} from '@angular/common';
+import {MoneyService} from '../../money.service';
+import {TransactionEditType} from '../../transaction/transactionEditType';
+import {GridDataInlineEdit} from './grid-data-inline-edit';
+import {GridDataEvent} from './grid-data-event';
+import {HeaderType} from '../header/grid-header-type';
+import {TransactionReport} from '../../transaction/transactionReport';
+import {PopupComponent} from '../../../standard/popup.component';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import {GridEntryDate} from '../entry/date/grid-entry-date';
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 
 @Component({
     selector: 'jbr-grid-data-date',
@@ -27,21 +27,21 @@ export class GridDataDate extends GridDataInlineEdit implements OnInit {
     modalRef: BsModalRef;
 
     content: Type<any>;
-    inputs: Record<string,unknown>;
+    inputs: Record<string, unknown>;
 
     dateValue: Date = new Date;
 
-    constructor(private modalService: BsModalService,
-                private datePipe: DatePipe) {
+    constructor(private readonly modalService: BsModalService,
+                private readonly datePipe: DatePipe) {
         super(TransactionEditType.Date);
     }
 
     ngOnInit(): void {
-        let enterEvent: EventEmitter<Date> = new EventEmitter();
+        const enterEvent: EventEmitter<Date> = new EventEmitter();
 
         enterEvent.subscribe(d => {
             this.onDateFromPopup(d);
-        })
+        });
 
         this.content = GridEntryDate;
         this.inputs = {
@@ -51,10 +51,10 @@ export class GridDataDate extends GridDataInlineEdit implements OnInit {
 
     @HostListener('document:click', ['$event'])
     clickOut(event) {
-        if(this.inputElement != null) {
+        if (this.inputElement != null) {
             if (!this.inputElement.nativeElement.contains(event.target)) {
-                let value: string = this.inputElement.nativeElement.value;
-                if(this.isEditing() && value.length > 0) {
+                const value: string = this.inputElement.nativeElement.value;
+                if (this.isEditing() && value.length > 0) {
                     this.completeEdit();
                 }
             }
@@ -63,20 +63,20 @@ export class GridDataDate extends GridDataInlineEdit implements OnInit {
 
     onPopupDate(template: TemplateRef<any>) {
         // Date the date value for the popup.
-        let date: Date = new Date(this.transaction.date + "T00:00:00");
-        this.dateValue.setFullYear(date.getFullYear(),date.getMonth(),date.getDate());
+        const date: Date = new Date(this.transaction.date + 'T00:00:00');
+        this.dateValue.setFullYear(date.getFullYear(), date.getMonth(), date.getDate());
 
         this.modalRef = this.modalService.show(template, {class: 'modal-md'});
     }
 
     interpretInput(text: string): void {
-        let newDate: string = MoneyService.getDate(text);
+        const newDate: string = MoneyService.getDate(text);
 
-        if (this.transaction.date != newDate) {
+        if (this.transaction.date !== newDate) {
             this.transaction.date = newDate;
             this.transaction.modified = true;
 
-            let event: GridDataEvent = new GridDataEvent();
+            const event: GridDataEvent = new GridDataEvent();
             event.transaction = this.transaction;
             event.source = HeaderType.Date;
             this.valueChanged.emit(event);
@@ -88,7 +88,7 @@ export class GridDataDate extends GridDataInlineEdit implements OnInit {
     }
 
     canEdit(): boolean {
-        if(this.transaction.type != TransactionReport.TRANSACTION) {
+        if (this.transaction.type !== TransactionReport.TRANSACTION) {
             return false;
         }
 
@@ -109,15 +109,15 @@ export class GridDataDate extends GridDataInlineEdit implements OnInit {
         this.modalRef.hide();
 
         // Has the value changed?
-        let newDate: string = this.datePipe.transform(newValue,"yyyy-MM-dd");
+        const newDate: string = this.datePipe.transform(newValue, 'yyyy-MM-dd');
 
-        if(this.transaction.date != newDate) {
+        if (this.transaction.date !== newDate) {
             // Set the transaction from the date.
             this.transaction.date = newDate;
             this.transaction.modified = true;
             console.log(this.transaction.date);
 
-            let event: GridDataEvent = new GridDataEvent();
+            const event: GridDataEvent = new GridDataEvent();
             event.transaction = this.transaction;
             event.source = HeaderType.Date;
             this.valueChanged.emit(event);

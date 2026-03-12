@@ -1,6 +1,6 @@
 <div class="row label-row">
     <p class="label-format" *ngFor="let nextLabel of selectedFile.labels">{{nextLabel}}</p>
-    <em class="fa fa-plus plus" (click)="showListSelector(labelPicker)" title="Add or remove labels"></em>
+    <em class="fa fa-plus plus" (click)="showListSelector(labelPicker)" (keydown.enter)="showListSelector(labelPicker)" tabindex="0" title="Add or remove labels"></em>
 </div>
 
 <ng-template #labelPicker>
@@ -9,7 +9,7 @@
     </div>
     <div class="body">
         <div class="row outer" *ngFor="let nextLabel of allLabels">
-            <div><p [ngClass]="nextLabel.selected ? 'label-format-option-selected': 'label-format-option'" (click)="select(nextLabel.id)">{{nextLabel.name}}</p></div>
+            <div><p [ngClass]="nextLabel.selected ? 'label-format-option-selected': 'label-format-option'" (click)="select(nextLabel.id)" (keydown.enter)="select(nextLabel.id)" tabindex="0">{{nextLabel.name}}</p></div>
         </div>
     </div>
 </ng-template>

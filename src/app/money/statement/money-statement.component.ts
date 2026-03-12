@@ -1,13 +1,13 @@
-import {Component, EventEmitter, Input, OnInit} from "@angular/core";
-import {CurrencyPipe, NgClass, NgForOf, NgIf} from "@angular/common";
-import {ButtonsModule} from "ngx-bootstrap/buttons";
-import {MoneyService} from "../money.service";
-import {IAccount, JbAccount} from "../account/jbAccount";
-import {IStatement} from "./statement";
-import {ITransactionReport, TransactionReport} from "../transaction/transactionReport";
-import {TransactionFilter} from "../transaction/transactionFilter";
-import {StatementDate} from "./statementDate";
-import {FinancialAmount} from "../transaction/financialAmount";
+import {Component, EventEmitter, Input, OnInit} from '@angular/core';
+import {CurrencyPipe, NgClass, NgForOf, NgIf} from '@angular/common';
+import {ButtonsModule} from 'ngx-bootstrap/buttons';
+import {MoneyService} from '../money.service';
+import {IAccount, JbAccount} from '../account/jbAccount';
+import {IStatement} from './statement';
+import {ITransactionReport, TransactionReport} from '../transaction/transactionReport';
+import {TransactionFilter} from '../transaction/transactionFilter';
+import {StatementDate} from './statementDate';
+import {FinancialAmount} from '../transaction/financialAmount';
 
 @Component({
     selector: 'jbr-statement',
@@ -28,23 +28,23 @@ export class MoneyStatement implements OnInit {
     @Input() statement: IStatement;
     @Input() lockEmitter: EventEmitter<void>;
     data: ITransactionReport[];
-    transactions : ITransactionReport[];
+    transactions: ITransactionReport[];
     balances: ITransactionReport[];
 
-    constructor(private _moneyService: MoneyService) {
+    constructor(private readonly _moneyService: MoneyService) {
     }
 
     ngOnInit(): void {
         console.log(this.account);
         console.log(this.statement);
 
-        let filter: TransactionFilter = new TransactionFilter();
-        let account: JbAccount = new JbAccount( this.account.id,
+        const filter: TransactionFilter = new TransactionFilter();
+        const account: JbAccount = new JbAccount( this.account.id,
             this.account.name,
             this.account.imagePrefix,
             this.account.colour,
             this.account.closed);
-        let date: StatementDate = new StatementDate(this.statement.year,this.statement.month);
+        const date: StatementDate = new StatementDate(this.statement.year, this.statement.month);
 
         filter.accounts = [];
         filter.accounts.push(account);
@@ -55,7 +55,7 @@ export class MoneyStatement implements OnInit {
                 this.data = val;
             },
             error: (response) => {
-                console.error("getTransactions Failed " + response);
+                console.error('getTransactions Failed ' + response);
             },
             complete: () => {
                 // Split data into transactions and balances.
@@ -63,34 +63,37 @@ export class MoneyStatement implements OnInit {
                 this.balances = [];
 
                 this.data.forEach(next => {
-                   if(next.type == TransactionReport.TRANSACTION) {
+                   if (next.type === TransactionReport.TRANSACTION) {
                        this.transactions.push(next);
                    } else {
                        this.balances.push(next);
                    }
                 });
-                console.log("getTransactions Complete. ")
+                console.log('getTransactions Complete. ');
             }
         });
     }
 
     isBlank(transaction: ITransactionReport, credit: boolean): boolean {
-        if(transaction.amount != null && transaction.amount.type == FinancialAmount.CREDIT && credit)
+        if (transaction.amount?.type === FinancialAmount.CREDIT && credit) {
             return false;
+        }
 
-        return !(transaction.amount != null && transaction.amount.type == FinancialAmount.DEBIT && !credit);
+        return !(transaction.amount?.type === FinancialAmount.DEBIT && !credit);
     }
 
     getCredit(transaction: ITransactionReport): number {
-        if(transaction.amount != null && transaction.amount.type == FinancialAmount.CREDIT)
+        if (transaction.amount?.type === FinancialAmount.CREDIT) {
             return transaction.amount.value;
+        }
 
         return 0;
     }
 
     getDebit(transaction: ITransactionReport): number {
-        if(transaction.amount != null && transaction.amount.type == FinancialAmount.DEBIT)
+        if (transaction.amount?.type === FinancialAmount.DEBIT) {
             return transaction.amount.value;
+        }
 
         return 0;
     }
@@ -104,35 +107,35 @@ export class MoneyStatement implements OnInit {
     }
 
     getBalanceClass(transaction: ITransactionReport): string {
-        if(transaction.balance.type == FinancialAmount.DEBIT) {
-            return "debit";
+        if (transaction.balance.type === FinancialAmount.DEBIT) {
+            return 'debit';
         }
 
-        return "";
+        return '';
     }
 
     openBalanceClass(): string {
-        if(this.getOpenBalance() < 0) {
-            return "amount debit";
+        if (this.getOpenBalance() < 0) {
+            return 'amount debit';
         }
 
-        return "amount";
+        return 'amount';
     }
 
     closeBalanceClass(): string {
-        if(this.getCloseBalance() < 0) {
-            return "amount debit";
+        if (this.getCloseBalance() < 0) {
+            return 'amount debit';
         }
 
-        return "amount";
+        return 'amount';
     }
 
     getOpenBalance(): number {
         // Find the open balance.
-        let result: number = 0;
-        if(this.balances != null) {
+        let result = 0;
+        if (this.balances != null) {
             this.balances.forEach(next => {
-                if (next.type == TransactionReport.OPEN_BALANCE) {
+                if (next.type === TransactionReport.OPEN_BALANCE) {
                     result = next.balance.value;
                 }
             });
@@ -143,10 +146,10 @@ export class MoneyStatement implements OnInit {
 
     getCredits(): number {
         // Sum the credit values.
-        let result: number = 0;
-        if(this.transactions != null) {
+        let result = 0;
+        if (this.transactions != null) {
             this.transactions.forEach(next => {
-                if (next.amount != null && next.amount.type == FinancialAmount.CREDIT) {
+                if (next.amount?.type === FinancialAmount.CREDIT) {
                     result = result + next.amount.value;
                 }
             });
@@ -157,10 +160,10 @@ export class MoneyStatement implements OnInit {
 
     getDebits(): number {
         // Sum the debits values.
-        let result: number = 0;
+        let result = 0;
         if (this.transactions != null) {
             this.transactions.forEach(next => {
-                if (next.amount != null && next.amount.type == FinancialAmount.DEBIT) {
+                if (next.amount?.type === FinancialAmount.DEBIT) {
                     result = result + next.amount.value;
                 }
             });
@@ -171,14 +174,11 @@ export class MoneyStatement implements OnInit {
 
     getCloseBalance(): number {
         // Find the closing balance (use future balance if available, else today balance.).
-        let result: number = 0;
-        let resultSet: boolean = false;
+        let result = 0;
 
-        if(this.balances != null) {
+        if (this.balances != null) {
             this.balances.forEach(next => {
-                if (next.type == TransactionReport.FUTURE_BALANCE) {
-                    result = next.balance.value;
-                } else if (next.type == TransactionReport.TODAY_BALANCE && !resultSet) {
+                if (next.type === TransactionReport.FUTURE_BALANCE || next.type === TransactionReport.TODAY_BALANCE) {
                     result = next.balance.value;
                 }
             });
@@ -188,7 +188,7 @@ export class MoneyStatement implements OnInit {
     }
 
     lock() {
-        if(!this.statement.locked){
+        if (!this.statement.locked) {
             this.lockEmitter.emit();
         }
     }

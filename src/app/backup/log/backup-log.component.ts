@@ -1,7 +1,7 @@
-import {Component, OnInit} from "@angular/core";
-import {Log} from "../backup-log";
-import {DatePipe} from "@angular/common";
-import {BackupLogService} from "./backup-log-service";
+import {Component, OnInit} from '@angular/core';
+import {Log} from '../backup-log';
+import {DatePipe} from '@angular/common';
+import {BackupLogService} from './backup-log-service';
 
 @Component({
     selector: 'jbr-backup-log',
@@ -12,7 +12,7 @@ export class BackupLogComponent implements OnInit {
     logs: Log[];
 
     constructor(private readonly _backupLogService: BackupLogService,
-                private datePipe: DatePipe) {
+                private readonly datePipe: DatePipe) {
     }
 
     ngOnInit(): void {
@@ -23,19 +23,19 @@ export class BackupLogComponent implements OnInit {
             next: logs => {
                 logs.forEach(nextLog => {
                     this.logs.push(nextLog);
-                })
+                });
             },
-            error: err => { console.log('Failed load log ' + err) },
-            complete: () => { console.log('Load Logs Complete') }
-        })
+            error: err => { console.log('Failed load log ' + err); },
+            complete: () => { console.log('Load Logs Complete'); }
+        });
     }
 
     getLogDate(log: Log): string {
-        return this.datePipe.transform(log.date,'ddMMM HH:mm:ss');
+        return this.datePipe.transform(log.date, 'ddMMM HH:mm:ss');
     }
 
     getLogIconClass(log: Log): string {
-        switch(log.type) {
+        switch (log.type) {
             case 'Debug':
                 return 'col-1 icon-col fa fa-info-circle icon-debug';
             case 'Info':
@@ -46,6 +46,6 @@ export class BackupLogComponent implements OnInit {
                 return 'col-1 icon-col fa fa-exclamation-circle icon-error';
         }
 
-        return 'col-1 icon-col fa fa-question-circle-o'
+        return 'col-1 icon-col fa fa-question-circle-o';
     }
 }

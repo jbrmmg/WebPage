@@ -1,6 +1,6 @@
-import {Component, Input} from "@angular/core";
-import {FileInfoExtra} from "../../../backup-fileinfoextra";
-import {BackupFileData} from "./backup-file-data";
+import {Component, Input} from '@angular/core';
+import {FileInfoExtra} from '../../../backup-fileinfoextra';
+import {BackupFileData} from './backup-file-data';
 
 @Component({
     selector: 'jbr-backup-file-data-select',
@@ -13,7 +13,7 @@ export class BackupFileDataSelect extends BackupFileData {
     @Input() selectedFile: FileInfoExtra;
 
     isSelected(): boolean {
-        return this.file && this.selectedFile && this.file.id === this.selectedFile.file.id;
+        return this.file != null && this.selectedFile?.file?.id === this.file.id;
     }
 
     getSelected(): string {

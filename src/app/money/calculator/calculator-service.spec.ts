@@ -128,7 +128,7 @@ describe('CalculatorService', () => {
 
         it('should do nothing when initialised with 0', () => {
             service.digit(3);
-            service.initialise(0.0);
+            service.initialise(0);
             expect(service.getValue).toBe(3);
         });
     });
@@ -236,7 +236,7 @@ describe('Decimal button', () => {
         expect(service.decimal).toHaveBeenCalled();
     });
 
-    it('should match "." key press', () => {
+    it('should match \'.\' key press', () => {
         const decimal = new Decimal(service);
         expect(decimal.isLinkedKeyPress('.')).toBeTrue();
     });
@@ -256,7 +256,7 @@ describe('Delete button', () => {
         expect(service.delete).toHaveBeenCalled();
     });
 
-    it('should match "Delete" key press', () => {
+    it('should match \'Delete\' key press', () => {
         const del = new Delete(service);
         expect(del.isLinkedKeyPress('Delete')).toBeTrue();
     });
@@ -281,12 +281,12 @@ describe('Clear button', () => {
         expect(service.clear).toHaveBeenCalled();
     });
 
-    it('should match "#" key press', () => {
+    it('should match \'#\' key press', () => {
         const clear = new Clear(service);
         expect(clear.isLinkedKeyPress('#')).toBeTrue();
     });
 
-    it('should match its own text "CLR"', () => {
+    it('should match its own text \'CLR\'', () => {
         const clear = new Clear(service);
         expect(clear.isLinkedKeyPress('CLR')).toBeTrue();
     });
@@ -311,12 +311,12 @@ describe('Equals button', () => {
         expect(service.calculate).toHaveBeenCalled();
     });
 
-    it('should match "Enter" key press', () => {
+    it('should match \'Enter\' key press', () => {
         const equals = new Equals(service);
         expect(equals.isLinkedKeyPress('Enter')).toBeTrue();
     });
 
-    it('should match "=" key press', () => {
+    it('should match \'=\' key press', () => {
         const equals = new Equals(service);
         expect(equals.isLinkedKeyPress('=')).toBeTrue();
     });
@@ -334,22 +334,22 @@ describe('Operator button', () => {
         service = new CalculatorService();
     });
 
-    it('should set text to "+" for ADD', () => {
+    it('should set text to \'+\' for ADD', () => {
         const op = new Operator(OperatorType.ADD, service);
         expect(op.text).toBe('+');
     });
 
-    it('should set text to "-" for SUBTRACT', () => {
+    it('should set text to \'-\' for SUBTRACT', () => {
         const op = new Operator(OperatorType.SUBTRACT, service);
         expect(op.text).toBe('-');
     });
 
-    it('should set text to "*" for MULTIPLY', () => {
+    it('should set text to \'*\' for MULTIPLY', () => {
         const op = new Operator(OperatorType.MULTIPLY, service);
         expect(op.text).toBe('*');
     });
 
-    it('should set text to "/" for DIVIDE', () => {
+    it('should set text to \'/\' for DIVIDE', () => {
         const op = new Operator(OperatorType.DIVIDE, service);
         expect(op.text).toBe('/');
     });
@@ -369,12 +369,12 @@ describe('DebitCredit button', () => {
         service = new CalculatorService();
     });
 
-    it('should show "DB" when service is in debit mode', () => {
+    it('should show \'DB\' when service is in debit mode', () => {
         const dc = new DebitCredit(service);
         expect(dc.text).toBe('DB');
     });
 
-    it('should show "CR" when service is in credit mode', () => {
+    it('should show \'CR\' when service is in credit mode', () => {
         service.debitCreditChange();
         const dc = new DebitCredit(service);
         expect(dc.text).toBe('CR');
@@ -387,21 +387,21 @@ describe('DebitCredit button', () => {
         expect(service.debitCreditChange).toHaveBeenCalled();
     });
 
-    it('should match "c" key when in debit mode', () => {
+    it('should match \'c\' key when in debit mode', () => {
         const dc = new DebitCredit(service);
         expect(service.isDebitValue).toBeTrue();
         expect(dc.isLinkedKeyPress('c')).toBeTrue();
         expect(dc.isLinkedKeyPress('C')).toBeTrue();
     });
 
-    it('should match "d" key when in credit mode', () => {
+    it('should match \'d\' key when in credit mode', () => {
         service.debitCreditChange();
         const dc = new DebitCredit(service);
         expect(dc.isLinkedKeyPress('d')).toBeTrue();
         expect(dc.isLinkedKeyPress('D')).toBeTrue();
     });
 
-    it('should update text to "CR" after toggling to credit', () => {
+    it('should update text to \'CR\' after toggling to credit', () => {
         const dc = new DebitCredit(service);
         service.debitCreditChange(); // triggers statusChange -> handleChange
         expect(dc.text).toBe('CR');
@@ -415,7 +415,7 @@ describe('Display', () => {
         service = new CalculatorService();
     });
 
-    it('should display "0.00" initially', () => {
+    it('should display \'0.00\' initially', () => {
         const display = new Display(service);
         expect(display.Text).toBe('0.00');
     });

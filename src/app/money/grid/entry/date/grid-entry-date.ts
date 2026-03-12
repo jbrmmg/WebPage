@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input} from "@angular/core";
-import {FormsModule} from "@angular/forms";
-import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
+import {Component, EventEmitter, Input} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
 
 @Component({
     selector: 'jbr-entry-date',
@@ -17,10 +17,10 @@ export class GridEntryDate {
     @Input() dateValue: Date;
     @Input() input: EventEmitter<Date>;
 
-    initialise: boolean = false;
+    initialise = false;
 
     onDateChange(newValue: Date) {
-        if(this.initialise) {
+        if (this.initialise) {
             // Fire the event.
             if (this.input != null) {
                 this.input.emit(newValue);

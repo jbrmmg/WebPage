@@ -1,12 +1,11 @@
-<!-- <p>{{header}}</p> -->
 <div class="col">
     <div class="row row-margin">
-        <div class="select-button" (click)="selectAll()">
+        <div class="select-button" (click)="selectAll()" (keydown.enter)="selectAll()" tabindex="0">
             <em class="fa fa-check-circle"></em>
         </div>
     </div>
     <div class="row row-margin">
-        <div class="select-button" (click)="selectNone()">
+        <div class="select-button" (click)="selectNone()" (keydown.enter)="selectNone()" tabindex="0">
             <em class="fa fa-times-circle"></em>
         </div>
     </div>

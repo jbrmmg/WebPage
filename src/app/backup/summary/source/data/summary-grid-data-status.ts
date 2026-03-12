@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {SummaryGridData} from "./summary-grid-data";
+import {Component} from '@angular/core';
+import {SummaryGridData} from './summary-grid-data';
 
 @Component({
     selector: 'jbr-summary-grid-data-status',
@@ -11,10 +11,10 @@ import {SummaryGridData} from "./summary-grid-data";
 })
 export class SummaryGridDataStatus extends SummaryGridData {
     getText(): string {
-        if(this.source) {
+        if (this.source) {
             return this.source.status;
         }
 
-        return "unknown";
+        return 'unknown';
     }
 }
