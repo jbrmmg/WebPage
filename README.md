@@ -67,6 +67,32 @@ npm run build
 
 Outputs a production build.
 
+## Docker
+
+Build the Angular app first, then build and run the Docker image:
+
+```bash
+npm run build
+docker build -t webpage .
+docker run -d \
+  --name webpage \
+  --restart unless-stopped \
+  --add-host=host.docker.internal:host-gateway \
+  -p 80:80 \
+  -e BACKUP_BACKEND=host.docker.internal:12013 \
+  -e MONEY_BACKEND=host.docker.internal:12017 \
+  webpage
+```
+
+`--add-host=host.docker.internal:host-gateway` makes the host machine reachable from inside the container. Use this when the backend services are running directly on the host.
+
+| Environment variable | Description                                | Default                          |
+|----------------------|--------------------------------------------|----------------------------------|
+| `BACKUP_BACKEND`     | `hostname:port` of the backup backend      | `host.docker.internal:12013`     |
+| `MONEY_BACKEND`      | `hostname:port` of the money backend       | `host.docker.internal:12017`     |
+
+nginx serves the Angular app and proxies `/backup` and `/money` requests to the respective backends. The `proxy.conf.json` files are dev-server only and have no effect in Docker.
+
 ## Testing
 
 ```bash
