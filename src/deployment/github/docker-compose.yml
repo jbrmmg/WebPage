@@ -2,7 +2,7 @@ name: webpage-runner
 
 services:
   github-runner:
-    image: myoung34/github-runner:latest
+    build: .
     container_name: webpage-runner
     restart: unless-stopped
     env_file:
