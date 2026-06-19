@@ -6,7 +6,6 @@ services:
     ports:
       - "80:80"
     environment:
-      - BACKUP_BACKEND=${BACKUP_BACKEND}
       - MONEY_BACKEND=${MONEY_BACKEND}
     networks:
       - jbr-network
