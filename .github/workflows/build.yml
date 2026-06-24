@@ -97,6 +97,7 @@ jobs:
       - name: Deploy
         env:
           PDN_WEBPAGE_MONEY_BACKEND: ${{ secrets.PDN_WEBPAGE_MONEY_BACKEND }}
+          PDN_WEBPAGE_BACKUP_BACKEND: ${{ secrets.PDN_WEBPAGE_BACKUP_BACKEND }}
         run: |
           docker login nexus.jbrmmg.me.uk:8084 \
             -u deployment \
