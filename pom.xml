@@ -5,7 +5,7 @@
 
     <groupId>com.jbr</groupId>
     <artifactId>MySite.Angular.js</artifactId>
-    <version>26.3.4-SNAPSHOT</version>
+    <version>${revision}</version>
     <packaging>pom</packaging>
 
     <build>
@@ -88,6 +88,7 @@
     </build>
 
     <properties>
+        <revision>local-SNAPSHOT</revision>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
