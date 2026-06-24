@@ -7,6 +7,7 @@ services:
       - "80:80"
     environment:
       - MONEY_BACKEND=${MONEY_BACKEND}
+      - BACKUP_BACKEND=${BACKUP_BACKEND}
     networks:
       - jbr-network
 

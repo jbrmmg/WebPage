@@ -46,3 +46,6 @@ Thumbs.db
 
 # System generated file
 src/api/util/version.json
+
+.env
+.env.secrets
