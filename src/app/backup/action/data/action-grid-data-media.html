@@ -1,10 +1,10 @@
 <div class="row" (click)="selectMedia()" (keydown.enter)="selectMedia()">
     <div class="col-4" (click)="selectMedia()" (keydown.enter)="selectMedia()">
         <div *ngIf="isImage()" (click)="selectMedia()" (keydown.enter)="selectMedia()">
-            <img ngSrc="backup/fileImage?id={{getFileId()}}" height="60" width="120" alt="backup file"/>
+            <img ngSrc="backup/files/image?id={{getFileId()}}" height="60" width="120" alt="backup file"/>
         </div>
         <div *ngIf="isVideo()" (click)="selectMedia()" (keydown.enter)="selectMedia()">
-            <img ngSrc="backup/file-video-image?id={{getFileId()}}" height="60" width="120" alt="backup video file"/>
+            <img ngSrc="backup/files/video-thumbnail?id={{getFileId()}}" height="60" width="120" alt="backup video file"/>
         </div>
     </div>
     <div class="col-8">

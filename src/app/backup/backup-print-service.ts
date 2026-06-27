@@ -132,7 +132,7 @@ export class BackupPrintService {
 
     imageUrl(id: number): string {
         if (environment.production) {
-            return `backup/fileImage?id=${id}`;
+            return `backup/files/image?id=${id}`;
         } else {
             return 'api/backup/test.image.jpg';
         }

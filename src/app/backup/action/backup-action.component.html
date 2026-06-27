@@ -37,10 +37,10 @@
     </button>
     <div class="media-view">
         <div *ngIf="isImageSelected()">
-            <img ngSrc="backup/fileImage?id={{getSelectedFileId()}}" alt="backup file"/>
+            <img ngSrc="backup/files/image?id={{getSelectedFileId()}}" alt="backup file"/>
         </div>
         <div *ngIf="isVideoSelected()">
-            <video src="backup/fileVideo?id={{getSelectedFileId()}}" controls>
+            <video src="backup/files/video?id={{getSelectedFileId()}}" controls>
                 <track kind="captions" src="" label="Captions">
             </video>
         </div>
