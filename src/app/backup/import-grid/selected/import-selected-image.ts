@@ -33,13 +33,13 @@ export class ImportSelectedImage {
         console.log('image update');
 
         if (file.source?.imageSize && file.source.image) {
-            this.imagePath = 'backup/import-image?name=' + file.source.filename;
+            this.imagePath = 'backup/import/file/image?name=' + file.source.filename;
             this.text = file.source.filename;
             this.image = true;
             this.video = false;
             return;
         } else if (file.source?.video) {
-            this.videoPath = 'backup/import-video?name=' + file.source.filename;
+            this.videoPath = 'backup/import/file/video?name=' + file.source.filename;
             this.text = file.source.filename;
             this.video = true;
             return;

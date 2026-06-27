@@ -40,7 +40,7 @@ export class BackupDisplayService {
 
     imageUrl(id: number): string {
         if (environment.production) {
-            return `backup/fileImage?id=${id}`;
+            return `backup/files/image?id=${id}`;
         } else {
             return 'api/backup/test.image.jpg';
         }
@@ -48,14 +48,14 @@ export class BackupDisplayService {
 
     videoUrl(id: number): string {
         if (environment.production) {
-            return `backup/fileVideo?id=${id}`;
+            return `backup/files/video?id=${id}`;
         } else {
             return 'api/backup/test.video.mp4';
         }
     }
 
     getFile(id: number): void {
-        this.http.get<FileInfoExtra>(environment.production === true ? `backup/file?id=${id}` : `api/backup/file${id}.json` ).pipe(
+        this.http.get<FileInfoExtra>(environment.production === true ? `backup/files/detail?id=${id}` : `api/backup/file${id}.json` ).pipe(
             tap(data => console.log(`All: ${JSON.stringify(data)}`)),
             catchError( err => BackupDisplayService.handleError(err))
         ).subscribe({
