@@ -19,7 +19,7 @@ server {
 
     # Proxy money API
     location /money/ {
-        proxy_pass http://${MONEY_BACKEND}/jbr/int/money/;
+        proxy_pass http://${MONEY_BACKEND}/api/v1/;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
