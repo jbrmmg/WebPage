@@ -1,7 +1,8 @@
 {
   "/backup": {
-    "target": "http://localhost:10013/jbr/int",
-    "secure": false
+    "target": "http://localhost:10013",
+    "secure": false,
+    "pathRewrite": {"^/backup": "/api/v1"}
   },
   "/money": {
     "target": "http://localhost:10017/jbr/int",
