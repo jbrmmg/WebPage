@@ -111,7 +111,7 @@ jobs:
             -p ${{ secrets.NEXUS_PASSWORD }}
           echo "BACKUP_BACKEND=${PDN_WEBPAGE_BACKUP_BACKEND}" > .env
           echo "MONEY_BACKEND=${PDN_WEBPAGE_MONEY_BACKEND}" >> .env
-          docker compose -f nginx/docker-compose.yml pull
-          docker compose -f nginx/docker-compose.yml up -d
+          docker compose -f nginx/docker-compose.yml --env-file .env pull
+          docker compose -f nginx/docker-compose.yml --env-file .env up -d
           docker compose pull
           docker compose up -d
