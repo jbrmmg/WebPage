@@ -1,36 +1,18 @@
-th {
-    font-family: Helvetica, serif;
-    font-size: 10px;
-    font-weight: bold;
-    border: 1px solid dimgrey;
-    text-align: center;
-}
+@import "../../../standard/standard-table.css";
 
 td {
-    font-family: Helvetica, serif;
-    font-size: 10px;
-    border: 1px solid dimgrey;
     text-align: center;
 }
 
-td.filter {
-    border: 2px solid black;
-}
+td.filter  { border: 2px solid #a0d4f5; }
+td.unknown { background: #444; }
+td.red     { background: #7a1a1a; }
+td.amber   { background: #7a5a00; }
+td.green   { background: #1a5a1a; }
 
-td.unknown {
-    background: grey;
-}
-
-td.red {
-    background: red;
-}
-
-td.amber {
-    background: gold;
-}
-
-td.green {
-    background: green;
+td.header {
+    font-weight: bold;
+    text-align: left;
 }
 
 .refresh {
@@ -60,81 +42,17 @@ td.green {
     margin-bottom: 4px;
 }
 
-td.header {
-    font-weight: bold;
-    text-align: left;
-}
-
-/*
- * first     -
- * nth  2    - 7
- * nth  3    - 7
- * nth  4    - 7
- * nth  5    - 7
- * nth  6    - 7
- * nth  7    - 7
- * nth  8    - 7
- * nth  9    - 7
- * nth 10    - 7
- * nth 11    - 7
- * nth 12    - 7
- * nth 13    - 7
- * nth 14    - 7
- */
-
-table td:first-child {
-    width: 7%;
-}
-
-table td:nth-child(2) {
-    width: 7%;
-}
-
-table td:nth-child(3) {
-    width: 7%;
-}
-
-table td:nth-child(4) {
-    width: 7%;
-}
-
-table td:nth-child(5) {
-    width: 7%;
-}
-
-table td:nth-child(6) {
-    width: 7%;
-}
-
-table td:nth-child(7) {
-    width: 7%;
-}
-
-table td:nth-child(8) {
-    width: 7%;
-}
-
-table td:nth-child(9) {
-    width: 7%;
-}
-
-table td:nth-child(10) {
-    width: 7%;
-}
-
-table td:nth-child(11) {
-    width: 7%;
-}
-
-table td:nth-child(12) {
-    width: 7%;
-}
-
-table td:nth-child(13) {
-    width: 7%;
-}
-
-table td:nth-child(14) {
-    width: 7%;
-}
-
+table td:first-child  { width: 7%; }
+table td:nth-child(2) { width: 7%; }
+table td:nth-child(3) { width: 7%; }
+table td:nth-child(4) { width: 7%; }
+table td:nth-child(5) { width: 7%; }
+table td:nth-child(6) { width: 7%; }
+table td:nth-child(7) { width: 7%; }
+table td:nth-child(8) { width: 7%; }
+table td:nth-child(9) { width: 7%; }
+table td:nth-child(10){ width: 7%; }
+table td:nth-child(11){ width: 7%; }
+table td:nth-child(12){ width: 7%; }
+table td:nth-child(13){ width: 7%; }
+table td:nth-child(14){ width: 7%; }

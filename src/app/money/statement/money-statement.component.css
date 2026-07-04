@@ -1,19 +1,6 @@
-@import "../../standard/standard-popup.css";
+@import "../../standard/standard-table.css";
 
 td {
-    font-family: Helvetica, serif;
-    font-size: 10px;
-    border: 1px solid #444;
-    text-align: center;
-}
-
-th {
-    font-family: Helvetica, serif;
-    font-size: 10px;
-    font-weight: bold;
-    border: 1px solid #444;
-    background: #1e1e38;
-    color: #a0d4f5;
     text-align: center;
 }
 

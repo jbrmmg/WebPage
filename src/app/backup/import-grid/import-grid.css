@@ -1,3 +1,5 @@
+@import "../../standard/standard-table.css";
+
 .file-table {
     margin: 0;
     padding: 0;
@@ -6,22 +8,6 @@
 
 .header-row {
     margin-bottom: 4px;
-}
-
-th {
-    font-family: Helvetica, serif;
-    font-size: 10px;
-    font-weight: bold;
-    border: 1px solid #444;
-    background: #1e1e38;
-    color: #a0d4f5;
-    text-align: center;
-}
-
-td {
-    font-family: Helvetica, serif;
-    font-size: 10px;
-    border: 1px solid #444;
 }
 
 td.mis-match {
@@ -42,46 +28,14 @@ td.mis-match {
  * nth 11    - 21    Destination
  */
 
-table td:first-child {
-    width: 2%;
-}
-
-table td:nth-child(2) {
-    width: 12%;
-}
-
-table td:nth-child(3) {
-    width: 12%;
-}
-
-table td:nth-child(4) {
-    width: 4%;
-}
-
-table td:nth-child(5) {
-    width: 7%;
-}
-
-table td:nth-child(6) {
-    width: 12%;
-}
-
-table td:nth-child(7) {
-    width: 12%;
-}
-
-table td:nth-child(8) {
-    width: 4%;
-}
-
-table td:nth-child(9) {
-    width: 7%;
-}
-
-table td:nth-child(10) {
-    width: 7%;
-}
-
-table td:nth-child(11) {
-    width: 21%;
-}
+table td:first-child  { width: 2%; }
+table td:nth-child(2) { width: 12%; }
+table td:nth-child(3) { width: 12%; }
+table td:nth-child(4) { width: 4%; }
+table td:nth-child(5) { width: 7%; }
+table td:nth-child(6) { width: 12%; }
+table td:nth-child(7) { width: 12%; }
+table td:nth-child(8) { width: 4%; }
+table td:nth-child(9) { width: 7%; }
+table td:nth-child(10){ width: 7%; }
+table td:nth-child(11){ width: 21%; }

@@ -1,3 +1,9 @@
+@import "../../../standard/standard-table.css";
+
+th, td {
+    font-size: 12px;
+}
+
 .summary-table {
     margin: 0;
     padding: 0;
@@ -6,22 +12,6 @@
 
 .header-row {
     margin-bottom: 4px;
-}
-
-th {
-    font-family: Helvetica, serif;
-    font-size: 12px;
-    font-weight: bold;
-    border: 1px solid #444;
-    background: #1e1e38;
-    color: #a0d4f5;
-    text-align: center;
-}
-
-td {
-    font-family: Helvetica, serif;
-    font-size: 12px;
-    border: 1px solid #444;
 }
 
 /*
@@ -34,30 +24,10 @@ td {
  * nth  7    - 30    Destination
  */
 
-table td:first-child {
-    width: 5%;
-}
-
-table td:nth-child(2) {
-    width: 30%;
-}
-
-table td:nth-child(3) {
-    width: 11%;
-}
-
-table td:nth-child(4) {
-    width: 8%;
-}
-
-table td:nth-child(5) {
-    width: 8%;
-}
-
-table td:nth-child(6) {
-    width: 8%;
-}
-
-table td:nth-child(7) {
-    width: 30%;
-}
+table td:first-child  { width: 5%; }
+table td:nth-child(2) { width: 30%; }
+table td:nth-child(3) { width: 11%; }
+table td:nth-child(4) { width: 8%; }
+table td:nth-child(5) { width: 8%; }
+table td:nth-child(6) { width: 8%; }
+table td:nth-child(7) { width: 30%; }

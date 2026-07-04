@@ -1,3 +1,8 @@
+@import "../../standard/standard-table.css";
+
+th, td {
+    font-size: 12px;
+}
 
 .backup {
     font-size: 12px;
@@ -19,36 +24,12 @@
     height: 100%;
 }
 
-th {
-    font-family: Helvetica, serif;
-    font-size: 12px;
-    font-weight: bold;
-    border: 1px solid #444;
-    background: #1e1e38;
-    color: #a0d4f5;
-    text-align: center;
-}
-
-td {
-    font-family: Helvetica, serif;
-    font-size: 12px;
-    border: 1px solid #444;
-}
-
 /*
- * first     - 35    Name / Action
- * nth  2    - 35    Details
- * nth  3    - 30    Confirm
+ * first     - 45    Name / Action
+ * nth  2    - 40    Details
+ * nth  3    - 15    Confirm
  */
 
-table td:first-child {
-    width: 45%;
-}
-
-table td:nth-child(2) {
-    width: 40%;
-}
-
-table td:nth-child(3) {
-    width: 15%;
-}
+table td:first-child  { width: 45%; }
+table td:nth-child(2) { width: 40%; }
+table td:nth-child(3) { width: 15%; }
