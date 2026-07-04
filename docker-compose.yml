@@ -3,11 +3,6 @@ services:
     image: nexus.jbrmmg.me.uk:8084/webpage:latest
     container_name: webpage
     restart: unless-stopped
-    ports:
-      - "80:80"
-    environment:
-      - MONEY_BACKEND=${MONEY_BACKEND}
-      - BACKUP_BACKEND=${BACKUP_BACKEND}
     networks:
       - jbr-network
 

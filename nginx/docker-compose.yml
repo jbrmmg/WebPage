@@ -1,0 +1,16 @@
+services:
+  proxy:
+    image: nexus.jbrmmg.me.uk:8084/proxy:latest
+    container_name: proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    environment:
+      - MONEY_BACKEND=${MONEY_BACKEND}
+      - BACKUP_BACKEND=${BACKUP_BACKEND}
+    networks:
+      - jbr-network
+
+networks:
+  jbr-network:
+    external: true

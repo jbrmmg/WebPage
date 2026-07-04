@@ -78,13 +78,18 @@ jobs:
       - name: Run Sonar
         run: mvn sonar:sonar -Dsonar.token=${{ secrets.SONAR_TOKEN }} -Drevision=${{ env.VERSION }}
 
-      - name: Build Docker image
+      - name: Build Docker images
         run: |
           docker build \
             -f src/deployment/Dockerfile \
             -t nexus.jbrmmg.me.uk:8083/webpage:${{ github.sha }} \
             -t nexus.jbrmmg.me.uk:8083/webpage:latest \
             .
+          docker build \
+            -f nginx/Dockerfile \
+            -t nexus.jbrmmg.me.uk:8083/proxy:${{ github.sha }} \
+            -t nexus.jbrmmg.me.uk:8083/proxy:latest \
+            nginx/
 
       - name: Push to Nexus Docker registry
         run: |
@@ -93,6 +98,8 @@ jobs:
             -p ${{ secrets.NEXUS_PASSWORD }}
           docker push nexus.jbrmmg.me.uk:8083/webpage:${{ github.sha }}
           docker push nexus.jbrmmg.me.uk:8083/webpage:latest
+          docker push nexus.jbrmmg.me.uk:8083/proxy:${{ github.sha }}
+          docker push nexus.jbrmmg.me.uk:8083/proxy:latest
 
       - name: Deploy
         env:
@@ -104,5 +111,7 @@ jobs:
             -p ${{ secrets.NEXUS_PASSWORD }}
           echo "BACKUP_BACKEND=${PDN_WEBPAGE_BACKUP_BACKEND}" > .env
           echo "MONEY_BACKEND=${PDN_WEBPAGE_MONEY_BACKEND}" >> .env
+          docker compose -f nginx/docker-compose.yml pull
+          docker compose -f nginx/docker-compose.yml up -d
           docker compose pull
           docker compose up -d

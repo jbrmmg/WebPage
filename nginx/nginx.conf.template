@@ -1,0 +1,70 @@
+server {
+    listen 80;
+    server_name _;
+
+    # ── Python web apps ──────────────────────────────────────────────────────
+
+    location /wordhelper/ {
+        proxy_pass         http://wordhelper:8080;
+        proxy_http_version 1.1;
+        proxy_set_header   Host                $host;
+        proxy_set_header   X-Real-IP           $remote_addr;
+        proxy_set_header   X-Forwarded-For     $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto   $scheme;
+        proxy_set_header   X-Forwarded-Prefix  /wordhelper;
+    }
+
+    location /wordclue/ {
+        proxy_pass         http://wordclue:8080;
+        proxy_http_version 1.1;
+        proxy_set_header   Host                $host;
+        proxy_set_header   X-Real-IP           $remote_addr;
+        proxy_set_header   X-Forwarded-For     $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto   $scheme;
+        proxy_set_header   X-Forwarded-Prefix  /wordclue;
+    }
+
+    location /home/ {
+        proxy_pass         http://home:8080;
+        proxy_http_version 1.1;
+        proxy_set_header   Host                $host;
+        proxy_set_header   X-Real-IP           $remote_addr;
+        proxy_set_header   X-Forwarded-For     $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto   $scheme;
+        proxy_set_header   X-Forwarded-Prefix  /home;
+    }
+
+    # ── Backend APIs ─────────────────────────────────────────────────────────
+
+    location /money/ {
+        proxy_pass         http://${MONEY_BACKEND}/api/v1/;
+        proxy_http_version 1.1;
+        proxy_set_header   Host                $host;
+        proxy_set_header   X-Real-IP           $remote_addr;
+        proxy_set_header   X-Forwarded-For     $proxy_add_x_forwarded_for;
+        proxy_buffering    off;
+        proxy_cache        off;
+        proxy_read_timeout 3600s;
+    }
+
+    location /backup/ {
+        proxy_pass         http://${BACKUP_BACKEND}/api/v1/;
+        proxy_http_version 1.1;
+        proxy_set_header   Host                $host;
+        proxy_set_header   X-Real-IP           $remote_addr;
+        proxy_set_header   X-Forwarded-For     $proxy_add_x_forwarded_for;
+        proxy_buffering    off;
+        proxy_cache        off;
+        proxy_read_timeout 3600s;
+    }
+
+    # ── Angular SPA (catch-all — must be last) ───────────────────────────────
+
+    location / {
+        proxy_pass         http://webpage:80;
+        proxy_http_version 1.1;
+        proxy_set_header   Host                $host;
+        proxy_set_header   X-Real-IP           $remote_addr;
+        proxy_set_header   X-Forwarded-For     $proxy_add_x_forwarded_for;
+    }
+}
