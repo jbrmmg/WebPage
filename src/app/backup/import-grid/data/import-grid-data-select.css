@@ -7,20 +7,20 @@
 .selected {
     width: 10px;
     height: 10px;
-    border: 1px solid black;
+    border: 1px solid #888;
     border-radius: 50%;
     display: flex;
-    background: #0d6efd;
+    background: #4caf50;
     padding: 0;
 }
 
 .not-selected {
     width: 10px;
     height: 10px;
-    border: 1px solid black;
+    border: 1px solid #555;
     border-radius: 50%;
     display: flex;
     flex-shrink: 1;
-    background: white;
+    background: #1a1a2e;
     padding: 0;
 }

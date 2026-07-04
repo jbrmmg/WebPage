@@ -18,20 +18,20 @@
 }
 
 .row-statement-age {
-    color: #0d6efd;
+    color: #a0d4f5;
     margin: 5px 14px 0 0;
 }
 
 .statement-age-label {
-    color: #0d6efd;
+    color: #a0d4f5;
     padding: 1px 6px 0 0;
     text-align: right;
     font-size: 14px;
 }
 
 .statement-age-input {
-    color: #0d6efd;
-    border-color: #0d6efd;
+    color: #a0d4f5;
+    border-color: #a0d4f5;
     padding: 0 0 0 2px;
     height: 22px;
     font-size: 14px;
