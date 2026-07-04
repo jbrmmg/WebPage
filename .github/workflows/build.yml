@@ -105,12 +105,14 @@ jobs:
         env:
           PDN_WEBPAGE_MONEY_BACKEND: ${{ secrets.PDN_WEBPAGE_MONEY_BACKEND }}
           PDN_WEBPAGE_BACKUP_BACKEND: ${{ secrets.PDN_WEBPAGE_BACKUP_BACKEND }}
+          PDN_WEBPAGE_HOME_API_BACKEND: ${{ secrets.PDN_WEBPAGE_HOME_API_BACKEND }}
         run: |
           docker login nexus.jbrmmg.me.uk:8084 \
             -u deployment \
             -p ${{ secrets.NEXUS_PASSWORD }}
           echo "BACKUP_BACKEND=${PDN_WEBPAGE_BACKUP_BACKEND}" > .env
           echo "MONEY_BACKEND=${PDN_WEBPAGE_MONEY_BACKEND}" >> .env
+          echo "HOME_API_BACKEND=${PDN_WEBPAGE_HOME_API_BACKEND}" >> .env
           docker compose -f nginx/docker-compose.yml --env-file .env pull
           docker compose -f nginx/docker-compose.yml --env-file .env up -d
           docker compose pull

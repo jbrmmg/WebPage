@@ -8,6 +8,7 @@ services:
     environment:
       - MONEY_BACKEND=${MONEY_BACKEND}
       - BACKUP_BACKEND=${BACKUP_BACKEND}
+      - HOME_API_BACKEND=${HOME_API_BACKEND}
     networks:
       - jbr-network
 

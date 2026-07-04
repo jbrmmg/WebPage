@@ -4,7 +4,7 @@ Personal dashboard Angular web application by Jason Brown ([jbrmmg.me.uk](https:
 
 ## Overview
 
-A multi-module Angular 17 frontend that provides a unified interface for several personal management tools. The app communicates with backend REST APIs via proxy configuration.
+A multi-module Angular 17 frontend that provides a unified interface for several personal management tools. In production the app runs as a Docker container behind a dedicated nginx reverse proxy that also routes traffic to the Python companion apps and the Java backend APIs.
 
 ## Modules
 
@@ -20,7 +20,7 @@ A multi-module Angular 17 frontend that provides a unified interface for several
 ## Tech Stack
 
 - **Framework**: Angular 17
-- **UI**: Bootstrap 5, Angular Material, ngx-bootstrap
+- **UI**: Bootstrap 5, Angular Material, ngx-bootstrap (dark theme via CSS variables in `src/styles.css`)
 - **Maps**: Leaflet
 - **Testing**: Karma + Jasmine
 
@@ -48,16 +48,16 @@ npm install
 | `npm run startdev` | Serve with debug-web config + `proxy.dev.conf.json` |
 | `npm run startdevdbg` | Serve with debug-web config + `proxy.dev-dbg.conf.json` (ports 13013/13017) |
 
-### Proxy configuration
+### Proxy configuration (dev server only)
 
-The app proxies two backend APIs:
+The Angular dev server proxies two backend APIs:
 
-| Path prefix | Internal ports | Production ports |
-|-------------|---------------|-----------------|
+| Path prefix | Debug ports | Production ports |
+|-------------|-------------|-----------------|
 | `/backup` | `localhost:13013/jbr/int` | `localhost:12013/jbr/int` |
 | `/money` | `localhost:13017/jbr/int` | `localhost:12017/jbr/int` |
 
-Choose the proxy config file that matches your backend environment when starting the dev server.
+These proxy configs are dev-server only and have no effect in Docker.
 
 ## Build
 
@@ -65,33 +65,74 @@ Choose the proxy config file that matches your backend environment when starting
 npm run build
 ```
 
-Outputs a production build.
+Outputs a production build to `dist/JbrMmg`.
+
+### Building outside Maven
+
+Maven generates `src/api/util/version.json` before the Angular build. When building manually:
+
+```bash
+echo '{"version":"dev"}' > src/api/util/version.json
+npm run build
+```
+
+## Production Architecture
+
+In production, all traffic goes through a dedicated **nginx reverse proxy container** (defined in `nginx/`). The Angular app container sits on the internal Docker network only — it is not exposed directly to the host.
+
+| Public path | Upstream container | Port | Notes |
+|---|---|---|---|
+| `/wordhelper/` | `wordhelper` | 8080 | Word Helper Python app |
+| `/wordclue/` | `wordclue` | 8080 | Word Clue Python app |
+| `/home/` | `home` | 8080 | Home dashboard Python app |
+| `/money/` | `${MONEY_BACKEND}` | 12017 | Money Java REST API (`/api/v1/` prefix stripped) |
+| `/backup/` | `${BACKUP_BACKEND}` | 12013 | Backup Java REST API (`/api/v1/` prefix stripped) |
+| `/` | `webpage` | 80 | Angular SPA (catch-all, must be last) |
+
+All containers must be on the `jbr-network` Docker network so the proxy can reach them by container name.
+
+All containers communicate over the external Docker network `jbr-network`.
 
 ## Docker
 
-Build the Angular app first, then build and run the Docker image:
+### Angular app container (`webpage`)
+
+The Angular app container serves static files only. It does **not** need backend environment variables — all proxying is handled by the nginx proxy container.
 
 ```bash
 npm run build
-docker build -t webpage .
-docker run -d \
-  --name webpage \
-  --restart unless-stopped \
-  --add-host=host.docker.internal:host-gateway \
-  -p 80:80 \
-  -e BACKUP_BACKEND=host.docker.internal:12013 \
-  -e MONEY_BACKEND=host.docker.internal:12017 \
-  webpage
+docker build -f src/deployment/Dockerfile -t webpage .
 ```
 
-`--add-host=host.docker.internal:host-gateway` makes the host machine reachable from inside the container. Use this when the backend services are running directly on the host.
+`docker-compose.yml` — runs the `webpage` container on `jbr-network` with no host port binding.
 
-| Environment variable | Description                                | Default                          |
-|----------------------|--------------------------------------------|----------------------------------|
-| `BACKUP_BACKEND`     | `hostname:port` of the backup backend      | `host.docker.internal:12013`     |
-| `MONEY_BACKEND`      | `hostname:port` of the money backend       | `host.docker.internal:12017`     |
+### nginx proxy container (`proxy`)
 
-nginx serves the Angular app and proxies `/backup` and `/money` requests to the respective backends. The `proxy.conf.json` files are dev-server only and have no effect in Docker.
+Defined in `nginx/`. This container handles all inbound traffic and routes it to the appropriate upstream.
+
+```bash
+docker build -f nginx/Dockerfile -t proxy nginx/
+```
+
+`nginx/docker-compose.yml` — runs the `proxy` container on port 80 of the host. Requires two environment variables:
+
+| Variable | Description |
+|---|---|
+| `MONEY_BACKEND` | `hostname:port` of the money backend (e.g. `myserver:12017`) |
+| `BACKUP_BACKEND` | `hostname:port` of the backup backend (e.g. `myserver:12013`) |
+
+Pass these via a `.env` file alongside `docker-compose.yml`, or inline:
+
+```bash
+MONEY_BACKEND=myserver:12017 BACKUP_BACKEND=myserver:12013 \
+  docker compose -f nginx/docker-compose.yml up -d
+```
+
+### nginx configuration
+
+`nginx/nginx.conf.template` is processed by `envsubst` at container startup (standard `nginx:alpine` behaviour). The template substitutes `${MONEY_BACKEND}` and `${BACKUP_BACKEND}`.
+
+The `X-Forwarded-Prefix` header is set for each Python app location so that Flask's `ProxyFix` middleware can generate correct prefixed URLs.
 
 ## Testing
 
@@ -102,9 +143,21 @@ npm test
 # Headless (CI)
 npm run test-headless
 
+# Single spec file
+npx ng test --include='src/app/money/money.service.spec.ts' --watch=false --browsers=ChromeHeadless
+
 # Lint
 npm run lint
-
-# End-to-end
-npm run e2e
 ```
+
+## CI/CD
+
+GitHub Actions (`.github/workflows/build.yml`) runs on the `webpage-prod` self-hosted runner on every push to `Release`:
+
+1. Builds and tests with Maven (which also runs `npm install` + `ng build`)
+2. Runs Sonar analysis
+3. Builds two Docker images: `webpage` and `proxy`
+4. Pushes both to the Nexus registry (`nexus.jbrmmg.me.uk:8083`)
+5. Deploys: pulls and restarts the proxy container first, then the webpage container
+
+Required repository secrets: `NEXUS_PASSWORD`, `SONAR_TOKEN`, `PDN_WEBPAGE_MONEY_BACKEND`, `PDN_WEBPAGE_BACKUP_BACKEND`.
