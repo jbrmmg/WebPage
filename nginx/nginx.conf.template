@@ -2,10 +2,13 @@ server {
     listen 80;
     server_name _;
 
+    resolver 127.0.0.11 valid=30s;
+
     # ── Python web apps ──────────────────────────────────────────────────────
 
     location /wordhelper/ {
-        proxy_pass         http://wordhelper:8080/;
+        set $upstream_wordhelper wordhelper:8080;
+        proxy_pass         http://$upstream_wordhelper/;
         proxy_http_version 1.1;
         proxy_set_header   Host                $host;
         proxy_set_header   X-Real-IP           $remote_addr;
@@ -15,7 +18,8 @@ server {
     }
 
     location /wordclue/ {
-        proxy_pass         http://wordclue:8080/;
+        set $upstream_wordclue wordclue:8080;
+        proxy_pass         http://$upstream_wordclue/;
         proxy_http_version 1.1;
         proxy_set_header   Host                $host;
         proxy_set_header   X-Real-IP           $remote_addr;
@@ -25,7 +29,8 @@ server {
     }
 
     location /home/ {
-        proxy_pass         http://home:8080/;
+        set $upstream_home home:8080;
+        proxy_pass         http://$upstream_home/;
         proxy_http_version 1.1;
         proxy_set_header   Host                $host;
         proxy_set_header   X-Real-IP           $remote_addr;
@@ -97,7 +102,8 @@ server {
     # ── Angular SPA (catch-all — must be last) ───────────────────────────────
 
     location / {
-        proxy_pass         http://webpage:80;
+        set $upstream_webpage webpage:80;
+        proxy_pass         http://$upstream_webpage;
         proxy_http_version 1.1;
         proxy_set_header   Host                $host;
         proxy_set_header   X-Real-IP           $remote_addr;
