@@ -1,13 +1,13 @@
-name: Build and Deploy
+name: Development Build
 
 on:
   push:
-    branches:
+    branches-ignore:
       - Release
 
 jobs:
   build:
-    runs-on: webpage-prod
+    runs-on: [webpage-dev, angular-dev]
 
     steps:
       - uses: actions/checkout@v4
@@ -104,7 +104,26 @@ jobs:
           docker push nexus.jbrmmg.me.uk:8083/proxy:${{ github.sha }}
           docker push nexus.jbrmmg.me.uk:8083/proxy:latest
 
-      - name: Deploy
+      - name: Deploy Angular
+        run: |
+          docker network create jbr-network 2>/dev/null || true
+          docker login nexus.jbrmmg.me.uk:8084 \
+            -u deployment \
+            -p ${{ secrets.NEXUS_PASSWORD }}
+          docker compose pull
+          docker compose up -d
+
+  nginx-deploy:
+    needs: build
+    runs-on: webpage-dev
+    strategy:
+      matrix:
+        index: [1, 2, 3]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy nginx
         env:
           PDN_WEBPAGE_MONEY_BACKEND: ${{ secrets.PDN_WEBPAGE_MONEY_BACKEND }}
           PDN_WEBPAGE_BACKUP_BACKEND: ${{ secrets.PDN_WEBPAGE_BACKUP_BACKEND }}
@@ -119,5 +138,3 @@ jobs:
           echo "HOME_API_BACKEND=${PDN_WEBPAGE_HOME_API_BACKEND}" >> .env
           docker compose -f nginx/docker-compose.yml --env-file .env pull
           docker compose -f nginx/docker-compose.yml --env-file .env up -d
-          docker compose pull
-          docker compose up -d
