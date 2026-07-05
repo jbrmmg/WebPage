@@ -106,6 +106,7 @@ jobs:
 
       - name: Deploy Angular
         run: |
+          docker network create jbr-network 2>/dev/null || true
           docker login nexus.jbrmmg.me.uk:8084 \
             -u deployment \
             -p ${{ secrets.NEXUS_PASSWORD }}
@@ -128,6 +129,7 @@ jobs:
           PDN_WEBPAGE_BACKUP_BACKEND: ${{ secrets.PDN_WEBPAGE_BACKUP_BACKEND }}
           PDN_WEBPAGE_HOME_API_BACKEND: ${{ secrets.PDN_WEBPAGE_HOME_API_BACKEND }}
         run: |
+          docker network create jbr-network 2>/dev/null || true
           docker login nexus.jbrmmg.me.uk:8084 \
             -u deployment \
             -p ${{ secrets.NEXUS_PASSWORD }}
