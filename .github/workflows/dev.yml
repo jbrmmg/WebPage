@@ -21,8 +21,10 @@ jobs:
       - name: Install Maven and Chrome
         run: |
           sudo apt-get update -q
-          sudo apt-get install -y -q maven chromium-browser
-          echo "CHROME_BIN=$(which chromium-browser)" >> $GITHUB_ENV
+          sudo apt-get install -y -q maven
+          wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo apt-get install -y -q ./google-chrome-stable_current_amd64.deb
+          echo "CHROME_BIN=$(which google-chrome-stable)" >> $GITHUB_ENV
 
       - name: Configure Maven settings
         run: |
