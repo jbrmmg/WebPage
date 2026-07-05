@@ -46,7 +46,8 @@ server {
     # ── Backend APIs ─────────────────────────────────────────────────────────
 
     location /money/docs/ {
-        proxy_pass         http://$money_backend/;
+        rewrite            ^/money/docs(/.*)?$  $1 break;
+        proxy_pass         http://$money_backend;
         proxy_http_version 1.1;
         proxy_set_header   Host                $host;
         proxy_set_header   X-Real-IP           $remote_addr;
@@ -58,7 +59,8 @@ server {
     }
 
     location /backup/docs/ {
-        proxy_pass         http://$backup_backend/;
+        rewrite            ^/backup/docs(/.*)?$ $1 break;
+        proxy_pass         http://$backup_backend;
         proxy_http_version 1.1;
         proxy_set_header   Host                $host;
         proxy_set_header   X-Real-IP           $remote_addr;
@@ -70,7 +72,8 @@ server {
     }
 
     location /home/docs/ {
-        proxy_pass         http://$home_api_backend/;
+        rewrite            ^/home/docs(/.*)?$   $1 break;
+        proxy_pass         http://$home_api_backend;
         proxy_http_version 1.1;
         proxy_set_header   Host                $host;
         proxy_set_header   X-Real-IP           $remote_addr;
@@ -82,7 +85,8 @@ server {
     }
 
     location /money/ {
-        proxy_pass         http://$money_backend/api/v1/;
+        rewrite            ^/money(/.*)?$       /api/v1$1 break;
+        proxy_pass         http://$money_backend;
         proxy_http_version 1.1;
         proxy_set_header   Host                $host;
         proxy_set_header   X-Real-IP           $remote_addr;
@@ -93,7 +97,8 @@ server {
     }
 
     location /backup/ {
-        proxy_pass         http://$backup_backend/api/v1/;
+        rewrite            ^/backup(/.*)?$      /api/v1$1 break;
+        proxy_pass         http://$backup_backend;
         proxy_http_version 1.1;
         proxy_set_header   Host                $host;
         proxy_set_header   X-Real-IP           $remote_addr;
