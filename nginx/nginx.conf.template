@@ -12,7 +12,8 @@ server {
 
     location /wordhelper/ {
         set $upstream_wordhelper wordhelper:8080;
-        proxy_pass         http://$upstream_wordhelper/;
+        rewrite            ^/wordhelper/(.*)    /$1 break;
+        proxy_pass         http://$upstream_wordhelper;
         proxy_http_version 1.1;
         proxy_set_header   Host                $host;
         proxy_set_header   X-Real-IP           $remote_addr;
@@ -23,7 +24,8 @@ server {
 
     location /wordclue/ {
         set $upstream_wordclue wordclue:8080;
-        proxy_pass         http://$upstream_wordclue/;
+        rewrite            ^/wordclue/(.*)      /$1 break;
+        proxy_pass         http://$upstream_wordclue;
         proxy_http_version 1.1;
         proxy_set_header   Host                $host;
         proxy_set_header   X-Real-IP           $remote_addr;
@@ -34,7 +36,8 @@ server {
 
     location /home/ {
         set $upstream_home home:8080;
-        proxy_pass         http://$upstream_home/;
+        rewrite            ^/home/(.*)          /$1 break;
+        proxy_pass         http://$upstream_home;
         proxy_http_version 1.1;
         proxy_set_header   Host                $host;
         proxy_set_header   X-Real-IP           $remote_addr;
