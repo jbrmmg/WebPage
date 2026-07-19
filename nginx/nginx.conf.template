@@ -47,6 +47,10 @@ server {
 
     # ── Backend APIs ─────────────────────────────────────────────────────────
 
+    location = /money/report {
+        return 301 /money/report/;
+    }
+
     location /money/report/ {
         set $upstream_moneyreport money:8081;
         rewrite            ^/money/report/(.*)  /$1 break;
