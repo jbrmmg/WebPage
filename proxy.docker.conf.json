@@ -1,0 +1,10 @@
+{
+  "/backup": {
+    "target": "http://localhost:80",
+    "secure": false
+  },
+  "/money": {
+    "target": "http://localhost:80",
+    "secure": false
+  }
+}

@@ -14,9 +14,13 @@
     width: 100%;
 }
 
+tr:hover td {
+    background-color: rgba(160, 212, 245, 0.06) !important;
+}
+
 th.filtered {
-    background: #5a1a1a;
-    color: #f44336;
+    background: #4a1515;
+    color: #ff8a80;
 }
 
 .flag {

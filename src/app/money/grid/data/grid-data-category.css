@@ -1,3 +1,6 @@
 p {
     margin: 0;
+    padding: 1px 3px;
+    border-radius: 2px;
+    filter: saturate(0.55) brightness(0.85);
 }

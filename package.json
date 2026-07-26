@@ -9,6 +9,7 @@
     "startdev": "ng serve --configuration=debug-web --proxy-config proxy.dev.conf.json",
     "startdevdbg": "ng serve --configuration=debug-web --proxy-config proxy.dev-dbg.conf.json",
     "startdbg": "ng serve --configuration=debug-web --proxy-config proxy.conf.json",
+    "startdocker": "ng serve --configuration=debug-web --proxy-config proxy.docker.conf.json",
     "build": "ng build --configuration=production",
     "test": "ng test",
     "test-headless": "ng test --watch=false --browsers=ChromeHeadlessNoSandbox --code-coverage",
