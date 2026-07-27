@@ -12,6 +12,7 @@ export class MoneyComponent {
     status = '';
     version = '';
     showFilter = false;
+    showAdd = false;
     hasChanges = false;
     filter: TransactionFilter = MoneyComponent.defaultFilter();
 
@@ -38,5 +39,9 @@ export class MoneyComponent {
 
     onSave(): void {
         this.grid.save();
+    }
+
+    onTransactionAdded(): void {
+        this.grid.update();
     }
 }

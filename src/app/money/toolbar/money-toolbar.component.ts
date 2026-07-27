@@ -17,13 +17,14 @@ export class MoneyToolbarComponent {
     @Input() version = '';
     @Input() hasChanges = false;
     @Output() filterClick = new EventEmitter<void>();
+    @Output() addClick = new EventEmitter<void>();
     @Output() saveClick = new EventEmitter<void>();
 
     pageSize = 300;
     pageSizes = [25, 50, 100, 200, 300];
 
     onFilter() { this.filterClick.emit(); }
-    onAdd() {}
+    onAdd() { this.addClick.emit(); }
     onSave() { this.saveClick.emit(); }
     onExport() {}
     onLoadRecFile() {}

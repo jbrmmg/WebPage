@@ -30,7 +30,7 @@ export class MoneyFilterComponent implements OnInit {
     reconciled: Tristate = null;
 
     dateMode: 'none' | 'statement' | 'range' = 'none';
-    statementMode: 'monthyear' | 'index' = 'monthyear';
+    statementMode: 'monthyear' | 'index' | 'nostatement' = 'monthyear';
     statementYear: number = null;
     statementMonth: number = null;
     statementIndex: number = null;
@@ -81,6 +81,9 @@ export class MoneyFilterComponent implements OnInit {
             this.statementMode = 'monthyear';
             this.statementYear = this.filter.statementDate.year;
             this.statementMonth = this.filter.statementDate.month;
+        } else if (this.filter.statementDate?.none) {
+            this.dateMode = 'statement';
+            this.statementMode = 'nostatement';
         } else if (this.filter.statementAge != null) {
             this.dateMode = 'statement';
             this.statementMode = 'index';
@@ -284,6 +287,8 @@ export class MoneyFilterComponent implements OnInit {
                     f.statementDate = new StatementDate(this.statementYear, this.statementMonth);
                 } else if (this.statementMode === 'index' && this.statementIndex != null) {
                     f.statementAge = this.statementIndex;
+                } else if (this.statementMode === 'nostatement') {
+                    f.statementDate = new StatementDate(null, null);
                 }
             } else if (this.dateMode === 'range') {
                 f.dateRange = new DateRange(

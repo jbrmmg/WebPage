@@ -1,0 +1,121 @@
+<div class="add-overlay">
+    <div class="add-panel">
+
+        <!-- Header -->
+        <div class="add-header">
+            <img src="assets/images/logo.svg" class="add-logo" alt="JBR" width="24" height="24">
+            <span class="add-title">Add Transaction</span>
+            <button class="btn btn-sm btn-secondary" (click)="onClose()"><em class="fa fa-times"></em></button>
+        </div>
+
+        <div class="add-body">
+
+            <!-- Date -->
+            <div class="add-section">
+                <div class="section-label">Date</div>
+                <input class="form-control add-date-input"
+                       bsDatepicker
+                       [bsValue]="date"
+                       (bsValueChange)="date=$event"
+                       [bsConfig]="{dateInputFormat:'DD-MMM-YYYY', containerClass:'theme-dark-blue', selectFromOtherMonth:true}">
+            </div>
+
+            <!-- Account -->
+            <div class="add-section">
+                <div class="section-label">Account</div>
+                <div class="account-grid">
+                    <button *ngFor="let acc of allAccounts"
+                            class="btn btn-sm item-btn"
+                            [style.background-color]="accountBgColor(acc)"
+                            [style.color]="accountFgColor(acc)"
+                            [style.border-color]="accountBorderColor(acc)"
+                            (click)="selectAccount(acc)">
+                        {{acc.name}}
+                    </button>
+                </div>
+            </div>
+
+            <!-- Category -->
+            <div class="add-section">
+                <div class="section-label">
+                    Category
+                    <span *ngIf="selectedCategory" class="cat-hint">▸ {{selectedCategory.name}}</span>
+                    <button class="btn btn-sm btn-outline-secondary toggle-btn" (click)="showCategories=!showCategories">
+                        <em [ngClass]="showCategories ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></em>
+                        {{showCategories ? 'Hide' : 'Show'}}
+                    </button>
+                </div>
+                <div *ngIf="showCategories" class="category-grid">
+                    <button *ngFor="let cat of allCategories"
+                            class="btn btn-sm item-btn"
+                            [style.background-color]="catBgColor(cat)"
+                            [style.color]="catFgColor(cat)"
+                            [style.border-color]="catBorderColor(cat)"
+                            (click)="selectCategory(cat)">
+                        {{cat.name}}
+                    </button>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="add-section">
+                <div class="section-label">Description</div>
+                <input type="text" class="form-control" [(ngModel)]="description" placeholder="Transaction description">
+            </div>
+
+            <!-- Amount -->
+            <div class="add-section">
+                <div class="section-label">Amount</div>
+                <div class="amount-row">
+                    <span class="amount-sign" [class.amount-db]="amountType === 'DB'" [class.amount-cr]="amountType === 'CR'">{{amountType === 'DB' ? '−' : '+'}}</span>
+                    <input type="number" class="form-control amount-input" [(ngModel)]="amount" placeholder="0.00" min="0" step="0.01">
+                    <div class="amount-type-btns">
+                        <button [ngClass]="amountTypeClass('DB')" (click)="amountType='DB'">Debit</button>
+                        <button [ngClass]="amountTypeClass('CR')" (click)="amountType='CR'">Credit</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Validation error -->
+            <div *ngIf="validationError" class="validation-error">
+                <em class="fa fa-exclamation-triangle"></em> {{validationError}}
+            </div>
+
+            <!-- Actions -->
+            <div class="add-actions">
+                <button class="btn btn-primary action-btn" title="Stage this entry (add more after)" (click)="onAdd()" [disabled]="saving">
+                    <em class="fa fa-plus"></em> Add
+                </button>
+                <button class="btn btn-success action-btn" [title]="'Send all staged transactions to the server'" (click)="onSaveAll()" [disabled]="saving || (pendingList.length === 0 && !hasFormData())">
+                    <em class="fa fa-save"></em> {{saveAllLabel}}
+                </button>
+                <button class="btn btn-secondary action-btn" title="Send this single transaction and close" (click)="onAddAndClose()" [disabled]="saving">
+                    <em class="fa fa-check"></em> Add &amp; Close
+                </button>
+                <button class="btn btn-outline-secondary action-btn ms-auto" (click)="onClose()" [disabled]="saving">
+                    <em class="fa fa-times"></em> Close
+                </button>
+            </div>
+
+            <!-- Pending list -->
+            <div *ngIf="pendingList.length > 0" class="pending-section">
+                <div class="section-label">Staged ({{pendingList.length}})</div>
+                <table class="pending-table">
+                    <tbody>
+                        <tr *ngFor="let p of pendingList; let i = index" class="pending-row">
+                            <td class="col-date">{{fmtDate(p.date)}}</td>
+                            <td class="col-account">{{p.account.name}}</td>
+                            <td class="col-category">{{p.category.name}}</td>
+                            <td class="col-desc">{{p.description}}</td>
+                            <td [ngClass]="p.amountType === 'CR' ? 'col-amount amount-cr' : 'col-amount amount-db'">{{pendingAmountLabel(p)}}</td>
+                            <td class="col-remove">
+                                <button class="btn btn-sm btn-danger" (click)="onRemovePending(i)"><em class="fa fa-times"></em></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

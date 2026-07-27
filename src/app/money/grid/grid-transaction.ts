@@ -12,9 +12,7 @@ import {GridDataFromReconciliation} from './data/grid-data-from-reconciliation';
 import {GridDataPredicted} from './data/grid-data-predicted';
 import {GridDataStatement} from './data/grid-data-statement';
 import {GridDataStatementDate} from './data/grid-data-statement-date';
-import {GridHeaderSelect, SelectChange} from './header/grid-header-select';
 import {GridHeaderActions} from './header/grid-header-actions';
-import {GridDataSelect} from './data/grid-data-select';
 import {GridDataActions} from './data/grid-data-actions';
 import {HeaderType} from './header/grid-header-type';
 import {ITransactionReport, TransactionReport} from '../transaction/transactionReport';
@@ -35,7 +33,6 @@ import {environment} from '../../../environments/environment.prod';
     imports: [
         NgForOf,
         NgIf,
-        GridHeaderSelect,
         GridHeaderActions,
         GridDataDate,
         GridDataAccount,
@@ -47,7 +44,6 @@ import {environment} from '../../../environments/environment.prod';
         GridDataPredicted,
         GridDataStatement,
         GridDataStatementDate,
-        GridDataSelect,
         GridDataActions
     ],
     standalone: true
@@ -224,14 +220,6 @@ export class GridTransaction implements OnInit, OnChanges {
         const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
         const p = iso.split('-');
         return p[2] + '-' + months[+p[1] - 1] + '-' + p[0];
-    }
-
-    selectionChange(event: SelectChange) {
-        this.data.forEach(value => {
-            if (value.type === TransactionReport.TRANSACTION) {
-                value.selected = event.selection;
-            }
-        });
     }
 
     update() {

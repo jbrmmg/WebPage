@@ -82,8 +82,9 @@
             <!-- Statement date -->
             <div *ngIf="dateMode === 'statement'" class="sub-section">
                 <div class="stmt-mode-btns">
-                    <button [ngClass]="statementMode==='monthyear' ? 'btn btn-sm btn-success' : 'btn btn-sm btn-outline-secondary'" (click)="statementMode='monthyear'">Month / Year</button>
-                    <button [ngClass]="statementMode==='index'     ? 'btn btn-sm btn-success' : 'btn btn-sm btn-outline-secondary'" (click)="statementMode='index'">Index</button>
+                    <button [ngClass]="statementMode==='monthyear'    ? 'btn btn-sm btn-success' : 'btn btn-sm btn-outline-secondary'" (click)="statementMode='monthyear'">Month / Year</button>
+                    <button [ngClass]="statementMode==='index'        ? 'btn btn-sm btn-success' : 'btn btn-sm btn-outline-secondary'" (click)="statementMode='index'">Index</button>
+                    <button [ngClass]="statementMode==='nostatement'  ? 'btn btn-sm btn-success' : 'btn btn-sm btn-outline-secondary'" (click)="statementMode='nostatement'">No Statement</button>
                 </div>
                 <div *ngIf="statementMode === 'monthyear'" class="monthyear-picker">
                     <div class="year-btns">

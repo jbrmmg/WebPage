@@ -37,6 +37,7 @@ import {BackupDisplayComponent} from './backup/display/backup-display.component'
 import {BackupPhotoComponent} from './backup/display/photo/backup-photo.component';
 import {MoneyToolbarComponent} from './money/toolbar/money-toolbar.component';
 import {MoneyFilterComponent} from './money/filter/money-filter.component';
+import {MoneyAddComponent} from './money/add/money-add.component';
 
 @NgModule({
     declarations: [
@@ -88,7 +89,8 @@ import {MoneyFilterComponent} from './money/filter/money-filter.component';
         BackupDisplayComponent,
         BackupPhotoComponent,
         MoneyToolbarComponent,
-        MoneyFilterComponent
+        MoneyFilterComponent,
+        MoneyAddComponent
     ],
     providers: [DatePipe],
     bootstrap: [AppComponent]

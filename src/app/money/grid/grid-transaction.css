@@ -34,16 +34,15 @@ th.filtered {
     text-align: center;
 }
 
-table td:first-child  { width: 3%; }
-table td:nth-child(2) { width: 6%; }
-table td:nth-child(3) { width: 3%; }
-table td:nth-child(4) { width: 7%; }
-table td:nth-child(5) { width: 2%; }
-table td:nth-child(6) { width: 2%; }
-table td:nth-child(7) { width: 2%; }
-table td:nth-child(8) { width: 10%; }
-table td:nth-child(9) { width: 30%; }
-table td:nth-child(10){ width: 7%; }
-table td:nth-child(11){ width: 7%; }
-table td:nth-child(12){ width: 7%; }
-table td:nth-child(13){ width: 7%; }
+table td:first-child  { width: 6%; }  /* Date */
+table td:nth-child(2) { width: 3%; }  /* Account */
+table td:nth-child(3) { width: 7%; }  /* Statement Date */
+table td:nth-child(4) { width: 2%; }  /* Locked */
+table td:nth-child(5) { width: 2%; }  /* Predicted */
+table td:nth-child(6) { width: 2%; }  /* Reconciliation */
+table td:nth-child(7) { width: 10%; } /* Category */
+table td:nth-child(8) { width: 30%; } /* Description */
+table td:nth-child(9) { width: 7%; }  /* Credits */
+table td:nth-child(10){ width: 7%; }  /* Debits */
+table td:nth-child(11){ width: 7%; }  /* Balance */
+table td:nth-child(12){ width: 7%; }  /* Actions */
