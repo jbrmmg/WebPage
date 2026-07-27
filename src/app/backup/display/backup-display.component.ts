@@ -57,10 +57,10 @@ export class BackupDisplayComponent implements OnInit  {
                 this.hierarchy = hierarchy;
             },
             error: err => {
-                console.log('Failed to get hierarchy ' + err);
+                console.error('❌ Failed to get hierarchy:', err);
             },
             complete: () => {
-                console.log('Load hierarchy complete');
+                console.log('✅ Load hierarchy complete');
             }
         });
     }
@@ -80,7 +80,7 @@ export class BackupDisplayComponent implements OnInit  {
                 this.hierarchy = hierarchy;
             },
             error: err => {
-                console.log('Failed to get hierarchy' + err);
+                console.error('❌ Failed to get hierarchy:', err);
             },
             complete: () => {
                 // Set the file list.
@@ -109,7 +109,7 @@ export class BackupDisplayComponent implements OnInit  {
                     this.displayFile(this.fileList[0]);
                 }
 
-                console.log('Load hierarchy complete');
+                console.log('✅ Load hierarchy complete');
             }
         });
     }
@@ -119,7 +119,7 @@ export class BackupDisplayComponent implements OnInit  {
     }
 
     displayFile(file: HierarchyResponse): void {
-        console.log(`Select file ${file.displayName}`);
+        console.log('📂 Select file:', file.displayName);
 
         // Select a file.
         this._backupDisplayService.getFile(file.underlyingId);

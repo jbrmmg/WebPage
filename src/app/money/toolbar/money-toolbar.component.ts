@@ -15,14 +15,16 @@ import {NgForOf} from '@angular/common';
 export class MoneyToolbarComponent {
     @Input() status = '';
     @Input() version = '';
+    @Input() hasChanges = false;
     @Output() filterClick = new EventEmitter<void>();
+    @Output() saveClick = new EventEmitter<void>();
 
     pageSize = 300;
     pageSizes = [25, 50, 100, 200, 300];
 
     onFilter() { this.filterClick.emit(); }
     onAdd() {}
-    onSave() {}
+    onSave() { this.saveClick.emit(); }
     onExport() {}
     onLoadRecFile() {}
     onPageUp() {}

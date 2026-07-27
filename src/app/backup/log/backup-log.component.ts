@@ -16,7 +16,7 @@ export class BackupLogComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log('Get Log.');
+        console.log('📋 Get Log.');
         this.logs = [];
 
         this._backupLogService.getLogs().subscribe({
@@ -25,8 +25,8 @@ export class BackupLogComponent implements OnInit {
                     this.logs.push(nextLog);
                 });
             },
-            error: err => { console.log('Failed load log ' + err); },
-            complete: () => { console.log('Load Logs Complete'); }
+            error: err => { console.error('❌ Failed to load log:', err); },
+            complete: () => { console.log('✅ Load Logs Complete'); }
         });
     }
 

@@ -70,7 +70,7 @@ export class MoneyAddCalcComponent implements OnInit {
 
     @HostListener('document:keypress', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
-        console.log('key:' + event.key);
+        console.log('⌨️ key:', event.key);
 
         // Click the key that is linked to the key press.
         this.rows.forEach((row) => {

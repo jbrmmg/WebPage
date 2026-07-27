@@ -71,7 +71,7 @@ export class BackupPrintsComponent implements OnInit {
     }
 
     clearPrints() {
-        console.log('Clear');
+        console.log('🧹 Clear prints');
         this._backupPrintService.clearPrints();
     }
 

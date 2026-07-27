@@ -62,7 +62,7 @@ export class GridTransaction implements OnInit, OnChanges {
     newTransaction: TransactionReport = new TransactionReport();
     status = 'ready';
     version = '';
-    @Output() gridDataChangeHandler: EventEmitter<any> = new EventEmitter();
+    @Output() hasChanges = new EventEmitter<boolean>();
     @Output() statusChange: EventEmitter<string> = new EventEmitter();
     @Output() versionChange: EventEmitter<string> = new EventEmitter();
 
@@ -101,9 +101,9 @@ export class GridTransaction implements OnInit, OnChanges {
         this._moneyService.getVersion().subscribe({
             next: value => { this.version = '(v' + value.version + ')'; this.versionChange.emit(this.version); },
             error: (response) => {
-                console.error('getVersion Failed ' + response);
+                console.error('❌ getVersion failed:', response);
             },
-            complete: () => console.log('Got Version'),
+            complete: () => console.log('🔑 Got Version'),
         });
 
         this.update();
@@ -248,7 +248,7 @@ export class GridTransaction implements OnInit, OnChanges {
             },
             error: (response) => {
                 this.status = 'Update failed ' + response;
-                console.error('getTransactions Failed ' + response);
+                console.error('❌ getTransactions failed:', response);
             },
             complete: () => {
                 // Mark the rows that are selectable.
@@ -275,7 +275,8 @@ export class GridTransaction implements OnInit, OnChanges {
                     formatCurrency(debits, 'en-UK', '£', 'GBP', '1.2-2') +
                     ', Credits: ' + formatCurrency(credits, 'en-UK', '£', 'GBP', '1.2-2');
                 this.statusChange.emit(this.status);
-                console.log('getTransactions Complete. ' + this.status);
+                this.hasChanges.emit(false);
+                console.log('✅ getTransactions complete:', this.status);
             }
         });
     }
@@ -284,6 +285,33 @@ export class GridTransaction implements OnInit, OnChanges {
         this.data.forEach(value => {
             value.editing = TransactionEditType.None;
         });
+    }
+
+    private computeHasChanges(): boolean {
+        return this.data?.some(t => t.modified) ?? false;
+    }
+
+    save() {
+        const modifiedExisting = this.data.filter(t => t.modified && !t.new);
+        const newTrn = this.data.find(t => t.new && t.modified);
+
+        if (modifiedExisting.length > 0) {
+            this.performActionUpdate(modifiedExisting);
+        }
+
+        if (newTrn != null && this.isValidNewTransaction(newTrn)) {
+            this.performActionAdd(newTrn);
+        }
+    }
+
+    private isValidNewTransaction(t: ITransactionReport): boolean {
+        return t.date != null &&
+            t.account != null &&
+            t.account.id !== JbAccount.unknownAccountId &&
+            t.category != null &&
+            t.description != null &&
+            t.description.length > 0 &&
+            t.amount.value !== 0;
     }
 
     valueChanged(event: GridDataEvent) {
@@ -297,16 +325,16 @@ export class GridTransaction implements OnInit, OnChanges {
             });
         }
 
-        this.gridDataChangeHandler.emit(event);
+        this.hasChanges.emit(this.computeHasChanges());
     }
 
     performActionUpdate(transactions: ITransactionReport[]) {
         this._moneyService.updateTransaction(transactions).subscribe({
             next: (val) => {
-                console.log('Updated TRN: ' + val.date + ' ' + val.amount + ' ' + val.error);
+                console.log('✅ Updated TRN:', val.date, val.amount, val.error);
             },
             error: (response) => {
-                console.log('Failed to update TRN: ' + response);
+                console.error('❌ Failed to update TRN:', response);
             },
             complete: () => {
                 this.update();
@@ -342,10 +370,10 @@ export class GridTransaction implements OnInit, OnChanges {
 
         this._moneyService.addTransaction(transactions).subscribe({
             next: (val) => {
-                console.log('Created TRN: ' + val.date + ' ' + val.amount);
+                console.log('➕ Created TRN:', val.date, val.amount);
             },
             error: (response) => {
-                console.log('Failed to add TRN: ' + response);
+                console.error('❌ Failed to add TRN:', response);
             },
             complete: () => {
                 this.update();
@@ -356,7 +384,7 @@ export class GridTransaction implements OnInit, OnChanges {
     performActionReconcile(transactions: ITransactionReport[]) {
         this._moneyService.reconcile(transactions, true).subscribe({
             error: (response) => {
-                console.log('Failed to reconcile TRN: ' + response);
+                console.error('❌ Failed to reconcile TRN:', response);
             },
             complete: () => {
                 this.update();
@@ -367,7 +395,7 @@ export class GridTransaction implements OnInit, OnChanges {
     performActionUnreconcile(transactions: ITransactionReport[]) {
         this._moneyService.reconcile(transactions, false).subscribe({
             error: (response) => {
-                console.log('Failed to reconcile TRN: ' + response);
+                console.error('❌ Failed to reconcile TRN:', response);
             },
             complete: () => {
                 this.update();
@@ -379,7 +407,7 @@ export class GridTransaction implements OnInit, OnChanges {
         // Delete this transaction.
         this._moneyService.deleteTransaction(transactions).subscribe({
             error: (response) => {
-                console.log('Failed to delete TRN: ' + response);
+                console.error('❌ Failed to delete TRN:', response);
             },
             complete: () => {
                 this.update();
@@ -389,14 +417,8 @@ export class GridTransaction implements OnInit, OnChanges {
 
     performActionClearAdd(transaction: ITransactionReport) {
         GridTransaction.clearTransaction(transaction, this.filter);
-
-        // Indicate that the transaction changed.
-        const event: GridDataEvent = new GridDataEvent();
-        event.transaction = transaction;
-        event.action = GridDataActionType.ClearAdd;
-        event.source = HeaderType.Action;
-
-        this.gridDataChangeHandler.emit(event);
+        transaction.modified = false;
+        this.hasChanges.emit(this.computeHasChanges());
     }
 
     performAction(event: GridDataEvent) {
@@ -440,16 +462,16 @@ export class GridTransaction implements OnInit, OnChanges {
                 break;
             case GridDataActionType.PendingUpdate:
             case GridDataActionType.PendingAdd:
-                console.log('Pending actions are ignored - ' + event.action);
+                console.log('⏭️ Pending action ignored:', event.action);
                 break;
         }
     }
 
     lockStatement(statement: IStatement) {
-        console.log('Lock Statement');
+        console.log('🔒 Lock Statement');
         this._moneyService.lockStatement(statement).subscribe({
             error: (response) => {
-                console.log('Failed to lock statement ' + response);
+                console.error('❌ Failed to lock statement:', response);
             },
             complete: () => {
                 this.update();
@@ -458,11 +480,11 @@ export class GridTransaction implements OnInit, OnChanges {
     }
 
     clearRecData() {
-        console.log(`Clear reconciliation data file {}`);
+        console.log('🧹 Clear reconciliation data file');
 
         this._moneyService.clearRecData().subscribe({
             error: (response) => {
-                console.log('Failed to clear rec data ' + response);
+                console.error('❌ Failed to clear rec data:', response);
             },
             complete: () => {
                 this.update();
@@ -471,12 +493,12 @@ export class GridTransaction implements OnInit, OnChanges {
     }
 
     selectRecData(file: IFile) {
-        console.log(`Load file {}`, file.filename);
+        console.log('📂 Load file:', file.filename);
 
         this._moneyService.loadFileRequest(file).subscribe({
             error: (response) => {
                 if (environment.production) {
-                    console.log('Failed to load file ' + response);
+                    console.error('❌ Failed to load file:', response);
                 } else {
                     // Treat as complete.
                     this.update();

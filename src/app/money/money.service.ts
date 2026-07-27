@@ -206,7 +206,7 @@ export class MoneyService {
         } else {
             errorMessage = 'Server returned code ' + err.status + ', error message is: ' + err.message;
         }
-        console.error(errorMessage);
+        console.error('❌', errorMessage);
         return throwError(() => new Error(errorMessage) );
     }
 
@@ -252,44 +252,44 @@ export class MoneyService {
 
     getFiles(): Observable<IFile[]> {
         return this.http.get<IFile[]>(environment.moneyGetFilesUrl).pipe(
-            tap(data => console.log('All: ' + JSON.stringify(data))),
+            tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError( err => MoneyService.handleError(err))
         );
     }
 
     getCategories(): Observable<Category[]> {
         return this.http.get<Category[]>(environment.moneyCategoryUrl).pipe(
-            tap(data => console.log('All: ' + JSON.stringify(data))),
+            tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
     }
 
     getAccounts(): Observable<JbAccount[]> {
         return this.http.get<JbAccount[]>(environment.moneyAccountUrl).pipe(
-            tap(data => console.log('All: ' + JSON.stringify(data))),
+            tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
     }
 
     getStatements(): Observable<Statement[]> {
         return this.http.get<Statement[]>(environment.moneyStatementUrl).pipe(
-            tap(data => console.log('All: ' + JSON.stringify(data))),
+            tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
     }
 
     getTransactions(filter: TransactionFilter): Observable<ITransactionReport[]>  {
-        console.log(JSON.stringify(filter));
+        console.log('🔍 Filter:', JSON.stringify(filter));
 
         return this.http.post<ITransactionReport[]>(environment.moneyTransactionList, filter).pipe(
-            tap(data => console.log('All: ' + JSON.stringify(data))),
+            tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
     }
 
     getVersion(): Observable<IVersion> {
         return this.http.get<IVersion>(environment.moneyVersion).pipe(
-            tap(data => console.log('Version ' + JSON.stringify(data))),
+            tap(data => console.log('🔑 Version', JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
     }

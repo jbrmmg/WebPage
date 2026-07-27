@@ -22,7 +22,7 @@ export class ImportGridService {
         } else {
             errorMessage = 'Server returned code(Import Grid Service) ' + err.status + ', error message is: ' + err.message;
         }
-        console.error(errorMessage);
+        console.error('❌', errorMessage);
         return throwError(() => new Error(errorMessage));
     }
 
@@ -33,7 +33,7 @@ export class ImportGridService {
         }
 
         return this.http.get<ImportGridFile[]>(url).pipe(
-            tap(data => console.log('All: ' + JSON.stringify(data))),
+            tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => ImportGridService.handleError(err))
         );
     }

@@ -27,13 +27,13 @@ export class BackupDisplayService {
         } else {
             errorMessage = `Server returned code ${err.status}, error message is ${err.message}`;
         }
-        console.error(errorMessage);
+        console.error('❌', errorMessage);
         return throwError(() => new Error(errorMessage));
     }
 
     getHierarchy(parent: HierarchyResponse): Observable<HierarchyResponse[]> {
         return this.http.post<HierarchyResponse[]>(environment.backupHierarchy, parent).pipe(
-            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+            tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => BackupDisplayService.handleError(err))
         );
     }
@@ -56,7 +56,7 @@ export class BackupDisplayService {
 
     getFile(id: number): void {
         this.http.get<FileInfoExtra>(environment.production === true ? `backup/files/detail?id=${id}` : `api/backup/file${id}.json` ).pipe(
-            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+            tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError( err => BackupDisplayService.handleError(err))
         ).subscribe({
             next: (nextFile: FileInfoExtra) => {
@@ -67,7 +67,7 @@ export class BackupDisplayService {
                 console.error('Failed to get file information.', response);
             },
             complete: () => {
-                console.log('File loaded ' + id);
+                console.log('✅ File loaded:', id);
             }
         });
     }
@@ -75,20 +75,20 @@ export class BackupDisplayService {
     deleteFile(id: number) {
         this.http.delete<void>(`backup/file?id=${id}`).subscribe({
             next: () => {
-                console.log('Delete File');
+                console.log('🗑️ Delete File');
             },
             error: (response) => {
-                console.log('DELETE call in error', response);
+                console.error('❌ DELETE call in error', response);
             },
             complete: () => {
-                console.log('The DELETE observable is now complete (delete file)');
+                console.log('✅ Delete file complete');
             }
         });
     }
 
     refreshFile(id: number) {
         this.http.post<FileInfoExtra>(environment.backupRefreshFile.replace('##id##', '' + id), '').pipe(
-            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+            tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError( err => BackupDisplayService.handleError(err))
         ).subscribe({
             next: (nextFile: FileInfoExtra) => {
@@ -99,14 +99,14 @@ export class BackupDisplayService {
                 console.error('Failed to get file information.', response);
             },
             complete: () => {
-                console.log('File loaded ' + id);
+                console.log('✅ File loaded:', id);
             }
         });
     }
 
     getLabels(): Observable<Label[]> {
         return this.http.get<Label[]>(environment.backupLabels).pipe(
-            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+            tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => BackupDisplayService.handleError(err))
         );
     }
@@ -119,7 +119,7 @@ export class BackupDisplayService {
         fileLabel.labels.push(labelId);
 
         this.http.post<FileInfoExtra>(environment.backupLabel, fileLabel).pipe(
-            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+            tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => BackupDisplayService.handleError(err))
         ).subscribe({
             next: (nextFile: FileInfoExtra) => {
@@ -130,7 +130,7 @@ export class BackupDisplayService {
                 console.error('Failed to update file label', response);
             },
             complete: () => {
-                console.log('Label updated ' + id);
+                console.log('✅ Label updated:', id);
             }
         });
     }
@@ -143,7 +143,7 @@ export class BackupDisplayService {
         fileLabel.labels.push(labelId);
 
         this.http.delete<FileInfoExtra>(environment.backupLabel, {body: fileLabel}).pipe(
-            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+            tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => BackupDisplayService.handleError(err))
         ).subscribe({
             next: (nextFile: FileInfoExtra) => {
@@ -154,7 +154,7 @@ export class BackupDisplayService {
                 console.error('Failed to update file label', response);
             },
             complete: () => {
-                console.log('Label updated ' + id);
+                console.log('✅ Label updated:', id);
             }
         });
     }
@@ -165,7 +165,7 @@ export class BackupDisplayService {
         fileExpiry.expiry = expiry;
 
         this.http.put<FileInfoExtra>(environment.backupExpire, fileExpiry).pipe(
-            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+            tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError( err => BackupDisplayService.handleError(err))
         ).subscribe({
             next: (nextFile: FileInfoExtra) => {
@@ -176,7 +176,7 @@ export class BackupDisplayService {
                 console.error('Failed to expire file.', response);
             },
             complete: () => {
-                console.log('File loaded (expire)' + id);
+                console.log('✅ File expiry set:', id);
             }
         });
     }

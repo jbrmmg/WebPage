@@ -54,7 +54,7 @@ export class BackupSummaryGrid implements OnInit {
             },
             error: err => {
                 // Error
-                console.log(err);
+                console.error('❌', err);
             },
             complete: () => {
                 // Sort the list.

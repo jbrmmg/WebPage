@@ -124,7 +124,7 @@ export class ImportSelectedData {
     }
 
     display(file: ImportGridFileDisplay) {
-        console.log('data update');
+        console.log('🔄 Data update');
         if (file?.source) {
             this.filename = file.source.filename;
             this.imageSize = file.source.imageSize;

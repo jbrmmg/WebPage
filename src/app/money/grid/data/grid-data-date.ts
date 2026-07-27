@@ -115,7 +115,7 @@ export class GridDataDate extends GridDataInlineEdit implements OnInit {
             // Set the transaction from the date.
             this.transaction.date = newDate;
             this.transaction.modified = true;
-            console.log(this.transaction.date);
+            console.log('📅 Date:', this.transaction.date);
 
             const event: GridDataEvent = new GridDataEvent();
             event.transaction = this.transaction;

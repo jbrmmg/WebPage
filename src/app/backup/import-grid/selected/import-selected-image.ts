@@ -30,7 +30,7 @@ export class ImportSelectedImage {
     }
 
     display(file: ImportGridFileDisplay) {
-        console.log('image update');
+        console.log('🖼️ Image update');
 
         if (file.source?.imageSize && file.source.image) {
             this.imagePath = 'backup/import/file/image?name=' + file.source.filename;

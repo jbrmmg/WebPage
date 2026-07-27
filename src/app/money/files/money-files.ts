@@ -48,7 +48,7 @@ export class MoneyFiles implements OnInit {
     handleBeforeUnload(_event: BeforeUnloadEvent): void {
         this.fileUpdateSource.removeEventListener('message', this.fileUpdate.bind(this));
         this.fileUpdateSource.close();
-        console.log('Cleanup before unload.');
+        console.log('🧹 Cleanup before unload.');
     }
 
     updateFileData() {

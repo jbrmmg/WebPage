@@ -21,10 +21,10 @@ export class WelcomeService {
 
         this.http.post<void>('/podcast/reminder', request).subscribe({
             next: (val) => {
-                console.log('POST call successful value returned in body', val);
+                console.log('✅ POST call successful', val);
             },
             error: (response) => {
-                console.log('POST call in error', response);
+                console.error('❌ POST call in error', response);
             }
         });
     }

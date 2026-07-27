@@ -62,6 +62,7 @@ export class GridDataAccount extends GridData implements OnInit {
     onSelect(account: JbAccount) {
         if (this.transaction != null) {
             this.transaction.account = account;
+            this.transaction.modified = true;
 
             const event: GridDataEvent = new GridDataEvent();
             event.transaction = this.transaction;

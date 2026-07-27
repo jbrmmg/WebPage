@@ -57,14 +57,14 @@ export class BackupDisplayLabelComponent implements OnInit {
             if (nextLabel.id === id) {
                 if (nextLabel.selected) {
                     this._backupDisplayService.removeFileLabel(this.selectedFile.file.id, id);
-                    console.log('remove');
+                    console.log('🗑️ Remove label');
                 } else {
                     this._backupDisplayService.setFileLabel(this.selectedFile.file.id, id);
-                    console.log('add');
+                    console.log('➕ Add label');
                 }
             }
         });
         this.modalService.hide();
-        console.log(id);
+        console.log('🏷️ Label ID:', id);
     }
 }

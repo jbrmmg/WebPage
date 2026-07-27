@@ -76,7 +76,7 @@ export class MoneyAccount implements OnInit {
             },
             error: (response) => this.errorMessage = response,
             complete: () => {
-                console.log('Account Options Loaded');
+                console.log('✅ Account Options Loaded');
             }
         });
     }

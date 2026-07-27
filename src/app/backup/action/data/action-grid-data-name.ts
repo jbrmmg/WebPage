@@ -29,7 +29,7 @@ export class ActionGridDataName extends ActionGridData {
     }
 
     selectMedia() {
-        console.log('Select Media');
+        console.log('🎬 Select Media');
         this.fileSelected.emit(this.action.fileId);
     }
 }

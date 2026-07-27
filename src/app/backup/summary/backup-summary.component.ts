@@ -26,7 +26,7 @@ export class BackupSummaryComponent implements OnInit  {
             },
             error: err => {
                 // Error
-                console.log(err);
+                console.error('❌', err);
             },
             complete: () => {
                 // Finished

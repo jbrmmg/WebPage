@@ -67,7 +67,7 @@ export class Map implements AfterViewInit {
             this.map.invalidateSize();
             this.map._resetView(this.map.getCenter(), this.map.getZoom(), true);
 
-            console.log('move ' + location.lat + ' ' + location.long);
+            console.log('📍 Move:', location.lat, location.long);
             this.map.panTo({lat: location.lat, lng: location.long});
             this.map.zoom = 16;
         }

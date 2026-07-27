@@ -35,7 +35,7 @@ export class BackupActionComponent implements OnInit  {
     }
 
     ngOnInit(): void {
-        console.log('Get Actions.');
+        console.log('📋 Get Actions.');
         this.actions = [];
 
         this.refreshActions();
@@ -54,10 +54,10 @@ export class BackupActionComponent implements OnInit  {
                 });
             },
             error: err => {
-                console.log('Failed to get actions.' + err);
+                console.error('❌ Failed to get actions:', err);
             },
             complete: () => {
-                console.log('Load Actions Complete');
+                console.log('✅ Load Actions Complete');
             }
         });
     }

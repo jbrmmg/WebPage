@@ -35,8 +35,8 @@ export class MoneyStatement implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log(this.account);
-        console.log(this.statement);
+        console.log('🏦 Account:', this.account);
+        console.log('📋 Statement:', this.statement);
 
         const filter: TransactionFilter = new TransactionFilter();
         const account: JbAccount = new JbAccount( this.account.id,
@@ -55,7 +55,7 @@ export class MoneyStatement implements OnInit {
                 this.data = val;
             },
             error: (response) => {
-                console.error('getTransactions Failed ' + response);
+                console.error('❌ getTransactions failed:', response);
             },
             complete: () => {
                 // Split data into transactions and balances.
@@ -69,7 +69,7 @@ export class MoneyStatement implements OnInit {
                        this.balances.push(next);
                    }
                 });
-                console.log('getTransactions Complete. ');
+                console.log('✅ getTransactions complete.');
             }
         });
     }

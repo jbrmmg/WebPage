@@ -25,13 +25,13 @@ export class BackupPrintService {
         } else {
             errorMessage = `Server returned code ${err.status}, error message is ${err.message}`;
         }
-        console.error(errorMessage);
+        console.error('❌', errorMessage);
         return throwError(() => new Error(errorMessage));
     }
 
     getPrintSizes(): Observable<PrintSize[]> {
         return this.http.get<PrintSize[]>(environment.backupPrintSize).pipe(
-            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+            tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => BackupPrintService.handleError(err))
         );
     }
@@ -55,14 +55,14 @@ export class BackupPrintService {
     selectForPrint() {
         this.http.post<void>(environment.backupPrint, this.selectedPhoto).subscribe({
             next: () => {
-                console.log('Select for print');
+                console.log('🖨️ Select for print');
             },
             error: (response) => {
-                console.log('POST select for print', response);
+                console.error('❌ POST select for print failed', response);
             },
             complete: () => {
                 this.updatePrints();
-                console.log('POST select for print completed');
+                console.log('✅ POST select for print completed');
             }
         });
     }
@@ -71,14 +71,14 @@ export class BackupPrintService {
         this.http.get<SelectedPrint[]>(environment.backupPrints).subscribe({
             next: (selected) => {
                 this.selectedPhotos = selected;
-                console.log('Selecting from print');
+                console.log('🖨️ Selecting from print');
             },
             error: (response) => {
-                console.log('Selecting for print err', response);
+                console.error('❌ Selecting for print failed', response);
             },
             complete: () => {
                 this.printsUpdated.emit();
-                console.log('loaded');
+                console.log('✅ Prints loaded');
             }
         });
     }
@@ -90,14 +90,14 @@ export class BackupPrintService {
     unselectForPrint(id: number) {
         this.http.post<void>(environment.backupUnprint, id).subscribe({
             next: () => {
-                console.log('Select for print');
+                console.log('🖨️ Unselect for print');
             },
             error: (response) => {
-                console.log('POST select for print', response);
+                console.error('❌ POST unselect for print failed', response);
             },
             complete: () => {
                 this.updatePrints();
-                console.log('POST unselect for print completed');
+                console.log('✅ POST unselect for print completed');
             }
         });
     }
@@ -118,14 +118,14 @@ export class BackupPrintService {
     clearPrints() {
         this.http.delete<void>(environment.backupPrints).subscribe({
             next: () => {
-                console.log('Delete prints');
+                console.log('🗑️ Delete prints');
             },
             error: (response) => {
-                console.log('DELETE prints', response);
+                console.error('❌ DELETE prints failed', response);
             },
             complete: () => {
                 this.updatePrints();
-                console.log('The DELETE observable is now complete (delete prints)');
+                console.log('✅ Delete prints complete');
             }
         });
     }

@@ -19,13 +19,13 @@ export class BackupActionService {
         } else {
             errorMessage = 'Server returned code (Backup Action Service) ' + err.status + ', error message is: ' + err.message;
         }
-        console.error(errorMessage);
+        console.error('❌', errorMessage);
         return throwError(() => new Error(errorMessage));
     }
 
     getActions(): Observable<Action[]> {
         return this.http.get<Action[]>(environment.backupActions).pipe(
-            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+            tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError( err => BackupActionService.handleError(err))
         );
     }
@@ -39,10 +39,10 @@ export class BackupActionService {
         // Send the confirmation request to the server.
         this.http.post<void>(environment.backupActions, confirmReq).subscribe({
             error: err => {
-                console.log('Failed to confirm the request ' + err);
+                console.error('❌ Failed to confirm the request:', err);
             },
             complete: () => {
-                console.log('Request is confirmed');
+                console.log('✅ Request confirmed');
             }
         });
     }

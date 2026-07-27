@@ -72,7 +72,7 @@ export class BackupPrintSizeSelectComponent implements OnInit {
             }
         });
 
-        console.log('Size selected ' + this.selectedSizeName + ' ' + this.selectedSizeId);
+        console.log('🖨️ Size selected:', this.selectedSizeName, this.selectedSizeId);
     }
 
     selectSizeAndStyle() {

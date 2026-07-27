@@ -17,6 +17,10 @@ tr:hover td {
     background-color: rgba(160, 212, 245, 0.06) !important;
 }
 
+tr.row-pending > td:first-child {
+    border-left: 3px solid #f0a030;
+}
+
 th.filtered {
     background: #4a1515;
     color: #ff8a80;

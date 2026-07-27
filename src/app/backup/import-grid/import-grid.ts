@@ -92,7 +92,7 @@ export class ImportGrid implements OnInit {
         this.fileUpdateSource.close();
         this.summaryUpdateSource.removeEventListener('message', this.summaryUpdate.bind(this));
         this.summaryUpdateSource.close();
-        console.log('Cleanup before unload.');
+        console.log('🧹 Cleanup before unload.');
     }
 
     updateFileDataBase(data: IImportGridFileBase, update: ImportGridFileBase) {
@@ -346,7 +346,7 @@ export class ImportGrid implements OnInit {
             this.summary.page = page;
         }
 
-        console.log('summary ' + update.PreImport);
+        console.log('📊 Summary PreImport:', update.PreImport);
     }
 
     fileUpdate(event: MessageEvent): void {
@@ -415,7 +415,7 @@ export class ImportGrid implements OnInit {
             },
             error: err => {
                 // Error
-                console.log(err);
+                console.error('❌', err);
             },
             complete: () => {
                 // Completed
@@ -639,14 +639,14 @@ export class ImportGrid implements OnInit {
         if (this.fileForDelete) {
             this._importGridService.delete(this.fileForDelete).subscribe({
                 next: (result) => {
-                    console.log(result);
+                    console.log('📡 Response:', result);
                 },
                 error: err => {
                     this.status = 'Delete failed - check log';
-                    console.log('There is an error?' + err.message);
+                    console.error('❌ Error:', err.message);
                 },
                 complete: () => {
-                    console.log('Deleted file');
+                    console.log('🗑️ Deleted file');
                     this.status = 'Delete complete.';
                     this.refresh(-1);
                 }
@@ -680,17 +680,17 @@ export class ImportGrid implements OnInit {
         this.status = 'Removing the ignore flag from the file.';
         this._importGridService.unignore(file).subscribe({
                 next: (result) => {
-                    console.log(result);
+                    console.log('📡 Response:', result);
                 },
                 error: err => {
                     // Error.
                     this.status = 'Un-Ignore file failed - check log.';
-                    console.log('There is an error?' + err.message);
+                    console.error('❌ Error:', err.message);
                 },
                 complete: () => {
                     this.status = 'File un-ignored.';
                     this.refresh(-1);
-                    console.log('Unignore complete');
+                    console.log('✅ Unignore complete');
                 }
             }
         );
@@ -701,17 +701,17 @@ export class ImportGrid implements OnInit {
         this.status = 'Ignoring the file.';
         this._importGridService.ignore(file).subscribe({
                 next: (result) => {
-                    console.log(result);
+                    console.log('📡 Response:', result);
                 },
                 error: err => {
                     // Error.
                     this.status = 'Ignore file failed - check log.';
-                    console.log('There is an error?' + err.message);
+                    console.error('❌ Error:', err.message);
                 },
                 complete: () => {
                     this.status = 'File ignored.';
                     this.refresh(-1);
-                    console.log('Ignore complete');
+                    console.log('✅ Ignore complete');
                 }
             }
         );
@@ -722,17 +722,17 @@ export class ImportGrid implements OnInit {
         this.status = 'Marking the file as a recipe.';
         this._importGridService.recipe(file).subscribe({
                 next: (result) => {
-                    console.log(result);
+                    console.log('📡 Response:', result);
                 },
                 error: err => {
                     // Error.
                     this.status = 'Failed to mark file as a recipe - check log.';
-                    console.log('There is an error?' + err.message);
+                    console.error('❌ Error:', err.message);
                 },
                 complete: () => {
                     this.status = 'File marked as recipe.';
                     this.nextAction(file);
-                    console.log('Mark as recipe complete complete');
+                    console.log('✅ Mark as recipe complete');
                 }
             }
         );
@@ -743,17 +743,17 @@ export class ImportGrid implements OnInit {
         this.status = 'Marking the file as a basic backup.';
         this._importGridService.backup(file).subscribe({
                 next: (result) => {
-                    console.log(result);
+                    console.log('📡 Response:', result);
                 },
                 error: err => {
                     // Error.
                     this.status = 'Failed to mark file as a basic backup - check log.';
-                    console.log('There is an error?' + err.message);
+                    console.error('❌ Error:', err.message);
                 },
                 complete: () => {
                     this.status = 'File marked as basic backup.';
                     this.nextAction(file);
-                    console.log('Mark as backup complete complete');
+                    console.log('✅ Mark as backup complete');
                 }
             }
         );
@@ -764,12 +764,12 @@ export class ImportGrid implements OnInit {
         this.status = 'Update the destination of ' + update.filename;
         this._importGridService.updateDestination(update).subscribe({
                 next: (result) => {
-                    console.log(result);
+                    console.log('📡 Response:', result);
                 },
                 error: err => {
                     // Error.
                     this.status = 'Failed to update the destination - check log.';
-                    console.log('There is an error?' + err.message);
+                    console.error('❌ Error:', err.message);
                 },
                 complete: () => {
                     this.status = 'Destination updated.';
@@ -782,7 +782,7 @@ export class ImportGrid implements OnInit {
                     });
 
                     this.nextAction(update.filename);
-                    console.log('Destination updated');
+                    console.log('✅ Destination updated');
                 }
             }
         );
@@ -855,15 +855,15 @@ export class ImportGrid implements OnInit {
         this.status = 'Removing Ignored files from the import directory';
         this._importGridService.removeIgnored().subscribe({
             next: (result) => {
-                console.log(result);
+                console.log('📡 Response:', result);
             },
             error: err => {
                 // Error.
                 this.status = 'Remove ignored failed - check log';
-                console.log('There is an error?' + err.message);
+                console.error('❌ Error:', err.message);
             },
             complete: () => {
-                console.log('Remove ignored complete');
+                console.log('✅ Remove ignored complete');
                 this.status = 'Remove ignored complete';
                 this.refresh(-1);
             }
@@ -874,15 +874,15 @@ export class ImportGrid implements OnInit {
         this.status = 'Importing the photos that have a destination.';
         this._importGridService.importPhotos().subscribe({
             next: (result) => {
-                console.log(result);
+                console.log('📡 Response:', result);
             },
             error: err => {
                 // Error.
                 this.status = 'Import Photos failed - check log';
-                console.log('There is an error?' + err.message);
+                console.error('❌ Error:', err.message);
             },
             complete: () => {
-                console.log('Import photos completed');
+                console.log('✅ Import photos completed');
                 this.status = 'Import photos completed';
                 this.refresh(-1);
             }
@@ -893,15 +893,15 @@ export class ImportGrid implements OnInit {
         this.status = 'Removing active photos';
         this._importGridService.removeActive().subscribe({
             next: (result) => {
-                console.log(result);
+                console.log('📡 Response:', result);
             },
             error: err => {
                 // Error.
                 this.status = 'Remove active photos failed - check log';
-                console.log('There is an error?' + err.message);
+                console.error('❌ Error:', err.message);
             },
             complete: () => {
-                console.log('Remove ignored complete');
+                console.log('✅ Remove ignored complete');
                 this.status = 'Remove active photos complete';
                 this.refresh(-1);
             }
@@ -912,14 +912,14 @@ export class ImportGrid implements OnInit {
         this.status = 'Removing files that are confirmed imports.';
         this._importGridService.removeConfirmedImports().subscribe({
             next: (result) => {
-                console.log(result);
+                console.log('📡 Response:', result);
             },
             error: err => {
                 this.status = 'Remove duplicates failed - check log';
-                console.log('There is an error?' + err.message);
+                console.error('❌ Error:', err.message);
             },
             complete: () => {
-                console.log('Remove duplicates complete');
+                console.log('✅ Remove duplicates complete');
                 this.status = 'Remove duplicates complete';
                 this.refresh(-1);
             }

@@ -20,13 +20,13 @@ export class BackupSummaryService {
         } else {
             errorMessage = `Server returned code ${err.status}, error message is ${err.message}`;
         }
-        console.error(errorMessage);
+        console.error('❌', errorMessage);
         return throwError(() => errorMessage);
     }
 
     getSummary(): Observable<BackupSummary> {
         return this.http.get<BackupSummary>(environment.backupSummary).pipe(
-            tap(data =>  console.log(`All: ${JSON.stringify(data)}`)),
+            tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => BackupSummaryService.handleError(err))
         );
     }

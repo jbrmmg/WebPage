@@ -20,13 +20,13 @@ export class BackupLogService {
         } else {
             errorMessage = `Server returned code ${err.status}, error message is ${err.message}`;
         }
-        console.error(errorMessage);
+        console.error('❌', errorMessage);
         return throwError(() => new Error(errorMessage));
     }
 
     getLogs(): Observable<Log[]> {
         return this.http.get<Log[]>(environment.backupLog).pipe(
-            tap(data => console.log(`All: ${JSON.stringify(data)}`)),
+            tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => BackupLogService.handleError(err))
         );
     }

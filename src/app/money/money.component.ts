@@ -1,14 +1,18 @@
-import {Component, HostListener} from '@angular/core';
+import {Component, HostListener, ViewChild} from '@angular/core';
 import {TransactionFilter} from './transaction/transactionFilter';
+import {GridTransaction} from './grid/grid-transaction';
 
 @Component({
     templateUrl: './money.component.html',
     styleUrls: ['./money.component.css']
 })
 export class MoneyComponent {
+    @ViewChild(GridTransaction) private grid: GridTransaction;
+
     status = '';
     version = '';
     showFilter = false;
+    hasChanges = false;
     filter: TransactionFilter = MoneyComponent.defaultFilter();
 
     static defaultFilter(): TransactionFilter {
@@ -30,5 +34,9 @@ export class MoneyComponent {
     onFilterApplied(newFilter: TransactionFilter): void {
         this.filter = newFilter;
         this.showFilter = false;
+    }
+
+    onSave(): void {
+        this.grid.save();
     }
 }
