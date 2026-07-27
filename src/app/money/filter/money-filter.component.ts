@@ -270,7 +270,12 @@ export class MoneyFilterComponent implements OnInit {
         f.categories = [];
 
         if (this.amountFrom != null || this.amountTo != null) {
-            f.valueRange = new ValueRange(this.amountFrom ?? 0, this.amountTo ?? 999999999);
+            let min = this.amountFrom ?? 0;
+            let max = this.amountTo ?? 0;
+            if (min > max) { [min, max] = [max, min]; }
+            this.amountFrom = min;
+            this.amountTo = max;
+            f.valueRange = new ValueRange(min, max);
         }
 
         if (!this.dateDisabled) {

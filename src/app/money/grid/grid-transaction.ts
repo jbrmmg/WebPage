@@ -128,7 +128,7 @@ export class GridTransaction implements OnInit, OnChanges {
                 return !(this.filter.categories == null || this.filter.categories.length === 0);
 
             case HeaderType.StatementDate:
-                return this.filter.statementDate != null;
+                return this.filter.statementDate != null || this.filter.statementAge != null;
 
             case HeaderType.Date:
                 return this.filter.dateRange != null;
@@ -143,6 +143,87 @@ export class GridTransaction implements OnInit, OnChanges {
 
         // Default - not filtered
         return false;
+    }
+
+    filterTooltip(header: HeaderType): string {
+        if (!this.filter) { return ''; }
+
+        switch (header) {
+            case HeaderType.Date:
+                if (this.filter.dateRange) {
+                    return this.fmtDate(this.filter.dateRange.from) + ' → ' + this.fmtDate(this.filter.dateRange.to);
+                }
+                break;
+
+            case HeaderType.Account:
+                if (this.filter.accounts?.length > 0) {
+                    return this.filter.accounts.length <= 3
+                        ? this.filter.accounts.map(a => a.name).join(', ')
+                        : this.filter.accounts.length + ' accounts selected';
+                }
+                break;
+
+            case HeaderType.StatementDate:
+                if (this.filter.statementDate != null && !this.filter.statementDate.none) {
+                    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                    return months[this.filter.statementDate.month - 1] + ' ' + this.filter.statementDate.year;
+                }
+                if (this.filter.statementAge != null) {
+                    return this.filter.statementAge === 0
+                        ? 'Most recent statement'
+                        : this.filter.statementAge + ' statements back';
+                }
+                break;
+
+            case HeaderType.Locked:
+                if (this.filter.locked != null) {
+                    return 'Locked: ' + (this.filter.locked ? 'Yes' : 'No');
+                }
+                break;
+
+            case HeaderType.Predicted:
+                if (this.filter.predicted != null) {
+                    return 'Predicted: ' + (this.filter.predicted ? 'Yes' : 'No');
+                }
+                break;
+
+            case HeaderType.Reconciliation:
+                if (this.filter.fromReconciled != null) {
+                    return 'Reconciled: ' + (this.filter.fromReconciled ? 'Yes' : 'No');
+                }
+                break;
+
+            case HeaderType.Category:
+                if (this.filter.categories?.length > 0) {
+                    return this.filter.categories.length <= 3
+                        ? this.filter.categories.map(c => c.name).join(', ')
+                        : this.filter.categories.length + ' categories selected';
+                }
+                break;
+
+            case HeaderType.Description:
+                if (this.filter.description) {
+                    return 'Contains: "' + this.filter.description + '"';
+                }
+                break;
+
+            case HeaderType.Credit:
+            case HeaderType.Debit:
+                if (this.filter.valueRange) {
+                    return formatCurrency(this.filter.valueRange.minimum, 'en-UK', '£', 'GBP', '1.2-2')
+                        + ' → '
+                        + formatCurrency(this.filter.valueRange.maximum, 'en-UK', '£', 'GBP', '1.2-2');
+                }
+                break;
+        }
+
+        return '';
+    }
+
+    private fmtDate(iso: string): string {
+        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        const p = iso.split('-');
+        return p[2] + '-' + months[+p[1] - 1] + '-' + p[0];
     }
 
     selectionChange(event: SelectChange) {

@@ -6,34 +6,34 @@
                     <jbr-grid-header-select class="header" [header]="' '" (selectionChange)="selectionChange($event)"></jbr-grid-header-select>
                 </th>
                 <th [class]="headerFiltered(HeaderType.Date) ? 'filtered' : ''">
-                    <p>Date</p>
+                    <p>Date <em *ngIf="headerFiltered(HeaderType.Date)" class="fa fa-filter filter-icon" [title]="filterTooltip(HeaderType.Date)"></em></p>
                 </th>
                 <th [class]="headerFiltered(HeaderType.Account) ? 'filtered' : ''">
-                    <p>Acc.</p>
+                    <p>Acc. <em *ngIf="headerFiltered(HeaderType.Account)" class="fa fa-filter filter-icon" [title]="filterTooltip(HeaderType.Account)"></em></p>
                 </th>
                 <th [class]="headerFiltered(HeaderType.StatementDate) ? 'filtered' : ''">
-                    <p>Statement Date</p>
+                    <p>Statement Date <em *ngIf="headerFiltered(HeaderType.StatementDate)" class="fa fa-filter filter-icon" [title]="filterTooltip(HeaderType.StatementDate)"></em></p>
                 </th>
                 <th [class]="headerFiltered(HeaderType.Locked) ? 'filtered' : ''">
-                    <p>Lck.</p>
+                    <p>Lck. <em *ngIf="headerFiltered(HeaderType.Locked)" class="fa fa-filter filter-icon" [title]="filterTooltip(HeaderType.Locked)"></em></p>
                 </th>
                 <th [class]="headerFiltered(HeaderType.Predicted) ? 'filtered' : ''">
-                    <p>Prd.</p>
+                    <p>Prd. <em *ngIf="headerFiltered(HeaderType.Predicted)" class="fa fa-filter filter-icon" [title]="filterTooltip(HeaderType.Predicted)"></em></p>
                 </th>
                 <th [class]="headerFiltered(HeaderType.Reconciliation) ? 'filtered' : ''">
-                    <p>Rec.</p>
+                    <p>Rec. <em *ngIf="headerFiltered(HeaderType.Reconciliation)" class="fa fa-filter filter-icon" [title]="filterTooltip(HeaderType.Reconciliation)"></em></p>
                 </th>
                 <th [class]="headerFiltered(HeaderType.Category) ? 'filtered' : ''">
-                    <p>Category</p>
+                    <p>Category <em *ngIf="headerFiltered(HeaderType.Category)" class="fa fa-filter filter-icon" [title]="filterTooltip(HeaderType.Category)"></em></p>
                 </th>
                 <th [class]="headerFiltered(HeaderType.Description) ? 'filtered' : ''">
-                    <p>Description</p>
+                    <p>Description <em *ngIf="headerFiltered(HeaderType.Description)" class="fa fa-filter filter-icon" [title]="filterTooltip(HeaderType.Description)"></em></p>
                 </th>
                 <th [class]="headerFiltered(HeaderType.Credit) ? 'filtered' : ''">
-                    <p>Credits</p>
+                    <p>Credits <em *ngIf="headerFiltered(HeaderType.Credit)" class="fa fa-filter filter-icon" [title]="filterTooltip(HeaderType.Credit)"></em></p>
                 </th>
                 <th [class]="headerFiltered(HeaderType.Debit) ? 'filtered' : ''">
-                    <p>Debits</p>
+                    <p>Debits <em *ngIf="headerFiltered(HeaderType.Debit)" class="fa fa-filter filter-icon" [title]="filterTooltip(HeaderType.Debit)"></em></p>
                 </th>
                 <th>
                     <p>Balance</p>
