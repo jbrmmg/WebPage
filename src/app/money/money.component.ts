@@ -5,4 +5,6 @@ import {Component} from '@angular/core';
     styleUrls: ['./money.component.css']
 })
 export class MoneyComponent {
+    status = '';
+    version = '';
 }

@@ -1,5 +1,6 @@
 <div class="card">
     <div class="card-body">
-        <jbr-grid-transaction style="width: 100%"></jbr-grid-transaction>
+        <jbr-money-toolbar [status]="status" [version]="version"></jbr-money-toolbar>
+        <jbr-grid-transaction style="width: 100%" (statusChange)="status = $event" (versionChange)="version = $event"></jbr-grid-transaction>
     </div>
 </div>

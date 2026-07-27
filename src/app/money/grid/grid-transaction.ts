@@ -80,6 +80,8 @@ export class GridTransaction implements OnInit {
     status = 'ready';
     version = '';
     @Output() gridDataChangeHandler: EventEmitter<any> = new EventEmitter();
+    @Output() statusChange: EventEmitter<string> = new EventEmitter();
+    @Output() versionChange: EventEmitter<string> = new EventEmitter();
 
     static clearTransaction(transaction: ITransactionReport, filter: TransactionFilter) {
         transaction.new = true;
@@ -112,7 +114,7 @@ export class GridTransaction implements OnInit {
         this.filter.maxPageSize = 300;
 
         this._moneyService.getVersion().subscribe({
-            next: value => this.version = '(v' + value.version + ')',
+            next: value => { this.version = '(v' + value.version + ')'; this.versionChange.emit(this.version); },
             error: (response) => {
                 console.error('getVersion Failed ' + response);
             },
@@ -175,6 +177,7 @@ export class GridTransaction implements OnInit {
 
     update() {
         this.status = 'Updating transactions ...';
+        this.statusChange.emit(this.status);
         this.data = [];
         this._moneyService.getTransactions(this.filter).subscribe({
             next: (val) => {
@@ -212,6 +215,7 @@ export class GridTransaction implements OnInit {
                     ' transactions displayed. Debits: ' +
                     formatCurrency(debits, 'en-UK', '£', 'GBP', '1.2-2') +
                     ', Credits: ' + formatCurrency(credits, 'en-UK', '£', 'GBP', '1.2-2');
+                this.statusChange.emit(this.status);
                 console.log('getTransactions Complete. ' + this.status);
             }
         });

@@ -35,6 +35,7 @@ import {ActionGridDataName} from './backup/action/data/action-grid-data-name';
 import {BackupActionComponent} from './backup/action/backup-action.component';
 import {BackupDisplayComponent} from './backup/display/backup-display.component';
 import {BackupPhotoComponent} from './backup/display/photo/backup-photo.component';
+import {MoneyToolbarComponent} from './money/toolbar/money-toolbar.component';
 
 @NgModule({
     declarations: [
@@ -84,7 +85,8 @@ import {BackupPhotoComponent} from './backup/display/photo/backup-photo.componen
         BackupActionComponent,
         NgOptimizedImage,
         BackupDisplayComponent,
-        BackupPhotoComponent
+        BackupPhotoComponent,
+        MoneyToolbarComponent
     ],
     providers: [DatePipe],
     bootstrap: [AppComponent]

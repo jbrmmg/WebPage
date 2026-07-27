@@ -1,0 +1,40 @@
+<div class="toolbar" role="toolbar">
+    <div class="toolbar-group">
+        <button class="btn btn-secondary toolbar-btn" title="Filter transactions" (click)="onFilter()">
+            <em class="fa fa-filter"></em>
+            <span class="btn-label">Filter</span>
+        </button>
+        <button class="btn btn-secondary toolbar-btn" title="Add transaction" (click)="onAdd()">
+            <em class="fa fa-plus"></em>
+            <span class="btn-label">Add</span>
+        </button>
+        <button class="btn btn-secondary toolbar-btn" title="Save changes" (click)="onSave()">
+            <em class="fa fa-save"></em>
+            <span class="btn-label">Save</span>
+        </button>
+        <button class="btn btn-secondary toolbar-btn" title="Export transactions" (click)="onExport()">
+            <em class="fa fa-download"></em>
+            <span class="btn-label">Export</span>
+        </button>
+    </div>
+    <div class="toolbar-group">
+        <button class="btn btn-secondary toolbar-btn" title="Page up" (click)="onPageUp()">
+            <em class="fa fa-chevron-up"></em>
+            <span class="btn-label">Prev</span>
+        </button>
+        <button class="btn btn-secondary toolbar-btn" title="Page down" (click)="onPageDown()">
+            <em class="fa fa-chevron-down"></em>
+            <span class="btn-label">Next</span>
+        </button>
+        <div class="toolbar-page-size">
+            <label class="page-size-label">Page size</label>
+            <select class="form-select form-select-sm page-size-select" [(ngModel)]="pageSize" (change)="onPageSizeChange()">
+                <option *ngFor="let size of pageSizes" [value]="size">{{size}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="toolbar-status">
+        <span class="status-text">{{status}}</span>
+        <span class="version-text">{{version}}</span>
+    </div>
+</div>
