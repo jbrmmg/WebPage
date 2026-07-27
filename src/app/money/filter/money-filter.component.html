@@ -1,0 +1,196 @@
+<div class="filter-overlay">
+    <div class="filter-panel">
+
+        <!-- Header -->
+        <div class="filter-header">
+            <img src="assets/images/logo.svg" class="filter-logo" alt="JBR" width="24" height="24">
+            <span class="filter-title">Transaction Filter</span>
+            <button class="btn btn-sm btn-secondary" (click)="onExit()"><em class="fa fa-times"></em></button>
+        </div>
+
+        <!-- Flags -->
+        <div class="filter-section">
+            <div class="section-label">Flags</div>
+            <div class="flag-grid">
+                <div class="flag-row">
+                    <span class="flag-name">Locked</span>
+                    <div class="tristate">
+                        <button [ngClass]="tristateClass(locked, true)"   (click)="locked=true">Yes</button>
+                        <button [ngClass]="tristateClass(locked, false)"  (click)="locked=false">No</button>
+                        <button [ngClass]="tristateClass(locked, null)"   (click)="locked=null">Unset</button>
+                    </div>
+                </div>
+                <div class="flag-row">
+                    <span class="flag-name">Changed</span>
+                    <div class="tristate">
+                        <button [ngClass]="tristateClass(changed, true)"  (click)="changed=true">Yes</button>
+                        <button [ngClass]="tristateClass(changed, false)" (click)="changed=false">No</button>
+                        <button [ngClass]="tristateClass(changed, null)"  (click)="changed=null">Unset</button>
+                    </div>
+                </div>
+                <div class="flag-row">
+                    <span class="flag-name">Predicted</span>
+                    <div class="tristate">
+                        <button [ngClass]="tristateClass(predicted, true)"   (click)="predicted=true">Yes</button>
+                        <button [ngClass]="tristateClass(predicted, false)"  (click)="predicted=false">No</button>
+                        <button [ngClass]="tristateClass(predicted, null)"   (click)="predicted=null">Unset</button>
+                    </div>
+                </div>
+                <div class="flag-row">
+                    <span class="flag-name">Reconciled</span>
+                    <div class="tristate">
+                        <button [ngClass]="tristateClass(reconciled, true)"  (click)="setReconciled(true)">Yes</button>
+                        <button [ngClass]="tristateClass(reconciled, false)" (click)="setReconciled(false)">No</button>
+                        <button [ngClass]="tristateClass(reconciled, null)"  (click)="setReconciled(null)">Unset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Accounts -->
+        <div class="filter-section">
+            <div class="section-label">
+                Account
+                <span class="cat-summary">{{accountFilterSummary()}}</span>
+                <span *ngIf="reconcileRequiresOneAccount" class="reconcile-note">Reconciled mode — select exactly one</span>
+                <button *ngIf="!reconcileRequiresOneAccount" class="btn btn-sm btn-outline-secondary cat-controls-btn" (click)="clearAccounts()">All</button>
+            </div>
+            <div class="account-grid">
+                <button *ngFor="let acc of allAccounts"
+                        class="btn btn-sm cat-btn"
+                        [style.background-color]="accountBgColor(acc)"
+                        [style.color]="accountFgColor(acc)"
+                        [style.border-color]="accountBorderColor(acc)"
+                        (click)="toggleAccount(acc)">
+                    {{acc.name}}
+                </button>
+            </div>
+        </div>
+
+        <!-- Date (disabled when Predicted = Yes) -->
+        <div class="filter-section" [class.section-disabled]="dateDisabled">
+            <div class="section-label">
+                Date
+                <span *ngIf="dateDisabled" class="disabled-note">not available when Predicted = Yes</span>
+            </div>
+            <div class="date-mode-btns">
+                <button [ngClass]="dateMode==='none'      ? 'btn btn-sm btn-success' : 'btn btn-sm btn-outline-secondary'" (click)="setDateMode('none')">None</button>
+                <button [ngClass]="dateMode==='statement' ? 'btn btn-sm btn-success' : 'btn btn-sm btn-outline-secondary'" (click)="setDateMode('statement')">Statement Date</button>
+                <button [ngClass]="dateMode==='range'     ? 'btn btn-sm btn-success' : 'btn btn-sm btn-outline-secondary'" (click)="setDateMode('range')">Date Range</button>
+            </div>
+
+            <!-- Statement date -->
+            <div *ngIf="dateMode === 'statement'" class="sub-section">
+                <div class="stmt-mode-btns">
+                    <button [ngClass]="statementMode==='monthyear' ? 'btn btn-sm btn-success' : 'btn btn-sm btn-outline-secondary'" (click)="statementMode='monthyear'">Month / Year</button>
+                    <button [ngClass]="statementMode==='index'     ? 'btn btn-sm btn-success' : 'btn btn-sm btn-outline-secondary'" (click)="statementMode='index'">Index</button>
+                </div>
+                <div *ngIf="statementMode === 'monthyear'" class="monthyear-picker">
+                    <div class="year-btns">
+                        <button *ngFor="let y of statementYears"
+                                [ngClass]="statementYear===y ? 'btn btn-sm btn-success year-btn' : 'btn btn-sm btn-outline-secondary year-btn'"
+                                (click)="statementYear=y">{{y}}</button>
+                    </div>
+                    <div class="month-btns">
+                        <button *ngFor="let m of monthNames; let i=index"
+                                [ngClass]="statementMonth===(i+1) ? 'btn btn-sm btn-success month-btn' : 'btn btn-sm btn-outline-secondary month-btn'"
+                                (click)="statementMonth=i+1">{{m}}</button>
+                    </div>
+                </div>
+                <div *ngIf="statementMode === 'index'" class="index-input-row">
+                    <label class="index-label">Statements back (0 = most recent)</label>
+                    <input type="number" class="form-control index-input" [(ngModel)]="statementIndex" min="0" max="99">
+                </div>
+            </div>
+
+            <!-- Date range -->
+            <div *ngIf="dateMode === 'range'" class="sub-section">
+                <div class="date-range-row">
+                    <div class="date-field">
+                        <label>From</label>
+                        <input class="form-control"
+                               bsDatepicker
+                               [bsValue]="dateFrom"
+                               (bsValueChange)="dateFrom=$event"
+                               [bsConfig]="{dateInputFormat:'DD-MMM-YYYY', containerClass:'theme-dark-blue', selectFromOtherMonth:true}">
+                    </div>
+                    <div class="date-field">
+                        <label>To</label>
+                        <input class="form-control"
+                               bsDatepicker
+                               [bsValue]="dateTo"
+                               (bsValueChange)="dateTo=$event"
+                               [bsConfig]="{dateInputFormat:'DD-MMM-YYYY', containerClass:'theme-dark-blue', selectFromOtherMonth:true}">
+                    </div>
+                </div>
+                <div class="quick-dates">
+                    <button class="btn btn-sm btn-outline-secondary" (click)="setYearToDate()">Year to Date</button>
+                    <button class="btn btn-sm btn-outline-secondary" (click)="setLastYear()">Last Year</button>
+                    <button class="btn btn-sm btn-outline-secondary" (click)="setMonthToDate()">Month to Date</button>
+                    <button class="btn btn-sm btn-outline-secondary" (click)="setLastMonth()">Last Month</button>
+                    <button class="btn btn-sm btn-outline-secondary" (click)="setPreviousMonth()">Previous Month</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="filter-section">
+            <div class="section-label">Description</div>
+            <input type="text" class="form-control" [(ngModel)]="description" placeholder="Contains...">
+        </div>
+
+        <!-- Amount range -->
+        <div class="filter-section">
+            <div class="section-label">Amount Range</div>
+            <div class="amount-row">
+                <input type="number" class="form-control amount-input" [(ngModel)]="amountFrom" placeholder="Min">
+                <span class="amount-sep">to</span>
+                <input type="number" class="form-control amount-input" [(ngModel)]="amountTo" placeholder="Max">
+            </div>
+        </div>
+
+        <!-- Categories (collapsible) -->
+        <div class="filter-section">
+            <div class="section-label">
+                Categories
+                <span class="cat-summary">{{categoryFilterSummary()}}</span>
+                <div class="cat-controls">
+                    <button class="btn btn-sm btn-outline-secondary" (click)="selectAllCategories()">All</button>
+                    <button class="btn btn-sm btn-outline-secondary" (click)="showCategories=!showCategories">
+                        <em [ngClass]="showCategories ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></em>
+                        {{showCategories ? 'Hide' : 'Show'}}
+                    </button>
+                </div>
+            </div>
+            <div *ngIf="showCategories" class="category-grid">
+                <button *ngFor="let cat of allCategories"
+                        class="btn btn-sm cat-btn"
+                        [style.background-color]="catBgColor(cat)"
+                        [style.color]="catFgColor(cat)"
+                        [style.border-color]="catBorderColor(cat)"
+                        (click)="toggleCategory(cat)">
+                    {{cat.name}}
+                </button>
+            </div>
+        </div>
+
+        <!-- Validation error -->
+        <div *ngIf="validationError" class="validation-error">
+            <em class="fa fa-exclamation-triangle"></em> {{validationError}}
+        </div>
+
+        <!-- Action buttons -->
+        <div class="filter-actions">
+            <button class="btn btn-primary action-btn" (click)="onOK()">
+                <em class="fa fa-check"></em> OK
+            </button>
+            <button class="btn btn-warning action-btn" (click)="onClear()">
+                <em class="fa fa-eraser"></em> Clear
+            </button>
+            <button class="btn btn-secondary action-btn" (click)="onExit()">
+                <em class="fa fa-times"></em> Exit
+            </button>
+        </div>
+
+    </div>
+</div>

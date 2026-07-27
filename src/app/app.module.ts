@@ -36,6 +36,7 @@ import {BackupActionComponent} from './backup/action/backup-action.component';
 import {BackupDisplayComponent} from './backup/display/backup-display.component';
 import {BackupPhotoComponent} from './backup/display/photo/backup-photo.component';
 import {MoneyToolbarComponent} from './money/toolbar/money-toolbar.component';
+import {MoneyFilterComponent} from './money/filter/money-filter.component';
 
 @NgModule({
     declarations: [
@@ -86,7 +87,8 @@ import {MoneyToolbarComponent} from './money/toolbar/money-toolbar.component';
         NgOptimizedImage,
         BackupDisplayComponent,
         BackupPhotoComponent,
-        MoneyToolbarComponent
+        MoneyToolbarComponent,
+        MoneyFilterComponent
     ],
     providers: [DatePipe],
     bootstrap: [AppComponent]

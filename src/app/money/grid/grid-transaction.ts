@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {TransactionFilter} from '../transaction/transactionFilter';
 import {MoneyService} from '../money.service';
 import {FlagType} from './header/grid-header-flag-type';
@@ -68,14 +68,14 @@ import {environment} from '../../../environments/environment.prod';
     ],
     standalone: true
 })
-export class GridTransaction implements OnInit {
+export class GridTransaction implements OnInit, OnChanges {
 
     constructor(private readonly _moneyService: MoneyService) {
     }
     protected readonly FlagType = FlagType;
     protected readonly HeaderType = HeaderType;
+    @Input() filter: TransactionFilter;
     data: ITransactionReport[] = null;
-    filter: TransactionFilter = new TransactionFilter();
     newTransaction: TransactionReport = new TransactionReport();
     status = 'ready';
     version = '';
@@ -96,23 +96,25 @@ export class GridTransaction implements OnInit {
         transaction.selectable = false;
 
         // If the filter is a single account, then use that.
-        if (filter.accounts.length === 1) {
+        if (filter.accounts?.length === 1) {
             transaction.account = filter.accounts[0];
         }
 
         // If the filter is a single category, then use that.
-        if (filter.categories.length === 1) {
+        if (filter.categories?.length === 1) {
             transaction.category = filter.categories[0];
         } else {
             transaction.category = null;
         }
     }
 
-    ngOnInit(): void {
-        this.filter.predicted = false;
-        this.filter.locked = false;
-        this.filter.maxPageSize = 300;
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['filter'] && !changes['filter'].firstChange) {
+            this.update();
+        }
+    }
 
+    ngOnInit(): void {
         this._moneyService.getVersion().subscribe({
             next: value => { this.version = '(v' + value.version + ')'; this.versionChange.emit(this.version); },
             error: (response) => {

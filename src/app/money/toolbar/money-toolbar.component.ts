@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {NgForOf} from '@angular/common';
 
@@ -15,14 +15,16 @@ import {NgForOf} from '@angular/common';
 export class MoneyToolbarComponent {
     @Input() status = '';
     @Input() version = '';
+    @Output() filterClick = new EventEmitter<void>();
 
     pageSize = 300;
     pageSizes = [25, 50, 100, 200, 300];
 
-    onFilter() {}
+    onFilter() { this.filterClick.emit(); }
     onAdd() {}
     onSave() {}
     onExport() {}
+    onLoadRecFile() {}
     onPageUp() {}
     onPageDown() {}
     onPageSizeChange() {}
