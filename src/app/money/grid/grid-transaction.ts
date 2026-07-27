@@ -1,16 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {TransactionFilter} from '../transaction/transactionFilter';
 import {MoneyService} from '../money.service';
-import {FlagType} from './header/grid-header-flag-type';
 import {formatCurrency, NgForOf, NgIf} from '@angular/common';
-import {GridHeaderDate} from './header/grid-header-date';
 import {GridDataDate} from './data/grid-data-date';
-import {GridHeaderAccount} from './header/grid-header-account';
-import {GridHeaderAmount} from './header/grid-header-amount';
-import {GridHeaderCategory} from './header/grid-header-category';
-import {GridHeaderFlag} from './header/grid-header-flag';
-import {GridHeaderStatementDate} from './header/grid-header-statement-date';
-import {GridHeaderText} from './header/grid-header-text';
 import {GridDataAccount} from './data/grid-data-account';
 import {GridDataAmount} from './data/grid-data-amount';
 import {GridDataBalance} from './data/grid-data-balance';
@@ -24,7 +16,6 @@ import {GridHeaderSelect, SelectChange} from './header/grid-header-select';
 import {GridHeaderActions} from './header/grid-header-actions';
 import {GridDataSelect} from './data/grid-data-select';
 import {GridDataActions} from './data/grid-data-actions';
-import {FilterEvent} from './header/grid-header';
 import {HeaderType} from './header/grid-header-type';
 import {ITransactionReport, TransactionReport} from '../transaction/transactionReport';
 import {JbAccount} from '../account/jbAccount';
@@ -44,13 +35,6 @@ import {environment} from '../../../environments/environment.prod';
     imports: [
         NgForOf,
         NgIf,
-        GridHeaderDate,
-        GridHeaderAccount,
-        GridHeaderAmount,
-        GridHeaderCategory,
-        GridHeaderFlag,
-        GridHeaderStatementDate,
-        GridHeaderText,
         GridHeaderSelect,
         GridHeaderActions,
         GridDataDate,
@@ -72,7 +56,6 @@ export class GridTransaction implements OnInit, OnChanges {
 
     constructor(private readonly _moneyService: MoneyService) {
     }
-    protected readonly FlagType = FlagType;
     protected readonly HeaderType = HeaderType;
     @Input() filter: TransactionFilter;
     data: ITransactionReport[] = null;
@@ -160,13 +143,6 @@ export class GridTransaction implements OnInit, OnChanges {
 
         // Default - not filtered
         return false;
-    }
-
-    filterChange(event: FilterEvent) {
-        console.log('Update from ' + event.source);
-
-        // Update the transactions.
-        this.update();
     }
 
     selectionChange(event: SelectChange) {

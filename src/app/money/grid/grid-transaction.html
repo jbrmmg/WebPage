@@ -6,37 +6,37 @@
                     <jbr-grid-header-select class="header" [header]="' '" (selectionChange)="selectionChange($event)"></jbr-grid-header-select>
                 </th>
                 <th [class]="headerFiltered(HeaderType.Date) ? 'filtered' : ''">
-                    <jbr-grid-header-date [header]="'Date'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-date>
+                    <p>Date</p>
                 </th>
                 <th [class]="headerFiltered(HeaderType.Account) ? 'filtered' : ''">
-                    <jbr-grid-header-account [header]="'Acc.'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-account>
+                    <p>Acc.</p>
                 </th>
                 <th [class]="headerFiltered(HeaderType.StatementDate) ? 'filtered' : ''">
-                    <jbr-grid-header-statement-date [header]="'Statement Date'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-statement-date>
+                    <p>Statement Date</p>
                 </th>
                 <th [class]="headerFiltered(HeaderType.Locked) ? 'filtered' : ''">
-                    <jbr-grid-header-flag [header]="'Lck.'" [flagType]="FlagType.Locked" [filter]="filter" (filterChanged)="filterChange($event)"></jbr-grid-header-flag>
+                    <p>Lck.</p>
                 </th>
                 <th [class]="headerFiltered(HeaderType.Predicted) ? 'filtered' : ''">
-                    <jbr-grid-header-flag [header]="'Prd.'" [flagType]="FlagType.Predicted" [filter]="filter" (filterChanged)="filterChange($event)"></jbr-grid-header-flag>
+                    <p>Prd.</p>
                 </th>
                 <th [class]="headerFiltered(HeaderType.Reconciliation) ? 'filtered' : ''">
-                    <jbr-grid-header-flag [header]="'Rec.'" [flagType]="FlagType.Reconciled" [filter]="filter" (filterChanged)="filterChange($event)"></jbr-grid-header-flag>
+                    <p>Rec.</p>
                 </th>
                 <th [class]="headerFiltered(HeaderType.Category) ? 'filtered' : ''">
-                    <jbr-grid-header-category [header]="'Category'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-category>
+                    <p>Category</p>
                 </th>
                 <th [class]="headerFiltered(HeaderType.Description) ? 'filtered' : ''">
-                    <jbr-grid-header-text [header]="'Description'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-text>
+                    <p>Description</p>
                 </th>
                 <th [class]="headerFiltered(HeaderType.Credit) ? 'filtered' : ''">
-                    <jbr-grid-header-amount [header]="'Credits'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-amount>
+                    <p>Credits</p>
                 </th>
                 <th [class]="headerFiltered(HeaderType.Debit) ? 'filtered' : ''">
-                    <jbr-grid-header-amount [header]="'Debits'" (filterChanged)="filterChange($event)" [filter]="filter"></jbr-grid-header-amount>
+                    <p>Debits</p>
                 </th>
                 <th>
-                    <jbr-grid-header-amount [header]="'Balance'"></jbr-grid-header-amount>
+                    <p>Balance</p>
                 </th>
                 <th>
                     <jbr-grid-header-actions [header]="'Actions'"></jbr-grid-header-actions>

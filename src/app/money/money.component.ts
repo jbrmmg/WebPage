@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import {TransactionFilter} from './transaction/transactionFilter';
 
 @Component({
@@ -19,6 +19,12 @@ export class MoneyComponent {
         f.accounts = [];
         f.categories = [];
         return f;
+    }
+
+    @HostListener('document:keydown.f3', ['$event'])
+    onF3(event: KeyboardEvent): void {
+        event.preventDefault();
+        this.showFilter = !this.showFilter;
     }
 
     onFilterApplied(newFilter: TransactionFilter): void {

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 import {DatePipe, NgClass, NgForOf, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {BsDatepickerModule} from 'ngx-bootstrap/datepicker';
@@ -235,6 +235,19 @@ export class MoneyFilterComponent implements OnInit {
         const y = t.getMonth() === 0 ? t.getFullYear() - 1 : t.getFullYear();
         this.dateFrom = new Date(y, m, 1);
         this.dateTo = new Date(t.getFullYear(), t.getMonth(), 0);
+    }
+
+    @HostListener('document:keydown', ['$event'])
+    onKeydown(event: KeyboardEvent): void {
+        if (event.key === 'Escape') {
+            this.onExit();
+        } else if (event.key === 'F4') {
+            event.preventDefault();
+            this.onClear();
+        } else if (event.key === 'Enter' && document.activeElement?.tagName !== 'BUTTON') {
+            event.preventDefault();
+            this.onOK();
+        }
     }
 
     onOK(): void {
