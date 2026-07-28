@@ -12,8 +12,6 @@ import {GridDataFromReconciliation} from './data/grid-data-from-reconciliation';
 import {GridDataPredicted} from './data/grid-data-predicted';
 import {GridDataStatement} from './data/grid-data-statement';
 import {GridDataStatementDate} from './data/grid-data-statement-date';
-import {GridHeaderActions} from './header/grid-header-actions';
-import {GridDataActions} from './data/grid-data-actions';
 import {HeaderType} from './header/grid-header-type';
 import {ITransactionReport, TransactionReport} from '../transaction/transactionReport';
 import {TransactionEditType} from '../transaction/transactionEditType';
@@ -30,7 +28,6 @@ import {environment} from '../../../environments/environment.prod';
     imports: [
         NgForOf,
         NgIf,
-        GridHeaderActions,
         GridDataDate,
         GridDataAccount,
         GridDataAmount,
@@ -41,7 +38,6 @@ import {environment} from '../../../environments/environment.prod';
         GridDataPredicted,
         GridDataStatement,
         GridDataStatementDate,
-        GridDataActions
     ],
     standalone: true
 })
@@ -310,6 +306,14 @@ export class GridTransaction implements OnInit, OnChanges {
                 this.update();
             }
         });
+    }
+
+    onDeleteClick(transaction: ITransactionReport) {
+        const event = new GridDataEvent();
+        event.transaction = transaction;
+        event.source = HeaderType.Action;
+        event.action = GridDataActionType.Delete;
+        this.performAction(event);
     }
 
     performAction(event: GridDataEvent) {

@@ -38,15 +38,31 @@ th.filtered {
     text-align: center;
 }
 
-table td:first-child  { width: 6%; }  /* Date */
-table td:nth-child(2) { width: 3%; }  /* Account */
-table td:nth-child(3) { width: 7%; }  /* Statement Date */
-table td:nth-child(4) { width: 2%; }  /* Locked */
-table td:nth-child(5) { width: 2%; }  /* Predicted */
-table td:nth-child(6) { width: 2%; }  /* Reconciliation */
-table td:nth-child(7) { width: 10%; } /* Category */
-table td:nth-child(8) { width: 30%; } /* Description */
-table td:nth-child(9) { width: 7%; }  /* Credits */
-table td:nth-child(10){ width: 7%; }  /* Debits */
-table td:nth-child(11){ width: 7%; }  /* Balance */
-table td:nth-child(12){ width: 7%; }  /* Actions */
+table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+table th:nth-child(1),  table td:first-child  { width: 7%; }  /* Date */
+table th:nth-child(2),  table td:nth-child(2) { width: 4%; }  /* Account */
+table th:nth-child(3),  table td:nth-child(3) { width: 8%; }  /* Statement Date */
+table th:nth-child(4),  table td:nth-child(4) { width: 2%; }  /* Locked */
+table th:nth-child(5),  table td:nth-child(5) { width: 2%; }  /* Predicted */
+table th:nth-child(6),  table td:nth-child(6) { width: 2%; }  /* Reconciliation */
+table th:nth-child(7),  table td:nth-child(7) { width: 10%; } /* Category */
+table th:nth-child(8),  table td:nth-child(8) { width: 40%; } /* Description */
+table th:nth-child(9),  table td:nth-child(9) { width: 7%; }  /* Credits */
+table th:nth-child(10), table td:nth-child(10){ width: 7%; }  /* Debits */
+table th:nth-child(11), table td:nth-child(11){ width: 7%; }  /* Balance */
+table th:nth-child(12), table td:nth-child(12){ width: 4%; }  /* Delete */
+
+.del-col {
+    text-align: center;
+    padding: 0 2px;
+}
+
+.del-btn {
+    padding: 1px 5px;
+    font-size: 0.7rem;
+    line-height: 1.3;
+}

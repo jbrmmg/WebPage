@@ -35,9 +35,7 @@
                 <th>
                     <p>Balance</p>
                 </th>
-                <th>
-                    <jbr-grid-header-actions [header]="'Actions'"></jbr-grid-header-actions>
-                </th>
+                <th class="del-col"></th>
             </tr>
         </thead>
         <tbody *ngIf="data && data && data.length">
@@ -75,8 +73,13 @@
                 <td>
                     <jbr-grid-data-balance [transaction]="transaction"></jbr-grid-data-balance>
                 </td>
-                <td>
-                    <jbr-grid-data-actions [transaction]="transaction" (performAction)="performAction($event)"></jbr-grid-data-actions>
+                <td class="del-col">
+                    <button *ngIf="transaction.actionDelete"
+                            class="btn btn-sm btn-danger del-btn"
+                            title="Delete transaction"
+                            (click)="onDeleteClick(transaction)">
+                        <em class="fa fa-trash"></em>
+                    </button>
                 </td>
             </tr>
     </table>
