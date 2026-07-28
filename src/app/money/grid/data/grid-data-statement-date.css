@@ -6,13 +6,24 @@
 }
 
 .stmt-date {
-    font-size: 0.78rem;
+    display: flex;
+    gap: 4px;
     cursor: pointer;
     color: #ccc;
 }
 
 .stmt-date:hover {
     color: #a0d4f5;
+}
+
+.stmt-month {
+    font-size: 0.78rem;
+    width: 28px;
+}
+
+.stmt-year {
+    font-size: 0.78rem;
+    color: #999;
 }
 
 .stmt-btn {

@@ -48,12 +48,13 @@ export class GridDataStatementDate extends GridData implements OnInit {
             lockEmitter: this.lockEmitter};
     }
 
-    display(): string {
-        if (this.transaction.statement) {
-            return String(this.transaction.statement.year) + '-' + String(this.transaction.statement.month);
-        }
+    getStatementMonth(): string {
+        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        return months[this.transaction.statement.month - 1];
+    }
 
-        return '';
+    getStatementYear(): string {
+        return String(this.transaction.statement.year);
     }
 
     openModal(template: TemplateRef<any>) {

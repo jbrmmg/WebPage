@@ -9,7 +9,7 @@
                     <p>Acc. <em *ngIf="headerFiltered(HeaderType.Account)" class="fa fa-filter filter-icon" [title]="filterTooltip(HeaderType.Account)"></em></p>
                 </th>
                 <th [class]="headerFiltered(HeaderType.StatementDate) ? 'filtered' : ''">
-                    <p>Statement Date <em *ngIf="headerFiltered(HeaderType.StatementDate)" class="fa fa-filter filter-icon" [title]="filterTooltip(HeaderType.StatementDate)"></em></p>
+                    <p>Statement <em *ngIf="headerFiltered(HeaderType.StatementDate)" class="fa fa-filter filter-icon" [title]="filterTooltip(HeaderType.StatementDate)"></em></p>
                 </th>
                 <th [class]="headerFiltered(HeaderType.Locked) ? 'filtered' : ''">
                     <p>Lck. <em *ngIf="headerFiltered(HeaderType.Locked)" class="fa fa-filter filter-icon" [title]="filterTooltip(HeaderType.Locked)"></em></p>

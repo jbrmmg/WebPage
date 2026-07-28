@@ -21,13 +21,14 @@
         title="Statement locked"></em>
 
     <!-- Statement date (clickable to open modal) -->
-    <span *ngIf="transaction.statement"
-          class="stmt-date"
-          (click)="openModal(templateStatement)"
-          (keydown.enter)="openModal(templateStatement)"
-          tabindex="0">
-        {{display() | date : 'yyyy-MMM'}}
-    </span>
+    <div *ngIf="transaction.statement"
+         class="stmt-date"
+         (click)="openModal(templateStatement)"
+         (keydown.enter)="openModal(templateStatement)"
+         tabindex="0">
+        <span class="stmt-month">{{getStatementMonth()}}</span>
+        <span class="stmt-year">{{getStatementYear()}}</span>
+    </div>
 </div>
 
 <ng-template #templateStatement>

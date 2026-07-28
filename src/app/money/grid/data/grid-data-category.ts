@@ -1,4 +1,5 @@
 import {Component, EventEmitter, OnInit, TemplateRef, Type} from '@angular/core';
+import {NgIf} from '@angular/common';
 import {TransactionReport} from '../../transaction/transactionReport';
 import {MoneyService} from '../../money.service';
 import {MoneyCategory} from '../../category/money-cat.component';
@@ -16,7 +17,8 @@ import {JbAccount} from '../../account/jbAccount';
     templateUrl: './grid-data-category.html',
     styleUrls: ['./grid-data-category.css'],
     imports: [
-        PopupComponent
+        PopupComponent,
+        NgIf
     ],
     standalone: true
 })

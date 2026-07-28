@@ -1,4 +1,5 @@
-<p [style.background]="'#' + getCategoryColour()"
+<p *ngIf="transaction.type === 'TRANSACTION'"
+   [style.background]="'#' + getCategoryColour()"
    [style.color]="'#' + getTextColour()"
    (click)="openModal(templateCategorySelect)">
     {{getCategoryName()}}</p>
