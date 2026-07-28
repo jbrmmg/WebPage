@@ -49,7 +49,7 @@
                     <jbr-grid-data-account [transaction]="transaction" (valueChanged)="valueChanged($event)"></jbr-grid-data-account>
                 </td>
                 <td>
-                    <jbr-grid-data-statement-date [transaction]="transaction" (statementLock)="lockStatement($event)"></jbr-grid-data-statement-date>
+                    <jbr-grid-data-statement-date [transaction]="transaction" (statementLock)="lockStatement($event)" (performAction)="performAction($event)"></jbr-grid-data-statement-date>
                 </td>
                 <td class="flag">
                     <jbr-grid-data-statement [transaction]="transaction"></jbr-grid-data-statement>

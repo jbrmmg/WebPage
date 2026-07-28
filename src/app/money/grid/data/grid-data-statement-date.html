@@ -1,4 +1,34 @@
-<p (click)="openModal(templateStatement)" (keydown.enter)="openModal(templateStatement)">{{display() | date : 'yyyy-MMM'}}</p>
+<div class="stmt-cell">
+    <!-- Reconcile: no statement yet, action available -->
+    <button *ngIf="transaction.actionReconcile"
+            class="btn btn-sm btn-success stmt-btn"
+            title="Add to statement"
+            (click)="doReconcile()">
+        <em class="fa fa-check"></em>
+    </button>
+
+    <!-- Unreconcile: has statement, not locked -->
+    <button *ngIf="transaction.actionUnreconcile"
+            class="btn btn-sm btn-warning stmt-btn"
+            title="Remove from statement"
+            (click)="doUnreconcile()">
+        <em class="fa fa-times"></em>
+    </button>
+
+    <!-- Locked indicator: has statement, locked -->
+    <em *ngIf="transaction.statement && !transaction.actionUnreconcile"
+        class="fa fa-lock stmt-lock"
+        title="Statement locked"></em>
+
+    <!-- Statement date (clickable to open modal) -->
+    <span *ngIf="transaction.statement"
+          class="stmt-date"
+          (click)="openModal(templateStatement)"
+          (keydown.enter)="openModal(templateStatement)"
+          tabindex="0">
+        {{display() | date : 'yyyy-MMM'}}
+    </span>
+</div>
 
 <ng-template #templateStatement>
     <jbr-popup [title]="'Statement'"

@@ -1,11 +1,14 @@
 import {Component, EventEmitter, OnInit, Output, TemplateRef, Type} from '@angular/core';
-import {DatePipe} from '@angular/common';
+import {DatePipe, NgIf} from '@angular/common';
 import {GridData} from './grid-data';
 import {MoneyStatement} from '../../statement/money-statement.component';
 import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {MoneyService} from '../../money.service';
 import {IStatement} from '../../statement/statement';
 import {PopupComponent} from '../../../standard/popup.component';
+import {GridDataEvent} from './grid-data-event';
+import {GridDataActionType} from './grid-data-action-type';
+import {HeaderType} from '../header/grid-header-type';
 
 @Component({
     selector: 'jbr-grid-data-statement-date',
@@ -13,6 +16,7 @@ import {PopupComponent} from '../../../standard/popup.component';
     styleUrls: ['./grid-data-statement-date.css'],
     imports: [
         DatePipe,
+        NgIf,
         PopupComponent
     ],
     standalone: true
@@ -20,6 +24,7 @@ import {PopupComponent} from '../../../standard/popup.component';
 export class GridDataStatementDate extends GridData implements OnInit {
     modalRef: BsModalRef;
     @Output() statementLock: EventEmitter<IStatement> = new EventEmitter();
+    @Output() performAction: EventEmitter<GridDataEvent> = new EventEmitter();
 
     content: Type<any>;
     inputs: Record<string, unknown>;
@@ -59,6 +64,22 @@ export class GridDataStatementDate extends GridData implements OnInit {
 
     getDateDisplay(): string {
         return this.datePipe.transform(new Date(this.transaction.statement.year, this.transaction.statement.month - 1, 1), 'MMMM yyyy');
+    }
+
+    doReconcile() {
+        const event = new GridDataEvent();
+        event.transaction = this.transaction;
+        event.source = HeaderType.StatementDate;
+        event.action = GridDataActionType.Reconcile;
+        this.performAction.emit(event);
+    }
+
+    doUnreconcile() {
+        const event = new GridDataEvent();
+        event.transaction = this.transaction;
+        event.source = HeaderType.StatementDate;
+        event.action = GridDataActionType.Unreconcile;
+        this.performAction.emit(event);
     }
 
     lock() {
