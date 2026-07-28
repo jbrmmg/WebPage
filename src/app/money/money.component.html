@@ -1,7 +1,9 @@
 <div class="card">
     <div class="card-body">
         <jbr-money-toolbar [status]="status" [version]="version" [hasChanges]="hasChanges" (filterClick)="showFilter=true" (addClick)="showAdd=true" (transferClick)="showTransfer=true" (saveClick)="onSave()"></jbr-money-toolbar>
-        <jbr-grid-transaction style="width: 100%" [filter]="filter" (statusChange)="status = $event" (versionChange)="version = $event" (hasChanges)="hasChanges=$event"></jbr-grid-transaction>
+        <div class="grid-scroll">
+            <jbr-grid-transaction style="width: 100%" [filter]="filter" (statusChange)="status = $event" (versionChange)="version = $event" (hasChanges)="hasChanges=$event"></jbr-grid-transaction>
+        </div>
     </div>
 </div>
 

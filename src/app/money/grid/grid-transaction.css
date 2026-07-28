@@ -1,5 +1,9 @@
 @import "../../standard/standard-table.css";
 
+:host {
+    display: block;
+}
+
 .transaction-table {
     margin: 0;
     padding: 0;

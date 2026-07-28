@@ -36,9 +36,19 @@
 }
 
 /* ── Base ───────────────────────────────────────────────────────────────── */
+html, body {
+  height: 100%;
+}
+
 body {
   background: #1a1a2e;
   color: #eee;
+}
+
+jbr-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 /* ── Navbar ─────────────────────────────────────────────────────────────── */
