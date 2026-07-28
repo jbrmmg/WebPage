@@ -1,5 +1,3 @@
-<div class="col">
-    <div class="row no-pad" *ngFor="let nextFile of files">
-        <jbr-money-file [file]="nextFile" (selectEmitter)="onSelectFile($event)"></jbr-money-file>
-    </div>
+<div class="file-list">
+    <jbr-money-file *ngFor="let nextFile of files" [file]="nextFile" (selectEmitter)="onSelectFile($event)"></jbr-money-file>
 </div>

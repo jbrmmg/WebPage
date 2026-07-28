@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, TemplateRef, ViewChild} from '@angular/core';
 import {TransactionFilter} from '../transaction/transactionFilter';
 import {MoneyService} from '../money.service';
 import {formatCurrency, NgForOf, NgIf} from '@angular/common';
@@ -20,6 +20,10 @@ import {GridDataActionType} from './data/grid-data-action-type';
 import {IStatement} from '../statement/statement';
 import {IFile} from '../files/file';
 import {environment} from '../../../environments/environment.prod';
+import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
+import {MoneyFiles} from '../files/money-files';
+import {PopupComponent} from '../../standard/popup.component';
+import {JbAccount} from '../account/jbAccount';
 
 @Component({
     selector: 'jbr-grid-transaction',
@@ -38,15 +42,25 @@ import {environment} from '../../../environments/environment.prod';
         GridDataPredicted,
         GridDataStatement,
         GridDataStatementDate,
+        MoneyFiles,
+        PopupComponent,
     ],
     standalone: true
 })
 export class GridTransaction implements OnInit, OnChanges {
 
-    constructor(private readonly _moneyService: MoneyService) {
-    }
+    constructor(private readonly _moneyService: MoneyService,
+                private readonly _modalService: BsModalService) {}
+
+    @ViewChild('templateRecFile') private templateRecFile: TemplateRef<any>;
+    private modalRef: BsModalRef;
+    private selectFileEvent = new EventEmitter<IFile>();
+    recFileInputs: Record<string, unknown>;
+
     protected readonly HeaderType = HeaderType;
+    protected readonly MoneyFiles = MoneyFiles;
     @Input() filter: TransactionFilter;
+    @Output() filterChange = new EventEmitter<TransactionFilter>();
     data: ITransactionReport[] = null;
     status = 'ready';
     version = '';
@@ -61,6 +75,9 @@ export class GridTransaction implements OnInit, OnChanges {
     }
 
     ngOnInit(): void {
+        this.selectFileEvent.subscribe(file => this.selectRecData(file));
+        this.recFileInputs = { selectFileEmitter: this.selectFileEvent };
+
         this._moneyService.getVersion().subscribe({
             next: value => { this.version = '(v' + value.version + ')'; this.versionChange.emit(this.version); },
             error: (response) => {
@@ -364,7 +381,12 @@ export class GridTransaction implements OnInit, OnChanges {
         });
     }
 
+    openRecFileModal() {
+        this.modalRef = this._modalService.show(this.templateRecFile, {class: 'modal-lg'});
+    }
+
     clearRecData() {
+        this.modalRef?.hide();
         console.log('🧹 Clear reconciliation data file');
 
         this._moneyService.clearRecData().subscribe({
@@ -379,19 +401,29 @@ export class GridTransaction implements OnInit, OnChanges {
 
     selectRecData(file: IFile) {
         console.log('📂 Load file:', file.filename);
+        this.modalRef?.hide();
 
         this._moneyService.loadFileRequest(file).subscribe({
             error: (response) => {
                 if (environment.production) {
                     console.error('❌ Failed to load file:', response);
                 } else {
-                    // Treat as complete.
-                    this.update();
+                    this.emitRecFilter(file);
                 }
             },
             complete: () => {
-                this.update();
+                this.emitRecFilter(file);
             }
         });
+    }
+
+    private emitRecFilter(file: IFile) {
+        const newFilter = new TransactionFilter();
+        newFilter.locked = false;
+        newFilter.predicted = false;
+        newFilter.maxPageSize = this.filter?.maxPageSize ?? 300;
+        newFilter.accounts = [file.account as JbAccount];
+        newFilter.categories = [];
+        this.filterChange.emit(newFilter);
     }
 }

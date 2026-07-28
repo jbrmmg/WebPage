@@ -1,8 +1,8 @@
 <div class="card">
     <div class="card-body">
-        <jbr-money-toolbar [status]="status" [version]="version" [hasChanges]="hasChanges" (filterClick)="showFilter=true" (addClick)="showAdd=true" (transferClick)="showTransfer=true" (saveClick)="onSave()"></jbr-money-toolbar>
+        <jbr-money-toolbar [status]="status" [version]="version" [hasChanges]="hasChanges" (filterClick)="showFilter=true" (addClick)="showAdd=true" (transferClick)="showTransfer=true" (saveClick)="onSave()" (recFileClick)="onLoadRecFile()"></jbr-money-toolbar>
         <div class="grid-scroll">
-            <jbr-grid-transaction style="width: 100%" [filter]="filter" (statusChange)="status = $event" (versionChange)="version = $event" (hasChanges)="hasChanges=$event"></jbr-grid-transaction>
+            <jbr-grid-transaction style="width: 100%" [filter]="filter" (statusChange)="status = $event" (versionChange)="version = $event" (hasChanges)="hasChanges=$event" (filterChange)="onFilterChange($event)"></jbr-grid-transaction>
         </div>
     </div>
 </div>

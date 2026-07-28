@@ -8,7 +8,7 @@ import {FormsModule} from '@angular/forms';
 @Component({
     selector: 'jbr-money-file',
     templateUrl: './money-file.html',
-    styleUrls: ['./money-files.css'],
+    styleUrls: ['./money-file.css'],
     imports: [
         ButtonsModule,
         NgIf,

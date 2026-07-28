@@ -56,7 +56,7 @@
                     <jbr-grid-data-predicted [transaction]="transaction"></jbr-grid-data-predicted>
                 </td>
                 <td class="flag">
-                    <jbr-grid-data-from-reconciliation [transaction]="transaction" (clearFileEmitter)="clearRecData()" (selectFileEmitter)="selectRecData($event)"></jbr-grid-data-from-reconciliation>
+                    <jbr-grid-data-from-reconciliation [transaction]="transaction"></jbr-grid-data-from-reconciliation>
                 </td>
                 <td>
                     <jbr-grid-data-category [transaction]="transaction" (valueChanged)="valueChanged($event)"></jbr-grid-data-category>
@@ -84,3 +84,14 @@
             </tr>
     </table>
 </div>
+
+<ng-template #templateRecFile>
+    <jbr-popup [title]="'Select a Reconciliation File'"
+               [imageUrl]="'../../../assets/images/money/default-popup.svg'"
+               [content]="MoneyFiles" [inputs]="recFileInputs"
+               [exit]="true"
+               [clear]="true"
+               (exitEvent)="modalRef.hide()"
+               (clearEvent)="clearRecData()">
+    </jbr-popup>
+</ng-template>

@@ -42,6 +42,14 @@ export class MoneyComponent {
         this.grid.save();
     }
 
+    onLoadRecFile(): void {
+        this.grid.openRecFileModal();
+    }
+
+    onFilterChange(filter: TransactionFilter): void {
+        this.filter = filter;
+    }
+
     onTransactionAdded(): void {
         this.grid.update();
     }

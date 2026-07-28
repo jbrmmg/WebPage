@@ -1,33 +1,7 @@
-.filename {
-    font-size: 40px;
-}
-
-.error {
-    color: firebrick;
-}
-
-.error-info {
-    font-size: 10px;
-}
-
-.info {
-    font-size: 10px;
-}
-
-.account-img {
-    width: 100%;
-    height: 30px;
-}
-
-.col-account-img {
+.file-list {
     display: flex;
-    align-items: center;
-}
-
-.no-pad {
-    margin: 4px;
-}
-
-.btn-action {
-    width: 100%;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+    min-width: 500px;
 }
