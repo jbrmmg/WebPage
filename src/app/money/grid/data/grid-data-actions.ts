@@ -47,13 +47,6 @@ export class GridDataActions extends GridData implements OnInit {
             deleteOpt.type = GridDataActionType.Delete;
             this.actions.push(deleteOpt);
         }
-        if (this.transaction.new) {
-            const clear: ActionOption = new ActionOption();
-            clear.text = 'Clear';
-            clear.code = 'C';
-            clear.type = GridDataActionType.ClearAdd;
-            this.actions.push(clear);
-        }
     }
 
     getClass(action: ActionOption) {

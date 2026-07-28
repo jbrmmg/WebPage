@@ -93,7 +93,7 @@ export class GridDataDate extends GridDataInlineEdit implements OnInit {
         }
 
         // Date can only be edited if the transaction is new or not reconciled.
-        return this.transaction.new || this.transaction.statement == null;
+        return this.transaction.statement == null;
     }
 
     onExit() {

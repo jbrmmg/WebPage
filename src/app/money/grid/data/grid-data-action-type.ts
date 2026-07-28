@@ -3,8 +3,5 @@ export enum GridDataActionType {
     PendingUpdate,
     Reconcile,
     Unreconcile,
-    Delete,
-    Add,
-    PendingAdd,
-    ClearAdd
+    Delete
 }

@@ -35,7 +35,7 @@ export class MoneyTransferComponent implements OnInit {
         this.moneyService.getAccounts().subscribe({
             next: accounts => {
                 this.allAccounts = accounts.filter(a => !a.closed);
-                const fd = this.allAccounts.find(a => a.name.toLowerCase().includes('first direct'));
+                const fd = this.allAccounts.find(a => a.name.toLowerCase().includes('bank'));
                 if (fd) { this.fromAccount = fd; }
             }
         });

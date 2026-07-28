@@ -16,12 +16,9 @@ import {GridHeaderActions} from './header/grid-header-actions';
 import {GridDataActions} from './data/grid-data-actions';
 import {HeaderType} from './header/grid-header-type';
 import {ITransactionReport, TransactionReport} from '../transaction/transactionReport';
-import {JbAccount} from '../account/jbAccount';
-import {FinancialAmount} from '../transaction/financialAmount';
 import {TransactionEditType} from '../transaction/transactionEditType';
 import {GridDataEvent} from './data/grid-data-event';
 import {GridDataActionType} from './data/grid-data-action-type';
-import {Transaction} from '../transaction/transaction';
 import {IStatement} from '../statement/statement';
 import {IFile} from '../files/file';
 import {environment} from '../../../environments/environment.prod';
@@ -55,37 +52,11 @@ export class GridTransaction implements OnInit, OnChanges {
     protected readonly HeaderType = HeaderType;
     @Input() filter: TransactionFilter;
     data: ITransactionReport[] = null;
-    newTransaction: TransactionReport = new TransactionReport();
     status = 'ready';
     version = '';
     @Output() hasChanges = new EventEmitter<boolean>();
     @Output() statusChange: EventEmitter<string> = new EventEmitter();
     @Output() versionChange: EventEmitter<string> = new EventEmitter();
-
-    static clearTransaction(transaction: ITransactionReport, filter: TransactionFilter) {
-        transaction.new = true;
-        transaction.type = TransactionReport.TRANSACTION;
-        transaction.date ??= MoneyService.getDateString(new Date());
-        transaction.description = '';
-        transaction.account = JbAccount.unknownAccount();
-        transaction.fromReconciliation = false;
-        transaction.predicted = false;
-        transaction.amount = new FinancialAmount(0, 'CR');
-        transaction.balance = new FinancialAmount(0, 'CR');
-        transaction.selectable = false;
-
-        // If the filter is a single account, then use that.
-        if (filter.accounts?.length === 1) {
-            transaction.account = filter.accounts[0];
-        }
-
-        // If the filter is a single category, then use that.
-        if (filter.categories?.length === 1) {
-            transaction.category = filter.categories[0];
-        } else {
-            transaction.category = null;
-        }
-    }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['filter'] && !changes['filter'].firstChange) {
@@ -229,10 +200,6 @@ export class GridTransaction implements OnInit, OnChanges {
         this._moneyService.getTransactions(this.filter).subscribe({
             next: (val) => {
                 this.data = val;
-
-                // Create a placeholder for the new transaction.
-                GridTransaction.clearTransaction(this.newTransaction, this.filter);
-                this.data.unshift(this.newTransaction);
             },
             error: (response) => {
                 this.status = 'Update failed ' + response;
@@ -245,14 +212,11 @@ export class GridTransaction implements OnInit, OnChanges {
                 this.data.forEach(value => {
                     value.modified = false;
                     if (value.type === TransactionReport.TRANSACTION) {
-                        value.selectable = !value.new;
-
-                        if (!value.new) {
-                            if (value.amount.type === 'DB') {
-                                debits -= value.amount.value;
-                            } else {
-                                credits += value.amount.value;
-                            }
+                        value.selectable = true;
+                        if (value.amount.type === 'DB') {
+                            debits -= value.amount.value;
+                        } else {
+                            credits += value.amount.value;
                         }
                     } else {
                         value.selectable = false;
@@ -280,26 +244,10 @@ export class GridTransaction implements OnInit, OnChanges {
     }
 
     save() {
-        const modifiedExisting = this.data.filter(t => t.modified && !t.new);
-        const newTrn = this.data.find(t => t.new && t.modified);
-
+        const modifiedExisting = this.data.filter(t => t.modified);
         if (modifiedExisting.length > 0) {
             this.performActionUpdate(modifiedExisting);
         }
-
-        if (newTrn != null && this.isValidNewTransaction(newTrn)) {
-            this.performActionAdd(newTrn);
-        }
-    }
-
-    private isValidNewTransaction(t: ITransactionReport): boolean {
-        return t.date != null &&
-            t.account != null &&
-            t.account.id !== JbAccount.unknownAccountId &&
-            t.category != null &&
-            t.description != null &&
-            t.description.length > 0 &&
-            t.amount.value !== 0;
     }
 
     valueChanged(event: GridDataEvent) {
@@ -323,45 +271,6 @@ export class GridTransaction implements OnInit, OnChanges {
             },
             error: (response) => {
                 console.error('❌ Failed to update TRN:', response);
-            },
-            complete: () => {
-                this.update();
-            }
-        });
-    }
-
-    performActionAdd(transaction: ITransactionReport) {
-        // Create the new transaction (if transfer then its two).
-        const transactions: Transaction[] = [];
-
-        let newTransaction: Transaction = new Transaction();
-        transactions.push(newTransaction);
-        newTransaction.date = transaction.date;
-        newTransaction.amount = transaction.amount.value;
-        newTransaction.description = transaction.description;
-        newTransaction.accountId = transaction.account.id;
-
-        if (transaction.category.id === 'TRF') {
-            // This is a transfer.
-            newTransaction.categoryId = transaction.category.id;
-
-            newTransaction = new Transaction();
-            transactions.push(newTransaction);
-            newTransaction.date = transaction.date;
-            newTransaction.amount = transaction.amount.value;
-            newTransaction.description = transaction.description;
-            newTransaction.accountId = transaction.transferAccountId;
-        } else {
-            // Standard transaction.
-            newTransaction.categoryId = transaction.category.id;
-        }
-
-        this._moneyService.addTransaction(transactions).subscribe({
-            next: (val) => {
-                console.log('➕ Created TRN:', val.date, val.amount);
-            },
-            error: (response) => {
-                console.error('❌ Failed to add TRN:', response);
             },
             complete: () => {
                 this.update();
@@ -403,12 +312,6 @@ export class GridTransaction implements OnInit, OnChanges {
         });
     }
 
-    performActionClearAdd(transaction: ITransactionReport) {
-        GridTransaction.clearTransaction(transaction, this.filter);
-        transaction.modified = false;
-        this.hasChanges.emit(this.computeHasChanges());
-    }
-
     performAction(event: GridDataEvent) {
         // If multiple transactions are selected, then they should all be processed together.
         const transactions: ITransactionReport[] = [];
@@ -441,16 +344,6 @@ export class GridTransaction implements OnInit, OnChanges {
                 break;
             case GridDataActionType.Delete:
                 this.performActionDelete(transactions);
-                break;
-            case GridDataActionType.ClearAdd:
-                this.performActionClearAdd(event.transaction);
-                break;
-            case GridDataActionType.Add:
-                this.performActionAdd(event.transaction);
-                break;
-            case GridDataActionType.PendingUpdate:
-            case GridDataActionType.PendingAdd:
-                console.log('⏭️ Pending action ignored:', event.action);
                 break;
         }
     }

@@ -46,7 +46,7 @@ export class GridDataCategory extends GridData implements OnInit {
 
         this.content = MoneyCategory;
         this.inputs = { filterMode: false,
-            allowTransfer: this.transaction.new,
+            allowTransfer: false,
             selectCategoryEvent: this.selectCategoryEvent,
             selectTransferEvent: this.selectTransferEvent };
     }
