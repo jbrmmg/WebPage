@@ -8,6 +8,10 @@
             <em class="fa fa-plus"></em>
             <span class="btn-label">Add</span>
         </button>
+        <button class="btn btn-secondary toolbar-btn" title="Add transfer between accounts" (click)="onTransfer()">
+            <em class="fa fa-exchange"></em>
+            <span class="btn-label">Transfer</span>
+        </button>
         <button [class]="hasChanges ? 'btn btn-warning toolbar-btn' : 'btn btn-secondary toolbar-btn'"
                 title="Save changes" [disabled]="!hasChanges" (click)="onSave()">
             <em class="fa fa-save"></em>

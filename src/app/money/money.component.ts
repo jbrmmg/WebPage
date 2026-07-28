@@ -13,6 +13,7 @@ export class MoneyComponent {
     version = '';
     showFilter = false;
     showAdd = false;
+    showTransfer = false;
     hasChanges = false;
     filter: TransactionFilter = MoneyComponent.defaultFilter();
 

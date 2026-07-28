@@ -1,0 +1,127 @@
+.transfer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 1050;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 56px 16px 32px;
+    overflow-y: auto;
+}
+
+.transfer-panel {
+    background: #2a2a4a;
+    border: 1px solid #444;
+    border-radius: 6px;
+    width: 600px;
+    max-width: 100%;
+    flex-shrink: 0;
+}
+
+.transfer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: #1e1e38;
+    border-bottom: 1px solid #444;
+    border-radius: 6px 6px 0 0;
+}
+
+.transfer-logo { margin-right: 8px; opacity: 0.8; flex-shrink: 0; }
+
+.transfer-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #a0d4f5;
+    flex: 1;
+}
+
+.transfer-body { padding: 0; }
+
+.transfer-section {
+    padding: 10px 16px;
+    border-bottom: 1px solid #333;
+}
+
+.section-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #a0d4f5;
+    margin-bottom: 8px;
+}
+
+.account-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.item-btn {
+    font-size: 0.78rem;
+    padding: 3px 9px;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.transfer-date-input {
+    width: 180px;
+    background-color: #1a1a2e;
+    border-color: #555;
+    color: #eee;
+}
+
+.form-control {
+    background-color: #1a1a2e;
+    border-color: #555;
+    color: #eee;
+}
+
+.form-control:focus {
+    background-color: #1a1a2e;
+    border-color: #4caf50;
+    color: #eee;
+    box-shadow: 0 0 0 0.15rem rgba(76, 175, 80, 0.2);
+}
+
+.amount-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.amount-prefix {
+    font-size: 1.2rem;
+    color: #a0d4f5;
+    flex-shrink: 0;
+}
+
+.amount-input { width: 160px; }
+
+.validation-error {
+    margin: 0 16px 4px;
+    padding: 8px 12px;
+    background: #4a1a1a;
+    color: #e07070;
+    border: 1px solid #6a2a2a;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.transfer-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    font-size: 0.85rem;
+    min-width: 90px;
+}

@@ -18,6 +18,7 @@ export class MoneyToolbarComponent {
     @Input() hasChanges = false;
     @Output() filterClick = new EventEmitter<void>();
     @Output() addClick = new EventEmitter<void>();
+    @Output() transferClick = new EventEmitter<void>();
     @Output() saveClick = new EventEmitter<void>();
 
     pageSize = 300;
@@ -25,6 +26,7 @@ export class MoneyToolbarComponent {
 
     onFilter() { this.filterClick.emit(); }
     onAdd() { this.addClick.emit(); }
+    onTransfer() { this.transferClick.emit(); }
     onSave() { this.saveClick.emit(); }
     onExport() {}
     onLoadRecFile() {}

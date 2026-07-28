@@ -1,0 +1,86 @@
+<div class="transfer-overlay">
+    <div class="transfer-panel">
+
+        <!-- Header -->
+        <div class="transfer-header">
+            <img src="assets/images/logo.svg" class="transfer-logo" alt="JBR" width="24" height="24">
+            <span class="transfer-title">Transfer</span>
+            <button class="btn btn-sm btn-secondary" (click)="onClose()"><em class="fa fa-times"></em></button>
+        </div>
+
+        <div class="transfer-body">
+
+            <!-- Date -->
+            <div class="transfer-section">
+                <div class="section-label">Date</div>
+                <input class="form-control transfer-date-input"
+                       bsDatepicker
+                       [bsValue]="date"
+                       (bsValueChange)="date=$event"
+                       [bsConfig]="{dateInputFormat:'DD-MMM-YYYY', containerClass:'theme-dark-blue', selectFromOtherMonth:true}">
+            </div>
+
+            <!-- From Account -->
+            <div class="transfer-section">
+                <div class="section-label">From Account</div>
+                <div class="account-grid">
+                    <button *ngFor="let acc of allAccounts"
+                            class="btn btn-sm item-btn"
+                            [style.background-color]="accountBgColor(acc, fromAccount)"
+                            [style.color]="accountFgColor(acc, fromAccount)"
+                            [style.border-color]="accountBorderColor(acc)"
+                            (click)="fromAccount = acc; validationError = null">
+                        {{acc.name}}
+                    </button>
+                </div>
+            </div>
+
+            <!-- To Account -->
+            <div class="transfer-section">
+                <div class="section-label">To Account</div>
+                <div class="account-grid">
+                    <button *ngFor="let acc of allAccounts"
+                            class="btn btn-sm item-btn"
+                            [style.background-color]="accountBgColor(acc, toAccount)"
+                            [style.color]="accountFgColor(acc, toAccount)"
+                            [style.border-color]="accountBorderColor(acc)"
+                            (click)="toAccount = acc; validationError = null">
+                        {{acc.name}}
+                    </button>
+                </div>
+            </div>
+
+            <!-- Amount -->
+            <div class="transfer-section">
+                <div class="section-label">Amount</div>
+                <div class="amount-row">
+                    <span class="amount-prefix">£</span>
+                    <input type="number" class="form-control amount-input" [(ngModel)]="amount"
+                           placeholder="0.00" min="0" step="0.01">
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="transfer-section">
+                <div class="section-label">Description</div>
+                <input type="text" class="form-control" [(ngModel)]="description" placeholder="Transfer description">
+            </div>
+
+            <!-- Validation error -->
+            <div *ngIf="validationError" class="validation-error">
+                <em class="fa fa-exclamation-triangle"></em> {{validationError}}
+            </div>
+
+            <!-- Actions -->
+            <div class="transfer-actions">
+                <button class="btn btn-success action-btn" (click)="onSave()" [disabled]="saving">
+                    <em class="fa fa-exchange"></em> Transfer
+                </button>
+                <button class="btn btn-outline-secondary action-btn ms-auto" (click)="onClose()" [disabled]="saving">
+                    <em class="fa fa-times"></em> Close
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
