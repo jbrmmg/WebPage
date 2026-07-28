@@ -40,12 +40,8 @@
                 <div class="section-label">
                     Category
                     <span *ngIf="selectedCategory" class="cat-hint">▸ {{selectedCategory.name}}</span>
-                    <button class="btn btn-sm btn-outline-secondary toggle-btn" (click)="showCategories=!showCategories">
-                        <em [ngClass]="showCategories ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></em>
-                        {{showCategories ? 'Hide' : 'Show'}}
-                    </button>
                 </div>
-                <div *ngIf="showCategories" class="category-grid">
+                <div class="category-grid">
                     <button *ngFor="let cat of allCategories"
                             class="btn btn-sm item-btn"
                             [style.background-color]="catBgColor(cat)"
@@ -68,7 +64,7 @@
                 <div class="section-label">Amount</div>
                 <div class="amount-row">
                     <span class="amount-sign" [class.amount-db]="amountType === 'DB'" [class.amount-cr]="amountType === 'CR'">{{amountType === 'DB' ? '−' : '+'}}</span>
-                    <input type="number" class="form-control amount-input" [(ngModel)]="amount" placeholder="0.00" min="0" step="0.01">
+                    <input type="number" class="form-control amount-input" [(ngModel)]="amount" placeholder="0.00" min="0" step="0.01" (keydown)="onAmountKeydown($event)">
                     <div class="amount-type-btns">
                         <button [ngClass]="amountTypeClass('DB')" (click)="amountType='DB'">Debit</button>
                         <button [ngClass]="amountTypeClass('CR')" (click)="amountType='CR'">Credit</button>

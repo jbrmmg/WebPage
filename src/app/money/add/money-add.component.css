@@ -68,12 +68,6 @@
     font-weight: 500;
 }
 
-.toggle-btn {
-    font-size: 0.72rem;
-    padding: 2px 6px;
-    margin-left: auto;
-}
-
 .account-grid,
 .category-grid {
     display: flex;

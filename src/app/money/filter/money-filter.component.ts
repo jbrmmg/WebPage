@@ -49,8 +49,6 @@ export class MoneyFilterComponent implements OnInit {
 
     allCategories: Category[] = [];
     selectedCategoryIds = new Set<string>();
-    showCategories = false;
-
     validationError: string = null;
 
     private readonly datePipe = new DatePipe('en-UK');

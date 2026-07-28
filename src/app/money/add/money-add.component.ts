@@ -37,8 +37,6 @@ export class MoneyAddComponent implements OnInit {
 
     allAccounts: JbAccount[] = [];
     allCategories: Category[] = [];
-    showCategories = false;
-
     pendingList: PendingTransaction[] = [];
     validationError: string = null;
     saving = false;
@@ -94,7 +92,6 @@ export class MoneyAddComponent implements OnInit {
 
     selectCategory(cat: Category): void {
         this.selectedCategory = cat;
-        this.showCategories = false;
         this.validationError = null;
     }
 
@@ -216,6 +213,25 @@ export class MoneyAddComponent implements OnInit {
     onKeydown(event: KeyboardEvent): void {
         if (event.key === 'Escape') {
             this.addClosed.emit();
+        } else if (event.key === 'Enter' && document.activeElement?.tagName !== 'BUTTON') {
+            event.preventDefault();
+            if (event.ctrlKey) {
+                this.onAddAndClose();
+            } else if (event.shiftKey) {
+                this.onSaveAll();
+            } else {
+                this.onAdd();
+            }
+        }
+    }
+
+    onAmountKeydown(event: KeyboardEvent): void {
+        if (event.key === '-') {
+            event.preventDefault();
+            this.amountType = 'DB';
+        } else if (event.key === '+') {
+            event.preventDefault();
+            this.amountType = 'CR';
         }
     }
 

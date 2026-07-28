@@ -157,13 +157,9 @@
                 <span class="cat-summary">{{categoryFilterSummary()}}</span>
                 <div class="cat-controls">
                     <button class="btn btn-sm btn-outline-secondary" (click)="selectAllCategories()">All</button>
-                    <button class="btn btn-sm btn-outline-secondary" (click)="showCategories=!showCategories">
-                        <em [ngClass]="showCategories ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></em>
-                        {{showCategories ? 'Hide' : 'Show'}}
-                    </button>
                 </div>
             </div>
-            <div *ngIf="showCategories" class="category-grid">
+            <div class="category-grid">
                 <button *ngFor="let cat of allCategories"
                         class="btn btn-sm cat-btn"
                         [style.background-color]="catBgColor(cat)"
