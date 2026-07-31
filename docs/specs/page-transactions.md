@@ -12,7 +12,7 @@ Change all uses of `/money/transaction/list` to use `/money/transaction/list/pag
 
 The response contains a list of transactions as now but is wrapped in a parent object that has the following properties in addition to the transaction array that is currently retuned.
 
-A new TypeScript interface/class will be required that contains the following properties:
+A new TypeScript interface `ITransactionPage` will be required that contains the following properties:
 
 + totalCount - the total number of transactions.
 + pageNumber - the page number returned.
@@ -53,6 +53,8 @@ The existing internal `pageSize` field should become an `@Input()` initialised f
 ### Filter change resets page
 
 When `onFilterApplied()` is called in `MoneyComponent` (user applies a new filter), `filter.pageNumber` must be reset to `1` before the updated filter is passed to `GridTransaction`. This ensures paging always starts from the first page after a filter change.
+
+When `MoneyComponent` handles the `pageSizeChange` event from the toolbar, it must update `filter.maxPageSize` with the new value and also reset `filter.pageNumber = 1`. A larger page size may reduce the total number of pages, making the current page number invalid.
 
 ### Test updates
 
