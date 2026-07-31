@@ -14,6 +14,7 @@ import {GridDataStatement} from './data/grid-data-statement';
 import {GridDataStatementDate} from './data/grid-data-statement-date';
 import {HeaderType} from './header/grid-header-type';
 import {ITransactionReport, TransactionReport} from '../transaction/transactionReport';
+import {ITransactionPage} from '../transaction/transactionPage';
 import {TransactionEditType} from '../transaction/transactionEditType';
 import {GridDataEvent} from './data/grid-data-event';
 import {GridDataActionType} from './data/grid-data-action-type';
@@ -67,6 +68,7 @@ export class GridTransaction implements OnInit, OnChanges {
     @Output() hasChanges = new EventEmitter<boolean>();
     @Output() statusChange: EventEmitter<string> = new EventEmitter();
     @Output() versionChange: EventEmitter<string> = new EventEmitter();
+    @Output() totalCountChange = new EventEmitter<number>();
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['filter'] && !changes['filter'].firstChange) {
@@ -211,8 +213,9 @@ export class GridTransaction implements OnInit, OnChanges {
         this.statusChange.emit(this.status);
         this.data = [];
         this._moneyService.getTransactions(this.filter).subscribe({
-            next: (val) => {
-                this.data = val;
+            next: (page: ITransactionPage) => {
+                this.data = page.transactions;
+                this.totalCountChange.emit(page.totalCount);
             },
             error: (response) => {
                 this.status = 'Update failed ' + response;

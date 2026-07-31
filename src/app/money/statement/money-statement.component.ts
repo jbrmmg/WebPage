@@ -49,10 +49,11 @@ export class MoneyStatement implements OnInit {
         filter.accounts = [];
         filter.accounts.push(account);
         filter.statementDate = date;
+        filter.pageNumber = 1;
 
         this._moneyService.getTransactions(filter).subscribe({
-            next: (val) => {
-                this.data = val;
+            next: (page) => {
+                this.data = page.transactions;
             },
             error: (response) => {
                 console.error('❌ getTransactions failed:', response);

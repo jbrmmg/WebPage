@@ -13,6 +13,7 @@ import {ReconcileTransaction} from './reconciliation/reconcileTransaction';
 import {LoadFileRequest} from './files/loadFileRequest';
 import {TransactionFilter} from './transaction/transactionFilter';
 import {ITransactionReport, TransactionReport} from './transaction/transactionReport';
+import {ITransactionPage} from './transaction/transactionPage';
 import {ReconcileStatus} from './reconciliation/reconcileStatus';
 import {IVersion} from './money-version';
 
@@ -278,10 +279,10 @@ export class MoneyService {
         );
     }
 
-    getTransactions(filter: TransactionFilter): Observable<ITransactionReport[]>  {
+    getTransactions(filter: TransactionFilter): Observable<ITransactionPage> {
         console.log('🔍 Filter:', JSON.stringify(filter));
 
-        return this.http.post<ITransactionReport[]>(environment.moneyTransactionList, filter).pipe(
+        return this.http.post<ITransactionPage>(environment.moneyTransactionListPage, filter).pipe(
             tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );

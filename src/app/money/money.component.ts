@@ -16,12 +16,17 @@ export class MoneyComponent {
     showTransfer = false;
     hasChanges = false;
     filter: TransactionFilter = MoneyComponent.defaultFilter();
+    totalCount = 0;
+    totalPages = 1;
+
+    get currentPage(): number { return this.filter.pageNumber; }
 
     static defaultFilter(): TransactionFilter {
         const f = new TransactionFilter();
         f.locked = false;
         f.predicted = false;
         f.maxPageSize = 300;
+        f.pageNumber = 1;
         f.accounts = [];
         f.categories = [];
         return f;
@@ -34,6 +39,7 @@ export class MoneyComponent {
     }
 
     onFilterApplied(newFilter: TransactionFilter): void {
+        newFilter.pageNumber = 1;
         this.filter = newFilter;
         this.showFilter = false;
     }
@@ -52,5 +58,26 @@ export class MoneyComponent {
 
     onTransactionAdded(): void {
         this.grid.update();
+    }
+
+    onTotalCountChange(totalCount: number): void {
+        this.totalCount = totalCount;
+        this.totalPages = Math.ceil(totalCount / this.filter.maxPageSize) || 1;
+    }
+
+    onPrev(): void {
+        if (this.filter.pageNumber > 1) {
+            this.filter = { ...this.filter, pageNumber: this.filter.pageNumber - 1 };
+        }
+    }
+
+    onNext(): void {
+        if (this.filter.pageNumber < this.totalPages) {
+            this.filter = { ...this.filter, pageNumber: this.filter.pageNumber + 1 };
+        }
+    }
+
+    onPageSizeChange(pageSize: number): void {
+        this.filter = { ...this.filter, maxPageSize: pageSize, pageNumber: 1 };
     }
 }

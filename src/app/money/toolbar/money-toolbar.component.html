@@ -27,11 +27,11 @@
         </button>
     </div>
     <div class="toolbar-group">
-        <button class="btn btn-secondary toolbar-btn" title="Page up" (click)="onPageUp()">
+        <button class="btn btn-secondary toolbar-btn" title="Page up" [disabled]="currentPage <= 1" (click)="onPageUp()">
             <em class="fa fa-chevron-up"></em>
             <span class="btn-label">Prev</span>
         </button>
-        <button class="btn btn-secondary toolbar-btn" title="Page down" (click)="onPageDown()">
+        <button class="btn btn-secondary toolbar-btn" title="Page down" [disabled]="currentPage >= totalPages" (click)="onPageDown()">
             <em class="fa fa-chevron-down"></em>
             <span class="btn-label">Next</span>
         </button>

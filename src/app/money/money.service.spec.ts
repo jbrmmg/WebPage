@@ -3,6 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { MoneyService } from './money.service';
 import { environment } from '../../environments/environment';
 import { TransactionReport, ITransactionReport } from './transaction/transactionReport';
+import { ITransactionPage } from './transaction/transactionPage';
 import { TransactionFilter } from './transaction/transactionFilter';
 import { IFile } from './files/file';
 import { IStatement } from './statement/statement';
@@ -319,12 +320,17 @@ describe('MoneyService', () => {
             req.flush([]);
         });
 
-        it('getTransactions() should make a POST to moneyTransactionList', () => {
+        it('getTransactions() should make a POST to moneyTransactionListPage and return ITransactionPage', () => {
             const filter = new TransactionFilter();
-            service.getTransactions(filter).subscribe();
-            const req = httpMock.expectOne(environment.moneyTransactionList);
+            let result: ITransactionPage;
+            service.getTransactions(filter).subscribe(page => result = page);
+            const req = httpMock.expectOne(environment.moneyTransactionListPage);
             expect(req.request.method).toBe('POST');
-            req.flush([]);
+            const mockPage: ITransactionPage = { totalCount: 1, pageNumber: 1, maxPageSize: 300, transactions: [] };
+            req.flush(mockPage);
+            expect(result.totalCount).toBe(1);
+            expect(result.pageNumber).toBe(1);
+            expect(result.transactions).toEqual([]);
         });
 
         it('getVersion() should make a GET to moneyVersion', () => {

@@ -16,13 +16,18 @@ export class MoneyToolbarComponent {
     @Input() status = '';
     @Input() version = '';
     @Input() hasChanges = false;
+    @Input() currentPage = 1;
+    @Input() totalPages = 1;
+    @Input() pageSize = 300;
     @Output() filterClick = new EventEmitter<void>();
     @Output() addClick = new EventEmitter<void>();
     @Output() transferClick = new EventEmitter<void>();
     @Output() saveClick = new EventEmitter<void>();
     @Output() recFileClick = new EventEmitter<void>();
+    @Output() prevClick = new EventEmitter<void>();
+    @Output() nextClick = new EventEmitter<void>();
+    @Output() pageSizeChange = new EventEmitter<number>();
 
-    pageSize = 300;
     pageSizes = [25, 50, 100, 200, 300];
 
     onFilter() { this.filterClick.emit(); }
@@ -31,7 +36,7 @@ export class MoneyToolbarComponent {
     onSave() { this.saveClick.emit(); }
     onExport() {}
     onLoadRecFile() { this.recFileClick.emit(); }
-    onPageUp() {}
-    onPageDown() {}
-    onPageSizeChange() {}
+    onPageUp() { this.prevClick.emit(); }
+    onPageDown() { this.nextClick.emit(); }
+    onPageSizeChange() { this.pageSizeChange.emit(this.pageSize); }
 }
