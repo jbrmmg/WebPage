@@ -20,14 +20,7 @@
                         <button [ngClass]="tristateClass(locked, null)"   (click)="locked=null">Unset</button>
                     </div>
                 </div>
-                <div class="flag-row">
-                    <span class="flag-name">Changed</span>
-                    <div class="tristate">
-                        <button [ngClass]="tristateClass(changed, true)"  (click)="changed=true">Yes</button>
-                        <button [ngClass]="tristateClass(changed, false)" (click)="changed=false">No</button>
-                        <button [ngClass]="tristateClass(changed, null)"  (click)="changed=null">Unset</button>
-                    </div>
-                </div>
+
                 <div class="flag-row">
                     <span class="flag-name">Predicted</span>
                     <div class="tristate">

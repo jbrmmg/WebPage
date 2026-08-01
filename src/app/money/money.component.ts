@@ -15,6 +15,7 @@ export class MoneyComponent {
     showAdd = false;
     showTransfer = false;
     hasChanges = false;
+    showChangesOnly = false;
     filter: TransactionFilter = MoneyComponent.defaultFilter();
     totalCount = 0;
     totalPages = 1;
@@ -46,6 +47,11 @@ export class MoneyComponent {
 
     onSave(): void {
         this.grid.save();
+    }
+
+    onHasChanges(value: boolean): void {
+        this.hasChanges = value;
+        if (!value) { this.showChangesOnly = false; }
     }
 
     onExport(): void {

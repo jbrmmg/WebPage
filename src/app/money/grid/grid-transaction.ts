@@ -61,8 +61,14 @@ export class GridTransaction implements OnInit, OnChanges {
     protected readonly HeaderType = HeaderType;
     protected readonly MoneyFiles = MoneyFiles;
     @Input() filter: TransactionFilter;
+    @Input() showChangesOnly = false;
     @Output() filterChange = new EventEmitter<TransactionFilter>();
     data: ITransactionReport[] = null;
+
+    get visibleData(): ITransactionReport[] {
+        if (!this.data) { return []; }
+        return this.showChangesOnly ? this.data.filter(t => t.modified) : this.data;
+    }
     status = 'ready';
     version = '';
     @Output() hasChanges = new EventEmitter<boolean>();

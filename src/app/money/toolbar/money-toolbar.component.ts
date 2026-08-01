@@ -28,6 +28,8 @@ export class MoneyToolbarComponent {
     @Output() nextClick = new EventEmitter<void>();
     @Output() pageSizeChange = new EventEmitter<number>();
     @Output() exportClick = new EventEmitter<void>();
+    @Input() showChangesOnly = false;
+    @Output() showChangesOnlyChange = new EventEmitter<boolean>();
 
     pageSizes = [25, 50, 100, 200, 300];
 
@@ -35,6 +37,7 @@ export class MoneyToolbarComponent {
     onAdd() { this.addClick.emit(); }
     onTransfer() { this.transferClick.emit(); }
     onSave() { this.saveClick.emit(); }
+    onToggleChanges() { this.showChangesOnlyChange.emit(!this.showChangesOnly); }
     onExport() { this.exportClick.emit(); }
     onLoadRecFile() { this.recFileClick.emit(); }
     onPageUp() { this.prevClick.emit(); }

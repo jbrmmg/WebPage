@@ -1,8 +1,8 @@
 <div class="card">
     <div class="card-body">
-        <jbr-money-toolbar [status]="status" [version]="version" [hasChanges]="hasChanges" [currentPage]="currentPage" [totalPages]="totalPages" [pageSize]="filter.maxPageSize" (filterClick)="showFilter=true" (addClick)="showAdd=true" (transferClick)="showTransfer=true" (saveClick)="onSave()" (exportClick)="onExport()" (recFileClick)="onLoadRecFile()" (prevClick)="onPrev()" (nextClick)="onNext()" (pageSizeChange)="onPageSizeChange($event)"></jbr-money-toolbar>
+        <jbr-money-toolbar [status]="status" [version]="version" [hasChanges]="hasChanges" [currentPage]="currentPage" [totalPages]="totalPages" [pageSize]="filter.maxPageSize" [showChangesOnly]="showChangesOnly" (filterClick)="showFilter=true" (addClick)="showAdd=true" (transferClick)="showTransfer=true" (saveClick)="onSave()" (exportClick)="onExport()" (showChangesOnlyChange)="showChangesOnly=$event" (recFileClick)="onLoadRecFile()" (prevClick)="onPrev()" (nextClick)="onNext()" (pageSizeChange)="onPageSizeChange($event)"></jbr-money-toolbar>
         <div class="grid-scroll">
-            <jbr-grid-transaction style="width: 100%" [filter]="filter" (statusChange)="status = $event" (versionChange)="version = $event" (hasChanges)="hasChanges=$event" (filterChange)="onFilterChange($event)" (totalCountChange)="onTotalCountChange($event)"></jbr-grid-transaction>
+            <jbr-grid-transaction style="width: 100%" [filter]="filter" [showChangesOnly]="showChangesOnly" (statusChange)="status = $event" (versionChange)="version = $event" (hasChanges)="onHasChanges($event)" (filterChange)="onFilterChange($event)" (totalCountChange)="onTotalCountChange($event)"></jbr-grid-transaction>
         </div>
     </div>
 </div>

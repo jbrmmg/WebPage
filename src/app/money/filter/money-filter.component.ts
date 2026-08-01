@@ -25,7 +25,6 @@ export class MoneyFilterComponent implements OnInit {
     @Output() filterClosed = new EventEmitter<void>();
 
     locked: Tristate = false;
-    changed: Tristate = null;
     predicted: Tristate = false;
     reconciled: Tristate = null;
 
@@ -70,7 +69,6 @@ export class MoneyFilterComponent implements OnInit {
         if (!this.filter) { return; }
 
         this.locked = this.filter.locked ?? false;
-        this.changed = this.filter.changed ?? null;
         this.predicted = this.filter.predicted ?? false;
         this.reconciled = this.filter.fromReconciled ?? null;
 
@@ -264,7 +262,6 @@ export class MoneyFilterComponent implements OnInit {
             ? this.allAccounts.filter(a => this.selectedAccountIds.has(a.id))
             : [];
         f.locked = this.locked;
-        f.changed = this.changed;
         f.predicted = this.predicted;
         f.fromReconciled = this.reconciled;
         f.description = this.description.trim() || null;

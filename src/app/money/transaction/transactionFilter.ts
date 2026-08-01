@@ -17,7 +17,6 @@ export class TransactionFilter {
     public locked?: boolean;
     public predicted?: boolean;
     public fromReconciled?: boolean;
-    public changed?: boolean;
     public description?: string;
     public maxPageSize?: number;
     public statementAge?: number;

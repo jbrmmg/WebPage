@@ -17,6 +17,11 @@
             <em class="fa fa-save"></em>
             <span class="btn-label">Save</span>
         </button>
+        <button [class]="showChangesOnly ? 'btn btn-info toolbar-btn' : 'btn btn-secondary toolbar-btn'"
+                title="Show changed rows only" [disabled]="!hasChanges" (click)="onToggleChanges()">
+            <em class="fa fa-pencil"></em>
+            <span class="btn-label">Changes</span>
+        </button>
         <button class="btn btn-secondary toolbar-btn" title="Export transactions" (click)="onExport()">
             <em class="fa fa-download"></em>
             <span class="btn-label">Export</span>

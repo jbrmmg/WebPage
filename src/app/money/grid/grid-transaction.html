@@ -38,8 +38,8 @@
                 <th class="del-col"></th>
             </tr>
         </thead>
-        <tbody *ngIf="data && data && data.length">
-            <tr *ngFor="let transaction of data" [class.row-pending]="transaction.modified">
+        <tbody *ngIf="visibleData.length">
+            <tr *ngFor="let transaction of visibleData" [class.row-pending]="transaction.modified">
                 <td>
                     <jbr-grid-data-date [transaction]="transaction" (valueChanged)="valueChanged($event)"></jbr-grid-data-date>
                 </td>
