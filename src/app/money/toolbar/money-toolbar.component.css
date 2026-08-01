@@ -57,6 +57,13 @@
     font-size: 0.9rem;
 }
 
+.page-indicator {
+    color: #aaa;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    margin: 0 4px;
+}
+
 .toolbar-page-size {
     display: flex;
     align-items: center;

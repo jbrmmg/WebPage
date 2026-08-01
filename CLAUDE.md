@@ -19,11 +19,12 @@ npx ng test --include='src/app/money/money.service.spec.ts' --watch=false --brow
 
 ### Dev server
 
-| Command | Proxy config | Backend ports |
-|---|---|---|
-| `npm run startdbg` | `proxy.conf.json` | 13013 / 13017 |
-| `npm run startpdn` | `proxy.prod.conf.json` | 12013 / 12017 |
-| `npm run startdev` | `proxy.dev.conf.json` | dev ports |
+```bash
+npm run startdocker   # proxy to local Docker stack (localhost:80)
+npm start             # no proxy — serves without backend
+```
+
+`startdocker` uses `proxy.docker.conf.json`, which forwards `/backup` and `/money` to `localhost:80` (the running Docker proxy container).
 
 ### Build (Maven)
 
@@ -36,16 +37,11 @@ npm run build
 
 ### Docker
 
+The Angular app is served by the `webpage` container (static files only). All routing to backends is handled by a separate `proxy` container defined in `nginx/`. See README for full deployment instructions.
+
 ```bash
 npm run build
 docker build -t webpage .
-docker run -d \
-  --name webpage \
-  --restart unless-stopped \
-  -p 80:80 \
-  -e BACKUP_BACKEND=myserver:12013 \
-  -e MONEY_BACKEND=myserver:12017 \
-  webpage
 ```
 
 ## Architecture
@@ -73,16 +69,16 @@ The `##placeholder##` pattern in environment URLs (e.g. `##id##`, `##type##`) is
 
 Two backends, proxied by path prefix:
 
-| Prefix | Backend (prod) |
+| Prefix | Backend (prod, by container name) |
 |---|---|
-| `/backup` | `host:12013/jbr/int` |
-| `/money` | `host:12017/jbr/int` |
+| `/backup` | `backup:8080` — rewrites to `/api/v1/` |
+| `/money` | `money:8080` — rewrites to `/api/v1/` |
 
-In dev: Angular CLI handles proxying via `proxy.*.conf.json`. In production/Docker: nginx handles it via `nginx.conf.template`.
+In dev: Angular CLI handles proxying via `proxy.*.conf.json` (same path rewrite). In production/Docker: nginx handles it via `nginx/nginx.conf.template`.
 
 ### Money module (`src/app/money/`)
 
-The largest feature. `MoneyComponent` is the top-level container; `MoneyService` handles all HTTP calls. Sub-components are broken into sub-directories: `account`, `calculator`, `category`, `files`, `grid`, `reconciliation`, `range`, `statement`, `transaction`. The `grid/` sub-tree contains a mix of NgModule-declared and standalone components — newer additions tend to be standalone.
+The largest feature. `MoneyComponent` is the top-level container; `MoneyService` handles all HTTP calls. Sub-components are broken into sub-directories: `account`, `add`, `calculator`, `category`, `files`, `filter`, `grid`, `reconciliation`, `range`, `statement`, `toolbar`, `transaction`, `transfer`. The `grid/` sub-tree contains a mix of NgModule-declared and standalone components — newer additions tend to be standalone.
 
 Some components use Server-Sent Events (`EventSource`) for live updates (`money/reconciliation/file-updates`).
 

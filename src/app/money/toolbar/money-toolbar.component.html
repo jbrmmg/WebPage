@@ -35,6 +35,7 @@
             <em class="fa fa-chevron-down"></em>
             <span class="btn-label">Next</span>
         </button>
+        <span class="page-indicator">{{currentPage}} of {{totalPages}}</span>
         <div class="toolbar-page-size">
             <label class="page-size-label">Page size</label>
             <select class="form-select form-select-sm page-size-select" [(ngModel)]="pageSize" (change)="onPageSizeChange()">

@@ -41,23 +41,12 @@ npm install
 
 | Command | Description |
 |---------|-------------|
-| `npm start` | Serve with internal/default config |
-| `npm run startint` | Serve with `debug` configuration |
-| `npm run startdbg` | Serve with debug-web config + `proxy.conf.json` (ports 13013/13017) |
-| `npm run startpdn` | Serve with debug-web config + `proxy.prod.conf.json` (ports 12013/12017) |
-| `npm run startdev` | Serve with debug-web config + `proxy.dev.conf.json` (ports 10013/10017) |
-| `npm run startdevdbg` | Serve with debug-web config + `proxy.dev-dbg.conf.json` (ports 13013/13017) |
+| `npm start` | Serve with default config (no backend proxy) |
+| `npm run startdocker` | Serve with debug-web config + `proxy.docker.conf.json` (proxies to local Docker stack) |
 
 ### Proxy configuration (dev server only)
 
-The Angular dev server proxies two backend APIs:
-
-| Path prefix | Debug ports | Production ports | Dev ports |
-|-------------|-------------|-----------------|-----------|
-| `/backup` | `localhost:13013/jbr/int` | `localhost:12013/jbr/int` | `localhost:10013/jbr/int` |
-| `/money` | `localhost:13017/jbr/int` | `localhost:12017/jbr/int` | `localhost:10017/jbr/int` |
-
-These proxy configs are dev-server only and have no effect in Docker.
+`startdocker` uses `proxy.docker.conf.json`, which forwards `/backup` and `/money` to `localhost:80` — the locally-running Docker proxy container. This is the standard development workflow.
 
 ## Build
 
@@ -78,18 +67,21 @@ npm run build
 
 ## Production Architecture
 
-In production, all traffic goes through a dedicated **nginx reverse proxy container** (defined in `nginx/`). The Angular app container sits on the internal Docker network only — it is not exposed directly to the host.
+In production, all traffic goes through a dedicated **nginx reverse proxy container** (defined in `nginx/`). The Angular app container sits on the internal Docker network only — it is not exposed directly to the host. Backends are resolved by Docker container name on `jbr-network` — no environment variable substitution is used in the template.
 
 | Public path | Upstream container | Port | Notes |
 |---|---|---|---|
 | `/wordhelper/` | `wordhelper` | 8080 | Word Helper Python app |
 | `/wordclue/` | `wordclue` | 8080 | Word Clue Python app |
 | `/home/` | `home` | 8080 | Home dashboard Python app |
-| `/money/docs/` | `${MONEY_BACKEND}` | 12017 | Money API Swagger UI |
-| `/backup/docs/` | `${BACKUP_BACKEND}` | 12013 | Backup API Swagger UI |
-| `/home/docs/` | `${HOME_API_BACKEND}` | varies | Home API Swagger UI |
-| `/money/` | `${MONEY_BACKEND}` | 12017 | Money Java REST API (`/api/v1/` prefix stripped) |
-| `/backup/` | `${BACKUP_BACKEND}` | 12013 | Backup Java REST API (`/api/v1/` prefix stripped) |
+| `/money/report/` | `money` | 8081 | Money report app |
+| `/money/docs/` | `money` | 8080 | Money API Swagger UI |
+| `/backup/docs/` | `backup` | 8080 | Backup API Swagger UI |
+| `/home/docs/` | `home` | 8080 | Home API Swagger UI |
+| `/money/api/v1/` | `money` | 8080 | Money Java REST API (direct, no rewrite) |
+| `/money/` | `money` | 8080 | Money Java REST API (rewrites to `/api/v1/`) |
+| `/backup/api/v1/` | `backup` | 8080 | Backup Java REST API (direct, no rewrite) |
+| `/backup/` | `backup` | 8080 | Backup Java REST API (rewrites to `/api/v1/`) |
 | `/` | `webpage` | 80 | Angular SPA (catch-all, must be last) |
 
 All containers must be on the `jbr-network` Docker network so the proxy can reach them by container name.
@@ -102,7 +94,7 @@ The Angular app container serves static files only. It does **not** need backend
 
 ```bash
 npm run build
-docker build -f src/deployment/Dockerfile -t webpage .
+docker build -t webpage .
 ```
 
 `docker-compose.yml` — runs the `webpage` container on `jbr-network` with no host port binding.
@@ -115,24 +107,15 @@ Defined in `nginx/`. This container handles all inbound traffic and routes it to
 docker build -f nginx/Dockerfile -t proxy nginx/
 ```
 
-`nginx/docker-compose.yml` — runs the `proxy` container on port 80 of the host. Requires three environment variables:
-
-| Variable | Description |
-|---|---|
-| `MONEY_BACKEND` | `hostname:port` of the money backend (e.g. `myserver:12017`) |
-| `BACKUP_BACKEND` | `hostname:port` of the backup backend (e.g. `myserver:12013`) |
-| `HOME_API_BACKEND` | `hostname:port` of the home API backend |
-
-Pass these via a `.env` file alongside `docker-compose.yml`, or inline:
+`nginx/docker-compose.yml` — runs the `proxy` container on port 80 of the host.
 
 ```bash
-MONEY_BACKEND=myserver:12017 BACKUP_BACKEND=myserver:12013 HOME_API_BACKEND=myserver:13019 \
-  docker compose -f nginx/docker-compose.yml up -d
+docker compose -f nginx/docker-compose.yml up -d
 ```
 
 ### nginx configuration
 
-`nginx/nginx.conf.template` is processed by `envsubst` at container startup (standard `nginx:alpine` behaviour). The template substitutes `${MONEY_BACKEND}`, `${BACKUP_BACKEND}`, and `${HOME_API_BACKEND}`.
+`nginx/nginx.conf.template` is processed by `envsubst` at container startup (standard `nginx:alpine` behaviour). All upstream backends are resolved by Docker container name (`backup`, `money`, `webpage`, `wordhelper`, `wordclue`, `home`) — no environment variable substitution is required.
 
 The `X-Forwarded-Prefix` header is set for each Python app location so that Flask's `ProxyFix` middleware can generate correct prefixed URLs.
 
