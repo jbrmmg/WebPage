@@ -259,6 +259,37 @@ export class GridTransaction implements OnInit, OnChanges {
         return this.data?.some(t => t.modified) ?? false;
     }
 
+    export() {
+        const escape = (v: string) => /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
+        const rows: string[] = [
+            ['Date','Account','Category','Description','Credits','Debits','Balance'].join(',')
+        ];
+
+        for (const t of this.data) {
+            const credit = t.amount?.type === 'CR' ? String(t.amount.value) : '';
+            const debit  = t.amount?.type === 'DB' ? String(t.amount.value) : '';
+            const balance = t.balance != null ? String(t.balance.value) : '';
+
+            rows.push([
+                escape(t.date ?? ''),
+                escape(t.account?.name ?? ''),
+                escape(t.category?.name ?? ''),
+                escape(MoneyService.getTransactionDescription(t)),
+                credit,
+                debit,
+                balance
+            ].join(','));
+        }
+
+        const blob = new Blob([rows.join('\n')], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'transactions.csv';
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
     save() {
         const modifiedExisting = this.data.filter(t => t.modified);
         if (modifiedExisting.length > 0) {

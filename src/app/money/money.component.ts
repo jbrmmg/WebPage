@@ -48,6 +48,10 @@ export class MoneyComponent {
         this.grid.save();
     }
 
+    onExport(): void {
+        this.grid.export();
+    }
+
     onLoadRecFile(): void {
         this.grid.openRecFileModal();
     }
