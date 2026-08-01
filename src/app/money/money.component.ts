@@ -62,6 +62,10 @@ export class MoneyComponent {
         this.grid.openRecFileModal();
     }
 
+    onChart(): void {
+        this.grid.openChartModal();
+    }
+
     onFilterChange(filter: TransactionFilter): void {
         this.filter = filter;
     }

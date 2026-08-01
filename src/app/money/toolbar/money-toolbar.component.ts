@@ -28,6 +28,7 @@ export class MoneyToolbarComponent {
     @Output() nextClick = new EventEmitter<void>();
     @Output() pageSizeChange = new EventEmitter<number>();
     @Output() exportClick = new EventEmitter<void>();
+    @Output() chartClick = new EventEmitter<void>();
     @Input() showChangesOnly = false;
     @Output() showChangesOnlyChange = new EventEmitter<boolean>();
 
@@ -39,6 +40,7 @@ export class MoneyToolbarComponent {
     onSave() { this.saveClick.emit(); }
     onToggleChanges() { this.showChangesOnlyChange.emit(!this.showChangesOnly); }
     onExport() { this.exportClick.emit(); }
+    onChart() { this.chartClick.emit(); }
     onLoadRecFile() { this.recFileClick.emit(); }
     onPageUp() { this.prevClick.emit(); }
     onPageDown() { this.nextClick.emit(); }

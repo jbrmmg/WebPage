@@ -85,6 +85,10 @@
     </table>
 </div>
 
+<ng-template #templateChart>
+    <jbr-chart-dialog [data]="chartData" (close)="modalRef.hide()"></jbr-chart-dialog>
+</ng-template>
+
 <ng-template #templateRecFile>
     <jbr-popup [title]="'Select a Reconciliation File'"
                [imageUrl]="'../../../assets/images/money/default-popup.svg'"

@@ -1,0 +1,59 @@
+<div class="modal-header">
+    <h5 class="modal-title">Charts</h5>
+    <button type="button" class="btn-close" (click)="close.emit()"></button>
+</div>
+<div class="modal-body chart-body">
+    <div class="btn-group mb-3">
+        <button [class]="chartType==='pie' ? 'btn btn-primary btn-sm' : 'btn btn-outline-secondary btn-sm'"
+                (click)="chartType='pie'">
+            <em class="fa fa-pie-chart me-1"></em>Spending by Category
+        </button>
+        <button [class]="chartType==='line' ? 'btn btn-primary btn-sm' : 'btn btn-outline-secondary btn-sm'"
+                (click)="chartType='line'">
+            <em class="fa fa-line-chart me-1"></em>Account Balance
+        </button>
+        <button [class]="chartType==='bar' ? 'btn btn-primary btn-sm' : 'btn btn-outline-secondary btn-sm'"
+                (click)="chartType='bar'">
+            <em class="fa fa-bar-chart me-1"></em>Spending by Day
+        </button>
+    </div>
+
+    <div *ngIf="chartType==='pie'">
+        <canvas *ngIf="hasPieData; else noPieData"
+                baseChart
+                [data]="pieChartData"
+                [type]="'pie'"
+                [options]="pieChartOptions">
+        </canvas>
+        <ng-template #noPieData>
+            <p class="text-muted text-center mt-4">No spending data in the current view.</p>
+        </ng-template>
+    </div>
+
+    <div *ngIf="chartType==='line'">
+        <canvas *ngIf="hasLineData; else noLineData"
+                baseChart
+                [data]="lineChartData"
+                [type]="'line'"
+                [options]="lineChartOptions">
+        </canvas>
+        <ng-template #noLineData>
+            <p class="text-muted text-center mt-4">No transaction data in the current view.</p>
+        </ng-template>
+    </div>
+
+    <div *ngIf="chartType==='bar'">
+        <canvas *ngIf="hasBarData; else noBarData"
+                baseChart
+                [data]="barChartData"
+                [type]="'bar'"
+                [options]="barChartOptions">
+        </canvas>
+        <ng-template #noBarData>
+            <p class="text-muted text-center mt-4">No spending data in the current view.</p>
+        </ng-template>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-secondary" (click)="close.emit()">Close</button>
+</div>

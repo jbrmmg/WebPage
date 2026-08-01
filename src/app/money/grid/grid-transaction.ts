@@ -25,6 +25,7 @@ import {BsModalRef, BsModalService} from 'ngx-bootstrap/modal';
 import {MoneyFiles} from '../files/money-files';
 import {PopupComponent} from '../../standard/popup.component';
 import {JbAccount} from '../account/jbAccount';
+import {ChartDialogComponent} from '../chart/chart-dialog.component';
 
 @Component({
     selector: 'jbr-grid-transaction',
@@ -45,6 +46,7 @@ import {JbAccount} from '../account/jbAccount';
         GridDataStatementDate,
         MoneyFiles,
         PopupComponent,
+        ChartDialogComponent,
     ],
     standalone: true
 })
@@ -54,9 +56,11 @@ export class GridTransaction implements OnInit, OnChanges {
                 private readonly _modalService: BsModalService) {}
 
     @ViewChild('templateRecFile') private templateRecFile: TemplateRef<any>;
+    @ViewChild('templateChart') private templateChart: TemplateRef<any>;
     private modalRef: BsModalRef;
     private selectFileEvent = new EventEmitter<IFile>();
     recFileInputs: Record<string, unknown>;
+    chartData: ITransactionReport[] = [];
 
     protected readonly HeaderType = HeaderType;
     protected readonly MoneyFiles = MoneyFiles;
@@ -423,6 +427,11 @@ export class GridTransaction implements OnInit, OnChanges {
 
     openRecFileModal() {
         this.modalRef = this._modalService.show(this.templateRecFile, {class: 'modal-lg'});
+    }
+
+    openChartModal() {
+        this.chartData = this.data ?? [];
+        this.modalRef = this._modalService.show(this.templateChart, {class: 'modal-xl'});
     }
 
     clearRecData() {
