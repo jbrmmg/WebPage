@@ -1,0 +1,85 @@
+<div class="mobile-page">
+    <div class="mobile-header">
+        <a routerLink="/money" class="back-link"><em class="fa fa-chevron-left"></em> Money</a>
+        <span class="mobile-title">Add Transaction</span>
+    </div>
+
+    <div class="mobile-body">
+
+        <!-- Success banner -->
+        <div *ngIf="saveSuccess" class="success-banner">
+            <em class="fa fa-check-circle"></em> Transaction saved.
+        </div>
+
+        <!-- Date -->
+        <div class="field-group">
+            <label class="field-label">Date</label>
+            <input class="form-control mobile-input"
+                   bsDatepicker
+                   [bsValue]="date"
+                   (bsValueChange)="date=$event"
+                   [bsConfig]="{dateInputFormat:'DD-MMM-YYYY', containerClass:'theme-dark-blue', selectFromOtherMonth:true}">
+        </div>
+
+        <!-- Account -->
+        <div class="field-group">
+            <label class="field-label">Account</label>
+            <div class="account-row">
+                <button *ngFor="let acc of allAccounts"
+                        class="account-btn"
+                        [class.account-btn--selected]="accountSelected(acc)"
+                        [style.border-color]="accountBorderColor(acc)"
+                        (click)="selectedAccount = acc; validationError = null">
+                    <img [src]="accountImageUrl(acc)" [alt]="acc.name" width="40" height="40">
+                </button>
+            </div>
+        </div>
+
+        <!-- Amount -->
+        <div class="field-group">
+            <label class="field-label">Amount</label>
+            <div class="amount-row">
+                <input type="number" class="form-control mobile-input amount-input"
+                       [(ngModel)]="amount" placeholder="0.00" min="0" step="0.01">
+                <button [ngClass]="amountTypeClass('DB')" (click)="amountType='DB'">Debit</button>
+                <button [ngClass]="amountTypeClass('CR')" (click)="amountType='CR'">Credit</button>
+            </div>
+        </div>
+
+        <!-- Category -->
+        <div class="field-group">
+            <label class="field-label">
+                Category
+                <span *ngIf="selectedCategory" class="cat-selected-name">▸ {{selectedCategory.name}}</span>
+            </label>
+            <div class="cat-grid">
+                <button *ngFor="let cat of allCategories"
+                        class="cat-chip"
+                        [style.background-color]="catChipBg(cat)"
+                        [style.color]="catChipFg(cat)"
+                        [style.border-color]="catChipBorder(cat)"
+                        (click)="selectedCategory = cat; validationError = null">
+                    {{cat.id}}
+                </button>
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="field-group">
+            <label class="field-label">Description</label>
+            <input type="text" class="form-control mobile-input"
+                   [(ngModel)]="description" placeholder="Transaction description">
+        </div>
+
+        <!-- Validation error -->
+        <div *ngIf="validationError" class="validation-error">
+            <em class="fa fa-exclamation-triangle"></em> {{validationError}}
+        </div>
+
+        <!-- Save -->
+        <button class="btn btn-primary mobile-save-btn" (click)="onSave()" [disabled]="saving">
+            <em class="fa fa-save"></em> {{saving ? 'Saving…' : 'Save'}}
+        </button>
+
+    </div>
+</div>

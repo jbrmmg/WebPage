@@ -1,0 +1,67 @@
+<div class="mobile-page">
+    <div class="mobile-header">
+        <a routerLink="/money" class="back-link"><em class="fa fa-chevron-left"></em> Money</a>
+        <span class="mobile-title">Recent Transactions</span>
+        <button class="btn btn-sm btn-secondary ms-auto refresh-btn"
+                (click)="fetch()" [disabled]="loading">
+            <em class="fa fa-refresh" [class.fa-spin]="loading"></em>
+        </button>
+    </div>
+
+    <div class="mobile-body">
+
+        <!-- Error -->
+        <div *ngIf="error" class="error-banner">
+            <em class="fa fa-exclamation-triangle"></em> {{error}}
+            <button class="btn btn-sm btn-outline-danger ms-2" (click)="fetch()">Retry</button>
+        </div>
+
+        <!-- Initial load spinner -->
+        <div *ngIf="loading && transactions.length === 0" class="state-text">Loading…</div>
+
+        <!-- Empty state -->
+        <div *ngIf="!loading && transactions.length === 0 && !error" class="state-text">
+            No transactions found.
+        </div>
+
+        <!-- Transaction list -->
+        <div class="txn-list" [class.txn-list--loading]="loading">
+            <div *ngFor="let t of transactions" class="txn-card"
+                 [style.border-left-color]="t.account ? '#' + t.account.colour : '#888'">
+                <div class="txn-top">
+                    <span class="txn-date">{{formatDate(t.date)}}</span>
+                    <span class="txn-amount"
+                          [class.amount-cr]="isCredit(t.amount)"
+                          [class.amount-db]="!isCredit(t.amount)">
+                        {{formatAmount(t.amount)}}
+                    </span>
+                </div>
+                <div class="txn-desc">{{t.description}}</div>
+                <div class="txn-bot">
+                    <span class="txn-account">{{t.account?.name}}</span>
+                    <span *ngIf="t.category" class="cat-chip"
+                          [style.background-color]="'#' + t.category.colour"
+                          [style.color]="catTextColor(t.category.colour)">
+                        {{t.category.id}}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Paging -->
+        <div class="paging-bar">
+            <button class="btn btn-secondary paging-btn"
+                    [disabled]="currentPage <= 1 || loading"
+                    (click)="onPrev()">
+                <em class="fa fa-chevron-left"></em> Prev
+            </button>
+            <span class="page-indicator">{{currentPage}} of {{totalPages}}</span>
+            <button class="btn btn-secondary paging-btn"
+                    [disabled]="currentPage >= totalPages || loading"
+                    (click)="onNext()">
+                Next <em class="fa fa-chevron-right"></em>
+            </button>
+        </div>
+
+    </div>
+</div>

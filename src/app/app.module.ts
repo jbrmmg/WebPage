@@ -39,6 +39,8 @@ import {MoneyToolbarComponent} from './money/toolbar/money-toolbar.component';
 import {MoneyFilterComponent} from './money/filter/money-filter.component';
 import {MoneyAddComponent} from './money/add/money-add.component';
 import {MoneyTransferComponent} from './money/transfer/money-transfer.component';
+import {MobileAddComponent} from './money/mobile/mobile-add.component';
+import {MobileRecentComponent} from './money/mobile/mobile-recent.component';
 
 @NgModule({
     declarations: [
@@ -74,6 +76,8 @@ import {MoneyTransferComponent} from './money/transfer/money-transfer.component'
             {path: 'bup', component: BackupListComponent},
             {path: 'weight', component: WeightComponent},
             {path: 'wifi', component: WifiComponent},
+            {path: 'money-add', component: MobileAddComponent},
+            {path: 'money-recent', component: MobileRecentComponent},
             {path: '', redirectTo: 'welcome', pathMatch: 'full'},
             {path: '**', redirectTo: 'welcome', pathMatch: 'full'}
         ]),
@@ -92,7 +96,9 @@ import {MoneyTransferComponent} from './money/transfer/money-transfer.component'
         MoneyToolbarComponent,
         MoneyFilterComponent,
         MoneyAddComponent,
-        MoneyTransferComponent
+        MoneyTransferComponent,
+        MobileAddComponent,
+        MobileRecentComponent
     ],
     providers: [DatePipe],
     bootstrap: [AppComponent]
