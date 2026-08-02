@@ -1,0 +1,4 @@
+[
+  { "id": "monthly", "name": "Monthly Summary" },
+  { "id": "annual", "name": "Annual Summary" }
+]

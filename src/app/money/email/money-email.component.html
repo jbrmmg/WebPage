@@ -1,0 +1,98 @@
+<div class="email-overlay">
+    <div class="email-panel">
+
+        <!-- Header -->
+        <div class="email-header">
+            <img src="assets/images/logo.svg" class="email-logo" alt="JBR" width="24" height="24">
+            <span class="email-title">Email Report</span>
+            <button class="btn btn-sm btn-secondary" (click)="onClose()"><em class="fa fa-times"></em></button>
+        </div>
+
+        <div class="email-body">
+
+            <!-- Success -->
+            <div *ngIf="sent" class="email-section">
+                <div class="sent-message">
+                    <em class="fa fa-check-circle"></em> Report sent successfully.
+                </div>
+                <div class="email-actions">
+                    <button class="btn btn-outline-secondary action-btn ms-auto" (click)="onClose()">
+                        <em class="fa fa-times"></em> Close
+                    </button>
+                </div>
+            </div>
+
+            <ng-container *ngIf="!sent">
+
+                <!-- Type -->
+                <div class="email-section">
+                    <div class="section-label">Type</div>
+                    <div class="type-group">
+                        <button class="btn btn-sm type-btn"
+                                [style.background-color]="selectedType === 'monthly' ? '#3a5f8a' : '#1a1a2e'"
+                                [style.border-color]="selectedType === 'monthly' ? '#a0d4f5' : '#555'"
+                                [style.color]="selectedType === 'monthly' ? '#ffffff' : '#aaaaaa'"
+                                (click)="selectedType = 'monthly'; onTypeChange()">
+                            Monthly
+                        </button>
+                        <button class="btn btn-sm type-btn"
+                                [style.background-color]="selectedType === 'annual' ? '#3a5f8a' : '#1a1a2e'"
+                                [style.border-color]="selectedType === 'annual' ? '#a0d4f5' : '#555'"
+                                [style.color]="selectedType === 'annual' ? '#ffffff' : '#aaaaaa'"
+                                (click)="selectedType = 'annual'; onTypeChange()">
+                            Annual
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Year -->
+                <div class="email-section">
+                    <div class="section-label">Year</div>
+                    <select class="form-select form-select-sm year-select"
+                            [(ngModel)]="selectedYear" (change)="onYearChange()">
+                        <option *ngFor="let y of availableYears" [ngValue]="y">{{y}}</option>
+                    </select>
+                </div>
+
+                <!-- Month (monthly only) -->
+                <div class="email-section" *ngIf="selectedType === 'monthly'">
+                    <div class="section-label">Month</div>
+                    <div class="month-grid">
+                        <button *ngFor="let m of allMonths"
+                                class="btn btn-sm month-btn"
+                                [disabled]="!monthAvailable(m)"
+                                [style.background-color]="selectedMonth === m ? '#3a5f8a' : '#1a1a2e'"
+                                [style.border-color]="selectedMonth === m ? '#a0d4f5' : (monthAvailable(m) ? '#555' : '#333')"
+                                [style.color]="selectedMonth === m ? '#ffffff' : (monthAvailable(m) ? '#aaaaaa' : '#444')"
+                                (click)="selectedMonth = m; validationError = null">
+                            {{monthName(m)}}
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Email address -->
+                <div class="email-section">
+                    <div class="section-label">Email address</div>
+                    <input type="email" class="form-control" [(ngModel)]="email" placeholder="you@example.com">
+                </div>
+
+                <!-- Validation error -->
+                <div *ngIf="validationError" class="validation-error">
+                    <em class="fa fa-exclamation-triangle"></em> {{validationError}}
+                </div>
+
+                <!-- Actions -->
+                <div class="email-actions">
+                    <button class="btn btn-success action-btn" (click)="onSend()" [disabled]="sending">
+                        <em class="fa fa-envelope"></em> Send
+                    </button>
+                    <button class="btn btn-outline-secondary action-btn ms-auto" (click)="onClose()" [disabled]="sending">
+                        <em class="fa fa-times"></em> Close
+                    </button>
+                </div>
+
+            </ng-container>
+
+        </div>
+    </div>
+</div>

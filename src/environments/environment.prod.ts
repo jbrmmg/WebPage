@@ -24,6 +24,8 @@ export const environment = {
   moneyAccountDisabledImage: "money/account/logo?disabled=true&id=##id##",
   moneyFileUpdates: "money/reconciliation/file-updates",
   moneyVersion: 'money/version',
+  moneyEmailReportsUrl: 'money/email/reports',
+  moneyEmailUrl: 'money/email',
 
   // Backup URLs
   backupGetPreImportFiles: "backup/import/files",

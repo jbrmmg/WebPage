@@ -372,4 +372,22 @@ export class MoneyService {
     getAccountImage(id: string): string {
         return MoneyService.getAccountImage(id);
     }
+
+    getEmailReports(): Observable<IEmailReport[]> {
+        return this.http.get<IEmailReport[]>(environment.moneyEmailReportsUrl).pipe(
+            tap(data => console.log('📡 Response:', JSON.stringify(data))),
+            catchError(err => MoneyService.handleError(err))
+        );
+    }
+
+    sendEmail(report: IEmailReport, email: string): Observable<void> {
+        return this.http.post<void>(environment.moneyEmailUrl, { ...report, to: email });
+    }
+}
+
+export interface IEmailReport {
+    type: string;
+    year: number;
+    month: number | null;
+    to: string | null;
 }

@@ -39,6 +39,7 @@ import {MoneyToolbarComponent} from './money/toolbar/money-toolbar.component';
 import {MoneyFilterComponent} from './money/filter/money-filter.component';
 import {MoneyAddComponent} from './money/add/money-add.component';
 import {MoneyTransferComponent} from './money/transfer/money-transfer.component';
+import {MoneyEmailComponent} from './money/email/money-email.component';
 import {MobileAddComponent} from './money/mobile/mobile-add.component';
 import {MobileRecentComponent} from './money/mobile/mobile-recent.component';
 
@@ -97,6 +98,7 @@ import {MobileRecentComponent} from './money/mobile/mobile-recent.component';
         MoneyFilterComponent,
         MoneyAddComponent,
         MoneyTransferComponent,
+        MoneyEmailComponent,
         MobileAddComponent,
         MobileRecentComponent
     ],

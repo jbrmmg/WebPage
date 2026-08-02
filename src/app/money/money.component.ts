@@ -14,6 +14,7 @@ export class MoneyComponent {
     showFilter = false;
     showAdd = false;
     showTransfer = false;
+    showEmail = false;
     hasChanges = false;
     showChangesOnly = false;
     filter: TransactionFilter = MoneyComponent.defaultFilter();
