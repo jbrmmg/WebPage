@@ -234,7 +234,7 @@ Implementation is split into stages so each can be reviewed before the next begi
 - Thumbnail grid (150×100px fixed) for image/video directories; table list retained for non-image files
 - Card-style tiles for top-level (Documents / Photo) entry points
 
-#### Stage 6 — Import tab
+#### Stage 6 — Import tab ✅ Complete
 **Files:** `import-grid.html/.css`, header components
 
 - Visual dividers between control bar, preview panel, and file grid

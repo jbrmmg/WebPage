@@ -1,16 +1,33 @@
-<jbr-import-grid-summary
-    [summary]="summary"
-    [status]="status"
-    (refreshEvent)="refresh($event)"
-    (removeConfirmedImportsEvent)="removeConfirmedImports()"
-    (removeIgnoredEvent)="removeIgnored()"
-    (removeActivePhotosEvent)="removeActivePhoto()"
-    (filterChangeEvent)="filterChange($event)"
-    (importPhotosEvent)="importPhotos()"></jbr-import-grid-summary>
-<import-selected #selected (actionEvent)="action($event,confirmTemplate)"></import-selected>
+<div class="section-panel">
+    <jbr-import-grid-summary
+        [summary]="summary"
+        [status]="status"
+        (refreshEvent)="refresh($event)"
+        (removeConfirmedImportsEvent)="removeConfirmedImports()"
+        (removeIgnoredEvent)="removeIgnored()"
+        (removeActivePhotosEvent)="removeActivePhoto()"
+        (filterChangeEvent)="filterChange($event)"
+        (importPhotosEvent)="importPhotos()"></jbr-import-grid-summary>
+</div>
+
+<div class="section-divider"></div>
+
+<div class="section-panel section-preview">
+    <import-selected #selected (actionEvent)="action($event,confirmTemplate)"></import-selected>
+</div>
+
+<div class="section-divider"></div>
+
 <div class="row file-table">
     <table>
         <thead>
+            <tr class="group-header-row">
+                <th></th>
+                <th colspan="4" class="gh-source">Source</th>
+                <th colspan="4" class="gh-import">Import</th>
+                <th class="gh-neutral">Steps</th>
+                <th class="gh-neutral">Destination</th>
+            </tr>
             <tr>
                 <th>
                     <jbr-import-grid-header-expand></jbr-import-grid-header-expand>

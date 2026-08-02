@@ -1,5 +1,48 @@
 @import "../../standard/standard-table.css";
 
+/* ── Section panels ── */
+.section-panel {
+    padding: 10px 0 8px 0;
+}
+
+.section-preview {
+    padding: 6px 0;
+}
+
+.section-divider {
+    border-top: 1px solid #2d3a5a;
+    margin: 4px 0;
+}
+
+/* ── Group header row (Source / Import) ── */
+.group-header-row th {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    padding: 4px 6px;
+    border-bottom: 2px solid transparent;
+}
+
+.gh-source {
+    background: #1a2a3a;
+    color: #60a5fa;
+    border-bottom-color: #60a5fa !important;
+    text-align: center;
+}
+
+.gh-import {
+    background: #1a2a1a;
+    color: #4caf50;
+    border-bottom-color: #4caf50 !important;
+    text-align: center;
+}
+
+.gh-neutral {
+    color: #7a8fb0;
+    text-align: center;
+}
+
 .file-table {
     margin: 0;
     padding: 0;
