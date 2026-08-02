@@ -20,35 +20,40 @@
                 <th>
                     <jbr-summary-grid-head-largest></jbr-summary-grid-head-largest>
                 </th>
-                <th>
+                <th *ngIf="hasAnyDestination()">
                     <jbr-summary-grid-head-destination></jbr-summary-grid-head-destination>
                 </th>
             </tr>
         </thead>
-        <tbody *ngIf="summary && summary.sources.length">
-            <tr *ngFor="let source of summary.sources">
-                <td>
-                    <jbr-summary-grid-data-status [source]="source" [summary]="summary"></jbr-summary-grid-data-status>
-                </td>
-                <td>
-                    <jbr-summary-grid-data-path [source]="source" [summary]="summary"></jbr-summary-grid-data-path>
-                </td>
-                <td>
-                    <jbr-summary-grid-data-location [source]="source" [summary]="summary"></jbr-summary-grid-data-location>
-                </td>
-                <td>
-                    <jbr-summary-grid-data-files [source]="source" [summary]="summary"></jbr-summary-grid-data-files>
-                </td>
-                <td>
-                    <jbr-summary-grid-data-directories [source]="source" [summary]="summary"></jbr-summary-grid-data-directories>
-                </td>
-                <td>
-                    <jbr-summary-grid-data-largest [source]="source" [summary]="summary"></jbr-summary-grid-data-largest>
-                </td>
-                <td>
-                    <jbr-summary-grid-data-destination [source]="source" [summary]="summary"></jbr-summary-grid-data-destination>
-                </td>
-            </tr>
+        <tbody *ngIf="groups && groups.length">
+            <ng-container *ngFor="let group of groups">
+                <tr class="group-header-row">
+                    <td colspan="7">{{group.label}}</td>
+                </tr>
+                <tr *ngFor="let source of group.sources">
+                    <td>
+                        <jbr-summary-grid-data-status [source]="source" [summary]="summary"></jbr-summary-grid-data-status>
+                    </td>
+                    <td>
+                        <jbr-summary-grid-data-path [source]="source" [summary]="summary"></jbr-summary-grid-data-path>
+                    </td>
+                    <td>
+                        <jbr-summary-grid-data-location [source]="source" [summary]="summary"></jbr-summary-grid-data-location>
+                    </td>
+                    <td>
+                        <jbr-summary-grid-data-files [source]="source" [summary]="summary"></jbr-summary-grid-data-files>
+                    </td>
+                    <td>
+                        <jbr-summary-grid-data-directories [source]="source" [summary]="summary"></jbr-summary-grid-data-directories>
+                    </td>
+                    <td>
+                        <jbr-summary-grid-data-largest [source]="source" [summary]="summary"></jbr-summary-grid-data-largest>
+                    </td>
+                    <td *ngIf="hasAnyDestination()">
+                        <jbr-summary-grid-data-destination [source]="source" [summary]="summary"></jbr-summary-grid-data-destination>
+                    </td>
+                </tr>
+            </ng-container>
         </tbody>
     </table>
 </div>

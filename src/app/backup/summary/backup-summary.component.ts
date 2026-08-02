@@ -8,29 +8,31 @@ import {BackupSummaryService} from './backup-summary-service';
     templateUrl: './backup-summary.component.html',
     styleUrls: ['./backup-summary.component.css']
 })
-export class BackupSummaryComponent implements OnInit  {
+export class BackupSummaryComponent implements OnInit {
     public summary: BackupSummary;
 
     constructor(private readonly _backupSummaryService: BackupSummaryService,
                 private datePipe: DatePipe) {
-        // Set up a blank summary before its initialised from the server.
         this.summary = new BackupSummary();
         this.summary.valid = false;
         this.summary.sources = [];
     }
 
     ngOnInit(): void {
+        this.loadSummary();
+    }
+
+    refresh(): void {
+        this.summary = new BackupSummary();
+        this.summary.valid = false;
+        this.summary.sources = [];
+        this.loadSummary();
+    }
+
+    private loadSummary(): void {
         this._backupSummaryService.getSummary().subscribe({
-            next: val => {
-                this.summary = val;
-            },
-            error: err => {
-                // Error
-                console.error('❌', err);
-            },
-            complete: () => {
-                // Finished
-            }
+            next: val => { this.summary = val; },
+            error: err => { console.error('❌', err); }
         });
     }
 
@@ -38,7 +40,6 @@ export class BackupSummaryComponent implements OnInit  {
         if (this.summary.valid) {
             return this.datePipe.transform(this.summary.validAt, 'dd MMMM yyyy HH:mm:ss') + ' (' + this.summary.version + ')';
         }
-
         return '';
     }
 }

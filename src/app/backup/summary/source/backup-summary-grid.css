@@ -31,3 +31,15 @@ table td:nth-child(4) { width: 8%; }
 table td:nth-child(5) { width: 8%; }
 table td:nth-child(6) { width: 8%; }
 table td:nth-child(7) { width: 30%; }
+
+.group-header-row td {
+    background: #1e2545;
+    color: #a0d4f5;
+    font-weight: bold;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 6px 8px;
+    border-top: 2px solid #3a4a6a;
+    border-bottom: none;
+}

@@ -15,10 +15,12 @@ export abstract class SummaryGridData {
     abstract getText(): string;
 
     statusClass() {
-        if (this.source && this.source.status && this.source.status === 'OK') {
-            return 'ok';
+        switch (this.source?.status) {
+            case 'OK':        return 'ok';
+            case 'GATHERING': return 'gathering';
+            case 'SUSPENDED': return 'suspended';
+            case 'ERROR':     return 'bad';
+            default:          return 'bad';
         }
-
-        return 'bad';
     }
 }

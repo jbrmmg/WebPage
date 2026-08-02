@@ -1,2 +1,7 @@
-<div class="file-count {{statusClass()}}" *ngIf="hasValue()">{{getFiles() | number}}</div>
+<div class="file-count {{statusClass()}}" *ngIf="hasValue()">
+    {{getFiles() | number}}
+    <em class="fa fa-check sync-ok" *ngIf="isSyncOk()" title="All destinations match"></em>
+    <em class="fa fa-exclamation-triangle sync-warn" *ngIf="isSyncMismatch()" title="File counts differ across destinations"></em>
+    <em class="fa fa-exclamation-circle import-active" *ngIf="isImportActive()" title="Files present in import directory"></em>
+</div>
 <div class="file-count {{statusClass()}}" *ngIf="!hasValue()">&nbsp;</div>

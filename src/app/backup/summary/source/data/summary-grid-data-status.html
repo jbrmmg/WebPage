@@ -1,1 +1,13 @@
-<div class="status {{statusClass()}}">{{getText()}}</div>
+<div class="status {{statusClass()}}">
+    <ng-container *ngIf="source?.status === 'GATHERING'">
+        <em class="fa fa-spinner fa-spin"></em> In progress
+    </ng-container>
+    <ng-container *ngIf="source?.status === 'SUSPENDED'">
+        <em class="fa fa-pause-circle"></em> Suspended
+    </ng-container>
+    <ng-container *ngIf="source?.status === 'ERROR'">
+        <em class="fa fa-times-circle"></em> Error
+    </ng-container>
+    <ng-container *ngIf="source?.status === 'OK'">OK</ng-container>
+    <ng-container *ngIf="!source?.status">Unknown</ng-container>
+</div>

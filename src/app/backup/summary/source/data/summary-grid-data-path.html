@@ -1,1 +1,4 @@
-<div class="path {{statusClass()}}">{{getText()}}</div>
+<div class="path {{statusClass()}}">
+    {{getText()}}
+    <span class="primary-badge" *ngIf="source?.primary">Source</span>
+</div>

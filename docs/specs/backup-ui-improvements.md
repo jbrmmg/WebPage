@@ -204,7 +204,7 @@ Implementation is split into stages so each can be reviewed before the next begi
 - Inactive tabs muted rather than all-green
 - Actions tab shows a badge count fetched lazily from the actions service on init
 
-#### Stage 2 — Summary tab
+#### Stage 2 — Summary tab ✅ Complete
 **Files:** `backup-summary.component.html/.css`, `backup-summary-grid.html`, status/path data cell components
 
 - Group rows by path type with a visual section separator

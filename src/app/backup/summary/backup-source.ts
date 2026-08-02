@@ -7,6 +7,7 @@ export class BackupSource {
     status: string;
     filter: string;
     type: string;
+    primary: boolean;
     destinationId: number;
     directoryCount: number;
     fileCount: number;
