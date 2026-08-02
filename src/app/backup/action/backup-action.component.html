@@ -1,35 +1,62 @@
 <ng-container *ngIf="!isMediaSelected()">
-    <div class="row action-table">
-        <table>
-            <thead>
-                <tr>
-                    <th>
-                        <jbr-action-header-name></jbr-action-header-name>
-                    </th>
-                    <th>
-                        <jbr-action-header-media></jbr-action-header-media>
-                    </th>
-                    <th>
-                        <jbr-action-header-confirm></jbr-action-header-confirm>
-                    </th>
-                </tr>
-            </thead>
-            <tbody *ngIf="actions && actions.length">
-                <tr *ngFor="let action of actions">
-                    <td>
-                        <jbr-action-data-name [action]="action" (fileSelected)="selectMedia($event)"></jbr-action-data-name>
-                    </td>
-                    <td>
-                        <jbr-action-data-media [action]="action" (fileSelected)="selectMedia($event)"></jbr-action-data-media>
-                    </td>
-                    <td>
-                        <jbr-action-data-confirm [action]="action" (confirm)="confirm($event)"></jbr-action-data-confirm>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+
+    <!-- Empty state -->
+    <div class="empty-state" *ngIf="!actions?.length">
+        <em class="fa fa-check-circle empty-icon"></em>
+        <p class="empty-title">No pending actions</p>
+        <p class="empty-subtitle">Everything is up to date.</p>
     </div>
+
+    <ng-container *ngIf="actions?.length">
+
+        <!-- Confirm all bar -->
+        <div class="confirm-all-bar" *ngIf="!confirmAllPending">
+            <button class="btn btn-sm btn-warning confirm-all-btn" (click)="requestConfirmAll()">
+                <em class="fa fa-check-square-o"></em> Confirm all ({{actions.length}})
+            </button>
+        </div>
+        <div class="confirm-all-pending" *ngIf="confirmAllPending">
+            <em class="fa fa-exclamation-triangle warn-icon"></em>
+            <span class="warn-text">Confirm all {{actions.length}} actions? This cannot be undone.</span>
+            <button class="btn btn-sm btn-danger" (click)="confirmAll()">Yes, confirm all</button>
+            <button class="btn btn-sm btn-secondary" (click)="cancelConfirmAll()">Cancel</button>
+        </div>
+
+        <!-- Action table -->
+        <div class="row action-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            <jbr-action-header-name></jbr-action-header-name>
+                        </th>
+                        <th>
+                            <jbr-action-header-media></jbr-action-header-media>
+                        </th>
+                        <th>
+                            <jbr-action-header-confirm></jbr-action-header-confirm>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let action of actions">
+                        <td>
+                            <jbr-action-data-name [action]="action" (fileSelected)="selectMedia($event)"></jbr-action-data-name>
+                        </td>
+                        <td>
+                            <jbr-action-data-media [action]="action" (fileSelected)="selectMedia($event)"></jbr-action-data-media>
+                        </td>
+                        <td>
+                            <jbr-action-data-confirm [action]="action" (confirm)="confirm($event)"></jbr-action-data-confirm>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </ng-container>
 </ng-container>
+
 <ng-container *ngIf="isMediaSelected()">
     <button class="btn btn-primary btn-directory"
            (click)="backToActions()">
@@ -37,7 +64,7 @@
     </button>
     <div class="media-view">
         <div *ngIf="isImageSelected()">
-            <img ngSrc="backup/files/image?id={{getSelectedFileId()}}" alt="backup file"/>
+            <img ngSrc="backup/files/image?id={{getSelectedFileId()}}" height="400" width="600" alt="backup file"/>
         </div>
         <div *ngIf="isVideoSelected()">
             <video src="backup/files/video?id={{getSelectedFileId()}}" controls>

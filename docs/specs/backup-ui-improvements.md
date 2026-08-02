@@ -213,7 +213,7 @@ Implementation is split into stages so each can be reviewed before the next begi
 - Refresh button in the summary header
 - Conditionally hide the Destination column when all values are empty
 
-#### Stage 3 — Actions tab
+#### Stage 3 — Actions tab ✅ Complete
 **Files:** `backup-action.component.html/.css/.ts`
 
 - Empty state message when no actions are pending

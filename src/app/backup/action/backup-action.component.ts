@@ -22,91 +22,59 @@ import {ActionGridDataMedia} from './data/action-grid-data-media';
         ActionGridDataConfirm,
         ActionGridHeaderMedia,
         ActionGridDataMedia,
-        ActionGridHeaderName,
         NgOptimizedImage
     ],
     standalone: true
 })
-export class BackupActionComponent implements OnInit  {
-    actions: Action[];
-    selected: Action;
+export class BackupActionComponent implements OnInit {
+    actions: Action[] = [];
+    selected: Action = null;
+    confirmAllPending = false;
 
-    constructor(private readonly _backupActionService: BackupActionService) {
-    }
+    constructor(private readonly _backupActionService: BackupActionService) {}
 
     ngOnInit(): void {
-        console.log('📋 Get Actions.');
-        this.actions = [];
-
         this.refreshActions();
     }
 
-    refreshActions() {
+    refreshActions(): void {
         this.selected = null;
+        this.confirmAllPending = false;
         this._backupActionService.getActions().subscribe({
             next: actions => {
-                this.actions = [];
-
-                actions.forEach(nextAction => {
-                    if (nextAction.action !== 'IMPORT') {
-                        this.actions.push(nextAction);
-                    }
-                });
+                this.actions = actions.filter(a => a.action !== 'IMPORT');
             },
-            error: err => {
-                console.error('❌ Failed to get actions:', err);
-            },
-            complete: () => {
-                console.log('✅ Load Actions Complete');
-            }
+            error: err => { console.error('❌ Failed to get actions:', err); },
+            complete: () => { console.log('✅ Load Actions Complete'); }
         });
     }
 
-    confirm(action: Action) {
+    confirm(action: Action): void {
         this._backupActionService.confirmRequest(action.id);
-
-        // Remove the action from the list
         this.actions.splice(this.actions.indexOf(action), 1);
     }
 
-    selectMedia(id: number) {
-        this.selected = null;
-        this.actions.forEach(a => {
-            if (a.fileId === id) {
-                this.selected = a;
-            }
-        });
+    requestConfirmAll(): void {
+        this.confirmAllPending = true;
     }
 
-    isMediaSelected(): boolean {
-        return this.selected !== null;
+    cancelConfirmAll(): void {
+        this.confirmAllPending = false;
     }
 
-    backToActions() {
-        this.selected = null;
+    confirmAll(): void {
+        this.confirmAllPending = false;
+        [...this.actions].forEach(a => this._backupActionService.confirmRequest(a.id));
+        this.actions = [];
     }
 
-    isImageSelected() {
-        if (this.selected) {
-            return this.selected.isImage;
-        }
-
-        return false;
+    selectMedia(id: number): void {
+        this.selected = this.actions.find(a => a.fileId === id) ?? null;
     }
 
-    isVideoSelected() {
-        if (this.selected) {
-            return this.selected.isVideo;
-        }
-
-        return false;
-    }
-
-    getSelectedFileId() {
-        if (this.selected) {
-            return this.selected.fileId;
-        }
-
-        return 0;
-    }
+    isMediaSelected(): boolean { return this.selected !== null; }
+    backToActions(): void { this.selected = null; }
+    isImageSelected(): boolean { return this.selected?.isImage ?? false; }
+    isVideoSelected(): boolean { return this.selected?.isVideo ?? false; }
+    getSelectedFileId(): number { return this.selected?.fileId ?? 0; }
 }

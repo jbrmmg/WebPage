@@ -1,4 +1,4 @@
 <div (click)="selectMedia()" (keydown.enter)="selectMedia()">
     <div class="name">{{getText()}}</div>
-    <div class="action">{{getActionName()}}</div>
+    <span class="action-badge {{getActionBadgeClass()}}">{{getActionName()}}</span>
 </div>
