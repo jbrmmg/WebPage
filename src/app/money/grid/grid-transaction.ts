@@ -66,12 +66,14 @@ export class GridTransaction implements OnInit, OnChanges {
     protected readonly MoneyFiles = MoneyFiles;
     @Input() filter: TransactionFilter;
     @Input() showChangesOnly = false;
+    @Input() newestFirst = false;
     @Output() filterChange = new EventEmitter<TransactionFilter>();
     data: ITransactionReport[] = null;
 
     get visibleData(): ITransactionReport[] {
         if (!this.data) { return []; }
-        return this.showChangesOnly ? this.data.filter(t => t.modified) : this.data;
+        const rows = this.showChangesOnly ? this.data.filter(t => t.modified) : this.data;
+        return this.newestFirst ? [...rows].reverse() : rows;
     }
     status = 'ready';
     version = '';

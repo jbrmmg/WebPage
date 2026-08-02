@@ -17,6 +17,7 @@ export class MoneyComponent {
     showEmail = false;
     hasChanges = false;
     showChangesOnly = false;
+    newestFirst = false;
     filter: TransactionFilter = MoneyComponent.defaultFilter();
     totalCount = 0;
     totalPages = 1;

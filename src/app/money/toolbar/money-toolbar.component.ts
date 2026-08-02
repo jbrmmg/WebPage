@@ -32,6 +32,8 @@ export class MoneyToolbarComponent {
     @Output() emailClick = new EventEmitter<void>();
     @Input() showChangesOnly = false;
     @Output() showChangesOnlyChange = new EventEmitter<boolean>();
+    @Input() newestFirst = false;
+    @Output() newestFirstChange = new EventEmitter<boolean>();
 
     pageSizes = [25, 50, 100, 200, 300];
 
@@ -40,6 +42,7 @@ export class MoneyToolbarComponent {
     onTransfer() { this.transferClick.emit(); }
     onSave() { this.saveClick.emit(); }
     onToggleChanges() { this.showChangesOnlyChange.emit(!this.showChangesOnly); }
+    onToggleNewestFirst() { this.newestFirstChange.emit(!this.newestFirst); }
     onExport() { this.exportClick.emit(); }
     onChart() { this.chartClick.emit(); }
     onEmail() { this.emailClick.emit(); }

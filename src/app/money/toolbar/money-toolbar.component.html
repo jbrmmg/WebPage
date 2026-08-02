@@ -22,6 +22,11 @@
             <em class="fa fa-pencil"></em>
             <span class="btn-label">Changes</span>
         </button>
+        <button [class]="newestFirst ? 'btn btn-info toolbar-btn' : 'btn btn-secondary toolbar-btn'"
+                title="Toggle sort order (oldest first / newest first)" (click)="onToggleNewestFirst()">
+            <em class="fa fa-sort"></em>
+            <span class="btn-label">Newest</span>
+        </button>
         <button class="btn btn-secondary toolbar-btn" title="Export transactions" (click)="onExport()">
             <em class="fa fa-download"></em>
             <span class="btn-label">Export</span>
