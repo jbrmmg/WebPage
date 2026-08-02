@@ -1,67 +1,68 @@
-<div class="card">
-    <div class="card-body">
-        <div class="row">
-            <button class="btn btn-primary btn-mode col-1"
-                   aria-controls="summary"
-                   (click)="selectSummaryMode()"
-                   [attr.aria-expanded]="isSummaryMode">
-                <em class="fa fa-hdd-o"></em>
-            </button>
-            <button class="btn btn-primary btn-mode col-1"
-                   aria-controls="files"
-                   (click)="selectFileMode()"
-                   [attr.aria-expanded]="isFileMode">
-                <em class="fa fa-save"></em>
-            </button>
-            <button class="btn btn-primary btn-mode col-1"
-                   aria-controls="actions"
-                   (click)="selectActionMode()"
-                   [attr.aria-expanded]="isActionMode">
-                <em class="fa fa-exclamation-circle"></em>
-            </button>
-            <button class="btn btn-primary btn-mode col-1"
-                   aria-controls="actions"
-                   (click)="selectImportMode()"
-                   [attr.aria-expanded]="isImportMode">
-                <em class="fa fa-level-down"></em>
-            </button>
-            <button class="btn btn-primary btn-mode col-1"
-                   aria-controls="logs"
-                   (click)="selectLogMode()"
-                   [attr.aria-expanded]="isLogMode">
-                <em class="fa fa-bars"></em>
-            </button>
-            <button class="btn btn-primary btn-mode col-1"
-                   aria-controls="prints"
-                   (click)="selectPrintsMode()"
-                   [attr.aria-expanded]="isPrintsMode">
-                <em class="fa fa-print"></em>
-            </button>
-        </div>
+<nav class="tab-bar">
+    <button class="tab-btn"
+            [class.active]="isSummaryMode"
+            (click)="selectSummaryMode()"
+            title="Summary">
+        <em class="fa fa-hdd-o"></em>
+        <span class="tab-label">Summary</span>
+    </button>
+    <button class="tab-btn"
+            [class.active]="isFileMode"
+            (click)="selectFileMode()"
+            title="Files">
+        <em class="fa fa-folder-open"></em>
+        <span class="tab-label">Files</span>
+    </button>
+    <button class="tab-btn"
+            [class.active]="isActionMode"
+            (click)="selectActionMode()"
+            title="Actions">
+        <em class="fa fa-exclamation-circle"></em>
+        <span class="tab-label">Actions</span>
+        <span class="tab-badge" *ngIf="actionCount > 0">{{actionCount}}</span>
+    </button>
+    <button class="tab-btn"
+            [class.active]="isImportMode"
+            (click)="selectImportMode()"
+            title="Import">
+        <em class="fa fa-level-down"></em>
+        <span class="tab-label">Import</span>
+    </button>
+    <button class="tab-btn"
+            [class.active]="isLogMode"
+            (click)="selectLogMode()"
+            title="Logs">
+        <em class="fa fa-file-text"></em>
+        <span class="tab-label">Logs</span>
+    </button>
+    <button class="tab-btn"
+            [class.active]="isPrintsMode"
+            (click)="selectPrintsMode()"
+            title="Prints">
+        <em class="fa fa-print"></em>
+        <span class="tab-label">Prints</span>
+    </button>
+</nav>
+<div class="tab-content">
+    <div id="summary" [collapse]="!isSummaryMode">
+        <jbr-backup-summary></jbr-backup-summary>
     </div>
-</div>
-<div class="card">
-    <div class="card-body">
-        <div id ="summary" [collapse]="!isSummaryMode">
-            <jbr-backup-summary></jbr-backup-summary>
-        </div>
-        <div id="files" [collapse]="!isFileMode">
-            <jbr-backup-display (selectPhoto)="selectPhotoMode()"></jbr-backup-display>
-        </div>
-        <div id="actions" [collapse]="!isActionMode">
-            <jbr-backup-action></jbr-backup-action>
-        </div>
-        <div id="import" [collapse]="!isImportMode">
-            <jbr-import-grid></jbr-import-grid>
-        </div>
-        <div id="logs" [collapse]="!isLogMode">
-            <jbr-backup-log></jbr-backup-log>
-        </div>
-        <div id="photo" [collapse]="!isPhotoMode">
-            <jbr-backup-photo (exit)="selectFileMode()"></jbr-backup-photo>
-        </div>
-        <div id="prints" [collapse]="!isPrintsMode">
-            <jbr-backup-prints></jbr-backup-prints>
-        </div>
+    <div id="files" [collapse]="!isFileMode">
+        <jbr-backup-display (selectPhoto)="selectPhotoMode()"></jbr-backup-display>
+    </div>
+    <div id="actions" [collapse]="!isActionMode">
+        <jbr-backup-action></jbr-backup-action>
+    </div>
+    <div id="import" [collapse]="!isImportMode">
+        <jbr-import-grid></jbr-import-grid>
+    </div>
+    <div id="logs" [collapse]="!isLogMode">
+        <jbr-backup-log></jbr-backup-log>
+    </div>
+    <div id="photo" [collapse]="!isPhotoMode">
+        <jbr-backup-photo (exit)="selectFileMode()"></jbr-backup-photo>
+    </div>
+    <div id="prints" [collapse]="!isPrintsMode">
+        <jbr-backup-prints></jbr-backup-prints>
     </div>
 </div>
