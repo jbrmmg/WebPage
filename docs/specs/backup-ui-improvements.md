@@ -196,7 +196,7 @@ The goal is to make the backup UI more professional in appearance and easier to 
 
 Implementation is split into stages so each can be reviewed before the next begins. Each stage is self-contained within one component subtree.
 
-#### Stage 1 — Navigation bar
+#### Stage 1 — Navigation bar ✅ Complete
 **Files:** `backup-list.component.html`, `backup-list.component.css`, `backup-list.component.ts`
 
 - Replace icon-only button row with a proper tab bar with icon + text label per tab
