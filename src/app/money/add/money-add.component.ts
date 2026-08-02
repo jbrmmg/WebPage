@@ -125,13 +125,18 @@ export class MoneyAddComponent implements OnInit {
         };
     }
 
+    adjustDate(days: number): void {
+        const d = new Date(this.date);
+        d.setDate(d.getDate() + days);
+        this.date = d;
+    }
+
     private resetForm(): void {
-        this.date = new Date();
         this.description = '';
         this.amount = null;
         this.amountType = 'DB';
         this.validationError = null;
-        // Keep account and category for convenience when adding multiple transactions
+        // Keep date, account and category for convenience when adding multiple transactions
     }
 
     private toTransaction(p: PendingTransaction): Transaction {

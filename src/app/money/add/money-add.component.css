@@ -82,6 +82,20 @@
     border-style: solid;
 }
 
+.date-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.date-adj-btn {
+    flex-shrink: 0;
+    width: 30px;
+    padding: 3px 0;
+    font-size: 1rem;
+    line-height: 1;
+}
+
 .add-date-input {
     width: 180px;
     background-color: #1a1a2e;

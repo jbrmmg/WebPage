@@ -94,8 +94,13 @@ export class MobileAddComponent implements OnInit {
         return t;
     }
 
+    adjustDate(days: number): void {
+        const d = new Date(this.date);
+        d.setDate(d.getDate() + days);
+        this.date = d;
+    }
+
     private resetForm(): void {
-        this.date = new Date();
         this.description = '';
         this.amount = null;
         this.amountType = 'DB';

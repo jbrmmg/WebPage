@@ -14,11 +14,15 @@
         <!-- Date -->
         <div class="field-group">
             <label class="field-label">Date</label>
-            <input class="form-control mobile-input"
-                   bsDatepicker
-                   [bsValue]="date"
-                   (bsValueChange)="date=$event"
-                   [bsConfig]="{dateInputFormat:'DD-MMM-YYYY', containerClass:'theme-dark-blue', selectFromOtherMonth:true}">
+            <div class="date-row">
+                <button class="btn btn-outline-secondary date-adj-btn" type="button" (click)="adjustDate(-1)">−</button>
+                <input class="form-control mobile-input date-input"
+                       bsDatepicker
+                       [bsValue]="date"
+                       (bsValueChange)="date=$event"
+                       [bsConfig]="{dateInputFormat:'DD-MMM-YYYY', containerClass:'theme-dark-blue', selectFromOtherMonth:true}">
+                <button class="btn btn-outline-secondary date-adj-btn" type="button" (click)="adjustDate(1)">+</button>
+            </div>
         </div>
 
         <!-- Account -->

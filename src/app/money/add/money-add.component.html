@@ -13,11 +13,15 @@
             <!-- Date -->
             <div class="add-section">
                 <div class="section-label">Date</div>
-                <input class="form-control add-date-input"
-                       bsDatepicker
-                       [bsValue]="date"
-                       (bsValueChange)="date=$event"
-                       [bsConfig]="{dateInputFormat:'DD-MMM-YYYY', containerClass:'theme-dark-blue', selectFromOtherMonth:true}">
+                <div class="date-row">
+                    <button class="btn btn-sm btn-outline-secondary date-adj-btn" type="button" (click)="adjustDate(-1)">−</button>
+                    <input class="form-control add-date-input"
+                           bsDatepicker
+                           [bsValue]="date"
+                           (bsValueChange)="date=$event"
+                           [bsConfig]="{dateInputFormat:'DD-MMM-YYYY', containerClass:'theme-dark-blue', selectFromOtherMonth:true}">
+                    <button class="btn btn-sm btn-outline-secondary date-adj-btn" type="button" (click)="adjustDate(1)">+</button>
+                </div>
             </div>
 
             <!-- Account -->
