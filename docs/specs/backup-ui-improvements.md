@@ -227,7 +227,7 @@ Implementation is split into stages so each can be reviewed before the next begi
 - Row background tint by level (amber for Warning, light red for Error)
 - Improved timestamp format
 
-#### Stage 5 — View Files tab
+#### Stage 5 — View Files tab ✅ Complete
 **Files:** `backup-display.component.html/.css/.ts`, `backup-display-files.*`, new thumbnail grid component
 
 - Breadcrumb navigation replacing the back button in the left panel

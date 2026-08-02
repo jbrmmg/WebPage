@@ -5,13 +5,17 @@ import {BackupDisplayInfoComponent} from './info/backup-display-info.component';
 import {NgForOf, NgIf} from '@angular/common';
 import {BackupDisplayLabelComponent} from './label/backup-display-label.component';
 import {BackupDisplayBackupsComponent} from './backups/backups-list.components';
-import {LatLong} from '../map/map-latlong';
 import {BackupDisplayTitle} from './title/backup-display-title';
 import {BackupDisplayMedia} from './media/backup-display-media';
 import {BackupDisplayMetadata} from './meta/backup-display-metadata';
 import {BackupDisplayService} from './backup-display-service';
 import {BackupDisplayFiles} from './files/backup-display-files';
 import {BackupPrintService} from '../backup-print-service';
+
+interface BreadcrumbItem {
+    name: string;
+    node: HierarchyResponse;
+}
 
 @Component({
     selector: 'jbr-backup-display',
@@ -30,161 +34,138 @@ import {BackupPrintService} from '../backup-print-service';
         BackupDisplayFiles
     ]
 })
-export class BackupDisplayComponent implements OnInit  {
+export class BackupDisplayComponent implements OnInit {
     hierarchy: HierarchyResponse[];
     fileList: HierarchyResponse[];
     initialHierarchy: HierarchyResponse;
-    atTopLevel: boolean;
     selectedFile: FileInfoExtra;
     zoom: number;
+    breadcrumb: BreadcrumbItem[] = [];
+    isMediaDirectory = false;
 
     @Output() selectPhoto = new EventEmitter();
 
     constructor(private readonly _backupDisplayService: BackupDisplayService,
-                private readonly _backupPrintService: BackupPrintService) {
-    }
+                private readonly _backupPrintService: BackupPrintService) {}
 
     ngOnInit(): void {
         this._backupDisplayService.fileLoaded.subscribe((nextFile: FileInfoExtra) => this.fileLoaded(nextFile));
         this.initialHierarchy = new HierarchyResponse();
         this.initialHierarchy.id = -1;
-        this.atTopLevel = true;
         this.selectedFile = null;
         this.zoom = 10;
+        this.fetchHierarchy(this.initialHierarchy);
+    }
 
-        this._backupDisplayService.getHierarchy(this.initialHierarchy).subscribe({
-            next: hierarchy => {
-                this.hierarchy = hierarchy;
-            },
-            error: err => {
-                console.error('❌ Failed to get hierarchy:', err);
-            },
+    get atTopLevel(): boolean {
+        return this.breadcrumb.length === 0;
+    }
+
+    private fetchHierarchy(parent: HierarchyResponse): void {
+        this.hierarchy = [];
+        this.fileList = [];
+        this.selectedFile = null;
+        this.isMediaDirectory = false;
+
+        this._backupDisplayService.getHierarchy(parent).subscribe({
+            next: hierarchy => { this.hierarchy = hierarchy; },
+            error: err => { console.error('❌ Failed to get hierarchy:', err); },
             complete: () => {
-                console.log('✅ Load hierarchy complete');
+                if (this.hierarchy?.length) {
+                    this.fileList = this.hierarchy
+                        .filter(h => !h.directory && !h.backup)
+                        .sort((h1, h2) => {
+                            const d1 = h1?.dateTime ? new Date(h1.dateTime).getTime() : Infinity;
+                            const d2 = h2?.dateTime ? new Date(h2.dateTime).getTime() : Infinity;
+                            return d1 - d2;
+                        });
+                }
+                if (this.fileList?.length >= 1) {
+                    this.displayFile(this.fileList[0]);
+                }
             }
         });
     }
 
-    changeHierarchy(parent: HierarchyResponse): void {
-        this.hierarchy = [];
-        this.fileList = [];
+    changeHierarchy(item: HierarchyResponse): void {
+        if (item.backup) {
+            this.breadcrumb.pop();
+        } else {
+            this.breadcrumb.push({name: item.displayName, node: item});
+        }
+        this.fetchHierarchy(item);
+    }
 
-        this.atTopLevel = parent.id === -1;
+    navigateToRoot(): void {
+        this.breadcrumb = [];
+        this.fetchHierarchy(this.initialHierarchy);
+    }
 
-        const latLong: LatLong = new LatLong();
-        latLong.lat = 51.60146388888889;
-        latLong.long = -0.37789999999999996;
-
-        this._backupDisplayService.getHierarchy(parent).subscribe({
-            next: hierarchy => {
-                this.hierarchy = hierarchy;
-            },
-            error: err => {
-                console.error('❌ Failed to get hierarchy:', err);
-            },
-            complete: () => {
-                // Set the file list.
-                if (this.hierarchy?.length) {
-                    this.hierarchy.forEach(h => {
-                        if (!h.directory && !h.backup) {
-                            this.fileList.push(h);
-                        }
-                    });
-
-                    // Sort by date.
-                    this.fileList.sort((h1, h2): number => {
-                        const dateH1 = h1?.dateTime ? new Date(h1.dateTime).getTime() : Infinity;
-                        const dateH2 = h2?.dateTime ? new Date(h2.dateTime).getTime() : Infinity;
-                        return dateH1 - dateH2;
-                    });
-                }
-
-                // If there are no files, then set the selected file to null.
-                if (!this.fileList?.length) {
-                    this.selectedFile = null;
-                }
-
-                // If there is more than one file, then select the first.
-                if (this.fileList.length >= 1) {
-                    this.displayFile(this.fileList[0]);
-                }
-
-                console.log('✅ Load hierarchy complete');
-            }
-        });
+    navigateToBreadcrumb(index: number): void {
+        const target = this.breadcrumb[index];
+        this.breadcrumb = this.breadcrumb.slice(0, index + 1);
+        this.fetchHierarchy(target.node);
     }
 
     fileLoaded(file: FileInfoExtra): void {
         this.selectedFile = file;
+        this.isMediaDirectory = file.file.image || file.file.video;
     }
 
     displayFile(file: HierarchyResponse): void {
-        console.log('📂 Select file:', file.displayName);
-
-        // Select a file.
         this._backupDisplayService.getFile(file.underlyingId);
     }
 
-    displayPrevious() {
-        // Display the previous file in the list by iterating through the list in reverse order.
+    isFileSelected(file: HierarchyResponse): boolean {
+        return this.selectedFile?.file?.id === file.underlyingId;
+    }
+
+    thumbnailUrl(fileId: number): string {
+        return this._backupDisplayService.imageUrl(fileId);
+    }
+
+    onThumbnailError(event: Event): void {
+        (event.target as HTMLImageElement).classList.add('thumbnail-missing');
+    }
+
+    displayPrevious(): void {
         let displayNext = false;
         let selected = false;
         this.fileList.slice().reverse().forEach(nextFile => {
             if (nextFile.underlyingId === this.selectedFile.file.id) {
                 displayNext = true;
-            } else if (displayNext) {
+            } else if (displayNext && !selected) {
                 this.displayFile(nextFile);
                 displayNext = false;
                 selected = true;
-                return;
             }
         });
-
-        // If nothing selected then select the last file.
-        if (!selected) {
-            this.displayFile(this.fileList.at(-1));
-        }
+        if (!selected) { this.displayFile(this.fileList.at(-1)); }
     }
 
-    displayNext() {
-        // Display the next file in the list.
+    displayNext(): void {
         let displayNext = false;
         let selected = false;
         this.fileList.forEach(nextFile => {
             if (nextFile.underlyingId === this.selectedFile.file.id) {
                 displayNext = true;
-            } else if (displayNext) {
+            } else if (displayNext && !selected) {
                 this.displayFile(nextFile);
                 displayNext = false;
                 selected = true;
-                return;
             }
         });
-
-        // If nothing selected then select the first file.
-        if (!selected) {
-            this.displayFile(this.fileList[0]);
-        }
+        if (!selected) { this.displayFile(this.fileList[0]); }
     }
 
-    deleteFile() {
-        this._backupDisplayService.deleteFile(this.selectedFile.file.id);
-    }
+    deleteFile(): void { this._backupDisplayService.deleteFile(this.selectedFile.file.id); }
+    refreshData(): void { this._backupDisplayService.refreshFile(this.selectedFile.file.id); }
 
-    refreshData() {
-        this._backupDisplayService.refreshFile(this.selectedFile.file.id);
-    }
-
-    selectPhotoMode() {
+    selectPhotoMode(): void {
         this._backupPrintService.setSelectedPhoto(this.selectedFile.file.id, this.selectedFile.file.name);
         this.selectPhoto.emit();
     }
 
-    zoomIn() {
-        this.zoom = Math.min(this.zoom + 10, 100);
-    }
-
-    zoomOut() {
-        this.zoom = Math.max(this.zoom - 10, 10);
-    }
+    zoomIn(): void { this.zoom = Math.min(this.zoom + 10, 100); }
+    zoomOut(): void { this.zoom = Math.max(this.zoom - 10, 10); }
 }

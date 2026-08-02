@@ -1,43 +1,81 @@
-<div class="row page-row">
-    <div class="col-2 list-container">
-        <div *ngIf="hierarchy && hierarchy.length">
-            <div class="row" *ngFor="let nextHierarchy of hierarchy">
-                <div class="col-12">
-                    <div *ngIf="nextHierarchy.backup">
-                        <label class="btn btn-primary btn-directory"
-                               (click)="changeHierarchy(nextHierarchy)">
-                            <em class="fa fa-chevron-circle-left"></em>
-                        </label>
-                    </div>
-                    <div *ngIf="nextHierarchy.directory && !nextHierarchy.backup">
-                        <label class="btn btn-primary btn-directory"
-                               (click)="changeHierarchy(nextHierarchy)">
-                            {{nextHierarchy.displayName}}
-                        </label>
+<!-- TOP LEVEL: card-tile grid -->
+<div *ngIf="atTopLevel" class="top-level-grid">
+    <div *ngFor="let item of hierarchy"
+         class="top-level-card"
+         (click)="changeHierarchy(item)">
+        <em class="fa fa-folder-open top-level-icon"></em>
+        <span class="top-level-name">{{item.displayName}}</span>
+    </div>
+</div>
+
+<!-- SUB LEVEL -->
+<div *ngIf="!atTopLevel">
+
+    <!-- Breadcrumb bar -->
+    <nav class="breadcrumb-bar">
+        <button class="breadcrumb-home" title="Home" (click)="navigateToRoot()">
+            <em class="fa fa-home"></em>
+        </button>
+        <ng-container *ngFor="let crumb of breadcrumb; let i = index; let last = last">
+            <span class="breadcrumb-sep">›</span>
+            <button *ngIf="!last" class="breadcrumb-item" (click)="navigateToBreadcrumb(i)">{{crumb.name}}</button>
+            <span *ngIf="last" class="breadcrumb-current">{{crumb.name}}</span>
+        </ng-container>
+    </nav>
+
+    <!-- Two-column detail layout -->
+    <div class="row page-row">
+        <div class="col-2 list-container">
+            <div *ngIf="hierarchy && hierarchy.length">
+                <div class="row" *ngFor="let nextHierarchy of hierarchy">
+                    <div class="col-12">
+                        <div *ngIf="nextHierarchy.directory && !nextHierarchy.backup">
+                            <label class="btn btn-primary btn-directory"
+                                   (click)="changeHierarchy(nextHierarchy)">
+                                <em class="fa fa-folder"></em> {{nextHierarchy.displayName}}
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-10 detail-col">
-        <div *ngIf="selectedFile != null">
-            <jbr-backup-display-title
-                    [selectedFile]="selectedFile"
-                    (previousFile)="displayPrevious()"
-                    (nextFile)="displayNext()"
-                    (deleteFile)="deleteFile()"
-                    (printFile)="selectPhotoMode()"
-                    (refresh)="refreshData()"
-                    (zoom)="$event ? zoomIn() : zoomOut()">
-            </jbr-backup-display-title>
-            <jbr-backup-display-media [selectedFile]="selectedFile" [mediaWidth]="zoom" (selectPhotoModeEvent)="selectPhotoMode()"></jbr-backup-display-media>
-            <jbr-backup-display-metadata [selectedFile]="selectedFile"></jbr-backup-display-metadata>
-            <jbr-backup-display-info [selectedFile]="selectedFile"></jbr-backup-display-info>
-            <jbr-backup-display-labels [selectedFile]="selectedFile"></jbr-backup-display-labels>
-            <jbr-backup-display-backups [selectedFile]="selectedFile"></jbr-backup-display-backups>
+        <div class="col-10 detail-col">
+            <div *ngIf="selectedFile != null">
+                <jbr-backup-display-title
+                        [selectedFile]="selectedFile"
+                        (previousFile)="displayPrevious()"
+                        (nextFile)="displayNext()"
+                        (deleteFile)="deleteFile()"
+                        (printFile)="selectPhotoMode()"
+                        (refresh)="refreshData()"
+                        (zoom)="$event ? zoomIn() : zoomOut()">
+                </jbr-backup-display-title>
+                <jbr-backup-display-media [selectedFile]="selectedFile" [mediaWidth]="zoom" (selectPhotoModeEvent)="selectPhotoMode()"></jbr-backup-display-media>
+                <jbr-backup-display-metadata [selectedFile]="selectedFile"></jbr-backup-display-metadata>
+                <jbr-backup-display-info [selectedFile]="selectedFile"></jbr-backup-display-info>
+                <jbr-backup-display-labels [selectedFile]="selectedFile"></jbr-backup-display-labels>
+                <jbr-backup-display-backups [selectedFile]="selectedFile"></jbr-backup-display-backups>
+            </div>
         </div>
     </div>
-</div>
-<div>
-    <jbr-backup-display-files [selectedFile]="selectedFile" [fileList]="fileList" (selectEvent)="displayFile($event)"></jbr-backup-display-files>
+
+    <!-- Thumbnail grid (image / video directories) -->
+    <div *ngIf="isMediaDirectory && fileList?.length" class="thumbnail-grid">
+        <div *ngFor="let file of fileList"
+             class="thumbnail-item"
+             [class.thumbnail-selected]="isFileSelected(file)"
+             (click)="displayFile(file)">
+            <img class="thumbnail-img"
+                 [src]="thumbnailUrl(file.underlyingId)"
+                 [alt]="file.displayName"
+                 (error)="onThumbnailError($event)">
+            <span class="thumbnail-name" [title]="file.displayName">{{file.displayName}}</span>
+        </div>
+    </div>
+
+    <!-- Table list (non-media directories) -->
+    <div *ngIf="!isMediaDirectory">
+        <jbr-backup-display-files [selectedFile]="selectedFile" [fileList]="fileList" (selectEvent)="displayFile($event)"></jbr-backup-display-files>
+    </div>
+
 </div>
