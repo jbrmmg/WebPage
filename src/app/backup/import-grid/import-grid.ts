@@ -624,6 +624,15 @@ export class ImportGrid implements OnInit {
         this.sortColumn = column;
     }
 
+    get knownDestinations(): string[] {
+        if (!this.data?.length) return [];
+        return [...new Set(
+            this.data
+                .filter(f => f.source?.destination)
+                .map(f => f.source.destination)
+        )].sort();
+    }
+
     deleteRejected() {
         if (this.modalRef) {
             this.modalRef.hide();

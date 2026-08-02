@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {Map} from '../../map/map';
 import {ImportGridFileDisplay} from '../import-grid-file-display';
 import {LatLong} from '../../map/map-latlong';
@@ -23,6 +23,7 @@ export class ImportSelected {
     @ViewChild('image') image: ImportSelectedImage;
     @ViewChild('data') data: ImportSelectedData;
 
+    @Input() knownDestinations: string[] = [];
     @Output() actionEvent: EventEmitter<ImportSelectedAction> = new EventEmitter();
 
     selectionChangeMap(file: ImportGridFileDisplay) {

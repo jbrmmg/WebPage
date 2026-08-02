@@ -93,6 +93,16 @@
         </div>
         <input class="col directory" type="text" size="40" [(ngModel)]="destination" (keydown.enter)="enterDestination()">
     </div>
+    <div class="row dest-picks" *ngIf="knownDestinations?.length">
+        <div class="col-12">
+            <button *ngFor="let dest of knownDestinations"
+                    class="btn btn-sm dest-pick-btn"
+                    [class.dest-pick-active]="dest === destination"
+                    (click)="pickDestination(dest)">
+                {{dest}}
+            </button>
+        </div>
+    </div>
     <div class="row">
         <import-selected-data-similar
                 [name]="filename"

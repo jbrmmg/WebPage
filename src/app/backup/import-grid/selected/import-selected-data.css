@@ -25,7 +25,8 @@ td.green   { background: #1a5a1a; }
 }
 
 .btn-row {
-    margin-top: 2px;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
 
 .action-btn-first {
@@ -51,6 +52,35 @@ td.green   { background: #1a5a1a; }
     width: 60%;
     border-radius: 5px;
     border: 1px solid #4caf50;
+}
+
+.dest-picks {
+    padding: 4px 0 2px 12px;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.dest-pick-btn {
+    font-size: 10px;
+    padding: 2px 8px;
+    margin-right: 4px;
+    margin-bottom: 4px;
+    border: 1px solid #4caf50;
+    color: #4caf50;
+    background: transparent;
+    border-radius: 12px;
+    white-space: nowrap;
+    transition: background 0.12s, color 0.12s;
+}
+
+.dest-pick-btn:hover {
+    background: #4caf50;
+    color: #1a1f35;
+}
+
+.dest-pick-active {
+    background: #4caf50;
+    color: #1a1f35;
 }
 
 table td:first-child  { width: 7%; }

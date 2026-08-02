@@ -13,7 +13,7 @@
 <div class="section-divider"></div>
 
 <div class="section-panel section-preview">
-    <import-selected #selected (actionEvent)="action($event,confirmTemplate)"></import-selected>
+    <import-selected #selected [knownDestinations]="knownDestinations" (actionEvent)="action($event,confirmTemplate)"></import-selected>
 </div>
 
 <div class="section-divider"></div>

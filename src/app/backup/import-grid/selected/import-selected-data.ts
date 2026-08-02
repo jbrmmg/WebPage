@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ImportGridFileDisplay} from '../import-grid-file-display';
 import {LatLong} from '../../map/map-latlong';
 import {ImageSize} from '../import-grid-imagesize';
 import {IImportGridFileBase} from '../import-grid-file-base';
 import {ImportSelectedDataSimilar} from './import-selected-data-similar';
-import {NgForOf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {StepStatusType, TrafficLightType} from '../traffic/import-grid-traffic-light';
 import {FormsModule} from '@angular/forms';
 import {FileDestinationUpdate} from '../import-grid-update-destination';
@@ -16,6 +16,7 @@ import {FileDestinationUpdate} from '../import-grid-update-destination';
     imports: [
         ImportSelectedDataSimilar,
         NgForOf,
+        NgIf,
         FormsModule
     ],
     styleUrls: ['./import-selected-data.css']
@@ -28,6 +29,7 @@ export class ImportSelectedData {
     @Output() ignoreEvent: EventEmitter<string> = new EventEmitter();
     @Output() unIgnoreEvent: EventEmitter<string> = new EventEmitter();
     @Output() backupEvent: EventEmitter<string> = new EventEmitter();
+    @Input() knownDestinations: string[] = [];
     @Output() destinationUpdateEvent: EventEmitter<FileDestinationUpdate> = new EventEmitter();
 
     destination: string;
@@ -332,5 +334,10 @@ export class ImportSelectedData {
 
     enterDestination() {
         this.destinationUpdateEvent.emit(new FileDestinationUpdate(this.filename, this.destination));
+    }
+
+    pickDestination(dest: string) {
+        this.destination = dest;
+        this.enterDestination();
     }
 }
