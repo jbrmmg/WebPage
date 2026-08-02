@@ -242,7 +242,7 @@ Implementation is split into stages so each can be reviewed before the next begi
 - Tooltips/labels on the step progress indicator
 - Tooltips on the control button bar
 
-#### Stage 7 — Prints tab + backend action count
+#### Stage 7 — Prints tab + backend action count ✅ Complete
 **Files:** `backup-prints.component.html/.css/.ts`; backend `/actions/count` endpoint
 
 - Total selected count shown at the top

@@ -1,15 +1,32 @@
-<div class="row row-gap">
-    <button class="btn btn-primary">
-        <em class="fa fa-close" (click)="clearPrints()" (keydown.enter)="clearPrints()"></em>
+<div class="prints-header">
+    <span class="photo-count">
+        <em class="fa fa-print"></em>
+        {{photoCount}} {{photoCount === 1 ? 'photo' : 'photos'}} selected
+    </span>
+    <button class="btn btn-outline-danger clear-btn"
+            *ngIf="!confirmClearPending && photoCount > 0"
+            title="Clear all selected prints"
+            (click)="requestConfirmClear()">
+        <em class="fa fa-trash"></em> Clear all
     </button>
 </div>
-<div *ngFor="let row of rows" class="row row-gap">
-    <div *ngFor="let col of cols" class="col-4">
-        <jbr-backup-print-image
-                [selectedPrint]="getPrintAtRowCol(row,col)"
-                (unselect)="unselectPrint($event)"
-                (updateSize)="updatePrintSize($event,sizePicker)">
-        </jbr-backup-print-image>
+
+<div class="confirm-clear-pending" *ngIf="confirmClearPending">
+    <em class="fa fa-exclamation-triangle"></em>
+    Clear all {{photoCount}} selected {{photoCount === 1 ? 'photo' : 'photos'}} from print selection?
+    <button class="btn btn-warning btn-sm confirm-yes" (click)="clearPrints()">Yes, clear all</button>
+    <button class="btn btn-outline-secondary btn-sm" (click)="cancelConfirmClear()">Cancel</button>
+</div>
+
+<div class="prints-scroll">
+    <div *ngFor="let row of rows" class="row row-gap">
+        <div *ngFor="let col of cols" class="col-5up">
+            <jbr-backup-print-image
+                    [selectedPrint]="getPrintAtRowCol(row,col)"
+                    (unselect)="unselectPrint($event)"
+                    (updateSize)="updatePrintSize($event,sizePicker)">
+            </jbr-backup-print-image>
+        </div>
     </div>
 </div>
 

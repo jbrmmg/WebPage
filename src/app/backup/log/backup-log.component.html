@@ -15,10 +15,12 @@
     <span class="filter-count">{{filteredLogs.length}} of {{logs.length}}</span>
 </div>
 
-<div class="row page-row">
-    <div class="row item-row align-items-center" [ngClass]="getRowClass(nextLog)" *ngFor="let nextLog of filteredLogs">
-        <div [ngClass]="getLogIconClass(nextLog)"></div>
-        <div class="col-2 date-col">{{getLogDate(nextLog)}}</div>
-        <div class="col-9 message-col">{{nextLog.message}}</div>
+<div class="logs-scroll">
+    <div class="row page-row">
+        <div class="row item-row align-items-center" [ngClass]="getRowClass(nextLog)" *ngFor="let nextLog of filteredLogs">
+            <div [ngClass]="getLogIconClass(nextLog)"></div>
+            <div class="col-2 date-col">{{getLogDate(nextLog)}}</div>
+            <div class="col-9 message-col">{{nextLog.message}}</div>
+        </div>
     </div>
 </div>

@@ -13,10 +13,11 @@ export class BackupPrintsComponent implements OnInit {
     sizePhoto: SelectedPrint;
     rows: number[];
     cols: number[];
+    confirmClearPending = false;
 
     constructor(private readonly _backupPrintService: BackupPrintService,
                 private readonly _modalService: BsModalService) {
-        this.cols = [0, 1, 2];
+        this.cols = [0, 1, 2, 3, 4];
         this.selectedPhotos = [];
         this.sizePhoto = null;
     }
@@ -70,7 +71,20 @@ export class BackupPrintsComponent implements OnInit {
         return this.cols.length;
     }
 
+    get photoCount(): number {
+        return this.selectedPhotos?.length ?? 0;
+    }
+
+    requestConfirmClear(): void {
+        this.confirmClearPending = true;
+    }
+
+    cancelConfirmClear(): void {
+        this.confirmClearPending = false;
+    }
+
     clearPrints() {
+        this.confirmClearPending = false;
         console.log('🧹 Clear prints');
         this._backupPrintService.clearPrints();
     }
