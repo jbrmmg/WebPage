@@ -1,7 +1,23 @@
+<div class="filter-bar">
+    <span class="filter-label">Show:</span>
+    <button class="filter-btn" [class.active-debug]="showDebug" [class.inactive]="!showDebug" (click)="toggleFilter('Debug')">
+        <em class="fa fa-info-circle"></em> Debug
+    </button>
+    <button class="filter-btn" [class.active-info]="showInfo" [class.inactive]="!showInfo" (click)="toggleFilter('Info')">
+        <em class="fa fa-info-circle"></em> Info
+    </button>
+    <button class="filter-btn" [class.active-warning]="showWarning" [class.inactive]="!showWarning" (click)="toggleFilter('Warning')">
+        <em class="fa fa-exclamation-triangle"></em> Warning
+    </button>
+    <button class="filter-btn" [class.active-error]="showError" [class.inactive]="!showError" (click)="toggleFilter('Error')">
+        <em class="fa fa-exclamation-circle"></em> Error
+    </button>
+    <span class="filter-count">{{filteredLogs.length}} of {{logs.length}}</span>
+</div>
+
 <div class="row page-row">
-    <div class="row item-row align-items-center" *ngFor="let nextLog of logs">
-        <div [ngClass]="getLogIconClass(nextLog)">
-        </div>
+    <div class="row item-row align-items-center" [ngClass]="getRowClass(nextLog)" *ngFor="let nextLog of filteredLogs">
+        <div [ngClass]="getLogIconClass(nextLog)"></div>
         <div class="col-2 date-col">{{getLogDate(nextLog)}}</div>
         <div class="col-9 message-col">{{nextLog.message}}</div>
     </div>

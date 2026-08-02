@@ -220,7 +220,7 @@ Implementation is split into stages so each can be reviewed before the next begi
 - "Confirm all" button with confirmation dialog
 - Action type shown as colour-coded badge/chip rather than plain text
 
-#### Stage 4 — Logs tab
+#### Stage 4 — Logs tab ✅ Complete
 **Files:** `backup-log.component.html/.css/.ts`
 
 - Level filter toggle buttons (Debug / Info / Warning / Error) — client-side, no server round-trip
