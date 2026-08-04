@@ -11,60 +11,62 @@
         </div>
         <div class="row second-row">
             <div class="col refresh" title="Remove any files that are already marked as ignore.">
-                <button class="btn btn-outline-warning"
+                <button class="btn btn-outline-danger"
                        aria-controls="list"
                        (click)="removeIgnored()">
                     <em class="fa fa-minus-circle"></em>
                 </button>
             </div>
             <div class="col global-action" title="Remove any files that are definitely already present.">
-                <button class="btn btn-outline-warning"
+                <button class="btn btn-outline-danger"
                        (click)="removeConfirmedImports()">
                     <em class="fa fa-trash"></em>
                 </button>
             </div>
             <div class="col global-action" title="Remove any files are Apple 'active' photos.">
-                <button class="btn btn-outline-warning"
+                <button class="btn btn-outline-danger"
                        (click)="removeActivePhotos()">
                     <em class="fa fa-apple"></em>
                 </button>
             </div>
             <div class="no-pad col global-action" title="Import the files">
-                <button class="btn btn-outline-warning"
+                <button class="btn btn-outline-success"
                        (click)="importFiles()">
                     <em class="fa fa-arrow-right"></em>
                 </button>
             </div>
+            <div class="btn-sep"></div>
             <div class="no-pad col first-page" title="Set the display limit to 10 files.">
-                <button class="btn btn-outline-primary"
+                <button class="btn btn-outline-secondary"
                        (click)="setPageSize(10)">
                     10
                 </button>
             </div>
             <div class="no-pad col global-action" title="Set the display limit to 20 files.">
-                <button class="btn btn-outline-primary"
+                <button class="btn btn-outline-secondary"
                        (click)="setPageSize(20)">
                     20
                 </button>
             </div>
             <div class="no-pad col global-action" title="Set the display limit to 50 files.">
-                <button class="btn btn-outline-primary"
+                <button class="btn btn-outline-secondary"
                        (click)="setPageSize(50)">
                     50
                 </button>
             </div>
             <div class="no-pad col global-action" title="Set the display limit to 100 files.">
-                <button class="btn btn-outline-primary"
+                <button class="btn btn-outline-secondary"
                        (click)="setPageSize(100)">
                     100
                 </button>
             </div>
             <div class="no-pad col global-action" title="Set the display limit to All files.">
-                <button class="btn btn-outline-primary"
+                <button class="btn btn-outline-secondary"
                        (click)="setPageSize(0)">
                     All
                 </button>
             </div>
+            <div class="btn-sep"></div>
             <div class="no-pad col global-action">
                 <button [class]="previousPageClass()"
                        title="Move to the previous page."
@@ -102,10 +104,10 @@
                         <ng-container *ngFor="let step of getSteps()">
                             <td [class]="getClass(step,status)" (click)="filter(step,status)">{{getTotal(step,status)}}</td>
                         </ng-container>
-                        <td>{{getPreImportTotal(status)}}</td>
-                        <td>{{getImportTotal(status)}}</td>
-                        <td>{{getPostImportTotal(status)}}</td>
-                        <td>{{getQueued(status)}}</td>
+                        <td class="phase-count">{{getPreImportTotal(status)}}</td>
+                        <td class="phase-count">{{getImportTotal(status)}}</td>
+                        <td class="phase-count">{{getPostImportTotal(status)}}</td>
+                        <td class="phase-count">{{getQueued(status)}}</td>
                     </tr>
                 </ng-container>
             </tbody>

@@ -43,6 +43,7 @@ export const baseEnvironment = {
       files: "backup/import/files",
       fileUpdates: "backup/import/events/files",
       summaryUpdates: "backup/import/events/summary",
+      mockSummaryUpdates: false,
       ignored: "backup/import/ignored",
       activePhotos: "backup/import/active-photos",
       photos: "backup/import/photos",

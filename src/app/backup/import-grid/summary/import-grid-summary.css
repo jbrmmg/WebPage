@@ -2,17 +2,28 @@
 
 td {
     text-align: center;
+    font-size: 13px;
+    padding: 4px 6px;
 }
 
 td.filter  { border: 2px solid #a0d4f5; }
-td.unknown { background: #444; }
-td.red     { background: #7a1a1a; }
-td.amber   { background: #7a5a00; }
-td.green   { background: #1a5a1a; }
+td.unknown { background: #333; color: #888; }
+td.red     { background: #7a1a1a; color: #ffaaaa; cursor: pointer; }
+td.amber   { background: #6a4a00; color: #ffd980; cursor: pointer; }
+td.green   { background: #1a5a1a; color: #88ee88; cursor: pointer; }
 
 td.header {
     font-weight: bold;
     text-align: left;
+    font-size: 11px;
+    color: #a0d4f5;
+    padding-left: 8px;
+}
+
+td.phase-count {
+    font-size: 14px;
+    font-weight: 600;
+    color: #e0e0e0;
 }
 
 .refresh {
@@ -28,7 +39,7 @@ td.header {
 }
 
 .first-page {
-    padding: 0 5px 0 22px;
+    padding: 0 5px 0 8px;
     flex: 0 1 0;
 }
 
@@ -38,8 +49,13 @@ td.header {
 }
 
 .second-row {
-    margin-top: 4px;
+    margin-top: 10px;
     margin-bottom: 4px;
+    align-items: center;
+}
+
+.btn-sep {
+    flex: 0 0 10px;
 }
 
 table td:first-child  { width: 7%; }

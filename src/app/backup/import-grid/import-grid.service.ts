@@ -1,5 +1,6 @@
 import {Observable, throwError} from 'rxjs';
 import {environment} from '../../../environments/environment';
+import {MockEventSource} from './mock-event-source';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {ImportGridFile} from './import-grid-file';
 import {catchError, tap} from 'rxjs/operators';
@@ -43,6 +44,9 @@ export class ImportGridService {
     }
 
     summaryUpdateSource(): EventSource {
+        if (environment.backup.import.mockSummaryUpdates) {
+            return new MockEventSource(environment.backup.import.summaryUpdates) as unknown as EventSource;
+        }
         return new EventSource(environment.backup.import.summaryUpdates);
     }
 

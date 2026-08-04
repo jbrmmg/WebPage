@@ -1,0 +1,1182 @@
+[
+  {
+    "filename": "IMG_1752.JPEG",
+    "date": "2026-08-02T18:58:46",
+    "size": 969877,
+    "md5": "9A1694F0506CFE7EC90E09F039B5AED5",
+    "type": null,
+    "status": "READ",
+    "location": {
+      "lat": 51.6496556,
+      "long": -0.4013667
+    },
+    "imageSize": {
+      "width": 2048,
+      "height": 1536
+    },
+    "image": true,
+    "video": false,
+    "updateTime": "2026-08-04T17:36:18.106349876",
+    "destination": "Hansa",
+    "duration": null,
+    "importName": "IMG_1752.JPEG",
+    "importDate": "2026-07-25T13:49:26",
+    "importSize": 969877,
+    "importMd5": "9A1694F0506CFE7EC90E09F039B5AED5",
+    "errorInPostImport": false,
+    "errorInImport": false,
+    "inDatabase": true,
+    "inImport": true,
+    "inPostImport": true,
+    "stepStatus": {
+      "readPreImportFile": "GREEN",
+      "gatherMetaData": "GREEN",
+      "copyFileToImport": "GREEN",
+      "checkFileIgnored": "GREEN",
+      "checkActivePhotoFile": "GREEN",
+      "checkDuplicateFile": "GREEN",
+      "checkFileConfirmedImported": "GREEN",
+      "processImport": "GREEN",
+      "completed": "GREEN"
+    },
+    "importMd5Optional": {
+      "value": "9A1694F0506CFE7EC90E09F039B5AED5"
+    },
+    "similarFiles": [
+      {
+        "filename": "/media/Shared/Photo/2026/July/Hansa/IMG_1752.JPEG",
+        "date": "2026-07-25T13:49:26",
+        "size": 969877,
+        "md5": "9A1694F0506CFE7EC90E09F039B5AED5",
+        "type": "FSO_FILE",
+        "md5Optional": {
+          "value": "9A1694F0506CFE7EC90E09F039B5AED5"
+        }
+      }
+    ],
+    "md5Optional": {
+      "value": "9A1694F0506CFE7EC90E09F039B5AED5"
+    }
+  },
+  {
+    "filename": "IMG_1755.JPEG",
+    "date": "2026-08-02T18:58:46",
+    "size": 1520761,
+    "md5": "965E8A9E32AC535CF6D16C8FA9442A53",
+    "type": null,
+    "status": "READ",
+    "location": {
+      "lat": 51.6497806,
+      "long": -0.4015583
+    },
+    "imageSize": {
+      "width": 2048,
+      "height": 1536
+    },
+    "image": true,
+    "video": false,
+    "updateTime": "2026-08-04T17:36:19.092686986",
+    "destination": "Hansa",
+    "duration": null,
+    "importName": "IMG_1755.JPEG",
+    "importDate": "2026-07-25T14:17:51",
+    "importSize": 1520761,
+    "importMd5": "965E8A9E32AC535CF6D16C8FA9442A53",
+    "errorInPostImport": false,
+    "errorInImport": false,
+    "inDatabase": true,
+    "inImport": true,
+    "inPostImport": true,
+    "stepStatus": {
+      "readPreImportFile": "GREEN",
+      "gatherMetaData": "GREEN",
+      "copyFileToImport": "GREEN",
+      "checkFileIgnored": "GREEN",
+      "checkActivePhotoFile": "GREEN",
+      "checkDuplicateFile": "GREEN",
+      "checkFileConfirmedImported": "GREEN",
+      "processImport": "GREEN",
+      "completed": "GREEN"
+    },
+    "importMd5Optional": {
+      "value": "965E8A9E32AC535CF6D16C8FA9442A53"
+    },
+    "similarFiles": [
+      {
+        "filename": "/media/Shared/Photo/2026/July/Hansa/IMG_1755.JPEG",
+        "date": "2026-07-25T14:17:51",
+        "size": 1520761,
+        "md5": "965E8A9E32AC535CF6D16C8FA9442A53",
+        "type": "FSO_FILE",
+        "md5Optional": {
+          "value": "965E8A9E32AC535CF6D16C8FA9442A53"
+        }
+      }
+    ],
+    "md5Optional": {
+      "value": "965E8A9E32AC535CF6D16C8FA9442A53"
+    }
+  },
+  {
+    "filename": "IMG_1731.JPEG",
+    "date": "2026-08-02T18:58:44",
+    "size": 879516,
+    "md5": "FCB3B8967B2393CCCFFE319B6531330A",
+    "type": null,
+    "status": "READ",
+    "location": {
+      "lat": 51.6614583,
+      "long": -0.2720528
+    },
+    "imageSize": {
+      "width": 2048,
+      "height": 1536
+    },
+    "image": true,
+    "video": false,
+    "updateTime": "2026-08-04T17:36:18.092478244",
+    "destination": "Borehamwood",
+    "duration": null,
+    "importName": "IMG_1731.JPEG",
+    "importDate": "2026-07-11T15:09:14",
+    "importSize": 879516,
+    "importMd5": "FCB3B8967B2393CCCFFE319B6531330A",
+    "errorInPostImport": false,
+    "errorInImport": false,
+    "inDatabase": true,
+    "inImport": true,
+    "inPostImport": true,
+    "stepStatus": {
+      "readPreImportFile": "GREEN",
+      "gatherMetaData": "GREEN",
+      "copyFileToImport": "GREEN",
+      "checkFileIgnored": "GREEN",
+      "checkActivePhotoFile": "GREEN",
+      "checkDuplicateFile": "GREEN",
+      "checkFileConfirmedImported": "GREEN",
+      "processImport": "GREEN",
+      "completed": "GREEN"
+    },
+    "importMd5Optional": {
+      "value": "FCB3B8967B2393CCCFFE319B6531330A"
+    },
+    "similarFiles": [
+      {
+        "filename": "/media/Shared/Photo/2026/July/Borehamwood/IMG_1731.JPEG",
+        "date": "2026-07-11T15:09:14",
+        "size": 879516,
+        "md5": "FCB3B8967B2393CCCFFE319B6531330A",
+        "type": "FSO_FILE",
+        "md5Optional": {
+          "value": "FCB3B8967B2393CCCFFE319B6531330A"
+        }
+      }
+    ],
+    "md5Optional": {
+      "value": "FCB3B8967B2393CCCFFE319B6531330A"
+    }
+  },
+  {
+    "filename": "IMG_1727.JPEG",
+    "date": "2026-08-02T18:58:46",
+    "size": 1113510,
+    "md5": "A80395C1D60777371115FD9A327F706D",
+    "type": null,
+    "status": "READ",
+    "location": {
+      "lat": 51.6015139,
+      "long": -0.3777528
+    },
+    "imageSize": {
+      "width": 1536,
+      "height": 2048
+    },
+    "image": true,
+    "video": false,
+    "updateTime": "2026-08-04T17:36:22.10736431",
+    "destination": "AtHome",
+    "duration": null,
+    "importName": "IMG_1727.JPEG",
+    "importDate": "2026-07-09T18:15:46",
+    "importSize": 1113510,
+    "importMd5": "A80395C1D60777371115FD9A327F706D",
+    "errorInPostImport": false,
+    "errorInImport": false,
+    "inDatabase": true,
+    "inImport": true,
+    "inPostImport": true,
+    "stepStatus": {
+      "readPreImportFile": "GREEN",
+      "gatherMetaData": "GREEN",
+      "copyFileToImport": "GREEN",
+      "checkFileIgnored": "GREEN",
+      "checkActivePhotoFile": "GREEN",
+      "checkDuplicateFile": "GREEN",
+      "checkFileConfirmedImported": "GREEN",
+      "processImport": "GREEN",
+      "completed": "GREEN"
+    },
+    "importMd5Optional": {
+      "value": "A80395C1D60777371115FD9A327F706D"
+    },
+    "similarFiles": [
+      {
+        "filename": "/media/Shared/Photo/2026/July/AtHome/IMG_1727.JPEG",
+        "date": "2026-07-09T18:15:46",
+        "size": 1113510,
+        "md5": "A80395C1D60777371115FD9A327F706D",
+        "type": "FSO_FILE",
+        "md5Optional": {
+          "value": "A80395C1D60777371115FD9A327F706D"
+        }
+      }
+    ],
+    "md5Optional": {
+      "value": "A80395C1D60777371115FD9A327F706D"
+    }
+  },
+  {
+    "filename": "IMG_1762.JPEG",
+    "date": "2026-08-02T18:58:46",
+    "size": 589490,
+    "md5": "8EEE6A37ADB41B3ED4B27101DD3E4F76",
+    "type": null,
+    "status": "READ",
+    "location": {
+      "lat": 51.6497944,
+      "long": -0.4016667
+    },
+    "imageSize": {
+      "width": 2048,
+      "height": 1536
+    },
+    "image": true,
+    "video": false,
+    "updateTime": "2026-08-04T17:36:21.09406932",
+    "destination": "Fiorentina",
+    "duration": null,
+    "importName": "IMG_1762.JPEG",
+    "importDate": "2026-07-29T19:35:13",
+    "importSize": 589490,
+    "importMd5": "8EEE6A37ADB41B3ED4B27101DD3E4F76",
+    "errorInPostImport": false,
+    "errorInImport": false,
+    "inDatabase": true,
+    "inImport": true,
+    "inPostImport": true,
+    "stepStatus": {
+      "readPreImportFile": "GREEN",
+      "gatherMetaData": "GREEN",
+      "copyFileToImport": "GREEN",
+      "checkFileIgnored": "GREEN",
+      "checkActivePhotoFile": "GREEN",
+      "checkDuplicateFile": "GREEN",
+      "checkFileConfirmedImported": "GREEN",
+      "processImport": "GREEN",
+      "completed": "GREEN"
+    },
+    "importMd5Optional": {
+      "value": "8EEE6A37ADB41B3ED4B27101DD3E4F76"
+    },
+    "similarFiles": [
+      {
+        "filename": "/media/Shared/Photo/2026/July/Fiorentina/IMG_1762.JPEG",
+        "date": "2026-07-29T19:35:13",
+        "size": 589490,
+        "md5": "8EEE6A37ADB41B3ED4B27101DD3E4F76",
+        "type": "FSO_FILE",
+        "md5Optional": {
+          "value": "8EEE6A37ADB41B3ED4B27101DD3E4F76"
+        }
+      }
+    ],
+    "md5Optional": {
+      "value": "8EEE6A37ADB41B3ED4B27101DD3E4F76"
+    }
+  },
+  {
+    "filename": "IMG_1763.JPEG",
+    "date": "2026-08-02T18:58:46",
+    "size": 880882,
+    "md5": "0506FCCAF93AE2880BC2A1B0E318F972",
+    "type": null,
+    "status": "READ",
+    "location": {
+      "lat": 51.6497889,
+      "long": -0.4016472
+    },
+    "imageSize": {
+      "width": 2048,
+      "height": 1536
+    },
+    "image": true,
+    "video": false,
+    "updateTime": "2026-08-04T17:36:18.10613956",
+    "destination": "Fiorentina",
+    "duration": null,
+    "importName": "IMG_1763.JPEG",
+    "importDate": "2026-07-29T20:34:48",
+    "importSize": 880882,
+    "importMd5": "0506FCCAF93AE2880BC2A1B0E318F972",
+    "errorInPostImport": false,
+    "errorInImport": false,
+    "inDatabase": true,
+    "inImport": true,
+    "inPostImport": true,
+    "stepStatus": {
+      "readPreImportFile": "GREEN",
+      "gatherMetaData": "GREEN",
+      "copyFileToImport": "GREEN",
+      "checkFileIgnored": "GREEN",
+      "checkActivePhotoFile": "GREEN",
+      "checkDuplicateFile": "GREEN",
+      "checkFileConfirmedImported": "GREEN",
+      "processImport": "GREEN",
+      "completed": "GREEN"
+    },
+    "importMd5Optional": {
+      "value": "0506FCCAF93AE2880BC2A1B0E318F972"
+    },
+    "similarFiles": [
+      {
+        "filename": "/media/Shared/Photo/2026/July/Fiorentina/IMG_1763.JPEG",
+        "date": "2026-07-29T20:34:48",
+        "size": 880882,
+        "md5": "0506FCCAF93AE2880BC2A1B0E318F972",
+        "type": "FSO_FILE",
+        "md5Optional": {
+          "value": "0506FCCAF93AE2880BC2A1B0E318F972"
+        }
+      }
+    ],
+    "md5Optional": {
+      "value": "0506FCCAF93AE2880BC2A1B0E318F972"
+    }
+  },
+  {
+    "filename": "IMG_1747.JPEG",
+    "date": "2026-08-02T18:58:46",
+    "size": 776680,
+    "md5": "12404C1693CE54EEA9D92F1E7A1351D4",
+    "type": null,
+    "status": "READ",
+    "location": {
+      "lat": 51.6014889,
+      "long": -0.3779944
+    },
+    "imageSize": {
+      "width": 2048,
+      "height": 1536
+    },
+    "image": true,
+    "video": false,
+    "updateTime": "2026-08-04T17:36:19.093773785",
+    "destination": "AtHome",
+    "duration": null,
+    "importName": "IMG_1747.JPEG",
+    "importDate": "2026-07-19T15:29:30",
+    "importSize": 776680,
+    "importMd5": "12404C1693CE54EEA9D92F1E7A1351D4",
+    "errorInPostImport": false,
+    "errorInImport": false,
+    "inDatabase": true,
+    "inImport": true,
+    "inPostImport": true,
+    "stepStatus": {
+      "readPreImportFile": "GREEN",
+      "gatherMetaData": "GREEN",
+      "copyFileToImport": "GREEN",
+      "checkFileIgnored": "GREEN",
+      "checkActivePhotoFile": "GREEN",
+      "checkDuplicateFile": "GREEN",
+      "checkFileConfirmedImported": "GREEN",
+      "processImport": "GREEN",
+      "completed": "GREEN"
+    },
+    "importMd5Optional": {
+      "value": "12404C1693CE54EEA9D92F1E7A1351D4"
+    },
+    "similarFiles": [
+      {
+        "filename": "/media/Shared/Photo/2026/July/AtHome/IMG_1747.JPEG",
+        "date": "2026-07-19T15:29:30",
+        "size": 776680,
+        "md5": "12404C1693CE54EEA9D92F1E7A1351D4",
+        "type": "FSO_FILE",
+        "md5Optional": {
+          "value": "12404C1693CE54EEA9D92F1E7A1351D4"
+        }
+      }
+    ],
+    "md5Optional": {
+      "value": "12404C1693CE54EEA9D92F1E7A1351D4"
+    }
+  },
+  {
+    "filename": "IMG_1733.JPEG",
+    "date": "2026-08-02T18:58:44",
+    "size": 1352105,
+    "md5": "4D6489EB72411D36845553DABCEEF797",
+    "type": null,
+    "status": "READ",
+    "location": {
+      "lat": 51.6616222,
+      "long": -0.2715722
+    },
+    "imageSize": {
+      "width": 2048,
+      "height": 1536
+    },
+    "image": true,
+    "video": false,
+    "updateTime": "2026-08-04T17:36:19.161846982",
+    "destination": "Borehamwood",
+    "duration": null,
+    "importName": "IMG_1733.JPEG",
+    "importDate": "2026-07-11T16:14:55",
+    "importSize": 1352105,
+    "importMd5": "4D6489EB72411D36845553DABCEEF797",
+    "errorInPostImport": false,
+    "errorInImport": false,
+    "inDatabase": true,
+    "inImport": true,
+    "inPostImport": true,
+    "stepStatus": {
+      "readPreImportFile": "GREEN",
+      "gatherMetaData": "GREEN",
+      "copyFileToImport": "GREEN",
+      "checkFileIgnored": "GREEN",
+      "checkActivePhotoFile": "GREEN",
+      "checkDuplicateFile": "GREEN",
+      "checkFileConfirmedImported": "GREEN",
+      "processImport": "GREEN",
+      "completed": "GREEN"
+    },
+    "importMd5Optional": {
+      "value": "4D6489EB72411D36845553DABCEEF797"
+    },
+    "similarFiles": [
+      {
+        "filename": "/media/Shared/Photo/2026/July/Borehamwood/IMG_1733.JPEG",
+        "date": "2026-07-11T16:14:55",
+        "size": 1352105,
+        "md5": "4D6489EB72411D36845553DABCEEF797",
+        "type": "FSO_FILE",
+        "md5Optional": {
+          "value": "4D6489EB72411D36845553DABCEEF797"
+        }
+      }
+    ],
+    "md5Optional": {
+      "value": "4D6489EB72411D36845553DABCEEF797"
+    }
+  },
+  {
+    "filename": "IMG_1715.JPEG",
+    "date": "2026-08-02T18:58:44",
+    "size": 971512,
+    "md5": "4FA8C258BFBC5EC703EC4376D79B845C",
+    "type": null,
+    "status": "READ",
+    "location": {
+      "lat": 51.6014333,
+      "long": -0.3778611
+    },
+    "imageSize": {
+      "width": 2048,
+      "height": 1536
+    },
+    "image": true,
+    "video": false,
+    "updateTime": "2026-08-04T17:36:19.106512784",
+    "destination": "AtHome",
+    "duration": null,
+    "importName": "IMG_1715.JPEG",
+    "importDate": "2026-06-27T10:02:31",
+    "importSize": 971512,
+    "importMd5": "4FA8C258BFBC5EC703EC4376D79B845C",
+    "errorInPostImport": false,
+    "errorInImport": false,
+    "inDatabase": true,
+    "inImport": true,
+    "inPostImport": true,
+    "stepStatus": {
+      "readPreImportFile": "GREEN",
+      "gatherMetaData": "GREEN",
+      "copyFileToImport": "GREEN",
+      "checkFileIgnored": "GREEN",
+      "checkActivePhotoFile": "GREEN",
+      "checkDuplicateFile": "GREEN",
+      "checkFileConfirmedImported": "GREEN",
+      "processImport": "GREEN",
+      "completed": "GREEN"
+    },
+    "importMd5Optional": {
+      "value": "4FA8C258BFBC5EC703EC4376D79B845C"
+    },
+    "similarFiles": [
+      {
+        "filename": "/media/Shared/Photo/2026/June/AtHome/IMG_1715.JPEG",
+        "date": "2026-06-27T10:02:31",
+        "size": 971512,
+        "md5": "4FA8C258BFBC5EC703EC4376D79B845C",
+        "type": "FSO_FILE",
+        "md5Optional": {
+          "value": "4FA8C258BFBC5EC703EC4376D79B845C"
+        }
+      }
+    ],
+    "md5Optional": {
+      "value": "4FA8C258BFBC5EC703EC4376D79B845C"
+    }
+  },
+  {
+    "filename": "IMG_1757.JPEG",
+    "date": "2026-08-02T18:58:46",
+    "size": 1551595,
+    "md5": "820E8C5DCF783C21097A928FC4D5E960",
+    "type": null,
+    "status": "READ",
+    "location": {
+      "lat": 51.6496917,
+      "long": -0.4015778
+    },
+    "imageSize": {
+      "width": 2048,
+      "height": 1536
+    },
+    "image": true,
+    "video": false,
+    "updateTime": "2026-08-04T17:36:20.093000013",
+    "destination": "Hansa",
+    "duration": null,
+    "importName": "IMG_1757.JPEG",
+    "importDate": "2026-07-25T15:33:20",
+    "importSize": 1551595,
+    "importMd5": "820E8C5DCF783C21097A928FC4D5E960",
+    "errorInPostImport": false,
+    "errorInImport": false,
+    "inDatabase": true,
+    "inImport": true,
+    "inPostImport": true,
+    "stepStatus": {
+      "readPreImportFile": "GREEN",
+      "gatherMetaData": "GREEN",
+      "copyFileToImport": "GREEN",
+      "checkFileIgnored": "GREEN",
+      "checkActivePhotoFile": "GREEN",
+      "checkDuplicateFile": "GREEN",
+      "checkFileConfirmedImported": "GREEN",
+      "processImport": "GREEN",
+      "completed": "GREEN"
+    },
+    "importMd5Optional": {
+      "value": "820E8C5DCF783C21097A928FC4D5E960"
+    },
+    "similarFiles": [
+      {
+        "filename": "/media/Shared/Photo/2026/July/Hansa/IMG_1757.JPEG",
+        "date": "2026-07-25T15:33:20",
+        "size": 1551595,
+        "md5": "820E8C5DCF783C21097A928FC4D5E960",
+        "type": "FSO_FILE",
+        "md5Optional": {
+          "value": "820E8C5DCF783C21097A928FC4D5E960"
+        }
+      }
+    ],
+    "md5Optional": {
+      "value": "820E8C5DCF783C21097A928FC4D5E960"
+    }
+  },
+  {
+    "filename": "IMG_1741.JPEG",
+    "date": "2026-08-02T18:58:46",
+    "size": 670052,
+    "md5": "CD3E16D5001567022FEF9394E613472E",
+    "type": null,
+    "status": "READ",
+    "location": {
+      "lat": 51.6031028,
+      "long": -0.2920472
+    },
+    "imageSize": {
+      "width": 2048,
+      "height": 1536
+    },
+    "image": true,
+    "video": false,
+    "updateTime": "2026-08-04T17:36:21.093252297",
+    "destination": "Barnet",
+    "duration": null,
+    "importName": "IMG_1741.JPEG",
+    "importDate": "2026-07-14T19:48:31",
+    "importSize": 670052,
+    "importMd5": "CD3E16D5001567022FEF9394E613472E",
+    "errorInPostImport": false,
+    "errorInImport": false,
+    "inDatabase": true,
+    "inImport": true,
+    "inPostImport": true,
+    "stepStatus": {
+      "readPreImportFile": "GREEN",
+      "gatherMetaData": "GREEN",
+      "copyFileToImport": "GREEN",
+      "checkFileIgnored": "GREEN",
+      "checkActivePhotoFile": "GREEN",
+      "checkDuplicateFile": "GREEN",
+      "checkFileConfirmedImported": "GREEN",
+      "processImport": "GREEN",
+      "completed": "GREEN"
+    },
+    "importMd5Optional": {
+      "value": "CD3E16D5001567022FEF9394E613472E"
+    },
+    "similarFiles": [
+      {
+        "filename": "/media/Shared/Photo/2026/July/Barnet/IMG_1741.JPEG",
+        "date": "2026-07-14T19:48:31",
+        "size": 670052,
+        "md5": "CD3E16D5001567022FEF9394E613472E",
+        "type": "FSO_FILE",
+        "md5Optional": {
+          "value": "CD3E16D5001567022FEF9394E613472E"
+        }
+      }
+    ],
+    "md5Optional": {
+      "value": "CD3E16D5001567022FEF9394E613472E"
+    }
+  },
+  {
+    "filename": "IMG_1764.JPEG",
+    "date": "2026-08-02T18:58:48",
+    "size": 875146,
+    "md5": "B5B818B92972C7D39833F54B401D2E96",
+    "type": null,
+    "status": "READ",
+    "location": {
+      "lat": 51.6497889,
+      "long": -0.4016472
+    },
+    "imageSize": {
+      "width": 2048,
+      "height": 1536
+    },
+    "image": true,
+    "video": false,
+    "updateTime": "2026-08-04T17:36:22.094177592",
+    "destination": "Fiorentina",
+    "duration": null,
+    "importName": "IMG_1764.JPEG",
+    "importDate": "2026-07-29T20:34:49",
+    "importSize": 875146,
+    "importMd5": "B5B818B92972C7D39833F54B401D2E96",
+    "errorInPostImport": false,
+    "errorInImport": false,
+    "inDatabase": true,
+    "inImport": true,
+    "inPostImport": true,
+    "stepStatus": {
+      "readPreImportFile": "GREEN",
+      "gatherMetaData": "GREEN",
+      "copyFileToImport": "GREEN",
+      "checkFileIgnored": "GREEN",
+      "checkActivePhotoFile": "GREEN",
+      "checkDuplicateFile": "GREEN",
+      "checkFileConfirmedImported": "GREEN",
+      "processImport": "GREEN",
+      "completed": "GREEN"
+    },
+    "importMd5Optional": {
+      "value": "B5B818B92972C7D39833F54B401D2E96"
+    },
+    "similarFiles": [
+      {
+        "filename": "/media/Shared/Photo/2026/July/Fiorentina/IMG_1764.JPEG",
+        "date": "2026-07-29T20:34:49",
+        "size": 875146,
+        "md5": "B5B818B92972C7D39833F54B401D2E96",
+        "type": "FSO_FILE",
+        "md5Optional": {
+          "value": "B5B818B92972C7D39833F54B401D2E96"
+        }
+      }
+    ],
+    "md5Optional": {
+      "value": "B5B818B92972C7D39833F54B401D2E96"
+    }
+  },
+  {
+    "filename": "IMG_1746.JPEG",
+    "date": "2026-08-02T18:58:46",
+    "size": 687129,
+    "md5": "AB041D546C5C6CC62FD5F4DEAE24D3FF",
+    "type": null,
+    "status": "READ",
+    "location": {
+      "lat": 51.6014472,
+      "long": -0.3780222
+    },
+    "imageSize": {
+      "width": 1536,
+      "height": 2048
+    },
+    "image": true,
+    "video": false,
+    "updateTime": "2026-08-04T17:36:21.107109752",
+    "destination": "AtHome",
+    "duration": null,
+    "importName": "IMG_1746.JPEG",
+    "importDate": "2026-07-19T15:27:10",
+    "importSize": 687129,
+    "importMd5": "AB041D546C5C6CC62FD5F4DEAE24D3FF",
+    "errorInPostImport": false,
+    "errorInImport": false,
+    "inDatabase": true,
+    "inImport": true,
+    "inPostImport": true,
+    "stepStatus": {
+      "readPreImportFile": "GREEN",
+      "gatherMetaData": "GREEN",
+      "copyFileToImport": "GREEN",
+      "checkFileIgnored": "GREEN",
+      "checkActivePhotoFile": "GREEN",
+      "checkDuplicateFile": "GREEN",
+      "checkFileConfirmedImported": "GREEN",
+      "processImport": "GREEN",
+      "completed": "GREEN"
+    },
+    "importMd5Optional": {
+      "value": "AB041D546C5C6CC62FD5F4DEAE24D3FF"
+    },
+    "similarFiles": [
+      {
+        "filename": "/media/Shared/Photo/2026/July/AtHome/IMG_1746.JPEG",
+        "date": "2026-07-19T15:27:10",
+        "size": 687129,
+        "md5": "AB041D546C5C6CC62FD5F4DEAE24D3FF",
+        "type": "FSO_FILE",
+        "md5Optional": {
+          "value": "AB041D546C5C6CC62FD5F4DEAE24D3FF"
+        }
+      }
+    ],
+    "md5Optional": {
+      "value": "AB041D546C5C6CC62FD5F4DEAE24D3FF"
+    }
+  },
+  {
+    "filename": "IMG_1707.JPEG",
+    "date": "2026-08-02T18:58:44",
+    "size": 1658748,
+    "md5": "25FF396C9F6FF00E7D0691A9EE9703F1",
+    "type": null,
+    "status": "READ",
+    "location": {
+      "lat": 51.6015139,
+      "long": -0.3781639
+    },
+    "imageSize": {
+      "width": 1536,
+      "height": 2048
+    },
+    "image": true,
+    "video": false,
+    "updateTime": "2026-08-04T17:36:18.093634636",
+    "destination": "AtHome",
+    "duration": null,
+    "importName": "IMG_1707.JPEG",
+    "importDate": "2026-06-25T20:44:33",
+    "importSize": 1658748,
+    "importMd5": "25FF396C9F6FF00E7D0691A9EE9703F1",
+    "errorInPostImport": false,
+    "errorInImport": false,
+    "inDatabase": true,
+    "inImport": true,
+    "inPostImport": true,
+    "stepStatus": {
+      "readPreImportFile": "GREEN",
+      "gatherMetaData": "GREEN",
+      "copyFileToImport": "GREEN",
+      "checkFileIgnored": "GREEN",
+      "checkActivePhotoFile": "GREEN",
+      "checkDuplicateFile": "GREEN",
+      "checkFileConfirmedImported": "GREEN",
+      "processImport": "GREEN",
+      "completed": "GREEN"
+    },
+    "importMd5Optional": {
+      "value": "25FF396C9F6FF00E7D0691A9EE9703F1"
+    },
+    "similarFiles": [
+      {
+        "filename": "/media/Shared/Photo/2026/June/AtHome/IMG_1707.JPEG",
+        "date": "2026-06-25T20:44:33",
+        "size": 1658748,
+        "md5": "25FF396C9F6FF00E7D0691A9EE9703F1",
+        "type": "FSO_FILE",
+        "md5Optional": {
+          "value": "25FF396C9F6FF00E7D0691A9EE9703F1"
+        }
+      }
+    ],
+    "md5Optional": {
+      "value": "25FF396C9F6FF00E7D0691A9EE9703F1"
+    }
+  },
+  {
+    "filename": "IMG_1754.JPEG",
+    "date": "2026-08-02T18:58:46",
+    "size": 1314989,
+    "md5": "8B627A2A75C9986C0BECF4AA89C30B41",
+    "type": null,
+    "status": "READ",
+    "location": {
+      "lat": 51.6498222,
+      "long": -0.4016694
+    },
+    "imageSize": {
+      "width": 2048,
+      "height": 1536
+    },
+    "image": true,
+    "video": false,
+    "updateTime": "2026-08-04T17:36:19.106520563",
+    "destination": "Hansa",
+    "duration": null,
+    "importName": "IMG_1754.JPEG",
+    "importDate": "2026-07-25T14:05:04",
+    "importSize": 1314989,
+    "importMd5": "8B627A2A75C9986C0BECF4AA89C30B41",
+    "errorInPostImport": false,
+    "errorInImport": false,
+    "inDatabase": true,
+    "inImport": true,
+    "inPostImport": true,
+    "stepStatus": {
+      "readPreImportFile": "GREEN",
+      "gatherMetaData": "GREEN",
+      "copyFileToImport": "GREEN",
+      "checkFileIgnored": "GREEN",
+      "checkActivePhotoFile": "GREEN",
+      "checkDuplicateFile": "GREEN",
+      "checkFileConfirmedImported": "GREEN",
+      "processImport": "GREEN",
+      "completed": "GREEN"
+    },
+    "importMd5Optional": {
+      "value": "8B627A2A75C9986C0BECF4AA89C30B41"
+    },
+    "similarFiles": [
+      {
+        "filename": "/media/Shared/Photo/2026/July/Hansa/IMG_1754.JPEG",
+        "date": "2026-07-25T14:05:04",
+        "size": 1314989,
+        "md5": "8B627A2A75C9986C0BECF4AA89C30B41",
+        "type": "FSO_FILE",
+        "md5Optional": {
+          "value": "8B627A2A75C9986C0BECF4AA89C30B41"
+        }
+      }
+    ],
+    "md5Optional": {
+      "value": "8B627A2A75C9986C0BECF4AA89C30B41"
+    }
+  },
+  {
+    "filename": "IMG_1730.JPEG",
+    "date": "2026-08-02T18:58:44",
+    "size": 992013,
+    "md5": "492541DC1A89CB6EA13FFC06984F3391",
+    "type": null,
+    "status": "READ",
+    "location": {
+      "lat": 51.6614722,
+      "long": -0.2720028
+    },
+    "imageSize": {
+      "width": 2048,
+      "height": 1536
+    },
+    "image": true,
+    "video": false,
+    "updateTime": "2026-08-04T17:36:20.093948899",
+    "destination": "Borehamwood",
+    "duration": null,
+    "importName": "IMG_1730.JPEG",
+    "importDate": "2026-07-11T15:08:52",
+    "importSize": 992013,
+    "importMd5": "492541DC1A89CB6EA13FFC06984F3391",
+    "errorInPostImport": false,
+    "errorInImport": false,
+    "inDatabase": true,
+    "inImport": true,
+    "inPostImport": true,
+    "stepStatus": {
+      "readPreImportFile": "GREEN",
+      "gatherMetaData": "GREEN",
+      "copyFileToImport": "GREEN",
+      "checkFileIgnored": "GREEN",
+      "checkActivePhotoFile": "GREEN",
+      "checkDuplicateFile": "GREEN",
+      "checkFileConfirmedImported": "GREEN",
+      "processImport": "GREEN",
+      "completed": "GREEN"
+    },
+    "importMd5Optional": {
+      "value": "492541DC1A89CB6EA13FFC06984F3391"
+    },
+    "similarFiles": [
+      {
+        "filename": "/media/Shared/Photo/2026/July/Borehamwood/IMG_1730.JPEG",
+        "date": "2026-07-11T15:08:52",
+        "size": 992013,
+        "md5": "492541DC1A89CB6EA13FFC06984F3391",
+        "type": "FSO_FILE",
+        "md5Optional": {
+          "value": "492541DC1A89CB6EA13FFC06984F3391"
+        }
+      }
+    ],
+    "md5Optional": {
+      "value": "492541DC1A89CB6EA13FFC06984F3391"
+    }
+  },
+  {
+    "filename": "IMG_1718.JPEG",
+    "date": "2026-08-02T18:58:44",
+    "size": 682873,
+    "md5": "B711D8B9017D7211A6F3506484B7C5F1",
+    "type": null,
+    "status": "READ",
+    "location": {
+      "lat": 51.601475,
+      "long": -0.3777472
+    },
+    "imageSize": {
+      "width": 1536,
+      "height": 2048
+    },
+    "image": true,
+    "video": false,
+    "updateTime": "2026-08-04T17:36:20.106842842",
+    "destination": "AtHome",
+    "duration": null,
+    "importName": "IMG_1718.JPEG",
+    "importDate": "2026-06-27T21:21:59",
+    "importSize": 682873,
+    "importMd5": "B711D8B9017D7211A6F3506484B7C5F1",
+    "errorInPostImport": false,
+    "errorInImport": false,
+    "inDatabase": true,
+    "inImport": true,
+    "inPostImport": true,
+    "stepStatus": {
+      "readPreImportFile": "GREEN",
+      "gatherMetaData": "GREEN",
+      "copyFileToImport": "GREEN",
+      "checkFileIgnored": "GREEN",
+      "checkActivePhotoFile": "GREEN",
+      "checkDuplicateFile": "GREEN",
+      "checkFileConfirmedImported": "GREEN",
+      "processImport": "GREEN",
+      "completed": "GREEN"
+    },
+    "importMd5Optional": {
+      "value": "B711D8B9017D7211A6F3506484B7C5F1"
+    },
+    "similarFiles": [
+      {
+        "filename": "/media/Shared/Photo/2026/June/AtHome/IMG_1718.JPEG",
+        "date": "2026-06-27T21:21:59",
+        "size": 682873,
+        "md5": "B711D8B9017D7211A6F3506484B7C5F1",
+        "type": "FSO_FILE",
+        "md5Optional": {
+          "value": "B711D8B9017D7211A6F3506484B7C5F1"
+        }
+      }
+    ],
+    "md5Optional": {
+      "value": "B711D8B9017D7211A6F3506484B7C5F1"
+    }
+  },
+  {
+    "filename": "IMG_1729.JPEG",
+    "date": "2026-08-02T18:58:46",
+    "size": 913929,
+    "md5": "1BBAB16E319D2FD918B6AE3B4FD3E89B",
+    "type": null,
+    "status": "READ",
+    "location": {
+      "lat": 51.6615056,
+      "long": -0.2720639
+    },
+    "imageSize": {
+      "width": 2048,
+      "height": 1536
+    },
+    "image": true,
+    "video": false,
+    "updateTime": "2026-08-04T17:36:20.162061737",
+    "destination": "Borehamwood",
+    "duration": null,
+    "importName": "IMG_1729.JPEG",
+    "importDate": "2026-07-11T15:08:42",
+    "importSize": 913929,
+    "importMd5": "1BBAB16E319D2FD918B6AE3B4FD3E89B",
+    "errorInPostImport": false,
+    "errorInImport": false,
+    "inDatabase": true,
+    "inImport": true,
+    "inPostImport": true,
+    "stepStatus": {
+      "readPreImportFile": "GREEN",
+      "gatherMetaData": "GREEN",
+      "copyFileToImport": "GREEN",
+      "checkFileIgnored": "GREEN",
+      "checkActivePhotoFile": "GREEN",
+      "checkDuplicateFile": "GREEN",
+      "checkFileConfirmedImported": "GREEN",
+      "processImport": "GREEN",
+      "completed": "GREEN"
+    },
+    "importMd5Optional": {
+      "value": "1BBAB16E319D2FD918B6AE3B4FD3E89B"
+    },
+    "similarFiles": [
+      {
+        "filename": "/media/Shared/Photo/2026/July/Borehamwood/IMG_1729.JPEG",
+        "date": "2026-07-11T15:08:42",
+        "size": 913929,
+        "md5": "1BBAB16E319D2FD918B6AE3B4FD3E89B",
+        "type": "FSO_FILE",
+        "md5Optional": {
+          "value": "1BBAB16E319D2FD918B6AE3B4FD3E89B"
+        }
+      }
+    ],
+    "md5Optional": {
+      "value": "1BBAB16E319D2FD918B6AE3B4FD3E89B"
+    }
+  },
+  {
+    "filename": "IMG_1756.JPEG",
+    "date": "2026-08-02T18:58:46",
+    "size": 1219334,
+    "md5": "49413578AA73F9CB55F00B70ACE59956",
+    "type": null,
+    "status": "READ",
+    "location": {
+      "lat": 51.6497111,
+      "long": -0.4016222
+    },
+    "imageSize": {
+      "width": 2048,
+      "height": 1536
+    },
+    "image": true,
+    "video": false,
+    "updateTime": "2026-08-04T17:36:22.093473057",
+    "destination": "Hansa",
+    "duration": null,
+    "importName": "IMG_1756.JPEG",
+    "importDate": "2026-07-25T15:33:13",
+    "importSize": 1219334,
+    "importMd5": "49413578AA73F9CB55F00B70ACE59956",
+    "errorInPostImport": false,
+    "errorInImport": false,
+    "inDatabase": true,
+    "inImport": true,
+    "inPostImport": true,
+    "stepStatus": {
+      "readPreImportFile": "GREEN",
+      "gatherMetaData": "GREEN",
+      "copyFileToImport": "GREEN",
+      "checkFileIgnored": "GREEN",
+      "checkActivePhotoFile": "GREEN",
+      "checkDuplicateFile": "GREEN",
+      "checkFileConfirmedImported": "GREEN",
+      "processImport": "GREEN",
+      "completed": "GREEN"
+    },
+    "importMd5Optional": {
+      "value": "49413578AA73F9CB55F00B70ACE59956"
+    },
+    "similarFiles": [
+      {
+        "filename": "/media/Shared/Photo/2026/July/Hansa/IMG_1756.JPEG",
+        "date": "2026-07-25T15:33:13",
+        "size": 1219334,
+        "md5": "49413578AA73F9CB55F00B70ACE59956",
+        "type": "FSO_FILE",
+        "md5Optional": {
+          "value": "49413578AA73F9CB55F00B70ACE59956"
+        }
+      }
+    ],
+    "md5Optional": {
+      "value": "49413578AA73F9CB55F00B70ACE59956"
+    }
+  },
+  {
+    "filename": "IMG_1753.JPEG",
+    "date": "2026-08-02T18:58:48",
+    "size": 977788,
+    "md5": "0AAC49DAA79DD08C9DA4CD7F5ECF162C",
+    "type": null,
+    "status": "READ",
+    "location": {
+      "lat": 51.6497833,
+      "long": -0.4016333
+    },
+    "imageSize": {
+      "width": 2048,
+      "height": 1536
+    },
+    "image": true,
+    "video": false,
+    "updateTime": "2026-08-04T17:36:18.161125609",
+    "destination": "Hansa",
+    "duration": null,
+    "importName": "IMG_1753.JPEG",
+    "importDate": "2026-07-25T14:04:52",
+    "importSize": 977788,
+    "importMd5": "0AAC49DAA79DD08C9DA4CD7F5ECF162C",
+    "errorInPostImport": false,
+    "errorInImport": false,
+    "inDatabase": true,
+    "inImport": true,
+    "inPostImport": true,
+    "stepStatus": {
+      "readPreImportFile": "GREEN",
+      "gatherMetaData": "GREEN",
+      "copyFileToImport": "GREEN",
+      "checkFileIgnored": "GREEN",
+      "checkActivePhotoFile": "GREEN",
+      "checkDuplicateFile": "GREEN",
+      "checkFileConfirmedImported": "GREEN",
+      "processImport": "GREEN",
+      "completed": "GREEN"
+    },
+    "importMd5Optional": {
+      "value": "0AAC49DAA79DD08C9DA4CD7F5ECF162C"
+    },
+    "similarFiles": [
+      {
+        "filename": "/media/Shared/Photo/2026/July/Hansa/IMG_1753.JPEG",
+        "date": "2026-07-25T14:04:52",
+        "size": 977788,
+        "md5": "0AAC49DAA79DD08C9DA4CD7F5ECF162C",
+        "type": "FSO_FILE",
+        "md5Optional": {
+          "value": "0AAC49DAA79DD08C9DA4CD7F5ECF162C"
+        }
+      }
+    ],
+    "md5Optional": {
+      "value": "0AAC49DAA79DD08C9DA4CD7F5ECF162C"
+    }
+  }
+]

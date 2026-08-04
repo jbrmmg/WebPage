@@ -1,0 +1,50 @@
+{
+  "PreImport":23,
+  "Import":23,
+  "PostImport":23,
+  "Queued":0,
+  "readPreImportFile": {
+    "UNKNOWN":1,
+    "RED":0,
+    "AMBER":0,
+    "GREEN":22 },
+  "gatherMetaData": {
+    "UNKNOWN":0,
+    "RED":1,
+    "AMBER":0,
+    "GREEN":22 },
+  "copyFileToImport": {
+    "UNKNOWN":0,
+    "RED":0,
+    "AMBER":0,
+    "GREEN":23 },
+  "checkFileIgnored": {
+    "UNKNOWN":0,
+    "RED":0,
+    "AMBER":0,
+    "GREEN":23 },
+  "checkActivePhotoFile": {
+    "UNKNOWN":0,
+    "RED":0,
+    "AMBER":1,
+    "GREEN":22},
+  "checkDuplicateFile": {
+    "UNKNOWN":0,
+    "RED":0,
+    "AMBER":0,
+    "GREEN":23 },
+  "checkFileConfirmedImported": {
+    "UNKNOWN":0,
+    "RED":0,
+    "AMBER":0,
+    "GREEN":23 },
+  "processImport": {
+    "UNKNOWN":0,
+    "RED":0,
+    "AMBER":0,
+    "GREEN":23 },
+  "completed": { "UNKNOWN":0,
+    "RED":0,
+    "AMBER":0,
+    "GREEN":23 }
+}

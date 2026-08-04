@@ -38,4 +38,13 @@ export class ImportGridFileDisplay {
     md5Diff() {
         return this.source?.md5 && this.source.importMd5 && this.source.md5 !== this.source.importMd5;
     }
+
+    rowClass(): string {
+        if (!this.source?.stepStatus) return '';
+        const vals = Object.values(this.source.stepStatus);
+        if (vals.some(v => v === 'RED'))   return 'row-red';
+        if (vals.some(v => v === 'AMBER')) return 'row-amber';
+        if (vals.every(v => v === 'GREEN')) return 'row-green';
+        return '';
+    }
 }

@@ -1,37 +1,21 @@
-.light-row {
-    margin: 0;
+.step-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: 2px 0;
 }
 
 .light {
-    width: 10px;
-    height: 10px;
-    border: 1px solid black;
-    border-radius: 50%;
-    display: flex;
-    padding: 0;
+    width: 8px;
+    height: 18px;
+    border-radius: 2px;
+    flex: 0 0 auto;
 }
 
-.left {
-    margin-left: 3px;
-}
+.left { /* spacing handled by gap */ }
 
-.red-light {
-    background: red;
-}
-
-.amber-light {
-    background: gold;
-}
-
-.green-light {
-    background: green;
-}
-
-.unknown-light {
-    background: grey;
-}
-
-.indicator {
-    padding: 2px 1px 0 0;
-    flex: 0 1 0;
-}
+.red-light     { background: #c0392b; }
+.amber-light   { background: #d4a017; }
+.green-light   { background: #27ae60; }
+.unknown-light { background: #2a2a3a; border: 1px solid #3d3d5a; }

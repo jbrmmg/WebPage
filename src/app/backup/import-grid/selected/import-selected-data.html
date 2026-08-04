@@ -1,33 +1,38 @@
 <div>
-    <div class="row">
+    <div class="row col-headers">
+        <div class="col-2"></div>
+        <div class="col-4 col-header">Source</div>
+        <div class="col-4 col-header">Import</div>
+    </div>
+    <div class="row data-row">
         <div class="col-2 title">Filename</div>
         <div class="col-4 data">{{getText()}}</div>
         <div class="col-4 data">{{getImportName()}}</div>
     </div>
-    <div class="row">
+    <div class="row data-row">
         <div class="col-2 title">Location</div>
         <div class="col-4 data">{{getLatLong()}}</div>
     </div>
-    <div class="row">
+    <div class="row data-row">
         <div class="col-2 title">Image Size</div>
         <div class="col-4 data">{{getImageSize()}}</div>
     </div>
-    <div class="row">
-        <div class="col-2 title">File Date</div>
+    <div class="row data-row">
+        <div class="col-2 title">Date</div>
         <div class="col-4 data">{{getFileDate()}}</div>
         <div class="col-4 data">{{getImportDate()}}</div>
     </div>
-    <div class="row">
-        <div class="col-2 title">File Size</div>
+    <div class="row data-row">
+        <div class="col-2 title">Size</div>
         <div class="col-4 data">{{getFileSize()}}</div>
         <div class="col-4 data">{{getImportSize()}}</div>
     </div>
-    <div class="row">
+    <div class="row data-row">
         <div class="col-2 title">MD5</div>
         <div class="col-4 data md5">{{getMD5()}}</div>
         <div class="col-4 data md5">{{getImportMd5()}}</div>
     </div>
-    <div class="row">
+    <div class="row data-row">
         <div class="col-2 title">Status</div>
         <div class="col-8 data">
             <table>
@@ -50,21 +55,21 @@
     </div>
     <div class="row btn-row">
         <div class="col action-btn-first">
-            <button class="btn btn-primary"
+            <button class="btn btn-sm btn-primary"
                    title="Move to the previous file in the list."
                    (click)="previous()">
                 <em class="fa fa-arrow-left"></em>
             </button>
         </div>
         <div class="col action-btn">
-            <button class="btn btn-primary"
+            <button class="btn btn-sm btn-primary"
                    title="Move to the next file in the list."
                    (click)="next()">
                 <em class="fa fa-arrow-right"></em>
             </button>
         </div>
         <div class="col action-btn">
-            <button class="btn btn-danger"
+            <button class="btn btn-sm btn-danger"
                    title="Remove this file from the import."
                    (click)="delete()">
                 <em class="fa fa-trash"></em>
@@ -78,14 +83,14 @@
             </button>
         </div>
         <div class="col action-btn">
-            <button class="btn btn-outline-success"
+            <button class="btn btn-sm btn-outline-success"
                    title="Import this photo as a recipe"
                    (click)="recipe()">
                 <em class="fa fa-cutlery"></em>
             </button>
         </div>
         <div class="col action-btn">
-            <button class="btn btn-outline-primary"
+            <button class="btn btn-sm btn-outline-primary"
                    title="Import this photo as a basic backup"
                    (click)="backup()">
                 <em class="fa fa-recycle"></em>

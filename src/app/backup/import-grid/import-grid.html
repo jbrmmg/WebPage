@@ -65,7 +65,7 @@
             </tr>
         </thead>
         <tbody *ngIf="data && data.length">
-            <tr *ngFor="let file of data">
+            <tr *ngFor="let file of data" [class]="file.rowClass()">
                 <ng-container *ngIf="file.visible">
                     <td>
                         <jbr-import-grid-data-select [file]=file (fileSelected)="selectRequest($event)"></jbr-import-grid-data-select>

@@ -311,9 +311,9 @@ export class ImportSelectedData {
 
     getIgnoreButtonLabelClass(): string {
         if (this.stepStatus?.checkFileIgnored && this.stepStatus.checkFileIgnored === 'RED') {
-            return 'btn btn-outline-success';
+            return 'btn btn-sm btn-outline-success';
         }
-        return 'btn btn-outline-danger';
+        return 'btn btn-sm btn-outline-danger';
     }
 
     getIgnoreButtonClass(): string {
