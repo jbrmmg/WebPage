@@ -240,6 +240,10 @@ export class MoneyService {
             return 'Future Balance';
         }
 
+        if (transaction.type === TransactionReport.CARRIED_FORWARD_BALANCE) {
+            return 'Carried Forward';
+        }
+
         return '&nbsp;';
     }
 

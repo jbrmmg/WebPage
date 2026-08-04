@@ -28,7 +28,7 @@ export class MoneyComponent {
         const f = new TransactionFilter();
         f.locked = false;
         f.predicted = false;
-        f.maxPageSize = 300;
+        f.maxPageSize = 25;
         f.pageNumber = 1;
         f.accounts = [];
         f.categories = [];

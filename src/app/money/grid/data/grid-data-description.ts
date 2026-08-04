@@ -48,7 +48,8 @@ export class GridDataDescription extends GridDataInlineEdit {
 
         return !((this.transaction.type === TransactionReport.OPEN_BALANCE) ||
             (this.transaction.type === TransactionReport.TODAY_BALANCE) ||
-            (this.transaction.type === TransactionReport.FUTURE_BALANCE));
+            (this.transaction.type === TransactionReport.FUTURE_BALANCE) ||
+            (this.transaction.type === TransactionReport.CARRIED_FORWARD_BALANCE));
     }
 
     getCategoryColour(): string {
