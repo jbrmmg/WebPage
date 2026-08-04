@@ -20,17 +20,17 @@ The current UI contains 6 tabs that provide the following:
 
 ### Summary information tab
 
-![Summary UI screen shot](./Summary.png)
+![Summary UI screen shot](./images/Summary.png)
 
 Simply displays the summary data as a list, if status is not OK then highlighted.
 
 ### View Files tab
 
-![Initial Screen](./ViewInitial.png)
+![Initial Screen](./images/ViewInitial.png)
 
 Initial view shows the high level directories, currently Documents and Photo
 
-![Photo View Screen](./PhotoView.png)
+![Photo View Screen](./images/PhotoView.png)
 
 The photo or video view shows a number of details of the photo/video:
 
@@ -45,33 +45,33 @@ The photo or video view shows a number of details of the photo/video:
 
 If the user clicks on the photo they can specify details of a print - these are sent of to an online retailer for printing.
 
-![Select for Print View](./SelectForPrint.png)
+![Select for Print View](./images/SelectForPrint.png)
 
 If file is not a photo / video - then display is basically the same but no view of the file is shown.
 
-![Other File View Screen](./OtherView.png)
+![Other File View Screen](./images/OtherView.png)
 
 ### Actions to approve
 
-![Actions View](./Action.png)
+![Actions View](./images/Action.png)
 
 This is just a list of actions with a confirm button.
 
 ### Import
 
-![Imports View](./Import.png)
+![Imports View](./images/Import.png)
 
 Controls the import of photos and videos, displays the media and information such as location and size.  A number of steps are involved in the processing and the status is show - it updates as files are updated.  User can choose the directory name, system will then put in that directory below the dated directory.  User can ignore files so they are never imported.
 
 ### Logs
 
-![Logs View](./Logs.png)
+![Logs View](./images/Logs.png)
 
 Displays a list of log file entries from the server.
 
 ### Prints
 
-![Prints View](./Print.png)
+![Prints View](./images/Print.png)
 
 Displays the photos selected for print with the size requested, user can remove from prints.
 
