@@ -25,7 +25,7 @@ export class BackupSummaryService {
     }
 
     getSummary(): Observable<BackupSummary> {
-        return this.http.get<BackupSummary>(environment.backupSummary).pipe(
+        return this.http.get<BackupSummary>(environment.backup.summary).pipe(
             tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => BackupSummaryService.handleError(err))
         );

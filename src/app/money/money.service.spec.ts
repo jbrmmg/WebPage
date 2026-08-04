@@ -294,28 +294,28 @@ describe('MoneyService', () => {
     describe('HTTP methods', () => {
         it('getFiles() should make a GET to moneyGetFilesUrl', () => {
             service.getFiles().subscribe();
-            const req = httpMock.expectOne(environment.moneyGetFilesUrl);
+            const req = httpMock.expectOne(environment.money.reconciliation.files);
             expect(req.request.method).toBe('GET');
             req.flush([]);
         });
 
         it('getCategories() should make a GET to moneyCategoryUrl', () => {
             service.getCategories().subscribe();
-            const req = httpMock.expectOne(environment.moneyCategoryUrl);
+            const req = httpMock.expectOne(environment.money.categories);
             expect(req.request.method).toBe('GET');
             req.flush([]);
         });
 
         it('getAccounts() should make a GET to moneyAccountUrl', () => {
             service.getAccounts().subscribe();
-            const req = httpMock.expectOne(environment.moneyAccountUrl);
+            const req = httpMock.expectOne(environment.money.accounts);
             expect(req.request.method).toBe('GET');
             req.flush([]);
         });
 
         it('getStatements() should make a GET to moneyStatementUrl', () => {
             service.getStatements().subscribe();
-            const req = httpMock.expectOne(environment.moneyStatementUrl);
+            const req = httpMock.expectOne(environment.money.statement.url);
             expect(req.request.method).toBe('GET');
             req.flush([]);
         });
@@ -324,7 +324,7 @@ describe('MoneyService', () => {
             const filter = new TransactionFilter();
             let result: ITransactionPage;
             service.getTransactions(filter).subscribe(page => result = page);
-            const req = httpMock.expectOne(environment.moneyTransactionListPage);
+            const req = httpMock.expectOne(environment.money.transaction.listPage);
             expect(req.request.method).toBe('POST');
             const mockPage: ITransactionPage = { totalCount: 1, pageNumber: 1, maxPageSize: 300, transactions: [] };
             req.flush(mockPage);
@@ -335,14 +335,14 @@ describe('MoneyService', () => {
 
         it('getVersion() should make a GET to moneyVersion', () => {
             service.getVersion().subscribe();
-            const req = httpMock.expectOne(environment.moneyVersion);
+            const req = httpMock.expectOne(environment.money.version);
             expect(req.request.method).toBe('GET');
             req.flush({ version: '1.0' });
         });
 
         it('addTransaction() should make a POST to moneyAddUrl', () => {
             service.addTransaction([]).subscribe();
-            const req = httpMock.expectOne(environment.moneyAddUrl);
+            const req = httpMock.expectOne(environment.money.transaction.add);
             expect(req.request.method).toBe('POST');
             req.flush({});
         });
@@ -350,7 +350,7 @@ describe('MoneyService', () => {
         it('loadFileRequest() should POST to moneyLoadFileUrl with the filename', () => {
             const file = { filename: 'test.csv' } as IFile;
             service.loadFileRequest(file).subscribe();
-            const req = httpMock.expectOne(environment.moneyLoadFileUrl);
+            const req = httpMock.expectOne(environment.money.reconciliation.load);
             expect(req.request.method).toBe('POST');
             expect(req.request.body.filename).toBe('test.csv');
             req.flush({});
@@ -358,7 +358,7 @@ describe('MoneyService', () => {
 
         it('updateTransaction() should make a PUT to moneyUpdateTransactionUrl', () => {
             service.updateTransaction([]).subscribe();
-            const req = httpMock.expectOne(environment.moneyUpdateTransactionUrl);
+            const req = httpMock.expectOne(environment.money.transaction.update);
             expect(req.request.method).toBe('PUT');
             req.flush({});
         });
@@ -366,7 +366,7 @@ describe('MoneyService', () => {
         it('reconcile() should PUT transaction ids and flag to moneyReconcileTransactionUrl', () => {
             const tx = { transactionId: 42 } as ITransactionReport;
             service.reconcile([tx], true).subscribe();
-            const req = httpMock.expectOne(environment.moneyReconcileTransactionUrl);
+            const req = httpMock.expectOne(environment.money.reconcile);
             expect(req.request.method).toBe('PUT');
             expect(req.request.body.reconcile).toBeTrue();
             expect(req.request.body.transactions).toContain(42);
@@ -376,7 +376,7 @@ describe('MoneyService', () => {
         it('deleteTransaction() should DELETE with body containing transaction ids', () => {
             const tx = { transactionId: 7 } as ITransactionReport;
             service.deleteTransaction([tx]).subscribe();
-            const req = httpMock.expectOne(environment.moneyDeleteTransactionUrl);
+            const req = httpMock.expectOne(environment.money.transaction.delete);
             expect(req.request.method).toBe('DELETE');
             expect(req.request.body[0].id).toBe(7);
             req.flush({});
@@ -388,7 +388,7 @@ describe('MoneyService', () => {
             };
             service.lockStatement(stmt).subscribe();
             expect(stmt.locked).toBeTrue();
-            const req = httpMock.expectOne(environment.moneyLockStatementUrl);
+            const req = httpMock.expectOne(environment.money.statement.lock);
             expect(req.request.method).toBe('POST');
             expect(req.request.body.accountId).toBe('ACC1');
             expect(req.request.body.month).toBe(3);
@@ -398,7 +398,7 @@ describe('MoneyService', () => {
 
         it('clearRecData() should make a DELETE to moneyClearDataUrl', () => {
             service.clearRecData().subscribe();
-            const req = httpMock.expectOne(environment.moneyClearDataUrl);
+            const req = httpMock.expectOne(environment.money.reconciliation.clear);
             expect(req.request.method).toBe('DELETE');
             req.flush(null);
         });
@@ -406,7 +406,7 @@ describe('MoneyService', () => {
         it('getFiles() should propagate HTTP errors', () => {
             let errorCaught = false;
             service.getFiles().subscribe({ error: () => { errorCaught = true; } });
-            const req = httpMock.expectOne(environment.moneyGetFilesUrl);
+            const req = httpMock.expectOne(environment.money.reconciliation.files);
             req.flush('Server error', { status: 500, statusText: 'Internal Server Error' });
             expect(errorCaught).toBeTrue();
         });

@@ -25,7 +25,7 @@ export class BackupLogService {
     }
 
     getLogs(): Observable<Log[]> {
-        return this.http.get<Log[]>(environment.backupLog).pipe(
+        return this.http.get<Log[]>(environment.backup.logs).pipe(
             tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => BackupLogService.handleError(err))
         );

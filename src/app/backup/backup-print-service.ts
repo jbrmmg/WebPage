@@ -30,7 +30,7 @@ export class BackupPrintService {
     }
 
     getPrintSizes(): Observable<PrintSize[]> {
-        return this.http.get<PrintSize[]>(environment.backupPrintSize).pipe(
+        return this.http.get<PrintSize[]>(environment.backup.prints.sizes).pipe(
             tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => BackupPrintService.handleError(err))
         );
@@ -53,7 +53,7 @@ export class BackupPrintService {
     }
 
     selectForPrint() {
-        this.http.post<void>(environment.backupPrint, this.selectedPhoto).subscribe({
+        this.http.post<void>(environment.backup.prints.url, this.selectedPhoto).subscribe({
             next: () => {
                 console.log('🖨️ Select for print');
             },
@@ -68,7 +68,7 @@ export class BackupPrintService {
     }
 
     updatePrints() {
-        this.http.get<SelectedPrint[]>(environment.backupPrints).subscribe({
+        this.http.get<SelectedPrint[]>(environment.backup.prints.url).subscribe({
             next: (selected) => {
                 this.selectedPhotos = selected;
                 console.log('🖨️ Selecting from print');
@@ -88,7 +88,7 @@ export class BackupPrintService {
     }
 
     unselectForPrint(id: number) {
-        this.http.post<void>(environment.backupUnprint, id).subscribe({
+        this.http.post<void>(environment.backup.prints.unselect, id).subscribe({
             next: () => {
                 console.log('🖨️ Unselect for print');
             },
@@ -103,7 +103,7 @@ export class BackupPrintService {
     }
 
     updatedPrint(print: SelectedPrint) {
-        this.http.put<void>(environment.backupPrint, print).subscribe(
+        this.http.put<void>(environment.backup.prints.url, print).subscribe(
             {
                 error: (response) => {
                     console.error('Failed to update file print size', response);
@@ -116,7 +116,7 @@ export class BackupPrintService {
     }
 
     clearPrints() {
-        this.http.delete<void>(environment.backupPrints).subscribe({
+        this.http.delete<void>(environment.backup.prints.url).subscribe({
             next: () => {
                 console.log('🗑️ Delete prints');
             },

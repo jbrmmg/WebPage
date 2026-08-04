@@ -27,7 +27,7 @@ export class ImportGridService {
     }
 
     getFiles(limit: number, page: number, filter: ListFilterType): Observable<ImportGridFile[]> {
-        let url = environment.backupGetPreImportFiles + '?limit=' + limit + '&page=' + page;
+        let url = environment.backup.import.files + '?limit=' + limit + '&page=' + page;
         if (filter != null) {
             url = url + '&stepType=' + TrafficLightType[filter.type] + '&status=' + TrafficLightStatus[filter.status];
         }
@@ -39,50 +39,50 @@ export class ImportGridService {
     }
 
     fileUpdateSource(): EventSource {
-        return new EventSource(environment.backupFileUpdates);
+        return new EventSource(environment.backup.import.fileUpdates);
     }
 
     summaryUpdateSource(): EventSource {
-        return new EventSource(environment.backupFileSummaryUpdates);
+        return new EventSource(environment.backup.import.summaryUpdates);
     }
 
     removeIgnored(): Observable<any> {
-        return this.http.delete(environment.backupRemoveIgnored, { responseType: 'text' });
+        return this.http.delete(environment.backup.import.ignored, { responseType: 'text' });
     }
 
     removeActive(): Observable<any> {
-        return this.http.delete(environment.backupRemoveActive, { responseType: 'text' });
+        return this.http.delete(environment.backup.import.activePhotos, { responseType: 'text' });
     }
 
     importPhotos(): Observable<any> {
-        return this.http.post(environment.backupImportPhotos, '', {responseType: 'text'});
+        return this.http.post(environment.backup.import.photos, '', {responseType: 'text'});
     }
 
     removeConfirmedImports(): Observable<any> {
-        return this.http.delete(environment.backupDeleteConfirmedImports, {responseType: 'text'});
+        return this.http.delete(environment.backup.import.confirmed, {responseType: 'text'});
     }
 
     ignore(file: string): Observable<any> {
-        return this.http.post(environment.backupIgnoreFile, file, {responseType: 'text'});
+        return this.http.post(environment.backup.import.file.ignore, file, {responseType: 'text'});
     }
 
     delete(file: string): Observable<any> {
-        return this.http.delete(environment.backupDeleteImportFile, {body: file});
+        return this.http.delete(environment.backup.import.file.delete, {body: file});
     }
 
     unignore(file: string): Observable<any> {
-        return this.http.post(environment.backupUnignoreFile, file, {responseType: 'text'});
+        return this.http.post(environment.backup.import.file.unIgnore, file, {responseType: 'text'});
     }
 
     recipe(file: string): Observable<any> {
-        return this.http.post(environment.backupRecipeFile, file, {responseType: 'text'});
+        return this.http.post(environment.backup.import.file.recipe, file, {responseType: 'text'});
     }
 
     backup(file: string): Observable<any> {
-        return this.http.post(environment.basicBackupFile, file, {responseType: 'text'});
+        return this.http.post(environment.backup.import.file.backup, file, {responseType: 'text'});
     }
 
     updateDestination(update: FileDestinationUpdate): Observable<any> {
-        return this.http.post(environment.backupUpdateDestination, update, {responseType: 'text'});
+        return this.http.post(environment.backup.import.file.destination, update, {responseType: 'text'});
     }
 }

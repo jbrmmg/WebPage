@@ -61,7 +61,7 @@ export class MoneyService {
     }
 
     public static getAccountImage(id: string): string {
-        return environment.moneyAccountImage.replace('##id##', id);
+        return environment.money.account.image.replace('##id##', id);
     }
 
     public static getDateString(date: Date): string {
@@ -197,7 +197,7 @@ export class MoneyService {
     }
 
     public static getDisabledAccountImage(id: string): string {
-        return environment.moneyAccountDisabledImage.replace('##id##', id);
+        return environment.money.account.disabledImage.replace('##id##', id);
     }
 
     private static handleError(err: HttpErrorResponse) {
@@ -252,28 +252,28 @@ export class MoneyService {
     }
 
     getFiles(): Observable<IFile[]> {
-        return this.http.get<IFile[]>(environment.moneyGetFilesUrl).pipe(
+        return this.http.get<IFile[]>(environment.money.reconciliation.files).pipe(
             tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError( err => MoneyService.handleError(err))
         );
     }
 
     getCategories(): Observable<Category[]> {
-        return this.http.get<Category[]>(environment.moneyCategoryUrl).pipe(
+        return this.http.get<Category[]>(environment.money.categories).pipe(
             tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
     }
 
     getAccounts(): Observable<JbAccount[]> {
-        return this.http.get<JbAccount[]>(environment.moneyAccountUrl).pipe(
+        return this.http.get<JbAccount[]>(environment.money.accounts).pipe(
             tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
     }
 
     getStatements(): Observable<Statement[]> {
-        return this.http.get<Statement[]>(environment.moneyStatementUrl).pipe(
+        return this.http.get<Statement[]>(environment.money.statement.url).pipe(
             tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
@@ -282,39 +282,39 @@ export class MoneyService {
     getTransactions(filter: TransactionFilter): Observable<ITransactionPage> {
         console.log('🔍 Filter:', JSON.stringify(filter));
 
-        return this.http.post<ITransactionPage>(environment.moneyTransactionListPage, filter).pipe(
+        return this.http.post<ITransactionPage>(environment.money.transaction.listPage, filter).pipe(
             tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
     }
 
     getVersion(): Observable<IVersion> {
-        return this.http.get<IVersion>(environment.moneyVersion).pipe(
+        return this.http.get<IVersion>(environment.money.version).pipe(
             tap(data => console.log('🔑 Version', JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
     }
 
     addTransaction(transactions: Transaction[]): Observable<Transaction> {
-        return this.http.post<Transaction>(environment.moneyAddUrl, transactions);
+        return this.http.post<Transaction>(environment.money.transaction.add, transactions);
     }
 
     loadFileRequest(file: IFile): Observable<LoadFileRequest> {
         const request: LoadFileRequest = new LoadFileRequest();
         request.filename = file.filename;
 
-        return this.http.post<LoadFileRequest>(environment.moneyLoadFileUrl, request);
+        return this.http.post<LoadFileRequest>(environment.money.reconciliation.load, request);
     }
 
     updateTransaction(transaction: ITransactionReport[]): Observable<ITransaction> {
         // Update the transaction provided.
-        return this.http.put<ITransaction>(environment.moneyUpdateTransactionUrl, transaction);
+        return this.http.put<ITransaction>(environment.money.transaction.update, transaction);
     }
 
     reconcile(transactions: ITransactionReport[], reconcile: boolean): Observable<ReconcileStatus> {
         // Set transaction to confirmed/unconfirmed
         // TransactionId & Flag
-        const url = environment.moneyReconcileTransactionUrl;
+        const url = environment.money.reconcile;
 
         const reconcileRequest: ReconcileTransaction = new ReconcileTransaction();
         reconcileRequest.transactions = [];
@@ -338,7 +338,7 @@ export class MoneyService {
         });
 
         // Delete the transactions.
-        return this.http.delete<Transaction>(environment.moneyDeleteTransactionUrl, {
+        return this.http.delete<Transaction>(environment.money.transaction.delete, {
             body: request
         });
     }
@@ -349,7 +349,7 @@ export class MoneyService {
 
         statement.locked = true;
 
-        const url = environment.moneyLockStatementUrl;
+        const url = environment.money.statement.lock;
 
         const lockRequest = new LockRequest();
 
@@ -362,11 +362,11 @@ export class MoneyService {
 
     clearRecData(): Observable<void> {
         // Clear the rec data.
-        return this.http.delete<void>(environment.moneyClearDataUrl);
+        return this.http.delete<void>(environment.money.reconciliation.clear);
     }
 
     fileUpdateSource(): EventSource {
-        return new EventSource(environment.moneyFileUpdates);
+        return new EventSource(environment.money.reconciliation.fileUpdates);
     }
 
     getAccountImage(id: string): string {
@@ -374,14 +374,14 @@ export class MoneyService {
     }
 
     getEmailReports(): Observable<IEmailReport[]> {
-        return this.http.get<IEmailReport[]>(environment.moneyEmailReportsUrl).pipe(
+        return this.http.get<IEmailReport[]>(environment.money.email.reports).pipe(
             tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => MoneyService.handleError(err))
         );
     }
 
     sendEmail(report: IEmailReport, email: string): Observable<void> {
-        return this.http.post<void>(environment.moneyEmailUrl, { ...report, to: email });
+        return this.http.post<void>(environment.money.email.url, { ...report, to: email });
     }
 }
 

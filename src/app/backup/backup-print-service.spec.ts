@@ -61,12 +61,12 @@ describe('BackupPrintService', () => {
     });
 
     describe('getPrintSizes()', () => {
-        it('should GET from backupPrintSize and return the list', () => {
+        it('should GET from prints.sizes and return the list', () => {
             const mockSizes: PrintSize[] = [{ id: 1, name: '4x6' }, { id: 2, name: '5x7' }];
             service.getPrintSizes().subscribe(sizes => {
                 expect(sizes).toEqual(mockSizes);
             });
-            const req = httpMock.expectOne(environment.backupPrintSize);
+            const req = httpMock.expectOne(environment.backup.prints.sizes);
             expect(req.request.method).toBe('GET');
             req.flush(mockSizes);
         });
@@ -74,19 +74,19 @@ describe('BackupPrintService', () => {
         it('should propagate HTTP errors', () => {
             let errorCaught = false;
             service.getPrintSizes().subscribe({ error: () => { errorCaught = true; } });
-            const req = httpMock.expectOne(environment.backupPrintSize);
+            const req = httpMock.expectOne(environment.backup.prints.sizes);
             req.flush('Error', { status: 500, statusText: 'Server Error' });
             expect(errorCaught).toBeTrue();
         });
     });
 
     describe('updatePrints()', () => {
-        it('should GET from backupPrints and store the result', () => {
+        it('should GET from prints.url and store the result', () => {
             const mockPhotos: SelectedPrint[] = [
                 { fileId: 1, fileName: 'a.jpg', sizeId: 1, sizeName: '4x6', border: false, blackWhite: false }
             ];
             service.updatePrints();
-            const req = httpMock.expectOne(environment.backupPrints);
+            const req = httpMock.expectOne(environment.backup.prints.url);
             expect(req.request.method).toBe('GET');
             req.flush(mockPhotos);
             expect(service.getSelectedPhotos()).toEqual(mockPhotos);
@@ -96,64 +96,61 @@ describe('BackupPrintService', () => {
             let emitted = false;
             service.printsUpdated.subscribe(() => { emitted = true; });
             service.updatePrints();
-            const req = httpMock.expectOne(environment.backupPrints);
+            const req = httpMock.expectOne(environment.backup.prints.url);
             req.flush([]);
             expect(emitted).toBeTrue();
         });
     });
 
     describe('selectForPrint()', () => {
-        it('should POST the selected photo to backupPrint', () => {
+        it('should POST the selected photo to prints.url', () => {
             service.setSelectedPhoto(5, 'test.jpg');
             service.selectForPrint();
-            const postReq = httpMock.expectOne(environment.backupPrint);
-            expect(postReq.request.method).toBe('POST');
+            const postReq = httpMock.expectOne(req => req.method === 'POST' && req.url === environment.backup.prints.url);
             expect(postReq.request.body.fileId).toBe(5);
             expect(postReq.request.body.fileName).toBe('test.jpg');
             postReq.flush(null);
             // selectForPrint calls updatePrints() on complete
-            const getReq = httpMock.expectOne(environment.backupPrints);
+            const getReq = httpMock.expectOne(req => req.method === 'GET' && req.url === environment.backup.prints.url);
             getReq.flush([]);
         });
     });
 
     describe('unselectForPrint()', () => {
-        it('should POST the photo id to backupUnprint', () => {
+        it('should POST the photo id to prints.unselect', () => {
             service.unselectForPrint(7);
-            const postReq = httpMock.expectOne(environment.backupUnprint);
+            const postReq = httpMock.expectOne(environment.backup.prints.unselect);
             expect(postReq.request.method).toBe('POST');
             expect(postReq.request.body).toBe(7);
             postReq.flush(null);
             // unselectForPrint calls updatePrints() on complete
-            const getReq = httpMock.expectOne(environment.backupPrints);
+            const getReq = httpMock.expectOne(environment.backup.prints.url);
             getReq.flush([]);
         });
     });
 
     describe('updatedPrint()', () => {
-        it('should PUT the print object to backupPrint', () => {
+        it('should PUT the print object to prints.url', () => {
             const print = new SelectedPrint();
             print.fileId = 3;
             print.sizeId = 2;
             service.updatedPrint(print);
-            const req = httpMock.expectOne(environment.backupPrint);
-            expect(req.request.method).toBe('PUT');
+            const req = httpMock.expectOne(req => req.method === 'PUT' && req.url === environment.backup.prints.url);
             expect(req.request.body.fileId).toBe(3);
             req.flush(null);
             // updatedPrint calls updatePrints() on complete
-            const getReq = httpMock.expectOne(environment.backupPrints);
+            const getReq = httpMock.expectOne(req => req.method === 'GET' && req.url === environment.backup.prints.url);
             getReq.flush([]);
         });
     });
 
     describe('clearPrints()', () => {
-        it('should DELETE from backupPrints', () => {
+        it('should DELETE from prints.url', () => {
             service.clearPrints();
-            const req = httpMock.expectOne(environment.backupPrints);
-            expect(req.request.method).toBe('DELETE');
+            const req = httpMock.expectOne(req => req.method === 'DELETE' && req.url === environment.backup.prints.url);
             req.flush(null);
             // clearPrints calls updatePrints() on complete
-            const getReq = httpMock.expectOne(environment.backupPrints);
+            const getReq = httpMock.expectOne(req => req.method === 'GET' && req.url === environment.backup.prints.url);
             getReq.flush([]);
         });
     });

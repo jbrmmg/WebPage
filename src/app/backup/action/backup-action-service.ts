@@ -24,7 +24,7 @@ export class BackupActionService {
     }
 
     getActions(): Observable<Action[]> {
-        return this.http.get<Action[]>(environment.backupActions).pipe(
+        return this.http.get<Action[]>(environment.backup.actions).pipe(
             tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError( err => BackupActionService.handleError(err))
         );
@@ -37,7 +37,7 @@ export class BackupActionService {
         confirmReq.confirm = true;
 
         // Send the confirmation request to the server.
-        this.http.post<void>(environment.backupActions, confirmReq).subscribe({
+        this.http.post<void>(environment.backup.actions, confirmReq).subscribe({
             error: err => {
                 console.error('❌ Failed to confirm the request:', err);
             },

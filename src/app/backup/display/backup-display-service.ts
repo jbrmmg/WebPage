@@ -32,7 +32,7 @@ export class BackupDisplayService {
     }
 
     getHierarchy(parent: HierarchyResponse): Observable<HierarchyResponse[]> {
-        return this.http.post<HierarchyResponse[]>(environment.backupHierarchy, parent).pipe(
+        return this.http.post<HierarchyResponse[]>(environment.backup.hierarchy, parent).pipe(
             tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => BackupDisplayService.handleError(err))
         );
@@ -87,7 +87,7 @@ export class BackupDisplayService {
     }
 
     refreshFile(id: number) {
-        this.http.post<FileInfoExtra>(environment.backupRefreshFile.replace('##id##', '' + id), '').pipe(
+        this.http.post<FileInfoExtra>(environment.backup.files.refresh.replace('##id##', '' + id), '').pipe(
             tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError( err => BackupDisplayService.handleError(err))
         ).subscribe({
@@ -105,7 +105,7 @@ export class BackupDisplayService {
     }
 
     getLabels(): Observable<Label[]> {
-        return this.http.get<Label[]>(environment.backupLabels).pipe(
+        return this.http.get<Label[]>(environment.backup.labels).pipe(
             tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => BackupDisplayService.handleError(err))
         );
@@ -118,7 +118,7 @@ export class BackupDisplayService {
         fileLabel.labels = [];
         fileLabel.labels.push(labelId);
 
-        this.http.post<FileInfoExtra>(environment.backupLabel, fileLabel).pipe(
+        this.http.post<FileInfoExtra>(environment.backup.labels, fileLabel).pipe(
             tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => BackupDisplayService.handleError(err))
         ).subscribe({
@@ -142,7 +142,7 @@ export class BackupDisplayService {
         fileLabel.labels = [];
         fileLabel.labels.push(labelId);
 
-        this.http.delete<FileInfoExtra>(environment.backupLabel, {body: fileLabel}).pipe(
+        this.http.delete<FileInfoExtra>(environment.backup.labels, {body: fileLabel}).pipe(
             tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError(err => BackupDisplayService.handleError(err))
         ).subscribe({
@@ -164,7 +164,7 @@ export class BackupDisplayService {
         fileExpiry.id = id;
         fileExpiry.expiry = expiry;
 
-        this.http.put<FileInfoExtra>(environment.backupExpire, fileExpiry).pipe(
+        this.http.put<FileInfoExtra>(environment.backup.files.expire, fileExpiry).pipe(
             tap(data => console.log('📡 Response:', JSON.stringify(data))),
             catchError( err => BackupDisplayService.handleError(err))
         ).subscribe({
