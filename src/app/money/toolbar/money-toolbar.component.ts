@@ -35,7 +35,7 @@ export class MoneyToolbarComponent {
     @Input() newestFirst = false;
     @Output() newestFirstChange = new EventEmitter<boolean>();
 
-    pageSizes = [25, 50, 100, 200, 300];
+    pageSizes = [35, 70, 140, 200, 300];
 
     onFilter() { this.filterClick.emit(); }
     onAdd() { this.addClick.emit(); }
