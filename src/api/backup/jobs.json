@@ -1,0 +1,121 @@
+[
+  {
+    "backupId": "KEEP",
+    "startedAt": "2026-08-09T15:12:23",
+    "finishedAt": "2026-08-09T15:12:23",
+    "status": "SKIPPED",
+    "message": "PassData.kdbx backed up"
+  },
+  {
+    "backupId": "MSTG",
+    "startedAt": "2026-08-09T15:12:30",
+    "finishedAt": "2026-08-09T15:12:30",
+    "status": "SKIPPED",
+    "message": "settings.xml backed up"
+  },
+  {
+    "backupId": "BKDB",
+    "startedAt": "2026-08-09T15:10:12",
+    "finishedAt": "2026-08-09T15:10:13",
+    "status": "SUCCESS",
+    "message": "Database backupdb backed up"
+  },
+  {
+    "backupId": "MYDB",
+    "startedAt": "2026-08-09T15:09:30",
+    "finishedAt": "2026-08-09T15:09:30",
+    "status": "SUCCESS",
+    "message": "Database moneydb backed up"
+  },
+  {
+    "backupId": "APDB",
+    "startedAt": "2026-08-09T15:10:04",
+    "finishedAt": "2026-08-09T15:10:05",
+    "status": "SUCCESS",
+    "message": "Database apacheauth backed up"
+  },
+  {
+    "backupId": "HOST",
+    "startedAt": "2026-08-09T15:12:16",
+    "finishedAt": "2026-08-09T15:12:16",
+    "status": "SKIPPED",
+    "message": "hosts backed up"
+  },
+  {
+    "backupId": "SUDO",
+    "startedAt": "2026-08-09T15:09:47",
+    "finishedAt": "2026-08-09T15:09:47",
+    "status": "SKIPPED",
+    "message": "sudoers backed up"
+  },
+  {
+    "backupId": "FTAB",
+    "startedAt": "2026-08-09T15:08:41",
+    "finishedAt": "2026-08-09T15:08:41",
+    "status": "SKIPPED",
+    "message": "fstab backed up"
+  },
+  {
+    "backupId": "CLAU",
+    "startedAt": "2026-08-09T15:10:22",
+    "finishedAt": "2026-08-09T15:10:22",
+    "status": "SKIPPED",
+    "message": "settings.json backed up"
+  },
+  {
+    "backupId": "DBUP",
+    "startedAt": "2026-08-09T15:10:57",
+    "finishedAt": "2026-08-09T15:11:14",
+    "status": "SUCCESS",
+    "message": "/host/home/jason/Source/Backup backed up"
+  },
+  {
+    "backupId": "DMNY",
+    "startedAt": "2026-08-09T15:11:25",
+    "finishedAt": "2026-08-09T15:11:38",
+    "status": "SUCCESS",
+    "message": "/host/home/jason/Source/Money backed up"
+  },
+  {
+    "backupId": "DMYS",
+    "startedAt": "2026-08-09T15:11:47",
+    "finishedAt": "2026-08-09T15:11:48",
+    "status": "SUCCESS",
+    "message": "/host/home/jason/Source/Sites backed up"
+  },
+  {
+    "backupId": "DSCR",
+    "startedAt": "2026-08-09T15:12:05",
+    "finishedAt": "2026-08-09T15:12:06",
+    "status": "SUCCESS",
+    "message": "/host/home/jason/Source/Scripts backed up"
+  },
+  {
+    "backupId": "DANG",
+    "startedAt": "2026-08-09T15:10:35",
+    "finishedAt": "2026-08-09T15:10:48",
+    "status": "SUCCESS",
+    "message": "/host/home/jason/Source/WebPage/src/app backed up"
+  },
+  {
+    "backupId": "MYDB",
+    "startedAt": "2026-08-08T15:09:30",
+    "finishedAt": "2026-08-08T15:09:31",
+    "status": "SUCCESS",
+    "message": "Database moneydb backed up"
+  },
+  {
+    "backupId": "BKDB",
+    "startedAt": "2026-08-08T15:10:12",
+    "finishedAt": "2026-08-08T15:10:14",
+    "status": "FAILED",
+    "message": "Database backupdb backup failed - connection timeout"
+  },
+  {
+    "backupId": "DBUP",
+    "startedAt": "2026-08-08T15:10:57",
+    "finishedAt": "2026-08-08T15:11:14",
+    "status": "SUCCESS",
+    "message": "/host/home/jason/Source/Backup backed up"
+  }
+]

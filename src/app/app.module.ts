@@ -42,6 +42,7 @@ import {MoneyTransferComponent} from './money/transfer/money-transfer.component'
 import {MoneyEmailComponent} from './money/email/money-email.component';
 import {MobileAddComponent} from './money/mobile/mobile-add.component';
 import {MobileRecentComponent} from './money/mobile/mobile-recent.component';
+import {BackupJobsComponent} from './backup/jobs/backup-jobs.component';
 
 @NgModule({
     declarations: [
@@ -57,7 +58,8 @@ import {MobileRecentComponent} from './money/mobile/mobile-recent.component';
         BackupPrintSizeSelectComponent,
         BackupPrintsComponent,
         BackupPrintImageComponent,
-        WifiComponent
+        WifiComponent,
+        BackupJobsComponent
     ],
     imports: [
         BrowserModule,

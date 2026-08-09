@@ -42,6 +42,13 @@
         <em class="fa fa-print"></em>
         <span class="tab-label">Prints</span>
     </button>
+    <button class="tab-btn"
+            [class.active]="isJobsMode"
+            (click)="selectJobsMode()"
+            title="Backup Jobs">
+        <em class="fa fa-tasks"></em>
+        <span class="tab-label">Backups</span>
+    </button>
 </nav>
 <div class="tab-content">
     <div id="summary" [collapse]="!isSummaryMode">
@@ -64,5 +71,8 @@
     </div>
     <div id="prints" [collapse]="!isPrintsMode">
         <jbr-backup-prints></jbr-backup-prints>
+    </div>
+    <div id="jobs" [collapse]="!isJobsMode">
+        <jbr-backup-jobs></jbr-backup-jobs>
     </div>
 </div>

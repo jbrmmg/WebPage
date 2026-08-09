@@ -1,0 +1,109 @@
+.jobs-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Day tabs */
+.day-tabs {
+    display: flex;
+    gap: 4px;
+    padding: 0 0 12px 0;
+    flex-wrap: wrap;
+}
+
+.day-tab {
+    padding: 5px 16px;
+    background: #1e2a42;
+    border: 1px solid #2d3a5a;
+    border-radius: 16px;
+    color: #7a8fb0;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.day-tab:hover {
+    background: #2d3a5a;
+    color: #c5d0e8;
+}
+
+.day-tab.active {
+    background: #1e3a5f;
+    border-color: #4caf50;
+    color: #ffffff;
+}
+
+/* Table */
+.jobs-scroll {
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+}
+
+.jobs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.jobs-table thead tr {
+    border-bottom: 1px solid #2d3a5a;
+}
+
+.jobs-table th {
+    padding: 8px 12px;
+    text-align: left;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #7a8fb0;
+    font-weight: 600;
+}
+
+.jobs-table td {
+    padding: 7px 12px;
+    border-bottom: 1px solid #1a2236;
+    vertical-align: middle;
+}
+
+/* Column widths */
+.col-id      { width: 100px; }
+.col-time    { width: 100px; }
+.col-status  { width: 130px; }
+.col-message { }
+
+.id-cell {
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #c5d0e8;
+}
+
+/* Status badges */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-success { background: rgba(76, 175, 80, 0.15);  color: #4caf50; }
+.status-running { background: rgba(33, 150, 243, 0.15); color: #42a5f5; }
+.status-skipped { background: rgba(255, 193, 7, 0.15);  color: #ffc107; }
+.status-failed  { background: rgba(244, 67, 54, 0.15);  color: #ef5350; }
+
+/* Row tints */
+tr.status-failed  td { background: rgba(244, 67, 54, 0.06); }
+tr.status-running td { background: rgba(33, 150, 243, 0.06); }
+
+.no-jobs {
+    padding: 24px;
+    text-align: center;
+    color: #7a8fb0;
+    font-size: 13px;
+}
