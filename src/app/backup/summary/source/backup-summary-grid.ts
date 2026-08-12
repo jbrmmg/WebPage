@@ -1,4 +1,5 @@
 import {Component, Input, OnChanges} from '@angular/core';
+import {BackupSummaryService} from '../backup-summary-service';
 import {SummaryGridHeaderPath} from './header/summary-grid-header-path';
 import {SummaryGridHeaderStatus} from './header/summary-grid-header-status';
 import {SummaryGridDataStatus} from './data/summary-grid-data-status';
@@ -49,6 +50,10 @@ export interface SourceGroup {
 export class BackupSummaryGrid implements OnChanges {
     @Input() summary: BackupSummary;
     groups: SourceGroup[] = [];
+    gatheringIds = new Set<number>();
+    syncingIds = new Set<number>();
+
+    constructor(private readonly _summaryService: BackupSummaryService) {}
 
     ngOnChanges(): void {
         if (this.summary?.sources?.length) {
@@ -82,12 +87,50 @@ export class BackupSummaryGrid implements OnChanges {
         }));
     }
 
+    triggerSync(source: BackupSource): void {
+        if (this.syncingIds.has(source.syncId)) return;
+        this.syncingIds.add(source.syncId);
+        this._summaryService.runSync(source.syncId).subscribe({
+            next: () => { this.syncingIds.delete(source.syncId); },
+            error: () => { this.syncingIds.delete(source.syncId); }
+        });
+    }
+
+    isSyncing(source: BackupSource): boolean {
+        return this.syncingIds.has(source.syncId);
+    }
+
+    triggerGather(source: BackupSource): void {
+        if (this.gatheringIds.has(source.id)) return;
+        this.gatheringIds.add(source.id);
+        this._summaryService.gather(source.id).subscribe({
+            next: () => { this.gatheringIds.delete(source.id); },
+            error: () => { this.gatheringIds.delete(source.id); }
+        });
+    }
+
+    isGathering(source: BackupSource): boolean {
+        return this.gatheringIds.has(source.id);
+    }
+
     hasAnyDestination(): boolean {
         return this.summary?.sources?.some(s => !!s.destinationId) ?? false;
     }
 
     get colCount(): number {
-        return this.hasAnyDestination() ? 7 : 6;
+        return this.hasAnyDestination() ? 9 : 8;
+    }
+
+    hasGatherData(source: BackupSource): boolean {
+        return source.gatherStart != null;
+    }
+
+    gatherTimeDisplay(source: BackupSource): string {
+        const start = this.timeOf(source.gatherStart);
+        if (!source.gatherFinished) return `${start} → Running…`;
+        const end = this.timeOf(source.gatherFinished);
+        const duration = this.syncDuration(source.gatherStart, source.gatherFinished);
+        return duration ? `${start} → ${end} (${duration})` : `${start} → ${end}`;
     }
 
     hasSyncData(source: BackupSource): boolean {

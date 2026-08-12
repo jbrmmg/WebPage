@@ -16,7 +16,7 @@ export class SummaryGridDataDestination extends SummaryGridData {
         if (this.source?.destinationId) {
             let result = '';
             this.summary.sources.forEach(b => {
-                if (b.destinationId === this.source.destinationId) {
+                if (b.id === this.source.destinationId) {
                     result = b.path;
                 }
             });

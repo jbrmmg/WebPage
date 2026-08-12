@@ -58,6 +58,8 @@ export const baseEnvironment = {
       },
     },
     summary: "backup/summary",
+    gather: "backup/gather",
+    syncRun: "backup/sync/run",
     actions: "backup/actions",
     hierarchy: "backup/hierarchy",
     prints: {

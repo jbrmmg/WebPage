@@ -29,13 +29,6 @@
         <span class="tab-label">Import</span>
     </button>
     <button class="tab-btn"
-            [class.active]="isLogMode"
-            (click)="selectLogMode()"
-            title="Logs">
-        <em class="fa fa-file-text"></em>
-        <span class="tab-label">Logs</span>
-    </button>
-    <button class="tab-btn"
             [class.active]="isPrintsMode"
             (click)="selectPrintsMode()"
             title="Prints">
@@ -62,9 +55,6 @@
     </div>
     <div id="import" [collapse]="!isImportMode">
         <jbr-import-grid></jbr-import-grid>
-    </div>
-    <div id="logs" [collapse]="!isLogMode">
-        <jbr-backup-log></jbr-backup-log>
     </div>
     <div id="photo" [collapse]="!isPhotoMode">
         <jbr-backup-photo (exit)="selectFileMode()"></jbr-backup-photo>

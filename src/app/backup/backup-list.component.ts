@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {BackupActionService} from './action/backup-action-service';
 
-export enum ListMode { Files, Actions, Summary, Import, Logs, Photo, Prints, Jobs }
+export enum ListMode { Files, Actions, Summary, Import, Photo, Prints, Jobs }
 
 @Component({
     templateUrl: './backup-list.component.html',
@@ -25,7 +25,6 @@ export class BackupListComponent implements OnInit {
     selectActionMode() { this.listMode = ListMode.Actions; }
     selectSummaryMode() { this.listMode = ListMode.Summary; }
     selectImportMode() { this.listMode = ListMode.Import; }
-    selectLogMode() { this.listMode = ListMode.Logs; }
     selectPhotoMode() { this.listMode = ListMode.Photo; }
     selectPrintsMode() { this.listMode = ListMode.Prints; }
     selectJobsMode() { this.listMode = ListMode.Jobs; }
@@ -34,7 +33,6 @@ export class BackupListComponent implements OnInit {
     get isActionMode(): boolean { return this.listMode === ListMode.Actions; }
     get isSummaryMode(): boolean { return this.listMode === ListMode.Summary; }
     get isImportMode(): boolean { return this.listMode === ListMode.Import; }
-    get isLogMode(): boolean { return this.listMode === ListMode.Logs; }
     get isPhotoMode(): boolean { return this.listMode === ListMode.Photo; }
     get isPrintsMode(): boolean { return this.listMode === ListMode.Prints; }
     get isJobsMode(): boolean { return this.listMode === ListMode.Jobs; }

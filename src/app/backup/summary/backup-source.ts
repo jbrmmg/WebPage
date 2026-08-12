@@ -15,6 +15,9 @@ export class BackupSource {
     totalFileSize: bigint;
     largestFile: bigint;
     gatherMetaData: boolean;
+    gatherStart: string;
+    gatherFinished: string;
+    syncId: number;
     syncStartTime: string;
     syncEndTime: string;
     syncFilesCopied: number;

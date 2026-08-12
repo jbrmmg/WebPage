@@ -23,6 +23,8 @@
                 <th *ngIf="hasAnyDestination()">
                     <jbr-summary-grid-head-destination></jbr-summary-grid-head-destination>
                 </th>
+                <th class="gather-col"></th>
+                <th class="gather-col"></th>
             </tr>
         </thead>
         <tbody *ngIf="groups && groups.length">
@@ -52,6 +54,24 @@
                         </td>
                         <td *ngIf="hasAnyDestination()">
                             <jbr-summary-grid-data-destination [source]="source" [summary]="summary"></jbr-summary-grid-data-destination>
+                        </td>
+                        <td class="gather-col">
+                            <button class="btn-gather" (click)="triggerGather(source)" [disabled]="isGathering(source)" title="Trigger gather">
+                                <em class="fa" [class.fa-bolt]="!isGathering(source)" [class.fa-spinner]="isGathering(source)" [class.fa-spin]="isGathering(source)"></em>
+                            </button>
+                        </td>
+                        <td class="gather-col">
+                            <button *ngIf="source.syncId" class="btn-sync" (click)="triggerSync(source)" [disabled]="isSyncing(source)" title="Trigger sync">
+                                <em class="fa" [class.fa-refresh]="!isSyncing(source)" [class.fa-spinner]="isSyncing(source)" [class.fa-spin]="isSyncing(source)"></em>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="hasGatherData(source)" class="gather-row">
+                        <td [attr.colspan]="colCount">
+                            <div class="sync-info">
+                                <span class="gather-label">GATHER</span>
+                                <span class="sync-time">{{gatherTimeDisplay(source)}}</span>
+                            </div>
                         </td>
                     </tr>
                     <tr *ngIf="hasSyncData(source)" class="sync-row">

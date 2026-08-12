@@ -3,7 +3,7 @@ import {Observable, throwError} from 'rxjs';
 import {BackupSummary} from './backup-summary';
 import {environment} from '../../../environments/environment';
 import {catchError, tap} from 'rxjs/operators';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
@@ -22,6 +22,20 @@ export class BackupSummaryService {
         }
         console.error('❌', errorMessage);
         return throwError(() => errorMessage);
+    }
+
+    runSync(syncId: number): Observable<void> {
+        const params = new HttpParams().set('syncId', syncId);
+        return this.http.post<void>(environment.backup.syncRun, null, { params }).pipe(
+            catchError(err => BackupSummaryService.handleError(err))
+        );
+    }
+
+    gather(sourceId: number): Observable<void> {
+        const params = new HttpParams().set('sourceId', sourceId);
+        return this.http.post<void>(environment.backup.gather, null, { params }).pipe(
+            catchError(err => BackupSummaryService.handleError(err))
+        );
     }
 
     getSummary(): Observable<BackupSummary> {

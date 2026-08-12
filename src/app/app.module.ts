@@ -19,7 +19,6 @@ import { BackupListComponent } from './backup/backup-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {DatePipe, NgOptimizedImage} from '@angular/common';
 import { BackupSummaryComponent } from './backup/summary/backup-summary.component';
-import { BackupLogComponent } from './backup/log/backup-log.component';
 import { BackupPrintsComponent } from './backup/prints/backup-prints.component';
 import { BackupPrintSizeSelectComponent } from './backup/prints/backup-print-size-select.component';
 import { BackupPrintImageComponent } from './backup/prints/backup-print-image.component';
@@ -54,7 +53,6 @@ import {BackupJobsComponent} from './backup/jobs/backup-jobs.component';
         WeightComponent,
         BackupListComponent,
         BackupSummaryComponent,
-        BackupLogComponent,
         BackupPrintSizeSelectComponent,
         BackupPrintsComponent,
         BackupPrintImageComponent,
