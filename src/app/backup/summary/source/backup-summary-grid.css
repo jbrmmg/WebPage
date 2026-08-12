@@ -43,3 +43,47 @@ table td:nth-child(7) { width: 30%; }
     border-top: 2px solid #3a4a6a;
     border-bottom: none;
 }
+
+.sync-row td {
+    background: #111827;
+    padding: 3px 8px 4px 8px;
+    border-top: none;
+}
+
+.sync-info {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    font-size: 10px;
+    color: #6b7280;
+}
+
+.sync-label {
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 0.6px;
+    background: #1e2545;
+    color: #7a8fb0;
+    border-radius: 3px;
+    padding: 1px 5px;
+    text-transform: uppercase;
+}
+
+.sync-time {
+    color: #9ca3af;
+    font-family: "Courier New", monospace;
+}
+
+.sync-divider {
+    color: #374151;
+}
+
+.sync-stat {
+    color: #6b7280;
+}
+
+.sync-stat-warn {
+    color: #d97706;
+    font-weight: bold;
+}

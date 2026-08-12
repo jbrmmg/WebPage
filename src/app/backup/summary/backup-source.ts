@@ -8,9 +8,20 @@ export class BackupSource {
     filter: string;
     type: string;
     primary: boolean;
+    group: string;
     destinationId: number;
     directoryCount: number;
     fileCount: number;
     totalFileSize: bigint;
     largestFile: bigint;
+    gatherMetaData: boolean;
+    syncStartTime: string;
+    syncEndTime: string;
+    syncFilesCopied: number;
+    syncDirectoriesCopied: number;
+    syncFilesDeleted: number;
+    syncDirectoriesDeleted: number;
+    syncSourcesRemoved: number;
+    syncDatesUpdated: number;
+    syncFilesWarned: number;
 }
