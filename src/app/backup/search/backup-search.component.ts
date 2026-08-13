@@ -62,6 +62,23 @@ export class BackupSearchComponent implements OnInit {
         this.selectedLabelIds = new Set(this.selectedLabelIds);
     }
 
+    clear(): void {
+        this.filename = '';
+        this.dateFrom = null;
+        this.dateTo = null;
+        this.sizeMin = null;
+        this.sizeMax = null;
+        this.expiryFrom = null;
+        this.expiryTo = null;
+        this.selectedLabelIds = new Set<number>();
+        this.useLocation = false;
+        this.locationBounds = null;
+        this.results = [];
+        this.totalCount = 0;
+        this.searched = false;
+        this.page = 0;
+    }
+
     onBoundsChange(bounds: MapBounds): void {
         this.locationBounds = bounds;
     }
