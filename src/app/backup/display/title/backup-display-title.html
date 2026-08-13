@@ -24,6 +24,26 @@
                 <em class="fa fa-recycle"></em>
             </button>
         </div>
+        <div class="btn-row-left btn-download">
+            <button class="btn btn-sm btn-primary" (click)="download()" title="Download the file.">
+                <em class="fa fa-download"></em>
+            </button>
+        </div>
+        <div class="btn-row-left btn-browser" *ngIf="isBrowserFile()">
+            <button class="btn btn-sm btn-primary" (click)="openBrowser()" title="Open file in browser.">
+                <em class="fa fa-clipboard"></em>
+            </button>
+        </div>
+        <div class="btn-row-left btn-edit-date">
+            <button class="btn btn-sm btn-outline-secondary" (click)="triggerEditDate()" title="Edit file date.">
+                <em class="fa fa-pencil"></em>
+            </button>
+        </div>
+        <div class="btn-row-left btn-edit-location">
+            <button class="btn btn-sm btn-outline-secondary" (click)="triggerEditLocation()" title="Edit location.">
+                <em class="fa fa-map-marker"></em>
+            </button>
+        </div>
         <div class="btn-row-left btn-zoom-out" *ngIf="displayZoom()">
             <button class="btn btn-sm btn-primary" (click)="zoomOut()" title="Zoom out">
                 <em class="fa fa-minus"></em>

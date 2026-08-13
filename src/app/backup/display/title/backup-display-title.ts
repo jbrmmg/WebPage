@@ -19,6 +19,10 @@ export class BackupDisplayTitle {
     @Output() refresh: EventEmitter<FileInfoExtra> = new EventEmitter<FileInfoExtra>();
     @Output() deleteFile: EventEmitter<FileInfoExtra> = new EventEmitter<FileInfoExtra>();
     @Output() printFile: EventEmitter<FileInfoExtra> = new EventEmitter<FileInfoExtra>();
+    @Output() downloadFile: EventEmitter<void> = new EventEmitter<void>();
+    @Output() openInBrowser: EventEmitter<void> = new EventEmitter<void>();
+    @Output() editDate: EventEmitter<void> = new EventEmitter<void>();
+    @Output() editLocation: EventEmitter<void> = new EventEmitter<void>();
     @Output() zoom: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     previous() {
@@ -39,6 +43,26 @@ export class BackupDisplayTitle {
 
     print() {
         this.printFile.emit(this.selectedFile);
+    }
+
+    download() {
+        this.downloadFile.emit();
+    }
+
+    openBrowser() {
+        this.openInBrowser.emit();
+    }
+
+    isBrowserFile(): boolean {
+        return this.selectedFile?.file?.browser === true;
+    }
+
+    triggerEditDate() {
+        this.editDate.emit();
+    }
+
+    triggerEditLocation() {
+        this.editLocation.emit();
     }
 
     displayZoom(): boolean {

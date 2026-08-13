@@ -32,6 +32,24 @@
     background: rgba(220, 38, 38, 0.85);
 }
 
+.btn-copy {
+    position: absolute;
+    top: 6px;
+    right: 36px;
+    padding: 2px 6px;
+    border: none;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    border-radius: 4px;
+    font-size: 13px;
+    line-height: 1;
+    transition: background 0.15s;
+}
+
+.btn-copy:hover {
+    background: rgba(37, 99, 235, 0.85);
+}
+
 .size-information {
     background-color: white;
     position: absolute;

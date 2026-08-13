@@ -59,6 +59,8 @@ export const environment = {
       activePhotos: "api/backup/delete-active-photos",
       photos: "api/backup/import-photos",
       confirmed: "api/backup/delete-confirmed-imports",
+      data: "api/backup/delete-ignored",
+      cache: "api/backup/delete-ignored",
       file: {
         ...baseEnvironment.backup.import.file,
         ignore: "api/backup/ignorefile",

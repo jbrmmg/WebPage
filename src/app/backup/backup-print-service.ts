@@ -115,6 +115,27 @@ export class BackupPrintService {
         );
     }
 
+    addCopyForPrint(original: SelectedPrint): void {
+        const copy = new SelectedPrint();
+        copy.fileId = original.fileId;
+        copy.fileName = original.fileName;
+        copy.border = false;
+        copy.blackWhite = false;
+
+        this.http.post<void>(environment.backup.prints.url, copy).subscribe({
+            next: () => {
+                console.log('🖨️ Add copy for print');
+            },
+            error: (response) => {
+                console.error('❌ POST add copy for print failed', response);
+            },
+            complete: () => {
+                this.updatePrints();
+                console.log('✅ POST add copy for print completed');
+            }
+        });
+    }
+
     clearPrints() {
         this.http.delete<void>(environment.backup.prints.url).subscribe({
             next: () => {

@@ -48,6 +48,8 @@ export const baseEnvironment = {
       activePhotos: "backup/import/active-photos",
       photos: "backup/import/photos",
       confirmed: "backup/import/confirmed",
+      data: "backup/import/data",
+      cache: "backup/import/cache",
       file: {
         ignore: "backup/import/file/ignore",
         unIgnore: "backup/import/file/un-ignore",
@@ -70,6 +72,8 @@ export const baseEnvironment = {
     files: {
       refresh: "backup/files/refresh?id=##id##",
       expire: "backup/files/expire",
+      location: "backup/files/location",
+      date: "backup/files/date",
     },
     labels: "backup/labels",
     logs: "backup/logs",

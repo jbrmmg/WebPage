@@ -936,10 +936,32 @@ export class ImportGrid implements OnInit {
     }
 
     filterChange(filter: ListFilterType) {
-        // Update the filter.
         this.filter = filter;
-
-        // Perform a refresh with the new filter.
         this.refresh(-1);
+    }
+
+    wipeImportData() {
+        this.status = 'Wiping import data...';
+        this._importGridService.wipeData().subscribe({
+            next: () => console.log('📡 Wipe data response'),
+            error: (err) => {
+                this.status = 'Wipe data failed - check log';
+                console.error('❌ Error:', err.message);
+            },
+            complete: () => {
+                this._importGridService.wipeCache().subscribe({
+                    next: () => console.log('📡 Wipe cache response'),
+                    error: (err) => {
+                        this.status = 'Wipe cache failed - check log';
+                        console.error('❌ Error:', err.message);
+                    },
+                    complete: () => {
+                        this.status = 'Import data wiped.';
+                        this.data = [];
+                        console.log('✅ Import data wiped');
+                    }
+                });
+            }
+        });
     }
 }

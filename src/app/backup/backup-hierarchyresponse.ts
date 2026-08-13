@@ -5,6 +5,7 @@ export class HierarchyResponse {
     path: string;
     directory: boolean;
     backup: boolean;
+    browser: boolean;
     underlyingId: number;
     dateTime: Date;
     md5: string;

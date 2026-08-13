@@ -12,6 +12,7 @@ export class BackupPrintImageComponent {
 
     @Output() unselect: EventEmitter<SelectedPrint> = new EventEmitter<SelectedPrint>();
     @Output() updateSize: EventEmitter<SelectedPrint> = new EventEmitter<SelectedPrint>();
+    @Output() addCopyEvent: EventEmitter<SelectedPrint> = new EventEmitter<SelectedPrint>();
 
     constructor(private readonly _backupPrintService: BackupPrintService) {
     }
@@ -22,6 +23,10 @@ export class BackupPrintImageComponent {
 
     selectSize(): void {
         this.updateSize.emit(this.selectedPrint);
+    }
+
+    addCopy(): void {
+        this.addCopyEvent.emit(this.selectedPrint);
     }
 
     imageUrl(): string {

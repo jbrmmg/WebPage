@@ -7,12 +7,14 @@ import {catchError, tap} from 'rxjs/operators';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {FileLabel, Label} from '../backup-label';
 import {FileExpiry} from '../backup-expiry';
+import {LatLong} from '../map/map-latlong';
 
 @Injectable({
     providedIn: 'root'
 })
 export class BackupDisplayService {
     private selectedFile: FileInfoExtra;
+    lastLocation: LatLong = null;
 
     @Output() fileLoaded: EventEmitter<FileInfoExtra> = new EventEmitter<FileInfoExtra>();
 
@@ -156,6 +158,47 @@ export class BackupDisplayService {
             complete: () => {
                 console.log('✅ Label updated:', id);
             }
+        });
+    }
+
+    downloadFile(id: number, name: string): void {
+        const url = environment.production
+            ? `backup/files/download?id=${id}`
+            : 'api/backup/test.image.jpg';
+
+        this.http.get(url, {responseType: 'blob'}).subscribe({
+            next: (blob) => {
+                const objectUrl = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = objectUrl;
+                a.download = name;
+                a.click();
+                URL.revokeObjectURL(objectUrl);
+            },
+            error: (err) => console.error('❌ Download failed', err)
+        });
+    }
+
+    updateFileLocation(id: number, lat: number, lng: number): void {
+        const payload = {id, latitude: lat, longitude: lng};
+        this.http.put<void>(environment.backup.files.location, payload).subscribe({
+            next: () => console.log('📍 Location updated'),
+            error: (err) => console.error('❌ Location update failed', err),
+            complete: () => {
+                this.lastLocation = new LatLong();
+                this.lastLocation.lat = lat;
+                this.lastLocation.long = lng;
+                console.log('✅ Location updated:', id);
+            }
+        });
+    }
+
+    updateFileDate(id: number, date: Date): void {
+        const payload = {id, date: date.toISOString()};
+        this.http.put<void>(environment.backup.files.date, payload).subscribe({
+            next: () => console.log('📅 Date updated'),
+            error: (err) => console.error('❌ Date update failed', err),
+            complete: () => console.log('✅ Date updated:', id)
         });
     }
 

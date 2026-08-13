@@ -19,12 +19,14 @@ export class ImportGridSummary {
     listFilter: ListFilterType;
     @Input() summary: ImportGridSummaryCount;
     @Input() status: string;
+    confirmWipePending = false;
     @Output() refreshEvent: EventEmitter<number> = new EventEmitter();
     @Output() removeConfirmedImportsEvent: EventEmitter<void> = new EventEmitter();
     @Output() removeIgnoredEvent: EventEmitter<void> = new EventEmitter();
     @Output() filterChangeEvent: EventEmitter<ListFilterType> = new EventEmitter();
     @Output() removeActivePhotosEvent: EventEmitter<void> = new EventEmitter();
     @Output() importPhotosEvent: EventEmitter<void> = new EventEmitter();
+    @Output() wipeDataEvent: EventEmitter<void> = new EventEmitter();
 
     getHeaderText(status: TrafficLightStatus): string {
         switch (status) {
@@ -252,6 +254,19 @@ export class ImportGridSummary {
 
     importFiles() {
         this.importPhotosEvent.emit();
+    }
+
+    requestConfirmWipe(): void {
+        this.confirmWipePending = true;
+    }
+
+    cancelConfirmWipe(): void {
+        this.confirmWipePending = false;
+    }
+
+    wipeData(): void {
+        this.confirmWipePending = false;
+        this.wipeDataEvent.emit();
     }
 
     setPageSize(size: number) {

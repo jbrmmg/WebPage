@@ -22,6 +22,7 @@ export interface MapBounds {
 export class Map implements AfterViewInit, OnDestroy {
     private map;
     private visibilityObserver: IntersectionObserver;
+    private marker: L.Marker = null;
 
     @ViewChild('mapEl') mapEl: ElementRef;
 
@@ -33,7 +34,9 @@ export class Map implements AfterViewInit, OnDestroy {
     @Input() leftMargin = 2;
     @Input() rightMargin = 2;
     @Input() latLong: LatLong;
+    @Input() clickable = false;
     @Output() boundsChange = new EventEmitter<MapBounds>();
+    @Output() locationClick = new EventEmitter<LatLong>();
 
     private emitBounds(): void {
         if (!this.map) return;
@@ -63,6 +66,26 @@ export class Map implements AfterViewInit, OnDestroy {
             this.map.panTo({lat: this.latLong.lat, lng: this.latLong.long});
         } else {
             this.map.panTo({lat: 51.60146388888889, lng: -0.37789999999999996});
+        }
+
+        if (this.clickable) {
+            if (this.latLong) {
+                this.marker = L.marker([this.latLong.lat, this.latLong.long]).addTo(this.map);
+            }
+
+            this.map.on('click', (e: any) => {
+                const loc = new LatLong();
+                loc.lat = e.latlng.lat;
+                loc.long = e.latlng.lng;
+
+                if (this.marker) {
+                    this.marker.setLatLng([loc.lat, loc.long]);
+                } else {
+                    this.marker = L.marker([loc.lat, loc.long]).addTo(this.map);
+                }
+
+                this.locationClick.emit(loc);
+            });
         }
     }
 
@@ -97,6 +120,7 @@ export class Map implements AfterViewInit, OnDestroy {
         if (this.map) {
             this.map.remove();
         }
+        this.marker = null;
     }
 
     move(location: LatLong) {

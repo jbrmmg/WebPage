@@ -11,6 +11,10 @@
             <p class="detail-date-label col-2">File date</p>
             <p class="detail-date col-10">{{formattedFileDate}}</p>
         </div>
+        <div class="row detail-id-row">
+            <p class="detail-id-label col-2">ID</p>
+            <p class="detail-id col-10">{{selectedFile.file.id}}</p>
+        </div>
         <div class="row detail-md5-row">
             <p class="detail-md5-label col-2">MD5</p>
             <p class="detail-md5 col-10">[{{selectedFile.file.md5}}]</p>
@@ -34,3 +38,54 @@
         </div>
     </div>
 </div>
+
+<ng-template #dateModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Edit File Date</h4>
+    </div>
+    <div class="modal-body date-modal-body">
+        <div class="date-modal-row">
+            <label class="date-modal-label">Date</label>
+            <input type="text"
+                   class="form-control date-modal-input"
+                   [bsValue]="pendingDate"
+                   (bsValueChange)="onPendingDateChange($event)"
+                   bsDatepicker [bsConfig]="{
+                       dateInputFormat: 'DD-MMMM-YYYY',
+                       containerClass: 'theme-dark-blue',
+                       selectFromOtherMonth: true }">
+        </div>
+        <div class="date-modal-row">
+            <label class="date-modal-label">Time</label>
+            <input type="time"
+                   class="form-control date-modal-input"
+                   [value]="pendingTime"
+                   (change)="onPendingTimeChange($any($event.target).value)">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" (click)="saveDateEdit()">
+            <em class="fa fa-check"></em> OK
+        </button>
+        <button class="btn btn-outline-secondary" (click)="cancelDateEdit()">Cancel</button>
+    </div>
+</ng-template>
+
+<ng-template #locationModal>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Set Location</h4>
+    </div>
+    <div class="modal-body location-modal-body">
+        <jbr-map [latLong]="dialogLatLong" [clickable]="true" [fullWidth]="true" [height]="400"
+                 (locationClick)="onLocationClick($event)"></jbr-map>
+        <p class="location-coords" *ngIf="dialogLat != null">
+            {{dialogLat | number:'1.6-6'}}, {{dialogLng | number:'1.6-6'}}
+        </p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" (click)="saveLocation()" [disabled]="dialogLat == null">
+            <em class="fa fa-save"></em> Save
+        </button>
+        <button class="btn btn-outline-secondary" (click)="cancelLocation()">Cancel</button>
+    </div>
+</ng-template>

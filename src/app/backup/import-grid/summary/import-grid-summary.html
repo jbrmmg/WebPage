@@ -7,6 +7,16 @@
                     <em class="fa fa-refresh"></em>
                 </button>
             </div>
+            <div class="col refresh" title="Reset all import data and cache." *ngIf="!confirmWipePending">
+                <button class="btn btn-outline-danger"
+                       (click)="requestConfirmWipe()">
+                    <em class="fa fa-trash"></em>
+                </button>
+            </div>
+            <div class="col" *ngIf="confirmWipePending">
+                <button class="btn btn-danger btn-sm" (click)="wipeData()">Wipe</button>
+                <button class="btn btn-outline-secondary btn-sm" (click)="cancelConfirmWipe()">Cancel</button>
+            </div>
             <div class="col status">{{status}}</div>
         </div>
         <div class="row second-row">

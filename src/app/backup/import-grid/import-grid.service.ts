@@ -89,4 +89,12 @@ export class ImportGridService {
     updateDestination(update: FileDestinationUpdate): Observable<any> {
         return this.http.post(environment.backup.import.file.destination, update, {responseType: 'text'});
     }
+
+    wipeData(): Observable<any> {
+        return this.http.delete(environment.backup.import.data, {responseType: 'text'});
+    }
+
+    wipeCache(): Observable<any> {
+        return this.http.delete(environment.backup.import.cache, {responseType: 'text'});
+    }
 }

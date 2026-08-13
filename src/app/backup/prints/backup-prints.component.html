@@ -24,7 +24,8 @@
             <jbr-backup-print-image
                     [selectedPrint]="getPrintAtRowCol(row,col)"
                     (unselect)="unselectPrint($event)"
-                    (updateSize)="updatePrintSize($event,sizePicker)">
+                    (updateSize)="updatePrintSize($event,sizePicker)"
+                    (addCopyEvent)="addCopyForPhoto($event)">
             </jbr-backup-print-image>
         </div>
     </div>

@@ -96,4 +96,8 @@ export class BackupPrintsComponent implements OnInit {
             this._backupPrintService.updatedPrint(selection);
         }
     }
+
+    addCopyForPhoto(print: SelectedPrint) {
+        this._backupPrintService.addCopyForPrint(print);
+    }
 }

@@ -42,6 +42,22 @@
     padding-left: 6px;
 }
 
+.btn-download {
+    padding-left: 6px;
+}
+
+.btn-browser {
+    padding-left: 2px;
+}
+
+.btn-edit-date {
+    padding-left: 6px;
+}
+
+.btn-edit-location {
+    padding-left: 2px;
+}
+
 .btn-zoom-out {
     padding-left: 6px;
     padding-right: 2px;

@@ -7,6 +7,7 @@ export class FileInfo {
     md5: string;
     image: boolean;
     video: boolean;
+    browser: boolean;
     icon: string;
     path: string;
     locationName: string;

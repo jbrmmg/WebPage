@@ -4,5 +4,9 @@
             (click)="unselectPrint()" (keydown.enter)="unselectPrint()">
         <em class="fa fa-times"></em>
     </button>
+    <button class="btn btn-copy" title="Add another copy with a different size"
+            (click)="addCopy()" (keydown.enter)="addCopy()">
+        <em class="fa fa-copy"></em>
+    </button>
     <button class="size-information" (click)="selectSize()"><a>{{printInfo()}}</a></button>
 </div>

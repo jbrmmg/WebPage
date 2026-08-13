@@ -50,6 +50,21 @@
     margin: 0;
 }
 
+.detail-id-row {
+    margin: 0;
+}
+
+.detail-id-label {
+    margin: 0;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.detail-id {
+    margin: 0;
+    font-size: 12px;
+}
+
 .detail-md5-label {
     margin: 0;
     font-size: 12px;
@@ -90,4 +105,38 @@
 
 .no-padding-col {
     padding: 0;
+}
+
+
+.date-modal-body {
+    padding: 16px;
+}
+
+.date-modal-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.date-modal-label {
+    width: 50px;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.date-modal-input {
+    flex: 1;
+    font-size: 14px;
+}
+
+
+.location-modal-body {
+    padding: 0;
+}
+
+.location-coords {
+    margin: 6px 12px;
+    font-size: 12px;
+    font-family: monospace;
 }

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {HierarchyResponse} from '../backup-hierarchyresponse';
 import {FileInfoExtra} from '../backup-fileinfoextra';
 import {BackupDisplayInfoComponent} from './info/backup-display-info.component';
@@ -35,6 +35,8 @@ interface BreadcrumbItem {
     ]
 })
 export class BackupDisplayComponent implements OnInit {
+    @ViewChild(BackupDisplayInfoComponent) private infoComponent: BackupDisplayInfoComponent;
+
     hierarchy: HierarchyResponse[];
     fileList: HierarchyResponse[];
     initialHierarchy: HierarchyResponse;
@@ -162,6 +164,10 @@ export class BackupDisplayComponent implements OnInit {
 
     deleteFile(): void { this._backupDisplayService.deleteFile(this.selectedFile.file.id); }
     refreshData(): void { this._backupDisplayService.refreshFile(this.selectedFile.file.id); }
+    downloadFile(): void { this._backupDisplayService.downloadFile(this.selectedFile.file.id, this.selectedFile.file.name); }
+    openFileInBrowser(): void { navigator.clipboard.writeText(`file://${this.selectedFile.file.path}`); }
+    triggerEditDate(): void { this.infoComponent?.startDateEdit(); }
+    triggerEditLocation(): void { this.infoComponent?.openLocationEditor(); }
 
     selectPhotoMode(): void {
         this._backupPrintService.setSelectedPhoto(this.selectedFile.file.id, this.selectedFile.file.name);
