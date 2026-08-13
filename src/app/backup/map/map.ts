@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild} from '@angular/core';
 import * as L from 'leaflet';
 import {LatLong} from './map-latlong';
 import {NgStyle} from '@angular/common';
@@ -12,8 +12,11 @@ import {NgStyle} from '@angular/common';
     ],
     styleUrls: ['./map.css']
 })
-export class Map implements AfterViewInit {
+export class Map implements AfterViewInit, OnDestroy {
     private map;
+    private visibilityObserver: IntersectionObserver;
+
+    @ViewChild('mapEl') mapEl: ElementRef;
 
     @Input() height = 237;
     @Input() width = 316;
@@ -25,7 +28,7 @@ export class Map implements AfterViewInit {
     @Input() latLong: LatLong;
 
     private initMap(): void {
-        this.map = L.map('map', { center: [34.65054, 32.720322], zoom: 16 });
+        this.map = L.map(this.mapEl.nativeElement, { center: [34.65054, 32.720322], zoom: 16 });
 
         const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 18,
@@ -59,7 +62,20 @@ export class Map implements AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this.initMap();
+        this.visibilityObserver = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                this.visibilityObserver.disconnect();
+                this.initMap();
+            }
+        });
+        this.visibilityObserver.observe(this.mapEl.nativeElement);
+    }
+
+    ngOnDestroy(): void {
+        this.visibilityObserver?.disconnect();
+        if (this.map) {
+            this.map.remove();
+        }
     }
 
     move(location: LatLong) {
