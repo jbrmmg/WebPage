@@ -86,5 +86,6 @@ export const environment = {
     labels: "api/backup/labels",
     logs: "api/backup/log",
     jobs: "api/backup/jobs.json",
+    search: "api/backup/search.json",
   },
 };

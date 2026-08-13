@@ -1,0 +1,132 @@
+import {Component} from '@angular/core';
+import {DatePipe} from '@angular/common';
+import {BackupSearchService} from './backup-search.service';
+import {BackupSearchRequest} from './backup-search-request';
+import {BackupSearchResponse, BackupSearchResult} from './backup-search-response';
+import {MapBounds} from '../map/map';
+
+@Component({
+    selector: 'jbr-backup-search',
+    templateUrl: './backup-search.component.html',
+    styleUrls: ['./backup-search.component.css']
+})
+export class BackupSearchComponent {
+    filename = '';
+    dateFrom: Date = null;
+    dateTo: Date = null;
+    sizeMin: number = null;
+    sizeMax: number = null;
+    expiryFrom: Date = null;
+    expiryTo: Date = null;
+    labelInput = '';
+    labels: string[] = [];
+    useLocation = false;
+    private locationBounds: MapBounds = null;
+
+    page = 0;
+    pageSize = 25;
+    totalCount = 0;
+    results: BackupSearchResult[] = [];
+    searched = false;
+    loading = false;
+
+    readonly pageSizes = [25, 50, 100];
+
+    readonly datePickerConfig = {
+        dateInputFormat: 'DD-MMM-YYYY',
+        containerClass: 'theme-dark-blue',
+        selectFromOtherMonth: true
+    };
+
+    constructor(private readonly _searchService: BackupSearchService,
+                private readonly datePipe: DatePipe) {}
+
+    addLabel(): void {
+        const l = this.labelInput.trim();
+        if (l && !this.labels.includes(l)) {
+            this.labels = [...this.labels, l];
+        }
+        this.labelInput = '';
+    }
+
+    removeLabel(label: string): void {
+        this.labels = this.labels.filter(l => l !== label);
+    }
+
+    onBoundsChange(bounds: MapBounds): void {
+        this.locationBounds = bounds;
+    }
+
+    get hasAnyCriteria(): boolean {
+        return !!(this.filename
+            || this.dateFrom || this.dateTo
+            || this.sizeMin != null || this.sizeMax != null
+            || this.expiryFrom || this.expiryTo
+            || this.labels.length > 0
+            || (this.useLocation && this.locationBounds));
+    }
+
+    get totalPages(): number {
+        return Math.ceil(this.totalCount / this.pageSize);
+    }
+
+    get canPrev(): boolean { return this.page > 0; }
+    get canNext(): boolean { return this.page < this.totalPages - 1; }
+
+    search(resetPage = true): void {
+        if (!this.hasAnyCriteria) return;
+        if (resetPage) this.page = 0;
+        this.loading = true;
+
+        const request: BackupSearchRequest = { page: this.page, pageSize: this.pageSize };
+
+        if (this.filename) request.filename = this.filename;
+        if (this.dateFrom) request.dateFrom = this.dateFrom.toISOString();
+        if (this.dateTo) request.dateTo = this.dateTo.toISOString();
+        if (this.sizeMin != null) request.sizeMin = this.sizeMin;
+        if (this.sizeMax != null) request.sizeMax = this.sizeMax;
+        if (this.expiryFrom) request.expiryFrom = this.expiryFrom.toISOString();
+        if (this.expiryTo) request.expiryTo = this.expiryTo.toISOString();
+        if (this.labels.length > 0) request.labels = this.labels;
+        if (this.useLocation && this.locationBounds) request.location = this.locationBounds;
+
+        this._searchService.search(request).subscribe({
+            next: (resp: BackupSearchResponse) => {
+                this.results = resp.results;
+                this.totalCount = resp.totalCount;
+                this.searched = true;
+                this.loading = false;
+            },
+            error: () => {
+                this.results = [];
+                this.totalCount = 0;
+                this.searched = true;
+                this.loading = false;
+            }
+        });
+    }
+
+    prevPage(): void {
+        if (this.canPrev) { this.page--; this.search(false); }
+    }
+
+    nextPage(): void {
+        if (this.canNext) { this.page++; this.search(false); }
+    }
+
+    onPageSizeChange(): void {
+        this.search(true);
+    }
+
+    formatDate(dt: string): string {
+        return this.datePipe.transform(dt, 'dd MMM yyyy') ?? '';
+    }
+
+    formatSize(bytes: number): string {
+        if (bytes == null) return '';
+        if (bytes < 1024) return `${bytes} B`;
+        if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+        if (bytes < 1024 * 1024 * 1024) return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
+        return `${(bytes / 1024 / 1024 / 1024).toFixed(2)} GB`;
+    }
+}

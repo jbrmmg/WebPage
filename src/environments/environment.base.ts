@@ -74,5 +74,6 @@ export const baseEnvironment = {
     labels: "backup/labels",
     logs: "backup/logs",
     jobs: "backup/backup/status/jobs",
+    search: "backup/backup/search",
   },
 };

@@ -1,7 +1,14 @@
-import {AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild} from '@angular/core';
 import * as L from 'leaflet';
 import {LatLong} from './map-latlong';
 import {NgStyle} from '@angular/common';
+
+export interface MapBounds {
+    north: number;
+    south: number;
+    east: number;
+    west: number;
+}
 
 @Component({
     selector: 'jbr-map',
@@ -26,6 +33,18 @@ export class Map implements AfterViewInit, OnDestroy {
     @Input() leftMargin = 2;
     @Input() rightMargin = 2;
     @Input() latLong: LatLong;
+    @Output() boundsChange = new EventEmitter<MapBounds>();
+
+    private emitBounds(): void {
+        if (!this.map) return;
+        const b = this.map.getBounds();
+        this.boundsChange.emit({
+            north: b.getNorth(),
+            south: b.getSouth(),
+            east: b.getEast(),
+            west: b.getWest()
+        });
+    }
 
     private initMap(): void {
         this.map = L.map(this.mapEl.nativeElement, { center: [34.65054, 32.720322], zoom: 16 });
@@ -37,6 +56,8 @@ export class Map implements AfterViewInit, OnDestroy {
         });
 
         tiles.addTo(this.map);
+
+        this.map.on('moveend zoomend', () => this.emitBounds());
 
         if (this.latLong) {
             this.map.panTo({lat: this.latLong.lat, lng: this.latLong.long});

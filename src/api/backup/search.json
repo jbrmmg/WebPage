@@ -1,0 +1,55 @@
+{
+  "page": 0,
+  "pageSize": 25,
+  "totalCount": 3,
+  "results": [
+    {
+      "id": 1001,
+      "name": "holiday2024.jpg",
+      "fullFilename": "/photos/2024/holiday2024.jpg",
+      "path": "/photos/2024",
+      "locationName": "Lanzarote",
+      "date": "2024-08-15T10:30:00Z",
+      "size": 4823104,
+      "expiry": null,
+      "icon": "image",
+      "md5": "abc123def456",
+      "latitude": 28.9636,
+      "longitude": -13.5472,
+      "video": false,
+      "image": true
+    },
+    {
+      "id": 1002,
+      "name": "holiday2024-clip.mp4",
+      "fullFilename": "/videos/2024/holiday2024-clip.mp4",
+      "path": "/videos/2024",
+      "locationName": "Lanzarote",
+      "date": "2024-08-16T14:05:00Z",
+      "size": 94371840,
+      "expiry": null,
+      "icon": "video",
+      "md5": "fed987cba654",
+      "latitude": 28.9636,
+      "longitude": -13.5472,
+      "video": true,
+      "image": false
+    },
+    {
+      "id": 1003,
+      "name": "notes.txt",
+      "fullFilename": "/docs/notes.txt",
+      "path": "/docs",
+      "locationName": null,
+      "date": "2025-01-03T08:00:00Z",
+      "size": 2048,
+      "expiry": "2026-01-03T00:00:00Z",
+      "icon": "file",
+      "md5": "111aaa222bbb",
+      "latitude": null,
+      "longitude": null,
+      "video": false,
+      "image": false
+    }
+  ]
+}

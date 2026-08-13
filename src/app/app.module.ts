@@ -42,6 +42,7 @@ import {MoneyEmailComponent} from './money/email/money-email.component';
 import {MobileAddComponent} from './money/mobile/mobile-add.component';
 import {MobileRecentComponent} from './money/mobile/mobile-recent.component';
 import {BackupJobsComponent} from './backup/jobs/backup-jobs.component';
+import {BackupSearchComponent} from './backup/search/backup-search.component';
 
 @NgModule({
     declarations: [
@@ -57,7 +58,8 @@ import {BackupJobsComponent} from './backup/jobs/backup-jobs.component';
         BackupPrintsComponent,
         BackupPrintImageComponent,
         WifiComponent,
-        BackupJobsComponent
+        BackupJobsComponent,
+        BackupSearchComponent
     ],
     imports: [
         BrowserModule,
