@@ -12,11 +12,12 @@ import {NgIf} from '@angular/common';
     styleUrls: ['./import-selected-image.css']
 })
 export class ImportSelectedImage {
-    imagePath = 'api/backup/NoEntry.jpg';
+    imagePath: string;
     text: string;
     videoPath: string;
-    image = true;
+    image = false;
     video = false;
+    noSelection = true;
 
     constructor() {
     }
@@ -37,11 +38,13 @@ export class ImportSelectedImage {
             this.text = file.source.filename;
             this.image = true;
             this.video = false;
+            this.noSelection = false;
             return;
         } else if (file.source?.video) {
             this.videoPath = 'backup/import/file/video?name=' + file.source.filename;
             this.text = file.source.filename;
             this.video = true;
+            this.noSelection = false;
             return;
         }
 
@@ -54,7 +57,10 @@ export class ImportSelectedImage {
     }
 
     clear() {
-        this.imagePath = 'api/backup/NoEntry.jpg';
+        this.image = false;
+        this.video = false;
+        this.noSelection = true;
+        this.imagePath = undefined;
     }
 
     showImage(): boolean {
