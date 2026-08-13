@@ -1,44 +1,40 @@
 .label-row {
-    margin: 20px 0 0;
-    flex-wrap: nowrap;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 12px 0 4px;
 }
 
-.label-format {
-    background-color: cornflowerblue;
-    color: white;
-    width: 15%;
-    margin: 0 4px;
-    text-align: center;
-    border-radius: 5px;
-}
-
-.label-format-option {
-    background-color: cornflowerblue;
-    color: white;
-    margin: 0 auto;
-    text-align: center;
-    border-radius: 5px;
-    box-sizing: border-box;
+.label-chip {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 12px;
+    font-size: 12px;
     cursor: pointer;
+    user-select: none;
+    border: 1px solid #2d3a5a;
+    background: #1a2340;
+    color: #7a8fb0;
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
+    outline: none;
 }
 
-.label-format-option-selected {
-    background-color: darkslateblue;
-    color: white;
-    margin: 0 auto;
-    text-align: center;
-    border-radius: 5px;
-    box-sizing: border-box;
-    cursor: pointer;
+.label-chip:hover {
+    border-color: #4a6090;
+    color: #c5d0e8;
 }
 
-.outer {
-    width: 100%;
-    text-align: center;
-    margin: 0;
-    padding: 4px;
+.label-chip:focus-visible {
+    border-color: #4caf50;
 }
 
-.plus {
-    padding: 0;
+.label-chip.label-chip-active {
+    background: #264d8c;
+    border-color: #4a80d4;
+    color: #e8f0ff;
+}
+
+.label-chip.label-chip-active:hover {
+    background: #1e3d70;
+    border-color: #3a6ab8;
 }

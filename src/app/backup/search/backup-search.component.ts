@@ -1,16 +1,17 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DatePipe} from '@angular/common';
 import {BackupSearchService} from './backup-search.service';
 import {BackupSearchRequest} from './backup-search-request';
 import {BackupSearchResponse, BackupSearchResult} from './backup-search-response';
 import {MapBounds} from '../map/map';
+import {ILabel} from '../backup-label';
 
 @Component({
     selector: 'jbr-backup-search',
     templateUrl: './backup-search.component.html',
     styleUrls: ['./backup-search.component.css']
 })
-export class BackupSearchComponent {
+export class BackupSearchComponent implements OnInit {
     filename = '';
     dateFrom: Date = null;
     dateTo: Date = null;
@@ -18,10 +19,11 @@ export class BackupSearchComponent {
     sizeMax: number = null;
     expiryFrom: Date = null;
     expiryTo: Date = null;
-    labelInput = '';
-    labels: string[] = [];
     useLocation = false;
     private locationBounds: MapBounds = null;
+
+    availableLabels: ILabel[] = [];
+    selectedLabelIds = new Set<number>();
 
     page = 0;
     pageSize = 25;
@@ -41,16 +43,23 @@ export class BackupSearchComponent {
     constructor(private readonly _searchService: BackupSearchService,
                 private readonly datePipe: DatePipe) {}
 
-    addLabel(): void {
-        const l = this.labelInput.trim();
-        if (l && !this.labels.includes(l)) {
-            this.labels = [...this.labels, l];
-        }
-        this.labelInput = '';
+    ngOnInit(): void {
+        this._searchService.getLabels().subscribe(labels => {
+            this.availableLabels = labels;
+        });
     }
 
-    removeLabel(label: string): void {
-        this.labels = this.labels.filter(l => l !== label);
+    isLabelSelected(label: ILabel): boolean {
+        return this.selectedLabelIds.has(label.id);
+    }
+
+    toggleSearchLabel(label: ILabel): void {
+        if (this.selectedLabelIds.has(label.id)) {
+            this.selectedLabelIds.delete(label.id);
+        } else {
+            this.selectedLabelIds.add(label.id);
+        }
+        this.selectedLabelIds = new Set(this.selectedLabelIds);
     }
 
     onBoundsChange(bounds: MapBounds): void {
@@ -62,7 +71,7 @@ export class BackupSearchComponent {
             || this.dateFrom || this.dateTo
             || this.sizeMin != null || this.sizeMax != null
             || this.expiryFrom || this.expiryTo
-            || this.labels.length > 0
+            || this.selectedLabelIds.size > 0
             || (this.useLocation && this.locationBounds));
     }
 
@@ -87,7 +96,11 @@ export class BackupSearchComponent {
         if (this.sizeMax != null) request.sizeMax = this.sizeMax;
         if (this.expiryFrom) request.expiryFrom = this.expiryFrom.toISOString();
         if (this.expiryTo) request.expiryTo = this.expiryTo.toISOString();
-        if (this.labels.length > 0) request.labels = this.labels;
+        if (this.selectedLabelIds.size > 0) {
+            request.labels = this.availableLabels
+                .filter(l => this.selectedLabelIds.has(l.id))
+                .map(l => l.name);
+        }
         if (this.useLocation && this.locationBounds) request.location = this.locationBounds;
 
         this._searchService.search(request).subscribe({

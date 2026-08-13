@@ -46,19 +46,15 @@
             </div>
         </div>
 
-        <div class="labels-row">
+        <div class="labels-row" *ngIf="availableLabels.length > 0">
             <label class="criteria-label">Labels</label>
-            <div class="label-input-row">
-                <input type="text" class="form-control input-sm label-input"
-                       [(ngModel)]="labelInput"
-                       placeholder="Add label"
-                       (keyup.enter)="addLabel()" />
-                <button class="btn btn-sm btn-secondary" (click)="addLabel()">Add</button>
-            </div>
-            <div class="label-chips" *ngIf="labels.length > 0">
-                <span class="label-chip" *ngFor="let lbl of labels">
-                    {{lbl}}
-                    <button class="chip-remove" (click)="removeLabel(lbl)">&times;</button>
+            <div class="label-chips">
+                <span *ngFor="let label of availableLabels"
+                      class="label-chip"
+                      [class.label-chip-active]="isLabelSelected(label)"
+                      (click)="toggleSearchLabel(label)"
+                      [title]="isLabelSelected(label) ? 'Remove from filter' : 'Add to filter'">
+                    {{label.name}}
                 </span>
             </div>
         </div>

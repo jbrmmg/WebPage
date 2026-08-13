@@ -5,6 +5,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {BackupSearchRequest} from './backup-search-request';
 import {BackupSearchResponse} from './backup-search-response';
+import {ILabel} from '../backup-label';
 
 @Injectable({
     providedIn: 'root'
@@ -18,6 +19,12 @@ export class BackupSearchService {
             : `Server returned code ${err.status}: ${err.message}`;
         console.error('❌', msg);
         return throwError(() => msg);
+    }
+
+    getLabels(): Observable<ILabel[]> {
+        return this.http.get<ILabel[]>(environment.backup.labels).pipe(
+            catchError(err => BackupSearchService.handleError(err))
+        );
     }
 
     search(request: BackupSearchRequest): Observable<BackupSearchResponse> {

@@ -1,15 +1,11 @@
-<div class="row label-row">
-    <p class="label-format" *ngFor="let nextLabel of selectedFile.labels">{{nextLabel}}</p>
-    <em class="fa fa-plus plus" (click)="showListSelector(labelPicker)" (keydown.enter)="showListSelector(labelPicker)" title="Add or remove labels"></em>
+<div class="label-row" *ngIf="allLabels.length > 0">
+    <span *ngFor="let label of allLabels"
+          class="label-chip"
+          [class.label-chip-active]="isAssigned(label)"
+          (click)="toggle(label)"
+          (keydown.enter)="toggle(label)"
+          [title]="isAssigned(label) ? 'Remove label' : 'Add label'"
+          tabindex="0">
+        {{label.name}}
+    </span>
 </div>
-
-<ng-template #labelPicker>
-    <div class="modal-header">
-        <h4 class="modal-title pull-left">Select or Unselect Labels</h4>
-    </div>
-    <div class="body">
-        <div class="row outer" *ngFor="let nextLabel of allLabels">
-            <div><p [ngClass]="nextLabel.selected ? 'label-format-option-selected': 'label-format-option'" (click)="select(nextLabel.id)" (keydown.enter)="select(nextLabel.id)">{{nextLabel.name}}</p></div>
-        </div>
-    </div>
-</ng-template>
