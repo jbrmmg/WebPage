@@ -42,6 +42,7 @@ export class BackupDisplayComponent implements OnInit {
     zoom: number;
     breadcrumb: BreadcrumbItem[] = [];
     isMediaDirectory = false;
+    failedThumbnails = new Set<number>();
 
     @Output() selectPhoto = new EventEmitter();
 
@@ -66,6 +67,7 @@ export class BackupDisplayComponent implements OnInit {
         this.fileList = [];
         this.selectedFile = null;
         this.isMediaDirectory = false;
+        this.failedThumbnails = new Set<number>();
 
         this._backupDisplayService.getHierarchy(parent).subscribe({
             next: hierarchy => { this.hierarchy = hierarchy; },
@@ -124,8 +126,8 @@ export class BackupDisplayComponent implements OnInit {
         return this._backupDisplayService.imageUrl(fileId);
     }
 
-    onThumbnailError(event: Event): void {
-        (event.target as HTMLImageElement).classList.add('thumbnail-missing');
+    onThumbnailError(fileId: number): void {
+        this.failedThumbnails.add(fileId);
     }
 
     displayPrevious(): void {

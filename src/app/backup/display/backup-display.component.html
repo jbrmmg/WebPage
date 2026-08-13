@@ -65,10 +65,17 @@
              class="thumbnail-item"
              [class.thumbnail-selected]="isFileSelected(file)"
              (click)="displayFile(file)">
-            <img class="thumbnail-img"
+            <img *ngIf="!failedThumbnails.has(file.underlyingId)"
+                 class="thumbnail-img"
                  [src]="thumbnailUrl(file.underlyingId)"
                  [alt]="file.displayName"
-                 (error)="onThumbnailError($event)">
+                 (error)="onThumbnailError(file.underlyingId)">
+            <span *ngIf="failedThumbnails.has(file.underlyingId)"
+                  class="fa-stack thumbnail-no-photo-icon"
+                  [title]="file.displayName">
+                <em class="fa fa-camera fa-stack-1x"></em>
+                <em class="fa fa-ban fa-stack-2x"></em>
+            </span>
             <span class="thumbnail-name" [title]="file.displayName">{{file.displayName}}</span>
         </div>
     </div>
