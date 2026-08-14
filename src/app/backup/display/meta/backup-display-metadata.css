@@ -6,3 +6,27 @@
 .title {
     font-weight: bold;
 }
+
+.custom-meta-section {
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px solid #2d3a5a;
+}
+
+.custom-meta-heading {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #7a8fb0;
+    margin-bottom: 4px;
+}
+
+.custom-meta-row {
+    margin-top: 2px;
+}
+
+.custom-meta-value {
+    color: #a0b0d0;
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+}

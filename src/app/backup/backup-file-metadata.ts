@@ -7,4 +7,5 @@ export class MetaData {
     video: boolean;
     duration: number;
     date: Date;
+    customMetaData?: { [key: string]: unknown };
 }

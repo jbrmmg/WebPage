@@ -36,6 +36,10 @@
     vertical-align: middle;
 }
 
+.hardware-table tbody tr:hover td {
+    background: #1e2d4a;
+}
+
 .col-mac      { width: 170px; }
 .col-ip       { width: 140px; }
 .col-reserved { width: 80px;  text-align: center; }

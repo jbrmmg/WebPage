@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {Map} from '../../map/map';
 import {FileInfoExtra} from '../../backup-fileinfoextra';
-import {NgIf} from '@angular/common';
+import {NgFor, NgIf} from '@angular/common';
 import {LatLong} from '../../map/map-latlong';
 
 @Component({
@@ -11,7 +11,8 @@ import {LatLong} from '../../map/map-latlong';
     standalone: true,
     imports: [
         Map,
-        NgIf
+        NgIf,
+        NgFor
     ]
 })
 export class BackupDisplayMetadata implements OnChanges {
@@ -76,5 +77,20 @@ export class BackupDisplayMetadata implements OnChanges {
 
     getDate(): string {
         return '' + this.selectedFile.metaData.date.toString().replace('T', ' ');
+    }
+
+    hasCustomMetaData(): boolean {
+        const c = this.selectedFile.metaData?.customMetaData;
+        return !!(c && Object.keys(c).length > 0);
+    }
+
+    getCustomMetaDataEntries(): { key: string; label: string; value: string }[] {
+        const c = this.selectedFile.metaData?.customMetaData;
+        if (!c) return [];
+        return Object.entries(c).map(([key, value]) => ({
+            key,
+            label: key.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase()),
+            value: String(value)
+        }));
     }
 }

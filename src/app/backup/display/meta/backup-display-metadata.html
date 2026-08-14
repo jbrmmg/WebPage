@@ -16,6 +16,13 @@
             <div class="col-3 title">Date</div>
             <div class="col-9">{{getDate()}}</div>
         </div>
+        <div class="custom-meta-section" *ngIf="hasCustomMetaData()">
+            <div class="custom-meta-heading">Custom</div>
+            <div class="row custom-meta-row" *ngFor="let entry of getCustomMetaDataEntries()">
+                <div class="col-3 title">{{entry.label}}</div>
+                <div class="col-9 custom-meta-value">{{entry.value}}</div>
+            </div>
+        </div>
     </div>
     <div class="col-6" *ngIf="hasLocation()">
         <jbr-map [latLong]="getLatLong()" [height]="250" [fullWidth]="true" #map></jbr-map>

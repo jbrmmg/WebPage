@@ -9,6 +9,10 @@
         <div class="col-4 data">{{getText()}}</div>
         <div class="col-4 data">{{getImportName()}}</div>
     </div>
+    <div class="row data-row" *ngIf="fileId">
+        <div class="col-2 title">ID</div>
+        <div class="col-4 data">{{fileId}}</div>
+    </div>
     <div class="row data-row">
         <div class="col-2 title">Location</div>
         <div class="col-4 data">{{getLatLong()}}</div>

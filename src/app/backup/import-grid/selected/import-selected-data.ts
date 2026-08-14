@@ -33,6 +33,7 @@ export class ImportSelectedData {
     @Output() destinationUpdateEvent: EventEmitter<FileDestinationUpdate> = new EventEmitter();
 
     destination: string;
+    fileId: number;
     filename: string;
     importFilename: string;
     location: LatLong;
@@ -128,6 +129,7 @@ export class ImportSelectedData {
     display(file: ImportGridFileDisplay) {
         console.log('🔄 Data update');
         if (file?.source) {
+            this.fileId = file.id;
             this.filename = file.source.filename;
             this.imageSize = file.source.imageSize;
             this.location = file.source.location;
@@ -175,6 +177,7 @@ export class ImportSelectedData {
     }
 
     clear() {
+        this.fileId = null;
         this.filename = '';
         this.imageSize = null;
         this.location = null;
