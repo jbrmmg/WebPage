@@ -22,6 +22,6 @@ There should be a new option to update the location of a file - the endpoint of 
 
 There should be a new option to update the date/time of a file - the endpoint of this is a PUT on the files called date. It takes a JSON with two properties id and date.
 
-## Wipe the Import data
+## Wipe the Import data ✅
 
 There should be a button on the import screen - next to the refresh - that resets the data - this is achieved by calling the DELETE backup/import/data followed by the DELETE backup/import/cache.
