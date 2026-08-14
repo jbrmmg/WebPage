@@ -1,0 +1,41 @@
+<div class="classifications-container">
+    <div class="error-msg" *ngIf="error">Failed to load classifications.</div>
+
+    <div class="classifications-scroll" *ngIf="!error">
+        <table class="classifications-table">
+            <thead>
+                <tr>
+                    <th class="col-order">#</th>
+                    <th class="col-icon">Icon</th>
+                    <th class="col-regex">Pattern (regex)</th>
+                    <th class="col-action">Action</th>
+                    <th class="col-flag">Image</th>
+                    <th class="col-flag">Video</th>
+                    <th class="col-flag">Metadata</th>
+                    <th class="col-flag">Browser</th>
+                    <th class="col-transformer">Transformer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let c of classifications">
+                    <td class="col-order">{{ c.order }}</td>
+                    <td class="col-icon"><em class="fa {{ c.icon }}"></em></td>
+                    <td class="col-regex"><code>{{ c.regex }}</code></td>
+                    <td class="col-action">
+                        <span class="action-badge" [ngClass]="actionClass(c.action)">
+                            {{ actionLabel(c.action) }}
+                        </span>
+                    </td>
+                    <td class="col-flag"><em class="fa" [ngClass]="c.isImage ? 'fa-check flag-yes' : 'fa-minus flag-no'"></em></td>
+                    <td class="col-flag"><em class="fa" [ngClass]="c.isVideo ? 'fa-check flag-yes' : 'fa-minus flag-no'"></em></td>
+                    <td class="col-flag"><em class="fa" [ngClass]="c.checkMetaData ? 'fa-check flag-yes' : 'fa-minus flag-no'"></em></td>
+                    <td class="col-flag"><em class="fa" [ngClass]="c.isBrowser ? 'fa-check flag-yes' : 'fa-minus flag-no'"></em></td>
+                    <td class="col-transformer">{{ c.imageTransformer ?? '—' }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="no-data" *ngIf="classifications.length === 0">
+            No classifications found.
+        </div>
+    </div>
+</div>

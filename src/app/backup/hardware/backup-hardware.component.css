@@ -1,0 +1,68 @@
+.hardware-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.hardware-scroll {
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+}
+
+.hardware-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.hardware-table thead tr {
+    border-bottom: 1px solid #2d3a5a;
+}
+
+.hardware-table th {
+    padding: 8px 12px;
+    text-align: left;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #7a8fb0;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.hardware-table td {
+    padding: 7px 12px;
+    border-bottom: 1px solid #1a2236;
+    vertical-align: middle;
+}
+
+.col-mac      { width: 170px; }
+.col-ip       { width: 140px; }
+.col-reserved { width: 80px;  text-align: center; }
+.col-name     { }
+
+code {
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    color: #c5d0e8;
+}
+
+.row-reserved td   { background: rgba(76, 175, 80, 0.04); }
+.row-unreserved td { }
+
+.flag-yes { color: #4caf50; }
+.flag-no  { color: #3a4a6a; }
+
+.no-data {
+    padding: 24px;
+    text-align: center;
+    color: #7a8fb0;
+    font-size: 13px;
+}
+
+.error-msg {
+    padding: 24px;
+    text-align: center;
+    color: #ef5350;
+    font-size: 13px;
+}

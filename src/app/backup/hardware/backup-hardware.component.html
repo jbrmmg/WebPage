@@ -1,0 +1,29 @@
+<div class="hardware-container">
+    <div class="error-msg" *ngIf="error">Failed to load hardware.</div>
+
+    <div class="hardware-scroll" *ngIf="!error">
+        <table class="hardware-table">
+            <thead>
+                <tr>
+                    <th class="col-mac">MAC Address</th>
+                    <th class="col-ip">IP Address</th>
+                    <th class="col-reserved">Reserved</th>
+                    <th class="col-name">Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let h of hardware" [ngClass]="h.reservedIP === 'Y' ? 'row-reserved' : 'row-unreserved'">
+                    <td class="col-mac"><code>{{ h.macAddress }}</code></td>
+                    <td class="col-ip">{{ h.ip || '—' }}</td>
+                    <td class="col-reserved">
+                        <em class="fa" [ngClass]="h.reservedIP === 'Y' ? 'fa-check flag-yes' : 'fa-minus flag-no'"></em>
+                    </td>
+                    <td class="col-name">{{ h.name }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="no-data" *ngIf="hardware.length === 0">
+            No hardware found.
+        </div>
+    </div>
+</div>

@@ -7,6 +7,20 @@
         <span class="tab-label">Summary</span>
     </button>
     <button class="tab-btn"
+            [class.active]="isClassificationsMode"
+            (click)="selectClassificationsMode()"
+            title="Classifications">
+        <em class="fa fa-tags"></em>
+        <span class="tab-label">Classifications</span>
+    </button>
+    <button class="tab-btn"
+            [class.active]="isHardwareMode"
+            (click)="selectHardwareMode()"
+            title="Hardware">
+        <em class="fa fa-sitemap"></em>
+        <span class="tab-label">Hardware</span>
+    </button>
+    <button class="tab-btn"
             [class.active]="isFileMode"
             (click)="selectFileMode()"
             title="Files">
@@ -74,5 +88,11 @@
     </div>
     <div id="search" [collapse]="!isSearchMode">
         <jbr-backup-search></jbr-backup-search>
+    </div>
+    <div id="classifications" [collapse]="!isClassificationsMode">
+        <jbr-backup-classifications></jbr-backup-classifications>
+    </div>
+    <div id="hardware" [collapse]="!isHardwareMode">
+        <jbr-backup-hardware></jbr-backup-hardware>
     </div>
 </div>

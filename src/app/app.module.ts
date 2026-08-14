@@ -43,6 +43,8 @@ import {MobileAddComponent} from './money/mobile/mobile-add.component';
 import {MobileRecentComponent} from './money/mobile/mobile-recent.component';
 import {BackupJobsComponent} from './backup/jobs/backup-jobs.component';
 import {BackupSearchComponent} from './backup/search/backup-search.component';
+import {BackupClassificationsComponent} from './backup/classifications/backup-classifications.component';
+import {BackupHardwareComponent} from './backup/hardware/backup-hardware.component';
 
 @NgModule({
     declarations: [
@@ -59,7 +61,9 @@ import {BackupSearchComponent} from './backup/search/backup-search.component';
         BackupPrintImageComponent,
         WifiComponent,
         BackupJobsComponent,
-        BackupSearchComponent
+        BackupSearchComponent,
+        BackupClassificationsComponent,
+        BackupHardwareComponent
     ],
     imports: [
         BrowserModule,
