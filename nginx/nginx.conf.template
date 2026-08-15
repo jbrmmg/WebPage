@@ -165,6 +165,46 @@ server {
         proxy_read_timeout 3600s;
     }
 
+    # ── Recipe (UI + API in single container) ───────────────────────────────
+
+    location /recipe/docs/ {
+        set $recipe_backend recipe:8080;
+        rewrite            ^/recipe/docs(/.*)?$ $1 break;
+        proxy_pass         http://$recipe_backend;
+        proxy_http_version 1.1;
+        proxy_set_header   Host                $host;
+        proxy_set_header   X-Real-IP           $remote_addr;
+        proxy_set_header   X-Forwarded-For     $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Prefix  /recipe;
+        proxy_set_header   Accept-Encoding     "";
+        sub_filter_once    off;
+        sub_filter_types   *;
+        sub_filter         '"/recipe/v3/api-docs' '"/recipe/docs/v3/api-docs';
+    }
+
+    location /recipe/api/ {
+        set $recipe_backend recipe:8080;
+        rewrite            ^/recipe(/.*)$       $1 break;
+        proxy_pass         http://$recipe_backend;
+        proxy_http_version 1.1;
+        proxy_set_header   Host                $host;
+        proxy_set_header   X-Real-IP           $remote_addr;
+        proxy_set_header   X-Forwarded-For     $proxy_add_x_forwarded_for;
+        proxy_buffering    off;
+        proxy_cache        off;
+        proxy_read_timeout 3600s;
+    }
+
+    location /recipe/ {
+        set $recipe_backend recipe:8080;
+        rewrite            ^/recipe(/.*)?$      /$1 break;
+        proxy_pass         http://$recipe_backend;
+        proxy_http_version 1.1;
+        proxy_set_header   Host                $host;
+        proxy_set_header   X-Real-IP           $remote_addr;
+        proxy_set_header   X-Forwarded-For     $proxy_add_x_forwarded_for;
+    }
+
     # ── Angular SPA (catch-all — must be last) ───────────────────────────────
 
     location / {
