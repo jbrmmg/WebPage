@@ -197,7 +197,7 @@ server {
 
     location /recipe/ {
         set $recipe_backend recipe:8080;
-        rewrite            ^/recipe(/.*)?$      /$1 break;
+        rewrite            ^/recipe/?(.*)$      /$1 break;
         proxy_pass         http://$recipe_backend;
         proxy_http_version 1.1;
         proxy_set_header   Host                $host;
