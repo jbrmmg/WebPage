@@ -473,6 +473,7 @@ export class GridTransaction implements OnInit, OnChanges {
         newFilter.locked = false;
         newFilter.predicted = false;
         newFilter.maxPageSize = this.filter?.maxPageSize ?? 300;
+        newFilter.pageNumber = 1;
         newFilter.accounts = [file.account as JbAccount];
         newFilter.categories = [];
         this.filterChange.emit(newFilter);
