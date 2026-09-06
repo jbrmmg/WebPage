@@ -78,7 +78,7 @@ import {BackupHardwareComponent} from './backup/hardware/backup-hardware.compone
         BsDropdownModule.forRoot(),
         RouterModule.forRoot([
             {path: 'welcome', component: WelcomeComponent},
-            {path: 'money', component: MoneyComponent},
+            {path: 'mny', component: MoneyComponent},
             {path: 'house', component: HouseComponent},
             {path: 'bup', component: BackupListComponent},
             {path: 'weight', component: WeightComponent},
